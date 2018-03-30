@@ -8,7 +8,7 @@ Library  service.py
 *** Variables ***
                                     ###ІНШІ ДАННІ###
 ${browser}                          chrome
-${start page}                       http://test.smarttender.biz
+${start_page}                       http://smarttender.biz
 ${file path}                        src/
 ${some text}                        Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування.
 
@@ -33,7 +33,7 @@ ${loading}                          css=.smt-load .box
 
 *** Keywords ***
 Start
-    Open Browser  ${start page}  ${browser}  alies
+    Open Browser  ${start_page}  ${browser}  alies
     #Maximize Browser Window
 
 Login
@@ -41,7 +41,7 @@ Login
     ...     ${user} - login
     ...     and login
     [Arguments]  ${user}
-    go to  ${start page}
+    go to  ${start_page}
     click element  ${events}
     click element  ${login link}
     wait until page contains element  ${login field}
@@ -51,7 +51,7 @@ Login
     ${password}=  get_user_variable  ${user}  password
     Fill password  ${password}
     click element  ${login button}
-    go to  ${start page}
+    go to  ${start_page}
 
 Fill login
     [Arguments]  ${user}
@@ -69,7 +69,7 @@ Open button
 
 Find tender
     [Arguments]  ${tender id}
-    Go to  ${start page}
+    Go to  ${start_page}
     Sleep  1  #бесит!!!
     Click element  ${komertsiyni-torgy icon}
     Input text  ${field find tender}  ${tender id}
@@ -92,4 +92,3 @@ Run again
     run keyword and ignore error  Click element  ${element}
     ${passed}=  Run Keyword And Return Status  wait until page does not contain element  ${element}
     Run keyword if   "${passed}" == "${False}"  Run again  ${element}
-

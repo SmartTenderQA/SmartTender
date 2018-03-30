@@ -1,9 +1,10 @@
 *** Settings ***
-Resource  ../src/src.robot
+Resource  ../../src/src.robot
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 Suite Teardown  Suite Postcondition
 
 *** Variables ***
+${IP}
 ${button pro-kompaniyu}         css=.with-drop>a[href='/pro-kompaniyu/']
 ${button komertsiyni-torgy}     css=.with-drop>a[href='/komertsiyni-torgy/']
 ${button kontakty}              css=.menu a[href='/pro-kompaniyu/kontakty/']
@@ -54,8 +55,10 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 *** Test Cases ***
 Відкрити головну сторінку SmartTender.biz під роллю ${role}
+  Run Keyword If  '${IP}' != ''  Change Start Page
   Start
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
+
 
 Договір
   Відкрити вікно договору
@@ -523,7 +526,12 @@ Suite Postcondition
 
 Зайти на сторінку з контактами
   Click Element  ${button kontakty}
+  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /pro-kompaniyu/kontakty/
+
+Ignore reCAPTCHA
+  ${alert}  Handle Alert
+  Should Be Equal  ${alert}  Неможливо підключитися до сервісу reCAPTCHA. Перевірте з’єднання з мережею та повторіть спробу.
 
 Перевірити заголовок сторінки контактів
   ${should header}  Set Variable  Контакти SmartTender
@@ -578,6 +586,7 @@ Suite Postcondition
 
 Зайти на сторінку реєстрації
   Click Element  ${RegisterAnchor}
+  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /reestratsiya/
 
 Перевірити заголовок сторінки реєстрації
@@ -605,6 +614,7 @@ Suite Postcondition
 
 Зайти на сторінку зворотній зв'язок
   Open button  ${feedback link}
+  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /zvorotniy-zvyazok/
 
 Перевірити заголовок сторінки зворотній зв'язок
@@ -823,6 +833,8 @@ Suite Postcondition
 Перейти по результату пошуку
   [Arguments]  ${selector}
   ${href}  Get Element Attribute  ${selector}  href
+  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
+  ...  ELSE  Set Variable  ${href}
   Go To  ${href}
 
 Перевірити тип процедури
@@ -888,6 +900,7 @@ Suite Postcondition
 
 Перевірити тендерний документ
   ${status}  Перевірити наявність документа
+  Run Keyword If  '${IP}' != ''  Pass Execution  doesn't work for local IP
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Open Button  ${tender doc exept EDS}
   ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
@@ -896,3 +909,7 @@ Suite Postcondition
 Перевірити наявність документа
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
   [Return]  ${status}
+
+Change Start Page
+  ${start_page}  Set Variable  ${IP}
+  Set Global Variable  ${start_page}

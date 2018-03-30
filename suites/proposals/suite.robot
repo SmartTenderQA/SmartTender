@@ -2,6 +2,7 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
+Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***

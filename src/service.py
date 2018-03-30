@@ -1,6 +1,13 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import re
+# ==============
+#      Main script file
+# ==============
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
+import re
 
 def get_user_variable(user, users_variable):
     a = {
@@ -138,6 +145,8 @@ def get_tender_variables(tender_form, tender_sign):
     }
     return a[tender_form][tender_sign]
 
-
 def get_number(amount):
     return int(''.join(re.findall(r'\d+', amount)))
+
+def convert_url(href, IP):
+    return str(re.sub('https://smarttender.biz', str(IP), str(href)))
