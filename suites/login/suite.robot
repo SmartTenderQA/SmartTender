@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation    Suite description
-Resource        ../src/src.robot
+Resource        ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 

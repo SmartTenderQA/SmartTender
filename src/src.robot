@@ -64,7 +64,7 @@ Fill password
 Open button
     [Documentation]   відкривае лінку з локатора у поточному вікні
     [Arguments]  ${selector}
-    ${a}=  Get Element Attribute  ${selector}@href
+    ${a}=  Get Element Attribute  ${selector}  href
     Go To  ${a}
 
 Find tender
