@@ -59,7 +59,6 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   Start
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
 
-
 Договір
   Відкрити вікно договору
   Перевірити заголовок договору

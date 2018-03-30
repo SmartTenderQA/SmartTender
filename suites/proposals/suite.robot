@@ -378,6 +378,12 @@ Sign EDS
   Wait Until Page Contains Element  ${EDS close}  20
   Run again  ${EDS close}
 
+Run again
+  [Arguments]  ${element}
+  run keyword and ignore error  Click element  ${element}
+  ${passed}=  Run Keyword And Return Status  wait until page does not contain element  ${element}
+  Run keyword if   "${passed}" == "${False}"  Run again  ${element}
+
 Run depending on the dict
     [Arguments]  ${tender_sign}  ${keyword}
     ${variable}  get_tender_variables  ${tender_form}  ${tender_sign}
