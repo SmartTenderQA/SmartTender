@@ -37,7 +37,6 @@ Start
 
 Login
   [Arguments]  ${user}
-  debug
   Go To  ${start_page}
   Click Element  ${events}
   Click Element  ${login link}
