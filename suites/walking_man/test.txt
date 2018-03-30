@@ -1,0 +1,5 @@
+-d test_output
+-v start_page:http://test.smarttender.biz
+-v role:viewer
+
+-e skip_for_test
