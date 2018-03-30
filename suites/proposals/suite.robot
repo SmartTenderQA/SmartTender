@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  ../src/src.robot
+Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 
@@ -240,7 +240,7 @@ Choice useful indicators LOOP
 Add file to ...
     [Documentation]  takes block number and file name
     [Arguments]  ${add_file_number}  ${file_name}
-    choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/src/${file_name}
+    choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/suites/proposals/${file_name}
 
 Add file LOOP
     ${count}  evaluate  ${lots amount}+2
