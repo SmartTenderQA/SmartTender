@@ -70,7 +70,7 @@ ${wait}                             60
     ${lots amount}  evaluate  ${blocks amount}-2
     set suite variable  ${lots amount}
     set suite variable  ${blocks amount}
-    run keyword if  '${number of lots}'=='withoutlot'  Pass Execution  tadam
+    run keyword if  '${number of lots}' == 'withoutlot'  Pass Execution  this is one lot tender
     Collaps Loop
 
 1.2.1 Ціна (по кожному лоту окремо)
@@ -329,7 +329,7 @@ Send Offer and Ignore Error
 
 Натиснути надіслати пропозицію та вичитати відповідь
   Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  120
   ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${succeed message}
   ${message}  Run Keyword if  '${status}' == 'FAIL'  Get Text  ${error message}
   ...  ELSE  Set Variable  ${message}
@@ -393,7 +393,7 @@ Run depending on the dict
 Stop depending on the dict or run
     [Arguments]  ${tender_sign}  ${keyword}
     ${variable}  get_tender_variables  ${tender_form}  ${tender_sign}
-    run keyword if  '${variable}'=='${False}'  Pass Execution  tadam
+    run keyword if  '${variable}'=='${False}'  Pass Execution  doesn't work for this tender type
     ${status}=  run keyword and return status  ${keyword}
     should be equal  ${status}  ${variable}
 
