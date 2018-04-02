@@ -46,9 +46,10 @@ Login
   ${password}=  get_user_variable  ${user}  password
   Fill Password  ${password}
   Click Element  ${login button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  60
   ${name}=  get_user_variable  ${user}  name
   Wait Until Page Contains  ${name}  10
+  Sleep  2
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  60
   Go To  ${start_page}
 
 Fill login
