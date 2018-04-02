@@ -312,13 +312,9 @@ omg this robot...
 
 ###    Submit    ###
 Submit offer
-  Send Offer and Ignore Error
-  Click Element  ${ok button}
-  Wait Until Page Does Not Contain Element  ${ok button}
-
-Send Offer and Ignore Error
   ${message}  Wait Until Keyword Succeeds  60  5  Натиснути надіслати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню  ${message}
+  Wait Until Page Does Not Contain Element  ${ok button}
 
 Виконати дії відповідно повідомленню
   [Arguments]  ${message}
@@ -338,7 +334,7 @@ Ignore error
   Click Element  ${ok button}
   Wait Until Page Does Not Contain Element  ${ok button}
   Sleep  20
-  Send Offer and Ignore Error
+  Submit offer
 
 Negative submit offer
   wait until page contains element  ${send offer button}
