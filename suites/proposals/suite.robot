@@ -37,7 +37,7 @@ ${succeed message}                  xpath=//div[@class='ivu-modal-confirm-body-i
 ${error message}                    css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 
 ${succeed}                          Пропозицію прийнято.
-${error1}                           Виникла помилка при збереженні пропозиції.
+${error1}                           Виникла помилка при збереженні пропозиції.123
 ${error2}                           Не вдалося подати пропозицію
 
 ${loading}                          css=#app .smt-load .box
@@ -329,7 +329,7 @@ Send Offer and Ignore Error
 
 Натиснути надіслати пропозицію та вичитати відповідь
   Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  120
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  180
   ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${succeed message}
   ${message}  Run Keyword if  '${status}' == 'FAIL'  Get Text  ${error message}
   ...  ELSE  Set Variable  ${message}
