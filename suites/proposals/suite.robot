@@ -318,9 +318,10 @@ Submit offer
 
 Виконати дії відповідно повідомленню
   [Arguments]  ${message}
-  Run Keyword If  "${error1}" in """${message}"""  Ignore error
+  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Look to message above
+  ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
 
