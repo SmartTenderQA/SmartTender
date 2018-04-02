@@ -33,12 +33,12 @@ ${delete file}                      //div[@class="file-container"]/div[last()]/d
 ${delete file confirm}              /div/div[2]//button[2]
 ${switch}                           xpath=//*[@class="ivu-switch"]
 ${switch field}                     xpath=//*[@class="ivu-input-wrapper ivu-input-type"]/input
-${succeed message}                  xpath=//div[@class='ivu-modal-confirm-body-icon ivu-modal-confirm-body-icon-info']/following-sibling::div/div/div
-${error message}                    css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
+${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 
-${succeed}                          Пропозицію прийнято.
-${error1}                           Виникла помилка при збереженні пропозиції.123
+${succeed}                          Пропозицію прийнято
+${error1}                           Виникла помилка при збереженні пропозиції.345
 ${error2}                           Не вдалося подати пропозицію
+${error3}                           Не вдалося зчитати пропозицію с ЦБД!
 
 ${loading}                          css=#app .smt-load .box
 ${wait}                             60
@@ -324,15 +324,14 @@ Send Offer and Ignore Error
   [Arguments]  ${message}
   Run Keyword If  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${succeed}" in """${message}"""  Log  ${message}
+  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
 
 Натиснути надіслати пропозицію та вичитати відповідь
   Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  180
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${succeed message}
-  ${message}  Run Keyword if  '${status}' == 'FAIL'  Get Text  ${error message}
-  ...  ELSE  Set Variable  ${message}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
   [Return]  ${message}
 
 Ignore error
