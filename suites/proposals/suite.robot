@@ -49,69 +49,70 @@ ${wait}                             60
 
 *** Test Cases ***
 1 ПОДАННЯ ПРОПОЗИЦІЇ НА ${tender_form} ${tender_type}
-    [Tags]   ${tender_type}  ${tender_form}
-    No Operation
+  [Tags]   ${tender_type}  ${tender_form}
+  No Operation
 
 1.1 Знайти оголошену закупівлю
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    ${tender id}=  service.get_tender_variables  ${tender_form}  ${tender_type}
-    go to  ${proposal}/${tender id}/
-    run keyword and ignore error  Cancellation offer
-    ${status}=  run keyword and return status  wait until page contains element  ${block}[2]//button
-    run keyword if  '${status}'=='${True}'   set global variable  ${number of lots}  multiple
-    ...  ELSE  set global variable  ${number of lots}  withoutlot
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  ${tender id}=  service.get_tender_variables  ${tender_form}  ${tender_type}
+  Go To  ${proposal}/${tender id}/
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${cancellation offers button}
+  Run Keyword If  '${status}' == '${True}'  Cancellation offer
+  ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}[2]//button
+  Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${number of lots}  multiple
+  ...  ELSE  Set Global Variable  ${number of lots}  withoutlot
 
 1.2 Заповнити наступні обов’язкові поля по декількох лотах:
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    [Documentation]  checks if this page is what needed
-    ...  counts number of lots
-    ...  opens lots if multiple
-    ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
-    run keyword if  '${blocks amount}'<'3'
-    ...  fatal error  Нету нужных елементов на странице(не та страница)
-    ${lots amount}  evaluate  ${blocks amount}-2
-    set suite variable  ${lots amount}
-    set suite variable  ${blocks amount}
-    run keyword if  '${number of lots}' == 'withoutlot'  Pass Execution  this is one lot tender
-    Collaps Loop
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  [Documentation]  checks if this page is what needed
+  ...  counts number of lots
+  ...  opens lots if multiple
+  ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
+  run keyword if  '${blocks amount}'<'3'
+  ...  fatal error  Нету нужных елементов на странице(не та страница)
+  ${lots amount}  evaluate  ${blocks amount}-2
+  set suite variable  ${lots amount}
+  set suite variable  ${blocks amount}
+  run keyword if  '${number of lots}' == 'withoutlot'  Pass Execution  this is one lot tender
+  Collaps Loop
 
 1.2.1 Ціна (по кожному лоту окремо)
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    Run depending on the dict  Amount  Enter price LOOP
-    Run Keyword If  "${tender_form}" == "ESCO"  Fill ESCO LOOP
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  Run depending on the dict  Amount  Enter price LOOP
+  Run Keyword If  "${tender_form}" == "ESCO"  Fill ESCO LOOP
 
 1.2.2 Інші критерії (по кожному лоту окремо)
-    [Tags]   ${tender_type}  ${tender_form}
-    Stop depending on the dict or run  Useful indicators  Choice useful indicators LOOP
+  [Tags]   ${tender_type}  ${tender_form}
+  Stop depending on the dict or run  Useful indicators  Choice useful indicators LOOP
 
 1.2.3 Підтвердження відповідності кваліфікаційним критеріям та відсутності підстав для відмови в участі (ст. 16 та ст. 17 Закону про публічні закупівлі)
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    Run depending on the dict  Conformity  Check boxes
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  Run depending on the dict  Conformity  Check boxes
 
 1.2.4 Додати файли
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    run keyword if  '${number of lots}'=='multiple'  Add file loop
-    ...  ELSE  Add file to ...  1  _First.txt
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  run keyword if  '${number of lots}'=='multiple'  Add file loop
+  ...  ELSE  Add file to ...  1  _First.txt
 
 1.2.4.1 Обрати типи файлів (до закупівлі в цілому, або по кожному лоту окремо)
-    [Tags]   ${tender_type}  ${tender_form}
-    Run depending on the dict  Document type  Choice type of file run
+   [Tags]   ${tender_type}  ${tender_form}
+   Run depending on the dict  Document type  Choice type of file run
 
 1.2.4.2 Перевірити кількість типів файлів
-    [Tags]   ${tender_type}  ${tender_form}
-    Run depending on the dict  Document type  Verify the number of file types
+  [Tags]   ${tender_type}  ${tender_form}
+  Run depending on the dict  Document type  Verify the number of file types
 
 1.2.4.3 Вибрати усі доспупні типи файлів
-    [Tags]   ${tender_type}  ${tender_form}
-    Run depending on the dict  Document type  Choice all type of files
+  [Tags]   ${tender_type}  ${tender_form}
+  Run depending on the dict  Document type  Choice all type of files
 
 1.2.4.4 Визначити файлы як конфіденційні
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    Run depending on the dict  Confidentiality  Confidentiality
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  Run depending on the dict  Confidentiality  Confidentiality
 
 1.2.4.5 Зазначивши причину конфіденційності
-    [Tags]   ${tender_type}  ${tender_form}  smoke
-    Run depending on the dict  Description  File description
+  [Tags]   ${tender_type}  ${tender_form}  smoke
+  Run depending on the dict  Description  File description
 
 1.2.4.6 Додати другий файл
     [Tags]   ${tender_type}  ${tender_form}
@@ -347,14 +348,14 @@ Negative submit offer
 Cancellation offer
   ${message}  Скасувати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню при скасуванні  ${message}
-  Wait Until Page Does Not Contain Element   ${ok button}
+  Wait Until Page Does Not Contain Element   ${cancellation offers button}
 
 Скасувати пропозицію та вичитати відповідь
   Wait Until Page Contains Element  ${cancellation offers button}
   Click Element  ${cancellation offers button}
   Click Element   ${cancel. offers confirm button}
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation mess
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
   [Return]  ${message}
 
 Виконати дії відповідно повідомленню при скасуванні
