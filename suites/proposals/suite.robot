@@ -36,9 +36,10 @@ ${switch field}                     xpath=//*[@class="ivu-input-wrapper ivu-inpu
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 
 ${succeed}                          Пропозицію прийнято
-${error1}                           Виникла помилка при збереженні пропозиції.345
-${error2}                           Не вдалося подати пропозицію
-${error3}                           Не вдалося зчитати пропозицію с ЦБД!
+${succeed2}                         Не вдалося зчитати пропозицію с ЦБД!
+${error1}                           Не вдалося подати пропозицію
+${cancellation succeed}             Пропозиція анульована.
+${cancellation error1}              Не вдалося анулювати пропозицію.
 
 ${loading}                          css=#app .smt-load .box
 ${file loading}                     css=div.loader
@@ -177,12 +178,11 @@ ${wait}                             60
 
 *** Keywords ***
 Precondition
-    set selenium speed  .2
-    Start
-    Login  user1
+  Start
+  Login  user1
 
 Postcondition
-    Close All Browsers
+  Close All Browsers
 
 
 ###    Collaps    ###
@@ -321,11 +321,10 @@ Submit offer
 
 Виконати дії відповідно повідомленню
   [Arguments]  ${message}
-  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Look to message above
+  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
+  ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
 
 Натиснути надіслати пропозицію та вичитати відповідь
@@ -346,14 +345,30 @@ Negative submit offer
   wait until page contains element  ${error}  3
 
 Cancellation offer
+  ${message}  Скасувати пропозицію та вичитати відповідь
+  Виконати дії відповідно повідомленню при скасуванні  ${message}
+  Wait Until Page Does Not Contain Element   ${ok button}
+
+Скасувати пропозицію та вичитати відповідь
   Wait Until Page Contains Element  ${cancellation offers button}
   Click Element  ${cancellation offers button}
   Click Element   ${cancel. offers confirm button}
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${response}=  get text  xpath=//div[@class='ivu-modal-confirm-body-icon ivu-modal-confirm-body-icon-info']/following-sibling::div
-  Should Be Equal  ${response}  Пропозиція анульована.
-  Click Element   ${ok button}
-  Wait Until Page Does Not Contain Element   ${ok button}
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation mess
+  [Return]  ${message}
+
+Виконати дії відповідно повідомленню при скасуванні
+  [Arguments]  ${message}
+  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
+  ...  ELSE IF  "${cancellation error1}" in """${message}"""  Ignore cancellation error
+  ...  ELSE IF  "${cancellation succeed}" in """${message}"""  Click Element  ${ok button}
+  ...  ELSE  Fail  Look to message above
+
+Ignore cancellation error
+  Click Element  ${ok button}
+  Wait Until Page Does Not Contain Element  ${ok button}
+  Sleep  20
+  Cancellation offer
 
 
 ###    Confidentiality    ###
