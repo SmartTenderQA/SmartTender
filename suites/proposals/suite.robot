@@ -37,6 +37,7 @@ ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-bo
 
 ${succeed}                          Пропозицію прийнято
 ${succeed2}                         Не вдалося зчитати пропозицію с ЦБД!
+${empty error}                      ValueError: Element locator
 ${error1}                           Не вдалося подати пропозицію
 ${error2}                           Виникла помилка при збереженні пропозиції.
 ${cancellation succeed}             Пропозиція анульована.
@@ -323,7 +324,7 @@ Submit offer
 
 Виконати дії відповідно повідомленню
   [Arguments]  ${message}
-  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
+  Run Keyword If  "${empty error}" in """${message}"""  Submit offer
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
