@@ -38,6 +38,7 @@ ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-bo
 ${succeed}                          Пропозицію прийнято
 ${succeed2}                         Не вдалося зчитати пропозицію с ЦБД!
 ${error1}                           Не вдалося подати пропозицію
+${error2}                           Виникла помилка при збереженні пропозиції.
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 
@@ -324,6 +325,7 @@ Submit offer
   [Arguments]  ${message}
   Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
