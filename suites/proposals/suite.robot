@@ -40,6 +40,7 @@ ${succeed2}                         Не вдалося зчитати проп�
 ${empty error}                      ValueError: Element locator
 ${error1}                           Не вдалося подати пропозицію
 ${error2}                           Виникла помилка при збереженні пропозиції.
+${error3}                           Непередбачувана ситуація
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 
@@ -327,6 +328,7 @@ Submit offer
   Run Keyword If  "${empty error}" in """${message}"""  Submit offer
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
