@@ -36,7 +36,7 @@ ${switch field}                     xpath=//*[@class="ivu-input-wrapper ivu-inpu
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 
 ${succeed}                          Пропозицію прийнято
-${succeed2}                         Не вдалося зчитати пропозицію с ЦБД!
+${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
 ${empty error}                      ValueError: Element locator
 ${error1}                           Не вдалося подати пропозицію
 ${error2}                           Виникла помилка при збереженні пропозиції.
@@ -319,7 +319,7 @@ omg this robot...
 
 ###    Submit    ###
 Submit offer
-  ${message}  Wait Until Keyword Succeeds  60  5  Натиснути надіслати пропозицію та вичитати відповідь
+  ${message}  Натиснути надіслати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню  ${message}
   Wait Until Page Does Not Contain Element  ${ok button}
 
@@ -342,7 +342,7 @@ Submit offer
 Ignore error
   Click Element  ${ok button}
   Wait Until Page Does Not Contain Element  ${ok button}
-  Sleep  20
+  Sleep  30
   Submit offer
 
 Negative submit offer
