@@ -44,7 +44,6 @@ ${error3}                           Непередбачувана ситуац�
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 
-${loading}                          css=#app .smt-load .box
 ${file loading}                     css=div.loader
 ${wait}                             60
 
