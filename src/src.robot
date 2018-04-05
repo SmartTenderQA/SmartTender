@@ -28,6 +28,8 @@ ${komertsiyni-torgy icon}           xpath=//*[@id="main"]//a[2]/img
 ${derzavni zakupku}                 xpath=//*[@id="MainMenuTenders"]//ul[1]/li[2]/a
 ${first element find tender}        xpath=//*[@id="tenders"]//tr[1]/td[2]/a
 
+${bread crumbs}                     xpath=(//*[@class='ivu-breadcrumb-item-link'])
+
 ${loading}                          css=.smt-load .box
 
 

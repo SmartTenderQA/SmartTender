@@ -15,7 +15,9 @@ ${dropdown navigation}          css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}           xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                  css=div[itemscope=itemscope] h1
 ${novyny text}                  css=[class="row content"] h1
-${news block}                   css=#newsSearchResult>div
+${news block}                   css=.ivu-card-body [type=flex]
+${news search input}            css=.ivu-card-body input
+${news search button}           css=.ivu-card-body button
 ${kontakty text}                css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}               css=div[itemscope=itemscope]>div.ivu-card
 ${nashi-klienty text}           css=#myGroupCaption_target h2
@@ -76,6 +78,10 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   Зайти на сторінку з новинами
   Перевірити заголовок сторінки з новинами
   Порахувати кількість новин
+  Перевірити пошук(Click button)
+  #Перевірити пошук(ENTER)
+  Переглянути новину
+  #Перевірити лінк хлібних крох
   [Teardown]  Перейти на головну сторінку
 
 Контакти
@@ -522,6 +528,36 @@ Suite Postcondition
 Порахувати кількість новин
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' == '0'  Fail  Де новини?
+
+Перевірити пошук(ENTER)
+  ${text}  Get Text  ${news block} div>a
+  Input text  ${news search input}  ${text}
+  Press Key  ${news search input}  \\13
+  ${count}  Get Element Count  ${news block}
+  Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
+  Reload Page
+
+Перевірити пошук(Click button)
+  ${text}  Get Text  ${news block} div>a
+  Input text  ${news search input}  ${text}
+  Click Element  ${news search button}
+  ${count}  Get Element Count  ${news block}
+  Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
+  Reload Page
+
+Переглянути новину
+  Open Button  ${news block} div>a
+  ${header}  Get Text  css=h1
+  Should Not Be Empty  ${header}
+  ${news}  Get Text  css=#News
+  Should Not Be Empty  ${news}
+
+Перевірити лінк хлібних крох
+  ${location}  Get Location
+  Click element  ${bread crumbs}[last()-1]
+  ${newlocation}  Get Location
+  Should Not Be Equal  ${location}  ${newlocation}
+  Run Keyword And Expect Error  *  Get Text  css=#News
 
 Зайти на сторінку з контактами
   Click Element  ${button kontakty}
