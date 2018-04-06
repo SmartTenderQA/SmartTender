@@ -131,7 +131,7 @@ ${wait}                             60
 
 2 ПОДАТИ ПРОПОЗИЦІЮ
     [Tags]   ${tender_type}  ${tender_form}  smoke
-    Submit offer
+    Подати пропозицію
 
 3 НАКЛАДАННЯ ЕЦП
     [Tags]   ${tender_type}  ${tender_form}
@@ -161,7 +161,7 @@ ${wait}                             60
 
 4.2 Подати пропозицію
     [Tags]   ${tender_type}  ${tender_form}
-    Submit offer
+    Подати пропозицію
 
 5 НАКЛАДАННЯ ЕЦП НА ВИПРАВЛЕНУ ПРОПОЗИЦІЮ
     [Tags]   ${tender_type}  ${tender_form}  EDS
@@ -173,7 +173,7 @@ ${wait}                             60
 
 7 НЕМОЖЛИВІСТЬ ПОДАТИ ПРОПОЗИЦІЮ
     [Tags]   ${tender_type}  ${tender_form}  negative
-    Run Keyword And Expect Error  *  Submit offer
+    Run Keyword And Expect Error  *  Подати пропозицію
 
 8 НЕМОЖЛИВІСТЬ НАКЛАСТИ ЕЦП
     [Tags]   ${tender_type}  ${tender_form}  negative
@@ -317,14 +317,21 @@ omg this robot...
     Add info about sub  2
 
 ###    Submit    ###
-Submit offer
+Подати пропозицію
   ${message}  Натиснути надіслати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню  ${message}
   Wait Until Page Does Not Contain Element  ${ok button}
 
+Натиснути надіслати пропозицію та вичитати відповідь
+  Click Element  ${send offer button}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
+  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
+  [Return]  ${message}
+
 Виконати дії відповідно повідомленню
   [Arguments]  ${message}
-  Run Keyword If  "${empty error}" in """${message}"""  Submit offer
+  Run Keyword If  "${empty error}" in """${message}"""  Подати пропозицію
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
@@ -332,17 +339,11 @@ Submit offer
   ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
 
-Натиснути надіслати пропозицію та вичитати відповідь
-  Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-  [Return]  ${message}
-
 Ignore error
   Click Element  ${ok button}
   Wait Until Page Does Not Contain Element  ${ok button}
   Sleep  30
-  Submit offer
+  Подати пропозицію
 
 Negative submit offer
   wait until page contains element  ${send offer button}
