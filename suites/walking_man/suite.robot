@@ -499,6 +499,7 @@ Suite Postcondition
   Close All Browsers
 
 Перейти на головну сторінку
+  Run Keyword If Test Failed  Capture Page Screenshot
   Go To  ${start_page}
 
 Зайти на сторінку про компанію
