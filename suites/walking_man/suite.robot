@@ -593,6 +593,7 @@ Ignore reCAPTCHA
 Перевірити заголовок сторінки клієнтів
   ${should}  Set variable  Останнім часом до нас приєдналися
   Select Frame  css=iframe
+  Sleep  5
   ${is}  Get Text  ${nashi-klienty text}
   Should Be Equal  ${is}  ${should}
 
