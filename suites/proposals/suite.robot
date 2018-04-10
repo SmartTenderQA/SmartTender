@@ -22,7 +22,7 @@ ${choice file button}               //button[@data-toggle="dropdown"]
 ${file button path}                 //div[@class="file-container"]/div
 ${choice file list}                 //div[@class="dropdown open"]//li
 ${sub field}                        xpath=//*[@id="lotSubcontracting0"]/textarea[1]
-${send offer button}                id=submitBidPlease
+${send offer button}                css=button#submitBidPlease
 ${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
 ${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
 ${EDS}                              ${block}[1]//div[@class="ivu-row"]//button

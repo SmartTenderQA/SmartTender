@@ -34,9 +34,9 @@ ${negative result}  css=#tendersSearchResult .text-center
   Page Should Contain Element  ${archive tab}
 
 Виконати негативний пошук
-  Click Element  ${active tenders tab}
   Input text  ${search field}  Тендернезнайдено.Тадам!
-  Wait Until Element Is Not Visible  ${loading}  ${wait}
+  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  ${wait}
   Click Element  ${search button}
   Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  ${wait}
