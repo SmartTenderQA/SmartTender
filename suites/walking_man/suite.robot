@@ -570,6 +570,7 @@ Ignore reCAPTCHA
   Should Be Equal  ${alert}  Неможливо підключитися до сервісу reCAPTCHA. Перевірте з’єднання з мережею та повторіть спробу.
 
 Перевірити заголовок сторінки контактів
+  Sleep  5
   ${should header}  Set Variable  Контакти SmartTender
   ${is header}  Get Text  ${header text}
   Should Be Equal  ${is header}  ${should header}
