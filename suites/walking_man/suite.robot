@@ -566,8 +566,9 @@ Suite Postcondition
   Location Should Contain  /pro-kompaniyu/kontakty/
 
 Ignore reCAPTCHA
-  ${alert}  Handle Alert
-  Should Be Equal  ${alert}  Неможливо підключитися до сервісу reCAPTCHA. Перевірте з’єднання з мережею та повторіть спробу.
+  No Operation
+  #${alert}  Handle Alert
+  #Should Be Equal  ${alert}  Неможливо підключитися до сервісу reCAPTCHA. Перевірте з’єднання з мережею та повторіть спробу.
 
 Перевірити заголовок сторінки контактів
   Sleep  5
