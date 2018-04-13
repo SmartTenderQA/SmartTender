@@ -20,12 +20,12 @@ ${news search input}            css=.ivu-card-body input
 ${news search button}           css=.ivu-card-body button
 ${kontakty text}                css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}               css=div[itemscope=itemscope]>div.ivu-card
-${nashi-klienty text}           xpath=//p[@class='interactive-text'][1]
+${nashi-klienty text}           css=h2[style]
 ${vakansii text}                css=.container>div.row>div
 ${taryfy text}                  css=.body-content ul[class="nav nav-pills nav-justified"] li
 ${torgy top/bottom tab}         css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
 ${torgy count tab}              li:nth-child
-${client banner}                css=[class='row content'] .flex-container>div
+${client banner}                css=tbody>tr td[id]>div>span>a
 ${item plan}                    css=tr[data-planid] a
 ${item dogovory}                css=.plans-table td>a
 ${auction active items}         css=#hotTrades>div>div
@@ -599,7 +599,7 @@ Ignore reCAPTCHA
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
-  Run Keyword if  '${count}' == '0'  Fail  Хто увів клієнтів?
+  Run Keyword if  '${count}' != '12'  Fail  Хто увів клієнтів?
 
 Зайти на сторінку вакансій
   Mouse Over  ${button pro-kompaniyu}
