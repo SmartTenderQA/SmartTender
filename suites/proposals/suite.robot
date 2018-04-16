@@ -245,7 +245,7 @@ Choice useful indicators LOOP
 Add file to ...
     [Documentation]  takes block number and file name
     [Arguments]  ${add_file_number}  ${file_name}
-    choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/suites/proposals/${file_name}
+    choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/suites/proposals/upload_files/${file_name}
     Run Keyword And Ignore Error  Wait Until Page Contains Element  ${file loading}
     Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${file loading}
 
