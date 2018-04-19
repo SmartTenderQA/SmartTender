@@ -324,6 +324,7 @@ omg this robot...
 
 Натиснути надіслати пропозицію та вичитати відповідь
   Click Element  ${send offer button}
+  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
   ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
   Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
