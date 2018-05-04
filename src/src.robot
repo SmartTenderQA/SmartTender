@@ -58,7 +58,7 @@ Login
   Fill Password  ${password}
   Click Element  ${login button}
   Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}
+  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
 
 Перевірити успішність авторизації
   [Arguments]  ${user}

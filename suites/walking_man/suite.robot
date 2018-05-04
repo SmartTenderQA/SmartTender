@@ -64,7 +64,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
 
 Особистий кабінет
-  Run Keyword If  '${role}' == 'viewer'
+  Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
   ...  ELSE  Відкрити особистий кабінет
   [Teardown]  Перейти на головну сторінку
@@ -264,7 +264,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Run Keyword If  '${role}' == 'viewer'
+  Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
   ...  Run Keyword And Expect Error  *  Перевірити кнопку подачі пропозиції
   ...  ELSE  Перевірити кнопку подачі пропозиції
   [Teardown]  Перейти на головну сторінку
