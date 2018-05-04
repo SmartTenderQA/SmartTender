@@ -5,54 +5,56 @@ Suite Teardown  Suite Postcondition
 
 *** Variables ***
 ${IP}
-${button pro-kompaniyu}         css=.with-drop>a[href='/pro-kompaniyu/']
-${button komertsiyni-torgy}     css=.with-drop>a[href='/komertsiyni-torgy/']
-${button kontakty}              css=.menu a[href='/pro-kompaniyu/kontakty/']
-${button taryfy}                css=#MenuList a[href='/taryfy/']
-${button podii}                 css=#LoginDiv [href='/podii/']
-${button dogovir}               css=#ContractButton
-${dropdown navigation}          css=#MenuList div.dropdown li>a
-${pro-kompaniyu text}           xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
-${header text}                  css=div[itemscope=itemscope] h1
-${novyny text}                  css=[class="row content"] h1
-${news block}                   css=.ivu-card-body [type=flex]
-${news search input}            css=.ivu-card-body input
-${news search button}           css=.ivu-card-body button
-${kontakty text}                css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
-${kontakty block}               css=div[itemscope=itemscope]>div.ivu-card
-${nashi-klienty text}           css=h2[style]
-${vakansii text}                css=.container>div.row>div
-${taryfy text}                  css=.body-content ul[class="nav nav-pills nav-justified"] li
-${torgy top/bottom tab}         css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
-${torgy count tab}              li:nth-child
-${client banner}                css=tbody>tr td[id]>div>span>a
-${item plan}                    css=tr[data-planid] a
-${item dogovory}                css=.plans-table td>a
-${auction active items}         css=#hotTrades>div>div
-${auction active items1}        css=tbody>tr.head
-${auction active header}        css=.ivu-card-body h4
-${auction active item}          css=.ivu-row>div>div[class="ivu-card-body"] a
-${RegisterAnchor}               css=#RegisterAnchor
-${instruktsii link}             css=#LoginDiv a[href='/instruktsii/']
-${h1 header text}               css=#main h1
-${feedback link}                css=.footer-feedback a
-${site map}                     css=a[href='/karta-saytu/']
-${exchange rates header}        css=#content h1
-${exchange link1}               xpath=//div[@class='bank-view'][1]//a
-${exchange link2}               xpath=//div[@class='bank-view'][2]//a
-${contract link1}               css=li:nth-child(1)>a
-${contract link2}               css=li:nth-child(2)>a
-${advanced search}              xpath=//div[contains(text(),'Розширений пошук')]/..
-${advanced search2}             xpath=//span[contains(text(),'Розгорнути')]
-${dropdown menu for bid forms}  xpath=//label[contains(text(),'Форми ')]/../../ul
-${bids search}                  xpath=//div[contains(text(), 'Пошук')]/..
-${info form1}                   css=#tenderPage h1
-${info form2}                   css=.info_form
-${info form3}                   css=.row dd
-${info form4}                   xpath=//*[contains(text(),'Тип активу')]/following-sibling::div
-${first found element}          css=#tenders tbody>.head a.linkSubjTrading
-${last found element}           xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
-${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
+${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
+${button komertsiyni-torgy}          css=.with-drop>a[href='/komertsiyni-torgy/']
+${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
+${button taryfy}                     css=#MenuList a[href='/taryfy/']
+${button podii}                      css=#LoginDiv [href='/podii/']
+${button dogovir}                    css=#ContractButton
+${dropdown navigation}               css=#MenuList div.dropdown li>a
+${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
+${header text}                       css=div[itemscope=itemscope] h1
+${novyny text}                       css=[class="row content"] h1
+${news block}                        css=.ivu-card-body [type=flex]
+${news search input}                 css=.ivu-card-body input
+${news search button}                css=.ivu-card-body button
+${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
+${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
+${nashi-klienty text}                css=h2[style]
+${vakansii text}                     css=.container>div.row>div
+${taryfy text}                       css=.body-content ul[class="nav nav-pills nav-justified"] li
+${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
+${torgy count tab}                   li:nth-child
+${client banner}                     css=tbody>tr td[id]>div>span>a
+${item plan}                         css=tr[data-planid] a
+${item dogovory}                     css=.plans-table td>a
+${auction active items}              css=#hotTrades>div>div
+${auction active items1}             css=tbody>tr.head
+${auction active header}             css=.ivu-card-body h4
+${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
+${RegisterAnchor}                    css=#RegisterAnchor
+${instruktsii link}                  css=#LoginDiv a[href='/instruktsii/']
+${h1 header text}                    css=#main h1
+${feedback link}                     css=.footer-feedback a
+${site map}                          css=a[href='/karta-saytu/']
+${exchange rates header}             css=#content h1
+${exchange link1}                    xpath=//div[@class='bank-view'][1]//a
+${exchange link2}                    xpath=//div[@class='bank-view'][2]//a
+${contract link1}                    css=li:nth-child(1)>a
+${contract link2}                    css=li:nth-child(2)>a
+${advanced search}                   xpath=//div[contains(text(),'Розширений пошук')]/..
+${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
+${dropdown menu for bid forms}       xpath=//label[contains(text(),'Форми ')]/../../ul
+${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
+${bids search}                       xpath=//div[contains(text(), 'Пошук')]/..
+${info form1}                        css=#tenderPage h1
+${info form2}                        css=.info_form
+${info form3}                        css=.row dd
+${info form4}                        xpath=//*[contains(text(),'Тип активу')]/following-sibling::div
+${first found element}               css=#tenders tbody>.head a.linkSubjTrading
+${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
+${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
+${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 
 
 *** Test Cases ***
@@ -60,6 +62,12 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   Run Keyword If  '${IP}' != ''  Change Start Page
   Start
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
+
+Особистий кабінет
+  Run Keyword If  '${role}' == 'viewer'
+  ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
+  ...  ELSE  Відкрити особистий кабінет
+  [Teardown]  Перейти на головну сторінку
 
 Договір
   Відкрити вікно договору
@@ -144,7 +152,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Відкриті торги. Аукціон
   Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
@@ -153,7 +162,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Відкриті торги. Аналіз пропозицій
   [Tags]  skip_for_test
   Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
@@ -162,7 +172,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Запит пропозицій
   [Tags]  skip_for_test
   Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
@@ -171,7 +182,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Відкриті торги. Аналіз ринку
   [Tags]  skip_for_test
   Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
@@ -228,7 +240,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Допорогові закупівлі
   [Tags]  skip_for_test
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -236,7 +249,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Відкриті торги
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -244,15 +258,21 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Відкриті торги з публікацією англійською мовою
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Відфільтрувати по статусу торгів  Прийом пропозицій
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
+  Run Keyword If  '${role}' == 'viewer'
+  ...  Run Keyword And Expect Error  *  Перевірити кнопку подачі пропозиції
+  ...  ELSE  Перевірити кнопку подачі пропозиції
   [Teardown]  Перейти на головну сторінку
 
 Переговорна процедура для потреб оборони
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -260,7 +280,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Відкриті торги для закупівлі енергосервісу
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -268,7 +289,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Конкурентний діалог 2-ий етап
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -276,7 +298,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Конкурентний діалог з публікацією англійською мовою 2-ий етап
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -284,7 +307,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Конкурентний діалог 1-ий етап
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -292,7 +316,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Конкурентний діалог з публікацією англійською мовою 1-ий етап
   Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
@@ -324,7 +349,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Звіт про укладений договір
   Зайти на сторінку державних закупівель
   Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
@@ -332,7 +358,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Переговорна процедура
   Зайти на сторінку державних закупівель
   Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
@@ -340,7 +367,8 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 Переговорна процедура (скорочена)
   Зайти на сторінку державних закупівель
   Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
@@ -375,21 +403,24 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Продаж права вимоги за кредитними договорами
   Зайти на сторінку аукціони на продаж активів банків
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form3}  Право вимоги
   [Teardown]  Перейти на головну сторінку
 
 Продаж майна банків, що ліквідуються
   Зайти на сторінку аукціони на продаж активів банків
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form3}  Майно банку
   [Teardown]  Перейти на головну сторінку
 
 Голландський аукціон
   Зайти на сторінку аукціони на продаж активів банків
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form3}  Голландський аукціон
   [Teardown]  Перейти на головну сторінку
@@ -419,14 +450,16 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
 
 Оренда майна
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form3}  ProZorro.Продажі (Оренда)
   [Teardown]  Перейти на головну сторінку
 
 Продаж майна
   Зайти на сторінку аукціони на продаж активів держпідприємств
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form3}  ProZorro.Продажі (Майно)
   [Teardown]  Перейти на головну сторінку
@@ -438,21 +471,24 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
 
 Запит цінових пропозицій
   [Tags]  skip_for_test
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
 
 Простий тендер
   Зайти на сторінку RIALTO
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
 
 Двохетапний тендер
   Зайти на сторінку RIALTO
-  Відфільтрувати по формі торгів та виконати пошук  ${TESTNAME}
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   [Teardown]  Перейти на головну сторінку
@@ -862,11 +898,18 @@ Ignore reCAPTCHA
   Should Contain  ${is link1}  ${should link1}
   Should Contain  ${is link2}  ${should link2}
 
-Відфільтрувати по формі торгів та виконати пошук
+Відфільтрувати по формі торгів
   [Arguments]  ${TESTNAME}
   Розгорнути розширений пошук та випадаючий список видів торгів
   Sleep  1
   Click Element  xpath=//li[text()='${TESTNAME}']
+
+Відфільтрувати по статусу торгів
+  [Arguments]  ${status}
+  Click Element  ${dropdown menu for bid statuses}
+  Click Element  xpath=//li[text()='${status}']
+
+Виконати пошук тендера
   Click Element At Coordinates  ${bids search}  -10  0
 
 Розгорнути розширений пошук та випадаючий список видів торгів
@@ -892,6 +935,7 @@ Ignore reCAPTCHA
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
   Select Frame  css=iframe
+  Wait Until Page Contains Element  ${selector}
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${should}
 
@@ -903,7 +947,7 @@ Ignore reCAPTCHA
   [Arguments]  ${selector}
   Click Element  ${advanced search2}
   Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
-  Wait Until Page Contains Element    xpath=//li[contains(text(),'${selector}')]
+  Wait Until Page Contains Element  xpath=//li[contains(text(),'${selector}')]
   Click Element  xpath=//li[contains(text(),'${selector}')]
   Sleep  1
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
@@ -957,3 +1001,15 @@ Ignore reCAPTCHA
 Change Start Page
   ${start_page}  Set Variable  ${IP}
   Set Global Variable  ${start_page}
+
+Відкрити особистий кабінет
+  Page Should Contain Element  ${personal account}
+  Click Element  ${personal account}
+  Location Should Contain  /WEBPARTS/
+  Page Should Contain Element  css=.sidebar-menu
+  Page Should Contain Element  css=.main-content
+
+Перевірити кнопку подачі пропозиції
+  Page Should Contain Element  ${link to make proposal button}
+  Open Button  ${link to make proposal button}
+  Location Should Contain  /bid/edit/

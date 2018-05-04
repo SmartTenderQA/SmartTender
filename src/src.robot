@@ -21,6 +21,8 @@ ${login field}                      id=login
 ${password field}                   id=password
 ${error}                            id=loginErrorMsg
 
+
+${link to make proposal button}     css=[class='show-control button-lot']
 ${iframe open tender}               xpath=.//div[@class="container"]/iframe
 ${make proposal button}             xpath=//*[@id="tenderPage"]//a[@class='btn button-lot cursor-pointer']
 ${make proposal button new}         xpath=//*[@id="tenderDetail"]//a[@class="show-control button-lot"]
@@ -39,17 +41,28 @@ Start
 
 Login
   [Arguments]  ${user}
-  Go To  ${start_page}
+  Відкрити вікно авторизації
+  Авторизуватися  ${user}
+  Перевірити успішність авторизації  ${user}
+
+Відкрити вікно авторизації
   Click Element  ${events}
   Click Element  ${login link}
   Sleep  2
+
+Авторизуватися
+  [Arguments]  ${user}
   ${login}=  get_user_variable  ${user}  login
-  Fill Login  ${login}
   ${password}=  get_user_variable  ${user}  password
+  Fill Login  ${login}
   Fill Password  ${password}
   Click Element  ${login button}
   Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}
+
+Перевірити успішність авторизації
+  [Arguments]  ${user}
+  Wait Until Page Does Not Contain Element  ${login button}
   ${name}=  get_user_variable  ${user}  name
   Wait Until Page Contains  ${name}  10
   Go To  ${start_page}
