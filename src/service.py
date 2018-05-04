@@ -11,6 +11,11 @@ import re
 
 def get_user_variable(user, users_variable):
     a = {
+        'tender_owner': {
+            'login': 'USER_SSP',
+            'password': 'qwerty123123',
+            'name': u'Орган приватизации',
+        },
         'user1': {
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',

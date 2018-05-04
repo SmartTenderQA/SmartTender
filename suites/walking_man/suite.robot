@@ -92,6 +92,7 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   [Teardown]  Перейти на головну сторінку
 
 З ким ми працюємо
+  [Tags]  skip_for_test
   Зайти на сторінку клієнтів
   Перевірити заголовок сторінки клієнтів
   Порахувати кількість клієнтів
@@ -457,6 +458,7 @@ ${tender doc exept EDS}         xpath=//a[@class='fileLink'][not(contains(text()
   [Teardown]  Перейти на головну сторінку
 
 Реєстрація
+  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
   Зайти на сторінку реєстрації
   Перевірити заголовок сторінки реєстрації
   Перевірити підзаголовок сторінки реєстрації
@@ -675,7 +677,10 @@ Ignore reCAPTCHA
 
 Порахувати кількість єлементів сторінки карта сайту
   ${count}  Get Element Count  css=[class="row content"] li>a
-  Run Keyword if  '${count}' < '31'  Fail  Хто сховав Інструкції?!
+  ${number}  Run Keyword If
+  ...  "${role}" == "viewer"  Set Variable  31
+  ...  ELSE  Set Variable  30
+  Run Keyword if  "${count}" < "${number}"  Fail  Нема всіх єлементів
 
 Перейти на сторінку запитань
   Mouse Over  ${button komertsiyni-torgy}
