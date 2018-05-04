@@ -33,7 +33,7 @@ ${first element find tender}        xpath=//*[@id="tenders"]//tr[1]/td[2]/a
 ${bread crumbs}                     xpath=(//*[@class='ivu-breadcrumb-item-link'])
 
 ${loading}                          css=.smt-load .box
-
+${webClient loading}                id=LoadingPanel
 
 *** Keywords ***
 Start
@@ -57,10 +57,24 @@ Login
   Fill Login  ${login}
   Fill Password  ${password}
   Click Element  ${login button}
-  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
+  Run Keyword If  '${role}' == 'Bened'
+  ...       Wait Until Element Is Not Visible  ${webClient loading}  120
+  ...  ELSE  Run Keywords
+  ...       Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
+  ...  AND  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
 
 Перевірити успішність авторизації
+  [Arguments]  ${user}
+  Run Keyword If  '${role}' == 'Bened'  Перевірити успішність авторизації організатора
+  ...  ELSE  Перевірити успішність авторизації учасника  ${user}
+
+Перевірити успішність авторизації організатора
+  Wait Until Page Does Not Contain Element  ${login button}
+  Location Should Contain  /webclient/
+  Wait Until Page Contains Element  css=.body-container #container
+  Go To  ${start_page}
+
+Перевірити успішність авторизації учасника
   [Arguments]  ${user}
   Wait Until Page Does Not Contain Element  ${login button}
   ${name}=  get_user_variable  ${user}  name

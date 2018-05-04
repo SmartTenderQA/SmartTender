@@ -14,6 +14,7 @@ ${registration link}                        http://test.smarttender.biz/reestrat
 *** Test Cases ***
 Залогінитися
     [Tags]  Main
+    Set role variable  user1
     Login  user1
     Go To  ${start page}
     Reload and check
@@ -48,11 +49,7 @@ prepearing for next step
 Залогінитися та перевірити користувача
     [Tags]  Main  Dimon
     Go To  ${start page}
-    Click Element  ${events}
-    Click Element  ${login link}
-    Wait Until Page Contains Element  ${login field}  5
     Login  user1
-    Go To  ${start page}
     Reload and check
 
 Комерційні торги
@@ -103,3 +100,8 @@ Login with wrong data
 Reload and check
     Reload Page
     Wait Until Page Contains  ${name}  10
+
+Set role variable
+  [Arguments]  ${user}
+  ${role}  Set Variable  ${user}
+  Set Global variable  ${role}

@@ -16,6 +16,10 @@ def get_user_variable(user, users_variable):
             'password': 'qwerty123123',
             'name': u'Орган приватизации',
         },
+        'Bened': {
+            'login': 'PPR_BV',
+            'password': '123321',
+        },
         'user1': {
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',

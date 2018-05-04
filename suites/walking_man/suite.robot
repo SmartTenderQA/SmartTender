@@ -66,6 +66,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 Особистий кабінет
   Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
+  ...  ELSE IF  '${role}' == 'Bened'  Відкрити особистий кабінет webcliend
   ...  ELSE  Відкрити особистий кабінет
   [Teardown]  Перейти на головну сторінку
 
@@ -264,7 +265,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
+  Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner' or '${role}' == 'Bened'
   ...  Run Keyword And Expect Error  *  Перевірити кнопку подачі пропозиції
   ...  ELSE  Перевірити кнопку подачі пропозиції
   [Teardown]  Перейти на головну сторінку
@@ -572,6 +573,7 @@ Suite Postcondition
   ${text}  Get Text  ${news block} div>a
   Input text  ${news search input}  ${text}
   Press Key  ${news search input}  \\13
+  Wait Until Element Is Not Visible  ${loading}  120
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
@@ -580,6 +582,7 @@ Suite Postcondition
   ${text}  Get Text  ${news block} div>a
   Input text  ${news search input}  ${text}
   Click Element  ${news search button}
+  Wait Until Element Is Not Visible  ${loading}  120
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
@@ -1008,6 +1011,12 @@ Change Start Page
   Location Should Contain  /WEBPARTS/
   Page Should Contain Element  css=.sidebar-menu
   Page Should Contain Element  css=.main-content
+
+Відкрити особистий кабінет webcliend
+  Page Should Contain Element  ${personal account}
+  Click Element  ${personal account}
+  Location Should Contain  /webclient/
+  Go To  ${start_page}
 
 Перевірити кнопку подачі пропозиції
   Page Should Contain Element  ${link to make proposal button}
