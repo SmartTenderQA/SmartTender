@@ -582,7 +582,7 @@ Suite Postcondition
   ${text}  Get Text  ${news block} div>a
   Input text  ${news search input}  ${text}
   Click Element  ${news search button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  120
+  Wait Until Element Is Not Visible  ${loading}  120
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
@@ -918,8 +918,7 @@ Ignore reCAPTCHA
 Розгорнути розширений пошук та випадаючий список видів торгів
   Click Element  ${advanced search}
   Wait Until Page Contains Element  ${dropdown menu for bid forms}
-  Wait Until Keyword Succeeds  30s  5  Run Keywords  Click Element  ${dropdown menu for bid forms}
-  ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
+  Click Element  ${dropdown menu for bid forms}
 
 Перейти по результату пошуку
   [Arguments]  ${selector}
