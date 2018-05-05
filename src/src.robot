@@ -40,7 +40,7 @@ Start
   Open Browser  ${start_page}  ${browser}  alies
 
 Login
-  [Arguments]  ${user}
+  [Arguments]  ${user}=user1
   Відкрити вікно авторизації
   Авторизуватися  ${user}
   Перевірити успішність авторизації  ${user}
