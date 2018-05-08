@@ -51,6 +51,7 @@ ${info form1}                        css=#tenderPage h1
 ${info form2}                        css=.info_form
 ${info form3}                        css=.row dd
 ${info form4}                        xpath=//*[contains(text(),'Тип активу')]/following-sibling::div
+${info form5}                        xpath=//*[contains(text(), 'Тип процедури')]/../p
 ${first found element}               css=#tenders tbody>.head a.linkSubjTrading
 ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
 ${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
@@ -407,7 +408,9 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form3}  Право вимоги
+  Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
+  ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Продаж права вимоги за кредитними договорами
+  ...  ELSE  Перевірити тип процедури за зразком для аукціонів  ${info form3}  Право вимоги
   [Teardown]  Перейти на головну сторінку
 
 Продаж майна банків, що ліквідуються
@@ -415,7 +418,9 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form3}  Майно банку
+  Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
+  ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Продаж майна банків, що ліквідуються
+  ...  ELSE  Перевірити тип процедури за зразком для аукціонів  ${info form3}  Майно банку
   [Teardown]  Перейти на головну сторінку
 
 Голландський аукціон
@@ -423,7 +428,9 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form3}  Голландський аукціон
+  Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
+  ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Голландський аукціон
+  ...  ELSE  Перевірити тип процедури за зразком для аукціонів  ${info form3}  Голландський аукціон
   [Teardown]  Перейти на головну сторінку
 
 Аукціони на продаж активів банків Активи
@@ -454,7 +461,9 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form3}  ProZorro.Продажі (Оренда)
+  Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
+  ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Оренда майна
+  ...  ELSE  Перевірити тип процедури за зразком для аукціонів  ${info form3}  ProZorro.Продажі (Оренда)
   [Teardown]  Перейти на головну сторінку
 
 Продаж майна
@@ -462,7 +471,9 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form3}  ProZorro.Продажі (Майно)
+  Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
+  ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Продаж майна
+  ...  ELSE  Перевірити тип процедури за зразком для аукціонів ${info form3}  ProZorro.Продажі (Майно)
   [Teardown]  Перейти на головну сторінку
 
 Торги RIALTO
@@ -939,6 +950,12 @@ Ignore reCAPTCHA
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
   Select Frame  css=iframe
+  Wait Until Page Contains Element  ${selector}
+  ${is}  Get Text  ${selector}
+  Should Contain  ${is}  ${should}
+
+Перевірити тип процедури за зразком для аукціонів
+  [Arguments]  ${selector}  ${should}
   Wait Until Page Contains Element  ${selector}
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${should}
