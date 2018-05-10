@@ -438,7 +438,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Перейти по результату пошуку  ${last found element}
   Run Keyword if  '${start_page}' == 'http://test.smarttender.biz'
   ...  Перевірити тип процедури за зразком для аукціонів  ${info form5}  Продаж майна банків, що ліквідуються
-  ...  ELSE  Перевірити тип процедури за зразком ${info form3}  Майно банку
+  ...  ELSE  Перевірити тип процедури за зразком  ${info form3}  Майно банку
   [Teardown]  Перейти на головну сторінку
 
 Голландський аукціон
