@@ -1030,8 +1030,10 @@ Ignore reCAPTCHA
   Should Be Equal  ${is}  ${should}
 
 Перевірити тендерний документ
+  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
+
+Перевірити тендерний документ не для IP
   ${status}  Перевірити наявність документа
-  Run Keyword If  '${IP}' != ''  Pass Execution  doesn't work for local IP
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Open Button  ${tender doc exept EDS}
   ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
