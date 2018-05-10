@@ -58,7 +58,7 @@ ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']
 ${first lot}                         css=.table-row-value>a.hyperlink
 ${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
-
+${count multiple lot checked}        0
 
 *** Test Cases ***
 Відкрити головну сторінку SmartTender.biz під роллю ${role}
@@ -561,6 +561,10 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
   Перевірити заголовок курсів валют
   Перевірити лінки курсів валют
   [Teardown]  Перейти на головну сторінку
+
+Перевірка результатів тесту
+  [Tags]  non-critical
+  Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
 
 *** Keywords ***
 Suite Postcondition
@@ -1081,3 +1085,4 @@ Change Start Page
   Page Should Contain  ${lot name}
   Select Frame  css=iframe
   Page Should Contain Element  css=a[class='button-lot show-control']
+  ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
