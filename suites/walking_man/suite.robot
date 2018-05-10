@@ -1086,3 +1086,4 @@ Change Start Page
   Select Frame  css=iframe
   Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
+  Set Global Variable  ${count multiple lot checked}
