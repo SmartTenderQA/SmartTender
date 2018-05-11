@@ -564,6 +564,7 @@ ${count multiple lot checked}        0
 
 Перевірка результатів тесту
   [Tags]  non-critical
+  Log  ${count multiple lot checked
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
 
 *** Keywords ***
@@ -1083,7 +1084,6 @@ Change Start Page
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
-  Location Should Contain  /government/lot/details/
   Page Should Contain  ${lot name}
   Select Frame  css=iframe
   Page Should Contain Element  css=a[class='button-lot show-control']
