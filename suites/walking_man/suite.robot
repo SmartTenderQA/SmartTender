@@ -1085,7 +1085,7 @@ Change Start Page
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
   Page Should Contain  ${lot name}
-  Select Frame  css=iframe
-  Page Should Contain Element  css=a[class='button-lot show-control']
+  #Select Frame  css=iframe
+  #Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
