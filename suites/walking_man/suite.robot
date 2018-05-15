@@ -260,8 +260,8 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
-  Перевірити сторінку окремого лота в мультилоті
+  #Повернутися до пошуку зі сторінки документу
+  #Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
 Відкриті торги з публікацією англійською мовою
@@ -564,7 +564,7 @@ ${count multiple lot checked}        0
 
 Перевірка результатів тесту
   [Tags]  non-critical
-  Log  ${count multiple lot checked
+  Log  ${count multiple lot checked}
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
 
 *** Keywords ***
