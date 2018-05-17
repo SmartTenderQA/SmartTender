@@ -1,5 +1,9 @@
 *** Settings ***
+
 Resource  ../../src/src.robot
+
+Resource        ../proposals/suite.robot
+
 Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
@@ -67,18 +71,18 @@ ${count multiple lot checked}        0
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
   [Teardown]  Перейти на головну сторінку
 
-#Подати пропозицію учасником на тестові торги Допорогові закупівлі
-#  Run Keyword if  '${role}' != 'demo_owner'  Pass Execution  only for demo_owner
-#  #Відкрити сторінку тестових торгів
-#  Mouse Over  ${button komertsiyni-torgy}
-#  Click Element  ${dropdown navigation}[href='/test-tenders/']
-#  Відфільтрувати по формі торгів  Допорогові закупівлі
-#  Відфільтрувати по статусу торгів  Прийом пропозицій
-#  Виконати пошук тендера
-#  Перейти по результату пошуку  ${last found element}
-#  Перевірити тип процедури  ${info form2}  Допорогові закупівлі
-#  Перевірити кнопку подачі пропозиції
-#  debug
+Подати пропозицію учасником на тестові торги Допорогові закупівлі
+  Run Keyword if  '${role}' != 'demo_owner'  Pass Execution  only for demo_owner
+  #Відкрити сторінку тестових торгів
+  Mouse Over  ${button komertsiyni-torgy}
+  Click Element  ${dropdown navigation}[href='/test-tenders/']
+  Відфільтрувати по формі торгів  Допорогові закупівлі
+  Відфільтрувати по статусу торгів  Прийом пропозицій
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури  ${info form2}  Допорогові закупівлі
+  Перевірити кнопку подачі пропозиції
+  debug
 
 
 Особистий кабінет
@@ -956,10 +960,10 @@ Ignore reCAPTCHA
   Should Contain  ${is link2}  ${should link2}
 
 Відфільтрувати по формі торгів
-  [Arguments]  ${TESTNAME}
+  [Arguments]  ${type}=${TESTNAME}
   Розгорнути розширений пошук та випадаючий список видів торгів
   Sleep  1
-  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${TESTNAME}']
+  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
 
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
