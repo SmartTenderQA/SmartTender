@@ -187,7 +187,6 @@ Precondition
 Postcondition
   Close All Browsers
 
-
 ###    Collaps    ###
 Collaps Loop
     [Documentation]  expand all lots
@@ -196,9 +195,8 @@ Collaps Loop
     \  ${n}  evaluate  ${INDEX}+2
     \  click element  ${block}[${n}]//button
 
-
 ###    Fill bid    ###
-Fill price field
+Заповнити поле з ціною
     [Documentation]  takes lot number and coefficient
     ...  fill bid field with max available price
     [Arguments]  ${lot number}  ${coefficient}
@@ -212,7 +210,7 @@ Fill price field
 Enter price LOOP
     :FOR  ${INDEX}  IN RANGE  ${lots amount}
     \  ${lot number}  evaluate  ${INDEX}+1
-    \  Fill price field  ${lot number}  1
+    \  Заповнити поле з ціною  ${lot number}  1
 
 ###    ESCO    ###
 Fill ESCO
@@ -419,4 +417,4 @@ Stop depending on the dict or run
     should be equal  ${status}  ${variable}
 
 Price again
-    Fill price field  1  0.9
+    Заповнити поле з ціною  1  0.9

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
 *** Variables ***
@@ -65,6 +65,21 @@ ${count multiple lot checked}        0
   Run Keyword If  '${IP}' != ''  Change Start Page
   Start
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
+  [Teardown]  Перейти на головну сторінку
+
+#Подати пропозицію учасником на тестові торги Допорогові закупівлі
+#  Run Keyword if  '${role}' != 'demo_owner'  Pass Execution  only for demo_owner
+#  #Відкрити сторінку тестових торгів
+#  Mouse Over  ${button komertsiyni-torgy}
+#  Click Element  ${dropdown navigation}[href='/test-tenders/']
+#  Відфільтрувати по формі торгів  Допорогові закупівлі
+#  Відфільтрувати по статусу торгів  Прийом пропозицій
+#  Виконати пошук тендера
+#  Перейти по результату пошуку  ${last found element}
+#  Перевірити тип процедури  ${info form2}  Допорогові закупівлі
+#  Перевірити кнопку подачі пропозиції
+#  debug
+
 
 Особистий кабінет
   Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
@@ -135,7 +150,7 @@ ${count multiple lot checked}        0
   Перевірити заголовок, комерційніх торгів
   Перевірити вкладку комерційніх закупівель
   Порахувати кількість торгів
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  Відкриті торги. Аукціон
 
 Перевірити наявність всіх видів торгів в випадаючому списку
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -198,7 +213,7 @@ ${count multiple lot checked}        0
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  Аукціон на продаж. Відкриті торги
 
 Перевірити список доступних торгів для Комерційні торги Продажі
   [Tags]  skip_for_test
@@ -223,7 +238,7 @@ ${count multiple lot checked}        0
   Перевірити заголовок державних закупівель
   Перевірити закладку конкурентні процедури
   Порахувати кількість торгів
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  Допорогові закупівлі
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Конкурентні процедури
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -249,7 +264,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -260,8 +274,7 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  #Повернутися до пошуку зі сторінки документу
-  #Перевірити сторінку окремого лота в мультилоті
+  Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
 Відкриті торги з публікацією англійською мовою
@@ -284,7 +297,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -295,7 +307,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -306,7 +317,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -317,7 +327,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -328,7 +337,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -339,7 +347,6 @@ ${count multiple lot checked}        0
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
   Перевірити тендерний документ
-  Повернутися до пошуку зі сторінки документу
   Перевірити сторінку окремого лота в мультилоті
   [Teardown]  Перейти на головну сторінку
 
@@ -348,7 +355,7 @@ ${count multiple lot checked}        0
   Перевірити заголовок державних закупівель
   Перевірити закладку неконкурентні процедури
   Порахувати кількість торгів
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  Звіт про укладений договір
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -412,7 +419,7 @@ ${count multiple lot checked}        0
   Перевірити заголовок аукціони на продаж активів банків
   Перевірити вкладку аукціони на продаж активів банків
   Порахувати кількість аукціонів на продаж
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  Продаж права вимоги за кредитними договорами
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -568,6 +575,17 @@ ${count multiple lot checked}        0
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
 
 *** Keywords ***
+
+#######################################################
+#######                                      ##########
+#######               Keywords               ##########
+#######                                      ##########
+#######################################################
+Test Postcondition
+  Run Keyword If Test Failed  Capture Page Screenshot
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
+  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
+
 Suite Postcondition
   Close All Browsers
 
@@ -740,7 +758,9 @@ Ignore reCAPTCHA
   Page Should Contain Element  css=#MainContent_MainContent_MainContent_submitBtn
 
 Перейти на сторінку карти сайту
-  Click Element  ${site map}
+  Page Should Contain Element  ${site map}
+  ${location}  Get Location
+  Go to  ${location}/karta-saytu/
   Location Should Contain  /karta-saytu/
 
 Перевірити заголовок сторінки карта сайта
@@ -939,7 +959,7 @@ Ignore reCAPTCHA
   [Arguments]  ${TESTNAME}
   Розгорнути розширений пошук та випадаючий список видів торгів
   Sleep  1
-  Click Element  xpath=//li[text()='${TESTNAME}']
+  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${TESTNAME}']
 
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
@@ -950,10 +970,15 @@ Ignore reCAPTCHA
   Click Element At Coordinates  ${bids search}  -10  0
 
 Розгорнути розширений пошук та випадаючий список видів торгів
-  Click Element  ${advanced search}
-  Wait Until Page Contains Element  ${dropdown menu for bid forms}
-  Wait Until Keyword Succeeds  30s  5  Run Keywords  Click Element  ${dropdown menu for bid forms}
+  [Arguments]  ${check from list}=${TESTNAME}
+  Wait Until Keyword Succeeds  30s  5  Run Keywords
+  ...       Click Element  ${advanced search}
+  ...  AND  Run Keyword And Expect Error  *  Click Element  ${advanced search}
+  Sleep  2
+  Wait Until Keyword Succeeds  30s  5  Run Keywords
+  ...       Click Element  ${dropdown menu for bid forms}
   ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
+  ...  AND  Wait Until Page Contains Element  xpath=//li[text()='${check from list}']
 
 Перейти по результату пошуку
   [Arguments]  ${selector}
@@ -963,12 +988,12 @@ Ignore reCAPTCHA
   Go To  ${href}
 
 Перевірити тип процедури
-  [Arguments]  ${selector}
+  [Arguments]  ${selector}  ${type}=${TESTNAME}
   Run Keyword If  "${selector}" == "css=.info_form"  Select Frame  css=iframe
   Wait Until Page Contains Element  ${selector}
   Sleep  2
   ${is}  Get Text  ${selector}
-  Should Contain  ${is}  ${TESTNAME}
+  Should Contain  ${is}  ${type}
 
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
@@ -1039,6 +1064,8 @@ Ignore reCAPTCHA
   ...  Open Button  ${tender doc exept EDS}
   ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
   ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
+  ...  AND  Go Back
+  ...  AND  Select Frame  css=iframe
 
 Перевірити наявність документа
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
@@ -1051,7 +1078,9 @@ Change Start Page
 Відкрити особистий кабінет
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
-  Location Should Contain  /WEBPARTS/
+  ${status}  Run Keyword And Return Status  Location Should Contain  test
+  Run Keyword If  "${status}" == "False"  Location Should Contain  /webparts/
+  ...  ELSE  Location Should Contain  /WEBPARTS/
   Page Should Contain Element  css=.sidebar-menu
   Page Should Contain Element  css=.main-content
 
@@ -1066,10 +1095,6 @@ Change Start Page
   Open Button  ${link to make proposal button}
   Location Should Contain  /bid/edit/
 
-Повернутися до пошуку зі сторінки документу
-  Go Back
-  Go Back
-
 Перевірити сторінку окремого лота в мультилоті
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
   Run Keyword If  '${status[0]}' == 'PASS'  Перевірити лот в мультилоті за наявністю
@@ -1077,15 +1102,15 @@ Change Start Page
 
 Перевірити лот в мультилоті за наявністю
   Select Frame  css=iframe
-  ${status}  Run Keyword And Ignore Error  Page Should Contain Element  ${first lot}
-  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити лот в мультилоті
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${first lot}
+  Run Keyword If  '${status}' == 'True'  Перевірити лот в мультилоті
   ...  ELSE  Pass Execution  It's one lot tender
 
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
-  Page Should Contain  ${lot name}
-  #Select Frame  css=iframe
-  #Page Should Contain Element  css=a[class='button-lot show-control']
+  Run Keyword If  '${start_page}' == 'http://smarttender.biz'  Select Frame  css=iframe
+  Page Should Contain Element  xpath=//*[contains(text(), "${lot name}")]
+  Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}

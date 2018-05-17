@@ -78,16 +78,17 @@ Login
   [Arguments]  ${user}
   Wait Until Page Does Not Contain Element  ${login button}
   ${name}=  get_user_variable  ${user}  name
+  Set Global Variable  ${name}
   Wait Until Page Contains  ${name}  10
   Go To  ${start_page}
 
 Fill login
   [Arguments]  ${user}
-  Input Text  ${login field}  ${user}
+  Input Password  ${login field}  ${user}
 
 Fill password
   [Arguments]  ${pass}
-  Input Text  ${password field}  ${pass}
+  Input Password  ${password field}  ${pass}
 
 Open button
   [Documentation]   відкривае лінку з локатора у поточному вікні
