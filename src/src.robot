@@ -31,6 +31,9 @@ ${error2}                           Виникла помилка при збе�
 ${error3}                           Непередбачувана ситуація
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
+${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
+${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
+${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
 
 
 ${link to make proposal button}     css=[class='show-control button-lot']
