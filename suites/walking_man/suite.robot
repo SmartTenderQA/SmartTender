@@ -65,7 +65,6 @@ ${count multiple lot checked}        0
   Run Keyword If  '${IP}' != ''  Change Start Page
   Start
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
-  [Teardown]  Test Postcondition
 
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
   [Tags]  proposal
@@ -80,7 +79,6 @@ ${count multiple lot checked}        0
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
   Подати пропозицію
-  [Teardown]  Test Postcondition
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
 #  [Tags]  proposal
@@ -103,13 +101,13 @@ ${count multiple lot checked}        0
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'Bened'  Відкрити особистий кабінет webcliend
   ...  ELSE  Відкрити особистий кабінет
-  [Teardown]  Test Postcondition
 
 Договір
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
   Перевірити лінки в тексті договору
+
 
 Про компанію
   Зайти на сторінку про компанію
@@ -560,8 +558,8 @@ ${count multiple lot checked}        0
 #######################################################
 Test Postcondition
   Run Keyword If Test Failed  Capture Page Screenshot
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
   Go To  ${start_page}
+  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
 Перевірити користувача
   ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
