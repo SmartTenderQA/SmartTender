@@ -1,9 +1,5 @@
 *** Settings ***
-
 Resource  ../../src/src.robot
-
-Resource        ../proposals/suite.robot
-
 Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
@@ -72,18 +68,18 @@ ${count multiple lot checked}        0
   [Teardown]  Перейти на головну сторінку
 
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
-  Run Keyword if  '${role}' != 'demo_owner'  Pass Execution  only for demo_owner
-  #Відкрити сторінку тестових торгів
-  Mouse Over  ${button komertsiyni-torgy}
-  Click Element  ${dropdown navigation}[href='/test-tenders/']
+  [Tags]  proposal
+  Run Keyword If  "${role}" == "demo_owner"  Pass execution  Only for provider for prod for tests tenders
+  Відкрити сторінку тестових торгів
   Відфільтрувати по формі торгів  Допорогові закупівлі
   Відфільтрувати по статусу торгів  Прийом пропозицій
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}  Допорогові закупівлі
   Перевірити кнопку подачі пропозиції
-  debug
-
+  Скасувати пропозицію за необхідністю
+  Заповнити поле з ціною  1  1
+  Подати пропозицію
 
 Особистий кабінет
   Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
@@ -587,6 +583,9 @@ ${count multiple lot checked}        0
 #######################################################
 Test Postcondition
   Run Keyword If Test Failed  Capture Page Screenshot
+  Run Keyword If  "${role}" != "viewer"  Перевірити користувача
+
+Перевірити користувача
   ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
   Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
 
@@ -961,7 +960,7 @@ Ignore reCAPTCHA
 
 Відфільтрувати по формі торгів
   [Arguments]  ${type}=${TESTNAME}
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
 
@@ -1014,7 +1013,8 @@ Ignore reCAPTCHA
 
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
-  Wait Until Page Contains Element    xpath=//li[contains(text(), '${bid form}')]
+  Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
+  Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
 
 Вибрати тип активу та виконати пошук
   [Arguments]  ${selector}

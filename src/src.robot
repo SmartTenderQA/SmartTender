@@ -13,6 +13,8 @@ ${file path}                        src/
 ${some text}                        Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування.
 
                                     ###ЛОКАТОРИ###
+${block}                            xpath=.//*[@class='ivu-card ivu-card-bordered']
+${send offer button}                css=button#submitBidPlease
 ${login button}                     xpath=//*[@id="loginForm"]/button[2]
 ${logout}                           id=LogoutBtn
 ${login link}                       id=SignIn
@@ -20,6 +22,15 @@ ${events}                           xpath=//*[@id="LoginDiv"]//a[2]
 ${login field}                      id=login
 ${password field}                   id=password
 ${error}                            id=loginErrorMsg
+
+${succeed}                          Пропозицію прийнято
+${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
+${empty error}                      ValueError: Element locator
+${error1}                           Не вдалося подати пропозицію
+${error2}                           Виникла помилка при збереженні пропозиції.
+${error3}                           Непередбачувана ситуація
+${cancellation succeed}             Пропозиція анульована.
+${cancellation error1}              Не вдалося анулювати пропозицію.
 
 
 ${link to make proposal button}     css=[class='show-control button-lot']
@@ -95,3 +106,77 @@ Open button
   [Arguments]  ${selector}
   ${a}=  Get Element Attribute  ${selector}  href
   Go To  ${a}
+
+Заповнити поле з ціною
+  [Documentation]  takes lot number and coefficient
+  ...  fill bid field with max available price
+  [Arguments]  ${lot number}  ${coefficient}
+  ${block number}  Set Variable  ${lot number}+1
+  ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
+  ${a}=  get_number  ${a}
+  ${amount}=  Evaluate  int(${a}*${coefficient})
+  ${field number}=  Evaluate  ${lot number}-1
+  Input Text  xpath=//*[@id="lotAmount${field number}"]/input[1]  ${amount}
+
+Скасувати пропозицію
+  ${message}  Скасувати пропозицію та вичитати відповідь
+  Виконати дії відповідно повідомленню при скасуванні  ${message}
+  Wait Until Page Does Not Contain Element   ${cancellation offers button}
+
+Скасувати пропозицію та вичитати відповідь
+  Wait Until Page Contains Element  ${cancellation offers button}
+  Click Element  ${cancellation offers button}
+  Click Element   ${cancel. offers confirm button}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
+  [Return]  ${message}
+
+Виконати дії відповідно повідомленню при скасуванні
+  [Arguments]  ${message}
+  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
+  ...  ELSE IF  "${cancellation error1}" in """${message}"""  Ignore cancellation error
+  ...  ELSE IF  "${cancellation succeed}" in """${message}"""  Click Element  ${ok button}
+  ...  ELSE  Fail  Look to message above
+
+Ignore cancellation error
+  Click Element  ${ok button}
+  Wait Until Page Does Not Contain Element  ${ok button}
+  Sleep  20
+  Скасувати пропозицію
+
+Скасувати пропозицію за необхідністю
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${cancellation offers button}
+  Run Keyword If  '${status}' == '${True}'  Скасувати пропозицію
+
+Подати пропозицію
+  ${message}  Натиснути надіслати пропозицію та вичитати відповідь
+  Виконати дії відповідно повідомленню  ${message}
+  Wait Until Page Does Not Contain Element  ${ok button}
+
+Натиснути надіслати пропозицію та вичитати відповідь
+  Click Element  ${send offer button}
+  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
+  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
+  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
+  [Return]  ${message}
+
+Виконати дії відповідно повідомленню
+  [Arguments]  ${message}
+  Run Keyword If  "${empty error}" in """${message}"""  Подати пропозицію
+  ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
+  ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
+  ...  ELSE  Fail  Look to message above
+
+Ignore error
+  Click Element  ${ok button}
+  Wait Until Page Does Not Contain Element  ${ok button}
+  Sleep  30
+  Подати пропозицію
+
+Відкрити сторінку тестових торгів
+  Mouse Over  ${button komertsiyni-torgy}
+  Click Element  ${dropdown navigation}[href='/test-tenders/']

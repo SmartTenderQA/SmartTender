@@ -7,9 +7,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 ${number of lots}                   how_many_lots?
-${block}                            xpath=.//*[@class='ivu-card ivu-card-bordered']
 ${error}                            xpath=.//*[@class='ivu-notice-notice ivu-notice-notice-closable ivu-notice-notice-with-desc']
-${xpath}                            xpath=//*
 ${block without}                    .//*[@class='ivu-card ivu-card-bordered']
 ${amount}                           ${block}[2]//div[@class='amount lead'][1]
 ${proposal}                         http://test.smarttender.biz/bid/edit
@@ -22,7 +20,6 @@ ${choice file button}               //button[@data-toggle="dropdown"]
 ${file button path}                 //div[@class="file-container"]/div
 ${choice file list}                 //div[@class="dropdown open"]//li
 ${sub field}                        xpath=//*[@id="lotSubcontracting0"]/textarea[1]
-${send offer button}                css=button#submitBidPlease
 ${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
 ${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
 ${EDS}                              ${block}[1]//div[@class="ivu-row"]//button
@@ -35,14 +32,7 @@ ${switch}                           xpath=//*[@class="ivu-switch"]
 ${switch field}                     xpath=//*[@class="ivu-input-wrapper ivu-input-type"]/input
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 
-${succeed}                          Пропозицію прийнято
-${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
-${empty error}                      ValueError: Element locator
-${error1}                           Не вдалося подати пропозицію
-${error2}                           Виникла помилка при збереженні пропозиції.
-${error3}                           Непередбачувана ситуація
-${cancellation succeed}             Пропозиція анульована.
-${cancellation error1}              Не вдалося анулювати пропозицію.
+
 
 ${file loading}                     css=div.loader
 ${wait}                             60
@@ -58,8 +48,7 @@ ${wait}                             60
   [Tags]   ${tender_type}  ${tender_form}  smoke
   ${tender id}=  service.get_tender_variables  ${tender_form}  ${tender_type}
   Go To  ${proposal}/${tender id}/
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${cancellation offers button}
-  Run Keyword If  '${status}' == '${True}'  Cancellation offer
+  Скасувати пропозицію за необхідністю
   ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}[2]//button
   Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${number of lots}  multiple
   ...  ELSE  Set Global Variable  ${number of lots}  withoutlot
@@ -169,7 +158,7 @@ ${wait}                             60
 
 6 СКАСУВАТИ ПРОПОЗИЦІЮ НА ПРОЦЕДУРУ/ЛОТ
     [Tags]   ${tender_type}  ${tender_form}  smoke
-    Cancellation offer
+    Скасувати пропозицію
 
 7 НЕМОЖЛИВІСТЬ ПОДАТИ ПРОПОЗИЦІЮ
     [Tags]   ${tender_type}  ${tender_form}  negative
@@ -196,17 +185,6 @@ Collaps Loop
     \  click element  ${block}[${n}]//button
 
 ###    Fill bid    ###
-Заповнити поле з ціною
-    [Documentation]  takes lot number and coefficient
-    ...  fill bid field with max available price
-    [Arguments]  ${lot number}  ${coefficient}
-    ${block number}  set variable  ${lot number}+1
-    ${a}=  get text  ${block}[${block number}]//div[@class='amount lead'][1]
-    ${a}=  get_number  ${a}
-    ${amount}=  evaluate  int(${a}*${coefficient})
-    ${field number}=  evaluate  ${lot number}-1
-    input text  ${xpath}[@id="lotAmount${field number}"]/input[1]  ${amount}
-
 Enter price LOOP
     :FOR  ${INDEX}  IN RANGE  ${lots amount}
     \  ${lot number}  evaluate  ${INDEX}+1
@@ -315,65 +293,10 @@ omg this robot...
     Add info about sub  2
 
 ###    Submit    ###
-Подати пропозицію
-  ${message}  Натиснути надіслати пропозицію та вичитати відповідь
-  Виконати дії відповідно повідомленню  ${message}
-  Wait Until Page Does Not Contain Element  ${ok button}
-
-Натиснути надіслати пропозицію та вичитати відповідь
-  Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
-  [Return]  ${message}
-
-Виконати дії відповідно повідомленню
-  [Arguments]  ${message}
-  Run Keyword If  "${empty error}" in """${message}"""  Подати пропозицію
-  ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE  Fail  Look to message above
-
-Ignore error
-  Click Element  ${ok button}
-  Wait Until Page Does Not Contain Element  ${ok button}
-  Sleep  30
-  Подати пропозицію
-
 Negative submit offer
   wait until page contains element  ${send offer button}
   click element  ${send offer button}
   wait until page contains element  ${error}  3
-
-Cancellation offer
-  ${message}  Скасувати пропозицію та вичитати відповідь
-  Виконати дії відповідно повідомленню при скасуванні  ${message}
-  Wait Until Page Does Not Contain Element   ${cancellation offers button}
-
-Скасувати пропозицію та вичитати відповідь
-  Wait Until Page Contains Element  ${cancellation offers button}
-  Click Element  ${cancellation offers button}
-  Click Element   ${cancel. offers confirm button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-  [Return]  ${message}
-
-Виконати дії відповідно повідомленню при скасуванні
-  [Arguments]  ${message}
-  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
-  ...  ELSE IF  "${cancellation error1}" in """${message}"""  Ignore cancellation error
-  ...  ELSE IF  "${cancellation succeed}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE  Fail  Look to message above
-
-Ignore cancellation error
-  Click Element  ${ok button}
-  Wait Until Page Does Not Contain Element  ${ok button}
-  Sleep  20
-  Cancellation offer
 
 
 ###    Confidentiality    ###
