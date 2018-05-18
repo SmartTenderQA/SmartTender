@@ -21,7 +21,7 @@ def get_user_variable(user, users_variable):
             'password': '123321',
             'name': '',
         },
-        'test@it.ua': {
+        'test_it.ua': {
             'login': 'test@it.ua',
             'password': 'qwerty123',
             'name': 'Тестировщик',

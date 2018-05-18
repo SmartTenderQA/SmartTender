@@ -69,7 +69,7 @@ ${count multiple lot checked}        0
 
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
   [Tags]  proposal
-  Run Keyword If  "${role}" == "test@it.ua"  Pass execution  Only for provider, prod, test_tender
+  Run Keyword If  "${role}" == "test_it.ua"  Pass execution  Only for provider, prod, test_tender
   Відкрити сторінку тестових торгів
   Відфільтрувати по формі торгів  Допорогові закупівлі
   Відфільтрувати по статусу торгів  Прийом пропозицій
