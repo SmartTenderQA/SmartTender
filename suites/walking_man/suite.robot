@@ -20,12 +20,13 @@ ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
-${nashi-klienty text}                css=h2[style]
+${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
+${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
 ${taryfy text}                       css=.body-content ul[class="nav nav-pills nav-justified"] li
 ${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
 ${torgy count tab}                   li:nth-child
-${client banner}                     css=tbody>tr td[id]>div>span>a
+${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
 ${item dogovory}                     css=.plans-table td>a
 ${auction active items}              css=#hotTrades>div>div
@@ -119,9 +120,9 @@ ${count multiple lot checked}        0
   Перевірити заголовок сторінки з новинами
   Порахувати кількість новин
   Перевірити пошук(Click button)
-  #Перевірити пошук(ENTER)
+  Перевірити пошук(ENTER)
   Переглянути новину
-  #Перевірити лінк хлібних крох
+  Перевірити лінк хлібних крох
 
 Контакти
   Зайти на сторінку з контактами
@@ -659,15 +660,16 @@ Ignore reCAPTCHA
   Location Should Contain  /nashi-klienty/
 
 Перевірити заголовок сторінки клієнтів
-  ${should}  Set variable  Останнім часом до нас приєдналися
-  Select Frame  css=iframe
-  Sleep  5
-  ${is}  Get Text  ${nashi-klienty text}
-  Should Be Equal  ${is}  ${should}
+  Element Text Should Be  ${nashi-klienty text}  Індивідуальні рішення
+  Element Text Should Be  ${nashi-klienty text1}  Останнім часом до нас приєдналися
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
-  Run Keyword if  '${count}' != '12'  Fail  Хто увів клієнтів?
+  Run Keyword if  '${count}' != '26'  Fail  Хто увів клієнтів?
+  Click Element  css=.container .row>button
+  Sleep  1
+  ${count}  Get Element Count  ${client banner}
+  Run Keyword if  '${count}' != '46'  Fail  Хто увів клієнтів?
 
 Зайти на сторінку вакансій
   Mouse Over  ${button pro-kompaniyu}
