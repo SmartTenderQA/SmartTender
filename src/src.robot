@@ -183,3 +183,7 @@ Ignore error
 Відкрити сторінку тестових торгів
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
+
+Дочекатись закінчення загрузки сторінки
+  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
+  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}

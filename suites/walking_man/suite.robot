@@ -601,7 +601,7 @@ Suite Postcondition
   ${text}  Get Text  ${news block} div>a
   Input text  ${news search input}  ${text}
   Press Key  ${news search input}  \\13
-  Wait Until Element Is Not Visible  ${loading}  120
+  Дочекатись закінчення загрузки сторінки
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
