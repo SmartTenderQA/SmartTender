@@ -1043,6 +1043,7 @@ Ignore reCAPTCHA
   ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
   ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
   ...  AND  Go Back
+  ...  AND  Go Back
   ...  AND  Select Frame  css=iframe
 
 Перевірити наявність документа
@@ -1088,7 +1089,7 @@ Change Start Page
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
   Run Keyword If  '${start_page}' == 'http://smarttender.biz'  Select Frame  css=iframe
-  Page Should Contain Element  xpath=//*[contains(text(), "${lot name}")]
+  Element Text Should Be  css=.title-lot h1  ${lot name}
   Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
