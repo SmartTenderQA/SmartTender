@@ -1035,6 +1035,9 @@ Ignore reCAPTCHA
 
 Перевірити тендерний документ
   Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
+  ...  ELSE  Run Keywords
+  ...  Go Back
+  ...  AND  Select Frame  css=iframe
 
 Перевірити тендерний документ не для IP
   ${status}  Перевірити наявність документа
