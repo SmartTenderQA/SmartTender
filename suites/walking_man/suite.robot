@@ -281,7 +281,6 @@ ${count multiple lot checked}        0
 Відкриті торги з публікацією англійською мовою
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
-  Відфільтрувати по статусу торгів  Прийом пропозицій
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
@@ -1035,7 +1034,6 @@ Ignore reCAPTCHA
   Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
   ...  ELSE  Run Keywords
   ...  Go Back
-  ...  AND  Select Frame  css=iframe
 
 Перевірити тендерний документ не для IP
   ${status}  Перевірити наявність документа
@@ -1045,7 +1043,6 @@ Ignore reCAPTCHA
   ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
   ...  AND  Go Back
   ...  AND  Go Back
-  ...  AND  Select Frame  css=iframe
 
 Перевірити наявність документа
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
