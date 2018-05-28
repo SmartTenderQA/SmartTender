@@ -35,7 +35,6 @@ ${file loading}                     css=div.loader
 ${wait}                             60
 
 
-
 *** Test Cases ***
 1 ПОДАННЯ ПРОПОЗИЦІЇ НА ${tender_form} ${tender_type}
   [Tags]   ${tender_type}  ${tender_form}
