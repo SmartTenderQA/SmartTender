@@ -46,7 +46,7 @@ ${first element find tender}        xpath=//*[@id="tenders"]//tr[1]/td[2]/a
 
 ${bread crumbs}                     xpath=(//*[@class='ivu-breadcrumb-item-link'])
 
-${loading}                          css=.smt-load .box
+${loading}                          css=div.smt-load
 ${webClient loading}                id=LoadingPanel
 
 *** Keywords ***
