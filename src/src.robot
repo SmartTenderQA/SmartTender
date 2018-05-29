@@ -29,6 +29,7 @@ ${empty error}                      ValueError: Element locator
 ${error1}                           Не вдалося подати пропозицію
 ${error2}                           Виникла помилка при збереженні пропозиції.
 ${error3}                           Непередбачувана ситуація
+${error4}                           В даний момент вже йде подача/зміна пропозиції по тендеру від Вашої організації!
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
@@ -171,6 +172,7 @@ Ignore cancellation error
   ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
   ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
+  ...  ELSE IF  "${error4}" in """${message}"""  Ignore error
   ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
   ...  ELSE  Fail  Look to message above
