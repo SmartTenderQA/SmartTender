@@ -51,7 +51,7 @@ ${bids search}                       xpath=//div[contains(text(), 'Пошук')]
 ${info form1}                        css=#tenderPage h1
 ${info form2}                        css=.info_form
 ${info form3}                        css=.row dd
-${info form4}                        xpath=//*[contains(text(),'Тип активу')]/following-sibling::div
+${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${info form5}                        xpath=//*[contains(text(), 'Тип процедури')]/../p
 ${first found element}               css=#tenders tbody>.head a.linkSubjTrading
 ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
