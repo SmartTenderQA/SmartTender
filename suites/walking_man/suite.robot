@@ -1095,7 +1095,7 @@ Change Start Page
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
-  Run Keyword If  '${start_page}' != 'http://test.smarttender.biz'  Select Frame  css=iframe
+  Select Frame  css=iframe
   ${text}  Get Text  css=.title-lot h1
   Should Contain  ${text}  ${lot name}
   Page Should Contain Element  css=a[class='button-lot show-control']
