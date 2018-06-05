@@ -1087,9 +1087,7 @@ Change Start Page
   ${lot name}  Get Text  ${first lot}
   Open Button  ${first lot}
   Run Keyword If  '${start_page}' != 'http://test.smarttender.biz'  Select Frame  css=iframe
-  ${text}  Run Keyword If  '${start_page}' != 'http://test.smarttender.biz'
-  ...        Get Text  css=.title-lot h1
-  ...  ELSE  Get Text  css=div.text-bold
+  ${text}  Get Text  css=.title-lot h1
   Should Contain  ${text}  ${lot name}
   Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
