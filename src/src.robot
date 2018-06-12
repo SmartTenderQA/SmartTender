@@ -86,7 +86,7 @@ Login
 Перевірити успішність авторизації організатора
   Wait Until Page Does Not Contain Element  ${login button}
   Location Should Contain  /webclient/
-  Wait Until Page Contains Element  css=.body-container #container
+  Wait Until Page Contains Element  css=.body-container #container  120
   Go To  ${start_page}
 
 Перевірити успішність авторизації учасника
