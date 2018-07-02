@@ -4,6 +4,8 @@
 #      Main script file
 # ==============
 import sys
+import urllib2
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -175,3 +177,9 @@ def convert_url(href, IP):
 def random_number(a, b):
     a, b = int(a), int(b)
     return str(randint(a, b))
+
+
+def download_file_and_return_content(url, download_path):
+    response = urllib2.urlopen(url)
+    file_content = response.read()
+    return file_content

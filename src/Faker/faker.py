@@ -26,6 +26,21 @@ def create_sentence(n=10):
     n = int(n)
     data = load_data_from_file(faker_data)
     words = data['words']
-    string = " ".join([words[random.randrange(0, len(words))] for _ in range(n)])
-    formated = (string[0].upper() + string[1:] + '.')
-    return formated
+    if n != 1:
+        string = " ".join([words[random.randrange(0, len(words))] for _ in range(n)])
+        sentence = (string[0].upper() + string[1:] + '.')
+        return sentence
+    else:
+        word = 'd-' + words[random.randrange(0, len(words))] + '.doc'
+        return word
+
+
+def create_fake_doc(n=10):
+    n = int(n)
+    content = create_sentence(n)
+    name = create_sentence(1)
+    path = locality + '/test_output/' + name
+    f = open(path, 'w+')
+    f.write(content.encode('utf8'))
+    f.close()
+    return path, name, content
