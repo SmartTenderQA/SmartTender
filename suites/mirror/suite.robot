@@ -18,8 +18,9 @@ ${negative result}  css=#tendersSearchResult .text-center
 
 *** Test Cases ***
 Відкрити потрібну сторінку
-  ${start_page}  Run Keyword If  "${copie}" == "test"  Set Variable  http://test.smarttender.biz/TenderMirror/?mirrorId=1
-  ...  ELSE IF  "${copie}" == "prod"  Set Variable  http://smarttender.biz/TenderMirror/?mirrorId=1
+  #${start_page}  Run Keyword If  "${copie}" == "test"  Set Variable  http://test.smarttender.biz/TenderMirror/?mirrorId=1
+  #...  ELSE IF  "${copie}" == "prod"  Set Variable  http://smarttender.biz/TenderMirror/?mirrorId=1
+  ${start_page}  Set Variable  http://test.smarttender.biz/TenderMirror/?mirrorId=1
   Open Browser  ${start_page}  ${browser}  alies
 
 Порахувати кількість тендерів
