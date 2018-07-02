@@ -84,8 +84,14 @@ Postcondition
 
 
 Надіслати пропозицію
-  Click Element  xpath=//*[contains(text(), 'Надіслати пропозицію')]
+  Натиснути надіслати пропозицію
   Wait Until Page Contains  Ваша пропозиція прийнята!  20
+
+
+Натиснути надіслати пропозицію
+  Click Element At Coordinates  xpath=//*[contains(text(), 'Надіслати пропозицію')]  -10  0
+  ${status}  Run Keyword And Return Status  Page Should Not Contain Element  xpath=//*[contains(text(), 'Надіслати пропозицію')]
+  Run keyword If  '${status}' == '${False}'   Натиснути надіслати пропозицію
 
 
 Перевірити ціну
