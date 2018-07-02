@@ -4,7 +4,6 @@ Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
 *** Variables ***
-${IP}
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
 ${button komertsiyni-torgy}          css=.with-drop>a[href='/komertsiyni-torgy/']
 ${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
@@ -43,11 +42,8 @@ ${exchange link1}                    xpath=//div[@class='bank-view'][1]//a
 ${exchange link2}                    xpath=//div[@class='bank-view'][2]//a
 ${contract link1}                    css=li:nth-child(1)>a
 ${contract link2}                    css=li:nth-child(2)>a
-${advanced search}                   xpath=//div[contains(text(),'Розширений пошук')]/..
 ${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
-${dropdown menu for bid forms}       xpath=//label[contains(text(),'Форми ')]/../../ul
 ${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
-${bids search}                       xpath=//div[contains(text(), 'Пошук')]/..
 ${info form1}                        css=#tenderPage h1
 ${info form2}                        css=.info_form
 ${info form3}                        css=.row dd
@@ -773,10 +769,6 @@ Ignore reCAPTCHA
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
   Run Keyword if  '${count}' > '5'  Fail  Хто сховав Питання та відповіді?!
 
-Зайти на сторінку комерційніх торгів
-  Click Element  ${komertsiyni-torgy icon}
-  Location Should Contain  /komertsiyni-torgy/
-
 Перевірити заголовок, комерційніх торгів
   ${should}  Set variable  Комерційні торги (тендери SmartTender)
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1) p
@@ -938,37 +930,10 @@ Ignore reCAPTCHA
   Should Contain  ${is link1}  ${should link1}
   Should Contain  ${is link2}  ${should link2}
 
-Відфільтрувати по формі торгів
-  [Arguments]  ${type}=${TESTNAME}
-  Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
-  Sleep  1
-  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
-
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
   Click Element  ${dropdown menu for bid statuses}
   Click Element  xpath=//li[text()='${status}']
-
-Виконати пошук тендера
-  Click Element At Coordinates  ${bids search}  -10  0
-
-Розгорнути розширений пошук та випадаючий список видів торгів
-  [Arguments]  ${check from list}=${TESTNAME}
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${advanced search}
-  ...  AND  Run Keyword And Expect Error  *  Click Element  ${advanced search}
-  Sleep  2
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${dropdown menu for bid forms}
-  ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
-  ...  AND  Wait Until Page Contains Element  xpath=//li[text()='${check from list}']
-
-Перейти по результату пошуку
-  [Arguments]  ${selector}
-  ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
-  ...  ELSE  Set Variable  ${href}
-  Go To  ${href}
 
 Перевірити тип процедури
   [Arguments]  ${selector}  ${type}=${TESTNAME}
@@ -1075,11 +1040,6 @@ Change Start Page
   Click Element  ${personal account}
   Location Should Contain  /webclient/
   Go To  ${start_page}
-
-Перевірити кнопку подачі пропозиції
-  Page Should Contain Element  ${link to make proposal button}
-  Open Button  ${link to make proposal button}
-  Location Should Contain  /bid/edit/
 
 Перевірити сторінку окремого лота в мультилоті
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}

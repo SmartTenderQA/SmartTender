@@ -60,11 +60,6 @@ prepearing for next step
     Reload and check
     Open button  ${first element find tender}
     Reload and check
-    Click Element  ${make proposal button}
-    Pass Execution  Waiting for fix from Stas
-    Reload and check
-    Go To  ${start page}
-    Reload and check
 
 Державні закупківлі
     [Tags]  Main  Dimon

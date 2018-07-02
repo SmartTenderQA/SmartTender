@@ -6,7 +6,6 @@ Suite Teardown  Postcondition
 
 *** Variables ***
 ${wait}  30
-${mirror page}  http://test.smarttender.biz/TenderMirror/?mirrorId=1
 ${tender_body}  css=.panel-body
 ${search field}  css=input#Phrase
 ${search button}  css=input#btnSubmit
@@ -19,7 +18,9 @@ ${negative result}  css=#tendersSearchResult .text-center
 
 *** Test Cases ***
 Відкрити потрібну сторінку
-  Open Browser  ${mirror page}  ${browser}  alies
+  ${start_page}  Run Keyword If  "${copie}" == "test"  Set Variable  http://test.smarttender.biz/TenderMirror/?mirrorId=1
+  ...  ELSE IF  "${copie}" == "prod"  Set Variable  http://smarttender.biz/TenderMirror/?mirrorId=1
+  Open Browser  ${start_page}  ${browser}  alies
 
 Порахувати кількість тендерів
   ${count}  Get Element Count  ${tender_body}

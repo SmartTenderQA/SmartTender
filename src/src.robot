@@ -1,8 +1,10 @@
 *** Settings ***
 Library  Selenium2Library
 Library  BuiltIn
+Library  Collections
 Library  DebugLibrary
 Library  service.py
+Library  Faker/faker.py
 
 
 *** Variables ***
@@ -11,6 +13,8 @@ ${browser}                          chrome
 ${start_page}                       http://test.smarttender.biz
 ${file path}                        src/
 ${some text}                        Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування.
+${role}                             None
+${IP}
 
                                     ###ЛОКАТОРИ###
 ${block}                            xpath=.//*[@class='ivu-card ivu-card-bordered']
@@ -50,6 +54,9 @@ ${bread crumbs}                     xpath=(//*[@class='ivu-breadcrumb-item-link'
 ${loading}                          css=div.smt-load
 ${webClient loading}                id=LoadingPanel
 
+${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
+${dropdown menu for bid forms}      xpath=//label[contains(text(),'Форми ')]/../../ul
+${bids search}                      xpath=//div[contains(text(), 'Пошук')]/..
 *** Keywords ***
 Start
   Open Browser  ${start_page}  ${browser}  alies
@@ -190,3 +197,40 @@ Ignore error
 Дочекатись закінчення загрузки сторінки
   Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
+
+Зайти на сторінку комерційніх торгів
+  Click Element  ${komertsiyni-torgy icon}
+  Location Should Contain  /komertsiyni-torgy/
+
+Відфільтрувати по формі торгів
+  [Arguments]  ${type}=${TESTNAME}
+  Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
+  Sleep  1
+  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
+
+Розгорнути розширений пошук та випадаючий список видів торгів
+  [Arguments]  ${check from list}=${TESTNAME}
+  Wait Until Keyword Succeeds  30s  5  Run Keywords
+  ...       Click Element  ${advanced search}
+  ...  AND  Run Keyword And Expect Error  *  Click Element  ${advanced search}
+  Sleep  2
+  Wait Until Keyword Succeeds  30s  5  Run Keywords
+  ...       Click Element  ${dropdown menu for bid forms}
+  ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
+  ...  AND  Wait Until Page Contains Element  xpath=//li[text()='${check from list}']
+
+Виконати пошук тендера
+  Click Element At Coordinates  ${bids search}  -10  0
+
+Перейти по результату пошуку
+  [Arguments]  ${selector}
+  ${href}  Get Element Attribute  ${selector}  href
+  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
+  ...  ELSE  Set Variable  ${href}
+  Go To  ${href}
+
+Перевірити кнопку подачі пропозиції
+  [Arguments]  ${button}=${link to make proposal button}
+  Page Should Contain Element  ${button}
+  Open Button  ${button}
+  Location Should Contain  /edit/

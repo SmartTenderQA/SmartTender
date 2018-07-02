@@ -7,7 +7,10 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
 import re
+from random import randint
+
 
 def get_user_variable(user, users_variable):
     a = {
@@ -160,8 +163,15 @@ def get_tender_variables(tender_form, tender_sign):
     }
     return a[tender_form][tender_sign]
 
+
 def get_number(amount):
     return int(''.join(re.findall(r'\d+', amount)))
 
+
 def convert_url(href, IP):
     return str(re.sub('https://smarttender.biz', str(IP), str(href)))
+
+
+def random_number(a, b):
+    a, b = int(a), int(b)
+    return str(randint(a, b))
