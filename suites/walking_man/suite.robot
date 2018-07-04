@@ -693,12 +693,11 @@ Suite Postcondition
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
-  debug
-  Run Keyword if  ${count} < 5  Log to console  5
+  Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
   Click Element  css=.container .row>button
   Sleep  1
   ${count}  Get Element Count  ${client banner}
-  Run Keyword if  '${count}' != '46'  Fail  Хто увів клієнтів?
+  Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
 
 Зайти на сторінку вакансій
   Mouse Over  ${button pro-kompaniyu}
