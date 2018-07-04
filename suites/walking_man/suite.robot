@@ -452,7 +452,7 @@ ${count multiple lot checked}        0
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 Продаж майна банків, що ліквідуються
-  [Tags]  sales
+  [Tags]  sales  non-critical
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -693,7 +693,7 @@ Suite Postcondition
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
-  Run Keyword if  '${count}' <= '5'  Fail  Хто увів клієнтів?
+  Run Keyword if  ${count} <= 5  Fail  Хто увів клієнтів?
   Click Element  css=.container .row>button
   Sleep  1
   ${count}  Get Element Count  ${client banner}
