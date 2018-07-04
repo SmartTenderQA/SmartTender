@@ -518,7 +518,7 @@ ${count multiple lot checked}        0
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
 Запит цінових пропозицій
-  [Tags]  skip_for_test rialto
+  [Tags]  skip_for_test  rialto
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
