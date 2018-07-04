@@ -693,7 +693,7 @@ Suite Postcondition
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
-  Run Keyword if  '${count}' >= '5'  Fail  Хто увів клієнтів?
+  Run Keyword if  '${count}' <= '5'  Fail  Хто увів клієнтів?
   Click Element  css=.container .row>button
   Sleep  1
   ${count}  Get Element Count  ${client banner}
