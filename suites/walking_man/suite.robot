@@ -100,6 +100,7 @@ ${count multiple lot checked}        0
   ...  ELSE  Відкрити особистий кабінет
 
 Договір
+  [Tags]  site
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
@@ -107,27 +108,30 @@ ${count multiple lot checked}        0
 
 
 Про компанію
+  [Tags]  site
   Зайти на сторінку про компанію
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
 Новини
+  [Tags]  site
   Зайти на сторінку з новинами
   Перевірити заголовок сторінки з новинами
   Порахувати кількість новин
   Перевірити пошук(Click button)
   Перевірити пошук(ENTER)
   Переглянути новину
-  #Перевірити лінк хлібних крох
+  Перевірити лінк хлібних крох
 
 Контакти
+  [Tags]  site
   Зайти на сторінку з контактами
   Перевірити заголовок сторінки контактів
   Порахувати кількість контактів
   Перевірити заголовок контакту
 
 З ким ми працюємо
-  [Tags]  skip_for_test
+  [Tags]  skip_for_test  site
   Зайти на сторінку клієнтів
   Перевірити заголовок сторінки клієнтів
   Порахувати кількість клієнтів
@@ -410,7 +414,8 @@ ${count multiple lot checked}        0
   Голландський аукціон
 
 Продаж права вимоги за кредитними договорами
-  [Tags]  non-critical
+  [Tags]  snon-critical
+  debug
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -626,20 +631,14 @@ Suite Postcondition
 
 Перевірити лінк хлібних крох
   ${location}  Get Location
-  Click element  ${bread crumbs}[last()-1]
+  Click element  xpath=//*[@class='ivu-breadcrumb']/a[last()]
   ${newlocation}  Get Location
   Should Not Be Equal  ${location}  ${newlocation}
   Run Keyword And Expect Error  *  Get Text  css=#News
 
 Зайти на сторінку з контактами
   Click Element  ${button kontakty}
-  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /pro-kompaniyu/kontakty/
-
-Ignore reCAPTCHA
-  No Operation
-  #${alert}  Handle Alert
-  #Should Be Equal  ${alert}  Неможливо підключитися до сервісу reCAPTCHA. Перевірте з’єднання з мережею та повторіть спробу.
 
 Перевірити заголовок сторінки контактів
   Sleep  5
@@ -697,7 +696,6 @@ Ignore reCAPTCHA
 
 Зайти на сторінку реєстрації
   Click Element  ${RegisterAnchor}
-  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /reestratsiya/
 
 Перевірити заголовок сторінки реєстрації
@@ -725,7 +723,6 @@ Ignore reCAPTCHA
 
 Зайти на сторінку зворотній зв'язок
   Open button  ${feedback link}
-  Run Keyword If  '${IP}'  Ignore reCAPTCHA
   Location Should Contain  /zvorotniy-zvyazok/
 
 Перевірити заголовок сторінки зворотній зв'язок
