@@ -98,6 +98,7 @@ ${count multiple lot checked}        0
 #  [Teardown]  Test Postcondition
 
 Особистий кабінет
+  [Tags]  site
   Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'Bened'  Відкрити особистий кабінет webcliend
@@ -196,7 +197,7 @@ ${count multiple lot checked}        0
   Перевірити тендерний документ
 
 Відкриті торги. Аналіз пропозицій
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -205,7 +206,7 @@ ${count multiple lot checked}        0
   Перевірити тендерний документ
 
 Запит пропозицій
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -214,7 +215,7 @@ ${count multiple lot checked}        0
   Перевірити тендерний документ
 
 Відкриті торги. Аналіз ринку
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -223,7 +224,7 @@ ${count multiple lot checked}        0
   Перевірити тендерний документ
 
 Комерційні торги Продажі
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
@@ -231,7 +232,7 @@ ${count multiple lot checked}        0
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
 Перевірити список доступних торгів для Комерційні торги Продажі
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   [Template]  Перевірити наявність тексту в випадаючому списку
   Тендер на продаж. Відкриті торги
   Аукціон на продаж. Відкриті торги
@@ -240,7 +241,7 @@ ${count multiple lot checked}        0
   Тендер на продаж. Обмежений список
 
 Аукціон на продаж. Відкриті торги
-  [Tags]  skip_for_test  commercial
+  [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
@@ -272,7 +273,7 @@ ${count multiple lot checked}        0
   Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
 Допорогові закупівлі
-  [Tags]  skip_for_test  procurement
+  [Tags]  procurement  skip_for_test
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера

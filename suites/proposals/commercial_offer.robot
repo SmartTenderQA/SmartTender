@@ -39,6 +39,7 @@ ${make proposal link}               xpath=//div[@class='row']//a[contains(@class
 
 
 Перевірити дані у поданій пропозиції
+  Sleep  180
   Go To  ${data.tender_url}
   Перевірити ціну
   Перевірити кількість
