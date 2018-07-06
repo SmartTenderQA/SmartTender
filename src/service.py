@@ -12,6 +12,7 @@ sys.setdefaultencoding('utf-8')
 
 import re
 from random import randint
+from datetime import datetime, timedelta
 
 
 def get_user_variable(user, users_variable):
@@ -29,6 +30,11 @@ def get_user_variable(user, users_variable):
         'test_it.ua': {
             'login': 'test@it.ua',
             'password': 'qwerty123',
+            'name': 'Тестировщик',
+        },
+        'fgv_prod_owner': {
+            'login': 'IT_TEST_FGV_USER',
+            'password': 'fdjh123fdsj',
             'name': 'Тестировщик',
         },
         'user1': {
@@ -183,3 +189,13 @@ def download_file_and_return_content(url, download_path):
     response = urllib2.urlopen(url)
     file_content = response.read()
     return file_content
+
+def get_time(v=0):
+    delta = int(v)
+    time = datetime.now() + timedelta(hours=delta)
+    return ('{:%d.%m.%Y %H:%M}'.format(time))
+
+def convert_data_for_web_client(value):
+    without_spaces = value.replace(" ", "")
+    without_dots = without_spaces.replace(".", "")
+    return without_dots.replace(":", "")
