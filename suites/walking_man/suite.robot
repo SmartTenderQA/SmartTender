@@ -554,6 +554,14 @@ ${count multiple lot checked}        0
   Перевірити заголовок сторінки інструкцій
   Порахувати кількість інструкцій
 
+Інструкції2
+  [Tags]  site
+  ${location}  Get Location
+  Go To  ${location}TenderInstruction/
+  ${should}  Set variable  Інструкції
+  ${is}  Get Text  css=h1
+  Should Be Equal  ${is}  ${should}
+
 Зворотній зв'язок
   [Tags]  site
   Зайти на сторінку зворотній зв'язок
