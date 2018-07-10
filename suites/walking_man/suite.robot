@@ -5,7 +5,6 @@ Suite Teardown  Suite Postcondition
 
 *** Variables ***
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
-${button komertsiyni-torgy}          css=.with-drop>a[href='/komertsiyni-torgy/']
 ${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
 ${button taryfy}                     css=#MenuList a[href='/taryfy/']
 ${button podii}                      css=#LoginDiv [href='/podii/']
@@ -76,7 +75,7 @@ ${count multiple lot checked}        0
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}  Допорогові закупівлі
-  Перевірити кнопку подачі пропозиції
+  Click Element  xpath=//button/span[contains(text(), 'Взяти участь')]
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
   Подати пропозицію
