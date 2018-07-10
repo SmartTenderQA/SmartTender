@@ -101,7 +101,7 @@ Open button
   [Arguments]  ${id}=None
   Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
   Press Key  ${find tender field}  \\13
-  Location Should Contain  f=${id}
+  Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
   Wait Until Page Contains Element  ${tender found}
   Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
 
