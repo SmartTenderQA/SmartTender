@@ -76,7 +76,7 @@ prepearing for next step
 
 *** Keywords ***
 Precondition
-    Start
+    Open Browser  ${start_page}  ${browser}
     ${name}=  get_user_variable  user1  name
     set global variable  ${name}
 

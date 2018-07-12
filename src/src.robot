@@ -46,10 +46,7 @@ ${dropdown navigation}              css=#MenuList div.dropdown li>a
 
 
 *** Keywords ***
-Start
-  Open Browser  ${start_page}  ${browser}  alies
-
-Open button
+Open Button
   [Documentation]   відкривае лінку з локатора у поточному вікні
   [Arguments]  ${selector}
   ${a}=  Get Element Attribute  ${selector}  href
@@ -129,3 +126,7 @@ conver json to dict
   [Arguments]  ${json}
   ${dict}  Evaluate  json.loads('''${json}''')  json
   [Return]  ${dict}
+
+
+Suite Postcondition
+  Close All Browsers

@@ -63,8 +63,10 @@ ${count multiple lot checked}        0
   ...  sales
   ...  rialto
   Run Keyword If  '${IP}' != ''  Change Start Page
-  Start
+  Open Browser  ${start_page}  ${browser}
   Run Keyword if  '${role}' != 'viewer'  Login  ${role}
+  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
+  Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
 
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
   [Tags]  proposal  procurement
