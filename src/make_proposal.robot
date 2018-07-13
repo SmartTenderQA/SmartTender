@@ -71,7 +71,10 @@ Ignore cancellation error
 
 
 Перевірити кнопку подачі пропозиції
-  ${button}  Set Variable  css=[class='show-control button-lot']
+  [Arguments]  ${selector}=None
+  ${button}  Run Keyword If  '${selector}' == 'None'
+  ...  Set Variable  css=[class='show-control button-lot']
+  ...  ELSE  Set Variable  ${selector}
   Page Should Contain Element ${button}
   Open button ${button}
   Location Should Contain /edit/
