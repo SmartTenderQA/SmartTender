@@ -75,9 +75,9 @@ Ignore cancellation error
   ${button}  Run Keyword If  '${selector}' == 'None'
   ...  Set Variable  css=[class='show-control button-lot']
   ...  ELSE  Set Variable  ${selector}
-  Page Should Contain Element ${button}
-  Open button ${button}
-  Location Should Contain /edit/
+  Page Should Contain Element  ${button}
+  Open button  ${button}
+  Location Should Contain  /edit/
 
 
 Подати пропозицію
