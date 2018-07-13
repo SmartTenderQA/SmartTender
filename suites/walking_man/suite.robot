@@ -55,7 +55,8 @@ ${first lot}                         css=.table-row-value>a.hyperlink
 ${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${count multiple lot checked}        0
-
+${num_of_tenders}                    xpath=(//*[@class="num"])[3]
+${analytics_page}                    https://smarttender.biz/ParticipationAnalytic/?segment=3&organizationId=226
 *** Test Cases ***
 Відкрити головну сторінку SmartTender.biz під роллю ${role}
   [Tags]  site
@@ -103,6 +104,13 @@ ${count multiple lot checked}        0
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'Bened'  Відкрити особистий кабінет webcliend
   ...  ELSE  Відкрити особистий кабінет
+
+Аналітика участі
+  [Tags]  site
+  Відкрити сторінку аналітики
+  Перевірити наявність діаграми та таблиці
+  Перевірити роботу кругової діаграми
+  Перевірити зміну періоду
 
 Договір
   [Tags]  site
@@ -1087,3 +1095,37 @@ Change Start Page
   Page Should Contain Element  css=a[class='button-lot show-control']
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
+
+Відкрити сторінку аналітики
+  Go to  ${analytics_page}
+  Дочекатись закінчення загрузки сторінки
+  ${value}=  Get text  xpath=//*[@class="text-center"]/h3
+  Should Contain  'Публічні закупівлі'  ${value}
+
+Перевірити наявність діаграми та таблиці
+  ${diag}  Set Variable  xpath=(//*[@class="echarts"]//canvas)[1]
+  ${table}  Set Variable  xpath=//*[@class="ivu-table-header"]//tr
+  Element Should Be Visible  ${diag}
+  Element Should Be Visible  ${table}
+
+Перевірити роботу кругової діаграми
+  ${tenders_before}  Get Text  ${num_of_tenders}
+  ${tenders_before}  Evaluate  int(${tenders_before})
+  Element Should Be Visible  xpath=(//*[@class="echarts"]//canvas)[2]
+  Click Element At Coordinates  xpath=(//*[@class="echarts"]//canvas)[2]  80  0
+  Wait Until Keyword Succeeds  1m  5s  Element Should Be Visible  xpath=//*[contains(@class, 'tag-checked')]
+  ${tenders_after}  Get Text  ${num_of_tenders}
+  ${tenders_after}  Evaluate  int(${tenders_after})
+  Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
+
+Перевірити зміну періоду
+  ${tenders_before}  Get Text  ${num_of_tenders}
+  ${tenders_before}  Evaluate  int(${tenders_before})
+  Click Element  xpath=//*[contains(@class, 'calendar')]
+  Click Element  xpath=//div[contains(text(), 'Поточний рік')]
+  Дочекатись закінчення загрузки сторінки
+  ${tenders_after}  Get Text  ${num_of_tenders}
+  ${tenders_after}  Evaluate  int(${tenders_after})
+  Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
+
+
