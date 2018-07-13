@@ -74,7 +74,7 @@ ${count multiple lot checked}        0
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}  Допорогові закупівлі
-  Click Element  xpath=//button/span[contains(text(), 'Взяти участь')]
+  Click Element  xpath=//button/span[contains(text(), 'Взяти участь')]|//button/span[contains(text(), 'Подати пропозицію')]
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
   Подати пропозицію
