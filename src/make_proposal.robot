@@ -70,6 +70,13 @@ Ignore cancellation error
   Run Keyword If  '${status}' == '${True}'  Скасувати пропозицію
 
 
+Перевірити кнопку подачі пропозиції
+  ${button}  Set Variable  css=[class='show-control button-lot']
+  Page Should Contain Element ${button}
+  Open button ${button}
+  Location Should Contain /edit/
+
+
 Подати пропозицію
   ${message}  Натиснути надіслати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню  ${message}
