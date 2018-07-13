@@ -27,8 +27,7 @@ ${torgy count tab}                   li:nth-child
 ${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
 ${item dogovory}                     css=.plans-table td>a
-${auction active items}              css=#hotTrades>div>div
-${auction active items1}             css=tbody>tr.head
+${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='hotTrades']/div/div
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
 ${RegisterAnchor}                    css=#RegisterAnchor
@@ -915,7 +914,7 @@ Suite Postcondition
   Should Be Equal  ${is}  ${should}
 
 Порахувати кількість торгів RIALTO
-  ${count}  Get Element Count  ${auction active items1}
+  ${count}  Get Element Count  ${auction active items}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
 Відкрити вікно договору
