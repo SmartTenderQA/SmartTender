@@ -3,8 +3,14 @@ Library  Selenium2Library
 Library  BuiltIn
 Library  Collections
 Library  DebugLibrary
+Library  OperatingSystem
 Library  service.py
 Library  Faker/faker.py
+Resource  make_proposal.robot
+Resource  participation_request.robot
+Resource  login.robot
+Resource  loading.robot
+Resource  create_tender.robot
 
 
 *** Variables ***
@@ -18,27 +24,8 @@ ${IP}
 
                                     ###ЛОКАТОРИ###
 ${block}                            xpath=.//*[@class='ivu-card ivu-card-bordered']
-${send offer button}                css=button#submitBidPlease
-${login button}                     xpath=//*[@id="loginForm"]/button[2]
 ${logout}                           id=LogoutBtn
-${login link}                       id=SignIn
-${events}                           xpath=//*[@id="LoginDiv"]//a[2]
-${login field}                      id=login
-${password field}                   id=password
 ${error}                            id=loginErrorMsg
-
-${succeed}                          Пропозицію прийнято
-${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
-${empty error}                      ValueError: Element locator
-${error1}                           Не вдалося подати пропозицію
-${error2}                           Виникла помилка при збереженні пропозиції.
-${error3}                           Непередбачувана ситуація
-${error4}                           В даний момент вже йде подача/зміна пропозиції по тендеру від Вашої організації!
-${cancellation succeed}             Пропозиція анульована.
-${cancellation error1}              Не вдалося анулювати пропозицію.
-${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
-${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
-${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
 
 
 ${link to make proposal button}     css=[class='show-control button-lot']
@@ -48,69 +35,19 @@ ${make proposal button new}         xpath=//*[@id="tenderDetail"]//a[@class="sho
 ${komertsiyni-torgy icon}           xpath=//*[@id="main"]//a[2]/img
 ${derzavni zakupku}                 xpath=//*[@id="MainMenuTenders"]//ul[1]/li[2]/a
 ${first element find tender}        xpath=//*[@id="tenders"]//tr[1]/td[2]/a
-
 ${bread crumbs}                     xpath=(//*[@class='ivu-breadcrumb-item-link'])
-
-${loading}                          css=div.smt-load
-${webClient loading}                id=LoadingPanel
-
 ${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
 ${dropdown menu for bid forms}      xpath=//label[contains(text(),'Форми ')]/../../ul
 ${bids search}                      xpath=//div[contains(text(), 'Пошук')]/..
+${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
+${tender found}                     xpath=//*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
+${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
+${dropdown navigation}              css=#MenuList div.dropdown li>a
+
+
 *** Keywords ***
 Start
   Open Browser  ${start_page}  ${browser}  alies
-
-Login
-  [Arguments]  ${user}
-  Відкрити вікно авторизації
-  Авторизуватися  ${user}
-  Перевірити успішність авторизації  ${user}
-
-Відкрити вікно авторизації
-  Click Element  ${events}
-  Click Element  ${login link}
-  Sleep  2
-
-Авторизуватися
-  [Arguments]  ${user}
-  ${login}=  get_user_variable  ${user}  login
-  ${password}=  get_user_variable  ${user}  password
-  Fill Login  ${login}
-  Fill Password  ${password}
-  Click Element  ${login button}
-  Run Keyword If  '${role}' == 'Bened'
-  ...       Wait Until Element Is Not Visible  ${webClient loading}  120
-  ...  ELSE  Run Keywords
-  ...       Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  ...  AND  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
-
-Перевірити успішність авторизації
-  [Arguments]  ${user}
-  Run Keyword If  '${role}' == 'Bened' or '${user}' == 'fgv_prod_owner'  Перевірити успішність авторизації організатора
-  ...  ELSE  Перевірити успішність авторизації учасника  ${user}
-
-Перевірити успішність авторизації організатора
-  Wait Until Page Does Not Contain Element  ${login button}
-  Location Should Contain  /webclient/
-  Wait Until Page Contains Element  css=.body-container #container  120
-  Go To  ${start_page}
-
-Перевірити успішність авторизації учасника
-  [Arguments]  ${user}
-  Wait Until Page Does Not Contain Element  ${login button}
-  ${name}=  get_user_variable  ${user}  name
-  Set Global Variable  ${name}
-  Wait Until Page Contains  ${name}  10
-  Go To  ${start_page}
-
-Fill login
-  [Arguments]  ${user}
-  Input Password  ${login field}  ${user}
-
-Fill password
-  [Arguments]  ${pass}
-  Input Password  ${password field}  ${pass}
 
 Open button
   [Documentation]   відкривае лінку з локатора у поточному вікні
@@ -118,95 +55,35 @@ Open button
   ${a}=  Get Element Attribute  ${selector}  href
   Go To  ${a}
 
-Заповнити поле з ціною
-  [Documentation]  takes lot number and coefficient
-  ...  fill bid field with max available price
-  [Arguments]  ${lot number}  ${coefficient}
-  ${block number}  Set Variable  ${lot number}+1
-  ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
-  ${a}=  get_number  ${a}
-  ${amount}=  Evaluate  int(${a}*${coefficient})
-  ${field number}=  Evaluate  ${lot number}-1
-  Input Text  xpath=//*[@id="lotAmount${field number}"]/input[1]  ${amount}
 
-Скасувати пропозицію
-  ${message}  Скасувати пропозицію та вичитати відповідь
-  Виконати дії відповідно повідомленню при скасуванні  ${message}
-  Wait Until Page Does Not Contain Element   ${cancellation offers button}
+Знайти тендер по auctionID
+  [Arguments]  ${tenderID}
+  Виконати пошук тендера  ${tenderID}
+  ${tender_href}=  Get Element Attribute  ${tender found}  href
+  Go To  ${tender_href}
+  Run Keyword If  '${tender_href}' == ''  Run Keywords
+  ...  Log  ${tender_href}  WARN
+  ...  AND  Set Global Variable  ${tender_href}
 
-Скасувати пропозицію та вичитати відповідь
-  Wait Until Page Contains Element  ${cancellation offers button}
-  Click Element  ${cancellation offers button}
-  Click Element   ${cancel. offers confirm button}
-  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-  [Return]  ${message}
-
-Виконати дії відповідно повідомленню при скасуванні
-  [Arguments]  ${message}
-  Run Keyword If  """${message}""" == "${EMPTY}"  Fail  Message is empty
-  ...  ELSE IF  "${cancellation error1}" in """${message}"""  Ignore cancellation error
-  ...  ELSE IF  "${cancellation succeed}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE  Fail  Look to message above
-
-Ignore cancellation error
-  Click Element  ${ok button}
-  Wait Until Page Does Not Contain Element  ${ok button}
-  Sleep  20
-  Скасувати пропозицію
-
-Скасувати пропозицію за необхідністю
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${cancellation offers button}
-  Run Keyword If  '${status}' == '${True}'  Скасувати пропозицію
-
-Подати пропозицію
-  ${message}  Натиснути надіслати пропозицію та вичитати відповідь
-  Виконати дії відповідно повідомленню  ${message}
-  Wait Until Page Does Not Contain Element  ${ok button}
-
-Натиснути надіслати пропозицію та вичитати відповідь
-  Click Element  ${send offer button}
-  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
-  ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
-  [Return]  ${message}
-
-Виконати дії відповідно повідомленню
-  [Arguments]  ${message}
-  Run Keyword If  "${empty error}" in """${message}"""  Подати пропозицію
-  ...  ELSE IF  "${error1}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error2}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error3}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${error4}" in """${message}"""  Ignore error
-  ...  ELSE IF  "${succeed}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE IF  "${succeed2}" in """${message}"""  Click Element  ${ok button}
-  ...  ELSE  Fail  Look to message above
-
-Ignore error
-  Click Element  ${ok button}
-  Wait Until Page Does Not Contain Element  ${ok button}
-  Sleep  30
-  Подати пропозицію
 
 Відкрити сторінку тестових торгів
+  Go To  ${start_page}
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
+  Location Should Contain  /test-tenders/
 
-Дочекатись закінчення загрузки сторінки
-  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
 
 Зайти на сторінку комерційніх торгів
   Click Element  ${komertsiyni-torgy icon}
   Location Should Contain  /komertsiyni-torgy/
+
 
 Відфільтрувати по формі торгів
   [Arguments]  ${type}=${TESTNAME}
   Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
+
 
 Розгорнути розширений пошук та випадаючий список видів торгів
   [Arguments]  ${check from list}=${TESTNAME}
@@ -219,8 +96,20 @@ Ignore error
   ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
   ...  AND  Wait Until Page Contains Element  xpath=//li[text()='${check from list}']
 
+
 Виконати пошук тендера
-  Click Element At Coordinates  ${bids search}  -10  0
+  [Arguments]  ${id}=None
+  Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
+  Press Key  ${find tender field}  \\13
+  Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
+  Wait Until Page Contains Element  ${tender found}
+  Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
+
+
+Перевірити унікальність результату пошуку
+  ${count}  Get Element Count  ${tender found}
+  Should Be Equal  '${count}'  '1'
+
 
 Перейти по результату пошуку
   [Arguments]  ${selector}
@@ -229,8 +118,14 @@ Ignore error
   ...  ELSE  Set Variable  ${href}
   Go To  ${href}
 
-Перевірити кнопку подачі пропозиції
-  [Arguments]  ${button}=${link to make proposal button}
-  Page Should Contain Element  ${button}
-  Open Button  ${button}
-  Location Should Contain  /edit/
+
+conver dict to json
+  [Arguments]  ${dict}
+  ${json}  evaluate  json.dumps(${dict})  json
+  [Return]  ${json}
+
+
+conver json to dict
+  [Arguments]  ${json}
+  ${dict}  Evaluate  json.loads('''${json}''')  json
+  [Return]  ${dict}
