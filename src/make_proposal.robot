@@ -72,7 +72,7 @@ Ignore cancellation error
 
 Перевірити кнопку подачі пропозиції
   [Arguments]  ${selector}=None
-  ${button}  Run Keyword If  '${selector}' == 'None'
+  ${button}  Run Keyword If  "${selector}" == "None"
   ...  Set Variable  css=[class='show-control button-lot']
   ...  ELSE  Set Variable  ${selector}
   Page Should Contain Element  ${button}
