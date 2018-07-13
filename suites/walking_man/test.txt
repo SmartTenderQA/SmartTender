@@ -3,4 +3,5 @@
 -v role:viewer
 -n non-critical
 
+-e analytic
 -e skip_for_test
