@@ -34,5 +34,6 @@ def convert_monitoring_status(value):
         u'Проект': 'draft',
         u'Відмінено': 'cancelled',
         u'Здійснення моніторингу': 'active',
+        u'Знайдено порушення': True
     }
     return map[value]

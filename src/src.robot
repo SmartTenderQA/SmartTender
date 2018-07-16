@@ -132,9 +132,11 @@ Suite Postcondition
   Close All Browsers
 
 
-Add Freedom Restriction EvaluatieData
-    #Execute Javascript    window.scrollTo(0,200);
-    Scroll Element Into View    ${EvaluatieTab}
-    Wait Until Element is visible    ${EvaluatieTab}     timeout=5s
-    Set Focus To Element    ${EvaluatieTab}
-    Click Element    ${EvaluatieTab}
+Створити та додати файл
+  [Arguments]  ${selector}
+  ${file}  create_fake_doc
+  ${path}  Set Variable  ${file[0]}
+  ${name}  Set Variable  ${file[1]}
+  ${content}  Set Variable  ${file[2]}
+  Choose File  ${selector}  ${path}
+  [Return]  ${path}  ${name}  ${content}

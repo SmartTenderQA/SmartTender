@@ -90,13 +90,63 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   Опублікувати висновок з інформацією про порушення
   Перевести моніторинг в статус  addressed
 
+Перевірити результат висновку
+  [Tags]  compare_data_after_conclusion
+  Звірити результат висновку
+
 
 Перевірити дату висновку
   [Tags]  compare_data_after_conclusion
-  debug
+  Звірити дату висновку
 
 
 Перевірити опис висновку
+  [Tags]  compare_data_after_conclusion
+  Звірити опис висновку
+
+
+Перевірити інформацію про результати висновку
+  [Tags]  compare_data_after_conclusion
+  Звірити інформацію про результати висновку
+
+
+Перевірити обов'язки висновку
+  [Tags]  compare_data_after_conclusion
+  Звірити обов'язки висновку
+
+
+Створити запит за роз'ясненнями щодо висновку
+  [Tags]  request_for_clarification
+  Відкрити бланк запиту за роз'ясненнями
+  ${title}  Заповнити поле Предмет
+  ${description}  Заповнити поле Опис
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+  Відправити пояснення
+  Перевірити відправлені дані запиту за роз'ясненнями щодо висновку  ${title}  ${description}  ${name}
+
+
+Перевірити відображення запиту за роз'ясненням
+  [Tags]  request_for_clarification
+  No Operation
+
+
+Опублікувати інформацію про усунення порушення
+  [Tags]  violation_elimination_report
+  Відкрити бланк звіту про усунення порушення
+  ${description}  Заповнити поле Опис звіту про усунення порушення
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='eliminationReport-files']//input
+  Відправити звіт про усунення порушення
+  Перевірити відправлені дані звіту про усунення порушення  ${description}  ${name}
+
+
+Перевірити відображення інформації про усунення порушення
+  [Tags]  violation_elimination_report
+  No Operation
+
+
+Опублікувати позов
+  [Tags]  appeal
+  Вікрити бланк позову
 
 
 *** Keywords ***
@@ -227,19 +277,19 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 Звірити дату рішення
   ${cdb_time}  Отримати дані моніторингу по API  decision.date
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]
-  ${site_time}  convert_data_from_the_page  ${text}  decision.date
+  ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
   Should Be Equal  ${status}  ${True}
 
 
 Опублікувати висновок з інформацією про порушення
-  ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
+  #${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${violationOccurred}  Set Variable  ${True}
   ${description}  create_sentence  20
   ${stringsAttached}  create_sentence  10
   ${auditFinding}  create_sentence  10
   ${data_conclusion}  conclusion
-  ...  ${relatedParty}
+  ...  relatedParty
   ...  ${violationOccurred}
   ...  ${description}
   ...  ${stringsAttached}
@@ -248,5 +298,94 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   Log  ${data_conclusion}
 
 
+Звірити результат висновку
+  ${cdb}  Отримати дані моніторингу по API  conclusion.violationOccurred
+  ${text}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]/following-sibling::*/*[@class='break-word']/div[1]/div
+  ${site}  convert_data_from_the_page  ${text}  status
+  Should Be Equal  ${status}  ${True}
+
+
+Звірити дату висновку
+  ${cdb_time}  Отримати дані моніторингу по API  conclusion.dateCreated
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]
+  ${site_time}  convert_data_from_the_page  ${site}  decision.date
+  ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
+  Should Be Equal  ${status}  ${True}
+
+
+Звірити опис висновку
+  ${cdb}  Отримати дані моніторингу по API  conclusion.description
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Опис')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
+
+
+Звірити інформацію про результати висновку
+  ${cdb}  Отримати дані моніторингу по API  conclusion.stringsAttached
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Информация о результатах')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
+
+
+Звірити обов'язки висновку
+  ${cdb}  Отримати дані моніторингу по API  conclusion.auditFinding
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Обязательство по устранению')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
+
+
 Дочекатись синхронізації
   syncronization  dasu
+
+
+Відкрити бланк запиту за роз'ясненнями
+  Click Element  ${monitoring_selector}//*[@data-qa='dialogueConclusion-submit']
+
+
+Заповнити поле Предмет
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-title']//input
+  ${text}  create_sentence  5
+  Input Text  ${selector}  ${text}
+  [Return]  ${text}
+
+
+Заповнити поле Опис
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-description']//textarea
+  ${text}  create_sentence  20
+  Input Text  ${selector}  ${text}
+  [Return]  ${text}
+
+
+Відправити пояснення
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-submit-accept']
+  Click Element  ${selector}
+  Дочекатись закінчення загрузки сторінки
+  Wait Until Page Does Not Contain Element  ${selector}
+
+
+Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
+  [Arguments]  ${title}  ${description}  ${name}
+  No Operation
+
+
+Відкрити бланк звіту про усунення порушення
+  Click Element  ${monitoring_selector}//*[@data-qa='eliminationReport-submit']
+
+
+Заповнити поле Опис звіту про усунення порушення
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='eliminationReport-description']//textarea
+  ${text}  create_sentence  30
+  Input Text  ${selector}  ${text}
+  [Return]  ${text}
+
+
+Відправити звіт про усунення порушення
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='eliminationReport-submit-accept']
+  Click Element  ${selector}
+  Дочекатись закінчення загрузки сторінки
+  Wait Until Page Does Not Contain Element  ${selector}
+
+
+Перевірити відправлені дані звіту про усунення порушення
+  [Arguments]  ${description}  ${file_name}
+  ${cdb_description}  Отримати дані моніторингу по API  eliminationReport.description
+  #${cdb_file_name}  Отримати дані моніторингу по API  eliminationReport.file_name
+  Should Be Equal  ${cdb_description}  ${description}
+  #Should Be Equal  ${cdb_description}  ${file_name}
