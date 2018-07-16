@@ -1,0 +1,8 @@
+-d test_output
+
+#-i create_monitoring
+-i compare_data_after_create_monitoring
+#-i activation
+#-i compare_data_after_activation
+#-i conclusion
+-i compare_data_after_conclusion

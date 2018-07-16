@@ -96,17 +96,13 @@ def get_monitoring_data(id, field=None):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
     r = requests.get(url)
 
-    if field == "parties.0.contactPoint.name":
-        return r.json()['data']['parties'][0]['contactPoint']['name']
-
-    elif field == "parties.0.id":
-        return r.json()['data']['parties'][0]['id']
-
-    elif field == "cancellation.description":
-        return r.json()['data']['cancellation']['description']
-
-    elif field is not None:
-        return r.json()['data'][field]
+    if field is not None:
+        my_key = r.json()['data']
+        for i in field.split('.'):
+            if i == '0':
+                i = int(i)
+            my_key = my_key[i]
+        return my_key
 
     else:
         return r.json()['data']
@@ -156,6 +152,38 @@ def change_monitoring_status(status, id):
     }
 
     data['data']['status'] = status
+
+    r = requests.patch(url, headers=headers, json=data)
+    return r.json()
+
+
+def conclusion(relatedParty, violationOccurred, description, stringsAttached, auditFinding, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+        "data": {
+            "conclusion": {
+                "violationType": [
+                    "documentsForm",
+                    "corruptionAwarded"
+                ],
+                "description": "",
+                "stringsAttached": "",
+                "auditFinding": "",
+                "violationOccurred": ''
+            }
+        }
+    }
+
+    data['data']['conclusion']['violationOccurred'] = violationOccurred
+    data['data']['conclusion']['description'] = description
+    data['data']['conclusion']['stringsAttached'] = stringsAttached
+    data['data']['conclusion']['auditFinding'] = auditFinding
 
     r = requests.patch(url, headers=headers, json=data)
     return r.json()

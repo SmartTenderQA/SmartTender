@@ -130,3 +130,11 @@ conver json to dict
 
 Suite Postcondition
   Close All Browsers
+
+
+Add Freedom Restriction EvaluatieData
+    #Execute Javascript    window.scrollTo(0,200);
+    Scroll Element Into View    ${EvaluatieTab}
+    Wait Until Element is visible    ${EvaluatieTab}     timeout=5s
+    Set Focus To Element    ${EvaluatieTab}
+    Click Element    ${EvaluatieTab}

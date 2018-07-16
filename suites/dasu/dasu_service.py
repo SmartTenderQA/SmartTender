@@ -1,4 +1,6 @@
 # coding=utf-8
+import re
+
 from dateutil.parser import parse
 from dateutil.parser import parserinfo
 
@@ -10,6 +12,9 @@ def convert_data_from_the_page(value, field):
             return splitter[1]
         elif field == 'monitoring_id':
             return splitter[0]
+    elif field == 'decision.date':
+        response = re.search(u'\D+ (?P<date>[\d .,:]+)', value)
+        return response.group('date')
     elif field == 'status':
         return convert_monitoring_status(value)
     else:
@@ -20,7 +25,7 @@ def compare_dates_smarttender(cdb, smarttender):
     ltr = parse(cdb, parserinfo(True, False))
     left = (ltr.strftime('%Y-%m-%dT%H:%M'))
     dtr = parse(smarttender, parserinfo(True, False))
-    right = (dtr.strftime('%Y-%d-%mT%H:%M'))
+    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
     return left == right
 
 
@@ -28,5 +33,6 @@ def convert_monitoring_status(value):
     map = {
         u'Проект': 'draft',
         u'Відмінено': 'cancelled',
+        u'Здійснення моніторингу': 'active',
     }
     return map[value]

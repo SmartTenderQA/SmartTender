@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-07-04-000042-a
 ${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
+${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 
 *** Test Cases ***
@@ -21,15 +21,13 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
 
 
 Знайти тендер по ідентифікатору
-  [Tags]  create_monitoring
-  ...  comrape_data
+  [Tags]  compare_data_after_create_monitoring
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
 
 Відкрити сторінку моніторингу
-  [Tags]  create_monitoring
-  ...  comrape_data
+  [Tags]  compare_data_after_create_monitoring
   Перейти за посиланням по dasu
   Відкрити вкладку моніторингу
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
@@ -37,20 +35,17 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
 
 
 Перевірити статус моніторингу
-  [Tags]  create_monitoring
-  ...  comrape_data
+  [Tags]  compare_data_after_create_monitoring
   Звірити статус моніторингу
 
 
 Перевірити дату створення
-  [Tags]  create_monitoring
-  ...  comrape_data
+  [Tags]  compare_data_after_create_monitoring
   Звірити дату створення
 
 
 Перевірити адитора
-  [Tags]  create_monitoring
-  ...  comrape_data
+  [Tags]  compare_data_after_create_monitoring
   Звірити адитора
 
 
@@ -59,9 +54,13 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
   Скасувати моніторинг по тендеру
 
 
-Перевірити успішність скасований моніторинг
-  [Tags]  cancellation
+Перевірити статус скасованого моніторингу
+  [Tags]  compare_data_after_ancellation
   Звірити статус моніторингу
+
+
+Перевірити опис скасованого моніторингу
+  [Tags]  compare_data_after_ancellation
   Звірити опис сказування
 
 
@@ -72,16 +71,38 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
 
 
 Перевірити статус моніторингу після активації
+  [Tags]  compare_data_after_activation
   Звірити статус моніторингу
 
 
 Перевірити опис рішення початку моніторингу
+  [Tags]  compare_data_after_activation
   Звірити опис рішення
+
+
+Перевірити дату рішення початку моніторингу
+  [Tags]  compare_data_after_activation
+  Звірити дату рішення
+
+
+Оприлюднення висновку з інформаціэю про порушення
+  [Tags]  conclusion
+  Опублікувати висновок з інформацією про порушення
+  Перевести моніторинг в статус  addressed
+
+
+Перевірити дату висновку
+  [Tags]  compare_data_after_conclusion
+  debug
+
+
+Перевірити опис висновку
 
 
 *** Keywords ***
 Підготувати організатора
   ${data}  create dictionary  id  ${id_for_skip_creating}
+  Set Global Variable  ${data}
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
   Login  dasu
 
@@ -159,6 +180,7 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
   ${monitoring_selector}  Set Variable  xpath=//*[contains(text(), '${monitoring_id}')]/ancestor::div[@class='ivu-card-body']
   Set Global Variable  ${monitoring_selector}
   Page Should Contain Element  ${monitoring_selector}
+  Execute Javascript    window.scrollTo(0,1200)
 
 
 Звірити номер моніторингу
@@ -193,13 +215,37 @@ ${id_for_skip_creating}         6abca32a6b4d4f72b5fb2697eb116748
 Звірити опис сказування
   ${cdb}  Отримати дані моніторингу по API  cancellation.description
   ${site}  Get Text  ${monitoring_selector}//div[contains(text(), 'Відмінено')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
 
 
 Звірити опис рішення
-  ${cdb}  Отримати дані моніторингу по API  cancellation.description
+  ${cdb}  Отримати дані моніторингу по API  decision.description
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
 
 
+Звірити дату рішення
+  ${cdb_time}  Отримати дані моніторингу по API  decision.date
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]
+  ${site_time}  convert_data_from_the_page  ${text}  decision.date
+  ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
+  Should Be Equal  ${status}  ${True}
 
+
+Опублікувати висновок з інформацією про порушення
+  ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
+  ${violationOccurred}  Set Variable  ${True}
+  ${description}  create_sentence  20
+  ${stringsAttached}  create_sentence  10
+  ${auditFinding}  create_sentence  10
+  ${data_conclusion}  conclusion
+  ...  ${relatedParty}
+  ...  ${violationOccurred}
+  ...  ${description}
+  ...  ${stringsAttached}
+  ...  ${auditFinding}
+  ...  ${data['id']}
+  Log  ${data_conclusion}
 
 
 Дочекатись синхронізації
