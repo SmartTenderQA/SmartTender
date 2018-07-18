@@ -25,7 +25,7 @@ ${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubm
 
 
 Подати пропозицію
-  Натиснути кнопку подачі пропозиції  ${make proposal link}
+  Wait Until Keyword Succeeds  60  3  Натиснути кнопку подачі пропозиції  ${make proposal link}
   ${location}  Get Location
   Set To Dictionary  ${data}  tender_url=${location}
   Заповтини поле з ціною
@@ -149,6 +149,6 @@ Postcondition
 
 Натиснути кнопку подачі пропозиції
   [Arguments]  ${selector}
-  Page Should Contain Element  ${selector}
-  Click Element  ${selector}
-  Wait Until Keyword Succeeds  10  3s  Location Should Contain  /edit/
+  Run Keyword And Ignore Error  Page Should Contain Element  ${selector}
+  Run Keyword And Ignore Error  Click Element  ${selector}
+  Location Should Contain  /edit/
