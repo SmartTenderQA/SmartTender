@@ -7,6 +7,7 @@
 -i conclusion
 -i compare_data_after_conclusion
 -i request_for_clarification
+-i compare_data_after_request_for_clarification
 -i violation_elimination_report
 -i appeal
 -i completed

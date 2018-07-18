@@ -11,13 +11,14 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-07-04-000042-a
 ${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
+${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 
 *** Test Cases ***
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
+  Дочекатись синхронізації  dasu
 
 
 Знайти тендер по ідентифікатору
@@ -126,13 +127,13 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 
 Перевірити відображення запиту за роз'ясненням
-  [Tags]  request_for_clarification
+  [Tags]  compare_data_after_request_for_clarification
   Log To Console  Перевірити відображення запиту за роз'ясненням
   debug
 
 
 Накласти ЕЦП на запит за роз'ясненням
-  [Tags]  request_for_clarification
+  [Tags]  compare_data_after_request_for_clarification
   ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]/../following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
   Перевірити можливість підписання ЕЦП для позову  ${selector}
   Відкрити вкладку моніторингу
@@ -253,7 +254,6 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   Log  ${response}
   ${data}  Create Dictionary  id  ${response['data']['id']}
   Set Global Variable  ${data}
-  Дочекатись синхронізації
 
 
 Скасувати моніторинг по тендеру
@@ -264,7 +264,8 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cancellation}
-  Дочекатись синхронізації
+  Дочекатись синхронізації  dasu
+  Відкрити вкладку моніторингу
 
 
 Сформувати рішення по моніторингу
@@ -275,8 +276,6 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ...  ${description}
   ...  ${data['id']}
   Log  ${data_decision}
-  ${dic_description}  Create Dictionary  description  ${description}
-  Set To Dictionary  ${data}  decision  ${dic_description}
 
 
 Перевести моніторинг в статус
@@ -285,7 +284,8 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ...  ${status}
   ...  ${data['id']}
   Log  ${date_status}
-  Дочекатись синхронізації
+  Дочекатись синхронізації  dasu
+  Відкрити вкладку моніторингу
 
 
 Сформувати рішення щодо усунення порушення
@@ -305,6 +305,7 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   Set Global Variable  ${monitoring_id}
   ${monitoring_selector}  Set Variable  xpath=//*[contains(text(), '${monitoring_id}')]/ancestor::div[@class='ivu-card-body']
   Set Global Variable  ${monitoring_selector}
+  Дочекатись закінчення загрузки сторінки
   Page Should Contain Element  ${monitoring_selector}
   Execute Javascript    window.scrollTo(0,1200)
 
@@ -351,7 +352,7 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 
 Звірити дату рішення
-  ${cdb_time}  Отримати дані моніторингу по API  decision.date
+  ${cdb_time}  Отримати дані моніторингу по API  decision.datePublished
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]
   ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -376,7 +377,7 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ${cdb}  Отримати дані моніторингу по API  conclusion.violationOccurred
   ${text}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]/following-sibling::*/*[@class='break-word']/div[1]/div
   ${site}  convert_data_from_the_page  ${text}  status
-  Should Be Equal  ${status}  ${True}
+  Should Be Equal  ${site}  ${cdb}
 
 
 Звірити дату висновку
@@ -395,18 +396,14 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 Звірити інформацію про результати висновку
   ${cdb}  Отримати дані моніторингу по API  conclusion.stringsAttached
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Информация о результатах')]/following-sibling::*
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Інформація про результати моніторингу')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити обов'язки висновку
   ${cdb}  Отримати дані моніторингу по API  conclusion.auditFinding
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Обязательство по устранению')]/following-sibling::*
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Зобов'язання щодо усунення порушень')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
-
-
-Дочекатись синхронізації
-  syncronization  dasu
 
 
 Відкрити бланк запиту за роз'ясненнями

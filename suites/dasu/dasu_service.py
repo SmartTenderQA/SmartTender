@@ -21,12 +21,19 @@ def convert_data_from_the_page(value, field):
         return value, field
 
 
-def compare_dates_smarttender(cdb, smarttender):
+def compare_dates_smarttender(cdb, smarttender, operator='=='):
     ltr = parse(cdb, parserinfo(True, False))
-    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
     dtr = parse(smarttender, parserinfo(True, False))
+    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
     right = (dtr.strftime('%Y-%m-%dT%H:%M'))
-    return left == right
+    if operator == '==':
+        return left == right
+    elif operator == '>':
+        return left > right
+    elif operator == '<':
+        return left < right
+    elif operator == '!=':
+        return left != right
 
 
 def convert_monitoring_status(value):

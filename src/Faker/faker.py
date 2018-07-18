@@ -44,3 +44,8 @@ def create_fake_doc(n=10):
     f.write(content.encode('utf8'))
     f.close()
     return path, name, content
+
+
+def random_number(a, b):
+    a, b = int(a), int(b)
+    return str(randint(a, b))

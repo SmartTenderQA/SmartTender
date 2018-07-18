@@ -12,6 +12,7 @@ Resource    login.robot
 Resource    loading.robot
 Resource    create_tender.robot
 Resource    EDS.robot
+Resource    synchronization.robot
 
 
 *** Variables ***
