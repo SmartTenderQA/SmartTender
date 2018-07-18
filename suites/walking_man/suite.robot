@@ -558,7 +558,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити підзаголовок сторінки реєстрації
 
 Інструкції
-  [Tags]  site
+  [Tags]  site  non-critical
   Перейти на сторонку інструкції
   Перевірити заголовок сторінки інструкцій
   Порахувати кількість інструкцій
