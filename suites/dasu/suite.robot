@@ -127,7 +127,16 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 Перевірити відображення запиту за роз'ясненням
   [Tags]  request_for_clarification
-  No Operation
+  Log To Console  Перевірити відображення запиту за роз'ясненням
+  debug
+
+
+Накласти ЕЦП на запит за роз'ясненням
+  [Tags]  request_for_clarification
+  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]/../following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
+  Перевірити можливість підписання ЕЦП для позову  ${selector}
+  Відкрити вкладку моніторингу
+  Перевірити успішність підписання ЕЦП  ${selector}
 
 
 Опублікувати інформацію про усунення порушення
@@ -135,23 +144,76 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   Відкрити бланк звіту про усунення порушення
   ${description}  Заповнити поле Опис звіту про усунення порушення
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='eliminationReport-files']//input
+  ${title}  Create Dictionary  title  ${name}
+  Set To Dictionary  ${data['eliminationReport']}  documents  ${title}
   Відправити звіт про усунення порушення
   Перевірити відправлені дані звіту про усунення порушення  ${description}  ${name}
 
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
-  No Operation
+  Log To Console  Перевірити відображення інформації про усунення порушення
+  Перевірити дату інформації про усунення порушення
+  Перевірити description інформації про усунення порушення
+  Перевірити documents.title інформації про усунення порушення
+  Перевірити documents.datePublished інформації про усунення порушення
+
+
+Накласти ЕЦП на звіт про усунення порушень
+  [Tags]  violation_elimination_report
+  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Звіт про усунення порушень')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
+  Перевірити можливість підписання ЕЦП для позову  ${selector}
+  Відкрити вкладку моніторингу
+  Перевірити успішність підписання ЕЦП  ${selector}
 
 
 Опублікувати позов
   [Tags]  appeal
   Вікрити бланк позову
+  ${description}  Заповнити поле Опис позову
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='appeal-files']//input
+  ${title}  Create Dictionary  title  ${name}
+  Set To Dictionary  ${data['appeal']}  documents  ${title}
+  Відправити позов
+  Перевірити відправлені дані позову  ${description}  ${name}
 
 
+Перевірити відображення інформації про позов
+  [Tags]  appeal
+  Перевірити дату позову
+  Перевірити description позову
+  Перевірити documents.title позову
+  Перевірити documents.datePublished позову
+
+
+Накласти ЕЦП на позов
+  [Tags]  appeal
+  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Висновок оскаржено в суді')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
+  Перевірити можливість підписання ЕЦП для позову  ${selector}
+  Відкрити вкладку моніторингу
+  Перевірити успішність підписання ЕЦП  ${selector}
+
+
+Підтвердити факт усунення порушення
+  [Tags]  completed
+  Сформувати рішення щодо усунення порушення
+
+
+Перевести моніторинг в статус вирішено
+  [Tags]  completed
+  Перевести моніторинг в статус  completed
+  Звірити статус моніторингу
+  Перевірити опис факту усунення порушення
+
+
+#################################################################################################
+#                                                                                               #
+#                                         Keywords                                              #
+#                                                                                               #
+#################################################################################################
 *** Keywords ***
 Підготувати організатора
-  ${data}  create dictionary  id  ${id_for_skip_creating}
+  ${data}  Create Dictionary  id  ${id_for_skip_creating}
   Set Global Variable  ${data}
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
   Login  dasu
@@ -169,9 +231,9 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 
 Відкрити вкладку моніторингу
-  ${tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and contains(text(), 'Моніторинг ДАСУ')]
-  ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and contains(text(), 'Моніторинг ДАСУ') and not(contains(@class, 'active'))]
-  ${active tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and contains(text(), 'Моніторинг ДАСУ') and contains(@class, 'active')]
+  ${tab}             Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab')]//*[contains(text(), 'Моніторинг ДАСУ')]
+  ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and not(contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
+  ${active tab}      Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and (contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Click Element  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
@@ -189,7 +251,7 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ${name}  create_sentence  1
   ${response}  create_monitoring  ${tender_ID}  ${name}
   Log  ${response}
-  ${data}  create dictionary  id  ${response['data']['id']}
+  ${data}  Create Dictionary  id  ${response['data']['id']}
   Set Global Variable  ${data}
   Дочекатись синхронізації
 
@@ -213,8 +275,10 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ...  ${description}
   ...  ${data['id']}
   Log  ${data_decision}
+  ${dic_description}  Create Dictionary  description  ${description}
+  Set To Dictionary  ${data}  decision  ${dic_description}
 
-############################### stopped here
+
 Перевести моніторинг в статус
   [Arguments]  ${status}
   ${date_status}  change_monitoring_status
@@ -222,6 +286,18 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ...  ${data['id']}
   Log  ${date_status}
   Дочекатись синхронізації
+
+
+Сформувати рішення щодо усунення порушення
+  ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
+  ${description}  create_sentence  20
+  ${data_eliminationResolution}  eliminationResolution
+  ...  ${relatedParty}
+  ...  ${description}
+  ...  ${data['id']}
+  Log  ${eliminationResolution}
+  ${dic_description}  Create Dictionary  description  ${description}
+  Set To Dictionary  ${data}  eliminationResolution  ${dic_description}
 
 
 Знайти потрібний моніторинг за номером
@@ -283,13 +359,11 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 
 Опублікувати висновок з інформацією про порушення
-  #${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${violationOccurred}  Set Variable  ${True}
   ${description}  create_sentence  20
   ${stringsAttached}  create_sentence  10
   ${auditFinding}  create_sentence  10
   ${data_conclusion}  conclusion
-  ...  relatedParty
   ...  ${violationOccurred}
   ...  ${description}
   ...  ${stringsAttached}
@@ -362,7 +436,8 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 
 Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
   [Arguments]  ${title}  ${description}  ${name}
-  No Operation
+  Log To Console  Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
+  debug
 
 
 Відкрити бланк звіту про усунення порушення
@@ -373,6 +448,8 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
   ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='eliminationReport-description']//textarea
   ${text}  create_sentence  30
   Input Text  ${selector}  ${text}
+  ${description}  Create Dictionary  description  ${text}
+  Set To Dictionary  ${data}  eliminationReport  ${description}
   [Return]  ${text}
 
 
@@ -386,6 +463,94 @@ ${id_for_skip_creating}         bb9d8dde76dc4c07a8a7782069311868
 Перевірити відправлені дані звіту про усунення порушення
   [Arguments]  ${description}  ${file_name}
   ${cdb_description}  Отримати дані моніторингу по API  eliminationReport.description
-  #${cdb_file_name}  Отримати дані моніторингу по API  eliminationReport.file_name
+  ${cdb_file_name}  Отримати дані моніторингу по API  eliminationReport.documents.0.title
   Should Be Equal  ${cdb_description}  ${description}
-  #Should Be Equal  ${cdb_description}  ${file_name}
+  Should Be Equal  ${cdb_description}  ${file_name}
+
+
+Вікрити бланк позову
+  Click Element  ${monitoring_selector}//*[@data-qa='appeal-submit']
+
+
+Заповнити поле Опис позову
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='appeal-description']//textarea
+  ${text}  create_sentence  30
+  ${appeal}  Create Dictionary  description  ${text}
+  ${data}  Set To Dictionary  ${data}  appeal  ${appeal}
+  Input Text  ${selector}  ${text}
+  [Return]  ${text}
+
+
+Відправити позов
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='appeal-submit-accept']
+  Click Element  ${selector}
+  Дочекатись закінчення загрузки сторінки
+  Wait Until Page Does Not Contain Element  ${selector}
+
+
+Перевірити відправлені дані позову
+  [Arguments]  ${description}  ${file_name}
+  ${cdb_description}  Отримати дані моніторингу по API  appeal.description
+  ${cdb_file_name}  Отримати дані моніторингу по API  appeal.documents.0.title
+  Should Be Equal  ${cdb_description}  ${description}
+  Should Be Equal  ${cdb_description}  ${file_name}
+
+
+Перевірити дату інформації про усунення порушення
+  ${date_cdb}  Отримати дані моніторингу по API  eliminationReport.dateCreated
+  ${text_site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Звіт про усунення порушень')]
+  ${date_site}  convert_data_from_the_page  ${text_site}  decision.date
+  ${status}  compare_dates_smarttender  ${date_site}  ${date_cdb}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити description інформації про усунення порушення
+  ${description}  Set Variable  ${data['eliminationReport']['description']}
+  ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-eliminationReport-description']
+  Should Be Equal  ${description}  ${description_site}
+
+
+Перевірити documents.title інформації про усунення порушення
+  ${title}  Set Variable  ${data['eliminationReport']['documents']['title']}
+  ${title_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]//a
+  Should Be Equal  ${title}  ${title_site}
+
+
+Перевірити documents.datePublished інформації про усунення порушення
+  ${file_date}  Отримати дані моніторингу по API  eliminationReport.documents.0.datePublished
+  ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]/div/div/div[2]
+  ${status}  compare_dates_smarttender  ${file_date}  ${file_date_site}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити дату позову
+  ${date_cdb}  Отримати дані моніторингу по API  appeal.datePublished
+  ${text_site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок оскаржено в суді')]
+  ${date_site}  convert_data_from_the_page  ${text_site}  decision.date
+  ${status}  compare_dates_smarttender  ${date_site}  ${date_cdb}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити description позову
+  ${description}  Set Variable  ${data['appeal']['description']}
+  ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-appeal-description']
+  Should Be Equal  ${description}  ${description_site}
+
+
+Перевірити documents.title позову
+  ${title}  Set Variable  ${data['appeal']['documents']['title']}
+  ${title_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]//a
+  Should Be Equal  ${title}  ${title_site}
+
+
+Перевірити documents.datePublished позову
+  ${file_date}  Отримати дані моніторингу по API  appeal.documents.0.datePublished
+  ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]/div/div/div[2]
+  ${status}  compare_dates_smarttender  ${file_date}  ${file_date_site}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити опис факту усунення порушення
+  ${description}  Set Variable  ${data['eliminationResolution']['description']}
+  ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-eliminationResolution-description']
+  Should Be Equal  ${description}  ${description_site}

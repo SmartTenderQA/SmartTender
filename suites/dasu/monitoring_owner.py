@@ -157,7 +157,7 @@ def change_monitoring_status(status, id):
     return r.json()
 
 
-def conclusion(relatedParty, violationOccurred, description, stringsAttached, auditFinding, id):
+def conclusion(violationOccurred, description, stringsAttached, auditFinding, id):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
@@ -184,6 +184,34 @@ def conclusion(relatedParty, violationOccurred, description, stringsAttached, au
     data['data']['conclusion']['description'] = description
     data['data']['conclusion']['stringsAttached'] = stringsAttached
     data['data']['conclusion']['auditFinding'] = auditFinding
+
+    r = requests.patch(url, headers=headers, json=data)
+    return r.json()
+
+def eliminationResolution(relatedParty, description, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+      "data": {
+        "eliminationResolution": {
+          "description": "",
+          "relatedParty": "",
+          "resultByType": {
+            "corruptionAwarded": "not_eliminated",
+            "documentsForm": "eliminated"
+          },
+          "result": "partly"
+        }
+      }
+    }
+
+    data['data']['eliminationResolution']['description'] = description
+    data['data']['eliminationResolution']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
     return r.json()

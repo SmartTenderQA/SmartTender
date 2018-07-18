@@ -1,16 +1,17 @@
 *** Settings ***
-Library  Selenium2Library
-Library  BuiltIn
-Library  Collections
-Library  DebugLibrary
-Library  OperatingSystem
-Library  service.py
-Library  Faker/faker.py
-Resource  make_proposal.robot
-Resource  participation_request.robot
-Resource  login.robot
-Resource  loading.robot
-Resource  create_tender.robot
+Library     Selenium2Library
+Library     BuiltIn
+Library     Collections
+Library     DebugLibrary
+Library     OperatingSystem
+Library     service.py
+Library     Faker/faker.py
+Resource    make_proposal.robot
+Resource    participation_request.robot
+Resource    login.robot
+Resource    loading.robot
+Resource    create_tender.robot
+Resource    EDS.robot
 
 
 *** Variables ***
