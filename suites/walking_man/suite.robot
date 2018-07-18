@@ -597,7 +597,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити лінки курсів валют
 
 Перевірка результатів тесту
-  [Tags]  non-critical  procurement
+  [Tags]  non-critical  procurement  check
   Log  ${count multiple lot checked}
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
   [Teardown]  No Operation
