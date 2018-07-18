@@ -42,7 +42,7 @@ ${contract link1}                    css=li:nth-child(1)>a
 ${contract link2}                    css=li:nth-child(2)>a
 ${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
 ${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
-${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage'//h1
+${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
 ${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
@@ -558,7 +558,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити підзаголовок сторінки реєстрації
 
 Інструкції
-  [Tags]  site
+  [Tags]  site  non-critical
   Перейти на сторонку інструкції
   Перевірити заголовок сторінки інструкцій
   Порахувати кількість інструкцій
@@ -597,7 +597,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити лінки курсів валют
 
 Перевірка результатів тесту
-  [Tags]  non-critical  procurement
+  [Tags]  non-critical  procurement  check
   Log  ${count multiple lot checked}
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
   [Teardown]  No Operation
