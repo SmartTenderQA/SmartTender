@@ -31,7 +31,7 @@ ${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='ho
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
 ${RegisterAnchor}                    css=#RegisterAnchor
-${instruktsii link}                  css=#LoginDiv a[href='/instruktsii/']
+${instruktsii link}                  css=#LoginDiv a[href='/instruktсii/']
 ${h1 header text}                    css=#main h1
 ${feedback link}                     css=.footer-feedback a
 ${site map}                          css=a[href='/karta-saytu/']
@@ -755,7 +755,7 @@ Suite Postcondition
 
 Перейти на сторонку інструкції
   Click Element  ${instruktsii link}
-  Location Should Contain  /instruktsii/
+  Location Should Contain  /instruktсii/
 
 Перевірити заголовок сторінки інструкцій
   ${should}  Set variable  Інструкції
@@ -1117,6 +1117,7 @@ Change Start Page
   ${tenders_before}  Evaluate  int(${tenders_before})
   Element Should Be Visible  xpath=(//*[@class="echarts"]//canvas)[2]
   Click Element At Coordinates  xpath=(//*[@class="echarts"]//canvas)[2]  80  0
+  Дочекатись закінчення загрузки сторінки
   Wait Until Keyword Succeeds  1m  5s  Element Should Be Visible  xpath=//*[contains(@class, 'tag-checked')]
   ${tenders_after}  Get Text  ${num_of_tenders}
   ${tenders_after}  Evaluate  int(${tenders_after})
