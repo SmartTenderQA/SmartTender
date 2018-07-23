@@ -3,4 +3,4 @@
 -i create_monitoring
 -i compare_data_after_create_monitoring
 -i cancellation
--i compare_data_after_ancellation
+-i compare_data_after_cancellation

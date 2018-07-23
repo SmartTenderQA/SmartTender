@@ -11,10 +11,13 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-07-04-000042-a
 ${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
+${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 
 *** Test Cases ***
+################################################################
+#                           DRAFT                              #
+################################################################
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
@@ -22,106 +25,84 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 
 Знайти тендер по ідентифікатору
-  [Tags]  compare_data_after_create_monitoring
+  [Tags]  find_tender
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
 
 Відкрити сторінку моніторингу
-  [Tags]  compare_data_after_create_monitoring
+  [Tags]  open_monitoring
   Перейти за посиланням по dasu
   Відкрити вкладку моніторингу
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
   Знайти потрібний моніторинг за номером  ${monitoring_id}
 
 
-Перевірити статус моніторингу
+Перевірити відображення інформації нового моніторингу
   [Tags]  compare_data_after_create_monitoring
   Звірити статус моніторингу
-
-
-Перевірити дату створення
-  [Tags]  compare_data_after_create_monitoring
   Звірити дату створення
-
-
-Перевірити адитора
-  [Tags]  compare_data_after_create_monitoring
   Звірити адитора
 
 
+################################################################
+#                          CANCELLED                           #
+################################################################
 Скасувати моніторинг
   [Tags]  cancellation
   Скасувати моніторинг по тендеру
 
 
-Перевірити статус скасованого моніторингу
-  [Tags]  compare_data_after_ancellation
+Перевірити відображення інформації скасованого моніторингу
+  [Tags]  compare_data_after_cancellation
   Звірити статус моніторингу
-
-
-Перевірити опис скасованого моніторингу
-  [Tags]  compare_data_after_ancellation
   Звірити опис сказування
 
 
+################################################################
+#                         ACTIVE                               #
+################################################################
 Активувати моніторинг
   [Tags]  activation
   Сформувати рішення по моніторингу
   Перевести моніторинг в статус  active
 
 
-Перевірити статус моніторингу після активації
+Перевірити відображення інформації моніторингу після активації
   [Tags]  compare_data_after_activation
   Звірити статус моніторингу
-
-
-Перевірити опис рішення початку моніторингу
-  [Tags]  compare_data_after_activation
   Звірити опис рішення
-
-
-Перевірити дату рішення початку моніторингу
-  [Tags]  compare_data_after_activation
   Звірити дату рішення
 
-
+################################################################
+#                       CONCLUSION                             #
+################################################################
 Оприлюднення висновку з інформаціэю про порушення
   [Tags]  conclusion
   Опублікувати висновок з інформацією про порушення
   Перевести моніторинг в статус  addressed
 
-Перевірити результат висновку
+
+Перевірити відображення інформації про висновок
   [Tags]  compare_data_after_conclusion
   Звірити результат висновку
-
-
-Перевірити дату висновку
-  [Tags]  compare_data_after_conclusion
   Звірити дату висновку
-
-
-Перевірити опис висновку
-  [Tags]  compare_data_after_conclusion
-  Звірити опис висновку
-
-
-Перевірити інформацію про результати висновку
-  [Tags]  compare_data_after_conclusion
   Звірити інформацію про результати висновку
-
-
-Перевірити обов'язки висновку
-  [Tags]  compare_data_after_conclusion
+  Звірити опис висновку
   Звірити обов'язки висновку
 
 
+################################################################
+#                      CLARIFICATION                           #
+################################################################
 Створити запит за роз'ясненнями щодо висновку
   [Tags]  request_for_clarification
   Відкрити бланк запиту за роз'ясненнями
   ${title}  Заповнити поле Предмет
   ${description}  Заповнити поле Опис
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+  ${title}  Create Dictionary  title  ${name}
+  Set To Dictionary  ${data['posts']}  documents  ${title}
   Відправити пояснення
   Перевірити відправлені дані запиту за роз'ясненнями щодо висновку  ${title}  ${description}  ${name}
 
@@ -140,6 +121,9 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   Перевірити успішність підписання ЕЦП  ${selector}
 
 
+################################################################
+#              VIOLATION ELIMINATION REPORT                    #
+################################################################
 Опублікувати інформацію про усунення порушення
   [Tags]  violation_elimination_report
   Відкрити бланк звіту про усунення порушення
@@ -153,7 +137,6 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
-  Log To Console  Перевірити відображення інформації про усунення порушення
   Перевірити дату інформації про усунення порушення
   Перевірити description інформації про усунення порушення
   Перевірити documents.title інформації про усунення порушення
@@ -168,6 +151,9 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   Перевірити успішність підписання ЕЦП  ${selector}
 
 
+################################################################
+#                          APPEAL                              #
+################################################################
 Опублікувати позов
   [Tags]  appeal
   Вікрити бланк позову
@@ -195,6 +181,9 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   Перевірити успішність підписання ЕЦП  ${selector}
 
 
+################################################################
+#                        COMPLETE                              #
+################################################################
 Підтвердити факт усунення порушення
   [Tags]  completed
   Сформувати рішення щодо усунення порушення
@@ -205,6 +194,44 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   Перевести моніторинг в статус  completed
   Звірити статус моніторингу
   Перевірити опис факту усунення порушення
+
+
+################################################################
+#                      MAKE A DIALOG                           #
+################################################################
+Подати пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  Відкрити бланк пояснення з власної ініціативи
+  ${title}  Заповнити поле предмет пояснення з власної ініціативи
+  ${description}  Заповнити поле опис пояснення з власної ініціативи
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+  Відправити пояснення з власної ініціативи
+  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+
+
+Перевірити відображення пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  Перевірити data пояснення з власної ініціативи
+  Перевірити title пояснення з власної ініціативи
+  Перевірити description пояснення з власної ініціативи
+  Перевірити documents.title пояснення з власної ініціативи
+  Перевірити documents.datePublished пояснення з власної ініціативи
+
+
+Створити запит
+  [Tags]  make_a_dialogue
+  Сформувати та відправити запит організатору
+  Дочекатись синхронізації  dasu
+
+
+Перевірити відображення інформаціїї запиту
+  [Tags]  make_a_dialogue
+  debug
+  #Перевірити title запиту
+  #Перевірити description запиту
+  #Перевірити date запиту
+
+
 
 
 #################################################################################################
@@ -242,8 +269,8 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 
 Отримати дані моніторингу по API
-  [Arguments]  ${field}
-  ${response}  get_monitoring_data  ${data['id']}  ${field}
+  [Arguments]  ${field}  ${title}=${None}
+  ${response}  get_monitoring_data  ${data['id']}  ${field}  ${title}
   [Return]  ${response}
 
 
@@ -414,6 +441,8 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-title']//input
   ${text}  create_sentence  5
   Input Text  ${selector}  ${text}
+  ${posts}  Create Dictionary  title  ${text}
+  Set To Dictionary  ${data}  posts  ${posts}
   [Return]  ${text}
 
 
@@ -421,6 +450,7 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-description']//textarea
   ${text}  create_sentence  20
   Input Text  ${selector}  ${text}
+  Set To Dictionary  ${data['posts']}  description  ${text}
   [Return]  ${text}
 
 
@@ -433,8 +463,12 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
   [Arguments]  ${title}  ${description}  ${name}
-  Log To Console  Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
-  debug
+  ${cdb_title}  Отримати дані моніторингу по API  posts.0.title
+  ${cdb_description}  Отримати дані моніторингу по API  posts.0.description
+  ${cdb_name}  Отримати дані моніторингу по API  posts.0.documents.0.title
+  Should Be Equal  ${title}  ${cdb_title}
+  Should Be Equal  ${description}  ${cdb_description}
+  Should Be Equal  ${name}  ${cdb_name}
 
 
 Відкрити бланк звіту про усунення порушення
@@ -459,11 +493,9 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 Перевірити відправлені дані звіту про усунення порушення
   [Arguments]  ${description}  ${file_name}
-  ${cdb_description}  Отримати дані моніторингу по API  eliminationReport.description
-  ${cdb_file_name}  Отримати дані моніторингу по API  eliminationReport.documents.0.title
-  Should Be Equal  ${cdb_description}  ${description}
-  Should Be Equal  ${cdb_description}  ${file_name}
-
+  ${cdb_eliminationReport}  Отримати дані моніторингу по API  eliminationReport.description
+  Should Be Equal  ${cdb_eliminationReport['description']}              ${description}
+  Should Be Equal  ${cdb_eliminationReport['documents'][0]['title']}    ${file_name}
 
 Вікрити бланк позову
   Click Element  ${monitoring_selector}//*[@data-qa='appeal-submit']
@@ -487,10 +519,9 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
 
 Перевірити відправлені дані позову
   [Arguments]  ${description}  ${file_name}
-  ${cdb_description}  Отримати дані моніторингу по API  appeal.description
-  ${cdb_file_name}  Отримати дані моніторингу по API  appeal.documents.0.title
-  Should Be Equal  ${cdb_description}  ${description}
-  Should Be Equal  ${cdb_description}  ${file_name}
+  ${cdb_appeal}  Отримати дані моніторингу по API  appeal
+  Should Be Equal  ${cdb_appeal['description']}  ${description}
+  Should Be Equal  ${cdb_appeal['documents'][0]['title']}  ${file_name}
 
 
 Перевірити дату інформації про усунення порушення
@@ -551,3 +582,78 @@ ${id_for_skip_creating}         53e9b78c4893439a88c92aacd0b2b224
   ${description}  Set Variable  ${data['eliminationResolution']['description']}
   ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-eliminationResolution-description']
   Should Be Equal  ${description}  ${description_site}
+
+
+Відкрити бланк пояснення з власної ініціативи
+  Click Element  xpath=//*[@data-qa="dialogue-submit"]
+  Wait Until Page Contains Element  ${monitoring_selector}//*[@data-qa='dialogue-title']
+
+
+Заповнити поле предмет пояснення з власної ініціативи
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-title']//input
+  ${title}  create_sentence  10
+  Input Text  ${selector}  ${title}
+  [Return]  ${title}
+
+
+Заповнити поле опис пояснення з власної ініціативи
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-description']//textarea
+  ${description}  create_sentence  30
+  Input Text  ${selector}  ${description}
+  [Return]  ${description}
+
+
+Відправити пояснення з власної ініціативи
+  ${selector}  Set Variable  ${monitoring_selector}//*[@data-qa='dialogue-submit-accept']
+  Click Element  ${selector}
+  Дочекатись закінчення загрузки сторінки
+  Wait Until Page Does Not Contain Element  ${selector}
+
+
+Перевірити відправлені дані пояснення з власної ініціативи
+  [Arguments]  ${title}  ${description}  ${name}
+  ${data_cdb}  Отримати дані моніторингу по API  posts  ${title}
+  Set Global Variable  ${data_cdb}
+  Should Be Equal  ${title}  ${cdb_post['title']}
+  Should Be Equal  ${description}  ${cdb_post['description']}
+  Should Be Equal  ${name}  ${cdb_post['documents'][0]['title']}
+
+
+Перевірити data пояснення з власної ініціативи
+  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]//*[contains(text(), 'Пояснення з ініціативи організатора')]
+  ${date_site}  convert_data_from_the_page  ${text}  decision.date
+  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['datePublished']}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити title пояснення з власної ініціативи
+  ${title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['title']}
+
+
+Перевірити description пояснення з власної ініціативи
+  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//*[@class='break-word']/div[2]
+  Should Be Equal  ${description}  ${data_cdb['description']}
+
+
+Перевірити documents.title пояснення з власної ініціативи
+  ${documents.title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a
+  Should Be Equal  ${documents.title}  ${data_cdb['documents'][0]['title']}
+
+
+Перевірити documents.datePublished пояснення з власної ініціативи
+  ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
+  ${status}  compare_dates_smarttender  ${documents.datePublished}  ${data_cdb['documents'][0]['datePublished']}
+  Should Be Equal  ${status}  ${True}
+
+
+Сформувати та відправити запит організатору
+  ${title}  create_sentence  5
+  ${description}  create_sentence  20
+  ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
+  ${data_dialogue}  make_a_dialogue
+  ...  ${title}
+  ...  ${description}
+  ...  ${relatedParty}
+  ...  ${data['id']}
+  Log  ${data_dialogue}

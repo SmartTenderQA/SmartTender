@@ -92,18 +92,31 @@ def cancellation_monitoring(description, relatedParty, id):
     return r.json()
 
 
-def get_monitoring_data(id, field=None):
+def get_monitoring_data(id, field=None, title=None):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
     r = requests.get(url)
+
+    if title is not None:
+        n = 0
+        l = r.json()['data'][field]
+        for i in l:
+            if i['title'] == title:
+                break
+            else:
+                n += 1
+        field = field + '.' + str(n)
 
     if field is not None:
         my_key = r.json()['data']
         for i in field.split('.'):
-            if i == '0':
+            try:
+                i = int(i)
+            except ValueError:
+                pass
+            else:
                 i = int(i)
             my_key = my_key[i]
         return my_key
-
     else:
         return r.json()['data']
 
@@ -188,6 +201,7 @@ def conclusion(violationOccurred, description, stringsAttached, auditFinding, id
     r = requests.patch(url, headers=headers, json=data)
     return r.json()
 
+
 def eliminationResolution(relatedParty, description, id):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
@@ -214,4 +228,28 @@ def eliminationResolution(relatedParty, description, id):
     data['data']['eliminationResolution']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
+    return r.json()
+
+
+def make_a_dialogue(title, description, relatedParty, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+        "data": {
+            "title": "",
+            "relatedParty": "",
+            "description": ""
+        }
+    }
+
+    data['data']['title'] = str(title)
+    data['data']['relatedParty'] = str(relatedParty)
+    data['data']['description'] = str(description)
+
+    r = requests.post(url, headers=headers, json=data)
     return r.json()

@@ -8,10 +8,14 @@
 
 Відкрити сторінку для створення публічних закупівель
   Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публичные закупки')]  120
-  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
-  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+  Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
   Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+
+
+Натиснути кнопку публічних закупівель
+  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
+  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
 Пошук тендеру у webclient

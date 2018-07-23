@@ -5,11 +5,15 @@ Library     synchronization.py
 *** Keywords ***
 Дочекатись синхронізації
   [Arguments]  ${mode}
-  ${n}  synchronization_map  ${mode}
   ${date_now}  smart_get_time  s
+  Log to console  synchronization has started ${date_now}
+  Wait Until Keyword Succeeds  20m  3  Дочекатись синхронізації продовження  ${mode}  ${date_now}
+
+Дочекатись синхронізації продовження
+  [Arguments]  ${mode}  ${date_now}
+  ${n}  synchronization_map  ${mode}
   ${url}  Set Variable
   ...  http://test.smarttender.biz/ws/webservice.asmx/Execute?calcId=_QA.GET.LAST.SYNCHRONIZATION&args={"SEGMENT":${n}}
-
   Go To  ${url}
   ${synch dict}  Get Text  css=.text
   ${dict}  synchronization  ${synch dict}
