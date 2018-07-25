@@ -170,13 +170,14 @@ def change_monitoring_status(status, id):
     return r.json()
 
 
-def conclusion(violationOccurred, description, stringsAttached, auditFinding, id):
+def conclusion_true(violationOccurred, description, stringsAttached, auditFinding, id):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
     }
+
 
     data = {
         "data": {
@@ -197,6 +198,30 @@ def conclusion(violationOccurred, description, stringsAttached, auditFinding, id
     data['data']['conclusion']['description'] = description
     data['data']['conclusion']['stringsAttached'] = stringsAttached
     data['data']['conclusion']['auditFinding'] = auditFinding
+
+    r = requests.patch(url, headers=headers, json=data)
+    return r.json()
+
+
+def conclusion_false(violationOccurred, relatedParty, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+        "data": {
+            "conclusion": {
+                "relatedParty": "",
+                "violationOccurred": ''
+            }
+        }
+    }
+
+    data['data']['conclusion']['violationOccurred'] = violationOccurred
+    data['data']['conclusion']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
     return r.json()
@@ -252,4 +277,54 @@ def make_a_dialogue(title, description, relatedParty, id):
     data['data']['description'] = str(description)
 
     r = requests.post(url, headers=headers, json=data)
+    return r.json()
+
+
+def stopped(description, relatedParty, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+        "data": {
+            "status": "stopped",
+            "cancellation": {
+                "relatedParty": "",
+                "description": ""
+            }
+        }
+    }
+
+    data['data']['cancellation']['relatedParty'] = str(relatedParty)
+    data['data']['cancellation']['description'] = str(description)
+
+    r = requests.patch(url, headers=headers, json=data)
+    return r.json()
+
+
+def declined(description, relatedParty, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic OWIzYWFhZmJhOWZlNGY0Yzk1YzNiZTNlMWZlYWFlMzE6',
+    }
+
+    data = {
+        "data": {
+            "status": "stopped",
+            "cancellation": {
+                "relatedParty": "",
+                "description": ""
+            }
+        }
+    }
+
+    data['data']['cancellation']['relatedParty'] = str(relatedParty)
+    data['data']['cancellation']['description'] = str(description)
+
+    r = requests.patch(url, headers=headers, json=data)
     return r.json()

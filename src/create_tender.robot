@@ -14,6 +14,7 @@
 
 
 Натиснути кнопку публічних закупівель
+  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
   Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
   Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 

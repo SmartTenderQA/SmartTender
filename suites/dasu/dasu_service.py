@@ -1,8 +1,6 @@
 # coding=utf-8
 import re
 
-from dateutil.parser import parse
-from dateutil.parser import parserinfo
 
 
 def convert_data_from_the_page(value, field):
@@ -19,21 +17,6 @@ def convert_data_from_the_page(value, field):
         return convert_monitoring_status(value)
     else:
         return value, field
-
-
-def compare_dates_smarttender(cdb, smarttender, operator='=='):
-    ltr = parse(cdb, parserinfo(True, False))
-    dtr = parse(smarttender, parserinfo(True, False))
-    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
-    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
-    if operator == '==':
-        return left == right
-    elif operator == '>':
-        return left > right
-    elif operator == '<':
-        return left < right
-    elif operator == '!=':
-        return left != right
 
 
 def convert_monitoring_status(value):

@@ -1,17 +1,27 @@
 -d test_output
 
-#-i create_monitoring
+-i create_monitoring
 -i find_tender
 -i open_monitoring
 #-i compare_data_after_create_monitoring
-#-i activation
-#-i compare_data_after_activation
-#-i conclusion
-#-i compare_data_after_conclusion
+
+-i activation
+-i compare_data_after_activation
+
+#-i make_a_dialogue_individually
+#-i make_a_dialogue
+
+#-i stopped_after_active
+
+#-i conclusion_true
+#-i compare_data_after_conclusion_true
+
 #-i request_for_clarification
 #-i compare_data_after_request_for_clarification
+
 #-i violation_elimination_report
 #-i appeal
 #-i completed
--i make_a_dialogue_individually
--i make_a_dialogue
+
+-i conclusion_false
+-i compare_data_after_conclusion_false

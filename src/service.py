@@ -7,9 +7,9 @@ import sys
 import re
 import urllib2
 from iso8601 import parse_date
-import requests
-import time
 from datetime import datetime, timedelta
+from dateutil.parser import parse
+from dateutil.parser import parserinfo
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -211,3 +211,18 @@ def convert_datetime_to_smart_format(isodate):
     iso_dt = parse_date(isodate)
     date_string = iso_dt.strftime("%d.%m.%Y %H:%M:%S")
     return date_string
+
+
+def compare_dates_smarttender(cdb, smarttender, operator='=='):
+    ltr = parse(cdb, parserinfo(True, False))
+    dtr = parse(smarttender, parserinfo(True, False))
+    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
+    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
+    if operator == '==':
+        return left == right
+    elif operator == '>':
+        return left > right
+    elif operator == '<':
+        return left < right
+    elif operator == '!=':
+        return left != right
