@@ -987,6 +987,7 @@ Suite Postcondition
 
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
+  Дочекатись закінчення загрузки сторінки(skeleton)
   Wait Until Page Contains Element  ${selector}
   Sleep  .5
   ${is}  Get Text  ${selector}
