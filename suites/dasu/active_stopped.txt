@@ -4,4 +4,7 @@
 -i find_tender
 -i open_monitoring_page
 
--i cancellation
+-i activation
+-i make_a_dialogue_individually
+
+-i stopped_after_active

@@ -12,4 +12,4 @@
 -i violation_elimination_report
 -i appeal
 
--i completed
+-i stopped_after_addressed

@@ -21,7 +21,7 @@
 
 Пошук тендеру у webclient
   [Arguments]  ${UAID}
-  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Номер тендер')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
   Click Element  ${find tender field}
   Input Text  ${find tender field}  ${UAID}
   ${get}  Get Element Attribute  ${find tender field}  value

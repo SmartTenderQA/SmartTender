@@ -2,7 +2,7 @@
 Resource  ../../src/src.robot
 Library  dasu_service.py
 Library  monitoring_owner.py
-Suite Setup  Підготувати організатора
+Suite Setup  Підготувати користувачів
 Suite Teardown  Suite Postcondition
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-07-04-000042-a
 ${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
+${id_for_skip_creating}         018b0a01912141618341364799869966
 
 
 *** Test Cases ***
@@ -26,24 +26,32 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Знайти тендер по ідентифікатору
   [Tags]  find_tender
+  Switch Browser  tender_owner
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
 
 Відкрити сторінку моніторингу
-  [Tags]  open_monitoring
+  [Tags]  open_monitoring_page
   Перейти за посиланням по dasu
   Відкрити вкладку моніторингу
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
   Знайти потрібний моніторинг за номером  ${monitoring_id}
+  :FOR  ${username}  IN  viewer  provider
+  \  Switch Browser  ${username}
+  \  Go To  ${data['location']}
+  \  Run Keyword If  '${username}' == 'viewer'  debug
+  \  Відкрити вкладку моніторингу
 
 
 Перевірити відображення інформації нового моніторингу
-  [Tags]  open_monitoring
+  [Tags]  open_monitoring_page
   Отримати дані моніторингу по API
-  Звірити статус моніторингу
-  Звірити дату створення
-  Звірити адитора
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Звірити статус моніторингу
+  \  Звірити дату створення
+  \  Звірити адитора
 
 
 ################################################################
@@ -57,8 +65,12 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 Перевірити відображення інформації скасованого моніторингу
   [Tags]  cancellation
   Отримати дані моніторингу по API
-  Звірити статус моніторингу
-  Звірити опис сказування
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити статус моніторингу
+  \  Звірити опис сказування
 
 
 ################################################################
@@ -73,35 +85,51 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 Перевірити відображення інформації моніторингу після активації
   [Tags]  activation
   Отримати дані моніторингу по API
-  Звірити статус моніторингу
-  Звірити опис рішення
-  Звірити дату рішення
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити статус моніторингу
+  \  Звірити опис рішення
+  \  Звірити дату рішення
 
 
 ################################################################
-#                   CONCLUSION_TRUE                            #
+#                        ADDRESSED                             #
 ################################################################
 Оприлюднити висновок з інформаціэю про порушення
-  [Tags]  conclusion_true
+  [Tags]  addressed
   Опублікувати висновок з інформацією про порушення
   Перевести моніторинг в статус  addressed
 
 
 Перевірити відображення інформації про висновок
-  [Tags]  conclusion_true
+  [Tags]  addressed
   Отримати дані моніторингу по API
-  Звірити результат висновку
-  Звірити дату висновку
-  Звірити інформацію про результати висновку
-  Звірити опис висновку
-  Звірити обов'язки висновку
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити результат висновку
+  \  Звірити дату висновку
+  \  Звірити інформацію про результати висновку
+  \  Звірити опис висновку
+  \  Звірити обов'язки висновку
 
 
 ################################################################
 #                      CLARIFICATION                           #
 ################################################################
+Неможливість створити запит за роз'ясненнями щодо висновку для ролей: viewer, provider
+  [Tags]  request_for_clarification
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк запиту за роз'ясненнями
+
+
 Створити запит за роз'ясненнями щодо висновку
   [Tags]  request_for_clarification
+  Switch Browser  tender_owner
   Відкрити бланк запиту за роз'ясненнями
   ${title}  Заповнити поле Предмет
   ${description}  Заповнити поле Опис
@@ -112,8 +140,15 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відображення запиту за роз'ясненням
   [Tags]  request_for_clarification
-  Log To Console  Перевірити відображення запиту за роз'ясненням
-  debug
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити title запиту
+  \  Звірити description запиту
+  \  Звірити datePublished запиту
+  \  Звірити documents.title запиту
+  \  Звірити documents.datePublished запиту
 
 
 #Накласти ЕЦП на запит за роз'ясненням
@@ -127,8 +162,16 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 ################################################################
 #              VIOLATION ELIMINATION REPORT                    #
 ################################################################
+Неможливість опублікувати інформацію про усунення порушення для ролей: viewer, provider
+  [Tags]  violation_elimination_report
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк звіту про усунення порушення
+
+
 Опублікувати інформацію про усунення порушення
   [Tags]  violation_elimination_report
+  Switch Browser  tender_owner
   Відкрити бланк звіту про усунення порушення
   ${description}  Заповнити поле Опис звіту про усунення порушення
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='eliminationReport-files']//input
@@ -138,10 +181,14 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
-  Перевірити дату інформації про усунення порушення
-  Перевірити description інформації про усунення порушення
-  Перевірити documents.title інформації про усунення порушення
-  Перевірити documents.datePublished інформації про усунення порушення
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити дату інформації про усунення порушення
+  \  Перевірити description інформації про усунення порушення
+  \  Перевірити documents.title інформації про усунення порушення
+  \  Перевірити documents.datePublished інформації про усунення порушення
 
 
 #Накласти ЕЦП на звіт про усунення порушень
@@ -155,8 +202,16 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 ################################################################
 #                          APPEAL                              #
 ################################################################
+Неможливість опублікувати позов для ролей: viewer, provider
+  [Tags]  appeal
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Вікрити бланк позову
+
+
 Опублікувати позов
   [Tags]  appeal
+  Switch Browser  tender_owner
   Вікрити бланк позову
   ${description}  Заповнити поле Опис позову
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='appeal-files']//input
@@ -166,10 +221,14 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відображення інформації про позов
   [Tags]  appeal
-  Перевірити дату позову
-  Перевірити description позову
-  Перевірити documents.title позову
-  Перевірити documents.datePublished позову
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити дату позову
+  \  Перевірити description позову
+  \  Перевірити documents.title позову
+  \  Перевірити documents.datePublished позову
 
 
 #Накласти ЕЦП на позов
@@ -192,15 +251,27 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 Перевести моніторинг в статус вирішено
   [Tags]  completed
   Отримати дані моніторингу по API
-  Звірити статус моніторингу
-  Перевірити опис факту усунення порушення
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити статус моніторингу
+  \  Перевірити опис факту усунення порушення
 
 
 ################################################################
 #                      MAKE A DIALOG                           #
 ################################################################
+Неможливість опублікувати позов для ролей: viewer, provider
+  [Tags]  make_a_dialogue_individually
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
+
+
 Подати пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
+  Switch Browser  tender_owner
   Відкрити бланк пояснення з власної ініціативи
   ${title}  Заповнити поле предмет пояснення з власної ініціативи
   ${description}  Заповнити поле опис пояснення з власної ініціативи
@@ -211,30 +282,50 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відображення пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
-  Перевірити date пояснення з власної ініціативи
-  Перевірити title пояснення з власної ініціативи
-  Перевірити description пояснення з власної ініціативи
-  Перевірити documents.title пояснення з власної ініціативи
-  Перевірити documents.datePublished пояснення з власної ініціативи
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити date пояснення з власної ініціативи
+  \  Перевірити title пояснення з власної ініціативи
+  \  Перевірити description пояснення з власної ініціативи
+  \  Перевірити documents.title пояснення з власної ініціативи
+  \  Перевірити documents.datePublished пояснення з власної ініціативи
+
+
+Підписати ЕЦП для пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  No Operation
 
 
 Створити запит
   [Tags]  make_a_dialogue
   Сформувати та відправити запит організатору
   Дочекатись синхронізації  dasu
-  Відкрити вкладку моніторингу
 
 
 Перевірити відображення інформаціїї запиту
   [Tags]  make_a_dialogue
   Отримати дані про останній запит
-  Перевірити title запиту  ${data_cdb}
-  Перевірити description запиту  ${data_cdb}
-  Перевірити date запиту  ${data_cdb}
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити title запиту  ${data_cdb}
+  \  Перевірити description запиту  ${data_cdb}
+  \  Перевірити date запиту  ${data_cdb}
+
+
+Неможливість відповісти на запит для ролей: viewer, provider
+  [Tags]  make_a_dialogue
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
 
 
 Відповісти на запит
   [Tags]  make_a_dialogue
+  Switch Browser  tender_owner
   Відкрити бланк відповіді на запит
   ${title}  Заповнити title відповіді на запит
   ${description}  Заповнити description відповіді на запит
@@ -245,11 +336,20 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відображення інформації про відповідь на запит
   [Tags]  make_a_dialogue
-  Перевірити date відповіді на запит
-  Перевірити title відповіді на запит
-  Перевірити description відповіді на запит
-  Перевірити documents.title відповіді на запит
-  Перевірити documents.datePublished відповіді на запит
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити date відповіді на запит
+  \  Перевірити title відповіді на запит
+  \  Перевірити description відповіді на запит
+  \  Перевірити documents.title відповіді на запит
+  \  Перевірити documents.datePublished відповіді на запит
+
+
+Підписати ЕЦП для відповіді на запит
+  [Tags]  make_a_dialogue
+  No Operation
 
 
 ################################################################
@@ -259,35 +359,51 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   [Tags]  stopped_after_active
   Сформувати дані та зупинити моніторинг
   Дочекатись синхронізації  dasu
-  Відкрити вкладку моніторингу
 
 
 Перевірити відображення інформації про зупинку моніторунгу після active
   [Tags]  stopped_after_active
-  Отримати дані моніторингу по API
-  Звірити статус моніторингу
-  Перевірити опис зупинення моніторингу
-  Перевірити дату зупинення моніторингу
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Отримати дані моніторингу по API
+  \  Звірити статус моніторингу
+  \  Перевірити опис зупинення моніторингу
+  \  Перевірити дату зупинення моніторингу
 
 
 ################################################################
-#                   CONCLUSION_FALSE                           #
+#                        DECLINED                              #
 ################################################################
 Оприлюднити висновок з інформаціэю про порушення
-  [Tags]  conclusion_false
+  [Tags]  declined
   Опублікувати висновок про відсутність порушень
   Перевести моніторинг в статус  declined
 
 
 Перевірити відображення інформації про висновок
-  [Tags]  compare_data_after_conclusion_false
-  Log To Console  Перевірити відображення інформації про висновок
-  debug
-  #Звірити результат висновку
-  #Звірити дату висновку
-  #Звірити інформацію про результати висновку
-  #Звірити опис висновку
-  #Звірити обов'язки висновку
+  [Tags]  declined
+  Отримати дані моніторингу по API
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити дату висновку
+
+
+################################################################
+#                         CLOSED                               #
+################################################################
+Завершити моніторинг
+  [Tags]  closed
+  Перевести моніторинг в статус  closed
+  Отримати дані моніторингу по API
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Звірити статус моніторингу
 
 
 #################################################################################################
@@ -296,11 +412,14 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 #                                                                                               #
 #################################################################################################
 *** Keywords ***
-Підготувати організатора
+Підготувати користувачів
   ${data}  Create Dictionary  id  ${id_for_skip_creating}
   Set Global Variable  ${data}
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
   Login  dasu
+  Open Browser  ${start_page}  ${browser}  alias=viewer
+  Open Browser  ${start_page}  ${browser}  alias=provider
+  Login  user1
 
 
 Перейти за посиланням по dasu
@@ -311,6 +430,7 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   Click element  xpath=//a[contains(text(), 'Натисніть для переходу') and @href]
   ${web}  Select Window  New
   ${location}  Get Location
+  Set To Dictionary  ${data}  location  ${location}
   Log  ${location}  WARN
 
 
@@ -323,6 +443,7 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Відкрити вкладку моніторингу
   Execute Javascript    window.scrollTo(0, 1200)
+  Дочекатись закінчення загрузки сторінки
 
 
 Отримати дані моніторингу по API
@@ -330,6 +451,7 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   ${data_cdb}  get_monitoring_data  ${data['id']}  ${field}  ${title}
   Log  ${data_cdb}
   Set Global Variable  ${data_cdb}
+  [Return]  ${data_cdb}
 
 
 Розпочати моніторинг по тендеру
@@ -350,7 +472,6 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   ...  ${data['id']}
   Log  ${data_cancellation}
   Дочекатись синхронізації  dasu
-  Відкрити вкладку моніторингу
 
 
 Сформувати рішення по моніторингу
@@ -370,13 +491,12 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   ...  ${data['id']}
   Log  ${date_status}
   Дочекатись синхронізації  dasu
-  Відкрити вкладку моніторингу
 
 
 Сформувати рішення щодо усунення порушення
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${description}  create_sentence  20
-  ${data_eliminationResolution}  eliminationResolution
+  ${eliminationResolution}  eliminationResolution
   ...  ${relatedParty}
   ...  ${description}
   ...  ${data['id']}
@@ -444,7 +564,7 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
   ${description}  create_sentence  20
   ${stringsAttached}  create_sentence  10
   ${auditFinding}  create_sentence  10
-  ${data_conclusion}  conclusion
+  ${data_conclusion}  conclusion_true
   ...  ${violationOccurred}
   ...  ${description}
   ...  ${stringsAttached}
@@ -461,7 +581,7 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 
 Звірити дату висновку
-  ${cdb_time}  Set Variable  ${data_cdb['conclusion']['dateCreated']
+  ${cdb_time}  Set Variable  ${data_cdb['conclusion']['dateCreated']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]
   ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -469,20 +589,20 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 
 Звірити опис висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['description']
+  ${cdb}  Set Variable  ${data_cdb['conclusion']['description']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Опис')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити інформацію про результати висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['stringsAttached']
+  ${cdb}  Set Variable  ${data_cdb['conclusion']['auditFinding']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Інформація про результати моніторингу')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити обов'язки висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['auditFinding']
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Зобов'язання щодо усунення порушень')]/following-sibling::*
+  ${cdb}  Set Variable  ${data_cdb['conclusion']['stringsAttached']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "Зобов'язання щодо усунення порушень")]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
@@ -516,10 +636,42 @@ ${id_for_skip_creating}         6d7108a548f24d87bd38e77ccaf0fa26
 
 Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
   [Arguments]  ${title}  ${description}  ${name}
-  Отримати дані моніторингу по API
-  Should Be Equal  ${title}  ${data_cdb['posts'][0]['title']
-  Should Be Equal  ${description}  ${data_cdb['posts'][0]['description']
-  Should Be Equal  ${name}  ${data_cdb['posts'][0]['documents'][0]['title']
+  Отримати дані моніторингу по API  posts  ${title}
+  Should Be Equal  ${title}  ${data_cdb['title']}
+  Should Be Equal  ${description}  ${data_cdb['description']}
+  Should Be Equal  ${name}  ${data_cdb['documents'][0]['title']}
+
+
+Звірити title запиту
+  Page Should Contain Element  xpath=//*[contains(text(), "${data_cdb['title']}")]
+
+
+Звірити description запиту
+  ${cdb}  Set Variable  ${data_cdb['description']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/following-sibling::*
+  Should Be Equal  ${cdb}  ${site}
+
+
+Звірити datePublished запиту
+  ${cdb_time}  Set Variable  ${data_cdb['datePublished']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]
+  ${site_time}  convert_data_from_the_page  ${site}  decision.date
+  ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
+  Should Be Equal  ${status}  ${True}
+
+
+Звірити documents.title запиту
+  ${cdb}  Set Variable  ${data_cdb['documents'][0]['title']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a
+  Should Be Equal  ${cdb}  ${site}
+
+
+Звірити documents.datePublished запиту
+  ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
+  ${site_time}  convert_data_from_the_page  ${site}  decision.date
+  ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
+  Should Be Equal  ${status}  ${True}
 
 
 Відкрити бланк звіту про усунення порушення

@@ -28,5 +28,7 @@ def convert_monitoring_status(value):
         u'Вирішено': 'completed',
         u'Завершено': 'closed',
         u'Рішення зупинено': 'stopped',
+        u'Порушення виявлені': 'addressed',
+        u'Порушення не виявлені': 'declined',
     }
     return map[value]

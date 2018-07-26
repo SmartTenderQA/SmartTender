@@ -7,9 +7,5 @@
 -i activation
 -i make_a_dialogue_individually
 
--i addressed
--i request_for_clarification
--i violation_elimination_report
--i appeal
-
--i completed
+-i declined
+-i stopped_after_declined
