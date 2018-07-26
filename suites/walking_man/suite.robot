@@ -461,8 +461,8 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
-Продаж майна банків, що ліквідуються
-  [Tags]  sales  non-critical
+Sale of property of liquidated banks
+  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
