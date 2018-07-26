@@ -458,55 +458,55 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
 Розпочати моніторинг по тендеру
   [Arguments]  ${tender_ID}
   ${name}  create_sentence  1
-  ${response}  create_monitoring  ${tender_ID}  ${name}
-  Run keyword If  '${response["status"]}' == 'error'  Fail  Look at the response
-  Log  ${response}
-  ${data}  Create Dictionary  id  ${response['data']['id']}
+  ${data_cdb}  create_monitoring  ${tender_ID}  ${name}
+  Перевірити відповідь  ${data_cdb}
+  Log  ${data_cdb}
+  ${data}  Create Dictionary  id  ${data_cdb['data']['id']}
   Set Global Variable  ${data}
 
 
 Скасувати моніторинг по тендеру
   ${description}  create_sentence  20
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
-  ${data_cancellation}  cancellation_monitoring
+  ${data_cdb}  cancellation_monitoring
   ...  ${description}
   ...  ${relatedParty}
   ...  ${data['id']}
-  Log  ${data_cancellation}
-  Run keyword If  '${data_cancellation["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
   Дочекатись синхронізації  dasu
 
 
 Сформувати рішення по моніторингу
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${description}  create_sentence  20
-  ${data_decision}  decision
+  ${data_cdb}  decision
   ...  ${relatedParty}
   ...  ${description}
   ...  ${data['id']}
-  Log  ${data_decision}
-  Run keyword If  '${data_decision["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
 
 
 Перевести моніторинг в статус
   [Arguments]  ${status}
-  ${date_status}  change_monitoring_status
+  ${data_cdb}  change_monitoring_status
   ...  ${status}
   ...  ${data['id']}
-  Log  ${date_status}
-  Run keyword If  '${date_status["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
   Дочекатись синхронізації  dasu
 
 
 Сформувати рішення щодо усунення порушення
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${description}  create_sentence  20
-  ${eliminationResolution}  eliminationResolution
+  ${data_cdb}  eliminationResolution
   ...  ${relatedParty}
   ...  ${description}
   ...  ${data['id']}
-  Log  ${eliminationResolution}
-  Run keyword If  '${eliminationResolution["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
 
 
 Знайти потрібний моніторинг за номером
@@ -570,14 +570,14 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ${description}  create_sentence  20
   ${stringsAttached}  create_sentence  10
   ${auditFinding}  create_sentence  10
-  ${data_conclusion}  conclusion_true
+  ${data_cdb}  conclusion_true
   ...  ${violationOccurred}
   ...  ${description}
   ...  ${stringsAttached}
   ...  ${auditFinding}
   ...  ${data['id']}
-  Log  ${data_conclusion}
-  Run keyword If  '${data_conclusion["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
 
 
 Звірити результат висновку
@@ -861,13 +861,13 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ${title}  create_sentence  5
   ${description}  create_sentence  20
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
-  ${data_dialogue}  make_a_dialogue
+  ${data_cdb}  make_a_dialogue
   ...  ${title}
   ...  ${description}
   ...  ${relatedParty}
   ...  ${data['id']}
-  Log  ${data_dialogue}
-  Run keyword If  '${data_dialogue["status"]}' == 'error'  Fail  Look at the response
+  Log  ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
   ${posts}  Create Dictionary  title  ${title}
   ${list}  Create List  ${posts}
   Set To Dictionary  ${data}  posts  ${list}
@@ -971,7 +971,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Run keyword If  '${data_cdb["status"]}' == 'error'  Fail  Look at the response
+  Перевірити відповідь  ${data_cdb}
 
 
 Перевірити опис зупинення моніторингу
@@ -996,4 +996,9 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Run keyword If  '${data_cdb["status"]}' == 'error'  Fail  Look at the response
+  Перевірити відповідь  ${data_cdb}
+
+
+Перевірити відповідь
+  [Arguments]  ${data_cdb}
+  Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
