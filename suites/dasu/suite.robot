@@ -459,7 +459,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   [Arguments]  ${tender_ID}
   ${name}  create_sentence  1
   ${response}  create_monitoring  ${tender_ID}  ${name}
-  Run keyword If  '${response['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${response["status"]}' == 'error'  Fail  Look at the response
   Log  ${response}
   ${data}  Create Dictionary  id  ${response['data']['id']}
   Set Global Variable  ${data}
@@ -473,7 +473,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cancellation}
-  Run keyword If  '${data_cancellation['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_cancellation["status"]}' == 'error'  Fail  Look at the response
   Дочекатись синхронізації  dasu
 
 
@@ -485,7 +485,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${description}
   ...  ${data['id']}
   Log  ${data_decision}
-  Run keyword If  '${data_decision['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_decision["status"]}' == 'error'  Fail  Look at the response
 
 
 Перевести моніторинг в статус
@@ -494,7 +494,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${status}
   ...  ${data['id']}
   Log  ${date_status}
-  Run keyword If  '${date_status['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${date_status["status"]}' == 'error'  Fail  Look at the response
   Дочекатись синхронізації  dasu
 
 
@@ -506,7 +506,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${description}
   ...  ${data['id']}
   Log  ${eliminationResolution}
-  Run keyword If  '${eliminationResolution['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${eliminationResolution["status"]}' == 'error'  Fail  Look at the response
 
 
 Знайти потрібний моніторинг за номером
@@ -577,7 +577,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${auditFinding}
   ...  ${data['id']}
   Log  ${data_conclusion}
-  Run keyword If  '${data_conclusion['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_conclusion["status"]}' == 'error'  Fail  Look at the response
 
 
 Звірити результат висновку
@@ -867,7 +867,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_dialogue}
-  Run keyword If  '${data_dialogue['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_dialogue["status"]}' == 'error'  Fail  Look at the response
   ${posts}  Create Dictionary  title  ${title}
   ${list}  Create List  ${posts}
   Set To Dictionary  ${data}  posts  ${list}
@@ -971,7 +971,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Run keyword If  '${data_cdb['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_cdb["status"]}' == 'error'  Fail  Look at the response
 
 
 Перевірити опис зупинення моніторингу
@@ -996,4 +996,4 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Run keyword If  '${data_cdb['status']}' == 'error'  Fail  Look at the response
+  Run keyword If  '${data_cdb["status"]}' == 'error'  Fail  Look at the response
