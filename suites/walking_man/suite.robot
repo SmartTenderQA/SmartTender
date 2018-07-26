@@ -461,7 +461,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
-Sale of property of liquidated banks
+Продаж майна банків, що ліквідуються
   [Tags]  sales
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
@@ -558,18 +558,11 @@ Sale of property of liquidated banks
   Перевірити підзаголовок сторінки реєстрації
 
 Інструкції
-  [Tags]  site  non-critical
-  Перейти на сторонку інструкції
-  Перевірити заголовок сторінки інструкцій
-  Порахувати кількість інструкцій
-
-Інструкції2
   [Tags]  site
-  ${location}  Get Location
-  Go To  ${location}TenderInstruction/
-  ${should}  Set variable  Інструкції
-  ${is}  Get Text  css=h1
-  Should Be Equal  ${is}  ${should}
+  Відкрити сторінку інструкцій
+  Перевірити заголовок сторінки інструкцій
+  Перевірити випаючий список інструкцій
+
 
 Зворотній зв'язок
   [Tags]  site
@@ -753,18 +746,29 @@ Suite Postcondition
   ${is}  Get Text  css=.main-content h3
   Should Be Equal  ${is}  ${should}
 
-Перейти на сторонку інструкції
-  Click Element  ${instruktsii link}
-  Location Should Contain  /instruktсii/
+Відкрити сторінку інструкцій
+  Click Element  xpath=//*[@href='/instruktcii/']
+  Location Should Contain  instruktcii
+  Дочекатись закінчення загрузки сторінки
 
 Перевірити заголовок сторінки інструкцій
-  ${should}  Set variable  Інструкції
-  ${is}  Get Text  ${h1 header text}
-  Should Be Equal  ${is}  ${should}
+  ${get}  Get Text  xpath=//h1
+  Should Be Equal  ${get}  Інструкції
 
-Порахувати кількість інструкцій
-  ${count}  Get Element Count  css=.item
-  Run Keyword if  '${count}' == '0'  Fail  Хто сховав Інструкції?!
+Перевірити випаючий список інструкцій
+  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
+  ${n}  Get Element Count  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class]
+  ${list}  Create List
+  :FOR  ${i}  IN RANGE  ${n}
+  \  ${t}  Evaluate  str(${i}+1)
+  \  ${r}  Get Text  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class][${t}]
+  \  Append To List  ${list}  ${r}
+  List Should Contain Value  ${list}  Показати всі
+  List Should Contain Value  ${list}  Інструкції загального напрямку
+  List Should Contain Value  ${list}  Інструкції для організатора
+  List Should Contain Value  ${list}  Інструкції для учасника
+  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
+  Sleep  2
 
 Зайти на сторінку зворотній зв'язок
   Open button  ${feedback link}
