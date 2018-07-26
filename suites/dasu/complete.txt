@@ -10,6 +10,6 @@
 -i addressed
 -i request_for_clarification
 -i violation_elimination_report
--i appeal
 
+-i appeal
 -i completed
