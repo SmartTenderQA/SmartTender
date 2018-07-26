@@ -988,6 +988,7 @@ Suite Postcondition
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
   Wait Until Page Contains Element  ${selector}
+  Sleep  .5
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${should}
 
