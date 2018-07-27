@@ -520,6 +520,47 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
+Англійський аукціон. Мала приватизація
+  [Tags]  sales
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+
+Голландський аукціон. Мала приватизація
+  [Tags]  broken
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+
+Об'єкти приватизації
+  [Tags]  sales
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
+Інформаційні повідомлення
+  [Tags]  sales
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
+Аукціони
+  [Tags]  sales
+  ...  -test
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
 Торги RIALTO
   [Tags]  rialto
   Зайти на сторінку RIALTO
@@ -1139,4 +1180,26 @@ Change Start Page
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
 
+Перевірити вкладку мала приватизація
+  Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  Location Should Contain  /small-privatization/
 
+Вибрати тип процедури для малої приватизації
+  Click Element  //*[contains(text(), "${TESTNAME}")]
+  Дочекатись закінчення загрузки сторінки(skeleton)
+
+Порахувати кількість торгів малої приватизації
+  ${n}  Get Element Count  //*[@class="content-block"]/div
+  Run Keyword if  '${n}' < 1  Fail  Look above
+
+Перевірити пошук малої приватизації
+  ${title}  Get text  //*[@class="content-block"]/div[last()]//h4
+  ${selector}  Set Variable  //*[@class="content-block"]/div[last()]//a
+  Open Button  ${selector}
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${text}  Run Keyword If
+  ...  "Інформаційні повідомлення" == "${TESTNAME}"  Get Text  css=h4>a
+  ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  .text-justify>span
+  ...  ELSE  Get Text  css=h3>span
+  Should Be Equal  ${text}  ${title}
