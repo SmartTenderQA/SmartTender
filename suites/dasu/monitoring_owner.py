@@ -328,3 +328,27 @@ def declined(description, relatedParty, id):
 
     r = requests.patch(url, headers=headers, json=data)
     return r.json()
+
+
+def inspection(description, monitoring_ids):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/inspections'
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+    }
+
+    data = {
+        "data": {
+            "description": "",
+            "monitoring_ids": [
+                ""
+            ]
+        }
+    }
+
+    data['data']['description']= str(description)
+    data['data']['monitoring_ids'][0] = str(monitoring_ids)
+
+    r = requests.post(url, headers=headers, json=data)
+    return r.json()

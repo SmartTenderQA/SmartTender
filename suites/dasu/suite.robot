@@ -117,6 +117,19 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
 
 
 ################################################################
+#                       INSPECTION                             #
+################################################################
+Створити інспекцію
+  [Tags]  inspection
+  Сформувати та опублікувати інспекцію
+
+
+Перевірити дані інспекції
+  [Tags]  inspection
+  debug
+
+
+################################################################
 #                      CLARIFICATION                           #
 ################################################################
 Неможливість створити запит за роз'ясненнями щодо висновку для ролей: viewer, provider
@@ -1002,3 +1015,13 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
 Перевірити відповідь
   [Arguments]  ${data_cdb}
   Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
+
+
+Сформувати та опублікувати інспекцію
+  ${description}  create_sentence  20
+  ${data_cdb}  inspection
+  ...  ${description}
+  ...  ${data['id']}
+  Log ${data_cdb}
+  Перевірити відповідь  ${data_cdb}
+  Дочекатись синхронізації  dasu
