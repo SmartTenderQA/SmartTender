@@ -1203,6 +1203,6 @@ Change Start Page
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${text}  Run Keyword If
   ...  "Аукціони" == "${TESTNAME}"  Get Text  css=h4>a
-  ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  .text-justify>span
-  ...  ELSE  Get Text  css=h3>span
+  ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  css=h3>span
+  ...  ELSE  Get Text  css=.ivu-row h3
   Should Be Equal  ${text}  ${title}
