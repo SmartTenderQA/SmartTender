@@ -557,6 +557,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 Голландський аукціон. Мала приватизація
   [Tags]  broken
   ...  -prod
+  ...  -test
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
