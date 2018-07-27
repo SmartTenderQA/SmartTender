@@ -1201,5 +1201,5 @@ Change Start Page
   ${text}  Run Keyword If
   ...  "Інформаційні повідомлення" == "${TESTNAME}"  Get Text  css=h4>a
   ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  .text-justify>span
-  ...  ELSE  Get Text  css=h3>span
+  ...  ELSE  Get Text  css=.text-justify>span
   Should Be Equal  ${text}  ${title}
