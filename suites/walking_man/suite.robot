@@ -522,6 +522,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Англійський аукціон. Мала приватизація
   [Tags]  sales
+  ...  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -530,6 +531,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Голландський аукціон. Мала приватизація
   [Tags]  broken
+  ...  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -1181,6 +1183,7 @@ Change Start Page
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
 
 Перевірити вкладку мала приватизація
+  Sleep  1
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   Дочекатись закінчення загрузки сторінки(skeleton)
   Location Should Contain  /small-privatization/
@@ -1199,7 +1202,7 @@ Change Start Page
   Open Button  ${selector}
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${text}  Run Keyword If
-  ...  "Інформаційні повідомлення" == "${TESTNAME}"  Get Text  css=h4>a
+  ...  "Аукціони" == "${TESTNAME}"  Get Text  css=h4>a
   ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  .text-justify>span
-  ...  ELSE  Get Text  css=.text-justify>span
+  ...  ELSE  Get Text  css=h3>span
   Should Be Equal  ${text}  ${title}
