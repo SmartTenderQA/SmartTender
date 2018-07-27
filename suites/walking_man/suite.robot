@@ -1197,12 +1197,20 @@ Change Start Page
   Run Keyword if  '${n}' < 1  Fail  Look above
 
 Перевірити пошук малої приватизації
-  ${title}  Get text  //*[@class="content-block"]/div[last()]//h4
-  ${selector}  Set Variable  //*[@class="content-block"]/div[last()]//a
-  Open Button  ${selector}
+  #${id}  Run Keyword If
+  #...  Get Text  //*[@class="content-block"]/div[last()]//p[contains(text(), 'UA')]
+  #...  ELSE  Get text  //*[@class="content-block"]/div[last()]//h4
+  ${id}  Get Text  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]
+  Виконати пошук малої приватизації  ${id}
+  Open Button  //*[@class="content-block"]/div//a
   Дочекатись закінчення загрузки сторінки(skeleton)
-  ${text}  Run Keyword If
-  ...           "${TESTNAME}" == "Об'єкти приватизації"  Get Text  css=.ivu-row h3
-  ...  ELSE IF  "${TESTNAME}" == "Інформаційні повідомлення"  Get Text  xpath=//h4/a
-  ...  ELSE IF  "${TESTNAME}" == "Аукціони"  Get Text  css=.ivu-row h3
-  Should Be Equal  ${text}  ${title}
+  ${text}  Get Text  //h4/a|//h4/following-sibling::a
+  Should Be Equal  ${text}  ${id}
+
+Виконати пошук малої приватизації
+  [Arguments]  ${id}
+  Input Text  //*[contains(@class, 'inner-button')]//input  ${id}
+  Click Element  //*[contains(@class, 'inner-button')]//input/following-sibling::*//button
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${n}  Get Element Count  //*[@class="content-block"]/div
+  Should Be Equal  '${n}'  '1'
