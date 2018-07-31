@@ -1192,6 +1192,9 @@ Change Start Page
 Вибрати тип процедури для малої приватизації
   Click Element  //*[contains(text(), "${TESTNAME}")]
   Дочекатись закінчення загрузки сторінки(skeleton)
+  ${status}  Run Keyword And Return Status  Page Should Contain Element
+  ...  //*[contains(text(), "${TESTNAME}")]/../*[contains(@class, 'checked')]
+  Run Keyword If  '${status}' == 'False'  Вибрати тип процедури для малої приватизації
 
 Порахувати кількість торгів малої приватизації
   ${n}  Get Element Count  //*[@class="content-block"]/div
