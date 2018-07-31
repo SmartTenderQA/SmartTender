@@ -941,7 +941,7 @@ Suite Postcondition
 
 Перевірити вкладку активи
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
+  Дочекатись закінчення загрузки сторінки
   ${should}  Set variable  Реєстр активів ФГВФО
   ${is}  Get Text  ${auction active header}
   Should Be Equal  ${is}  ${should}
