@@ -1194,7 +1194,7 @@ Change Start Page
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${status}  Run Keyword And Return Status  Page Should Contain Element
   ...  //*[contains(text(), "${TESTNAME}")]/../*[contains(@class, 'checked')]
-  Run Keyword If  '${status}' == 'False'  Вибрати тип процедури для малої приватизації
+  Run Keyword If  '${status}' == 'False' and '${TESTNAME}' != 'Аукціони' Вибрати тип процедури для малої приватизації
 
 Порахувати кількість торгів малої приватизації
   ${n}  Get Element Count  //*[@class="content-block"]/div
