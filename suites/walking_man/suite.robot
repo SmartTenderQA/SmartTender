@@ -108,6 +108,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   ...  analytic
   Run Keyword If  '${role}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
+  ...  AND  Вибрати минулий місяці при відсутності тендерів
   ...  AND  Перевірити наявність діаграми та таблиці
   ...  AND  Перевірити роботу кругової діаграми
   ...  AND  Перевірити зміну періоду
@@ -1150,17 +1151,34 @@ Change Start Page
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
 
+
 Відкрити сторінку аналітики
   Go to  ${analytics_page}
   Дочекатись закінчення загрузки сторінки
   ${value}=  Get text  xpath=//*[@class="text-center"]/h3
   Should Contain  'Публічні закупівлі'  ${value}
 
+
+Вибрати минулий місяці при відсутності тендерів
+  ${number_of_tenders}  Get Text  ${num_of_tenders}
+  Run Keyword If  '${number_of_tenders}' == '0'  Вибрати інший період аукціону  Минулий місяць
+  ${number_of_tenders}  Get Text  ${num_of_tenders}
+  Run Keyword If  "${number_of_tenders}" == "0"  Fail  За минулий місяць повинні бути тендери
+
+
+Вибрати інший період аукціону
+  [Arguments]  ${period}
+  Click Element  xpath=//*[contains(@class, 'calendar')]
+  Click Element  xpath=//div[contains(text(), '${period}')]
+  Дочекатись закінчення загрузки сторінки
+
+
 Перевірити наявність діаграми та таблиці
   ${diag}  Set Variable  xpath=(//*[@class="echarts"]//canvas)[1]
   ${table}  Set Variable  xpath=//*[@class="ivu-table-header"]//tr
   Element Should Be Visible  ${diag}
   Element Should Be Visible  ${table}
+
 
 Перевірити роботу кругової діаграми
   ${tenders_before}  Get Text  ${num_of_tenders}
@@ -1173,21 +1191,22 @@ Change Start Page
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
 
+
 Перевірити зміну періоду
   ${tenders_before}  Get Text  ${num_of_tenders}
   ${tenders_before}  Evaluate  int(${tenders_before})
-  Click Element  xpath=//*[contains(@class, 'calendar')]
-  Click Element  xpath=//div[contains(text(), 'Поточний рік')]
-  Дочекатись закінчення загрузки сторінки
+  Вибрати інший період аукціону  Поточний рік
   ${tenders_after}  Get Text  ${num_of_tenders}
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
+
 
 Перевірити вкладку мала приватизація
   Sleep  1
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   Дочекатись закінчення загрузки сторінки(skeleton)
   Location Should Contain  /small-privatization/
+
 
 Вибрати тип процедури для малої приватизації
   Click Element  //*[contains(text(), "${TESTNAME}")]
