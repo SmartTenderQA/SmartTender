@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-07-04-000042-a
 ${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
+${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
 
 
 *** Test Cases ***
@@ -91,6 +91,7 @@ ${id_for_skip_creating}         4fdf3382da004478bbf0e16c72219538
   \  Звірити статус моніторингу
   \  Звірити опис рішення
   \  Звірити дату рішення
+  debug
 
 
 ################################################################

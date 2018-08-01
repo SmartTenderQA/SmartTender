@@ -1,6 +1,6 @@
 -d test_output
 
--i create_monitoring
+#-i create_monitoring
 -i find_tender
 -i open_monitoring_page
 

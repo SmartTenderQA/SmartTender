@@ -214,8 +214,8 @@ def convert_datetime_to_smart_format(isodate):
 
 
 def compare_dates_smarttender(cdb, smarttender, operator='=='):
-    ltr = parse(cdb, parserinfo(True, False))
-    dtr = parse(smarttender, parserinfo(True, False))
+    ltr = parse(cdb, parserinfo(True, False), dayfirst=False)
+    dtr = parse(smarttender, parserinfo(True, False), dayfirst=False)
     left = (ltr.strftime('%Y-%m-%dT%H:%M'))
     right = (dtr.strftime('%Y-%m-%dT%H:%M'))
     if operator == '==':
