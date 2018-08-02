@@ -1197,6 +1197,7 @@ Change Start Page
   ${tenders_before}  Evaluate  int(${tenders_before})
   Вибрати інший період аукціону  Поточний рік
   ${tenders_after}  Get Text  ${num_of_tenders}
+  ${tenders_after}  get_number  ${tenders_after}
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
 
