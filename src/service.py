@@ -11,8 +11,6 @@ from iso8601 import parse_date
 from datetime import datetime, timedelta
 from dateutil.parser import parse
 from dateutil.parser import parserinfo
-import simplejson as json
-
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -242,7 +240,7 @@ def sleep_to(time):
     return subtract.seconds, now
 
 
-def conver_date_from_cdb(date):
+def convert_date_from_cdb(date):
     time = (parse(date)).replace(tzinfo=None)
     time = (time.strftime('%Y-%m-%d %H:%M:%S'))
     return time

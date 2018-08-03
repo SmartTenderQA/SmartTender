@@ -536,7 +536,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 Дочекатись закінчення elimination period
   ${cdb}  Set Variable  ${data_cdb['data']['eliminationPeriod']['endDate']}
-  ${until}  conver_date_from_cdb  ${cdb}
+  ${until}  convert_date_from_cdb  ${cdb}
   ${now}  Get Current Date
   ${sleep}  Subtract Date From Date  ${until}  ${now}
   Run Keyword If  ${sleep} > ${0}  Sleep  ${sleep}
