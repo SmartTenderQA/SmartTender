@@ -6,7 +6,7 @@ Library     synchronization.py
 Дочекатись синхронізації
   [Arguments]  ${mode}
   ${date_now}  smart_get_time  s
-  Log to console  synchronization has started ${date_now}
+  #Log to console  synchronization has started ${date_now}
   Wait Until Keyword Succeeds  20m  3  Дочекатись синхронізації продовження  ${mode}  ${date_now}
 
 Дочекатись синхронізації продовження
@@ -22,7 +22,7 @@ Library     synchronization.py
   ${WorkStatus}  Set Variable  ${dict[2]}
   ${Success}  Set Variable  ${dict[3]}
 
-  ${compared_time}  compare_dates_smarttender  ${DateStart}  ${date_now}  >
+  ${compared_time}  compare_dates_synch  ${DateStart}  ${date_now}
    ${status}  Run Keyword if  '${compared_time}' == '${True}' and '${DateEnd}' != '${EMPTY}' and '${WorkStatus}' != 'working' and '${WorkStatus}' != 'fail' and '${Success}' == 'true'
   ...  Set Variable  Pass
   ...  ELSE  Reload Page

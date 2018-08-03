@@ -4,6 +4,7 @@ Library     BuiltIn
 Library     Collections
 Library     DebugLibrary
 Library     OperatingSystem
+Library     DateTime
 Library     service.py
 Library     Faker/faker.py
 Resource    make_proposal.robot

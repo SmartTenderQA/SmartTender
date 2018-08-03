@@ -1,4 +1,6 @@
 import re
+from dateutil.parser import parse
+from dateutil.parser import parserinfo
 
 
 def synchronization(string):
@@ -21,3 +23,11 @@ def synchronization_map(mode):
         "dasu": "9",
     }
     return map_mode[mode]
+
+
+def compare_dates_synch(start, now):
+    ltr = parse(start, parserinfo(True, False))
+    dtr = parse(now, parserinfo(True, False))
+    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
+    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
+    return left > right

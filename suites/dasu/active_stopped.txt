@@ -1,4 +1,5 @@
 -d test_output
+-L TRACE:INFO
 
 -i create_monitoring
 -i find_tender

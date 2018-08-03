@@ -6,10 +6,12 @@
 import sys
 import re
 import urllib2
+
 from iso8601 import parse_date
 from datetime import datetime, timedelta
 from dateutil.parser import parse
 from dateutil.parser import parserinfo
+import simplejson as json
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -207,14 +209,19 @@ def convert_data_for_web_client(value):
     return without_dots.replace(":", "")
 
 
-def convert_datetime_to_smart_format(isodate):
+def convert_datetime_to_smart_format(isodate, accuracy='s'):
     iso_dt = parse_date(isodate)
-    date_string = iso_dt.strftime("%d.%m.%Y %H:%M:%S")
+    if accuracy == 's':
+        date_string = iso_dt.strftime("%d.%m.%Y %H:%M:%S")
+    elif accuracy == 'm':
+        date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    elif accuracy == 'd':
+        date_string = iso_dt.strftime("%d.%m.%Y")
     return date_string
 
 
 def compare_dates_smarttender(cdb, smarttender, operator='=='):
-    ltr = parse(cdb, parserinfo(True, False), dayfirst=False)
+    ltr = parse(cdb, parserinfo(True, False))
     dtr = parse(smarttender, parserinfo(True, False), dayfirst=False)
     left = (ltr.strftime('%Y-%m-%dT%H:%M'))
     right = (dtr.strftime('%Y-%m-%dT%H:%M'))
@@ -226,3 +233,16 @@ def compare_dates_smarttender(cdb, smarttender, operator='=='):
         return left < right
     elif operator == '!=':
         return left != right
+
+
+def sleep_to(time):
+    end = (parse(time)).replace(tzinfo=None)
+    now = datetime.now()
+    subtract = end - now
+    return subtract.seconds, now
+
+
+def conver_date_from_cdb(date):
+    time = (parse(date)).replace(tzinfo=None)
+    time = (time.strftime('%Y-%m-%d %H:%M:%S'))
+    return time

@@ -9,9 +9,9 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${UAID}                         UA-2018-07-04-000042-a
-${tender_ID}                    65185416966049988973a95cd118b7a6
-${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
+${UAID}                         UA-2018-08-01-000053-c
+${tender_ID}                    8ce0fbe605544e4c9a01f2740dca7c44
+${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 *** Test Cases ***
@@ -91,7 +91,102 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   \  Звірити статус моніторингу
   \  Звірити опис рішення
   \  Звірити дату рішення
-  debug
+
+
+################################################################
+#               MAKE A DIALOG INDIVIDUALLY                     #
+################################################################
+Неможливість подати пояснення з валсної ініціативи для ролей: viewer, provider
+  [Tags]  make_a_dialogue_individually
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
+
+
+Подати пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  Switch Browser  tender_owner
+  Відкрити бланк пояснення з власної ініціативи
+  ${title}  Заповнити поле предмет пояснення з власної ініціативи
+  ${description}  Заповнити поле опис пояснення з власної ініціативи
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+  Відправити пояснення з власної ініціативи
+  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+
+
+Перевірити відображення пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити date пояснення з власної ініціативи
+  \  Перевірити title пояснення з власної ініціативи
+  \  Перевірити description пояснення з власної ініціативи
+  \  Перевірити documents.title пояснення з власної ініціативи
+  \  Перевірити documents.datePublished пояснення з власної ініціативи
+
+
+Підписати ЕЦП для пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+  No Operation
+
+
+################################################################
+#                      MAKE A DIALOG                           #
+################################################################
+Створити запит
+  [Tags]  make_a_dialogue
+  Сформувати та відправити запит організатору
+  Дочекатись синхронізації  dasu
+
+
+Перевірити відображення інформаціїї запиту
+  [Tags]  make_a_dialogue
+  Отримати дані про останній запит
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити title запиту  ${data_cdb}
+  \  Перевірити description запиту  ${data_cdb}
+  \  Перевірити date запиту  ${data_cdb}
+
+
+Неможливість відповісти на запит для ролей: viewer, provider
+  [Tags]  make_a_dialogue
+  :FOR  ${username}  IN  provider  viewer
+  \  Switch Browser  ${username}
+  \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
+
+
+Відповісти на запит
+  [Tags]  make_a_dialogue
+  Switch Browser  tender_owner
+  Відкрити бланк відповіді на запит
+  ${title}  Заповнити title відповіді на запит
+  ${description}  Заповнити description відповіді на запит
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogueAnswer-files']//input
+  Відправити відповідь на запит
+  Перевірити відправлені дані відповіді на запит  ${title}  ${description}  ${name}
+
+
+Перевірити відображення інформації про відповідь на запит
+  [Tags]  make_a_dialogue
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити date відповіді на запит
+  \  Перевірити title відповіді на запит
+  \  Перевірити description відповіді на запит
+  \  Перевірити documents.title відповіді на запит
+  \  Перевірити documents.datePublished відповіді на запит
+
+
+Підписати ЕЦП для відповіді на запит
+  [Tags]  make_a_dialogue
+  No Operation
 
 
 ################################################################
@@ -127,8 +222,15 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
 
 Перевірити дані інспекції
   [Tags]  inspection
-  debug
-
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Відкрити вікно інспекції
+  \  Перевірити наявність description інспекціїї
+  \  Перевірити наявність inspection_id інспекціїї
+  \  Перевірити наявність dateCreated інспекціїї
+  \  Закрити вікно інспекцій
 
 ################################################################
 #                      CLARIFICATION                           #
@@ -255,13 +357,14 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
 ################################################################
 #                        COMPLETE                              #
 ################################################################
-Підтвердити факт усунення порушення
+Підтвердити факт усунення порушення та перевести моніторинг в статус вирішено
   [Tags]  completed
   Сформувати рішення щодо усунення порушення
+  Дочекатись закінчення elimination period
   Перевести моніторинг в статус  completed
 
 
-Перевести моніторинг в статус вирішено
+Перевірити відображення інформації моніторингу в статусі в вирішено
   [Tags]  completed
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
@@ -270,99 +373,6 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Перевірити опис факту усунення порушення
-
-
-################################################################
-#                      MAKE A DIALOG                           #
-################################################################
-Неможливість опублікувати позов для ролей: viewer, provider
-  [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
-
-
-Подати пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  Switch Browser  tender_owner
-  Відкрити бланк пояснення з власної ініціативи
-  ${title}  Заповнити поле предмет пояснення з власної ініціативи
-  ${description}  Заповнити поле опис пояснення з власної ініціативи
-  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
-  Відправити пояснення з власної ініціативи
-  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
-
-
-Перевірити відображення пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити date пояснення з власної ініціативи
-  \  Перевірити title пояснення з власної ініціативи
-  \  Перевірити description пояснення з власної ініціативи
-  \  Перевірити documents.title пояснення з власної ініціативи
-  \  Перевірити documents.datePublished пояснення з власної ініціативи
-
-
-Підписати ЕЦП для пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  No Operation
-
-
-Створити запит
-  [Tags]  make_a_dialogue
-  Сформувати та відправити запит організатору
-  Дочекатись синхронізації  dasu
-
-
-Перевірити відображення інформаціїї запиту
-  [Tags]  make_a_dialogue
-  Отримати дані про останній запит
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити title запиту  ${data_cdb}
-  \  Перевірити description запиту  ${data_cdb}
-  \  Перевірити date запиту  ${data_cdb}
-
-
-Неможливість відповісти на запит для ролей: viewer, provider
-  [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
-
-
-Відповісти на запит
-  [Tags]  make_a_dialogue
-  Switch Browser  tender_owner
-  Відкрити бланк відповіді на запит
-  ${title}  Заповнити title відповіді на запит
-  ${description}  Заповнити description відповіді на запит
-  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogueAnswer-files']//input
-  Відправити відповідь на запит
-  Перевірити відправлені дані відповіді на запит  ${title}  ${description}  ${name}
-
-
-Перевірити відображення інформації про відповідь на запит
-  [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити date відповіді на запит
-  \  Перевірити title відповіді на запит
-  \  Перевірити description відповіді на запит
-  \  Перевірити documents.title відповіді на запит
-  \  Перевірити documents.datePublished відповіді на запит
-
-
-Підписати ЕЦП для відповіді на запит
-  [Tags]  make_a_dialogue
-  No Operation
 
 
 ################################################################
@@ -449,6 +459,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   Log  ${location}  WARN
 
 
+
 Відкрити вкладку моніторингу
   ${tab}             Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab')]//*[contains(text(), 'Моніторинг ДАСУ')]
   ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and not(contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
@@ -473,7 +484,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   [Arguments]  ${tender_ID}
   ${name}  create_sentence  1
   ${data_cdb}  create_monitoring  ${tender_ID}  ${name}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   Log  ${data_cdb}
   ${data}  Create Dictionary  id  ${data_cdb['data']['id']}
   Set Global Variable  ${data}
@@ -487,7 +498,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   Дочекатись синхронізації  dasu
 
 
@@ -499,7 +510,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${description}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
 
 
 Перевести моніторинг в статус
@@ -508,7 +519,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${status}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   Дочекатись синхронізації  dasu
 
 
@@ -520,7 +531,15 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${description}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
+
+
+Дочекатись закінчення elimination period
+  ${cdb}  Set Variable  ${data_cdb['data']['eliminationPeriod']['endDate']}
+  ${until}  conver_date_from_cdb  ${cdb}
+  ${now}  Get Current Date
+  ${sleep}  Subtract Date From Date  ${until}  ${now}
+  Run Keyword If  ${sleep} > ${0}  Sleep  ${sleep}
 
 
 Знайти потрібний моніторинг за номером
@@ -591,7 +610,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${auditFinding}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
 
 
 Звірити результат висновку
@@ -690,7 +709,6 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
 Звірити documents.datePublished запиту
   ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
-  ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
   Should Be Equal  ${status}  ${True}
 
@@ -881,7 +899,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   ${posts}  Create Dictionary  title  ${title}
   ${list}  Create List  ${posts}
   Set To Dictionary  ${data}  posts  ${list}
@@ -985,7 +1003,7 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
 
 
 Перевірити опис зупинення моніторингу
@@ -1010,12 +1028,13 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ...  ${relatedParty}
   ...  ${data['id']}
   Log  ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
 
 
-Перевірити відповідь
+Перевірити та зберегти відповідь
   [Arguments]  ${data_cdb}
   Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
+  Set Global Variable  ${data_cdb}
 
 
 Сформувати та опублікувати інспекцію
@@ -1023,6 +1042,34 @@ ${id_for_skip_creating}         03fc4b077b94473d9db19545503d257f
   ${data_cdb}  inspection
   ...  ${description}
   ...  ${data['id']}
-  Log ${data_cdb}
-  Перевірити відповідь  ${data_cdb}
+  Log  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   Дочекатись синхронізації  dasu
+
+
+Відкрити вікно інспекції
+  Sleep  2
+  Click Element  ${monitoring_selector}//*[@data-qa="inspection-show"]
+
+
+Перевірити наявність description інспекціїї
+  ${description}  Set Variable  ${data_cdb['data']['description']}
+  Page Should Contain Element  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), '${description}')]
+
+
+Перевірити наявність inspection_id інспекціїї
+  ${inspection_id}  Set Variable  ${data_cdb['data']['inspection_id']}
+  Page Should Contain Element  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), '${inspection_id}')]
+
+
+Перевірити наявність dateCreated інспекціїї
+  ${dateCreated}  Set Variable  ${data_cdb['data']['dateCreated']}
+  ${data_converted}  convert_datetime_to_smart_format  ${dateCreated}  m
+  Page Should Contain Element  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), '${data_converted}')]
+
+
+Закрити вікно інспекцій
+  Click Element  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), 'Закрити')]
+  ${status}  Run Keyword And Return Status
+  ...  Wait Until Element Is Not Visible  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), 'Закрити')]  20
+  Run Keyword If  '${status}' == 'False'  Закрити вікно інспекцій

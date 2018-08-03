@@ -1,16 +1,18 @@
 -d test_output
+-L TRACE:INFO
 
 #-i create_monitoring
 -i find_tender
 -i open_monitoring_page
 
--i activation
--i make_a_dialogue_individually
+#-i activation
+#-i make_a_dialogue_individually
+#-i make_a_dialogue
 
--i addressed
--i request_for_clarification
--i violation_elimination_report
+#-i addressed
 #-i inspection
+#-i request_for_clarification
+#-i violation_elimination_report
+#-i appeal
 
--i appeal
 -i completed
