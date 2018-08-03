@@ -709,7 +709,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Звірити documents.datePublished запиту
   ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
-  ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
+  ${status}  compare_dates_smarttender  ${cdb_time}  ${site}
   Should Be Equal  ${status}  ${True}
 
 
@@ -1044,7 +1044,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ...  ${data['id']}
   Log  ${data_cdb}
   Перевірити та зберегти відповідь  ${data_cdb}
-  Дочекатись синхронізації  dasu
+  Дочекатись синхронізації  inspection
 
 
 Відкрити вікно інспекції

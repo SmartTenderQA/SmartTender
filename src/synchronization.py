@@ -21,6 +21,7 @@ def synchronization_map(mode):
         "assets": "7",
         "lots": "8",
         "dasu": "9",
+        "inspection": "10",
     }
     return map_mode[mode]
 
