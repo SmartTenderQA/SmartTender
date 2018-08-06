@@ -1007,13 +1007,13 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити опис зупинення моніторингу
-  ${cdb_description}  Set Variable  ${data_cdb['data']['cancellation']['description']}
+  ${cdb_description}  Set Variable  ${data_cdb['cancellation']['description']}
   ${description}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-cancellation-description"]/..
   Should Be Equal  ${cdb_description}  ${description}
 
 
 Перевірити дату зупинення моніторингу
-  ${cdb_time}  Set Variable  ${data_cdb['data']['cancellation']['datePublished']}
+  ${cdb_time}  Set Variable  ${data_cdb['cancellation']['datePublished']}
   ${text}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-cancellation-description"]/../preceding-sibling::div
   ${site_time}  convert_data_from_the_page  ${text}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
