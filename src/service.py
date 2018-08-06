@@ -190,6 +190,7 @@ def download_file_and_return_content(url, download_path):
     file_content = response.read()
     return file_content
 
+
 def smart_get_time(v=0, accuracy='m'):
     delta = int(v)
     time = datetime.now() + timedelta(days=delta)
@@ -197,6 +198,7 @@ def smart_get_time(v=0, accuracy='m'):
         return ('{:%d.%m.%Y %H:%M}'.format(time))
     elif accuracy == 'd':
         return ('{:%d.%m.%Y}'.format(time))
+
 
 def convert_data_for_web_client(value):
     without_spaces = value.replace(" ", "")

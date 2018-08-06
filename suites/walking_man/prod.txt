@@ -2,3 +2,5 @@
 -v start_page:http://smarttender.biz
 -v role:viewer
 -n non-critical
+
+-e -prod

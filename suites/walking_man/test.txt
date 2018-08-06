@@ -5,3 +5,5 @@
 
 -e analytic
 -e skip_for_test
+-e check
+-e -test

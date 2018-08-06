@@ -117,6 +117,7 @@ Open button
   ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
   ...  ELSE  Set Variable  ${href}
   Go To  ${href}
+  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 conver dict to json

@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${tender}                           Простой однолотовый
 ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text(), '${tender}') and @href]
-${make proposal link}               xpath=//div[@class='row']//a[contains(@class, 'button')]
+${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubmit']
 
 
 *** Test Cases ***
@@ -25,7 +25,7 @@ ${make proposal link}               xpath=//div[@class='row']//a[contains(@class
 
 
 Подати пропозицію
-  Перевірити кнопку подачі пропозиції  ${make proposal link}
+  Wait Until Keyword Succeeds  60  3  Натиснути кнопку подачі пропозиції  ${make proposal link}
   ${location}  Get Location
   Set To Dictionary  ${data}  tender_url=${location}
   Заповтини поле з ціною
@@ -146,3 +146,9 @@ Postcondition
   ${href}  Get Element Attribute  xpath=//*[contains(text(), 'Список завантажених файлів')]/..//td[2]//a  href
   ${content}  download_file_and_return_content  ${href}
   Should Be Equal  ${content}  ${data.file.content}
+
+Натиснути кнопку подачі пропозиції
+  [Arguments]  ${selector}
+  Run Keyword And Ignore Error  Page Should Contain Element  ${selector}
+  Run Keyword And Ignore Error  Click Element  ${selector}
+  Location Should Contain  /edit/

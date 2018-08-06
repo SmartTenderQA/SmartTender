@@ -31,7 +31,7 @@ ${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='ho
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
 ${RegisterAnchor}                    css=#RegisterAnchor
-${instruktsii link}                  css=#LoginDiv a[href='/instruktsii/']
+${instruktsii link}                  css=#LoginDiv a[href='/instruktсii/']
 ${h1 header text}                    css=#main h1
 ${feedback link}                     css=.footer-feedback a
 ${site map}                          css=a[href='/karta-saytu/']
@@ -42,7 +42,7 @@ ${contract link1}                    css=li:nth-child(1)>a
 ${contract link2}                    css=li:nth-child(2)>a
 ${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
 ${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
-${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]
+${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
 ${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
@@ -108,6 +108,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   ...  analytic
   Run Keyword If  '${role}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
+  ...  AND  Вибрати минулий місяці при відсутності тендерів
   ...  AND  Перевірити наявність діаграми та таблиці
   ...  AND  Перевірити роботу кругової діаграми
   ...  AND  Перевірити зміну періоду
@@ -437,6 +438,31 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість договорів
   Перейти по результату пошуку  ${item dogovory}
 
+Об'єкти приватизації
+  [Tags]  sales
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
+Інформаційні повідомлення
+  [Tags]  sales
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
+Аукціони
+  [Tags]  sales
+  ...  -test
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Перевірити вкладку мала приватизація
+  Вибрати тип процедури для малої приватизації
+  Порахувати кількість торгів малої приватизації
+  Перевірити пошук малої приватизації
+
 Аукціони на продаж активів банків
   [Tags]  sales
   Зайти на сторінку аукціони на продаж активів банків
@@ -462,7 +488,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 Продаж майна банків, що ліквідуються
-  [Tags]  sales  non-critical
+  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -520,6 +546,25 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
+Англійський аукціон. Мала приватизація
+  [Tags]  sales
+  ...  -prod
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+
+Голландський аукціон. Мала приватизація
+  [Tags]  broken
+  ...  -prod
+  ...  -test
+  Зайти на сторінку аукціони на продаж активів держпідприємств
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+
 Торги RIALTO
   [Tags]  rialto
   Зайти на сторінку RIALTO
@@ -559,17 +604,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Інструкції
   [Tags]  site
-  Перейти на сторонку інструкції
+  Відкрити сторінку інструкцій
   Перевірити заголовок сторінки інструкцій
-  Порахувати кількість інструкцій
+  Перевірити випаючий список інструкцій
 
-Інструкції2
-  [Tags]  site
-  ${location}  Get Location
-  Go To  ${location}TenderInstruction/
-  ${should}  Set variable  Інструкції
-  ${is}  Get Text  css=h1
-  Should Be Equal  ${is}  ${should}
 
 Зворотній зв'язок
   [Tags]  site
@@ -597,7 +635,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити лінки курсів валют
 
 Перевірка результатів тесту
-  [Tags]  non-critical  procurement
+  [Tags]  non-critical  procurement  check
   Log  ${count multiple lot checked}
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
   [Teardown]  No Operation
@@ -753,18 +791,29 @@ Suite Postcondition
   ${is}  Get Text  css=.main-content h3
   Should Be Equal  ${is}  ${should}
 
-Перейти на сторонку інструкції
-  Click Element  ${instruktsii link}
-  Location Should Contain  /instruktsii/
+Відкрити сторінку інструкцій
+  Click Element  xpath=//*[@href='/instruktcii/']
+  Location Should Contain  instruktcii
+  Дочекатись закінчення загрузки сторінки
 
 Перевірити заголовок сторінки інструкцій
-  ${should}  Set variable  Інструкції
-  ${is}  Get Text  ${h1 header text}
-  Should Be Equal  ${is}  ${should}
+  ${get}  Get Text  xpath=//h1
+  Should Be Equal  ${get}  Інструкції
 
-Порахувати кількість інструкцій
-  ${count}  Get Element Count  css=.item
-  Run Keyword if  '${count}' == '0'  Fail  Хто сховав Інструкції?!
+Перевірити випаючий список інструкцій
+  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
+  ${n}  Get Element Count  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class]
+  ${list}  Create List
+  :FOR  ${i}  IN RANGE  ${n}
+  \  ${t}  Evaluate  str(${i}+1)
+  \  ${r}  Get Text  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class][${t}]
+  \  Append To List  ${list}  ${r}
+  List Should Contain Value  ${list}  Показати всі
+  List Should Contain Value  ${list}  Інструкції загального напрямку
+  List Should Contain Value  ${list}  Інструкції для організатора
+  List Should Contain Value  ${list}  Інструкції для учасника
+  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
+  Sleep  2
 
 Зайти на сторінку зворотній зв'язок
   Open button  ${feedback link}
@@ -893,7 +942,7 @@ Suite Postcondition
 
 Перевірити вкладку активи
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
+  Дочекатись закінчення загрузки сторінки
   ${should}  Set variable  Реєстр активів ФГВФО
   ${is}  Get Text  ${auction active header}
   Should Be Equal  ${is}  ${should}
@@ -987,7 +1036,9 @@ Suite Postcondition
 
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
+  Дочекатись закінчення загрузки сторінки(skeleton)
   Wait Until Page Contains Element  ${selector}
+  Sleep  .5
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${should}
 
@@ -1100,11 +1151,27 @@ Change Start Page
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
 
+
 Відкрити сторінку аналітики
   Go to  ${analytics_page}
   Дочекатись закінчення загрузки сторінки
   ${value}=  Get text  xpath=//*[@class="text-center"]/h3
   Should Contain  'Публічні закупівлі'  ${value}
+
+
+Вибрати минулий місяці при відсутності тендерів
+  ${number_of_tenders}  Get Text  ${num_of_tenders}
+  Run Keyword If  '${number_of_tenders}' == '0'  Вибрати інший період аукціону  Минулий місяць
+  ${number_of_tenders}  Get Text  ${num_of_tenders}
+  Run Keyword If  "${number_of_tenders}" == "0"  Fail  За минулий місяць повинні бути тендери
+
+
+Вибрати інший період аукціону
+  [Arguments]  ${period}
+  Click Element  xpath=//*[contains(@class, 'calendar')]
+  Click Element  xpath=//div[contains(text(), '${period}')]
+  Дочекатись закінчення загрузки сторінки
+
 
 Перевірити наявність діаграми та таблиці
   ${diag}  Set Variable  xpath=(//*[@class="echarts"]//canvas)[1]
@@ -1112,24 +1179,62 @@ Change Start Page
   Element Should Be Visible  ${diag}
   Element Should Be Visible  ${table}
 
+
 Перевірити роботу кругової діаграми
   ${tenders_before}  Get Text  ${num_of_tenders}
   ${tenders_before}  Evaluate  int(${tenders_before})
   Element Should Be Visible  xpath=(//*[@class="echarts"]//canvas)[2]
   Click Element At Coordinates  xpath=(//*[@class="echarts"]//canvas)[2]  80  0
+  Дочекатись закінчення загрузки сторінки
   Wait Until Keyword Succeeds  1m  5s  Element Should Be Visible  xpath=//*[contains(@class, 'tag-checked')]
   ${tenders_after}  Get Text  ${num_of_tenders}
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
 
+
 Перевірити зміну періоду
   ${tenders_before}  Get Text  ${num_of_tenders}
   ${tenders_before}  Evaluate  int(${tenders_before})
-  Click Element  xpath=//*[contains(@class, 'calendar')]
-  Click Element  xpath=//div[contains(text(), 'Поточний рік')]
-  Дочекатись закінчення загрузки сторінки
+  Вибрати інший період аукціону  Поточний рік
   ${tenders_after}  Get Text  ${num_of_tenders}
+  ${tenders_after}  get_number  ${tenders_after}
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
 
 
+Перевірити вкладку мала приватизація
+  Sleep  1
+  Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  Location Should Contain  /small-privatization/
+
+
+Вибрати тип процедури для малої приватизації
+  Click Element  //*[contains(text(), "${TESTNAME}")]
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${status}  Run Keyword And Return Status  Page Should Contain Element
+  ...  //*[contains(text(), "${TESTNAME}")]/../*[contains(@class, 'checked')]
+  Run Keyword If  '${status}' == 'False' and "${TESTNAME}" != "Аукціони"  Вибрати тип процедури для малої приватизації
+
+Порахувати кількість торгів малої приватизації
+  ${n}  Get Element Count  //*[@class="content-block"]/div
+  Run Keyword if  '${n}' < 1  Fail  Look above
+
+Перевірити пошук малої приватизації
+  #${id}  Run Keyword If
+  #...  Get Text  //*[@class="content-block"]/div[last()]//p[contains(text(), 'UA')]
+  #...  ELSE  Get text  //*[@class="content-block"]/div[last()]//h4
+  ${id}  Get Text  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]
+  Виконати пошук малої приватизації  ${id}
+  Open Button  //*[@class="content-block"]/div//a
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${text}  Get Text  //h4/a|//h4/following-sibling::a
+  Should Be Equal  ${text}  ${id}
+
+Виконати пошук малої приватизації
+  [Arguments]  ${id}
+  Input Text  //*[contains(@class, 'inner-button')]//input  ${id}
+  Click Element  //*[contains(@class, 'inner-button')]//input/following-sibling::*//button
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${n}  Get Element Count  //*[@class="content-block"]/div
+  Should Be Equal  '${n}'  '1'
