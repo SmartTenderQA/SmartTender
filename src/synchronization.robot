@@ -14,7 +14,11 @@ Library     synchronization.py
   ${n}  synchronization_map  ${mode}
   ${url}  Set Variable
   ...  http://test.smarttender.biz/ws/webservice.asmx/Execute?calcId=_QA.GET.LAST.SYNCHRONIZATION&args={"SEGMENT":${n}}
-  Go To  ${url}
+
+  ${location}  Get Location
+  Run Keyword If  '/ws/webservice.asmx/' in '${location}'  Reload Page
+  ...  ELSE  Go To  ${url}
+
   ${synch dict}  Get Text  css=.text
   ${dict}  synchronization  ${synch dict}
   ${DateStart}  Set Variable  ${dict[0]}
