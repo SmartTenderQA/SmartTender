@@ -6,9 +6,9 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 ${forgot password locator}                  xpath=//*[@id="loginForm"]/h5/a
-${forgot password link}                     http://test.smarttender.biz/vidnovlennya-parolyu/
+${forgot password link}                     https://test.smarttender.biz/vidnovlennya-parolyu/
 ${registration locator}                     xpath=//*[@id="login-modal"]//div[2]/p/a
-${registration link}                        http://test.smarttender.biz/reestratsiya/
+${registration link}                        https://test.smarttender.biz/reestratsiya/
 
 
 *** Test Cases ***
