@@ -44,7 +44,7 @@ def get_user_variable(user, users_variable):
         },
         'user2': {
             'login': 'SmartTenderProvider2@gmail.com',
-            'password': 'np3ozi"',
+            'password': 'np3ozi',
         },
         'wrong user': {
             'login': "I don't exist@gmail.com",
