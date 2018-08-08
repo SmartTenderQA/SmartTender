@@ -1035,6 +1035,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Перевірити та зберегти відповідь
   [Arguments]  ${data_cdb}
   Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
+  ${data_cdb}  Set Variable  ${data_cdb['data']}
   Set Global Variable  ${data_cdb}
 
 
