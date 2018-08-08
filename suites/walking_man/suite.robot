@@ -553,7 +553,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон з умовами, без умов
 
 Голландський аукціон. Мала приватизація
   [Tags]  broken
