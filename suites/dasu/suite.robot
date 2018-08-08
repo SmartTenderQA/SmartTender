@@ -477,17 +477,22 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   [Arguments]  ${field}=${None}  ${title}=${None}
   ${data_cdb}  get_monitoring_data  ${data['id']}  ${field}  ${title}
   Log  ${data_cdb}
-  Set Global Variable  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}
   [Return]  ${data_cdb}
+
+
+Перевірити та зберегти відповідь
+  [Arguments]  ${data_cdb}
+  Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
+  Set Global Variable  ${data_cdb}
 
 
 Розпочати моніторинг по тендеру
   [Arguments]  ${tender_ID}
   ${name}  create_sentence  1
   ${data_cdb}  create_monitoring  ${tender_ID}  ${name}
-  Перевірити та зберегти відповідь  ${data_cdb}
   Log  ${data_cdb}
-  ${data}  Create Dictionary  id  ${data_cdb['id']}
+  ${data}  Create Dictionary  id  ${data_cdb['data']['id']}
   Set Global Variable  ${data}
 
 
@@ -536,7 +541,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Дочекатись закінчення elimination period
-  ${cdb}  Set Variable  ${data_cdb['eliminationPeriod']['endDate']}
+  ${cdb}  Set Variable  ${data_cdb['data']['eliminationPeriod']['endDate']}
   ${until}  convert_date_from_cdb  ${cdb}
   ${now}  Get Current Date
   ${sleep}  Subtract Date From Date  ${until}  ${now}
@@ -559,14 +564,14 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Звірити статус моніторингу
-  ${cdb}  Set Variable  ${data_cdb['status']}
+  ${cdb}  Set Variable  ${data_cdb['data']['status']}
   ${text}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-statusTitle']
   ${site}  convert_data_from_the_page  ${text}  status
   Should Be Equal  ${site}  ${cdb}
 
 
 Звірити дату створення
-  ${cdb_time}  Set Variable  ${data_cdb['dateCreated']}
+  ${cdb_time}  Set Variable  ${data_cdb['data']['dateCreated']}
   ${text}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-number']/..
   ${site_time}  convert_data_from_the_page  ${text}  dateCreated
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -574,25 +579,25 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Звірити адитора
-  ${cdb}  Set Variable  ${data_cdb['parties'][0]['contactPoint']['name']}
+  ${cdb}  Set Variable  ${data_cdb['data']['parties'][0]['contactPoint']['name']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Аудитори')]/following-sibling::ul
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити опис сказування
-  ${cdb}  Set Variable  ${data_cdb['cancellation']['description']}
+  ${cdb}  Set Variable  ${data_cdb['data']['cancellation']['description']}
   ${site}  Get Text  ${monitoring_selector}//div[contains(text(), 'Відмінено')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити опис рішення
-  ${cdb}  Set Variable  ${data_cdb['decision']['description']}
+  ${cdb}  Set Variable  ${data_cdb['data']['decision']['description']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити дату рішення
-  ${cdb_time}  Set Variable  ${data_cdb['decision']['datePublished']}
+  ${cdb_time}  Set Variable  ${data_cdb['data']['decision']['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Рішення про початок моніторингу')]
   ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -615,14 +620,14 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Звірити результат висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['violationOccurred']}
+  ${cdb}  Set Variable  ${data_cdb['data']['conclusion']['violationOccurred']}
   ${text}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]/following-sibling::*/*[@class='break-word']/div[1]/div
   ${site}  convert_data_from_the_page  ${text}  status
   Should Be Equal  ${site}  ${cdb}
 
 
 Звірити дату висновку
-  ${cdb_time}  Set Variable  ${data_cdb['conclusion']['dateCreated']}
+  ${cdb_time}  Set Variable  ${data_cdb['data']['conclusion']['dateCreated']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок')]
   ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -630,19 +635,19 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Звірити опис висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['description']}
+  ${cdb}  Set Variable  ${data_cdb['data']['conclusion']['description']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Опис')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити інформацію про результати висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['auditFinding']}
+  ${cdb}  Set Variable  ${data_cdb['data']['conclusion']['auditFinding']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Інформація про результати моніторингу')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити обов'язки висновку
-  ${cdb}  Set Variable  ${data_cdb['conclusion']['stringsAttached']}
+  ${cdb}  Set Variable  ${data_cdb['data']['conclusion']['stringsAttached']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "Забов'язання щодо усунення порушень")]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
@@ -678,23 +683,23 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Перевірити відправлені дані запиту за роз'ясненнями щодо висновку
   [Arguments]  ${title}  ${description}  ${name}
   Отримати дані моніторингу по API  posts  ${title}
-  Should Be Equal  ${title}  ${data_cdb['title']}
-  Should Be Equal  ${description}  ${data_cdb['description']}
-  Should Be Equal  ${name}  ${data_cdb['documents'][0]['title']}
+  Should Be Equal  ${title}  ${data_cdb['data']['title']}
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
+  Should Be Equal  ${name}  ${data_cdb['data']['documents'][0]['title']}
 
 
 Звірити title запиту
-  Page Should Contain Element  xpath=//*[contains(text(), "${data_cdb['title']}")]
+  Page Should Contain Element  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]
 
 
 Звірити description запиту
-  ${cdb}  Set Variable  ${data_cdb['description']}
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/following-sibling::*
+  ${cdb}  Set Variable  ${data_cdb['data']['description']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['data']['title']}')]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити datePublished запиту
-  ${cdb_time}  Set Variable  ${data_cdb['datePublished']}
+  ${cdb_time}  Set Variable  ${data_cdb['data']['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]
   ${site_time}  convert_data_from_the_page  ${site}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -702,14 +707,14 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Звірити documents.title запиту
-  ${cdb}  Set Variable  ${data_cdb['documents'][0]['title']}
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a
+  ${cdb}  Set Variable  ${data_cdb['data']['documents'][0]['title']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "${data_cdb['data']['title']}")]/../following-sibling::*//a
   Should Be Equal  ${cdb}  ${site}
 
 
 Звірити documents.datePublished запиту
-  ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
+  ${cdb_time}  Set Variable  ${data_cdb['data']['documents'][0]['datePublished']}
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['data']['title']}')]/../following-sibling::*//a/../following-sibling::*
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site}
   Should Be Equal  ${status}  ${True}
 
@@ -737,8 +742,8 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Перевірити відправлені дані звіту про усунення порушення
   [Arguments]  ${description}  ${file_name}
   Отримати дані моніторингу по API
-  Should Be Equal  ${data_cdb['eliminationReport']['description']}  ${description}
-  Should Be Equal  ${data_cdb['eliminationReport']['documents'][0]['title']}  ${file_name}
+  Should Be Equal  ${data_cdb['data']['eliminationReport']['description']}  ${description}
+  Should Be Equal  ${data_cdb['data']['eliminationReport']['documents'][0]['title']}  ${file_name}
 
 
 Вікрити бланк позову
@@ -764,12 +769,12 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Перевірити відправлені дані позову
   [Arguments]  ${description}  ${file_name}
   Отримати дані моніторингу по API
-  Should Be Equal  ${data_cdb['appeal']['description']}  ${description}
-  Should Be Equal  ${data_cdb['appeal']['documents'][0]['title']}  ${file_name}
+  Should Be Equal  ${data_cdb['data']['appeal']['description']}  ${description}
+  Should Be Equal  ${data_cdb['data']['appeal']['documents'][0]['title']}  ${file_name}
 
 
 Перевірити дату інформації про усунення порушення
-  ${date_cdb}  Set Variable  ${data_cdb['eliminationReport']['dateCreated']}
+  ${date_cdb}  Set Variable  ${data_cdb['data']['eliminationReport']['dateCreated']}
   ${text_site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Звіт про усунення порушень')]
   ${date_site}  convert_data_from_the_page  ${text_site}  decision.date
   ${status}  compare_dates_smarttender  ${date_site}  ${date_cdb}
@@ -777,26 +782,26 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити description інформації про усунення порушення
-  ${description}  Set Variable  ${data_cdb['eliminationReport']['description']}
+  ${description}  Set Variable  ${data_cdb['data']['eliminationReport']['description']}
   ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-eliminationReport-description']
   Should Be Equal  ${description}  ${description_site}
 
 
 Перевірити documents.title інформації про усунення порушення
-  ${title}  Set Variable  ${data_cdb['eliminationReport']['documents'][0]['title']}
+  ${title}  Set Variable  ${data_cdb['data']['eliminationReport']['documents'][0]['title']}
   ${title_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]//a
   Should Be Equal  ${title}  ${title_site}
 
 
 Перевірити documents.datePublished інформації про усунення порушення
-  ${file_date}  Set Variable  ${data_cdb['eliminationReport']['documents'][0]['datePublished']}
+  ${file_date}  Set Variable  ${data_cdb['data']['eliminationReport']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]/div/div/div[2]
   ${status}  compare_dates_smarttender  ${file_date}  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
 
 Перевірити дату позову
-  ${date_cdb}  Set Variable  ${data_cdb['appeal']['datePublished']}
+  ${date_cdb}  Set Variable  ${data_cdb['data']['appeal']['datePublished']}
   ${text_site}  Get Text  ${monitoring_selector}//*[contains(text(), 'Висновок оскаржено в суді')]
   ${date_site}  convert_data_from_the_page  ${text_site}  decision.date
   ${status}  compare_dates_smarttender  ${date_site}  ${date_cdb}
@@ -804,26 +809,26 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити description позову
-  ${description}  Set Variable  ${data_cdb['appeal']['description']}
+  ${description}  Set Variable  ${data_cdb['data']['appeal']['description']}
   ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-appeal-description']
   Should Be Equal  ${description}  ${description_site}
 
 
 Перевірити documents.title позову
-  ${title}  Set Variable  ${data_cdb['appeal']['documents'][0]['title']}
+  ${title}  Set Variable  ${data_cdb['data']['appeal']['documents'][0]['title']}
   ${title_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]//a
   Should Be Equal  ${title}  ${title_site}
 
 
 Перевірити documents.datePublished позову
-  ${file_date}  Set Variable  ${data_cdb['appeal']['documents'][0]['datePublished']}
+  ${file_date}  Set Variable  ${data_cdb['data']['appeal']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]/div/div/div[2]
   ${status}  compare_dates_smarttender  ${file_date}  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
 
 Перевірити опис факту усунення порушення
-  ${description}  Set Variable  ${data_cdb['eliminationResolution']['description']}
+  ${description}  Set Variable  ${data_cdb['data']['eliminationResolution']['description']}
   ${description_site}  Get Text  ${monitoring_selector}//*[@data-qa='monitoring-eliminationResolution-description']
   Should Be Equal  ${description}  ${description_site}
 
@@ -857,36 +862,36 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Перевірити відправлені дані пояснення з власної ініціативи
   [Arguments]  ${title}  ${description}  ${name}
   Отримати дані моніторингу по API  posts  ${title}
-  Should Be Equal  ${title}  ${data_cdb['title']}
-  Should Be Equal  ${description}  ${data_cdb['description']}
-  Should Be Equal  ${name}  ${data_cdb['documents'][0]['title']}
+  Should Be Equal  ${title}  ${data_cdb['data']['title']}
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
+  Should Be Equal  ${name}  ${data_cdb['data']['documents'][0]['title']}
 
 
 Перевірити date пояснення з власної ініціативи
-  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]//*[contains(text(), 'Пояснення з ініціативи організатора')]
+  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-card-body'][1]//*[contains(text(), 'Пояснення з ініціативи організатора')]
   ${date_site}  convert_data_from_the_page  ${text}  decision.date
-  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['datePublished']}
+  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['data']['datePublished']}
   Should Be Equal  ${status}  ${True}
 
 
 Перевірити title пояснення з власної ініціативи
-  ${title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]
-  Should Be Equal  ${title}  ${data_cdb['title']}
+  ${title}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['data']['title']}
 
 
 Перевірити description пояснення з власної ініціативи
-  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//*[@class='break-word']/div[2]
-  Should Be Equal  ${description}  ${data_cdb['description']}
+  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//*[@class='break-word']/div[2]
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
 
 
 Перевірити documents.title пояснення з власної ініціативи
-  ${documents.title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a
-  Should Be Equal  ${documents.title}  ${data_cdb['documents'][0]['title']}
+  ${documents.title}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//a
+  Should Be Equal  ${documents.title}  ${data_cdb['data']['documents'][0]['title']}
 
 
 Перевірити documents.datePublished пояснення з власної ініціативи
-  ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${status}  compare_dates_smarttender  ${documents.datePublished}  ${data_cdb['documents'][0]['datePublished']}
+  ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
+  ${status}  compare_dates_smarttender  ${documents.datePublished}  ${data_cdb['data']['documents'][0]['datePublished']}
   Should Be Equal  ${status}  ${True}
 
 
@@ -916,20 +921,20 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 Перевірити title запиту
   [Arguments]  ${data_cdb}
-  Page Should Contain Element  xpath=//*[contains(text(), "${data_cdb['title']}")]
+  Page Should Contain Element  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]
 
 
 Перевірити description запиту
   [Arguments]  ${data_cdb}
-  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/following-sibling::div
-  Should Be Equal  ${description}  ${data_cdb['description']}
+  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/following-sibling::div
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
 
 
 Перевірити date запиту
   [Arguments]  ${data_cdb}
-  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class="ivu-row"]//*[@class="text-muted"]
+  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class="ivu-row"]//*[@class="text-muted"]
   ${date_site}  convert_data_from_the_page  ${text}  decision.date
-  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['datePublished']}
+  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['data']['datePublished']}
   Should Be Equal  ${status}  ${True}
 
 
@@ -948,7 +953,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Відкрити бланк відповіді на запит
-  Click Element  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class="ivu-row"]//*[contains(text(), "Відповісти на запит")]
+  Click Element  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class="ivu-row"]//*[contains(text(), "Відповісти на запит")]
   Wait Until Page Contains Element  xpath=//*[@data-qa='dialogueAnswer-title']  60
 
 
@@ -963,36 +968,36 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   [Arguments]  ${title}  ${description}  ${name}
   ${data_cdb}  Отримати дані моніторингу по API  posts  ${title}
   Set Global Variable  ${data_cdb}
-  Should Be Equal  ${title}  ${data_cdb['title']}
-  Should Be Equal  ${description}  ${data_cdb['description']}
-  Should Be Equal  ${name}  ${data_cdb['documents'][0]['title']}
+  Should Be Equal  ${title}  ${data_cdb['data']['title']}
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
+  Should Be Equal  ${name}  ${data_cdb['data']['documents'][0]['title']}
 
 
 Перевірити date відповіді на запит
-  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]//*[contains(text(), 'Відповідь організатора')]
+  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-card-body'][1]//*[contains(text(), 'Відповідь організатора')]
   ${date_site}  convert_data_from_the_page  ${text}  decision.date
-  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['datePublished']}
+  ${status}  compare_dates_smarttender  ${date_site}  ${data_cdb['data']['datePublished']}
   Should Be Equal  ${status}  ${True}
 
 
 Перевірити title відповіді на запит
-  ${title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]
-  Should Be Equal  ${title}  ${data_cdb['title']}
+  ${title}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['data']['title']}
 
 
 Перевірити description відповіді на запит
-  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//*[@class='break-word']/div[2]
-  Should Be Equal  ${description}  ${data_cdb['description']}
+  ${description}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//*[@class='break-word']/div[2]
+  Should Be Equal  ${description}  ${data_cdb['data']['description']}
 
 
 Перевірити documents.title відповіді на запит
-  ${documents.title}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a
-  Should Be Equal  ${documents.title}  ${data_cdb['documents'][0]['title']}
+  ${documents.title}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//a
+  Should Be Equal  ${documents.title}  ${data_cdb['data']['documents'][0]['title']}
 
 
 Перевірити documents.datePublished відповіді на запит
-  ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${status}  compare_dates_smarttender  ${documents.datePublished}  ${data_cdb['documents'][0]['datePublished']}
+  ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['data']['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
+  ${status}  compare_dates_smarttender  ${documents.datePublished}  ${data_cdb['data']['documents'][0]['datePublished']}
   Should Be Equal  ${status}  ${True}
 
 
@@ -1008,13 +1013,13 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити опис зупинення моніторингу
-  ${cdb_description}  Set Variable  ${data_cdb['cancellation']['description']}
+  ${cdb_description}  Set Variable  ${data_cdb['data']['cancellation']['description']}
   ${description}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-cancellation-description"]/..
   Should Be Equal  ${cdb_description}  ${description}
 
 
 Перевірити дату зупинення моніторингу
-  ${cdb_time}  Set Variable  ${data_cdb['cancellation']['datePublished']}
+  ${cdb_time}  Set Variable  ${data_cdb['data']['cancellation']['datePublished']}
   ${text}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-cancellation-description"]/../preceding-sibling::div
   ${site_time}  convert_data_from_the_page  ${text}  decision.date
   ${status}  compare_dates_smarttender  ${cdb_time}  ${site_time}
@@ -1030,13 +1035,6 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ...  ${data['id']}
   Log  ${data_cdb}
   Перевірити та зберегти відповідь  ${data_cdb}
-
-
-Перевірити та зберегти відповідь
-  [Arguments]  ${data_cdb}
-  Run Keyword And Ignore Error  Run keyword If  '${data_cdb["status"]}' == 'error'  Fatal Error  Look at the response
-  ${data_cdb}  Set Variable  ${data_cdb['data']}
-  Set Global Variable  ${data_cdb}
 
 
 Сформувати та опублікувати інспекцію
@@ -1055,17 +1053,17 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити наявність description інспекціїї
-  ${description}  Set Variable  ${data_cdb['description']}
+  ${description}  Set Variable  ${data_cdb['data']['description']}
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${description}")]
 
 
 Перевірити наявність inspection_id інспекціїї
-  ${inspection_id}  Set Variable  ${data_cdb['inspection_id']}
+  ${inspection_id}  Set Variable  ${data_cdb['data']['inspection_id']}
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${inspection_id}")]
 
 
 Перевірити наявність dateCreated інспекціїї
-  ${dateCreated}  Set Variable  ${data_cdb['dateCreated']}
+  ${dateCreated}  Set Variable  ${data_cdb['data']['dateCreated']}
   ${data_converted}  convert_datetime_to_smart_format  ${dateCreated}  m
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${data_converted}")]
 
