@@ -487,7 +487,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ${data_cdb}  create_monitoring  ${tender_ID}  ${name}
   Перевірити та зберегти відповідь  ${data_cdb}
   Log  ${data_cdb}
-  ${data}  Create Dictionary  id  ${data_cdb['data']['id']}
+  ${data}  Create Dictionary  id  ${data_cdb['id']}
   Set Global Variable  ${data}
 
 
@@ -536,7 +536,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Дочекатись закінчення elimination period
-  ${cdb}  Set Variable  ${data_cdb['data']['eliminationPeriod']['endDate']}
+  ${cdb}  Set Variable  ${data_cdb['eliminationPeriod']['endDate']}
   ${until}  convert_date_from_cdb  ${cdb}
   ${now}  Get Current Date
   ${sleep}  Subtract Date From Date  ${until}  ${now}
@@ -1054,17 +1054,17 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити наявність description інспекціїї
-  ${description}  Set Variable  ${data_cdb['data']['description']}
+  ${description}  Set Variable  ${data_cdb['description']}
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${description}")]
 
 
 Перевірити наявність inspection_id інспекціїї
-  ${inspection_id}  Set Variable  ${data_cdb['data']['inspection_id']}
+  ${inspection_id}  Set Variable  ${data_cdb['inspection_id']}
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${inspection_id}")]
 
 
 Перевірити наявність dateCreated інспекціїї
-  ${dateCreated}  Set Variable  ${data_cdb['data']['dateCreated']}
+  ${dateCreated}  Set Variable  ${data_cdb['dateCreated']}
   ${data_converted}  convert_datetime_to_smart_format  ${dateCreated}  m
   Page Should Contain Element  //*[@class="ivu-modal-content"]//*[contains(text(), "Інспекції")]/../..//*[contains(text(), "${data_converted}")]
 
