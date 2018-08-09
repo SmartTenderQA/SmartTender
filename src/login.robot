@@ -1,3 +1,7 @@
+*** Settings ***
+Library     service.py
+
+
 *** Variables ***
 ${login link}                       id=SignIn
 ${events}                           xpath=//*[@id="LoginDiv"]//a[2]

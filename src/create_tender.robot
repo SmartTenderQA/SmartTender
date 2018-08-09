@@ -1,3 +1,10 @@
+*** Settings ***
+Library     Collections
+Library     service.py
+Library     Faker/faker.py
+
+
+
 *** Keywords ***
 Відкрити сторінку для створення аукціону на продаж
   Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]

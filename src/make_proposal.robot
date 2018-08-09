@@ -1,3 +1,7 @@
+*** Settings ***
+Library     service.py
+
+
 *** Variables ***
 ${send offer button}                css=button#submitBidPlease
 

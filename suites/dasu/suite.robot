@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+Library  DateTime
 Library  dasu_service.py
 Library  monitoring_owner.py
 Suite Setup  Підготувати користувачів

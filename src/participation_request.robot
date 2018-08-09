@@ -1,3 +1,7 @@
+*** Settings ***
+Library     Faker/faker.py
+
+
 *** Keywords ***
 Відкрити бланк подачі заявки
   Reload Page
