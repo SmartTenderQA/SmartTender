@@ -17,6 +17,8 @@ def check_response(data):
         json = data['data']
     except KeyError:
         json = data
+    else:
+        json = data
     return json
 
 
@@ -190,7 +192,6 @@ def conclusion_true(violationOccurred, description, stringsAttached, auditFindin
         'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
     }
 
-
     data = {
         "data": {
             "conclusion": {
@@ -212,7 +213,7 @@ def conclusion_true(violationOccurred, description, stringsAttached, auditFindin
     data['data']['conclusion']['auditFinding'] = auditFinding
 
     r = requests.patch(url, headers=headers, json=data)
-    rjson = check_response(r.json())
+    json = check_response(r.json())
     return json
 
 
