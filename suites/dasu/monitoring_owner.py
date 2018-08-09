@@ -12,6 +12,14 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
+def check_response(data):
+    try:
+        json = data['data']
+    except KeyError:
+        json = data
+    return json
+
+
 def create_monitoring(id, name):
     url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings'
 
@@ -64,7 +72,8 @@ def create_monitoring(id, name):
     data['data']['parties'][0]['contactPoint']['name'] = str(name)
 
     r = requests.post(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def cancellation_monitoring(description, relatedParty, id):
@@ -89,7 +98,8 @@ def cancellation_monitoring(description, relatedParty, id):
     data['data']['cancellation']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def get_monitoring_data(id, field=None, title=None):
@@ -118,7 +128,7 @@ def get_monitoring_data(id, field=None, title=None):
             my_key = my_key[i]
         return my_key
     else:
-        return r.json()
+        return r.json()['data']
 
 
 def decision(relatedParty, description, id):
@@ -147,7 +157,8 @@ def decision(relatedParty, description, id):
     data['data']['decision']['description'] = description
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def change_monitoring_status(status, id):
@@ -167,7 +178,8 @@ def change_monitoring_status(status, id):
     data['data']['status'] = status
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def conclusion_true(violationOccurred, description, stringsAttached, auditFinding, id):
@@ -200,7 +212,8 @@ def conclusion_true(violationOccurred, description, stringsAttached, auditFindin
     data['data']['conclusion']['auditFinding'] = auditFinding
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    rjson = check_response(r.json())
+    return json
 
 
 def conclusion_false(violationOccurred, relatedParty, id):
@@ -224,7 +237,8 @@ def conclusion_false(violationOccurred, relatedParty, id):
     data['data']['conclusion']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def eliminationResolution(relatedParty, description, id):
@@ -253,7 +267,8 @@ def eliminationResolution(relatedParty, description, id):
     data['data']['eliminationResolution']['relatedParty'] = relatedParty
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def make_a_dialogue(title, description, relatedParty, id):
@@ -277,7 +292,8 @@ def make_a_dialogue(title, description, relatedParty, id):
     data['data']['description'] = str(description)
 
     r = requests.post(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def stopped(description, relatedParty, id):
@@ -302,7 +318,8 @@ def stopped(description, relatedParty, id):
     data['data']['cancellation']['description'] = str(description)
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def declined(description, relatedParty, id):
@@ -327,7 +344,8 @@ def declined(description, relatedParty, id):
     data['data']['cancellation']['description'] = str(description)
 
     r = requests.patch(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
 
 
 def inspection(description, monitoring_ids):
@@ -347,8 +365,9 @@ def inspection(description, monitoring_ids):
         }
     }
 
-    data['data']['description']= str(description)
+    data['data']['description'] = str(description)
     data['data']['monitoring_ids'][0] = str(monitoring_ids)
 
     r = requests.post(url, headers=headers, json=data)
-    return r.json()
+    json = check_response(r.json())
+    return json
