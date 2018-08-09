@@ -17,8 +17,6 @@ def check_response(data):
         json = data['data']
     except KeyError:
         json = data
-    else:
-        json = data
     return json
 
 

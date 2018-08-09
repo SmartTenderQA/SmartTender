@@ -25,7 +25,8 @@
   Click Element  ${find tender field}
   Input Text  ${find tender field}  ${UAID}
   ${get}  Get Element Attribute  ${find tender field}  value
-  Should Be Equal  ${get}  ${UAID}
+  ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
+  Run Keyword If  '${status}' == 'False'  Пошук тендеру у webclient  ${UAID}
   Press Key  ${find tender field}  \\13
 
 

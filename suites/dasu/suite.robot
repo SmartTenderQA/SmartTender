@@ -546,6 +546,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ${now}  Get Current Date
   ${sleep}  Subtract Date From Date  ${until}  ${now}
   Run Keyword If  ${sleep} > ${0}  Sleep  ${sleep}
+  Sleep  5
 
 
 Знайти потрібний моніторинг за номером
