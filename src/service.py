@@ -41,10 +41,12 @@ def get_user_variable(user, users_variable):
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',
             'name': 'Provider1 SmartTender Tender',
+            'mail_password': 'qwertyuiop[]',
         },
         'user2': {
             'login': 'SmartTenderProvider2@gmail.com',
             'password': 'np3ozi"',
+            'mail_password': 'qwertyuiop[]',
         },
         'wrong user': {
             'login': "I don't exist@gmail.com",
