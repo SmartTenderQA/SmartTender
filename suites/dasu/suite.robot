@@ -22,7 +22,17 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
-  Дочекатись синхронізації  dasu
+  #Дочекатись синхронізації  dasu
+
+Скасувати моніторинг
+  [Tags]  cancellation
+  Скасувати моніторинг по тендеру
+
+
+Активувати моніторинг
+  [Tags]  activation
+  Сформувати рішення по моніторингу
+  Перевести моніторинг в статус  active
 
 
 Знайти тендер по ідентифікатору
@@ -31,13 +41,12 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
-
 Відкрити сторінку моніторингу
   [Tags]  open_monitoring_page
   Перейти за посиланням по dasu
   Відкрити вкладку моніторингу
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
-  Знайти потрібний моніторинг за номером  ${monitoring_id}
+  Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
   :FOR  ${username}  IN  viewer  provider
   \  Switch Browser  ${username}
   \  Go To  ${data['location']}
@@ -45,7 +54,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 
 Перевірити відображення інформації нового моніторингу
-  [Tags]  open_monitoring_page
+  [Tags]  open_monitoring_page123
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
   \  Switch Browser  ${username}
@@ -57,11 +66,6 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 ################################################################
 #                          CANCELLED                           #
 ################################################################
-Скасувати моніторинг
-  [Tags]  cancellation
-  Скасувати моніторинг по тендеру
-
-
 Перевірити відображення інформації скасованого моніторингу
   [Tags]  cancellation
   Отримати дані моніторингу по API
@@ -76,12 +80,6 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 ################################################################
 #                         ACTIVE                               #
 ################################################################
-Активувати моніторинг
-  [Tags]  activation
-  Сформувати рішення по моніторингу
-  Перевести моніторинг в статус  active
-
-
 Перевірити відображення інформації моніторингу після активації
   [Tags]  activation
   Отримати дані моніторингу по API
@@ -556,8 +554,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ${monitoring_selector}  Set Variable  xpath=//*[contains(text(), '${monitoring_id}')]/ancestor::div[@class='ivu-card-body']
   Set Global Variable  ${monitoring_selector}
   Дочекатись закінчення загрузки сторінки
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${monitoring_selector}
-  Run Keyword If  '${status}' == 'False'  Знайти потрібний моніторинг за номером  ${monitoring_id}
+  Page Should Contain Element  ${monitoring_selector}
 
 
 Звірити номер моніторингу
