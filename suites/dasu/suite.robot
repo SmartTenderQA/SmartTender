@@ -556,7 +556,8 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
   ${monitoring_selector}  Set Variable  xpath=//*[contains(text(), '${monitoring_id}')]/ancestor::div[@class='ivu-card-body']
   Set Global Variable  ${monitoring_selector}
   Дочекатись закінчення загрузки сторінки
-  Page Should Contain Element  ${monitoring_selector}
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${monitoring_selector}
+  Run Keyword If  '${status}' == 'False'  Знайти потрібний моніторинг за номером  ${monitoring_id}
 
 
 Звірити номер моніторингу
