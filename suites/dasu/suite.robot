@@ -12,7 +12,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-08-01-000053-c
 ${tender_ID}                    8ce0fbe605544e4c9a01f2740dca7c44
-${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
+${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 
 
 *** Test Cases ***
@@ -694,7 +694,7 @@ ${id_for_skip_creating}         028996df09fa4bb4b48e9a47fdfcfbd2
 
 Звірити description запиту
   ${cdb}  Set Variable  ${data_cdb['description']}
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/following-sibling::*
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "${data_cdb['title']}")]/following-sibling::*
   Should Be Equal  ${cdb}  ${site}
 
 

@@ -2,10 +2,11 @@
 -L TRACE:INFO
 
 -i create_monitoring
+-i activation
+
 -i find_tender
 -i open_monitoring_page
 
--i activation
 -i make_a_dialogue_individually
 -i make_a_dialogue
 
@@ -15,4 +16,4 @@
 -i violation_elimination_report
 -i appeal
 
--i completed
+#-i completed
