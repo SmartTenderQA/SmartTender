@@ -436,7 +436,9 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Зайти на сторінку державних закупівель
   Перевірити закладку закупівлі договори
   Порахувати кількість договорів
-  Перейти по результату пошуку  ${item dogovory}
+  ${id}  Отримати id першого договору
+  Перейти по результату пошуку  ${item dogovory}//h4/a
+  Перевірити заголовок договору для закупок  ${id}
 
 Об'єкти приватизації
   [Tags]  sales
@@ -920,6 +922,16 @@ Suite Postcondition
 Порахувати кількість договорів
   ${count}  Get Element Count  ${item dogovory}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
+
+Отримати id першого договору
+  ${id}  get text  ${item dogovory}//h4
+  [Return]  ${id}
+
+Перевірити заголовок договору для закупок
+  [Arguments]  ${id}
+  ${get}  Get Text  //h1
+  Should Contain  ${get}  Договір
+  Should Contain  ${get}  ${id}
 
 Зайти на сторінку аукціони на продаж активів банків
   Click Element  ${komertsiyni-torgy icon}
