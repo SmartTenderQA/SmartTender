@@ -26,7 +26,7 @@ ${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 b
 ${torgy count tab}                   li:nth-child
 ${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
-${item dogovory}                     css=.plans-table td>a
+${item dogovory}                     xpath=//*[contains(@class, 'container')]//*[contains(@class, 'content-expanded')]/div[2]/*
 ${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='hotTrades']/div/div
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
@@ -918,7 +918,6 @@ Suite Postcondition
   Should Be Equal  ${is}  ${should}
 
 Порахувати кількість договорів
-  Select Frame  css=iframe
   ${count}  Get Element Count  ${item dogovory}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
