@@ -13,7 +13,7 @@ ${dropdown navigation}               css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                       css=div[itemscope=itemscope] h1
 ${novyny text}                       css=[class="row content"] h1
-${news block}                        css=.ivu-card-body [type=flex]
+${news block}                        css=.ivu-row-undefined-space-between
 ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
