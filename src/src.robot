@@ -43,6 +43,7 @@ ${find tender field}                xpath=//input[@placeholder="Введіть �
 ${tender found}                     xpath=//*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${dropdown navigation}              css=#MenuList div.dropdown li>a
+${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
 
 
 *** Keywords ***
@@ -83,6 +84,11 @@ Open button
   Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
+
+Відфільтрувати по статусу торгів
+  [Arguments]  ${status}
+  Click Element  ${dropdown menu for bid statuses}
+  Click Element  xpath=//li[text()='${status}']
 
 
 Розгорнути розширений пошук та випадаючий список видів торгів
