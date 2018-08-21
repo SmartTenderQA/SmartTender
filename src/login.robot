@@ -7,20 +7,30 @@ ${password field}                   id=password
 
 *** Keywords ***
 Login
-  [Arguments]  ${user}
+  [Arguments]  ${user}  ${password}=None
+  ${login}  ${password}  Run Keyword If  "${password}" == "None"
+  ...  Отримати логін і пароль по імень користувача  ${user}
+  ...  ELSE  Set Variable  ${user}  ${password}
   Відкрити вікно авторизації
-  Авторизуватися  ${user}
+  Авторизуватися  ${login}  ${password}
   Перевірити успішність авторизації  ${user}
+
+
+Отримати логін і пароль по імень користувача
+  [Arguments]  ${user}
+  ${login}  get_user_variable  ${user}  login
+  ${password}=  get_user_variable  ${user}  password
+  [Return]  ${login}  ${password}
+
 
 Відкрити вікно авторизації
   Click Element  ${events}
   Click Element  ${login link}
   Sleep  2
 
+
 Авторизуватися
-  [Arguments]  ${user}
-  ${login}=  get_user_variable  ${user}  login
-  ${password}=  get_user_variable  ${user}  password
+  [Arguments]  ${login}  ${password}
   Fill Login  ${login}
   Fill Password  ${password}
   Click Element  ${login button}
@@ -30,16 +40,19 @@ Login
   ...       Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   ...  AND  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
 
+
 Перевірити успішність авторизації
   [Arguments]  ${user}
   Run Keyword If  '${role}' == 'Bened' or '${user}' == 'fgv_prod_owner'  Перевірити успішність авторизації організатора
   ...  ELSE  Перевірити успішність авторизації учасника  ${user}
+
 
 Перевірити успішність авторизації організатора
   Wait Until Page Does Not Contain Element  ${login button}
   Location Should Contain  /webclient/
   Wait Until Page Contains Element  css=.body-container #container  120
   Go To  ${start_page}
+
 
 Перевірити успішність авторизації учасника
   [Arguments]  ${user}
@@ -49,9 +62,11 @@ Login
   Wait Until Page Contains  ${name}  10
   Go To  ${start_page}
 
+
 Fill login
   [Arguments]  ${user}
   Input Password  ${login field}  ${user}
+
 
 Fill password
   [Arguments]  ${pass}

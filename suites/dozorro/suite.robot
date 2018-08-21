@@ -549,11 +549,6 @@ Postcondition
   Log  ${location}  WARN
   Set To Dictionary  ${data}  tender_url=${location}
 
-Розгорнути розширений пошук
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...  Click Element  ${advanced search}
-  ...  AND  Element Should Be Visible  xpath=//*[@class="dhxform_base"]//*[contains(text(), 'Згорнути пошук')]
-
 Фільтр беру участь
   Wait Until Keyword Succeeds  30s  5  Click Element  ${take_part}
 

@@ -45,10 +45,13 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${dropdown navigation}              css=#MenuList div.dropdown li>a
 ${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
 
+${first found element}               css=#tenders tbody>.head a.linkSubjTrading
+${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
 
 *** Keywords ***
 Start
   Open Browser  ${start_page}  ${browser}  alies
+
 
 Open button
   [Documentation]   відкривае лінку з локатора у поточному вікні
@@ -84,6 +87,7 @@ Open button
   Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
+
 
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
@@ -136,3 +140,24 @@ conver json to dict
   [Arguments]  ${json}
   ${dict}  Evaluate  json.loads('''${json}''')  json
   [Return]  ${dict}
+
+
+Suite Postcondition
+  Close All Browsers
+
+
+Розгорнути розширений пошук
+  Wait Until Keyword Succeeds  30s  5  Run Keywords
+  ...  Click Element  ${advanced search}
+  ...  AND  Element Should Be Visible  xpath=//*[@class="dhxform_base"]//*[contains(text(), 'Згорнути пошук')]
+
+
+Test Postcondition
+  Run Keyword If Test Failed  Capture Page Screenshot
+  Go To  ${start_page}
+  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
+
+
+Перевірити користувача
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
+  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user

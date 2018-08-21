@@ -46,8 +46,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
-${first found element}               css=#tenders tbody>.head a.linkSubjTrading
-${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${first lot}                         css=.table-row-value>a.hyperlink
 ${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
@@ -649,18 +647,6 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 #######               Keywords               ##########
 #######                                      ##########
 #######################################################
-Test Postcondition
-  Run Keyword If Test Failed  Capture Page Screenshot
-  Go To  ${start_page}
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
-
-Перевірити користувача
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
-  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
-
-Suite Postcondition
-  Close All Browsers
-
 Зайти на сторінку про компанію
   Click Element  ${button pro-kompaniyu}
   Location Should Contain  pro-kompaniyu

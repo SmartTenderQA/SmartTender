@@ -58,9 +58,12 @@ def get_user_variable(user, users_variable):
         'deleted': {
             'login': 'ivan@lider.com.ua',
             'password': 'qwerty123',
-        }
+        },
     }
-    return a[user][users_variable]
+    if user not in a:
+        return user
+    else:
+        return a[user][users_variable]
 
 
 def get_tender_variables(tender_form, tender_sign):
