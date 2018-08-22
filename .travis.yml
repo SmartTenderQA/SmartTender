@@ -16,7 +16,7 @@ python:
 jobs:
   include:
     - stage: clarification
-    - script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i clarification suites/dozorro/suite.robot
+      script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i clarification suites/dozorro/suite.robot
     - stage: acceptance
-    - script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i acceptance suites/dozorro/suite.robot
+      script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i acceptance suites/dozorro/suite.robot
 
