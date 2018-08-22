@@ -13,4 +13,10 @@ install: "pip install -r requirements.txt"
 language: python
 python:
   - "2.7"
-script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt suites/dozorro/suite.robot
+jobs:
+  include:
+    - stage: clarification
+    - script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i clarification suites/dozorro/suite.robot
+    - stage: acceptance
+    - script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i acceptance suites/dozorro/suite.robot
+
