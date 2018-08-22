@@ -15,8 +15,9 @@ python:
   - "2.7"
 jobs:
   include:
-    - stage: clarification
+    - stage: DOZORRO
+      name: clarification
       script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i clarification suites/dozorro/suite.robot
-    - stage: acceptance
+      name: acceptance
       script: robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i acceptance suites/dozorro/suite.robot
 
