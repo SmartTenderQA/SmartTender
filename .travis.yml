@@ -1,5 +1,7 @@
 #user container-based infrastructure
-sudo: false
+sudo: required
+addons:
+  chrome: stable
 before_install:
 # install dependencies
 install: "pip install -r requirements.txt"  
