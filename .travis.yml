@@ -3,6 +3,7 @@ sudo: required
 addons:
   chrome: stable
 before_install:
+  - google-chrome-stable --headless --no-sandbox
 # install dependencies
 install: "pip install -r requirements.txt"  
 language: python
