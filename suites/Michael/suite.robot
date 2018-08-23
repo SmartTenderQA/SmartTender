@@ -13,8 +13,8 @@ ${cpmb_start_page}           http://192.168.1.205/wsmbdemo_all/client
 *** Test Cases ***
 Запуск проекта MASTER
   Натиснути адміністрування
-  Run Keyword If  "${start_from}" == "webclient"  Натиснути користувачі
-  Run Keyword  Натиснути Користувачі та групи ${start_from}
+  Розгорнути користувачі
+  Натиснути Користувачі та групи
   Перевірити відкриту сторінку
 
 
@@ -96,3 +96,11 @@ Test Postcondition
 Перевірити відкриту сторінку
   Element Should Be Visible  //*[@data-placeid="TBN"]//td[text()="Користувачi"]
   Element Should Be Visible  //*[@class="dx-vam" and contains(text(), "РОЗРОБНИК")]
+
+
+Натиснути Користувачі та групи
+  Run Keyword  Натиснути Користувачі та групи ${start_from}
+
+
+Розгорнути користувачі
+  Run Keyword If  "${start_from}" == "webclient"  Натиснути користувачі
