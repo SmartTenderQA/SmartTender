@@ -3,6 +3,7 @@ Resource  ../../src/src.robot
 Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
+
 *** Variables ***
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
 ${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
@@ -53,6 +54,8 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    https://smarttender.biz/ParticipationAnalytic/?segment=3&organizationId=226
+
+
 *** Test Cases ***
 Відкрити головну сторінку SmartTender.biz під роллю ${role}
   [Tags]  site
@@ -77,6 +80,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
   Подати пропозицію
+
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
 #  [Tags]  proposal  procurement
@@ -307,6 +311,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
+  Перевірка гарантійного внеску
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
 
@@ -1026,7 +1031,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 Перевірити тип процедури
   [Arguments]  ${selector}  ${type}=${TESTNAME}
   Run Keyword If  "${selector}" == "css=.info_form"  Select Frame  css=iframe
-  Wait Until Page Contains Element  ${selector}
+  Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
   Sleep  .5
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${type}
@@ -1127,19 +1132,24 @@ Change Start Page
   Location Should Contain  /webclient/
   Go To  ${start_page}
 
+
 Перевірити сторінку окремого лота в мультилоті
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
-  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити лот в мультилоті за наявністю
-  ...  ELSE  Pass Execution  Tender with multiple lots doesn't present on the page
+  ${presence}  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити наявність декалькох лотів
+  Run Keyword If  '${presence}' == 'True'
+  ...  Перевірити лот в мультилоті
+  ...  ELSE  Pass Execution  It's one lot tender
 
-Перевірити лот в мультилоті за наявністю
+
+Перевірити наявність декалькох лотів
   Select Frame  css=iframe
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${first lot}
-  Run Keyword If  '${status}' == 'True'  Перевірити лот в мультилоті
-  ...  ELSE  Pass Execution  It's one lot tender
+  [Return]  ${status}
+
 
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}
+  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
   Open Button  ${first lot}
   Select Frame  css=iframe
   ${text}  Get Text  css=.title-lot h1
@@ -1228,6 +1238,7 @@ Change Start Page
   ${text}  Get Text  //h4/a|//h4/following-sibling::a
   Should Be Equal  ${text}  ${id}
 
+
 Виконати пошук малої приватизації
   [Arguments]  ${id}
   Input Text  //*[contains(@class, 'inner-button')]//input  ${id}
@@ -1235,3 +1246,72 @@ Change Start Page
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${n}  Get Element Count  //*[@class="content-block"]/div
   Should Be Equal  '${n}'  '1'
+
+
+Перевірка гарантійного внеску
+  ${data}  Отримати дані тендеру з cdb по id
+  Set Global Variable  ${data}
+  ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
+  Run Keyword If  "${multiple_status}" == "True"  Перевірка гарантійного внеску для мультилоту
+  ...  ELSE  Перевірка гарантійного внеску для не мультилоту
+
+
+Перевірка гарантійного внеску для мультилоту
+  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
+  ${location}  Get Location
+  Run Keyword If  "${status}" == "True"  Run Keywords
+  ...  Open Button  ${first lot}
+  ...  AND  Select Frame  css=iframe
+  ...  AND  Відкрити сторінку гарантійного внеску
+  ...  AND  Go To  ${location}
+  ...  AND  Виділити iFrame за необхідністю у лоті
+
+
+Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
+  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][0]}  guarantee
+  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['lots'][0]['guarantee']}  amount
+  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
+  [Return]  ${ret}
+
+
+Перевірка гарантійного внеску для не мультилоту
+  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску
+  Run Keyword If  "${status}" == "True"  Run Keywords
+  ...  Відкрити сторінку гарантійного внеску
+  ...  AND  Go Back
+  ...  AND  Виділити iFrame за необхідністю
+
+
+Перевірити необхідність наявності кнопки гарантійного внеску
+  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']}  guarantee
+  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['guarantee']}  amount
+  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
+  [Return]  ${ret}
+
+
+Отримати дані тендеру з cdb по id
+  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
+  Create Session  api  https://public.api.openprocurement.org/api/0/tenders/${id}
+  ${data}  Get Request  api  \
+  ${data}  Set Variable  ${data.json()}
+  [Return]  ${data}
+
+
+Відкрити сторінку гарантійного внеску
+  Open Button  //*[@id="guarantee"]//a
+  Run Keyword If  "${role}" != "viewer"  Run Keywords
+  ...       Element Should Be Visible  //h4[contains(text(), "Оформлення заявки на тендерне забезпечення")]
+  ...  AND  Location Should Contain  /GuaranteePage/
+  ...  ELSE  Run Keywords
+  ...       Location Should Contain  .biz/Errors/
+  ...  AND  Element Should Contain  //h1/following-sibling::h2  Для просмотра страницы необходимо войти на сайт!
+
+
+Виділити iFrame за необхідністю
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?tenderId=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?tenderId=")]
+
+
+Виділити iFrame за необхідністю у лоті
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]

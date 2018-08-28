@@ -2,6 +2,7 @@
 Library  Selenium2Library
 Library  BuiltIn
 Library  Collections
+Library	 RequestsLibrary
 Library  DebugLibrary
 Library  OperatingSystem
 Library  service.py
