@@ -166,7 +166,7 @@ ${wait}                             60
 
 *** Keywords ***
 Precondition
-  Start
+  Open Browser  ${start_page}  ${browser}
   Login  user1
 
 Postcondition

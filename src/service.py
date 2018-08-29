@@ -4,15 +4,15 @@
 #      Main script file
 # ==============
 import sys
+import re
 import urllib2
 
+from iso8601 import parse_date
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+from dateutil.parser import parserinfo
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
-
-import re
-from random import randint
-from datetime import datetime, timedelta
 
 
 def get_user_variable(user, users_variable):
@@ -41,10 +41,12 @@ def get_user_variable(user, users_variable):
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',
             'name': 'Provider1 SmartTender Tender',
+            'mail_password': 'qwertyuiop[]',
         },
         'user2': {
             'login': 'SmartTenderProvider2@gmail.com',
             'password': 'np3ozi"',
+            'mail_password': 'qwertyuiop[]',
         },
         'wrong user': {
             'login': "I don't exist@gmail.com",
@@ -56,6 +58,10 @@ def get_user_variable(user, users_variable):
         },
         'deleted': {
             'login': 'ivan@lider.com.ua',
+            'password': 'qwerty123',
+        },
+        'dasu': {
+            'login': 'PPR_TEST',
             'password': 'qwerty123',
         }
     }
@@ -180,11 +186,6 @@ def convert_url(href, IP):
     return str(re.sub('https://smarttender.biz', str(IP), str(href)))
 
 
-def random_number(a, b):
-    a, b = int(a), int(b)
-    return str(randint(a, b))
-
-
 def download_file_and_return_content(url, download_path):
     response = urllib2.urlopen(url)
     file_content = response.read()
@@ -196,6 +197,8 @@ def smart_get_time(v=0, accuracy='m'):
     time = datetime.now() + timedelta(days=delta)
     if accuracy == 'm':
         return ('{:%d.%m.%Y %H:%M}'.format(time))
+    elif accuracy == 's':
+        return ('{:%d.%m.%Y %H:%M:%S}'.format(time))
     elif accuracy == 'd':
         return ('{:%d.%m.%Y}'.format(time))
 
@@ -204,3 +207,42 @@ def convert_data_for_web_client(value):
     without_spaces = value.replace(" ", "")
     without_dots = without_spaces.replace(".", "")
     return without_dots.replace(":", "")
+
+
+def convert_datetime_to_smart_format(isodate, accuracy='s'):
+    iso_dt = parse_date(isodate)
+    if accuracy == 's':
+        date_string = iso_dt.strftime("%d.%m.%Y %H:%M:%S")
+    elif accuracy == 'm':
+        date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
+    elif accuracy == 'd':
+        date_string = iso_dt.strftime("%d.%m.%Y")
+    return date_string
+
+
+def compare_dates_smarttender(cdb, smarttender, operator='=='):
+    ltr = parse(cdb, parserinfo(True, False))
+    dtr = parse(smarttender, parserinfo(True, False), dayfirst=False)
+    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
+    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
+    if operator == '==':
+        return left == right
+    elif operator == '>':
+        return left > right
+    elif operator == '<':
+        return left < right
+    elif operator == '!=':
+        return left != right
+
+
+def sleep_to(time):
+    end = (parse(time)).replace(tzinfo=None)
+    now = datetime.now()
+    subtract = end - now
+    return subtract.seconds, now
+
+
+def convert_date_from_cdb(date):
+    time = (parse(date)).replace(tzinfo=None)
+    time = (time.strftime('%Y-%m-%d %H:%M:%S'))
+    return time

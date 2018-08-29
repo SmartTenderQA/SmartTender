@@ -1,0 +1,11 @@
+-d test_output
+-L TRACE:INFO
+
+-i create_monitoring
+-i find_tender
+-i open_monitoring_page
+
+-i activation
+-i make_a_dialogue_individually
+
+-i stopped_after_active

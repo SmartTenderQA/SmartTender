@@ -22,25 +22,30 @@ def load_data_from_file(file_name):
         data = json.load(f)
         return data
 
-def create_sentence(n=10):
+def create_sentence(n=10, file=None):
     n = int(n)
     data = load_data_from_file(faker_data)
     words = data['words']
-    if n != 1:
+    if file == 'file':
+        word = 'd-' + words[random.randrange(0, len(words))] + '.doc'
+        return word
+    else:
         string = " ".join([words[random.randrange(0, len(words))] for _ in range(n)])
         sentence = (string[0].upper() + string[1:] + '.')
         return sentence
-    else:
-        word = 'd-' + words[random.randrange(0, len(words))] + '.doc'
-        return word
 
 
 def create_fake_doc(n=10):
     n = int(n)
     content = create_sentence(n)
-    name = create_sentence(1)
+    name = create_sentence(1, 'file')
     path = locality + '/test_output/' + name
     f = open(path, 'w+')
     f.write(content.encode('utf8'))
     f.close()
     return path, name, content
+
+
+def random_number(a, b):
+    a, b = int(a), int(b)
+    return str(randint(a, b))

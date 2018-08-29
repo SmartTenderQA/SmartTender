@@ -1,9 +1,40 @@
+*** Settings ***
+Library     Collections
+Library     service.py
+Library     Faker/faker.py
+
+
+
 *** Keywords ***
-Відкрити сторінку для створення тендеру
+Відкрити сторінку для створення аукціону на продаж
   Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
   Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
   Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
+
+
+Відкрити сторінку для створення публічних закупівель
+  Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публичные закупки')]  120
+  Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
+  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
+  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+
+
+Натиснути кнопку публічних закупівель
+  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
+  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
+  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+
+
+Пошук тендеру у webclient
+  [Arguments]  ${UAID}
+  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Номер тендер')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+  Click Element  ${find tender field}
+  Input Text  ${find tender field}  ${UAID}
+  ${get}  Get Element Attribute  ${find tender field}  value
+  ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
+  Run Keyword If  '${status}' == 'False'  Пошук тендеру у webclient  ${UAID}
+  Press Key  ${find tender field}  \\13
 
 
 Відкрити вікно створення тендеру

@@ -1,3 +1,7 @@
+*** Settings ***
+Library     service.py
+
+
 *** Variables ***
 ${login link}                       id=SignIn
 ${events}                           xpath=//*[@id="LoginDiv"]//a[2]
@@ -12,10 +16,12 @@ Login
   Авторизуватися  ${user}
   Перевірити успішність авторизації  ${user}
 
+
 Відкрити вікно авторизації
   Click Element  ${events}
   Click Element  ${login link}
   Sleep  2
+
 
 Авторизуватися
   [Arguments]  ${user}
@@ -30,16 +36,18 @@ Login
   ...       Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
   ...  AND  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
 
+
 Перевірити успішність авторизації
   [Arguments]  ${user}
-  Run Keyword If  '${role}' == 'Bened' or '${user}' == 'fgv_prod_owner'  Перевірити успішність авторизації організатора
+  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
+  Run Keyword If  '${status}' == 'True'  Перевірити успішність авторизації організатора
   ...  ELSE  Перевірити успішність авторизації учасника  ${user}
+
 
 Перевірити успішність авторизації організатора
   Wait Until Page Does Not Contain Element  ${login button}
-  Location Should Contain  /webclient/
   Wait Until Page Contains Element  css=.body-container #container  120
-  Go To  ${start_page}
+
 
 Перевірити успішність авторизації учасника
   [Arguments]  ${user}
@@ -49,9 +57,11 @@ Login
   Wait Until Page Contains  ${name}  10
   Go To  ${start_page}
 
+
 Fill login
   [Arguments]  ${user}
   Input Password  ${login field}  ${user}
+
 
 Fill password
   [Arguments]  ${pass}

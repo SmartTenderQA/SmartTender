@@ -5,3 +5,5 @@
 /.idea/
 debug.log
 /src/service.pyc
+
+*.pyc

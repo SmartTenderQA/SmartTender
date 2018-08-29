@@ -1,0 +1,19 @@
+-d test_output
+-L TRACE:INFO
+
+-i create_monitoring
+-i activation
+
+-i find_tender
+-i open_monitoring_page
+
+-i make_a_dialogue_individually
+-i make_a_dialogue
+
+-i addressed
+-i inspection
+-i request_for_clarification
+-i violation_elimination_report
+-i appeal
+
+#-i completed

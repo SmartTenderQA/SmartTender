@@ -49,7 +49,7 @@ ${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubm
 
 *** Keywords ***
 Precondition
-  Start
+  Open Browser  ${start_page}  ${browser}
   Login  user1
   ${data}  Create Dictionary
   Set Global Variable  ${data}

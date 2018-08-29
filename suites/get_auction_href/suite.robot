@@ -18,7 +18,7 @@ ${webClient loading}                id=LoadingPanel
   [Tags]  create_tender
   Switch Browser  tender_owner
   Sleep  2
-  Відкрити сторінку для створення тендеру
+  Відкрити сторінку для створення аукціону на продаж
   Відкрити вікно створення тендеру
   Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
   Заповнити auctionPeriod.startDate
@@ -79,7 +79,7 @@ If skipped create tender
 
 
 
-Отримати почилання на участь в аукціоні учасником
+Отримати поcилання на участь в аукціоні учасником
 
 
 
@@ -132,7 +132,3 @@ If skipped create tender
   Підтвердити відповідність для подачі заявки
   Відправити заявку для подачі пропозиції та закрити валідаційне вікно
   Підтвердити заявку  ${tender_uaid}
-
-Suite Postcondition
-  Close All Browsers
-

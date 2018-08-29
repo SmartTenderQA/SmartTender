@@ -15,7 +15,7 @@ ${}     css=li.loginButton a
 
 *** Keywords ***
 Precondition
-  Start
+  Open Browser  ${start_page}  ${browser}
 
 Postcondition
     Close All Browsers

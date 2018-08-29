@@ -1,16 +1,19 @@
 *** Settings ***
-Library  Selenium2Library
-Library  BuiltIn
-Library  Collections
-Library  DebugLibrary
-Library  OperatingSystem
-Library  service.py
-Library  Faker/faker.py
-Resource  make_proposal.robot
-Resource  participation_request.robot
-Resource  login.robot
-Resource  loading.robot
-Resource  create_tender.robot
+Library     Selenium2Library
+Library     BuiltIn
+Library     Collections
+Library     DebugLibrary
+Library     OperatingSystem
+Library     DateTime
+Library     service.py
+Library     Faker/faker.py
+Resource    make_proposal.robot
+Resource    participation_request.robot
+Resource    login.robot
+Resource    loading.robot
+Resource    create_tender.robot
+Resource    EDS.robot
+Resource    synchronization.robot
 
 
 *** Variables ***
@@ -46,10 +49,7 @@ ${dropdown navigation}              css=#MenuList div.dropdown li>a
 
 
 *** Keywords ***
-Start
-  Open Browser  ${start_page}  ${browser}  alies
-
-Open button
+Open Button
   [Documentation]   відкривае лінку з локатора у поточному вікні
   [Arguments]  ${selector}
   ${a}=  Get Element Attribute  ${selector}  href
@@ -130,3 +130,17 @@ conver json to dict
   [Arguments]  ${json}
   ${dict}  Evaluate  json.loads('''${json}''')  json
   [Return]  ${dict}
+
+
+Suite Postcondition
+  Close All Browsers
+
+
+Створити та додати файл
+  [Arguments]  ${selector}
+  ${file}  create_fake_doc
+  ${path}  Set Variable  ${file[0]}
+  ${name}  Set Variable  ${file[1]}
+  ${content}  Set Variable  ${file[2]}
+  Choose File  ${selector}  ${path}
+  [Return]  ${path}  ${name}  ${content}
