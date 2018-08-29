@@ -44,8 +44,10 @@ Suite Precondition
 
 
 Закрити вікно LLC2
-  Wait Until Page Contains Element  //*[.="Заміна оператора"]
-  Wait Until Page Contains Element  //*[contains(text(),"${content}")]
-  Click Element   (//*[contains(@class, "close-empty")])[last()]
-  Wait Until Page Does Not Contain  (//*[contains(@class, "close-empty")])[last()]  15
-  Location Should Be  https://smarttender.biz/
+  ${status}  Run Keyword And Return Status  Click Element  //*[contains(@class, "modal-dialog")]//h4[contains(text(), "Прийом пропозицій") and contains(text(), " завершений!")]
+  Run Keyword If  "${status}" == "False"  Run Keywords
+  ...  Wait Until Page Contains Element  //*[.="Заміна оператора"]
+  ...  AND  Wait Until Page Contains Element  //*[contains(text(),"${content}")]
+  ...  AND  Click Element   (//*[contains(@class, "close-empty")])[last()]
+  ...  AND  Wait Until Page Does Not Contain  (//*[contains(@class, "close-empty")])[last()]  15
+  ...  AND  Location Should Be  https://smarttender.biz/
