@@ -3,6 +3,7 @@ Resource  ../../src/src.robot
 Test Teardown  Test Postcondition
 Suite Teardown  Suite Postcondition
 
+
 *** Variables ***
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
 ${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
@@ -13,7 +14,7 @@ ${dropdown navigation}               css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                       css=div[itemscope=itemscope] h1
 ${novyny text}                       css=[class="row content"] h1
-${news block}                        css=.ivu-card-body [type=flex]
+${news block}                        css=.ivu-row-undefined-space-between
 ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
@@ -26,7 +27,7 @@ ${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 b
 ${torgy count tab}                   li:nth-child
 ${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
-${item dogovory}                     css=.plans-table td>a
+${item dogovory}                     xpath=//*[contains(@class, 'container')]//*[contains(@class, 'content-expanded')]/div[2]/*
 ${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='hotTrades']/div/div
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
@@ -46,8 +47,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
-${first found element}               css=#tenders tbody>.head a.linkSubjTrading
-${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${first lot}                         css=.table-row-value>a.hyperlink
 ${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
@@ -55,6 +54,8 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    https://smarttender.biz/ParticipationAnalytic/?segment=3&organizationId=226
+
+
 *** Test Cases ***
 Відкрити головну сторінку SmartTender.biz під роллю ${role}
   [Tags]  site
@@ -81,6 +82,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
   Подати пропозицію
+
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
 #  [Tags]  proposal  procurement
@@ -311,6 +313,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form2}
+  Перевірка гарантійного внеску
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
 
@@ -438,7 +441,9 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Зайти на сторінку державних закупівель
   Перевірити закладку закупівлі договори
   Порахувати кількість договорів
-  Перейти по результату пошуку  ${item dogovory}
+  ${id}  Отримати id першого договору
+  Перейти по результату пошуку  ${item dogovory}//h4/a
+  Перевірити заголовок договору для закупок  ${id}
 
 Об'єкти приватизації
   [Tags]  sales
@@ -555,7 +560,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон з умовами, без умов
 
 Голландський аукціон. Мала приватизація
   [Tags]  broken
@@ -649,18 +654,6 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 #######               Keywords               ##########
 #######                                      ##########
 #######################################################
-Test Postcondition
-  Run Keyword If Test Failed  Capture Page Screenshot
-  Go To  ${start_page}
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
-
-Перевірити користувача
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
-  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
-
-Suite Postcondition
-  Close All Browsers
-
 Зайти на сторінку про компанію
   Click Element  ${button pro-kompaniyu}
   Location Should Contain  pro-kompaniyu
@@ -920,9 +913,18 @@ Suite Postcondition
   Should Be Equal  ${is}  ${should}
 
 Порахувати кількість договорів
-  Select Frame  css=iframe
   ${count}  Get Element Count  ${item dogovory}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
+
+Отримати id першого договору
+  ${id}  get text  ${item dogovory}//h4
+  [Return]  ${id}
+
+Перевірити заголовок договору для закупок
+  [Arguments]  ${id}
+  ${get}  Get Text  //h1
+  Should Contain  ${get}  Договір
+  Should Contain  ${get}  ${id}
 
 Зайти на сторінку аукціони на продаж активів банків
   Click Element  ${komertsiyni-torgy icon}
@@ -1031,7 +1033,7 @@ Suite Postcondition
 Перевірити тип процедури
   [Arguments]  ${selector}  ${type}=${TESTNAME}
   Run Keyword If  "${selector}" == "css=.info_form"  Select Frame  css=iframe
-  Wait Until Page Contains Element  ${selector}
+  Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
   Sleep  .5
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${type}
@@ -1132,19 +1134,24 @@ Change Start Page
   Location Should Contain  /webclient/
   Go To  ${start_page}
 
+
 Перевірити сторінку окремого лота в мультилоті
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
-  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити лот в мультилоті за наявністю
-  ...  ELSE  Pass Execution  Tender with multiple lots doesn't present on the page
+  ${presence}  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити наявність декалькох лотів
+  Run Keyword If  '${presence}' == 'True'
+  ...  Перевірити лот в мультилоті
+  ...  ELSE  Pass Execution  It's one lot tender
 
-Перевірити лот в мультилоті за наявністю
+
+Перевірити наявність декалькох лотів
   Select Frame  css=iframe
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${first lot}
-  Run Keyword If  '${status}' == 'True'  Перевірити лот в мультилоті
-  ...  ELSE  Pass Execution  It's one lot tender
+  [Return]  ${status}
+
 
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}
+  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
   Open Button  ${first lot}
   Select Frame  css=iframe
   ${text}  Get Text  css=.title-lot h1
@@ -1233,6 +1240,7 @@ Change Start Page
   ${text}  Get Text  //h4/a|//h4/following-sibling::a
   Should Be Equal  ${text}  ${id}
 
+
 Виконати пошук малої приватизації
   [Arguments]  ${id}
   Input Text  //*[contains(@class, 'inner-button')]//input  ${id}
@@ -1240,3 +1248,72 @@ Change Start Page
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${n}  Get Element Count  //*[@class="content-block"]/div
   Should Be Equal  '${n}'  '1'
+
+
+Перевірка гарантійного внеску
+  ${data}  Отримати дані тендеру з cdb по id
+  Set Global Variable  ${data}
+  ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
+  Run Keyword If  "${multiple_status}" == "True"  Перевірка гарантійного внеску для мультилоту
+  ...  ELSE  Перевірка гарантійного внеску для не мультилоту
+
+
+Перевірка гарантійного внеску для мультилоту
+  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
+  ${location}  Get Location
+  Run Keyword If  "${status}" == "True"  Run Keywords
+  ...  Open Button  ${first lot}
+  ...  AND  Select Frame  css=iframe
+  ...  AND  Відкрити сторінку гарантійного внеску
+  ...  AND  Go To  ${location}
+  ...  AND  Виділити iFrame за необхідністю у лоті
+
+
+Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
+  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][0]}  guarantee
+  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['lots'][0]['guarantee']}  amount
+  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
+  [Return]  ${ret}
+
+
+Перевірка гарантійного внеску для не мультилоту
+  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску
+  Run Keyword If  "${status}" == "True"  Run Keywords
+  ...  Відкрити сторінку гарантійного внеску
+  ...  AND  Go Back
+  ...  AND  Виділити iFrame за необхідністю
+
+
+Перевірити необхідність наявності кнопки гарантійного внеску
+  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']}  guarantee
+  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['guarantee']}  amount
+  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
+  [Return]  ${ret}
+
+
+Отримати дані тендеру з cdb по id
+  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
+  Create Session  api  https://public.api.openprocurement.org/api/0/tenders/${id}
+  ${data}  Get Request  api  \
+  ${data}  Set Variable  ${data.json()}
+  [Return]  ${data}
+
+
+Відкрити сторінку гарантійного внеску
+  Open Button  //*[@id="guarantee"]//a
+  Run Keyword If  "${role}" != "viewer"  Run Keywords
+  ...       Element Should Be Visible  //h4[contains(text(), "Оформлення заявки на тендерне забезпечення")]
+  ...  AND  Location Should Contain  /GuaranteePage/
+  ...  ELSE  Run Keywords
+  ...       Location Should Contain  .biz/Errors/
+  ...  AND  Element Should Contain  //h1/following-sibling::h2  Для просмотра страницы необходимо войти на сайт!
+
+
+Виділити iFrame за необхідністю
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?tenderId=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?tenderId=")]
+
+
+Виділити iFrame за необхідністю у лоті
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]

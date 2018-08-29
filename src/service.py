@@ -47,6 +47,7 @@ def get_user_variable(user, users_variable):
             'login': 'SmartTenderProvider2@gmail.com',
             'password': 'np3ozi"',
             'mail_password': 'qwertyuiop[]',
+            'name': 'Smart Provider Tender',
         },
         'wrong user': {
             'login': "I don't exist@gmail.com",
@@ -65,7 +66,10 @@ def get_user_variable(user, users_variable):
             'password': 'qwerty123',
         }
     }
-    return a[user][users_variable]
+    if user not in a:
+        return user
+    else:
+        return a[user][users_variable]
 
 
 def get_tender_variables(tender_form, tender_sign):

@@ -1,0 +1,3 @@
+-d test_output
+-n non-critical
+-e smart
