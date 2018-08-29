@@ -678,7 +678,7 @@ Postcondition
   Switch Browser  ${username}
   ${title}  Get Text  xpath=(//*[@class="ivu-card-body"]//h5)[1]
   Click Element  xpath=//div[@class="ivu-select-selection"]
-  Click Element  xpath=(//ul[@class="ivu-select-dropdown-list"])[1]/li[contains(text(), '${title}')]
+  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=(//ul[@class="ivu-select-dropdown-list"])[1]/li[contains(text(), '${title}')]
   ${count_review}  Get Element Count  xpath=(//*[@class="ivu-card-body"]//h5)
   ${count_title}  Get Element Count  xpath=//h5[contains(text(), '${title}')]
   Should Be Equal  ${count_review}  ${count_title}
