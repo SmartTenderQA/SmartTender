@@ -1,6 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Test Teardown  Test Postcondition
+Suite Setup  Start  ${user}
 Suite Teardown  Suite Postcondition
 
 
@@ -48,30 +49,29 @@ ${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
-${first lot}                         css=.table-row-value>a.hyperlink
-${tender doc exept EDS}              xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
+${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
+${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    https://smarttender.biz/ParticipationAnalytic/?segment=3&organizationId=226
+${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span
 
 
 *** Test Cases ***
-Відкрити головну сторінку SmartTender.biz під роллю ${role}
+Відкрити головну сторінку SmartTender.biz під роллю ${user}
   [Tags]  site
   ...  commercial
   ...  procurement
   ...  sales
   ...  rialto
-  Run Keyword If  '${IP}' != ''  Change Start Page
-  Open Browser  ${start_page}  ${browser}
-  Run Keyword if  '${role}' != 'viewer'  Login  ${role}
+  Змінити стартову сторінку для IP
   ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
   Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
 
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
   [Tags]  proposal  procurement
-  Run Keyword If  "${role}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
+  Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
   Відкрити сторінку тестових торгів
   Відфільтрувати по формі торгів  Допорогові закупівлі
   Відфільтрувати по статусу торгів  Прийом пропозицій
@@ -86,7 +86,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
 #  [Tags]  proposal  procurement
-#  Run Keyword If  "${role}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
+#  Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
 #  Відкрити сторінку тестових торгів
 #  Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
 #  Відфільтрувати по статусу торгів  Прийом пропозицій
@@ -95,28 +95,28 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 #  Перевірити тип процедури  ${info form2}  Відкриті торги з публікацією англійською мовою
 #  Перевірити кнопку подачі пропозиції
 #  Скасувати пропозицію за необхідністю
-#  debug
 #  #Заповнити поле з ціною  1  1
 #  Подати пропозицію
 #  [Teardown]  Test Postcondition
 
 Особистий кабінет
   [Tags]  site
-  Run Keyword If  '${role}' == 'viewer' or '${role}' == 'tender_owner'
+  Run Keyword If  '${user}' == 'viewer' or '${user}' == 'tender_owner'
   ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
-  ...  ELSE IF  '${role}' == 'Bened'  Відкрити особистий кабінет webcliend
+  ...  ELSE IF  '${user}' == 'Bened'  Відкрити особистий кабінет webcliend
   ...  ELSE  Відкрити особистий кабінет
 
 Аналітика участі
   [Tags]  site
   ...  analytic
-  Run Keyword If  '${role}' == 'test_it.ua'  Run Keywords
+  Run Keyword If  '${user}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
   ...  AND  Вибрати минулий місяці при відсутності тендерів
   ...  AND  Перевірити наявність діаграми та таблиці
   ...  AND  Перевірити роботу кругової діаграми
   ...  AND  Перевірити зміну періоду
   ...  ELSE  No Operation
+
 
 Договір
   [Tags]  site
@@ -132,6 +132,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
+
 Новини
   [Tags]  site
   Зайти на сторінку з новинами
@@ -142,6 +143,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Переглянути новину
   Перевірити лінк хлібних крох
 
+
 Контакти
   [Tags]  site
   Зайти на сторінку з контактами
@@ -149,16 +151,19 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість контактів
   Перевірити заголовок контакту
 
+
 З ким ми працюємо
   [Tags]  site
   Зайти на сторінку клієнтів
   Перевірити заголовок сторінки клієнтів
   Порахувати кількість клієнтів
 
+
 Вакансії
   [Tags]  site
   Зайти на сторінку вакансій
   Перевірити заголовок сторінки вакансій
+
 
 Тарифи
   [Tags]  site
@@ -169,11 +174,13 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Закладка Продаж активів банків, що ліквідуються (ФГВФО)
   Закладка Продаж і оренда майна/активів Державних підприємств
 
+
 Події
   [Tags]  site
   Зайти на сторінку с подіями
   Превірити заголовок сторінки подій
   Перевірити наявність календаря
+
 
 Комерційні торги Закупівлі
   [Tags]  commercial
@@ -183,6 +190,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість торгів
   Розгорнути розширений пошук та випадаючий список видів торгів  Відкриті торги. Аукціон
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
+
 
 Перевірити наявність всіх видів торгів в випадаючому списку
   [Tags]  commercial
@@ -201,6 +209,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відкриті торги. Аналіз ринку
   Закриті торги. Аналіз ринку
 
+
 Відкриті торги. Аукціон
   [Tags]  commercial
   Зайти на сторінку комерційніх торгів
@@ -209,6 +218,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
+
 
 Відкриті торги. Аналіз пропозицій
   [Tags]  commercial  skip_for_test
@@ -219,6 +229,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
+
 Запит пропозицій
   [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
@@ -227,6 +238,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
+
 
 Відкриті торги. Аналіз ринку
   [Tags]  commercial  skip_for_test
@@ -237,6 +249,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
+
 Комерційні торги Продажі
   [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
@@ -244,6 +257,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість торгів
   Розгорнути розширений пошук та випадаючий список видів торгів  Аукціон на продаж. Відкриті торги
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
+
 
 Перевірити список доступних торгів для Комерційні торги Продажі
   [Tags]  commercial  skip_for_test
@@ -254,12 +268,14 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Аукціон на продаж. За рейтингом
   Тендер на продаж. Обмежений список
 
+
 Аукціон на продаж. Відкриті торги
   [Tags]  commercial  skip_for_test
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
   Розгорнути розширений пошук та випадаючий список видів торгів
+
 
 Державні закупівлі прозорро Конкурентні процедури
   [Tags]  procurement
@@ -269,6 +285,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість торгів
   Розгорнути розширений пошук та випадаючий список видів торгів  Допорогові закупівлі
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
+
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Конкурентні процедури
   [Tags]  procurement
@@ -286,6 +303,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Конкурентний діалог 1-ий етап
   Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
+
 Допорогові закупівлі
   [Tags]  procurement  skip_for_test
   Зайти на сторінку державних закупівель
@@ -296,15 +314,17 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
 
+
 Відкриті торги
   [Tags]  procurement
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Відкриті торги з публікацією англійською мовою
   [Tags]  procurement
@@ -312,10 +332,11 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірка гарантійного внеску
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Переговорна процедура для потреб оборони
   [Tags]  procurement
@@ -323,9 +344,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Відкриті торги для закупівлі енергосервісу
   [Tags]  procurement
@@ -333,9 +355,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Конкурентний діалог 2-ий етап
   [Tags]  procurement
@@ -343,9 +366,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Конкурентний діалог з публікацією англійською мовою 2-ий етап
   [Tags]  procurement
@@ -353,9 +377,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Конкурентний діалог 1-ий етап
   [Tags]  procurement
@@ -363,9 +388,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Конкурентний діалог з публікацією англійською мовою 1-ий етап
   [Tags]  procurement
@@ -373,9 +399,10 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+
 
 Державні закупівлі прозорро Неконкурентні процедури
   [Tags]  procurement
@@ -385,6 +412,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Порахувати кількість торгів
   Розгорнути розширений пошук та випадаючий список видів торгів  Звіт про укладений договір
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
+
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
   [Tags]  procurement
@@ -402,6 +430,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Конкурентний діалог 1-ий етап
   Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
+
 Звіт про укладений договір
   [Tags]  procurement
   Зайти на сторінку державних закупівель
@@ -409,7 +438,9 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
+  Перевірити тендерний документ
+
 
 Переговорна процедура
   [Tags]  procurement
@@ -418,7 +449,9 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
+  Перевірити тендерний документ
+
 
 Переговорна процедура (скорочена)
   [Tags]  procurement
@@ -427,7 +460,9 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
+  Перевірити тендерний документ
+
 
 Державні закупівлі прозорро Плани
   [Tags]  procurement
@@ -435,6 +470,8 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   Перевірити закладку закупівлі плани
   Порахувати кількість плану
   Перейти по результату пошуку  ${item plan}
+  Перевірити сторінку прозорро Плани
+
 
 Державні закупівлі прозорро Договори
   [Tags]  procurement
@@ -444,6 +481,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
   ${id}  Отримати id першого договору
   Перейти по результату пошуку  ${item dogovory}//h4/a
   Перевірити заголовок договору для закупок  ${id}
+
 
 Об'єкти приватизації
   [Tags]  sales
@@ -604,7 +642,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Реєстрація
   [Tags]  site
-  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
+  Run Keyword if  '${user}' != 'viewer'  Pass Execution  only for viewer
   Зайти на сторінку реєстрації
   Перевірити заголовок сторінки реєстрації
   Перевірити підзаголовок сторінки реєстрації
@@ -836,7 +874,7 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 Порахувати кількість єлементів сторінки карта сайту
   ${count}  Get Element Count  css=[class="row content"] li>a
   ${number}  Run Keyword If
-  ...  "${role}" == "viewer"  Set Variable  31
+  ...  "${user}" == "viewer"  Set Variable  31
   ...  ELSE  Set Variable  30
   Run Keyword if  "${count}" < "${number}"  Fail  Нема всіх єлементів
 
@@ -1032,7 +1070,6 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Перевірити тип процедури
   [Arguments]  ${selector}  ${type}=${TESTNAME}
-  Run Keyword If  "${selector}" == "css=.info_form"  Select Frame  css=iframe
   Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
   Sleep  .5
   ${is}  Get Text  ${selector}
@@ -1096,27 +1133,26 @@ ${analytics_page}                    https://smarttender.biz/ParticipationAnalyt
 
 Перевірити тендерний документ
   Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
-  ...  ELSE  Run Keywords
-  ...  Go Back
+
 
 Перевірити тендерний документ не для IP
   ${status}  Перевірити наявність документа
   Run Keyword If  '${status}' == '${True}'  Run Keywords
-  ...  Open Button  ${tender doc exept EDS}
+  ...  Mouse over  ${tender doc exept EDS}
+  ...  AND  Open Button  //*[@data-qa="documents-block"]//a[@href][1]
   ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
   ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
   ...  AND  Go Back
-  ...  AND  Go Back
+
 
 Перевірити наявність документа
-  # for commercial doc
-  # xpath=//a[@class='fileLink'][not(contains(text(), 'sign.p7s'))]
-  # |//*[@data-qa='tender-tabs-info-attachments']//a
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
   [Return]  ${status}
 
-Change Start Page
-  ${start_page}  Set Variable  ${IP}
+
+Змінити стартову сторінку для IP
+  ${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
+  ...  ELSE  Set Variable  ${start_page}
   Set Global Variable  ${start_page}
 
 Відкрити особистий кабінет
@@ -1136,29 +1172,29 @@ Change Start Page
 
 
 Перевірити сторінку окремого лота в мультилоті
+  Go Back
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
   ${presence}  Run Keyword If  '${status[0]}' == 'PASS'  Перевірити наявність декалькох лотів
   Run Keyword If  '${presence}' == 'True'
   ...  Перевірити лот в мультилоті
-  ...  ELSE  Pass Execution  It's one lot tender
 
 
 Перевірити наявність декалькох лотів
-  Select Frame  css=iframe
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${first lot}
   [Return]  ${status}
 
 
 Перевірити лот в мультилоті
-  ${lot name}  Get Text  ${first lot}
-  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
-  Open Button  ${first lot}
-  Select Frame  css=iframe
-  ${text}  Get Text  css=.title-lot h1
-  Should Contain  ${text}  ${lotname[:-3]}
-  Page Should Contain Element  css=a[class='button-lot show-control']
+  ${lot name}  Get Text  ${first lot}/div
+  Click Element  ${first lot}/div/div[2]
+  ${text}  Get Text  css=[data-qa="main-block"] [data-qa="title"]
+  #Should Contain  ${text}  ${lotname[:-3]}
+  Should Be Equal  ${text}  ${lot name}
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
+  Run Keyword If  "${role}" != "tender_owner"  Run Keywords
+  ...  Page Should Contain Element  //*[@data-qa="bid-button"]
+  ...  AND  Page Should Contain Element  //*[@data-qa="jurist-help-dropdown"]
 
 
 Відкрити сторінку аналітики
@@ -1225,14 +1261,13 @@ Change Start Page
   ...  //*[contains(text(), "${TESTNAME}")]/../*[contains(@class, 'checked')]
   Run Keyword If  '${status}' == 'False' and "${TESTNAME}" != "Аукціони"  Вибрати тип процедури для малої приватизації
 
+
 Порахувати кількість торгів малої приватизації
   ${n}  Get Element Count  //*[@class="content-block"]/div
   Run Keyword if  '${n}' < 1  Fail  Look above
 
+
 Перевірити пошук малої приватизації
-  #${id}  Run Keyword If
-  #...  Get Text  //*[@class="content-block"]/div[last()]//p[contains(text(), 'UA')]
-  #...  ELSE  Get text  //*[@class="content-block"]/div[last()]//h4
   ${id}  Get Text  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]
   Виконати пошук малої приватизації  ${id}
   Open Button  //*[@class="content-block"]/div//a
@@ -1253,9 +1288,10 @@ Change Start Page
 Перевірка гарантійного внеску
   ${data}  Отримати дані тендеру з cdb по id
   Set Global Variable  ${data}
-  ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
-  Run Keyword If  "${multiple_status}" == "True"  Перевірка гарантійного внеску для мультилоту
-  ...  ELSE  Перевірка гарантійного внеску для не мультилоту
+  ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  title
+  ${multiple_status_guarantee}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
+  Run Keyword If  "${multiple_status_guarantee}" == "True"  Перевірка гарантійного внеску для мультилоту
+  ...  ELSE IF  "${multiple_status}" == "False"  Перевірка гарантійного внеску для не мультилоту
 
 
 Перевірка гарантійного внеску для мультилоту
@@ -1292,8 +1328,11 @@ Change Start Page
 
 
 Отримати дані тендеру з cdb по id
-  ${id}  Get Text  //div[@class="group-element-title" and contains(., "ID у Prozorro")]/following-sibling::*//span
-  Create Session  api  https://public.api.openprocurement.org/api/0/tenders/${id}
+  ${id}  Get Text  //*[@data-qa="prozorro-id"]//div[2]//span
+  Run Keyword If  "${site}" == "test"
+  ...  Create Session  api  https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/${id}
+  Run Keyword If  "${site}" == "prod"
+  ...  Create Session  api  https://public.api.openprocurement.org/api/0/tenders/${id}
   ${data}  Get Request  api  \
   ${data}  Set Variable  ${data.json()}
   [Return]  ${data}
@@ -1301,7 +1340,7 @@ Change Start Page
 
 Відкрити сторінку гарантійного внеску
   Open Button  //*[@id="guarantee"]//a
-  Run Keyword If  "${role}" != "viewer"  Run Keywords
+  Run Keyword If  "${user}" != "viewer"  Run Keywords
   ...       Element Should Be Visible  //h4[contains(text(), "Оформлення заявки на тендерне забезпечення")]
   ...  AND  Location Should Contain  /GuaranteePage/
   ...  ELSE  Run Keywords
@@ -1317,3 +1356,9 @@ Change Start Page
 Виділити iFrame за необхідністю у лоті
   ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
   Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]
+
+
+Перевірити сторінку прозорро Плани
+  Location Should Contain  /publichni-zakupivli-prozorro-plany/
+  Select Frame  css=iFrame
+  Page Should Contain Element  css=#main-section .title-plan

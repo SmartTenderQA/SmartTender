@@ -1,5 +1,4 @@
 -d test_output
--v start_page:http://smarttender.biz
 -v role:viewer
 -n non-critical
 

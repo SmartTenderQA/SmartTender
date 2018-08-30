@@ -13,21 +13,11 @@ ${close promt}                      xpath=//*[contains(@class, 'notification-pro
 
 *** Keywords ***
 Login
-  [Arguments]  ${user}  ${password}=None
-  ${login}  ${password}  Run Keyword If  "${password}" == "None"
-  ...  Отримати логін і пароль по імень користувача  ${user}
-  ...  ELSE  Set Variable  ${user}  ${password}
+  [Arguments]  ${login}  ${password}
   Закрити вспливаюче вікно про повідомлення
   Відкрити вікно авторизації
   Авторизуватися  ${login}  ${password}
-  Перевірити успішність авторизації  ${user}
-
-
-Отримати логін і пароль по імень користувача
-  [Arguments]  ${user}
-  ${login}  get_user_variable  ${user}  login
-  ${password}=  get_user_variable  ${user}  password
-  [Return]  ${login}  ${password}
+  Перевірити успішність авторизації
 
 
 Відкрити вікно авторизації
@@ -49,10 +39,9 @@ Login
 
 
 Перевірити успішність авторизації
-  [Arguments]  ${user}
   ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
   Run Keyword If  '${status}' == 'True'  Перевірити успішність авторизації організатора
-  ...  ELSE  Перевірити успішність авторизації учасника  ${user}
+  ...  ELSE  Перевірити успішність авторизації учасника
 
 
 Перевірити успішність авторизації організатора
@@ -60,12 +49,8 @@ Login
   Wait Until Page Contains Element  css=.body-container #container  120
 
 
-
 Перевірити успішність авторизації учасника
-  [Arguments]  ${user}
   Wait Until Page Does Not Contain Element  ${login button}
-  ${name}=  get_user_variable  ${user}  name
-  Set Global Variable  ${name}
   Wait Until Page Contains  ${name}  10
   Go To  ${start_page}
 

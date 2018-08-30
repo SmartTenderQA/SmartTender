@@ -14,7 +14,6 @@ ${registration link}                        https://test.smarttender.biz/reestra
 *** Test Cases ***
 Залогінитися
     [Tags]  Main
-    Set role variable  user1
     Login  user1
     Go To  ${start page}
     Reload and check
@@ -96,8 +95,3 @@ Login with wrong data
 Reload and check
     Reload Page
     Wait Until Page Contains  ${name}  10
-
-Set role variable
-  [Arguments]  ${user}
-  ${role}  Set Variable  ${user}
-  Set Global variable  ${role}
