@@ -11,6 +11,7 @@ sys.setdefaultencoding('utf-8')
 import os
 import json
 import random
+from random import randint
 
 
 locality = os.getcwd()
