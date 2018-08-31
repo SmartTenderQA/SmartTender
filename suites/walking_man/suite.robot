@@ -383,7 +383,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Конкурентний діалог 1-ий етап
-  [Tags]  procurement
+  [Tags]  procurement  non-critical
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
