@@ -101,10 +101,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Особистий кабінет
   [Tags]  site
-  Run Keyword If  '${user}' == 'viewer' or '${user}' == 'tender_owner'
-  ...  Run Keyword And Expect Error  *  Відкрити особистий кабінет
-  ...  ELSE IF  '${user}' == 'Bened'  Відкрити особистий кабінет webcliend
-  ...  ELSE  Відкрити особистий кабінет
+  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
+  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
 
 Аналітика участі
   [Tags]  site
@@ -1156,6 +1154,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ...  ELSE  Set Variable  ${start_page}
   Set Global Variable  ${start_page}
 
+
 Відкрити особистий кабінет
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
@@ -1165,11 +1164,11 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Page Should Contain Element  css=.sidebar-menu
   Page Should Contain Element  css=.main-content
 
+
 Відкрити особистий кабінет webcliend
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
   Location Should Contain  /webclient/
-  Go To  ${start_page}
 
 
 Перевірити сторінку окремого лота в мультилоті

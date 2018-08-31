@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Test Teardown  Test Postcondition
-Suite Setup  Start  ${user}
+Suite Setup  Start  LLC
 Suite Teardown  Suite Postcondition
 
 

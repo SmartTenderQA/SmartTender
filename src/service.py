@@ -41,7 +41,7 @@ def get_user_variable(user, users_variable):
         'dasu': {
             'login': 'PPR_TEST',
             'password': 'qwerty123',
-            'name': u'Демо организатор (государственные торги). Test Public Enterprise',
+            'name': 'Test Public Enterprise',
             'role': 'tender_owner',
             'site': 'test',
         },
@@ -80,6 +80,13 @@ def get_user_variable(user, users_variable):
             'password': '',
             'name': '',
             'role': 'viewer',
+            'site': 'prod',
+        },
+        'LLC': {
+            'login': 'ttt@debug.kz',
+            'password': 'Qqqqqqqqqq1',
+            'name': u'Тест QA',
+            'role': 'provider',
             'site': 'prod',
         },
         'wrong user': {
