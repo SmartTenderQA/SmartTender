@@ -14,8 +14,6 @@ ${registration link}                        https://test.smarttender.biz/reestra
 *** Test Cases ***
 Залогінитися
     [Tags]  Main
-    Login  user1
-    Go To  ${start page}
     Reload and check
 
 prepearing for next step
@@ -48,7 +46,8 @@ prepearing for next step
 Залогінитися та перевірити користувача
     [Tags]  Main  Dimon
     Go To  ${start page}
-    Login  user1
+    ${login}  ${password}  Отримати дані користувача  user1
+    Login  ${login}  ${password}
     Reload and check
 
 Комерційні торги
@@ -75,9 +74,7 @@ prepearing for next step
 
 *** Keywords ***
 Precondition
-    Open Browser  ${start_page}  ${browser}
-    ${name}=  get_user_variable  user1  name
-    set global variable  ${name}
+    Start  user1
 
 Postcondition
     close all browsers
