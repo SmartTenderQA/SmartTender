@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Start  user1
+Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -48,6 +48,12 @@ ${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubm
   #Перевірити вміст файлу
 
 *** Keywords ***
+Precondition
+  Start  user1
+  ${data}  Create Dictionary
+  Set Global Variable  ${data}
+
+
 Postcondition
   Close All Browsers
 

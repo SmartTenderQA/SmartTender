@@ -1161,7 +1161,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Click Element  ${personal account}
   ${status}  Run Keyword And Return Status  Location Should Contain  test
   Run Keyword If  "${status}" == "False"  Location Should Contain  /webparts/
-  ...  ELSE  Location Should Contain  /WEBPARTS/
+  ...  ELSE  Location Should Contain  /webparts/
+  #...  ELSE  Location Should Contain  /WEBPARTS/
   Page Should Contain Element  css=.sidebar-menu
   Page Should Contain Element  css=.main-content
 
