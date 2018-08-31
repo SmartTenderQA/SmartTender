@@ -68,6 +68,20 @@ def get_user_variable(user, users_variable):
             'site': 'test',
             'mail_password': 'qwertyuiop[]',
         },
+        'viewer_test': {
+            'login': '',
+            'password': '',
+            'name': '',
+            'role': 'viewer',
+            'site': 'test',
+        },
+        'viewer_prod': {
+            'login': '',
+            'password': '',
+            'name': '',
+            'role': 'viewer',
+            'site': 'prod',
+        },
         'wrong user': {
             'login': "I don't exist@gmail.com",
             'password': "gfhyje2456$",

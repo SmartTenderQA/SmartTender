@@ -56,15 +56,15 @@ ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='
 
 *** Keywords ***
 Start
-  [Arguments]  ${user}  ${site}=test
+  [Arguments]  ${user}
   ${login}  ${password}  Отримати дані користувача  ${user}
-  Отримати стартову сторінку  ${site}
+  ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
 
 Отримати стартову сторінку
-  [Arguments]  ${site}
+  [Arguments]  ${site}  ${site_manually}
   ${start_page}  Run Keyword If  "${site}" == "prod"  Set Variable  ${prod}
   ...  ELSE  Set Variable  ${test}
   Set Global Variable  ${start_page}
