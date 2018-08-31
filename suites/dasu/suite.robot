@@ -22,7 +22,6 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
-  #Дочекатись синхронізації  dasu
 
 Скасувати моніторинг
   [Tags]  cancellation
@@ -439,11 +438,17 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 Підготувати користувачів
   ${data}  Create Dictionary  id  ${id_for_skip_creating}
   Set Global Variable  ${data}
+
+  ${login}  ${password}  Отримати дані користувача  dasu
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
-  Login  dasu
+  Login  ${login}  ${password}
+
+  ${login}  ${password}  Отримати дані користувача  viewer_test
   Open Browser  ${start_page}  ${browser}  alias=viewer
+
+  ${login}  ${password}  Отримати дані користувача  user1
   Open Browser  ${start_page}  ${browser}  alias=provider
-  Login  user1
+  Login  ${login}  ${password}
 
 
 Перейти за посиланням по dasu

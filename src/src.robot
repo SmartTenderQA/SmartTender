@@ -21,11 +21,12 @@ Resource    synchronization.robot
 *** Variables ***
                                     ###ІНШІ ДАННІ###
 ${browser}                          chrome
-${start_page}                       http://test.smarttender.biz
 ${file path}                        src/
 ${some text}                        Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування._Це_тестовый_текст_для_тестування.
 ${role}                             None
 ${IP}
+${test}                             http://test.smarttender.biz
+${prod}                             http://smarttender.biz
 
                                     ###ЛОКАТОРИ###
 ${block}                            xpath=.//*[@class='ivu-card ivu-card-bordered']
@@ -55,7 +56,35 @@ ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='
 
 *** Keywords ***
 Start
-  Open Browser  ${start_page}  ${browser}  alies
+  [Arguments]  ${user}  ${alies}=alies
+  ${login}  ${password}  Отримати дані користувача  ${user}
+  ${start_page}  Отримати стартову сторінку  ${site}
+  Open Browser  ${start_page}  ${browser}  ${alies}
+  Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
+
+
+Отримати стартову сторінку
+  [Arguments]  ${site}
+  ${start_page}  Run Keyword If  "${site}" == "prod"  Set Variable  ${prod}
+  ...  ELSE  Set Variable  ${test}
+  Set Global Variable  ${start_page}
+  [Return]  ${start_page}
+
+
+Отримати дані користувача
+  [Arguments]  ${user}
+  ${login}=     get_user_variable  ${user}  login
+  ${password}=  get_user_variable  ${user}  password
+
+  ${name}=  get_user_variable  ${user}  name
+  Set Global Variable  ${name}
+
+  ${role}=  get_user_variable  ${user}  role
+  Set Global Variable  ${role}
+
+  ${site}=  get_user_variable  ${user}  site
+  Set Global Variable  ${site}
+  [Return]  ${login}  ${password}
 
 
 Open button

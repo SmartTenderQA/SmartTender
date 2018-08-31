@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Precondition
+Suite Setup  Start  user1
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -165,10 +165,6 @@ ${wait}                             60
     Run Keyword And Expect Error  *  Sign EDS
 
 *** Keywords ***
-Precondition
-  Open Browser  ${start_page}  ${browser}
-  Login  user1
-
 Postcondition
   Close All Browsers
 

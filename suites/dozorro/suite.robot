@@ -488,18 +488,13 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 
 *** Keywords ***
-
-
 Підготувати користувачів
   ${data}  Create Dictionary
   Set Global Variable  ${data}
-  Open Browser  ${start_page}  ${browser}  alias=viewer
-  Open Browser  ${start_page}  ${browser}  alias=tender_owner
-  Login  Bened
-  Open Browser  ${start_page}  ${browser}  alias=provider2
-  Login  user2
-  Open Browser  ${start_page}  ${browser}  alias=provider
-  Login  user1
+  Start  viewer_test
+  Start  Bened
+  Start  user2
+  Start  user1
 
 Postcondition
   Close All Browsers

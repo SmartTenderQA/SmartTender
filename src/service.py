@@ -21,33 +21,66 @@ def get_user_variable(user, users_variable):
             'login': 'USER_SSP',
             'password': 'qwerty123123',
             'name': u'Орган приватизации',
+            'role': 'tender_owner',
+            'site': 'test',
         },
         'Bened': {
             'login': 'PPR_BV',
             'password': '123321',
             'name': '',
-        },
-        'test_it.ua': {
-            'login': 'test@it.ua',
-            'password': 'qwerty123',
-            'name': 'Тестировщик',
+            'role': 'tender_owner',
+            'site': 'test',
         },
         'fgv_prod_owner': {
             'login': 'IT_TEST_FGV_USER',
             'password': 'fdjh123fdsj',
-            'name': 'Тестировщик',
+            'name': u'Тестировщик',
+            'role': 'tender_owner',
+            'site': 'prod',
+        },
+        'dasu': {
+            'login': 'PPR_TEST',
+            'password': 'qwerty123',
+            'name': u'Демо организатор (государственные торги). Test Public Enterprise',
+            'role': 'tender_owner',
+            'site': 'test',
+        },
+        'test_it.ua': {
+            'login': 'test@it.ua',
+            'password': 'qwerty123',
+            'name': u'Тестировщик',
+            'role': 'provider',
+            'site': 'prod',
         },
         'user1': {
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',
             'name': 'Provider1 SmartTender Tender',
+            'role': 'provider',
+            'site': 'test',
             'mail_password': 'qwertyuiop[]',
         },
         'user2': {
             'login': 'SmartTenderProvider2@gmail.com',
             'password': 'np3ozi"',
-            'mail_password': 'qwertyuiop[]',
             'name': 'Smart Provider Tender',
+            'role': 'provider',
+            'site': 'test',
+            'mail_password': 'qwertyuiop[]',
+        },
+        'viewer_test': {
+            'login': '',
+            'password': '',
+            'name': '',
+            'role': 'viewer',
+            'site': 'test',
+        },
+        'viewer_prod': {
+            'login': '',
+            'password': '',
+            'name': '',
+            'role': 'viewer',
+            'site': 'prod',
         },
         'wrong user': {
             'login': "I don't exist@gmail.com",
@@ -61,10 +94,6 @@ def get_user_variable(user, users_variable):
             'login': 'ivan@lider.com.ua',
             'password': 'qwerty123',
         },
-        'dasu': {
-            'login': 'PPR_TEST',
-            'password': 'qwerty123',
-        }
     }
     if user not in a:
         return user
