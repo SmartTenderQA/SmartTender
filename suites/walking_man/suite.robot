@@ -103,6 +103,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   [Tags]  site
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
+  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
 
 Аналітика участі
   [Tags]  site
@@ -1169,6 +1170,14 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
   Location Should Contain  /webclient/
+
+
+Відкрити особистий кабінет для ssp_tender_owner
+  Page Should Contain Element  ${personal account}
+  Click Element  ${personal account}
+  Location Should Contain  /cabinet/registry/privatization-objects
+  Page Should Contain Element  css=.action-block [type="button"]
+  Page Should Contain Element  css=.content-block .asset-card
 
 
 Перевірити сторінку окремого лота в мультилоті

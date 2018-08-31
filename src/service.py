@@ -17,11 +17,11 @@ sys.setdefaultencoding('utf-8')
 
 def get_user_variable(user, users_variable):
     a = {
-        'tender_owner': {
+        'ssp_tender_owner': {
             'login': 'USER_SSP',
             'password': 'qwerty123123',
             'name': u'Орган приватизации',
-            'role': 'tender_owner',
+            'role': 'ssp_tender_owner',
             'site': 'test',
         },
         'Bened': {
