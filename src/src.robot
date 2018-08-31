@@ -64,7 +64,7 @@ Start
 
 
 Отримати стартову сторінку
-  [Arguments]  ${site}  ${site_manually}
+  [Arguments]  ${site}
   ${start_page}  Run Keyword If  "${site}" == "prod"  Set Variable  ${prod}
   ...  ELSE  Set Variable  ${test}
   Set Global Variable  ${start_page}
