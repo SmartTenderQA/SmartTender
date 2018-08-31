@@ -621,7 +621,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
 
 Простий тендер
   [Tags]  rialto
@@ -629,7 +629,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
 
 Двохетапний тендер
   [Tags]  rialto
@@ -637,7 +637,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
 
 Реєстрація
   [Tags]  site
