@@ -955,6 +955,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
 Отримати id першого договору
+  Wait Until Page Contains Element  ${item dogovory}  10
   ${id}  get text  ${item dogovory}//h4
   [Return]  ${id}
 
