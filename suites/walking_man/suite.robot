@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Test Setup  No Operation
 Test Teardown  Test Postcondition
 Suite Setup  Відкрити головну сторінку SmartTender.biz під потрібною роллю
 Suite Teardown  Suite Postcondition
@@ -601,7 +600,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Аукціони на продаж активів банків Активи
-  [Tags]  sales  -test  -prod
+  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів банків
   Перевірити вкладку активи
   Порахувати кількість прав
@@ -666,7 +665,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Голландський аукціон. Мала приватизація
   [Documentation]  Пока отсутвуют на проде
-  [Tags]  sales  -prod
+  [Tags]  sales  -test  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
