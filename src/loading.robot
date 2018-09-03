@@ -10,7 +10,7 @@ ${webClient loading}                id=LoadingPanel
 
 Дочекатись закінчення загрузки сторінки(skeleton)
   ${status}  ${message}  Run Keyword And Ignore Error  Wait Until Page Contains Element  css=.skeleton-wrapper  3
-  Run Keyword If  "${status}" == "PASS"  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  css=.skeleton-wrapper  180
+  Run Keyword If  "${status}" == "PASS"  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  css=.skeleton-wrapper  180
 
 
 Дочекатись закінчення загрузки сторінки(webclient)
