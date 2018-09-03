@@ -964,7 +964,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 Порахувати кількість запитань
   Select Frame  css=iframe
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
-  Run Keyword if  '${count}' < '5'  Fail  Хто сховав Питання та відповіді?!
+  Run Keyword if  ${count} < 5  Fail  Хто сховав Питання та відповіді?!
 
 
 Перевірити заголовок, комерційніх торгів
@@ -1260,7 +1260,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Перевірити тендерний документ не для IP
-  ${commercial}  Run Keyword And Return Status  Location Should Contain  /komertsiyni-torgy/
+  ${commercial}  Run Keyword And Return Status  Location Should Contain  /komertsiyni-torgy
   Run Keyword If  "${commercial}" == "True"  Перевірити тендерний документ для commercial
   ...  ELSE  Перевірити тендерний документ для procurement
 
