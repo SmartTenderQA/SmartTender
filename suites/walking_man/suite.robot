@@ -955,7 +955,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
 Отримати id першого договору
-  Wait Until Page Contains Element  ${item dogovory}  10
+  Wait Until Page Contains Element  ${item dogovory}//h4  10
   ${id}  get text  ${item dogovory}//h4
   [Return]  ${id}
 
@@ -1283,7 +1283,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук малої приватизації  ${id}
   Open Button  //*[@class="content-block"]/div//a
   Дочекатись закінчення загрузки сторінки(skeleton)
-  ${text}  Get Text  //h4/a|//h4/following-sibling::a
+  ${text}  Get Text  //*[@class="ivu-card-body"]//a[@href and @rel="noopener noreferrer"]
   Should Be Equal  ${text}  ${id}
 
 
