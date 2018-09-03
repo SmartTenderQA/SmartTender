@@ -59,8 +59,15 @@ Start
   [Arguments]  ${user}  ${alies}=alies
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
+  Змінити стартову сторінку для IP
   Open Browser  ${start_page}  ${browser}  ${alies}
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
+
+
+Змінити стартову сторінку для IP
+  ${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
+  ...  ELSE  Set Variable  ${start_page}
+  Set Global Variable  ${start_page}
 
 
 Отримати стартову сторінку

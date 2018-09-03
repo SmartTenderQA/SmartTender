@@ -97,7 +97,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Аналітика участі
-  [Tags]  site
+  [Tags]  site  dev
   Run Keyword If  '${user}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
   ...  AND  Вибрати минулий місяці при відсутності тендерів
@@ -725,7 +725,6 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
   Start  ${user}
-  Змінити стартову сторінку для IP
   ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
   Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
 
@@ -1297,12 +1296,6 @@ Check document for error
 Перевірити наявність документа для commercial
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS commercial}
   [Return]  ${status}
-
-
-Змінити стартову сторінку для IP
-  ${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
-  ...  ELSE  Set Variable  ${start_page}
-  Set Global Variable  ${start_page}
 
 
 Відкрити особистий кабінет
