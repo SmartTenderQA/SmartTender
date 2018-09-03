@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+Test Setup  No Operation
 Test Teardown  Test Postcondition
 Suite Setup  Відкрити головну сторінку SmartTender.biz під потрібною роллю
 Suite Teardown  Suite Postcondition
@@ -23,7 +24,7 @@ ${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
 ${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
-${taryfy text}                       css=.body-content ul[class="nav nav-pills nav-justified"] li
+${taryfy text}                       //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
 ${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
 ${torgy count tab}                   li:nth-child
 ${client banner}                     css=.container .row .ivu-card-body
@@ -49,7 +50,8 @@ ${info form for sales}               xpath=//h5[@class='label-key' and contains(
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
+${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
+${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
@@ -59,8 +61,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 *** Test Cases ***
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
-  [Tags]  proposal  procurement
-  Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
+  [Documentation]  only for ${user} == test_it.ua and ${site} == prod
+  [Tags]  proposal
   Відкрити сторінку тестових торгів
   Відфільтрувати по формі торгів  Допорогові закупівлі
   Відфільтрувати по статусу торгів  Прийом пропозицій
@@ -74,8 +76,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
-  #[Tags]  proposal  procurement
-  #Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
+  #[Tags]  proposal
   #Відкрити сторінку тестових торгів
   #Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
   #Відфільтрувати по статусу торгів  Прийом пропозицій
@@ -88,11 +89,13 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   #Заповнити поле з ціною  1  1
   #Подати пропозицію
 
+
 Особистий кабінет
   [Tags]  site
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
   ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
+
 
 Аналітика участі
   [Tags]  site
@@ -167,6 +170,51 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Зайти на сторінку с подіями
   Превірити заголовок сторінки подій
   Перевірити наявність календаря
+
+
+Реєстрація
+  [Tags]  site
+  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
+  Зайти на сторінку реєстрації
+  Перевірити заголовок сторінки реєстрації
+  Перевірити підзаголовок сторінки реєстрації
+
+
+Інструкції
+  [Tags]  site
+  Відкрити сторінку інструкцій
+  Перевірити заголовок сторінки інструкцій
+  Перевірити випаючий список інструкцій
+
+
+Зворотній зв'язок
+  [Tags]  site
+  Зайти на сторінку зворотній зв'язок
+  Перевірити заголовок сторінки зворотній зв'язок
+  Перевірити наявність кнопки відправити на сторінці зворотній зв'язок
+
+
+Карта сайту
+  [Tags]  site
+  Перейти на сторінку карти сайту
+  Перевірити заголовок сторінки карта сайта
+  Порахувати кількість єлементів сторінки карта сайту
+
+
+Питання та відповіді
+  [Tags]  site  -test
+  Перейти на сторінку запитань
+  Перевірити заголовок сторінки запитань
+  Порахувати кількість запитань
+
+
+Курси валют
+  [Documentation]  страница валют отличается от прода
+  [Tags]  site  -test
+  Відкрити вікно курсів валют
+  Перевірити шлях курсів валют
+  Перевірити заголовок курсів валют
+  Перевірити лінки курсів валют
 
 
 Комерційні торги Закупівлі
@@ -261,7 +309,11 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
-  Розгорнути розширений пошук та випадаючий список видів торгів
+  Відфільтрувати по формі торгів  ${TESTNAME}
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури  ${info form1}
+  Перевірити тендерний документ
 
 
 Державні закупівлі прозорро Конкурентні процедури
@@ -477,6 +529,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Вибрати тип процедури для малої приватизації
   Порахувати кількість торгів малої приватизації
   Перевірити пошук малої приватизації
+  Перевірити тендерний документ для commercial
+
 
 Інформаційні повідомлення
   [Tags]  sales
@@ -485,6 +539,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Вибрати тип процедури для малої приватизації
   Порахувати кількість торгів малої приватизації
   Перевірити пошук малої приватизації
+  Перевірити тендерний документ для commercial
+
 
 Аукціони
   [Tags]  sales
@@ -493,6 +549,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Вибрати тип процедури для малої приватизації
   Порахувати кількість торгів малої приватизації
   Перевірити пошук малої приватизації
+  Перевірити тендерний документ для commercial
+
 
 Аукціони на продаж активів банків
   [Tags]  sales
@@ -503,12 +561,14 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Розгорнути розширений пошук та випадаючий список видів торгів  Продаж права вимоги за кредитними договорами
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
+
 Перевірити список доступних торгів для Аукціони на продаж активів банків
   [Tags]  sales
   [Template]  Перевірити наявність тексту в випадаючому списку
   Продаж права вимоги за кредитними договорами
   Продаж майна банків, що ліквідуються
   Голландський аукціон
+
 
 Продаж права вимоги за кредитними договорами
   [Tags]  sales
@@ -517,6 +577,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Продаж майна банків, що ліквідуються
   [Tags]  sales
@@ -525,6 +587,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Голландський аукціон
   [Tags]  sales
@@ -533,19 +597,24 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Аукціони на продаж активів банків Активи
-  [Tags]  sales
+  [Tags]  sales  -test  -prod
   Зайти на сторінку аукціони на продаж активів банків
   Перевірити вкладку активи
   Порахувати кількість прав
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
+
 
 Майно
   [Tags]  sales
   Вибрати тип активу та виконати пошук  ${TESTNAME}
   Перейти по результату пошуку  ${auction active item}
   Перевірити тип процедури  ${info form4}
+  Перевірити тендерний документ для commercial
+
 
 Права вимоги
   [Tags]  sales
@@ -554,6 +623,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Вибрати тип активу та виконати пошук  ${TESTNAME}
   Перейти по результату пошуку  ${auction active item}
   Перевірити тип процедури  ${info form4}
+  Перевірити тендерний документ для commercial
+
 
 Аукціони на продаж активів держпідприємств
   [Tags]  sales
@@ -562,12 +633,15 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
+
 Оренда майна
   [Tags]  sales
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Продаж майна
   [Tags]  sales
@@ -576,6 +650,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Англійський аукціон. Мала приватизація
   [Tags]  sales
@@ -585,6 +661,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Перейти по результату пошуку  ${last found element}
   Run Keyword If  "${site}" == "test"  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон з умовами, без умов
   Run Keyword If  "${site}" == "prod"  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Голландський аукціон. Мала приватизація
   [Documentation]  Пока отсутвуют на проде
@@ -594,6 +672,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+  Перевірити тендерний документ для commercial
+
 
 Торги RIALTO
   [Tags]  rialto
@@ -602,13 +682,15 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Порахувати кількість торгів RIALTO
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
+
 Запит цінових пропозицій
   [Documentation]  не присутсвуют на тесте
-  [Tags]  -test  rialto
+  [Tags]  rialto  -test
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${tender_type_procurement}
+
 
 Простий тендер
   [Tags]  rialto
@@ -618,6 +700,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${tender_type_procurement}
 
+
 Двохетапний тендер
   [Tags]  rialto
   Зайти на сторінку RIALTO
@@ -626,45 +709,6 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${tender_type_procurement}
 
-Реєстрація
-  [Tags]  site
-  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
-  Зайти на сторінку реєстрації
-  Перевірити заголовок сторінки реєстрації
-  Перевірити підзаголовок сторінки реєстрації
-
-Інструкції
-  [Tags]  site
-  Відкрити сторінку інструкцій
-  Перевірити заголовок сторінки інструкцій
-  Перевірити випаючий список інструкцій
-
-
-Зворотній зв'язок
-  [Tags]  site
-  Зайти на сторінку зворотній зв'язок
-  Перевірити заголовок сторінки зворотній зв'язок
-  Перевірити наявність кнопки відправити на сторінці зворотній зв'язок
-
-Карта сайту
-  [Tags]  site
-  Перейти на сторінку карти сайту
-  Перевірити заголовок сторінки карта сайта
-  Порахувати кількість єлементів сторінки карта сайту
-
-Питання та відповіді
-  [Tags]  site
-  Перейти на сторінку запитань
-  Перевірити заголовок сторінки запитань
-  Порахувати кількість запитань
-
-Курси валют
-  [Documentation]  страница валют отличается от прода
-  [Tags]  -test  site
-  Відкрити вікно курсів валют
-  Перевірити шлях курсів валют
-  Перевірити заголовок курсів валют
-  Перевірити лінки курсів валют
 
 Перевірка результатів тесту
   [Tags]  non-critical  procurement
@@ -921,7 +965,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 Порахувати кількість запитань
   Select Frame  css=iframe
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
-  Run Keyword if  '${count}' > '5'  Fail  Хто сховав Питання та відповіді?!
+  Run Keyword if  '${count}' < '5'  Fail  Хто сховав Питання та відповіді?!
 
 
 Перевірити заголовок, комерційніх торгів
@@ -1181,30 +1225,34 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Закладка Публічні закупівлі
-  Click Element  ${taryfy text}:nth-child(1)
+  Click Element  ${taryfy text}[1]
+  Page Should Contain Element  ${taryfy text}[1][@class="active"]
   ${should}  Set variable   Публічні закупівлі ProZorro та торги RIALTO
-  ${is}  Get Text  ${taryfy text}:nth-child(1)
+  ${is}  Get Text  ${taryfy text}[1]
   Should Be Equal  ${is}  ${should}
 
 
 Закладка Комерційні торги
-  Click Element  ${taryfy text}:nth-child(2)
+  Click Element  ${taryfy text}[2]
+  Page Should Contain Element  ${taryfy text}[2][@class="active"]
   ${should}  Set variable    Комерційні торги
-  ${is}  Get Text  ${taryfy text}:nth-child(2)
+  ${is}  Get Text  ${taryfy text}[2]
   Should Be Equal  ${is}  ${should}
 
 
 Закладка Продаж активів банків, що ліквідуються (ФГВФО)
-  Click Element  ${taryfy text}:nth-child(3)
+  Click Element  ${taryfy text}[3]
+  Page Should Contain Element  ${taryfy text}[3][@class="active"]
   ${should}  Set variable    Продаж активів банків, що ліквідуються (ФГВФО)
-  ${is}  Get Text  ${taryfy text}:nth-child(3)
+  ${is}  Get Text  ${taryfy text}[3]
   Should Be Equal  ${is}  ${should}
 
 
 Закладка Продаж і оренда майна/активів Державних підприємств
-  Click Element  ${taryfy text}:nth-child(4)
+  Click Element  ${taryfy text}[4]
+  Page Should Contain Element  ${taryfy text}[4][@class="active"]
   ${should}  Set variable    Продаж і оренда майна/активів Державних підприємств
-  ${is}  Get Text  ${taryfy text}:nth-child(4)
+  ${is}  Get Text  ${taryfy text}[4]
   Should Be Equal  ${is}  ${should}
 
 
@@ -1213,17 +1261,42 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Перевірити тендерний документ не для IP
+  ${commercial}  Run Keyword And Return Status  Location Should Contain  /komertsiyni-torgy/
+  Run Keyword If  "${commercial}" == "True"  Перевірити тендерний документ для commercial
+  ...  ELSE  Перевірити тендерний документ для procurement
+
+
+Перевірити тендерний документ для commercial
+  ${status}  Перевірити наявність документа для commercial
+  Run Keyword If  '${status}' == '${True}'  Run Keywords
+  ...  Mouse over  ${tender doc exept EDS commercial}
+  ...  AND  Wait Until Page Contains Element  //*[contains(@class, 'filename')]//a[@href][1]
+  ...  AND  Open Button  //*[contains(@class, 'filename')]//a[@href][1]
+  ...  AND  Check document for error
+
+
+Перевірити тендерний документ для procurement
   ${status}  Перевірити наявність документа
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Mouse over  ${tender doc exept EDS}
+  ...  AND  Wait Until Page Contains Element  //*[@data-qa="documents-block"]//a[@href][1]  5
   ...  AND  Open Button  //*[@data-qa="documents-block"]//a[@href][1]
-  ...  AND  Run Keyword And Expect Error  *  Location Should Contain  error
-  ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
-  ...  AND  Go Back
+  ...  AND  Check document for error
+
+
+Check document for error
+  Run Keyword And Expect Error  *  Location Should Contain  error
+  Run Keyword And Expect Error  *  Page Should Contain  an error
+  Go Back
 
 
 Перевірити наявність документа
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
+  [Return]  ${status}
+
+
+Перевірити наявність документа для commercial
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS commercial}
   [Return]  ${status}
 
 
@@ -1236,10 +1309,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 Відкрити особистий кабінет
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
-  ${status}  Run Keyword And Return Status  Location Should Contain  test
-  Run Keyword If  "${status}" == "False"  Location Should Contain  /webparts/
-  ...  ELSE  Location Should Contain  /webparts/
-  #...  ELSE  Location Should Contain  /WEBPARTS/
+  Location Should Contain  /webparts/
   Page Should Contain Element  css=.sidebar-menu
   Page Should Contain Element  css=.main-content
 
