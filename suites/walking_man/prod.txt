@@ -1,5 +1,4 @@
 -d test_output
--v role:viewer
 -n non-critical
 
 -e -prod

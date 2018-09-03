@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Test Teardown  Test Postcondition
-Suite Setup  Start  ${user}
+Suite Setup  Відкрити головну сторінку SmartTender.biz під потрібною роллю
 Suite Teardown  Suite Postcondition
 
 
@@ -45,7 +45,6 @@ ${contract link2}                    css=li:nth-child(2)>a
 ${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
 ${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
 ${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
-${info form2}                        css=.info_form
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
@@ -59,16 +58,6 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 *** Test Cases ***
-Відкрити головну сторінку SmartTender.biz під роллю ${user}
-  [Tags]  site
-  ...  commercial
-  ...  procurement
-  ...  sales
-  ...  rialto
-  Змінити стартову сторінку для IP
-  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
-  Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
-
 Подати пропозицію учасником на тестові торги Допорогові закупівлі
   [Tags]  proposal  procurement
   Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
@@ -77,7 +66,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Відфільтрувати по статусу торгів  Прийом пропозицій
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}  Допорогові закупівлі
+  Перевірити тип процедури  ${tender_type_procurement}  Допорогові закупівлі
   Перевірити кнопку подачі пропозиції
   Скасувати пропозицію за необхідністю
   Заповнити поле з ціною  1  1
@@ -85,19 +74,19 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 #Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
-#  [Tags]  proposal  procurement
-#  Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
-#  Відкрити сторінку тестових торгів
-#  Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
-#  Відфільтрувати по статусу торгів  Прийом пропозицій
-#  Виконати пошук тендера
-#  Перейти по результату пошуку  ${last found element}
-#  Перевірити тип процедури  ${info form2}  Відкриті торги з публікацією англійською мовою
-#  Перевірити кнопку подачі пропозиції
-#  Скасувати пропозицію за необхідністю
-#  #Заповнити поле з ціною  1  1
-#  Подати пропозицію
-#  [Teardown]  Test Postcondition
+  #[Tags]  proposal  procurement
+  #Run Keyword If  "${user}" != "test_it.ua"  Pass execution  Only for provider, prod, test_tender
+  #Відкрити сторінку тестових торгів
+  #Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
+  #Відфільтрувати по статусу торгів  Прийом пропозицій
+  #Виконати пошук тендера
+  #Перейти по результату пошуку  ${last found element}
+  #Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
+  #Перевірити кнопку подачі пропозиції
+  #Скасувати пропозицію за необхідністю
+  #debug
+  #Заповнити поле з ціною  1  1
+  #Подати пропозицію
 
 Особистий кабінет
   [Tags]  site
@@ -107,7 +96,6 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Аналітика участі
   [Tags]  site
-  ...  analytic
   Run Keyword If  '${user}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
   ...  AND  Вибрати минулий місяці при відсутності тендерів
@@ -220,7 +208,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Відкриті торги. Аналіз пропозицій
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -230,7 +218,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Запит пропозицій
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -240,7 +228,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Відкриті торги. Аналіз ринку
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -250,7 +238,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Комерційні торги Продажі
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
@@ -259,7 +247,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Перевірити список доступних торгів для Комерційні торги Продажі
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   [Template]  Перевірити наявність тексту в випадаючому списку
   Тендер на продаж. Відкриті торги
   Аукціон на продаж. Відкриті торги
@@ -269,7 +257,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Аукціон на продаж. Відкриті торги
-  [Tags]  commercial  skip_for_test
+  [Tags]  commercial  -test
   Зайти на сторінку комерційніх торгів
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
@@ -304,12 +292,12 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Допорогові закупівлі
-  [Tags]  procurement  skip_for_test
+  [Tags]  procurement
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури  ${info form2}
+  Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
 
@@ -500,7 +488,6 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Аукціони
   [Tags]  sales
-  ...  -test
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Перевірити вкладку мала приватизація
   Вибрати тип процедури для малої приватизації
@@ -592,17 +579,16 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Англійський аукціон. Мала приватизація
   [Tags]  sales
-  ...  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
-  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон з умовами, без умов
+  Run Keyword If  "${site}" == "test"  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон з умовами, без умов
+  Run Keyword If  "${site}" == "prod"  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 Голландський аукціон. Мала приватизація
-  [Tags]  broken
-  ...  -prod
-  ...  -test
+  [Documentation]  Пока отсутвуют на проде
+  [Tags]  sales  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -617,7 +603,8 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   [Teardown]  Run Keyword If Test Failed  Capture Page Screenshot
 
 Запит цінових пропозицій
-  [Tags]  skip_for_test  rialto
+  [Documentation]  не присутсвуют на тесте
+  [Tags]  -test  rialto
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
@@ -641,7 +628,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Реєстрація
   [Tags]  site
-  Run Keyword if  '${user}' != 'viewer'  Pass Execution  only for viewer
+  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
   Зайти на сторінку реєстрації
   Перевірити заголовок сторінки реєстрації
   Перевірити підзаголовок сторінки реєстрації
@@ -672,17 +659,19 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Порахувати кількість запитань
 
 Курси валют
-  [Tags]  skip_for_test  site
+  [Documentation]  страница валют отличается от прода
+  [Tags]  -test  site
   Відкрити вікно курсів валют
   Перевірити шлях курсів валют
   Перевірити заголовок курсів валют
   Перевірити лінки курсів валют
 
 Перевірка результатів тесту
-  [Tags]  non-critical  procurement  check
+  [Tags]  non-critical  procurement
   Log  ${count multiple lot checked}
   Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
   [Teardown]  No Operation
+
 
 *** Keywords ***
 
@@ -691,20 +680,29 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 #######               Keywords               ##########
 #######                                      ##########
 #######################################################
+Відкрити головну сторінку SmartTender.biz під потрібною роллю
+  Start  ${user}
+  Змінити стартову сторінку для IP
+  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
+  Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
+
 
 Зайти на сторінку про компанію
   Click Element  ${button pro-kompaniyu}
   Location Should Contain  pro-kompaniyu
+
 
 Перевірити заголовок сторінки про компанію
   ${should header}  Set Variable  Про майданчик SmartTender
   ${is header}  Get Text  ${header text}
   Should Be Equal  ${is header}  ${should header}
 
+
 Перевірити текст сторінки про компанію
   ${should text}  Set variable  Раді вітати Вас на електронному торговельному майданчику SmartTender!
   ${is text}  Get Text  ${pro-kompaniyu text}
   Should Contain  ${is text}  ${should text}
+
 
 Зайти на сторінку з новинами
   Mouse Over  ${button pro-kompaniyu}
@@ -716,9 +714,11 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість новин
   ${count}  Get Element Count  ${news block}
   Run Keyword if  '${count}' == '0'  Fail  Де новини?
+
 
 Перевірити пошук(ENTER)
   ${text}  Get Text  ${news block} div>a
@@ -729,6 +729,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
 
+
 Перевірити пошук(Click button)
   ${text}  Get Text  ${news block} div>a
   Input text  ${news search input}  ${text}
@@ -738,12 +739,14 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
   Reload Page
 
+
 Переглянути новину
   Open Button  ${news block} div>a
   ${header}  Get Text  css=h1
   Should Not Be Empty  ${header}
   ${news}  Get Text  css=#News
   Should Not Be Empty  ${news}
+
 
 Перевірити лінк хлібних крох
   ${location}  Get Location
@@ -752,9 +755,11 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Should Not Be Equal  ${location}  ${newlocation}
   Run Keyword And Expect Error  *  Get Text  css=#News
 
+
 Зайти на сторінку з контактами
   Click Element  ${button kontakty}
   Location Should Contain  /pro-kompaniyu/kontakty/
+
 
 Перевірити заголовок сторінки контактів
   Sleep  5
@@ -762,23 +767,28 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is header}  Get Text  ${header text}
   Should Be Equal  ${is header}  ${should header}
 
+
 Порахувати кількість контактів
   ${count}  Get Element Count  ${kontakty block}
   Run Keyword if  '${count}' == '0'  Fail  Нема до кого звертатися!
+
 
 Перевірити заголовок контакту
   ${should text}  Set variable  З ПИТАНЬ
   ${is text}  Get Text  ${kontakty text}
   Should Contain  ${is text}  ${should text}
 
+
 Зайти на сторінку клієнтів
   Mouse Over  ${button pro-kompaniyu}
   Click Element  ${dropdown navigation}[href='/nashi-klienty/']
   Location Should Contain  /nashi-klienty/
 
+
 Перевірити заголовок сторінки клієнтів
   Element Text Should Be  ${nashi-klienty text}  Індивідуальні рішення
   Element Text Should Be  ${nashi-klienty text1}  Останнім часом до нас приєдналися
+
 
 Порахувати кількість клієнтів
   ${count}  Get Element Count  ${client banner}
@@ -788,50 +798,61 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${count}  Get Element Count  ${client banner}
   Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
 
+
 Зайти на сторінку вакансій
   Mouse Over  ${button pro-kompaniyu}
   Click Element  ${dropdown navigation}[href='/vakansii/']
   Location Should Contain  /vakansii/
+
 
 Перевірити заголовок сторінки вакансій
   ${should}  Set variable  Вакансії
   ${is}  Get Text  ${vakansii text}
   Should Be Equal  ${is}  ${should}
 
+
 Зайти на сторінку с подіями
   Click Element  ${button podii}
   Location Should Contain  /podii/
+
 
 Превірити заголовок сторінки подій
   ${should}  Set variable  Заходи SmartTender
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити наявність календаря
   Page Should Contain Element  css=div#calendar[class]
+
 
 Зайти на сторінку реєстрації
   Click Element  ${RegisterAnchor}
   Location Should Contain  /reestratsiya/
+
 
 Перевірити заголовок сторінки реєстрації
   ${should}  Set variable  Реєстрація
   ${is}  Get Text  ${h1 header text}
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити підзаголовок сторінки реєстрації
   ${should}  Set variable  Персональна інформація
   ${is}  Get Text  css=.main-content h3
   Should Be Equal  ${is}  ${should}
+
 
 Відкрити сторінку інструкцій
   Click Element  xpath=//*[@href='/instruktcii/']
   Location Should Contain  instruktcii
   Дочекатись закінчення загрузки сторінки
 
+
 Перевірити заголовок сторінки інструкцій
   ${get}  Get Text  xpath=//h1
   Should Be Equal  ${get}  Інструкції
+
 
 Перевірити випаючий список інструкцій
   Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
@@ -848,17 +869,21 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
   Sleep  2
 
+
 Зайти на сторінку зворотній зв'язок
   Open button  ${feedback link}
   Location Should Contain  /zvorotniy-zvyazok/
+
 
 Перевірити заголовок сторінки зворотній зв'язок
   ${should}  Set variable  Зворотній зв'язок
   ${is}  Get Text  ${h1 header text}
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити наявність кнопки відправити на сторінці зворотній зв'язок
   Page Should Contain Element  css=#MainContent_MainContent_MainContent_submitBtn
+
 
 Перейти на сторінку карти сайту
   Page Should Contain Element  ${site map}
@@ -866,46 +891,55 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Go to  ${location}/karta-saytu/
   Location Should Contain  /karta-saytu/
 
+
 Перевірити заголовок сторінки карта сайта
   ${should}  Set variable  Карта сайту
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість єлементів сторінки карта сайту
   ${count}  Get Element Count  css=[class="row content"] li>a
   ${number}  Run Keyword If
-  ...  "${user}" == "viewer"  Set Variable  31
+  ...  "${role}" == "viewer"  Set Variable  31
   ...  ELSE  Set Variable  30
   Run Keyword if  "${count}" < "${number}"  Fail  Нема всіх єлементів
+
 
 Перейти на сторінку запитань
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/zapytannya-i-vidpovidi/']
   Location Should Contain  /zapytannya-i-vidpovidi/
 
+
 Перевірити заголовок сторінки запитань
   ${should}  Set variable  Питання та відповіді
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
+
 
 Порахувати кількість запитань
   Select Frame  css=iframe
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
   Run Keyword if  '${count}' > '5'  Fail  Хто сховав Питання та відповіді?!
 
+
 Перевірити заголовок, комерційніх торгів
   ${should}  Set variable  Комерційні торги (тендери SmartTender)
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1) p
   Should Be Equal  ${is}  ${should}
+
 
 Перевірити вкладку комерційніх закупівель
   ${should}  Set variable  Закупівлі
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(1)
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість торгів
   ${count}  Get Element Count  ${first element find tender}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
+
 
 Перевірити вкладку комерційних продаж
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
@@ -913,19 +947,23 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   Should Be Equal  ${is}  ${should}
 
+
 Зайти на сторінку державних закупівель
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(2)
+
 
 Перевірити заголовок державних закупівель
   ${should}  Set variable  Публічні (державні) закупівлі PROZORRO
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(2)
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити закладку конкурентні процедури
   ${should}  Set variable  Конкурентні процедури
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(1)
   Should Be Equal  ${is}  ${should}
+
 
 Перевірити закладку неконкурентні процедури
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
@@ -933,16 +971,19 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити закладку закупівлі плани
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(3)
   ${should}  Set variable  Плани закупок ProZorro
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість плану
   Select Frame  css=iframe
   ${count}  Get Element Count  ${item plan}
   Run Keyword if  '${count}' == '0'  Fail  Як це ми без плану?!
+
 
 Перевірити закладку закупівлі договори
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(4)
@@ -950,13 +991,16 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${novyny text}
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість договорів
   ${count}  Get Element Count  ${item dogovory}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
+
 Отримати id першого договору
   ${id}  get text  ${item dogovory}//h4
   [Return]  ${id}
+
 
 Перевірити заголовок договору для закупок
   [Arguments]  ${id}
@@ -964,23 +1008,28 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Should Contain  ${get}  Договір
   Should Contain  ${get}  ${id}
 
+
 Зайти на сторінку аукціони на продаж активів банків
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(3)
+
 
 Перевірити заголовок аукціони на продаж активів банків
   ${should}  Set variable  Аукціони на продаж активів банків
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(3)
   Should Be Equal  ${is}  ${should}
 
+
 Перевірити вкладку аукціони на продаж активів банків
   ${should}  Set variable  Аукціони
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(1)
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість аукціонів на продаж
   ${count}  Get Element Count  ${auction active items}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
+
 
 Перевірити вкладку активи
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
@@ -989,50 +1038,61 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${auction active header}
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість прав
   ${count}  Get Element Count  ${auction active item}
   Run Keyword if  '${count}' == '0'  Fail  Як це без прав?!
 
+
 Зайти на сторінку аукціони на продаж активів держпідприємств
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
+
 
 Перевірити заголовок аукціони на продаж активів держпідприємств
   ${should}  Set variable  Аукціони на продаж активів держпідприємств
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
   ${count}  Get Element Count  ${auction active items}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
+
 Зайти на сторінку RIALTO
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(5)
+
 
 Перевірити заголовок RIALTO
   ${should}  Set variable  Торги RIALTO
   ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(5)
   Should Be Equal  ${is}  ${should}
 
+
 Порахувати кількість торгів RIALTO
   ${count}  Get Element Count  ${auction active items}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
+
 Відкрити вікно договору
   Click Element  ${button dogovir}
   Sleep  3
+
 
 Перевірити заголовок договору
   ${should header}  Set Variable  Договір
   ${is header}  Get Text  css=#ui-id-2
   Should Be Equal  ${is header}  ${should header}
 
+
 Перевірити перший абзац договору
   Select Frame  css=#ui-id-1>iframe
   ${should text}  Set Variable  Для участі у будь-якому статусі в електронних торгах (закупівлях) Вам необхідно укласти відповідний договір із Оператором електронного майданчика Smarttender.biz. Для цього Ви може скористатися Акцептом оферти (прийняття умов договору приєднання).
   ${is text}  Get Text  css=p
   Should Contain  ${is text}  ${should text}
+
 
 Перевірити лінки в тексті договору
   ${should link1}  Set Variable  https://smarttender.biz/instruktsii/dogovir-oferta-so-2015-003-pro-nadannya-informatsiynyh-poslug-pid-chas-provedennya-protsedur-publichnyh-zakupivel-prozorro-ta-zakupivel-rialto/
@@ -1042,17 +1102,21 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Should Be Equal  ${is link1}  ${should link1}
   Should Be Equal  ${is link2}  ${should link2}
 
+
 Відкрити вікно курсів валют
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/kursy-valyut/']
 
+
 Перевірити шлях курсів валют
   Location Should Contain  kursy-valyut
+
 
 Перевірити заголовок курсів валют
   ${should header}  Set Variable  Курсы валют
   ${is header}  Get Text  ${exchange rates header}
   Should Be Equal  ${is header}  ${should header}
+
 
 Перевірити лінки курсів валют
   Select Frame  css=#main #content iframe
@@ -1063,10 +1127,12 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Should Contain  ${is link1}  ${should link1}
   Should Contain  ${is link2}  ${should link2}
 
+
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
   Click Element  ${dropdown menu for bid statuses}
   Click Element  xpath=//li[text()='${status}']
+
 
 Перевірити тип процедури
   [Arguments]  ${selector}  ${type}=${TESTNAME}
@@ -1074,6 +1140,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Sleep  .5
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${type}
+
 
 Перевірити тип процедури за зразком
   [Arguments]  ${selector}  ${should}
@@ -1083,10 +1150,12 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${selector}
   Should Contain  ${is}  ${should}
 
+
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
   Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
+
 
 Вибрати тип активу та виконати пошук
   [Arguments]  ${selector}
@@ -1098,14 +1167,17 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
   Sleep  1
 
+
 Зайти на сторінку тарифів
   Click Element  ${button taryfy}
   Location Should Contain  /taryfy/
+
 
 Перевірити кількість закладок
   Select Frame  css=iframe
   ${count}  Get Element Count  ${taryfy text}
   Run Keyword if  '${count}' != '4'  Fail  Не вірна кількість закладок тарифів
+
 
 Закладка Публічні закупівлі
   Click Element  ${taryfy text}:nth-child(1)
@@ -1113,11 +1185,13 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${taryfy text}:nth-child(1)
   Should Be Equal  ${is}  ${should}
 
+
 Закладка Комерційні торги
   Click Element  ${taryfy text}:nth-child(2)
   ${should}  Set variable    Комерційні торги
   ${is}  Get Text  ${taryfy text}:nth-child(2)
   Should Be Equal  ${is}  ${should}
+
 
 Закладка Продаж активів банків, що ліквідуються (ФГВФО)
   Click Element  ${taryfy text}:nth-child(3)
@@ -1125,11 +1199,13 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   ${is}  Get Text  ${taryfy text}:nth-child(3)
   Should Be Equal  ${is}  ${should}
 
+
 Закладка Продаж і оренда майна/активів Державних підприємств
   Click Element  ${taryfy text}:nth-child(4)
   ${should}  Set variable    Продаж і оренда майна/активів Державних підприємств
   ${is}  Get Text  ${taryfy text}:nth-child(4)
   Should Be Equal  ${is}  ${should}
+
 
 Перевірити тендерний документ
   Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
@@ -1282,7 +1358,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Виконати пошук малої приватизації  ${id}
   Open Button  //*[@class="content-block"]/div//a
   Дочекатись закінчення загрузки сторінки(skeleton)
-  ${text}  Get Text  //h4/a|//h4/following-sibling::a
+  ${text}  Get Text  //*[@class="ivu-card-body"]//a[@href and @rel="noopener noreferrer"]|//h4/a|//h4/following-sibling::a
   Should Be Equal  ${text}  ${id}
 
 
@@ -1350,7 +1426,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Відкрити сторінку гарантійного внеску
   Open Button  //*[@id="guarantee"]//a
-  Run Keyword If  "${user}" != "viewer"  Run Keywords
+  Run Keyword If  "${role}" != "viewer"  Run Keywords
   ...       Element Should Be Visible  //h4[contains(text(), "Оформлення заявки на тендерне забезпечення")]
   ...  AND  Location Should Contain  /GuaranteePage/
   ...  ELSE  Run Keywords
