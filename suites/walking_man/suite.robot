@@ -998,6 +998,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Отримати id першого договору
+  Wait Until Page Contains Element  ${item dogovory}//h4  10
   ${id}  get text  ${item dogovory}//h4
   [Return]  ${id}
 
