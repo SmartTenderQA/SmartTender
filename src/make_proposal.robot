@@ -21,6 +21,8 @@ ${checkbox1}                        xpath=//*[@id="SelfEligible"]//input
 ${checkbox2}                        xpath=//*[@id="SelfQualified"]//input
 ${button add file}                  //input[@type="file"][1]
 ${file loading}                     css=div.loader
+${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel"]/button
+${cancel. offers confirm button}    ${block}[last()]//div[@class="ivu-poptip-footer"]/button[2]
 
 *** Keywords ***
 Відкрити сторінку подачі пропозиції

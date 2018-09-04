@@ -20,8 +20,6 @@ ${choice file list}                 //div[@class="dropdown open"]//li
 ${sub field}                        xpath=//*[@id="lotSubcontracting0"]/textarea[1]
 ${EDS}                              ${block}[1]//div[@class="ivu-row"]//button
 ${EDS close}                        xpath=//*[@class="modal-dialog "]//button
-${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel"]/button
-${cancel. offers confirm button}    ${block}[last()]//div[@class="ivu-poptip-footer"]/button[2]
 ${delete file}                      //div[@class="file-container"]/div[last()]/div/div[2]
 ${delete file confirm}              /div/div[2]//button[2]
 ${switch}                           xpath=//*[@class="ivu-switch"]
