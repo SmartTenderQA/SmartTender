@@ -370,15 +370,16 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Відкриті торги з публікацією англійською мовою
+  [Documentation]  Перевірка гарантійного внеску відключена для prod
   [Tags]  procurement
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірка гарантійного внеску
   Перевірити тендерний документ
   Перевірити сторінку окремого лота в мультилоті
+  Перевірка гарантійного внеску
 
 
 Переговорна процедура для потреб оборони
@@ -1441,6 +1442,7 @@ Check document for error
 
 
 Перевірка гарантійного внеску
+  Run Keyword If  '${site}' == 'prod'  Pass Execution  Відключено для старої сторінки детальної інформації
   ${data}  Отримати дані тендеру з cdb по id
   Set Global Variable  ${data}
   ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  title
@@ -1483,7 +1485,7 @@ Check document for error
 
 
 Отримати дані тендеру з cdb по id
-  ${id}  Get Text  //*[@data-qa="prozorro-id"]//div[2]//span
+  ${id}  Get Text  //*[@data-qa="prozorro-id"]//div[2]//span|//*[@class="info_idcbd"]
   Run Keyword If  "${site}" == "test"
   ...  Create Session  api  https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/${id}
   Run Keyword If  "${site}" == "prod"
