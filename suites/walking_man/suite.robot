@@ -54,7 +54,7 @@ ${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
-${analytics_page}                    https://smarttender.biz/ParticipationAnalytic/?segment=3&organizationId=226
+${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span
 
 
@@ -97,7 +97,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Аналітика участі
-  [Tags]  site  dev
+  [Tags]  site
   Run Keyword If  '${user}' == 'test_it.ua'  Run Keywords
   ...  Відкрити сторінку аналітики
   ...  AND  Вибрати минулий місяці при відсутності тендерів
@@ -201,6 +201,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Питання та відповіді
+  [Documentation]  не работает на тесте
   [Tags]  site  -test
   Перейти на сторінку запитань
   Перевірити заголовок сторінки запитань
@@ -421,7 +422,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Конкурентний діалог 1-ий етап
-  [Tags]  procurement  non-critical
+  [Tags]  procurement
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
@@ -522,7 +523,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Об'єкти приватизації
-  [Tags]  sales  dev
+  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Перевірити вкладку мала приватизація
   Вибрати тип процедури для малої приватизації
@@ -532,7 +533,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 
 Інформаційні повідомлення
-  [Tags]  sales  dev
+  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Перевірити вкладку мала приватизація
   Вибрати тип процедури для малої приватизації
@@ -665,6 +666,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 
 Голландський аукціон. Мала приватизація
   [Documentation]  Пока отсутвуют на проде
+  ...  на тесте не правильное название, обновлений на проде что бы поправить тест
   [Tags]  sales  -test  -prod
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
@@ -1347,7 +1349,7 @@ Check document for error
 
 
 Відкрити сторінку аналітики
-  Go to  ${analytics_page}
+  Go to  ${start_page}${analytics_page}
   Дочекатись закінчення загрузки сторінки
   ${value}=  Get text  xpath=//*[@class="text-center"]/h3
   Should Contain  'Публічні закупівлі'  ${value}

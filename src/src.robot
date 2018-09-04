@@ -97,8 +97,16 @@ Start
 Open button
   [Documentation]   відкривае лінку з локатора у поточному вікні
   [Arguments]  ${selector}
-  ${a}=  Get Element Attribute  ${selector}  href
-  Go To  ${a}
+  ${href}=  Get Element Attribute  ${selector}  href
+  ${href}  Поправили лінку для IP  ${href}
+  Go To  ${href}
+
+
+Поправили лінку для IP
+  [Arguments]  ${href}
+  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
+  ...  ELSE  Set Variable  ${href}
+  [Return]  ${href}
 
 
 Знайти тендер по auctionID
@@ -165,8 +173,7 @@ Open button
 Перейти по результату пошуку
   [Arguments]  ${selector}
   ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
-  ...  ELSE  Set Variable  ${href}
+  ${href}  Поправили лінку для IP  ${href}
   Go To  ${href}
   Дочекатись закінчення загрузки сторінки(webclient)
 
