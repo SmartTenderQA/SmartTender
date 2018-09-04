@@ -12,6 +12,8 @@ import os
 import json
 import random
 from random import randint
+from fpdf import FPDF
+
 
 
 locality = os.getcwd()
@@ -45,6 +47,18 @@ def create_fake_doc(n=10):
     f.write(content.encode('utf8'))
     f.close()
     return path, name, content
+
+
+def create_pdf_file():
+    pdf = FPDF()
+    pdf.add_page()
+    name = create_sentence(1, 'file')
+    pdf_name = 'test_output/' + name + '.pdf'
+    content = (create_sentence(50)).encode('utf8')
+    pdf.set_font('Arial', 'B', 24)
+    pdf.cell(40, 10, content)
+    pdf.output(pdf_name, 'F')
+    return pdf_name
 
 
 def random_number(a, b):

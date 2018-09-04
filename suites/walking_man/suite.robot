@@ -55,7 +55,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
-${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span
+${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span|//*[@class="info_form"]
 
 
 *** Test Cases ***
@@ -74,19 +74,23 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Подати пропозицію
 
 
-#Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
-  #[Tags]  proposal
-  #Відкрити сторінку тестових торгів
-  #Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
-  #Відфільтрувати по статусу торгів  Прийом пропозицій
-  #Виконати пошук тендера
-  #Перейти по результату пошуку  ${last found element}
-  #Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
-  #Перевірити кнопку подачі пропозиції
-  #Скасувати пропозицію за необхідністю
-  #debug
-  #Заповнити поле з ціною  1  1
-  #Подати пропозицію
+Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
+  [Tags]  proposal
+  Відкрити сторінку тестових торгів
+  Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
+  Відфільтрувати по статусу торгів  Прийом пропозицій
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
+  Перевірити кнопку подачі пропозиції
+  Скасувати пропозицію за необхідністю
+  ${lots amount}  Порахувати Кількість Лотів
+  ${multiple status}  Перевірка на мультилот
+  Розгорнути усі лоти
+  Заповнити поле з ціною  1  1
+  Підтвердити відповідність
+  Завантажити файли на весь тендер
+  Подати пропозицію
 
 
 Особистий кабінет
@@ -1497,16 +1501,6 @@ Check document for error
   ...  ELSE  Run Keywords
   ...       Location Should Contain  .biz/Errors/
   ...  AND  Element Should Contain  //h1/following-sibling::h2  Для просмотра страницы необходимо войти на сайт!
-
-
-Виділити iFrame за необхідністю
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?tenderId=")]
-  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?tenderId=")]
-
-
-Виділити iFrame за необхідністю у лоті
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
-  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]
 
 
 Перевірити сторінку прозорро Плани

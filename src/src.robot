@@ -57,6 +57,7 @@ ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='
 *** Keywords ***
 Start
   [Arguments]  ${user}  ${alies}=alies
+  clear_test_output
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
@@ -175,6 +176,7 @@ Open button
   ${href}  Get Element Attribute  ${selector}  href
   ${href}  Поправили лінку для IP  ${href}
   Go To  ${href}
+  Виділити iFrame за необхідністю
   Дочекатись закінчення загрузки сторінки(webclient)
 
 
@@ -219,3 +221,13 @@ Test Postcondition
 Перевірити користувача
   ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
   Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
+
+
+Виділити iFrame за необхідністю
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?tenderId=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?tenderId=")]
+
+
+Виділити iFrame за необхідністю у лоті
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
+  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]

@@ -17,6 +17,10 @@ ${cancellation error1}              Не вдалося анулювати пр�
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
 ${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
 ${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
+${checkbox1}                        xpath=//*[@id="SelfEligible"]//input
+${checkbox2}                        xpath=//*[@id="SelfQualified"]//input
+${button add file}                  //input[@type="file"][1]
+${file loading}                     css=div.loader
 
 *** Keywords ***
 Відкрити сторінку подачі пропозиції
@@ -77,10 +81,12 @@ Ignore cancellation error
 Перевірити кнопку подачі пропозиції
   [Arguments]  ${selector}=None
   ${button}  Run Keyword If  "${selector}" == "None"
-  ...  Set Variable  css=[class='show-control button-lot']
+  ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
   ...  ELSE  Set Variable  ${selector}
   Page Should Contain Element  ${button}
   Open button  ${button}
+  ${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@class='modal-dialog ']//h4
+  Run Keyword If  "${status}" == "True"  Pass Execution  Прийом пропозицій завершений!
   Location Should Contain  /edit/
 
 
@@ -116,3 +122,49 @@ Ignore error
   Wait Until Page Does Not Contain Element  ${ok button}
   Sleep  30
   Подати пропозицію
+
+
+Порахувати Кількість Лотів
+  ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
+  run keyword if  '${blocks amount}'<'3'
+  ...  fatal error  Нету нужных елементов на странице(не та страница)
+  ${lots amount}  evaluate  ${blocks amount}-2
+  Set Global Variable  ${lots amount}
+  Set Global Variable  ${blocks amount}
+  [Return]  ${lots amount}
+
+
+Перевірка на мультилот
+  ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}[2]//button
+  Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${multiple status}  multiple
+  ...  ELSE  Set Global Variable  ${multiple status}  withoutlot
+  [Return]  ${multiple status}
+
+
+Розгорнути усі лоти
+  Run Keyword If  '${multiple status}' == 'multiple'  Collaps Loop
+
+
+Collaps Loop
+  Sleep  .5
+  :FOR  ${INDEX}  IN RANGE  ${lots amount}
+  \  ${n}  evaluate  ${INDEX}+2
+  \  click element  ${block}[${n}]//button
+
+
+Підтвердити відповідність
+  Click Element  ${checkbox1}
+  Click Element  ${checkbox2}
+
+
+Створити та додати PDF файл
+  [Arguments]  ${add_file_number}
+  ${path}  create_pdf_file
+  Choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/${path}
+  ${status}  ${message}  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${file loading}  3
+  Run Keyword If  "${status}" == "PASS"  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${file loading}
+
+
+Завантажити файли на весь тендер
+  :FOR  ${INDEX}  IN RANGE  1  ${blocks amount}
+  \  Створити та додати PDF файл  ${INDEX}

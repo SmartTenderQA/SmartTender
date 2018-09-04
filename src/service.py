@@ -11,6 +11,10 @@ from iso8601 import parse_date
 from datetime import datetime, timedelta
 from dateutil.parser import parse
 from dateutil.parser import parserinfo
+from glob import glob
+import os
+
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -286,3 +290,11 @@ def convert_date_from_cdb(date):
     time = (parse(date)).replace(tzinfo=None)
     time = (time.strftime('%Y-%m-%d %H:%M:%S'))
     return time
+
+
+def clear_test_output():
+    for filename in glob("*.pdf"):
+        os.remove(filename)
+
+    for filename in glob("*.png"):
+        os.remove(filename)

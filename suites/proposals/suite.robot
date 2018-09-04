@@ -6,15 +6,13 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${number of lots}                   how_many_lots?
+${multiple status}                   how_many_lots?
 ${error}                            xpath=.//*[@class='ivu-notice-notice ivu-notice-notice-closable ivu-notice-notice-with-desc']
 ${block without}                    .//*[@class='ivu-card ivu-card-bordered']
 ${amount}                           ${block}[2]//div[@class='amount lead'][1]
 ${proposal}                         http://test.smarttender.biz/bid/edit
 ${useful indicators open}           //span[@class='ivu-select-selected-value']
 ${useful indicators list}           //div[@class='ivu-select-dropdown']/ul[2]/li
-${checkbox1}                        xpath=//*[@id="SelfEligible"]//input
-${checkbox2}                        xpath=//*[@id="SelfQualified"]//input
 ${button add file}                  //input[@type="file"][1]
 ${choice file button}               //button[@data-toggle="dropdown"]
 ${file button path}                 //div[@class="file-container"]/div
@@ -28,10 +26,6 @@ ${delete file}                      //div[@class="file-container"]/div[last()]/d
 ${delete file confirm}              /div/div[2]//button[2]
 ${switch}                           xpath=//*[@class="ivu-switch"]
 ${switch field}                     xpath=//*[@class="ivu-input-wrapper ivu-input-type"]/input
-
-
-
-${file loading}                     css=div.loader
 ${wait}                             60
 
 
@@ -45,23 +39,17 @@ ${wait}                             60
   ${tender id}=  service.get_tender_variables  ${tender_form}  ${tender_type}
   Go To  ${proposal}/${tender id}/
   Скасувати пропозицію за необхідністю
-  ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}[2]//button
-  Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${number of lots}  multiple
-  ...  ELSE  Set Global Variable  ${number of lots}  withoutlot
+
 
 1.2 Заповнити наступні обов’язкові поля по декількох лотах:
   [Tags]   ${tender_type}  ${tender_form}  smoke
   [Documentation]  checks if this page is what needed
   ...  counts number of lots
   ...  opens lots if multiple
-  ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
-  run keyword if  '${blocks amount}'<'3'
-  ...  fatal error  Нету нужных елементов на странице(не та страница)
-  ${lots amount}  evaluate  ${blocks amount}-2
-  set suite variable  ${lots amount}
-  set suite variable  ${blocks amount}
-  run keyword if  '${number of lots}' == 'withoutlot'  Pass Execution  this is one lot tender
-  Collaps Loop
+  ${lots amount}  Порахувати Кількість Лотів
+  ${multiple status}  Перевірка на мультилот
+  Розгорнути усі лоти
+
 
 1.2.1 Ціна (по кожному лоту окремо)
   [Tags]   ${tender_type}  ${tender_form}  smoke
@@ -74,12 +62,12 @@ ${wait}                             60
 
 1.2.3 Підтвердження відповідності кваліфікаційним критеріям та відсутності підстав для відмови в участі (ст. 16 та ст. 17 Закону про публічні закупівлі)
   [Tags]   ${tender_type}  ${tender_form}  smoke
-  Run depending on the dict  Conformity  Check boxes
+  Run depending on the dict  Conformity  Підтвердити відповідність
 
 1.2.4 Додати файли
   [Tags]   ${tender_type}  ${tender_form}  smoke
-  run keyword if  '${number of lots}'=='multiple'  Add file loop
-  ...  ELSE  Add file to ...  1  _First.txt
+  run keyword if  '${multiple status}'=='multiple'  Завантажити файли на весь тендер
+  ...  ELSE  Створити та додати PDF файл  1
 
 1.2.4.1 Обрати типи файлів (до закупівлі в цілому, або по кожному лоту окремо)
    [Tags]   ${tender_type}  ${tender_form}
@@ -103,7 +91,7 @@ ${wait}                             60
 
 1.2.4.6 Додати другий файл
     [Tags]   ${tender_type}  ${tender_form}
-    Add file to ...  1  _Second.txt
+    Створити та додати PDF файл  1
 
 1.2.4.7 Вадалити файл
     [Tags]   ${tender_type}  ${tender_form}
@@ -111,7 +99,7 @@ ${wait}                             60
 
 1.3 Зазначити інформацію про субпідрядника
     [Tags]   ${tender_type}  ${tender_form}  smoke
-    run keyword if  '${number of lots}'=='multiple'  Run depending on the dict  Sub information  Add info about sub LOOP
+    run keyword if  '${multiple status}'=='multiple'  Run depending on the dict  Sub information  Add info about sub LOOP
     ...  ELSE  Run depending on the dict  Sub information  omg this robot...
 
 2 ПОДАТИ ПРОПОЗИЦІЮ
@@ -141,8 +129,8 @@ ${wait}                             60
 
 4.1.3 Додати нові файли
     [Tags]   ${tender_type}  ${tender_form}
-    ${a}=  set variable if  '${number of lots}'=='multiple'  2  1
-    Add file to ...  ${a}  _Second.txt
+    ${a}=  set variable if  '${multiple status}'=='multiple'  2  1
+    Створити та додати PDF файл  ${a}
 
 4.2 Подати пропозицію
     [Tags]   ${tender_type}  ${tender_form}
@@ -167,14 +155,6 @@ ${wait}                             60
 *** Keywords ***
 Postcondition
   Close All Browsers
-
-###    Collaps    ###
-Collaps Loop
-    [Documentation]  expand all lots
-    sleep  1
-    :FOR  ${INDEX}  IN RANGE  ${lots amount}
-    \  ${n}  evaluate  ${INDEX}+2
-    \  click element  ${block}[${n}]//button
 
 ###    Fill bid    ###
 Enter price LOOP
@@ -210,17 +190,8 @@ Choice useful indicators LOOP
 
 
 ###    Add File    ###
-Add file to ...
-    [Documentation]  takes block number and file name
-    [Arguments]  ${add_file_number}  ${file_name}
-    choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/suites/proposals/upload_files/${file_name}
-    Run Keyword And Ignore Error  Wait Until Page Contains Element  ${file loading}
-    Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${file loading}
 
-Add file LOOP
-    ${count}  evaluate  ${lots amount}+2
-    :FOR  ${INDEX}  IN RANGE  1  ${count}
-    \  Add file to ...  ${INDEX}  _First.txt
+
 
 Delete file
     [Documentation]  deleta last file
@@ -264,12 +235,12 @@ Verify the number of file types
 Choice all type of files
     Get number of file types from dict
     :FOR  ${INDEX}  IN RANGE  1  ${number of file types}
-    \  Add file to ...  1  ${INDEX}.txt
+    \  Створити та додати PDF файл  1
     \  ${a}  set variable  ${INDEX}+1
     \  Choice type of file  1  ${INDEX}  ${a}
 
 Choice type of file run
-    run keyword if  '${number of lots}'=='multiple'  Choice type of file loop
+    run keyword if  '${multiple status}'=='multiple'  Choice type of file loop
     ...  ELSE  Choice type of file  1  last()  1
 
 ###    Add info    ###
@@ -299,10 +270,6 @@ File description
     Input text  ${switch field}  ${some text}
 
 ###    Other    ###
-Check boxes
-    click element  ${checkbox1}
-    click element  ${checkbox2}
-
 Sign EDS
   ${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS}[2]
   sleep  2
