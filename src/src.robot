@@ -97,9 +97,10 @@ Start
 
 Open button
   [Documentation]   відкривае лінку з локатора у поточному вікні
-  [Arguments]  ${selector}
+  [Arguments]  ${selector}  ${ip}=None
   ${href}=  Get Element Attribute  ${selector}  href
-  ${href}  Поправили лінку для IP  ${href}
+  ${href}  Run Keyword If  "${id}" != "None"  Поправили лінку для IP  ${href}
+  ...  ELSE  Set Variable  ${href}
   Go To  ${href}
 
 

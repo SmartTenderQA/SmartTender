@@ -1276,7 +1276,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Mouse over  ${tender doc exept EDS commercial}
   ...  AND  Wait Until Page Contains Element  //*[contains(@class, 'filename')]//a[@href][1]
-  ...  AND  Open Button  //*[contains(@class, 'filename')]//a[@href][1]
+  ...  AND  Open Button  //*[contains(@class, 'filename')]//a[@href][1]  not_ip
   ...  AND  Check document for error
 
 
@@ -1285,7 +1285,7 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Mouse over  ${tender doc exept EDS}
   ...  AND  Wait Until Page Contains Element  //*[@data-qa="documents-block"]//a[@href][1]  5
-  ...  AND  Open Button  //*[@data-qa="documents-block"]//a[@href][1]
+  ...  AND  Open Button  //*[@data-qa="documents-block"]//a[@href][1]  not_ip
   ...  AND  Check document for error
 
 
