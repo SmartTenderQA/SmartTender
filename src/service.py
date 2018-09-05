@@ -66,7 +66,7 @@ def get_user_variable(user, users_variable):
         },
         'user2': {
             'login': 'SmartTenderProvider2@gmail.com',
-            'password': 'np3ozi"',
+            'password': 'np3ozi',
             'name': 'Smart Provider Tender',
             'role': 'provider',
             'site': 'test',
