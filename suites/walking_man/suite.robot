@@ -59,6 +59,10 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
 ${elastic search input}              css=.ivu-card-bordered input
 ${elastic search button}             css=.ivu-card-bordered button
 ${elastic search clean filter}       css=.tag-holder button
+${vidhuky}                           css=.ivu-row .ivu-card
+${blog}                              css=.ivu-card-body>.ivu-row
+${blog input}                        css=.ivu-card-body input
+${blog search button}                css=.ivu-card-body button
 
 
 *** Test Cases ***
@@ -94,6 +98,14 @@ ${elastic search clean filter}       css=.tag-holder button
   Підтвердити відповідність
   Завантажити файли на весь тендер
   Подати пропозицію
+
+
+Відгуки
+  [Tags]  site
+  Зайти на сторінку відгуків
+  Перевірити заголовок відгуків
+  Перевірити наявність відгуків
+  Відкрити та перевірити відгук
 
 
 Блог
@@ -1562,24 +1574,44 @@ Check document for error
 
 
 Перевірити наявність блогів
-  ${count}  Get Element Count  css=.ivu-card-body>.ivu-row
+  ${count}  Get Element Count  ${blog}
   Run Keyword if  ${count} < 1  Fail  2018+, не можна без блогів!
 
 
 Перевірити пошук на сторінці блогів
-  ${get}  Get Text  css=.ivu-card-body>.ivu-row>div a
-  Input Text  css=.ivu-card-body input  ${get}
-  Click Element  css=.ivu-card-body button
-  ${count}  Get Element Count  css=.ivu-card-body>.ivu-row
+  ${get}  Get Text  ${blog}>div a
+  Input Text  ${blog input}  ${get}
+  Click Element  ${blog search button}
+  ${count}  Get Element Count  ${blog}
   Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
   [Return]  ${get}
 
 
 Відкрити Блог
-  Open Button  css=.ivu-card-body>.ivu-row a
+  Open Button  ${blog} a
 
 
 Перевірити відкритий блог
   [Arguments]  ${title}
   Element Should Contain  //h1  ${title}
   Page Should Contain Element  css=#NewsContent
+
+
+Зайти на сторінку відгуків
+  Mouse Over  ${button pro-kompaniyu}
+  Click Element  ${dropdown navigation}[href='/vidhuky/']
+  Location Should Contain  /vidhuky/
+
+
+Перевірити заголовок відгуків
+  Element Should Contain  //h1  Відгуки
+
+
+Перевірити наявність відгуків
+  ${count}  Get Element Count  ${vidhuky}
+  Run Keyword if  ${count} < 6  Fail  оу, а було як мінінмум 6 відгуків
+
+
+Відкрити та перевірити відгук
+  Click Element  ${vidhuky}
+  Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
