@@ -96,6 +96,16 @@ ${elastic search clean filter}       css=.tag-holder button
   Подати пропозицію
 
 
+Блог
+  [Tags]  site
+  Зайти на сторінку блогу
+  Перевірити загловок блогу
+  Перевірити наявність блогів
+  ${title}  Перевірити пошук на сторінці блогів
+  Відкрити Блог
+  Перевірити відкритий блог  ${title}
+
+
 Перевірити elastic
   [Tags]  site
   Зайти на сторінку пошуку elastic
@@ -1539,3 +1549,37 @@ Check document for error
   Click Element  ${elastic search clean filter}
   Дочекатись закінчення загрузки сторінки(skeleton)
   Wait Until Element Is Not Visible  ${elastic search clean filter}
+
+
+Зайти на сторінку блогу
+  Mouse Over  ${button pro-kompaniyu}
+  Click Element  ${dropdown navigation}[href='/blog/']
+  Location Should Contain  /blog/
+
+
+Перевірити загловок блогу
+   Element Should Contain  //h1  Блог
+
+
+Перевірити наявність блогів
+  ${count}  Get Element Count  css=.ivu-card-body>.ivu-row
+  Run Keyword if  ${count} < 1  Fail  2018+, не можна без блогів!
+
+
+Перевірити пошук на сторінці блогів
+  ${get}  Get Text  css=.ivu-card-body>.ivu-row>div a
+  Input Text  css=.ivu-card-body input  ${get}
+  Click Element  css=.ivu-card-body button
+  ${count}  Get Element Count  css=.ivu-card-body>.ivu-row
+  Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
+  [Return]  ${get}
+
+
+Відкрити Блог
+  Open Button  css=.ivu-card-body>.ivu-row a
+
+
+Перевірити відкритий блог
+  [Arguments]  ${title}
+  Element Should Contain  //h1  ${title}
+  Page Should Contain Element  css=#NewsContent
