@@ -1377,11 +1377,11 @@ Check document for error
   ${lot name}  Get Text  ${first lot}/div
   Click Element  ${first lot}/div/div[2]
   ${text}  Get Text  css=[data-qa="main-block"] [data-qa="title"]
-  #Should Contain  ${text}  ${lotname[:-3]}
   Should Be Equal  ${text}  ${lot name}
   ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
   Set Global Variable  ${count multiple lot checked}
-  Run Keyword If  "${role}" != "tender_owner"  Run Keywords
+  ${status}  Get Text  //*[@data-qa="status"]
+  Run Keyword If  "${role}" != "tender_owner" and "${status}" != "Відмінений"  Run Keywords
   ...  Page Should Contain Element  //*[@data-qa="bid-button"]
   ...  AND  Page Should Contain Element  //*[@data-qa="jurist-help-dropdown"]
 
