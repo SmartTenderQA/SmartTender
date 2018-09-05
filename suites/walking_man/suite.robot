@@ -56,6 +56,9 @@ ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span|//*[@class="info_form"]
+${elastic search input}              css=.ivu-card-bordered input
+${elastic search button}             css=.ivu-card-bordered button
+${elastic search clean filter}       css=.tag-holder button
 
 
 *** Test Cases ***
@@ -91,6 +94,14 @@ ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//spa
   Підтвердити відповідність
   Завантажити файли на весь тендер
   Подати пропозицію
+
+
+Перевірити elastic
+  [Tags]  site
+  Зайти на сторінку пошуку elastic
+  Виконати пошук в elastic  папір
+  Page Should Contain  Бумага
+  Очистити фільтр пошуку elastic
 
 
 Особистий кабінет
@@ -1509,3 +1520,22 @@ Check document for error
   Location Should Contain  /publichni-zakupivli-prozorro-plany/
   Select Frame  css=iFrame
   Page Should Contain Element  css=#main-section .title-plan
+
+
+Зайти на сторінку пошуку elastic
+  Go To  ${start_page}/Participation/tenders/
+  Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Виконати пошук в elastic
+  [Arguments]  ${text}
+  Input Text  ${elastic search input}  ${text}
+  Click Element  ${elastic search button}
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  Wait Until Page Contains Element  ${elastic search clean filter}
+
+
+Очистити фільтр пошуку elastic
+  Click Element  ${elastic search clean filter}
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  Wait Until Element Is Not Visible  ${elastic search clean filter}
