@@ -101,7 +101,7 @@ ${blog search button}                css=.ivu-card-body button
 
 
 Відгуки
-  [Tags]  site
+  [Tags]  site  -test
   Зайти на сторінку відгуків
   Перевірити заголовок відгуків
   Перевірити наявність відгуків
@@ -109,7 +109,7 @@ ${blog search button}                css=.ivu-card-body button
 
 
 Блог
-  [Tags]  site
+  [Tags]  site  -non-critical
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -119,7 +119,7 @@ ${blog search button}                css=.ivu-card-body button
 
 
 Перевірити elastic
-  [Tags]  site
+  [Tags]  site  -test
   Зайти на сторінку пошуку elastic
   Виконати пошук в elastic  папір
   Page Should Contain  Бумага
