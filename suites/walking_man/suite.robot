@@ -93,7 +93,7 @@ ${blog search button}                css=.ivu-card-body button
   Скасувати пропозицію за необхідністю
   ${lots amount}  Порахувати Кількість Лотів
   ${multiple status}  Перевірка на мультилот
-  Розгорнути усі лоти
+  Розгорнути перший лот
   Заповнити поле з ціною  1  1
   Підтвердити відповідність
   Створити та додати PDF файл  1
@@ -1615,3 +1615,7 @@ Check document for error
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
   Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
+
+
+Розгорнути перший лот
+  Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}[2]//button
