@@ -1179,7 +1179,7 @@ ${blog search button}                css=.ivu-card-body button
 
 Перевірити лінки в тексті договору
   ${should link1}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2015-003-pro-nadannya-informatsiynyh-poslug-pid-chas-provedennya-protsedur-publichnyh-zakupivel-prozorro-ta-zakupivel-rialto/
-  ${should link2}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2016-001-pro-nadannya-poslug-z-organizatsii-ta-provedennya-vidkrytyh-elektronnyh-torgiv-auktsioniv-prozorro-prodazhi/
+  ${should link2}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2016-001-pro-nadannya-poslug-z-organizatsii-ta-provedennya-vidkrytyh-elektronnyh-torgiv-auktsioniv/
   ${is link1}  Get Element Attribute  ${contract link1}  href
   ${is link2}  Get Element Attribute  ${contract link2}  href
   Should Be Equal  ${is link1}  ${should link1}
