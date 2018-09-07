@@ -109,7 +109,7 @@ ${blog search button}                css=.ivu-card-body button
 
 
 Блог
-  [Tags]  site  -non-critical
+  [Tags]  site  non-critical-test
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -145,7 +145,7 @@ ${blog search button}                css=.ivu-card-body button
 
 
 Договір
-  [Tags]  site
+  [Tags]  site  non-critical-test
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
