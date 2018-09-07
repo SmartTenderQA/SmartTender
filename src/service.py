@@ -222,8 +222,12 @@ def get_tender_variables(tender_form, tender_sign):
     return a[tender_form][tender_sign]
 
 
-def get_number(amount):
-    return int(''.join(re.findall(r'\d+', amount)))
+def get_number(value):
+    str =  re.search(u'(?P<amount>[\d.\s]+).+', value)
+    str_amount = str.group("amount")
+    str_amount = str_amount.replace(' ', '')
+    amount = float(str_amount)
+    return amount
 
 
 def convert_url(href, IP):
