@@ -24,6 +24,9 @@ Suite Precondition
   Start
   Дочекатись закінчення загрузки сторінки(webclient)
   Авторизуватися
+  Run Keyword If  "${start_from}" == "webclient"  Run Keywords
+  ...  Click Element  css=.dxmLite_DevEx li
+  ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Отримати стартовий URL
