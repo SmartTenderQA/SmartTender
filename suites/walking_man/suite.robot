@@ -96,7 +96,7 @@ ${blog search button}                css=.ivu-card-body button
   Розгорнути перший лот
   Заповнити поле з ціною  1  1
   Підтвердити відповідність
-  Створити та додати PDF файл  2
+  Додати файл до openeu
   Подати пропозицію
 
 
@@ -1620,3 +1620,8 @@ Check document for error
 
 Розгорнути перший лот
   Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}[2]//button
+
+
+Додати файл до openeu
+  Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
+  ...  ELSE  Створити та додати PDF файл  1
