@@ -1582,6 +1582,7 @@ Check document for error
   ${get}  Get Text  ${blog}>div a
   Input Text  ${blog input}  ${get}
   Click Element  ${blog search button}
+  Дочекатись закінчення загрузки сторінки
   ${count}  Get Element Count  ${blog}
   Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
   [Return]  ${get}
