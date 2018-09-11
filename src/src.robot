@@ -54,6 +54,7 @@ ${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статус�
 ${first found element}               css=#tenders tbody>.head a.linkSubjTrading
 ${last found element}                xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
 
+
 *** Keywords ***
 Start
   [Arguments]  ${user}  ${alies}=alies
@@ -61,7 +62,7 @@ Start
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
-  Open Browser  ${start_page}  ${browser}  ${alies}  http://192.168.4.178:4444/wd/hub
+  Open Browser  ${start_page}  ${browser}  ${alies}  http://http://autotest.it.ua:4444/wd/hub
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
 
