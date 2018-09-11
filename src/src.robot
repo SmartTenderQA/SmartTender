@@ -61,7 +61,7 @@ Start
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
-  Open Browser  ${start_page}  ${browser}  ${alies}
+  Open Browser  ${start_page}  ${browser}  ${alies}  http://10.0.2.15:4444/wd/hub
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
 
