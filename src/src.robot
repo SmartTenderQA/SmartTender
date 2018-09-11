@@ -62,7 +62,7 @@ Start
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
-  Open Browser  ${start_page}  ${browser}  ${alies}  http://http://autotest.it.ua:4444/wd/hub
+  Open Browser  ${start_page}  ${browser}  ${alies}  http://autotest:4444/wd/hub
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
 
