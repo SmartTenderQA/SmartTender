@@ -55,7 +55,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
-${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span|//*[@class="info_form"]
+${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
 ${elastic search input}              css=.ivu-card-bordered input
 ${elastic search button}             css=.ivu-card-bordered button
 ${elastic search clean filter}       css=.tag-holder button
