@@ -992,6 +992,7 @@ ${blog search button}                css=.ivu-card-body button
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/zapytannya-i-vidpovidi/']
   Location Should Contain  /zapytannya-i-vidpovidi/
+  Дочекатись закінчення загрузки сторінки(circle)
 
 
 Перевірити заголовок сторінки запитань
