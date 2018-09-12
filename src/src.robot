@@ -5,6 +5,7 @@ Library     Collections
 Library	    RequestsLibrary
 Library     DebugLibrary
 Library     OperatingSystem
+Library     String
 Library     DateTime
 Library     service.py
 Library     Faker/faker.py
@@ -15,6 +16,7 @@ Resource    loading.robot
 Resource    create_tender.robot
 Resource    EDS.robot
 Resource    synchronization.robot
+Resource    email.robot
 
 
 

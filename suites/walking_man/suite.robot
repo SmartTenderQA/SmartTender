@@ -63,6 +63,9 @@ ${vidhuky}                           css=.ivu-row .ivu-card
 ${blog}                              css=.ivu-card-body>.ivu-row
 ${blog input}                        css=.ivu-card-body input
 ${blog search button}                css=.ivu-card-body button
+${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
+${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
+
 
 
 *** Test Cases ***
@@ -100,6 +103,49 @@ ${blog search button}                css=.ivu-card-body button
   Подати пропозицію
 
 
+Особистий кабінет
+  [Tags]  your_account
+  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
+  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
+  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
+
+
+Аналітика участі
+  [Tags]  your_account
+  Відкрити сторінку аналітики
+  Вибрати минулий місяці при відсутності тендерів
+  Перевірити наявність діаграми та таблиці
+  Перевірити роботу кругової діаграми
+  Перевірити зміну періоду
+
+
+Сформувати рахунок-фактуру
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Відкрити сторінку рахунка фактури
+  debug
+  Сгенерувати та ввести суму до оплати
+  Натиснути сформувати рахунок
+  Перевірити валідаційне повідомлення для сформованого рахунку
+  Перевірити email рахунок-фактуру
+
+
+Налаштування підписки
+  [Tags]  your_account1
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Відкрити сторінку налаштування підписки
+  Перевірити блок запиту допомоги з налаштування підписки
+  Перевірити блок Персональне запрошення організатора
+  Перевірити блок E-mail адреси для дублювання всіх розсилок
+  Перевірити вкладки підписки для закупівель
+  Перевірити вкладки підписки на продаж
+
+  Активувати тип торгів для підписки  на закупівлю
+
+
+
 Відгуки
   [Tags]  site
   Зайти на сторінку відгуків
@@ -124,24 +170,6 @@ ${blog search button}                css=.ivu-card-body button
   Виконати пошук в elastic  папір
   Page Should Contain  Бумага
   Очистити фільтр пошуку elastic
-
-
-Особистий кабінет
-  [Tags]  site
-  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
-  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
-  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
-
-
-Аналітика участі
-  [Tags]  site
-  Run Keyword If  '${user}' == 'test_it.ua'  Run Keywords
-  ...  Відкрити сторінку аналітики
-  ...  AND  Вибрати минулий місяці при відсутності тендерів
-  ...  AND  Перевірити наявність діаграми та таблиці
-  ...  AND  Перевірити роботу кругової діаграми
-  ...  AND  Перевірити зміну періоду
-  ...  ELSE  No Operation
 
 
 Договір
@@ -1615,3 +1643,184 @@ Check document for error
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
   Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
+
+Розкрити меню в особистому кабінеті
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${not collapsed menu button your account}
+  Run Keyword If  "${status}" != "True"  Click Element  ${collapsed menu button your account}
+
+
+Відкрити сторінку рахунка фактури
+  Click Element  //*[contains(text(), "Сформувати рахунок-фактуру")]/ancestor::a
+  Location Should Contain  /invoicepage/
+
+
+Сгенерувати та ввести суму до оплати
+  ${n}  random_number  1  1000
+  ${amount}  Evaluate  ${n}*17
+  Input Text  //*[@class="ivu-card-body"]//input  ${amount}
+  ${get}  Get Element Attribute  //*[@class="ivu-card-body"]//input  value
+  Run Keyword If  "${get}" == ""  Сгенерувати та ввести суму до оплати
+
+
+Натиснути сформувати рахунок
+  ${selector}  Set Variable  //*[@class="ivu-card-body"]//button
+  Click Element  ${selector}
+  Дочекатись закінчення загрузки сторінки
+  Wait Until Page Does Not Contain  ${selector}
+
+
+Перевірити валідаційне повідомлення для сформованого рахунку
+  Element Should Contain  css=.ivu-alert-desc  Рахунок сформований і відправлений на електронну адресу Вашої компанії
+  Page Should Contain Element  //*[@class="ivu-alert-desc"]//a[contains(@href, 'it')]
+
+
+Перевірити email рахунок-фактуру
+  debug
+
+
+Відкрити сторінку налаштування підписки
+  Click Element  //*[contains(text(), "Налаштування підписки")]/ancestor::a
+  Location Should Contain  /Subscription/
+
+
+Перевірити блок запиту допомоги з налаштування підписки
+  Click Element  css=.btn-shadow.ivu-btn-success
+  ${header}  Set Variable  //*[@class="ivu-modal-mask" and not(contains(@style, "display: none"))]/following-sibling::*//*[@class="ivu-modal-header-inner"]
+  Wait Until Page Contains Element  ${header}
+  Sleep  2
+  Element Should Contain  ${header}  Запит налаштування підписки
+  ${close button}  Set Variable  //*[@class="ivu-modal-mask" and not(contains(@style, "display: none"))]/following-sibling::*//*[contains(@class, "ivu-icon-ios-close-empty")]
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
+
+
+Перевірити блок Персональне запрошення організатора
+  Перевірити заголовок Персональне запрошення організатора
+  Перевірити перемикач Персональне запрошення організатора
+
+
+Перевірити заголовок Персональне запрошення організатора
+  ${element}  Set Variable  (//h4)[2]
+  Element Should Contain  ${element}  Персональне запрошення організатора
+
+
+Перевірити перемикач Персональне запрошення організатора
+  ${switcher}  Set Variable  //*[@class="ivu-card-body" and contains(., "Персональне запрошення організатора")]//*[@tabindex]
+  ${status}  Get Element Attribute  ${switcher}/input  Value
+  Click Element  ${switcher}
+  ${new_status}  Get Element Attribute  ${switcher}/input  Value
+  Should Not Be Equal  ${new_status}  ${status}
+
+
+Перевірити блок E-mail адреси для дублювання всіх розсилок
+  Перевірити заголовок E-mail адреси для дублювання всіх розсилок
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+
+
+Перевірити заголовок E-mail адреси для дублювання всіх розсилок
+  ${element}  Set Variable  (//h4)[3]
+  Element Should Contain  ${element}  E-mail адреси для дублювання всіх розсилок
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
+  ${mail}  create_e-mail
+  Input Text  ${input field}//input  ${mail}
+  Click Element  ${input field}//button
+  Page Should Contain  ${mail}
+  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+  ${element}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
+  ${n}  random_number  4  20
+  ${name}  Generate Random String  ${n}  [LOWER]
+  Input Text  ${element}//input  ${name}
+  Click Element  ${element}//button
+  Wait Until Keyword Succeeds  20  2
+  ...  Element Should Contain  css=.ivu-message-notice span  Неправильний формат електронної пошти
+
+
+create_e-mail
+  ${n}  random_number  4  12
+  ${name}  Generate Random String  ${n}  [LOWER]
+  [Return]  ${name}@gmail.com
+
+
+Перевірити вкладки підписки для закупівель
+  Перевірити наявність всіх елементів в блоці категорії
+  Вибрати вкладку для підписки  Публічні закупівлі
+  Перевірити наявність всіх елементів в блоці категорії
+  Вибрати вкладку для підписки  RIALTO.Закупівлі
+  Перевірити наявність всіх елементів в блоці категорії
+
+
+Перевірити вкладки підписки на продаж
+  Активувати тип торгів для підписки  на продаж
+  Перевірити наявність всіх елементів в блоці категорії
+  Вибрати вкладку для підписки  Аукціони на продаж активів банків
+  Перевірити наявність всіх елементів в блоці категорії
+  Вибрати вкладку для підписки  Аукціони на продаж активів держпідприємств
+  Перевірити наявність всіх елементів в блоці категорії
+
+
+Активувати тип торгів для підписки
+  [Arguments]  ${type}
+  ${n}  Run Keyword If  "${type}" == "на продаж"  Set Variable  2
+  ...  ELSE IF  "${type}" == "на закупівлю"  Set Variable  1
+  ${element}  Set Variable  //*[contains(@class, "ivu-row-flex-space-between")]//label[${n}]
+  Click Element  ${element}
+  ${status}  Run Keyword And Return Status
+  ...  Page Should Contain Element  ${element}[contains(@class, "checked")]
+  Run Keyword If  "${status}" != "True"  Активувати тип торгів для підписки  ${type}
+
+
+Перевірити наявність перемикача для активування сповіщень
+  ${element}  Set Variable  //*[@class="ivu-row" and contains(., "Періодичність оповіщення про публікацію")]//span[contains(@class, "ivu-switch")]
+  Page Should Contain Element  ${element}
+
+
+Перевірити наявність блоку підписки
+  [Arguments]  ${text}
+  Page Should Contain Element  (//*[@class="ivu-card-body" and contains(., "${text}")])[last()]
+
+
+Перевірити блок Ключові слова
+  Перевірити заголовок Ключові слова
+  Перевірити неактивність перемикачів Ключові слова
+  Перевірити поле вводу Ключові слова
+  Перевірити checkbox Ключові слова
+
+
+Перевірити заголовок Ключові слова
+  ${element}  Set Variable  (//h4)[6]
+  Element Should Contain  ${element}  Ключові слова
+
+
+Перевірити неактивність перемикачів Ключові слова
+  ${element}  Set Variable  //*[@class="ivu-card-body" and contains(., "Ключові слова")]
+
+
+Вибрати вкладку для підписки
+  [Arguments]  ${text}
+  ${selector}  Set Variable  //*[contains(@class, "ivu-tabs-nav")]//div[contains(@class, "ivu-tabs-tab")]
+  ${n}  Run Keyword If  "${text}" == "Публічні закупівлі" or "${text}" == "Аукціони на продаж активів банків"
+  ...  Set Variable  2
+  ...  ELSE IF  "${text}" == "RIALTO.Закупівлі" or "${text}" == "Аукціони на продаж активів держпідприємств"
+  ...  Set Variable  3
+  Click Element  ${selector}[${n}]
+  ${status}  Run Keyword And Return Status
+  ...  Page Should Contain Element  ${selector}[${n}][contains(@class, "active")]
+  Run Keyword If  "${status}" != "True"  Вибрати вкладку для підписки  ${text}
+
+
+Перевірити наявність всіх елементів в блоці категорії
+  Перевірити наявність перемикача для активування сповіщень
+  Перевірити наявність блоку підписки  Категорії
+  Перевірити наявність блоку підписки  Ключові слова
+  Перевірити наявність блоку підписки  Мінус-слова
+  Перевірити наявність блоку підписки  Додаткові реквізити
+  Перевірити наявність блоку підписки  Реквізити організатора
