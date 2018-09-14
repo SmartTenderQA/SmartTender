@@ -5,7 +5,7 @@ Library     service.py
 *** Keywords ***
 Дочекатись синхронізації
   [Arguments]  ${mode}
-  ${date_now}  smart_get_time  s
+  ${date_now}  smart_get_time  0  s
   #Log to console  synchronization has started ${date_now}
   Wait Until Keyword Succeeds  20m  3  Дочекатись синхронізації продовження  ${mode}  ${date_now}
 
