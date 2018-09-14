@@ -37,6 +37,7 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 Знайти тендер по ідентифікатору
   [Tags]  find_tender
   Switch Browser  tender_owner
+  Перейти у webclient за необхідністю
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
@@ -440,13 +441,16 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
   Set Global Variable  ${data}
 
   ${login}  ${password}  Отримати дані користувача  dasu
+  ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
   Login  ${login}  ${password}
 
   ${login}  ${password}  Отримати дані користувача  viewer_test
+  ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=viewer
 
   ${login}  ${password}  Отримати дані користувача  user1
+  ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=provider
   Login  ${login}  ${password}
 
@@ -1079,3 +1083,13 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
   ${status}  Run Keyword And Return Status
   ...  Wait Until Element Is Not Visible  //*[@class='ivu-modal-content']//*[contains(text(), 'Інспекції')]/../..//*[contains(text(), 'Закрити')]  20
   Run Keyword If  '${status}' == 'False'  Закрити вікно інспекцій
+
+
+Перейти у webclient за необхідністю
+  ${status}  Run Keyword And Return Status  Page Should Contain  организатор
+  Run Keyword If  '${status}' == 'True'  Перейти у webclient
+
+
+Перейти у webclient
+  Go To  ${start_page}/webclient/
+  Дочекатись закінчення загрузки сторінки(webclient)
