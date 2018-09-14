@@ -24,5 +24,15 @@ ${skeleton loading}                 css=.skeleton-wrapper
 ###*** Keywords ***###
 Дочекатись закінчення загрузки сторінки по елементу
   [Arguments]  ${locator}
-  ${status}  ${message}  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${locator}  3
-  Run Keyword If  "${status}" == "PASS"  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${locator}  180
+  ${status}  ${message}  Run Keyword And Ignore Error
+  ...  Wait Until Page Contains Element
+  ...  ${locator}
+  ...  3
+  Run Keyword If  "${status}" == "PASS"
+  ...  Run Keyword And Ignore Error
+  ...  Wait Until Element Is Not Visible
+  ...  ${locator}
+  ...  30
+  Run Keyword If  "${status}" == "PASS"
+  ...  Дочекатись закінчення загрузки сторінки по елементу
+  ...  ${locator}

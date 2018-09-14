@@ -1250,9 +1250,7 @@ ${blog search button}                css=.ivu-card-body button
   Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
   Wait Until Page Contains Element  xpath=//li[contains(text(),'${selector}')]
   Click Element  xpath=//li[contains(text(),'${selector}')]
-  Sleep  1
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
-  Sleep  1
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Зайти на сторінку тарифів
