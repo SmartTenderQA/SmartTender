@@ -464,7 +464,7 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
   Click element  xpath=//a[contains(text(), 'Натисніть для переходу') and @href]
   ${web}  Select Window  New
   ${location}  Get Location
-  ${list}  Evaluate  '${location}'.split('&ticket')
+  ${list}  Evaluate  '${location}'.split('?ticket')
   ${location}  Set Variable  ${list[0]}
   Set To Dictionary  ${data}  location  ${location}
   Log  ${location}  WARN
