@@ -59,32 +59,32 @@ ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronna
 
 
 Переглянути архів зі статусом Завершено
-  [Tags]  test  uspa
+  [Tags]  -test  uspa
   Використати фільтр  ${select status button}  Завершено
 
 
 Відфільтрувати по статусу Прийом пропозицій
-  [Tags]  test  utg  uspa
+  [Tags]  -test  utg  uspa
   Використати фільтр  ${select status button}  Прийом пропозицій
 
 
 Відфільтрувати по типу Допорогові закупівлі
-  [Tags]  test  utg  uspa
+  [Tags]  -test  utg  uspa
   Використати фільтр  ${select type bidding button}  Допорогові закупівлі
 
 
 Відфільтрувати по типу Відкриті торги з публікацією англійською мовою
-  [Tags]  test  utg  uspa
+  [Tags]  -test  utg  uspa
   Використати фільтр  ${select type bidding button}  Відкриті торги з публікацією англійською мовою
 
 
 Відфільтрувати по типу Конкурентний діалог 1-ий етап
-  [Tags]  test
+  [Tags]  -test
   Використати фільтр  ${select type bidding button}  Конкурентний діалог 1-ий етап
 
 
 Відфільтрувати по типу Звіт про укладений договір
-  [Tags]  test  uspa
+  [Tags]  -test  uspa
   Використати фільтр  ${select type bidding button}  Звіт про укладений договір
 
 

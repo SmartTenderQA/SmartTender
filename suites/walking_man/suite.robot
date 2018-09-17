@@ -55,7 +55,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 ${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
-${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//span|//*[@class="info_form"]
+${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
 ${elastic search input}              css=.ivu-card-bordered input
 ${elastic search button}             css=.ivu-card-bordered button
 ${elastic search clean filter}       css=.tag-holder button
@@ -80,12 +80,15 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Перевірити тип процедури  ${tender_type_procurement}  Допорогові закупівлі
   Перевірити кнопку подачі пропозиції
   Скасувати пропозицію за необхідністю
+  ${lots amount}  Порахувати Кількість Лотів
+  ${multiple status}  Перевірка на мультилот
+  Розгорнути перший лот
   Заповнити поле з ціною  1  1
   Подати пропозицію
 
 
 Подати пропозицію учасником на тестові торги Відкриті торги з публікацією англійською мовою
-  [Tags]  proposal
+  [Tags]  proposal  -test
   Відкрити сторінку тестових торгів
   Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
   Відфільтрувати по статусу торгів  Прийом пропозицій
@@ -96,10 +99,10 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Скасувати пропозицію за необхідністю
   ${lots amount}  Порахувати Кількість Лотів
   ${multiple status}  Перевірка на мультилот
-  Розгорнути усі лоти
+  Розгорнути перший лот
   Заповнити поле з ціною  1  1
   Підтвердити відповідність
-  Завантажити файли на весь тендер
+  Додати файл до openeu
   Подати пропозицію
 
 
@@ -146,7 +149,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Відгуки
-  [Tags]  site
+  [Tags]  site  -test
   Зайти на сторінку відгуків
   Перевірити заголовок відгуків
   Перевірити наявність відгуків
@@ -154,7 +157,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Блог
-  [Tags]  site
+  [Tags]  site  non-critical-test
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -164,7 +167,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Перевірити elastic
-  [Tags]  site
+  [Tags]  site  -test
   Зайти на сторінку пошуку elastic
   Виконати пошук в elastic  папір
   Page Should Contain  Бумага
@@ -172,7 +175,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Договір
-  [Tags]  site
+  [Tags]  site  non-critical-test
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
@@ -1019,6 +1022,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/zapytannya-i-vidpovidi/']
   Location Should Contain  /zapytannya-i-vidpovidi/
+  Дочекатись закінчення загрузки сторінки(circle)
 
 
 Перевірити заголовок сторінки запитань
@@ -1205,8 +1209,8 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Перевірити лінки в тексті договору
-  ${should link1}  Set Variable  https://smarttender.biz/instruktsii/dogovir-oferta-so-2015-003-pro-nadannya-informatsiynyh-poslug-pid-chas-provedennya-protsedur-publichnyh-zakupivel-prozorro-ta-zakupivel-rialto/
-  ${should link2}  Set Variable  https://smarttender.biz/instruktsii/dogovir-oferta-so-2016-001-pro-nadannya-poslug-z-organizatsii-ta-provedennya-vidkrytyh-elektronnyh-torgiv-auktsioniv-prozorro-prodazhi/
+  ${should link1}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2015-003-pro-nadannya-informatsiynyh-poslug-pid-chas-provedennya-protsedur-publichnyh-zakupivel-prozorro-ta-zakupivel-rialto/
+  ${should link2}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2016-001-pro-nadannya-poslug-z-organizatsii-ta-provedennya-vidkrytyh-elektronnyh-torgiv-auktsioniv/
   ${is link1}  Get Element Attribute  ${contract link1}  href
   ${is link2}  Get Element Attribute  ${contract link2}  href
   Should Be Equal  ${is link1}  ${should link1}
@@ -1273,9 +1277,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
   Wait Until Page Contains Element  xpath=//li[contains(text(),'${selector}')]
   Click Element  xpath=//li[contains(text(),'${selector}')]
-  Sleep  1
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}
-  Sleep  1
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Зайти на сторінку тарифів
@@ -1549,7 +1551,7 @@ Check document for error
   Run Keyword If  "${site}" == "test"
   ...  Create Session  api  https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/${id}
   Run Keyword If  "${site}" == "prod"
-  ...  Create Session  api  https://public.api.openprocurement.org/api/0/tenders/${id}
+  ...  Create Session  api  https://public-api-sandbox.prozorro.gov.ua/api/0/tenders/${id}
   ${data}  Get Request  api  \
   ${data}  Set Variable  ${data.json()}
   [Return]  ${data}
@@ -1609,6 +1611,7 @@ Check document for error
   ${get}  Get Text  ${blog}>div a
   Input Text  ${blog input}  ${get}
   Click Element  ${blog search button}
+  Дочекатись закінчення загрузки сторінки
   ${count}  Get Element Count  ${blog}
   Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
   [Return]  ${get}
@@ -1642,6 +1645,7 @@ Check document for error
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
   Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
+
 
 Розкрити меню в особистому кабінеті
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${not collapsed menu button your account}
@@ -1842,3 +1846,12 @@ create_e-mail
   Перевірити наявність блоку підписки  Мінус-слова
   Перевірити наявність блоку підписки  Додаткові реквізити
   Перевірити наявність блоку підписки  Реквізити організатора
+
+
+Розгорнути перший лот
+  Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}[2]//button
+
+
+Додати файл до openeu
+  Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
+  ...  ELSE  Створити та додати PDF файл  1
