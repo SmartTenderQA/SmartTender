@@ -1696,7 +1696,8 @@ Check document for error
   [Arguments]  ${amount}
   Mouse Over  //a[contains(., 'Рахунок')]
   Click Element  //a[contains(., 'Рахунок')]
-  Wait Until Page Contains  ${amount}  30
+  ${text}  Evaluate  str(${amount})
+  Wait Until Page Contains  ${text}  30
 
 
 Відкрити сторінку налаштування підписки
