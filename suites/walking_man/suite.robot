@@ -1658,6 +1658,7 @@ Check document for error
 
 
 Сгенерувати та ввести суму до оплати
+  Wait Until Page Contains Element  //*[@class="ivu-card-body"]//input  60
   ${n}  random_number  1  1000
   ${amount}  Evaluate  ${n}*17
   Input Text  //*[@class="ivu-card-body"]//input  ${amount}
