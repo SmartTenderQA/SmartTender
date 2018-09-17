@@ -10,8 +10,8 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${UAID}                         UA-2018-08-01-000053-c
-${tender_ID}                    8ce0fbe605544e4c9a01f2740dca7c44
+${UAID}                         UA-2018-09-14-000033-b
+${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
 ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 
 
@@ -38,6 +38,7 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
   [Tags]  find_tender
   Switch Browser  tender_owner
   Перейти у webclient за необхідністю
+  Змінити мову на укр.
   Відкрити сторінку для створення публічних закупівель
   Пошук тендеру у webclient  ${UAID}
 
@@ -1092,4 +1093,16 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
 
 Перейти у webclient
   Go To  ${start_page}/webclient/
+  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Змінити мову на укр.
+  Click Element  //*[@class="dxr-groupContent"]/div/a[2]
+  ${selector}  Set Variable  //*[contains(text(), "Українська")]
+  Wait Until Page Contains Element  ${selector}  30
+  Sleep  2
+  Click Element  ${selector}
+  Wait Until Page Does Not Contain Element  ${selector}
+  Дочекатись закінчення загрузки сторінки(webclient)
+  Sleep  2
   Дочекатись закінчення загрузки сторінки(webclient)

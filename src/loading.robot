@@ -1,6 +1,6 @@
 *** Variables ***
 ${loading}                          css=div.smt-load
-${webClient loading}                id=LoadingPanel
+${webClient loading}                //*[contains(@class, 'LoadingPanel')]
 ${circle loading}                   css=.loading_container .sk-circle
 ${skeleton loading}                 css=.skeleton-wrapper
 
@@ -25,7 +25,7 @@ ${skeleton loading}                 css=.skeleton-wrapper
 Дочекатись закінчення загрузки сторінки по елементу
   [Arguments]  ${locator}
   ${status}  ${message}  Run Keyword And Ignore Error
-  ...  Wait Until Page Contains Element
+  ...  Wait Until Element Is Visible
   ...  ${locator}
   ...  3
   Run Keyword If  "${status}" == "PASS"
