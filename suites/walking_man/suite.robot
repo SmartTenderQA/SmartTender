@@ -1277,7 +1277,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
   Wait Until Page Contains Element  xpath=//li[contains(text(),'${selector}')]
   Click Element  xpath=//li[contains(text(),'${selector}')]
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки(sales spin)
 
 
 Зайти на сторінку тарифів

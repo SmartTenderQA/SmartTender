@@ -3,6 +3,7 @@ ${loading}                          css=div.smt-load
 ${webClient loading}                //*[contains(@class, 'LoadingPanel')]
 ${circle loading}                   css=.loading_container .sk-circle
 ${skeleton loading}                 css=.skeleton-wrapper
+${sales spin}                       css=.ivu-spin
 
 *** Keywords ***
 Дочекатись закінчення загрузки сторінки
@@ -19,6 +20,10 @@ ${skeleton loading}                 css=.skeleton-wrapper
 
 Дочекатись закінчення загрузки сторінки(webclient)
   Дочекатись закінчення загрузки сторінки по елементу  ${webClient loading}
+
+
+Дочекатись закінчення загрузки сторінки(sales spin)
+  Дочекатись закінчення загрузки сторінки по елементу  ${sales spin}
 
 
 ###*** Keywords ***###
