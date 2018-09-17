@@ -114,7 +114,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Сформувати рахунок-фактуру
-  [Tags]  invoice  -test  -prod  invoice
+  [Tags]  invoice  -test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку рахунка фактури
