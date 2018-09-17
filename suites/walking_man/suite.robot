@@ -1694,8 +1694,8 @@ Check document for error
 
 Звірити дані в pdf файлі
   [Arguments]  ${amount}
-  Mouse Over  //a[@id and contains(., 'Рахунок')]
-  Click Element  //a[@id and contains(., 'Рахунок')]
+  Mouse Over  //a[contains(., 'Рахунок')]
+  Click Element  //a[contains(., 'Рахунок')]
   Wait Until Keyword Succeeds  60  2
   ...  Page Should Contain Element  //p[contains(., '${amount}')]
 
