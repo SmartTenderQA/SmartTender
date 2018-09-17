@@ -56,6 +56,14 @@ def get_user_variable(user, users_variable):
             'role': 'provider',
             'site': 'prod',
         },
+        'tostorovich': {
+            'login': 'ttostorovich@gmail.com',
+            'password': 'qwerty123',
+            'name': u'Тестовый пользователь',
+            'role': 'provider',
+            'site': 'prod',
+            'mail_password': 'qwedfgtyhj[s/',
+        },
         'user1': {
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',

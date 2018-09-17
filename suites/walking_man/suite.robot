@@ -110,6 +110,17 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
 
 
+Сформувати рахунок-фактуру
+  [Tags]  invoice  -test  -prod  invoice
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Відкрити сторінку рахунка фактури
+  ${amount}  Сгенерувати та ввести суму до оплати
+  Натиснути сформувати рахунок
+  Перевірити валідаційне повідомлення для сформованого рахунку
+  Перевірити email рахунок-фактуру  ${amount}
+
+
 Аналітика участі
   [Tags]  your_account
   Відкрити сторінку аналітики
@@ -119,20 +130,8 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Перевірити зміну періоду
 
 
-Сформувати рахунок-фактуру
-  [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку рахунка фактури
-  debug
-  Сгенерувати та ввести суму до оплати
-  Натиснути сформувати рахунок
-  Перевірити валідаційне повідомлення для сформованого рахунку
-  Перевірити email рахунок-фактуру
-
-
 Налаштування підписки
-  [Tags]  your_account1
+  [Tags]  your_account123  wait for Dimon
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку налаштування підписки
@@ -1660,6 +1659,7 @@ Check document for error
   Input Text  //*[@class="ivu-card-body"]//input  ${amount}
   ${get}  Get Element Attribute  //*[@class="ivu-card-body"]//input  value
   Run Keyword If  "${get}" == ""  Сгенерувати та ввести суму до оплати
+  [Return]  ${amount}
 
 
 Натиснути сформувати рахунок
@@ -1675,7 +1675,25 @@ Check document for error
 
 
 Перевірити email рахунок-фактуру
-  debug
+  [Arguments]  ${amount}
+  email precondition  ${user}
+  Відкрити перший лист Рахунок за Надання послуг
+  Звірити дані в pdf файлі  ${amount}
+  Close Browser
+  Switch Browser  1
+
+
+Відкрити перший лист Рахунок за Надання послуг
+  Wait Until Keyword Succeeds  60  2
+  ...  Click Element  //td[@id]//span[contains(text(), "SmartTender - Рахунок за Надання послуг")]
+
+
+Звірити дані в pdf файлі
+  [Arguments]  ${amount}
+  Mouse Over  //a[@id and contains(., 'Рахунок')]
+  Click Element  //a[@id and contains(., 'Рахунок')]
+  Wait Until Keyword Succeeds  60  2
+  ...  Page Should Contain Element  //p[contains(., '${amount}')]
 
 
 Відкрити сторінку налаштування підписки

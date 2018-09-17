@@ -5,22 +5,28 @@ ${field_password}       //input[@type="password"]
 
 
 *** Keywords ***
-Email precondition
-  Open Browser  https://www.google.com/gmail/about/#  chrome
-  eMail login
-  Закрити валідаційне вікно в email  welcome_dialog_next
-  Закрити валідаційне вікно в email  ok
+email precondition
+  [Arguments]  ${user}
+  Open Browser  https://www.google.com/gmail/about/#  chrome  email
+  eMail login  ${user}
+  #Закрити валідаційне вікно в email  welcome_dialog_next
+  #Закрити валідаційне вікно в email  ok
 
 
 eMail login
-  ${login}  get_user_variable  user1  login
-  ${password}  get_user_variable  user1  mail_password
+  [Arguments]  ${user}
+  ${login}  get_user_variable  ${user}  login
+  ${password}  get_user_variable  ${user}  mail_password
   Click Element  css=[data-g-label="Sign in"]
-  Input Text  ${field_login}  ${login}
+  Wait Until Page Contains Element  ${field_login}
+  Wait Until Keyword Succeeds  20  2
+  ...  Input Text  ${field_login}  ${login}
   Click Element  ${button_next}
-  Input Text  ${field_password}  ${password}
+  Wait Until Page Contains Element  ${field_password}
+  Wait Until Keyword Succeeds  20  2
+  ...  Input Text  ${field_password}  ${password}
   Click Element  ${button_next}
-  Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
+  #Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
 
 
 Закрити валідаційне вікно в email
