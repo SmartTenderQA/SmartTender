@@ -1696,8 +1696,7 @@ Check document for error
   [Arguments]  ${amount}
   Mouse Over  //a[contains(., 'Рахунок')]
   Click Element  //a[contains(., 'Рахунок')]
-  Wait Until Keyword Succeeds  60  2
-  ...  Page Should Contain Element  //p[contains(., '${amount}')]
+  Wait Until Page Contains  ${amount}
 
 
 Відкрити сторінку налаштування підписки
