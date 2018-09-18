@@ -1486,6 +1486,7 @@ Check document for error
 
 
 Перевірити пошук малої приватизації
+  Wait Until Page Contains Element  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]  15
   ${id}  Get Text  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]
   Виконати пошук малої приватизації  ${id}
   Open Button  //*[@class="content-block"]/div//a
