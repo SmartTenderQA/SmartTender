@@ -149,6 +149,20 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Активувати тип торгів для підписки  на закупівлю
 
 
+Заявки на отримання тендерного забезпечення
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Відкрити сторінку Заявки на отримання тендерного забезпечення
+  Перевірити сторінку Заявки на отримання тендерного забезпечення
+
+
+Юридична допомога
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Перевірити вкладку Отримати юридичну допомогу
+
 
 Відгуки
   [Tags]  site  -test
@@ -1891,3 +1905,21 @@ create_e-mail
 Додати файл до openeu
   Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
   ...  ELSE  Створити та додати PDF файл  1
+
+
+Відкрити сторінку Заявки на отримання тендерного забезпечення
+  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
+  Click Element  //*[contains(text(), "Тендерне забезпечення")]/ancestor::a
+
+
+Перевірити сторінку Заявки на отримання тендерного забезпечення
+  Element Should Contain  //h1  Заявки на отримання тендерного забезпечення
+  Page Should Contain Element  //img[@src="/Images/Guarantee/guarantee-button.png"]
+
+
+Перевірити вкладку Отримати юридичну допомогу
+  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
+  Click Element  //*[contains(text(), "Юридична допомога")]/ancestor::a
+  Select frame  css=div.main-content iFrame
+  Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
+  Page Should Contain Element  css=.ivu-card-body>button[type="button"]
