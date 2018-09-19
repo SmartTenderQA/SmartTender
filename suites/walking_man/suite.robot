@@ -191,8 +191,8 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Перевірити текст сторінки про компанію
 
 Повідомлення
-  [Tags]  site1
-  Перевірити сторінку повідомлень  ${user}
+  [Tags]  site
+  Перевірити сторінку повідомлень
 
 Новини
   [Tags]  site
@@ -878,7 +878,6 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Location Should Contain  /pro-kompaniyu/kontakty/
 
 Перевірити сторінку повідомлень
-  [Arguments]  ${user}
   Run Keyword If  '${user}' == 'ssp_tender_owner'  Run Keywords
   ...  Зайти на сторінку з контактами
   ...  AND  Зайти на сторінку повідомлень
