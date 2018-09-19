@@ -11,6 +11,7 @@ ${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/'
 ${button taryfy}                     css=#MenuList a[href='/taryfy/']
 ${button podii}                      css=#LoginDiv [href='/podii/']
 ${button dogovir}                    css=#ContractButton
+${button messages}                   xpath=//*[contains(@class,'fa-bell')]
 ${dropdown navigation}               css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                       css=div[itemscope=itemscope] h1
@@ -20,6 +21,7 @@ ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
+${messages block}                    //*[contains(@class,'long-text')]/span
 ${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
@@ -188,6 +190,9 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
+Повідомлення
+  [Tags]  site
+  Перевірити сторінку повідомлень
 
 Новини
   [Tags]  site
@@ -862,6 +867,42 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 Зайти на сторінку з контактами
   Click Element  ${button kontakty}
   Location Should Contain  /pro-kompaniyu/kontakty/
+
+Перевірити сторінку повідомлень
+  Run Keyword If  '${user}' == 'ssp_tender_owner'  Run Keywords
+  ...  Зайти на сторінку з контактами
+  ...  AND  Зайти на сторінку повідомлень
+  ...  AND  Перевірити заголовок сторінки повідомлень
+  ...  AND  Порахувати кількість повідомлень
+  ...  AND  Переглянути повідемлення
+  ...  ELSE  Перевірити відсутність кнопки повідомлень
+
+
+Перевірити відсутність кнопки повідомлень
+  Зайти на сторінку з контактами
+  Element Should Not Be Visible  ${button messages}
+
+
+Зайти на сторінку повідомлень
+  Click Element  ${button messages}
+  Location Should Contain  /povidomlenya/
+
+
+Перевірити заголовок сторінки повідомлень
+  ${should header}  Set Variable  Повідомлення
+  ${is header}  Get Text  xpath=//*[@type='flex']//h1
+  Should Be Equal  ${is header}  ${should header}
+
+Порахувати кількість повідомлень
+  ${count}  Get Element Count  ${messages block}
+  Run Keyword if  '${count}' == '0'  Fail  Де повідомлення?
+
+Переглянути повідемлення
+  ${title}  Get Text  (${messages block})[1]
+  Click Element  (${messages block})[1]
+  Sleep  5
+  ${message title}  Get Text  //table//div[contains(text(),'ТЕСТУВАННЯ')]
+  Should Be Equal  ${title}  ${message title}
 
 
 Перевірити заголовок сторінки контактів
