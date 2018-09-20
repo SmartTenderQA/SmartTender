@@ -67,6 +67,7 @@ ${blog input}                        css=.ivu-card-body input
 ${blog search button}                css=.ivu-card-body button
 ${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
 ${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
+${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 
 
 
@@ -162,6 +163,39 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Отримати юридичну допомогу
+
+
+Особисті дані користувача
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Перевірити вкладку Профіль компанії
+
+
+Змінити пароль
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Перевірити вкладку Змінити пароль
+
+
+Управління користувачами
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Перевірити вкладку Управління користувачами
+
+
+Звіти
+  [Tags]  your_account
+  Відкрити особистий кабінет
+  Розкрити меню в особистому кабінеті
+  Відкрити сторінку Звіти
+  Натиснути на фільтр Тільки обрані звіти  вимкнути
+  Перевірити наявність звітів
+  ${name}  Додати в обрані випадковій звіт та вернути назву
+  Перевірити фильтр Тільки обрані звіти  ${name}
+  Прибрати з обраних усі звіти
 
 
 Відгуки
@@ -1913,6 +1947,7 @@ create_e-mail
 
 
 Перевірити сторінку Заявки на отримання тендерного забезпечення
+  Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Заявки на отримання тендерного забезпечення
   Page Should Contain Element  //img[@src="/Images/Guarantee/guarantee-button.png"]
 
@@ -1921,5 +1956,87 @@ create_e-mail
   Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
   Click Element  //*[contains(text(), "Юридична допомога")]/ancestor::a
   Select frame  css=div.main-content iFrame
+  Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
   Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
   Page Should Contain Element  css=.ivu-card-body>button[type="button"]
+
+
+Перевірити вкладку Профіль компанії
+  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Click Element  //*[contains(text(), "Профіль компанії")]/ancestor::a
+  Select frame  css=div.main-content iFrame
+  Wait Until Page Contains Element  css=#FormLayout_1_0  30
+  Element Should Contain  css=#FormLayout_1_0  Основна інформація
+  Element Should Contain  css=#FormLayout_1_1  Додаткова інформація
+  Page Should Contain Element  css=#BTSUBMIT_CD
+
+
+Перевірити вкладку Змінити пароль
+  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
+  Location Should Contain  /zmina-parolyu/
+  Wait Until Page Contains Element  //h1  30
+  Element Should Contain  //h1  Зміна пароля
+  Element Should Contain  (//h1/..//span)[1]  Старий пароль
+  Element Should Contain  (//h1/..//span)[2]  Новий пароль
+  Element Should Contain  (//h1/..//span)[3]  Повторіть пароль
+  Page Should Contain Element  //*[@id="content"]//*[@class='button']
+
+
+Перевірити вкладку Управління користувачами
+  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Click Element  //*[contains(text(), "Управління користувачами")]/ancestor::a
+  Location Should Contain  /UserManagement/
+  Wait Until Page Contains Element  //h1  30
+  Element Should Contain  //h1  Структура підприємства
+  Element Should Contain  //h5  Управління користувачами
+  ${tr for user}  Set Variable  css=.ivu-table-body .ivu-table-row
+  Page Should Contain Element  ${tr for user}
+
+
+Відкрити сторінку Звіти
+  Click Element  //*[contains(text(), "Звіти")]/ancestor::a
+  Location Should Contain  /Reports/
+  Wait Until Page Contains Element  //h1  30
+  Element Should Contain  //h1  Звіти
+
+
+Перевірити наявність звітів
+  Page Should Contain Element  css=.ivu-card-body .favoriteStar
+
+
+Додати в обрані випадковій звіт та вернути назву
+  ${count}  Get Element Count  ${report}
+  ${n}  random_number  1  ${count}
+  Click Element  (${report})[${n}]
+  ${name}  Get Text  (${report})[${n}]/following-sibling::*//*[@title]
+  [Return]  ${name}
+
+
+Перевірити фильтр Тільки обрані звіти
+  [Arguments]  ${name}
+  Натиснути на фільтр Тільки обрані звіти  увімкнути
+  ${count}  Get Element Count  ${report}
+  Should Be Equal  "${count}"  "1"
+  ${report name}  Get Text  ${report}/following-sibling::*//*[@title]
+  Should Be Equal  ${report name}  ${name}
+  Натиснути на фільтр Тільки обрані звіти  вимкнути
+  ${count}  Get Element Count  ${report}
+  Run Keyword if  ${count} < 2  Fail  Маловато будет(Отчетов)
+
+
+Натиснути на фільтр Тільки обрані звіти
+  [Arguments]  ${action}
+  ${switcher}  Set Variable  css=.ivu-switch
+  ${status}  Get Element Attribute  ${switcher} [value]  value
+  Run Keyword If  "${status}" == "false" and "${action}" == "увімкнути"
+  ...  Click Element  ${switcher}
+  Run Keyword If  "${status}" == "true" and "${action}" == "вимкнути"
+  ...  Click Element  ${switcher}
+
+
+Прибрати з обраних усі звіти
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
+  Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
+  Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти

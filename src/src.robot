@@ -216,6 +216,7 @@ Suite Postcondition
 
 
 Test Postcondition
+  Log Location
   Run Keyword If Test Failed  Capture Page Screenshot
   Go To  ${start_page}
   Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
