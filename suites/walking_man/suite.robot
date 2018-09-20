@@ -1943,7 +1943,9 @@ create_e-mail
 
 Відкрити сторінку Заявки на отримання тендерного забезпечення
   Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
+  Sleep  1
   Click Element  //*[contains(text(), "Тендерне забезпечення")]/ancestor::a
+  Sleep  1
 
 
 Перевірити сторінку Заявки на отримання тендерного забезпечення
@@ -1954,7 +1956,9 @@ create_e-mail
 
 Перевірити вкладку Отримати юридичну допомогу
   Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
+  Sleep  1
   Click Element  //*[contains(text(), "Юридична допомога")]/ancestor::a
+  Sleep  1
   Select frame  css=div.main-content iFrame
   Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
   Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
@@ -1963,7 +1967,9 @@ create_e-mail
 
 Перевірити вкладку Профіль компанії
   Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Sleep  1
   Click Element  //*[contains(text(), "Профіль компанії")]/ancestor::a
+  Sleep  1
   Select frame  css=div.main-content iFrame
   Wait Until Page Contains Element  css=#FormLayout_1_0  30
   Element Should Contain  css=#FormLayout_1_0  Основна інформація
@@ -1973,7 +1979,9 @@ create_e-mail
 
 Перевірити вкладку Змінити пароль
   Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Sleep  1
   Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
+  Sleep  1
   Location Should Contain  /zmina-parolyu/
   Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Зміна пароля
@@ -1985,7 +1993,9 @@ create_e-mail
 
 Перевірити вкладку Управління користувачами
   Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
+  Sleep  1
   Click Element  //*[contains(text(), "Управління користувачами")]/ancestor::a
+  Sleep  1
   Location Should Contain  /UserManagement/
   Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Структура підприємства
@@ -1996,6 +2006,7 @@ create_e-mail
 
 Відкрити сторінку Звіти
   Click Element  //*[contains(text(), "Звіти")]/ancestor::a
+  Sleep  1
   Location Should Contain  /Reports/
   Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Звіти
