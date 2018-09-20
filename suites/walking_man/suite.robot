@@ -158,7 +158,7 @@ ${collapsed menu button your account}             //*[contains(@class, "page-con
 
 
 Юридична допомога
-  [Tags]  your_account
+  [Tags]  your_account  -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Отримати юридичну допомогу
