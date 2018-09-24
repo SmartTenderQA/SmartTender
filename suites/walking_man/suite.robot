@@ -1485,7 +1485,7 @@ Check document for error
 
 Перевірити лот в мультилоті
   ${lot name}  Get Text  ${first lot}/div
-  Click Element  ${first lot}/div/div[2]
+  Click Element  ${first lot}/div
   Wait Until Page Contains Element  css=[data-qa="main-block"] [data-qa="title"]
   Sleep  1
   ${text}  Get Text  css=[data-qa="main-block"] [data-qa="title"]
