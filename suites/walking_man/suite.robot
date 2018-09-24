@@ -2052,4 +2052,5 @@ create_e-mail
 Прибрати з обраних усі звіти
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
   Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
+  Sleep  5
   Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
