@@ -84,7 +84,7 @@ Test Postcondition
   Double Click Element  //div[@data-key and contains(., "Користувачі та групи")]
   Дочекатись закінчення загрузки сторінки(webclient)
   Sleep  3
-  Wait Until Page Does Not Contain Element  //div[@data-key and contains(., "Користувачі та групи")]
+  Wait Until Page Does Not Contain Element  //div[@data-key and contains(., "Користувачі та групи")]  30
 
 
 Натиснути Користувачі та групи cpmb
