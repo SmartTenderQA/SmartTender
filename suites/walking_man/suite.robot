@@ -173,7 +173,7 @@ ${report}                            //*[@class="ivu-card-body"]//*[@class="favo
 
 
 Змінити пароль
-  [Tags]  your_account
+  [Tags]  your_account  -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Змінити пароль
@@ -192,8 +192,8 @@ ${report}                            //*[@class="ivu-card-body"]//*[@class="favo
   Розкрити меню в особистому кабінеті
   Відкрити сторінку Звіти
   Натиснути на фільтр Тільки обрані звіти  вимкнути
-  Прибрати з обраних усі звіти
   Перевірити наявність звітів
+  Прибрати з обраних усі звіти
   ${name}  Додати в обрані випадковій звіт та вернути назву
   Перевірити фильтр Тільки обрані звіти  ${name}
   Прибрати з обраних усі звіти
@@ -2022,6 +2022,7 @@ create_e-mail
   ${n}  random_number  1  ${count}
   Click Element  (${report})[${n}]
   ${name}  Get Text  (${report})[${n}]/following-sibling::*//*[@title]
+  Sleep  3
   [Return]  ${name}
 
 
@@ -2045,10 +2046,10 @@ create_e-mail
   ...  Click Element  ${switcher}
   Run Keyword If  "${status}" == "true" and "${action}" == "вимкнути"
   ...  Click Element  ${switcher}
+  Sleep  3
 
 
 Прибрати з обраних усі звіти
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
   Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
   Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
