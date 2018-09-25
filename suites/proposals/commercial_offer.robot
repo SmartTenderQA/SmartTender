@@ -41,13 +41,13 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	Змінити кількість одиниць
 	Заповнити поле Інф. учасника
 	Заповнити поле додаткова інформація
-	Видалити файл при наявності
-	@{file}  Створити файл
-	Додати файл  @{file}
 	Заповнити поле термін поставки
 	Заповнити поле гарантія(років)
 	Заповнити поле умови оплати
 	Заповнити поле умови доставки
+	Видалити файл при наявності
+	@{file}  Створити файл
+	Додати файл  @{file}
 	Надіслати пропозицію
 
 
@@ -77,7 +77,13 @@ Postcondition
 
 
 Заповтини поле з ціною
-  ${bid}  random_number  1  10000000
+  ${max price selector}  Set Variable  //*[contains(text(), "Краща ціна")]/../following-sibling::*//span
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${max price selector}
+  ${max}  Run Keyword If  ${status} == ${True}  Get Text  ${max price selector}
+  ...  ELSE  Set Variable  10000000
+  ${amount}  Evaluate  '${max}'.replace(" ", "")
+  ${float}  Evaluate  float(${amount})
+  ${bid}  random_number  1  ${float}
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${bid}
   Set To Dictionary  ${data}  bid_value=${bid}
 
@@ -85,7 +91,7 @@ Postcondition
 Змінити кількість одиниць
   ${max}  Get Text  xpath=//label[contains(text(), 'Потреба')]/../following-sibling::*
   ${count}  random_number  1  ${max}
-  Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[2]  ${count}
+  Input Text  xpath=(//label[contains(text(), 'Кількість')]/ancestor::tr//input)[last()]  ${count}
   Set To Dictionary  ${data}  bid_count=${count}
 
 
