@@ -68,7 +68,7 @@ ${blog search button}                css=.ivu-card-body button
 ${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
 ${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
 ${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
-
+${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 *** Test Cases ***
@@ -435,6 +435,17 @@ ${report}                            //*[@class="ivu-card-body"]//*[@class="favo
   Перейти по результату пошуку  ${last found element}
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
+
+
+Перевірка посилання на тендер (з порталу)
+  [Tags]  procurement
+  Зайти на сторінку державних закупівель
+  Перевірити заголовок державних закупівель
+  Виконати пошук тендера
+  Перейти по результату пошуку  ${last found element}
+  ${id}  Отримати UAID на сторінці з тендером
+  ${link}  Сформувати пряме посилання на тендер  ${id}
+  Перевірити відкриття тендера за посиланням  ${link}
 
 
 Державні закупівлі прозорро Конкурентні процедури
@@ -2055,3 +2066,17 @@ create_e-mail
   Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
   Sleep  5
   Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
+
+Отримати UAID на сторінці з тендером
+  ${id}  Get Text  ${prozorro-number}
+  [Return]  ${id}
+
+Сформувати пряме посилання на тендер
+  [Arguments]  ${id}
+  ${link to tender}  Set Variable  ${start page}/publichni-zakupivli-prozorro/${id}
+  [Return]  ${link to tender}
+
+Перевірити відкриття тендера за посиланням
+  [Arguments]  ${link to tender}
+  Go To  ${link to tender}
+  Отримати UAID на сторінці з тендером
