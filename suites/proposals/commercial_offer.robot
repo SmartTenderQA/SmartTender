@@ -64,6 +64,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	Перевірити умови доставки
 	#Перевірити вміст файлу
 
+
 *** Keywords ***
 Precondition
 	Start  user1
