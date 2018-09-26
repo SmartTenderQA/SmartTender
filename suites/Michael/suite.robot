@@ -25,7 +25,7 @@ Suite Precondition
   Дочекатись закінчення загрузки сторінки(webclient)
   Авторизуватися
   Run Keyword If  "${start_from}" == "webclient"  Run Keywords
-  ...  Click Element  css=.dxmLite_DevEx li
+  ...  Click Element  //span[contains(text(), 'Вибір')]
   ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
