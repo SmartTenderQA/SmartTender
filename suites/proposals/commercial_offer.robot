@@ -14,7 +14,7 @@ ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text
 ${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubmit']
 
 ${delivery_term_field}              xpath=(//label[contains(text(), 'Термін поставки')]/ancestor::tr//input)[1]
-${guaranty_field}                   xpath=(//label[contains(text(), 'Гарантія')]/ancestor::tr//input)[2]
+${guaranty_field}                   //label[contains(text(), 'Гарантія(років)')]/ancestor::tr//input
 ${terms_of_payment_field}           xpath=//label[contains(text(), 'Умови оплати')]/../following-sibling::*//textarea
 ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови доставки')]/../following-sibling::*//textarea
 
@@ -59,7 +59,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	Перевірити Опис
 	Перевірити ім'я файла
 	Перевірити термін поставки
-	Перевірити гарантію
+	Перевірити гарантію(років)
 	Перевірити Умови оплати
 	Перевірити умови доставки
 	#Перевірити вміст файлу
@@ -172,7 +172,7 @@ Postcondition
   Should Be Equal  "${value}"  "${data.delivery_term}"
 
 
-Перевірити гарантію
+Перевірити гарантію(років)
   ${value}  Get Element Attribute  ${guaranty_field}  value
   Should Be Equal  "${value}"  "${data.guaranty}"
 
