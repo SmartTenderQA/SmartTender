@@ -1408,7 +1408,8 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Перевірити тендерний документ
-  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
+  Run Keyword If  '${site}' == 'prod'  Run Keyword
+  ...  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
 
 
 Перевірити тендерний документ не для IP
@@ -1436,10 +1437,9 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Check document for error
-  Run Keyword If  '${site}' == 'prod'  Run Keywords
-  ...  Run Keyword And Expect Error  *  Location Should Contain  error
-  ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
-  ...  AND  Go Back
+  Run Keyword And Expect Error  *  Location Should Contain  error
+  Run Keyword And Expect Error  *  Page Should Contain  an error
+  Go Back
 
 
 Перевірити наявність документа
