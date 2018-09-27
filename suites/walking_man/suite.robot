@@ -1408,7 +1408,8 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Перевірити тендерний документ
-  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
+  Run Keyword If  '${site}' == 'prod'  Run Keyword
+  ...  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
 
 
 Перевірити тендерний документ не для IP
