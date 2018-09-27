@@ -1436,9 +1436,10 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Check document for error
-  Run Keyword And Expect Error  *  Location Should Contain  error
-  Run Keyword And Expect Error  *  Page Should Contain  an error
-  Go Back
+  Run Keyword If  '${site}' == 'prod'  Run Keywords
+  ...  Run Keyword And Expect Error  *  Location Should Contain  error
+  ...  AND  Run Keyword And Expect Error  *  Page Should Contain  an error
+  ...  AND  Go Back
 
 
 Перевірити наявність документа
