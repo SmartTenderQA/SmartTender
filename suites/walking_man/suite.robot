@@ -1430,8 +1430,8 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   ${status}  Перевірити наявність документа
   Run Keyword If  '${status}' == '${True}'  Run Keywords
   ...  Mouse over  ${tender doc exept EDS}
-  ...  AND  Wait Until Page Contains Element  //*[@data-qa="documents-block"]//a[@href][1]  5
-  ...  AND  Open Button  //*[@data-qa="documents-block"]//a[@href][1]  not_ip
+  ...  AND  Wait Until Page Contains Element  //*[@class="ivu-poptip-content"]//a[@href][1]  5
+  ...  AND  Open Button  //*[@class="ivu-poptip-content"]//a[@href][1]  not_ip
   ...  AND  Check document for error
 
 
