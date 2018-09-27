@@ -12,7 +12,8 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${UAID}                         UA-2018-09-14-000033-b
 ${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
-${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
+
+${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
 
 
 *** Test Cases ***
@@ -1102,7 +1103,7 @@ ${id_for_skip_creating}         552968c3e5424c6895dbc7448bc710b1
   Wait Until Page Contains Element  ${selector}  30
   Sleep  2
   Click Element  ${selector}
-  Wait Until Page Does Not Contain Element  ${selector}
+  Wait Until Page Does Not Contain Element  ${selector}  180
   Дочекатись закінчення загрузки сторінки(webclient)
   Sleep  2
   Дочекатись закінчення загрузки сторінки(webclient)
