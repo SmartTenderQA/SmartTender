@@ -2071,4 +2071,5 @@ create_e-mail
 Перевірити відкриття тендера за посиланням
   [Arguments]  ${link to tender}
   Go To  ${link to tender}
+  Дочекатись закінчення загрузки сторінки(skeleton)
   Отримати UAID на сторінці з тендером
