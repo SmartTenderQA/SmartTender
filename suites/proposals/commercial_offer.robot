@@ -84,7 +84,8 @@ Postcondition
   ...  ELSE  Set Variable  10000000
   ${amount}  Evaluate  '${max}'.replace(" ", "")
   ${float}  Evaluate  float(${amount})
-  ${bid}  random_number  1  ${float}
+  ${min}  Evaluate  float(${amount})//2
+  ${bid}  random_number  ${min}  ${float}
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${bid}
   Set To Dictionary  ${data}  bid_value=${bid}
 
@@ -126,7 +127,7 @@ Postcondition
 
 
 Перевірити кількість
-  ${value}  Get Element Attribute  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[2]  value
+  ${value}  Get Element Attribute  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[last()]  value
   Should Be Equal  ${value}  ${data.bid_count}
 
 
