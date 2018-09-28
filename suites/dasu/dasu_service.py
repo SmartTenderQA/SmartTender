@@ -2,7 +2,6 @@
 import re
 
 
-
 def convert_data_from_the_page(value, field):
     if field == 'dateCreated' or field == 'monitoring_id':
         splitter = value.split(u" від ")
@@ -12,6 +11,9 @@ def convert_data_from_the_page(value, field):
             return splitter[0]
     elif field == 'decision.date':
         response = re.search(u'\D+ (?P<date>[\d .,:]+)', value)
+        return response.group('date')
+    elif field == 'posts.datePublished':
+        response = re.search(u'Відповідь ДАСУ - (?P<date>[\d .,:]+)', value)
         return response.group('date')
     elif field == 'status':
         return convert_monitoring_status(value)

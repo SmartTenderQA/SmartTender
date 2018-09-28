@@ -13,7 +13,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 ${UAID}                         UA-2018-09-14-000033-b
 ${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
 
-${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
+${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 
 *** Test Cases ***
@@ -130,6 +130,23 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   \  Перевірити documents.datePublished пояснення з власної ініціативи
 
 
+Надати відповіть на пояснення з власної ініціативи органом ДАСУ
+  [Tags]  make_a_dialogue_individually
+  Сформувати та відправити відповідь органом ДАСУ
+  Дочекатись синхронізації  dasu
+
+
+Перевірити відображення відповіді на пояснення з власної ініціативи органом ДАСУ
+  [Tags]  make_a_dialogue_individually
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити title відповіді на пояснення з власної ініціативи
+  \  Перевірити datePublished відповіді на пояснення з власної ініціативи
+  \  Перевірити description відповіді на пояснення з власної ініціативи
+
+
 Підписати ЕЦП для пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
   No Operation
@@ -187,9 +204,9 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   \  Перевірити documents.datePublished відповіді на запит
 
 
-Підписати ЕЦП для відповіді на запит
-  [Tags]  make_a_dialogue
-  No Operation
+#Підписати ЕЦП для відповіді на запит
+#  [Tags]  make_a_dialogue
+#  No Operation
 
 
 ################################################################
@@ -267,6 +284,23 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   \  Звірити datePublished запиту
   \  Звірити documents.title запиту
   \  Звірити documents.datePublished запиту
+
+
+Надати відповідь на запит за роз'ясненнями щодо висновку органом ДАСУ
+  [Tags]  request_for_clarification
+  Сформувати та відправити відповідь органом ДАСУ
+  Дочекатись синхронізації  dasu
+
+
+Перевірити відображення відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  [Tags]  request_for_clarification
+  :FOR  ${username}  IN  tender_owner  provider  viewer
+  \  Switch Browser  ${username}
+  \  Reload Page
+  \  Відкрити вкладку моніторингу
+  \  Перевірити title відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  \  Перевірити datePublished відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  \  Перевірити description відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
 
 
 #Накласти ЕЦП на запит за роз'ясненням
@@ -908,6 +942,40 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   Should Be Equal  ${status}  ${True}
 
 
+Перевірити title відповіді на пояснення з власної ініціативи
+  ${title}  Get Text  //*[contains(text(), "${data_cdb['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['title']}
+
+
+Перевірити datePublished відповіді на пояснення з власної ініціативи
+  ${text}  Get Text  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row']//*[contains(@class, 'muted')]
+  ${date_site}  convert_data_from_the_page  ${text}  posts.datePublished
+  ${status}  compare_dates_smarttender  ${data_cdb['datePublished']}  ${date_site}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити description відповіді на пояснення з власної ініціативи
+  ${description}  Get Text  //*[contains(text(), "${data_cdb['title']}")]/following-sibling::*
+  Should Be Equal  ${description}  ${data_cdb['description']}
+
+
+Перевірити title відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  ${title}  Get Text  //*[contains(text(), "${data_cdb['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['title']}
+
+
+Перевірити datePublished відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  ${text}  Get Text  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row']//*[contains(@class, 'muted')]
+  ${date_site}  convert_data_from_the_page  ${text}  posts.datePublished
+  ${status}  compare_dates_smarttender  ${data_cdb['datePublished']}  ${date_site}
+  Should Be Equal  ${status}  ${True}
+
+
+Перевірити description відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  ${title}  Get Text  //*[contains(text(), "${data_cdb['title']}")]
+  Should Be Equal  ${title}  ${data_cdb['title']}
+
+
 Сформувати та відправити запит організатору
   ${title}  create_sentence  5
   ${description}  create_sentence  20
@@ -1108,3 +1176,21 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   Дочекатись закінчення загрузки сторінки(webclient)
   Sleep  2
   Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Сформувати та відправити відповідь органом ДАСУ
+  [Documentation]  для:
+  ...  Подати пояснення з власної ініціативи
+  ...  Створити запит за роз'ясненнями щодо висновку
+  ${title}  create_sentence  3
+  ${description}  create_sentence  4
+  ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
+  ${relatedPost}  Отримати дані моніторингу по API  posts.-1.id
+  ${data_cdb}  sas_answer
+  ...  ${title}
+  ...  ${description}
+  ...  ${relatedParty}
+  ...  ${relatedPost}
+  ...  ${data['id']}
+  Log  ${data_cdb}
+  Перевірити та зберегти відповідь  ${data_cdb}

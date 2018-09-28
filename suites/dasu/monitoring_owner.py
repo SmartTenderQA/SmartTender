@@ -370,3 +370,30 @@ def inspection(description, monitoring_ids):
     r = requests.post(url, headers=headers, json=data)
     json = check_response(r.json())
     return json
+
+
+def sas_answer(title, description, relatedParty, relatedPost, id):
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+    }
+
+    data = {
+        "data": {
+            "title": "",
+            "relatedParty": "",
+            "relatedPost": "",
+            "description": ""
+        }
+    }
+
+    data['data']['title'] = str(title)
+    data['data']['relatedParty'] = str(relatedParty)
+    data['data']['relatedPost'] = str(relatedPost)
+    data['data']['description'] = str(description)
+
+    r = requests.post(url, headers=headers, json=data)
+    json = check_response(r.json())
+    return json
