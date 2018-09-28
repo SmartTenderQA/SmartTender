@@ -49,6 +49,7 @@ ${id_for_skip_creating}         8bc05038fc384365a564127d60cf4a07
   Перейти за посиланням по dasu
   Відкрити вкладку моніторингу
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
+  Log  ${monitoring_id}  WARN
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
   :FOR  ${username}  IN  viewer  provider
   \  Switch Browser  ${username}
