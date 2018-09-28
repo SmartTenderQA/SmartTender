@@ -231,7 +231,7 @@ def get_tender_variables(tender_form, tender_sign):
 
 
 def get_number(value):
-    str =  re.search(u'(?P<amount>[\d.\s]+).+', value)
+    str =  re.search(u'(?P<amount>[\d.\s]+)', value)
     str_amount = str.group("amount")
     str_amount = str_amount.replace(' ', '')
     amount = float(str_amount)
