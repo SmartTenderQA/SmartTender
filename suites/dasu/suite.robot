@@ -511,11 +511,11 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   ${tab}             Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab')]//*[contains(text(), 'Моніторинг ДАСУ')]
   ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and not(contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
   ${active tab}      Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and (contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
+  Scroll Page To Element XPATH  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Click Element  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Відкрити вкладку моніторингу
-  Execute Javascript    window.scrollTo(0, 1200)
   Дочекатись закінчення загрузки сторінки
 
 
