@@ -235,3 +235,15 @@ Test Postcondition
 Виділити iFrame за необхідністю у лоті
   ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
   Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]
+
+
+Scroll Page To Element XPATH
+  [Arguments]    ${xpath}
+  Run Keyword And Ignore Error
+  ...  Execute JavaScript  document.evaluate('${xpath.replace("xpath=", "")}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
+  Run Keyword And Ignore Error
+  ...  Execute JavaScript  document.evaluate("${xpath.replace('xpath=', '')}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
+
+
+Scroll Page To Top
+  Execute JavaScript  window.scrollTo(0,0);
