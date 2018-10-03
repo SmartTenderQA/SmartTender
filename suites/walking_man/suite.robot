@@ -2032,7 +2032,7 @@ create_e-mail
 Відкрити сторінку Звіти
   Click Element  //*[contains(text(), "Звіти")]/ancestor::a
   Sleep  1
-  Location Should Contain  /Reports/
+  Location Should Contain  /Reports
   Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Звіти
 
