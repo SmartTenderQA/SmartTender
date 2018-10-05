@@ -307,13 +307,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити випаючий список інструкцій
 
 
-Зворотній зв'язок
-  [Tags]  site
-  Зайти на сторінку зворотній зв'язок
-  Перевірити заголовок сторінки зворотній зв'язок
-  Перевірити наявність кнопки відправити на сторінці зворотній зв'язок
-
-
 Карта сайту
   [Tags]  site
   Перейти на сторінку карти сайту
@@ -1083,21 +1076,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   List Should Contain Value  ${list}  Інструкції для учасника
   Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
   Sleep  2
-
-
-Зайти на сторінку зворотній зв'язок
-  Open button  ${feedback link}
-  Location Should Contain  /zvorotniy-zvyazok/
-
-
-Перевірити заголовок сторінки зворотній зв'язок
-  ${should}  Set variable  Зворотній зв'язок
-  ${is}  Get Text  ${h1 header text}
-  Should Be Equal  ${is}  ${should}
-
-
-Перевірити наявність кнопки відправити на сторінці зворотній зв'язок
-  Page Should Contain Element  css=#MainContent_MainContent_MainContent_submitBtn
 
 
 Перейти на сторінку карти сайту
