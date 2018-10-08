@@ -60,7 +60,7 @@ def get_user_variable(user, users_variable):
             'login': 'test_com',
             'password': '291263',
             'name': 'test test',
-            'role': 'provider',
+            'role': 'tender_owner',
             'site': 'test',
         },
         'tostorovich': {
