@@ -506,7 +506,6 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   Log  ${location}  WARN
 
 
-
 Відкрити вкладку моніторингу
   ${tab}             Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab')]//*[contains(text(), 'Моніторинг ДАСУ')]
   ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and not(contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]

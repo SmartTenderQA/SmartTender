@@ -31,17 +31,16 @@ Login
   Fill Login  ${login}
   Fill Password  ${password}
   Click Element  ${login button}
-  Run Keyword If  '${role}' == 'Bened'
-  ...       Wait Until Element Is Not Visible  ${webClient loading}  120
-  ...  ELSE  Run Keywords
-  ...       Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
-  ...  AND  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${loading}  120
+  Run Keyword If  "tender_owner" == "${role}"
+  ...        Дочекатись закінчення загрузки сторінки(webclient)
+  ...  ELSE  Дочекатись закінчення загрузки сторінки
 
 
 Перевірити успішність авторизації
-  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
-  Run Keyword If  '${status}' == 'True'  Перевірити успішність авторизації організатора
-  ...  ELSE  Перевірити успішність авторизації учасника
+  Run Keyword If
+  ...  "tender_owner" in "${role}"  Перевірити успішність авторизації організатора
+  ...  ELSE IF  "provider" in "${role}"  Перевірити успішність авторизації учасника
+  ...  ELSE IF  "viewer" == "${role}"  No Operation
 
 
 Перевірити успішність авторизації організатора

@@ -37,7 +37,7 @@ ${sales spin}                       css=.ivu-spin
   ...  Run Keyword And Ignore Error
   ...  Wait Until Element Is Not Visible
   ...  ${locator}
-  ...  30
+  ...  120
   Run Keyword If  "${status}" == "PASS"
   ...  Дочекатись закінчення загрузки сторінки по елементу
   ...  ${locator}
