@@ -17,10 +17,13 @@ Resource    create_tender.robot
 Resource    EDS.robot
 Resource    synchronization.robot
 Resource    email.robot
+Resource    webclient_keywords.robot
 
 
 
 *** Variables ***
+${tab_keybutton}					\\13
+
                                     ###ІНШІ ДАННІ###
 ${browser}                          chrome
 ${file path}                        src/

@@ -56,6 +56,13 @@ def get_user_variable(user, users_variable):
             'role': 'provider',
             'site': 'prod',
         },
+        'comm_tender_owner': {
+            'login': 'test_com',
+            'password': '291263',
+            'name': 'test test',
+            'role': 'provider',
+            'site': 'test',
+        },
         'tostorovich': {
             'login': 'ttostorovich@gmail.com',
             'password': 'qwerty123',
@@ -310,3 +317,10 @@ def clear_test_output():
 
     for filename in glob("*.png"):
         os.remove(filename)
+
+
+def get_tender_href_for_commercial_owner(value):
+    list = re.search('.*(?P<href>http.+)(?P<ticket>\?ticket=.+)\'.*', value)
+    href = list.group('href')
+    ticket = list.group('ticket')
+    return href, ticket
