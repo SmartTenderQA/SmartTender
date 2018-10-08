@@ -854,8 +854,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
   Start  ${user}
-  ${status}  Run Keyword And Return Status  Location Should Contain  /webclient/
-  Run Keyword If  '${status}' == 'True'  Go To  ${start_page}
+  Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
 
 
 Зайти на сторінку про компанію

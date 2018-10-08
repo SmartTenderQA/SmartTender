@@ -38,7 +38,7 @@ Login
 
 Перевірити успішність авторизації
   Run Keyword If
-  ...  "tender_owner" in "${role}"  Перевірити успішність авторизації організатора
+  ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора
   ...  ELSE IF  "provider" in "${role}"  Перевірити успішність авторизації учасника
   ...  ELSE IF  "viewer" == "${role}"  No Operation
 
