@@ -65,7 +65,7 @@ def get_user_variable(user, users_variable):
         },
         'tostorovich': {
             'login': 'ttostorovich@gmail.com',
-            'password': 'qwerty123',
+            'password': 'qwedfgtyhj[s/',
             'name': u'Тестовый пользователь',
             'role': 'provider',
             'site': 'prod',
