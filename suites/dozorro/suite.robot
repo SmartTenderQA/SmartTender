@@ -9,12 +9,12 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 
 ${first found element}               xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[1]
-${dozorro btn}                       xpath=//li/*[contains(text(), 'Відгуки Dozorro')]/ancestor::li
+${dozorro btn}                       xpath=//*[@data-qa="tabs"]//*[contains(text(),'Dozorro')]
 ${review add}                        xpath=//*[@type='button']/*[contains(text(), 'Залишити відгук')]
 ${review submit}                     xpath=//button[@type="submit"]
 ${sort date}                         xpath=//*[@id="tenders"]//tr/*[contains(text(), 'Дата')]
 ${review_list}                       xpath=(//div[@class="ivu-select-selection"]/span)[4]
-${review_list_close}                 xpath=//*[@class="ivu-modal-close"]
+${review_list_close}                 xpath=//*[@class='ivu-modal' and not(contains(@style,'display: none'))]//*[@class="ivu-modal-close"]
 ${take_part}                         xpath=//div[@class="dhxform_base"]//*[contains(text(), 'Беру участь')]
 ${org_field}                         xpath=(//label[contains(text(), 'Організатори')]/following::input[@type='text'])[1]
 ${multylot}
@@ -491,19 +491,18 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Підготувати користувачів
   ${data}  Create Dictionary
   Set Global Variable  ${data}
-  Start  viewer_test
-  Start  Bened
-  Start  user2
-  Start  user1
+  Start  viewer_test   viewer
+  Start  Bened         tender_owner
+  Start  user2         provider2
+  Start  user1         provider
 
 Postcondition
   Close All Browsers
 
 Відкрити сторінку відгуки Dozorro
-  Select Frame  css=iframe
   Click Element At Coordinates  ${dozorro btn}  -40  0
   Дочекатись закінчення загрузки сторінки
-  Select Frame  iframeDozorro
+
 
 Перевірити чи тендер мультилот
   ${status}  Run Keyword and Return Status  Element Should Be Visible  ${first found element}/../..//*[contains(text(),'Мультилоти')]
