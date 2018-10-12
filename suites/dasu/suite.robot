@@ -1171,9 +1171,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   Wait Until Page Contains Element  ${selector}  30
   Sleep  2
   Click Element  ${selector}
-  Wait Until Page Does Not Contain Element  ${selector}  180
-  Дочекатись закінчення загрузки сторінки(webclient)
-  Sleep  2
+  Wait Until Element Is Not Visible  ${selector}  15
   Дочекатись закінчення загрузки сторінки(webclient)
 
 
