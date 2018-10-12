@@ -142,7 +142,7 @@ Open button
   [Arguments]  ${type}=${TESTNAME}
   Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
-  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[text()='${type}']
+  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
 
 
 Відфільтрувати по статусу торгів
@@ -160,7 +160,7 @@ Open button
   Wait Until Keyword Succeeds  30s  5  Run Keywords
   ...       Click Element  ${dropdown menu for bid forms}
   ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
-  ...  AND  Wait Until Page Contains Element  xpath=//li[text()='${check from list}']
+  ...  AND  Wait Until Page Contains Element  xpath=//li[contains(@class,'dropdown-item') and text()='${check from list}']
 
 
 Виконати пошук тендера
