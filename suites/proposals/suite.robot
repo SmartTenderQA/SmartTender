@@ -100,7 +100,7 @@ Postcondition
 
 Заповнити поле з ціною для першого лоту
   Run depending on the dict  Amount  Заповнити поле з ціною  1  1
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO LOOP
+  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
 Підтвердити відповідність за наявністю
@@ -114,6 +114,7 @@ Postcondition
 Змінити цінову пропозицію(по кожному лоту окремо)
   :FOR  ${i}  IN RANGE  1  ${lots amount}+1
   \  Заповнити поле з ціною  ${i}  0.9
+  \  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
 Видалити останній файл до тендеру
@@ -156,10 +157,10 @@ Postcondition
 Fill ESCO
     [Arguments]  ${number_of_lot}
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
-    input text  xpath=(${block without}[${number_of_lot}]//input)[1]  1
-    input text  xpath=(${block without}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block without}[${number_of_lot}]//input)[3]  95
-    input text  xpath=(${block without}[${number_of_lot}]//input)[6]  100
+    input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
+    input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
 ###    Useful indicators    ###
@@ -257,7 +258,8 @@ File description
 Run depending on the dict
     [Arguments]  ${tender_sign}  ${keyword}  @{arguments}
     ${variable}  get_tender_variables  ${tender_type}  ${tender_sign}
-    Run Keyword  ${keyword}  @{arguments}
+    Run Keyword If  ${variable} == ${True}
+    ...  Run Keyword  ${keyword}  @{arguments}
 
 
 Змінити ціну
