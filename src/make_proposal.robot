@@ -4,7 +4,6 @@ Library     service.py
 
 *** Variables ***
 ${send offer button}                css=button#submitBidPlease
-
 ${succeed}                          Пропозицію прийнято
 ${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
 ${empty error}                      ValueError: Element locator
@@ -15,10 +14,10 @@ ${error4}                           В даний момент вже йде п�
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 ${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
-${ok button}                        xpath=.//div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
-${ok button error}                  xpath=.//*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
-${checkbox1}                        xpath=//*[@id="SelfEligible"]//input
-${checkbox2}                        xpath=//*[@id="SelfQualified"]//input
+${ok button}                        //div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
+${ok button error}                  //*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
+${checkbox1}                        //*[@id="SelfEligible"]//input
+${checkbox2}                        //*[@id="SelfQualified"]//input
 ${button add file}                  //input[@type="file"][1]
 ${file loading}                     css=div.loader
 ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel"]/button
@@ -49,6 +48,7 @@ ${cancel. offers confirm button}    ${block}[last()]//div[@class="ivu-poptip-foo
   ${message}  Скасувати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню при скасуванні  ${message}
   Wait Until Page Does Not Contain Element   ${cancellation offers button}
+  Sleep  2
 
 
 Скасувати пропозицію та вичитати відповідь
@@ -85,6 +85,7 @@ Ignore cancellation error
   ${button}  Run Keyword If  "${selector}" == "None"
   ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
   ...  ELSE  Set Variable  ${selector}
+  Додаткова перевірка на тестові торги для продуктива
   Page Should Contain Element  ${button}
   Open button  ${button}
   ${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@class='modal-dialog ']//h4
@@ -92,10 +93,25 @@ Ignore cancellation error
   Location Should Contain  /edit/
 
 
+Додаткова перевірка на тестові торги для продуктива
+  ${status}  Run Keyword And Return Status  Location Should Contain  test.
+  ${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa="title"]  [ТЕСТУВАННЯ]
+  Run Keyword If  ${status2} == ${False}  Fatal Error  це не тестовий тендер [ТЕСТУВАННЯ]
+
+
 Подати пропозицію
   ${message}  Натиснути надіслати пропозицію та вичитати відповідь
   Виконати дії відповідно повідомленню  ${message}
   Wait Until Page Does Not Contain Element  ${ok button}
+
+
+Перевірити неможливість подати пропозицію
+	[Arguments]  ${compare}
+	Click Element  ${send offer button}
+	${validation message}  Set Variable  css=.ivu-notice-desc
+	Wait Until Page Contains Element  ${validation message}
+	${text}  Get Text  ${validation message}
+	Should Contain  ${text}  ${compare}
 
 
 Натиснути надіслати пропозицію та вичитати відповідь
@@ -144,14 +160,15 @@ Ignore error
 
 
 Розгорнути усі лоти
-  Run Keyword If  '${multiple status}' == 'multiple'  Collaps Loop
+	:FOR  ${i}  IN RANGE  1  ${lots amount}+1
+	\  Розгорнути лот  ${i}
 
 
-Collaps Loop
-  Sleep  .5
-  :FOR  ${INDEX}  IN RANGE  ${lots amount}
-  \  ${n}  evaluate  ${INDEX}+2
-  \  click element  ${block}[${n}]//button
+Розгорнути лот
+	[Arguments]  ${lot}
+	${status}  Run Keyword And Return Status  Page Should Contain Element  ${block}[${lot}+1]//button/i
+	${class}  Run Keyword If  ${status} == ${True}  Get Element Attribute  ${block}[${lot}+1]//button/i  class
+	Run Keyword If  "checkmark" not in "${class}" and ${status} == ${True}  Click Element  ${block}[${lot}+1]//button
 
 
 Підтвердити відповідність
@@ -160,13 +177,15 @@ Collaps Loop
 
 
 Створити та додати PDF файл
-  [Arguments]  ${add_file_number}
+  [Documentation]  if ${lot} == 0 add file to tender overall
+  [Arguments]  ${lot}
+  ${lot}  Evaluate  ${lot}+1
   ${path}  create_pdf_file
-  Choose File  xpath=(${button add file})[${add_file_number}]  ${EXECDIR}/${path}
+  Choose File  xpath=(${button add file})[${lot}]  ${EXECDIR}/${path}
   ${status}  ${message}  Run Keyword And Ignore Error  Wait Until Page Contains Element  ${file loading}  3
   Run Keyword If  "${status}" == "PASS"  Run Keyword And Ignore Error  Wait Until Page Does Not Contain Element  ${file loading}
 
 
 Завантажити файли на весь тендер
-  :FOR  ${INDEX}  IN RANGE  1  ${blocks amount}
+  :FOR  ${INDEX}  IN RANGE  0  ${lots amount}+1
   \  Створити та додати PDF файл  ${INDEX}
