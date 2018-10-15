@@ -113,7 +113,7 @@ Postcondition
 
 Змінити цінову пропозицію(по кожному лоту окремо)
   :FOR  ${i}  IN RANGE  1  ${lots amount}+1
-  \  Заповнити поле з ціною  ${i}  0.9
+  \  Run depending on the dict  Amount  Заповнити поле з ціною  ${i}  0.9
   \  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
