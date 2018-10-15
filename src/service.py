@@ -13,13 +13,14 @@ from dateutil.parser import parse
 from dateutil.parser import parserinfo
 from glob import glob
 import os
+import operator
 
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-def get_user_variable(user, users_variable):
+def get_user_variable(user, users_variable=None):
     a = {
         'ssp_tender_owner': {
             'login': 'USER_SSP',
@@ -127,12 +128,9 @@ def get_user_variable(user, users_variable):
         return a[user][users_variable]
 
 
-def get_tender_variables(tender_form, tender_sign):
+def get_tender_variables(tender_type, tender_sign):
     a = {
         'open_trade': {
-            'One_lot': '3164571',
-            'Multiple': '3164573',
-            'Simple': '3164574',
             'Amount': True,
             'Conformity': True,
             'Document type': True,
@@ -140,14 +138,9 @@ def get_tender_variables(tender_form, tender_sign):
                                    'Підтвердження відповідності кваліфікаційним критеріям',
                                    'Цінова пропозиція'],
             'Confidentiality': False,
-            'Description': False,
             'Sub information': True,
-            'Useful indicators': True,
         },
         'open_trade_eng': {
-            'One_lot': '3164929',
-            'Multiple': '3164930',
-            'Simple': '3164932',
             'Amount': True,
             'Conformity': True,
             'Document type': True,
@@ -157,26 +150,16 @@ def get_tender_variables(tender_form, tender_sign):
                                    'Цінова пропозиція',
                                    'Кошторис'],
             'Confidentiality': True,
-            'Description': True,
             'Sub information': True,
-            'Useful indicators': True,
         },
         'below_threshold': {
-            'One_lot': '3164321',
-            'Multiple': '3164332',
-            'Simple': '3164557',
             'Amount': True,
             'Conformity': False,
             'Document type': False,
             'Confidentiality': False,
-            'Description': False,
             'Sub information': False,
-            'Useful indicators': True,
         },
         'negotiation_procedure': {
-            'One_lot': '3164934',
-            'Multiple': '3164935',
-            'Simple': '3164936',
             'Amount': True,
             'Conformity': True,
             'Document type': True,
@@ -184,42 +167,27 @@ def get_tender_variables(tender_form, tender_sign):
                                    'Підтвердження відповідності кваліфікаційним критеріям',
                                    'Цінова пропозиція'],
             'Confidentiality': False,
-            'Description': False,
             'Sub information': True,
-            'Useful indicators': True,
         },
         'competitive_dialog': {
-            'One_lot': '3164941',
-            'Multiple': '3164946',
-            'Simple': '3164951',
             'Amount': False,
             'Conformity': True,
             'Document type': True,
             'Document type list': ['Технічний опис предмету закупівлі',
                                    'Підтвердження відповідності кваліфікаційним критеріям'],
             'Confidentiality': True,
-            'Description': True,
             'Sub information': True,
-            'Useful indicators': False,
         },
         'competitive_dialog_eng': {
-            'One_lot': '3164954',
-            'Multiple': '3164956',
-            'Simple': '3164958',
             'Amount': False,
             'Conformity': True,
             'Document type': True,
             'Document type list': ['Технічний опис предмету закупівлі',
                                    'Підтвердження відповідності кваліфікаційним критеріям'],
             'Confidentiality': True,
-            'Description': True,
             'Sub information': True,
-            'Useful indicators': False,
         },
         'ESCO': {
-            'One_lot': '3165194',
-            'Multiple': '3165300',
-            'Simple': '3165305',
             'Amount': False,
             'Conformity': True,
             'Document type': True,
@@ -229,12 +197,26 @@ def get_tender_variables(tender_form, tender_sign):
                                    'Цінова пропозиція',
                                    'Кошторис'],
             'Confidentiality': True,
-            'Description': True,
             'Sub information': True,
-            'Useful indicators': True,
         },
     }
-    return a[tender_form][tender_sign]
+    if tender_sign == None:
+        return a[tender_type]
+    else:
+        return a[tender_type][tender_sign]
+
+
+def convert_tender_type(tender_type):
+    a = {
+        'open_trade': u'Відкриті торги',
+        'open_trade_eng': u'Відкриті торги з публікацією англійською мовою',
+        'below_threshold': u'Допорогові закупівлі',
+        'negotiation_procedure': u'Переговорна процедура для потреб оборони',
+        'competitive_dialog': u'Конкурентний діалог 1-ий етап',
+        'competitive_dialog_eng': u'Конкурентний діалог з публікацією англійською мовою 1-ий етап',
+        'ESCO': u'Відкриті торги для закупівлі енергосервісу',
+    }
+    return a[tender_type]
 
 
 def get_number(value):
@@ -283,19 +265,10 @@ def convert_datetime_to_smart_format(isodate, accuracy='s'):
     return date_string
 
 
-def compare_dates_smarttender(cdb, smarttender, operator='=='):
-    ltr = parse(cdb, parserinfo(True, False))
-    dtr = parse(smarttender, parserinfo(True, False), dayfirst=False)
-    left = (ltr.strftime('%Y-%m-%dT%H:%M'))
-    right = (dtr.strftime('%Y-%m-%dT%H:%M'))
-    if operator == '==':
-        return left == right
-    elif operator == '>':
-        return left > right
-    elif operator == '<':
-        return left < right
-    elif operator == '!=':
-        return left != right
+def compare_dates_smarttender(l, operator, r, day_first=True):
+    left = parse(l, parserinfo(True, False))
+    right = parse(r, parserinfo(True, False), dayfirst=day_first)
+    return get_truth(left, operator, right)
 
 
 def sleep_to(time):
@@ -324,3 +297,20 @@ def get_tender_href_for_commercial_owner(value):
     href = list.group('href')
     ticket = list.group('ticket')
     return href, ticket
+
+
+def get_truth(inp, relate, cut):
+    ops = {'>': operator.gt,
+           '<': operator.lt,
+           '>=': operator.ge,
+           '<=': operator.le,
+           '==': operator.eq}
+    return ops[relate](inp, cut)
+
+def get_key_from_dict_with_value_true(tender_type):
+    l = []
+    d = get_tender_variables(tender_type)
+    for key, value in d.iteritems():
+        if value == True:
+            l.append(key)
+    return l
