@@ -92,7 +92,6 @@ ${wait}                             60
     Run Keyword And Expect Error  *  Підписати ЕЦП
 
 
-
 *** Keywords ***
 Postcondition
   Close All Browsers
