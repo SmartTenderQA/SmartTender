@@ -220,7 +220,7 @@ def convert_tender_type(tender_type):
 
 
 def get_number(value):
-    str =  re.search(u'(?P<amount>[\d.\s]+)', value)
+    str = re.search(u'(?P<amount>[\d.\s]+)', value)
     str_amount = str.group("amount")
     str_amount = str_amount.replace(' ', '')
     amount = float(str_amount)
@@ -231,7 +231,7 @@ def convert_url(href, IP):
     return str(re.sub('https://smarttender.biz', str(IP), str(href)))
 
 
-def download_file_and_return_content(url, download_path):
+def download_file_and_return_content(url):
     response = urllib2.urlopen(url)
     file_content = response.read()
     return file_content
@@ -306,11 +306,3 @@ def get_truth(inp, relate, cut):
            '<=': operator.le,
            '==': operator.eq}
     return ops[relate](inp, cut)
-
-def get_key_from_dict_with_value_true(tender_type):
-    l = []
-    d = get_tender_variables(tender_type)
-    for key, value in d.iteritems():
-        if value == True:
-            l.append(key)
-    return l
