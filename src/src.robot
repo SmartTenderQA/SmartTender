@@ -39,6 +39,7 @@ ${logout}                           id=LogoutBtn
 ${error}                            id=loginErrorMsg
 
 ${komertsiyni-torgy icon}           //*[@id="main"]//a[2]/img
+
 ${link to make proposal button}     css=[class='show-control button-lot']
 ${iframe open tender}               //div[@class="container"]/iframe
 ${make proposal button}             //*[@id="tenderPage"]//a[@class='btn button-lot cursor-pointer']

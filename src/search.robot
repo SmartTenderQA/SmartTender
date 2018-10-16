@@ -5,6 +5,7 @@ ${find tender field}                xpath=//input[@placeholder="Введіть �
 
 ${first found element}              css=#tenders tbody>.head a.linkSubjTrading
 ${last found element}               xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
+${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 
 *** Keywords ***
@@ -20,7 +21,6 @@ ${last found element}               xpath=(//*[@id='tenders']//tbody/*[@class='h
 
 Відкрити сторінку тестових торгів
   ${dropdown navigation}  Set Variable  css=#MenuList div.dropdown li>a
-  ${button komertsiyni-torgy}  Set Variable  css=.with-drop>a[href='/komertsiyni-torgy/']
   Go To  ${start_page}
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
