@@ -72,6 +72,14 @@ def get_user_variable(user, users_variable=None):
             'site': 'prod',
             'mail_password': 'qwedfgtyhj[s/',
         },
+        'prod_owner': {
+            'login': 'PPR_TEST_PROZORRO',
+            'password': 'jh3jlkbkj2br',
+            'name': u'PPR_TEST_PROZORRO',
+            'role': 'tender_owner',
+            'site': 'prod',
+            'mail_password': '',
+        },
         'user1': {
             'login': 'SmartTenderProvider1@gmail.com',
             'password': 'nowihs',
