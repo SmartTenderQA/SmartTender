@@ -27,22 +27,22 @@ ${wait}                             60
 
 *** Test Cases ***
 Знайти необхідний тендер
-  Відкрити сторінку тестових торгів
-  ${ua_tender_type}  convert_tender_type  ${tender_type}
-  Відфільтрувати по формі торгів  ${ua_tender_type}
-  Відфільтрувати по статусу торгів  Прийом пропозицій
-  ${date}  smart_get_time  1  d
-  Відфільтрувати по даті кінця прийому пропозиції від  ${date}
-  Виконати пошук тендера
-  Перейти по результату пошуку  ${first found element}
-  Перевірити кнопку подачі пропозиції
-  Скасувати пропозицію за необхідністю
-  ${lots amount}  Порахувати Кількість Лотів
-  Розгорнути лот  1
+	Відкрити сторінку тестових торгів
+	${ua_tender_type}  convert_tender_type  ${tender_type}
+	Відфільтрувати по формі торгів  ${ua_tender_type}
+	Відфільтрувати по статусу торгів  Прийом пропозицій
+	${date}  smart_get_time  1  d
+	Відфільтрувати по даті кінця прийому пропозиції від  ${date}
+	Виконати пошук тендера
+	Перейти по результату пошуку  ${first found element}
+	Перевірити кнопку подачі пропозиції
+	Скасувати пропозицію за необхідністю
+	${lots amount}  Порахувати Кількість Лотів
+	Розгорнути лот  1
 
 
 Перевірити неможливість подати пропозіцію без заповнення жодного поля
-	Перевірити неможливість подати пропозицію  Не усі поля заповнені правильно. Перевірте будь ласка та внесіть відповідні зміни
+	Перевірити неможливість подати пропозицію
 
 
 Зповнити необхідні поля
@@ -85,12 +85,11 @@ ${wait}                             60
 
 
 Перевірити неможливість подати пропозицію
-    Перевірити неможливість подати пропозицію  Необхідно прийняти участь хоча б в одному лоті
+    Перевірити неможливість подати пропозицію
 
 
 Перевірити неможливість накласти ЕЦП
     Run Keyword And Expect Error  *  Підписати ЕЦП
-
 
 
 *** Keywords ***
@@ -100,7 +99,7 @@ Postcondition
 
 Заповнити поле з ціною для першого лоту
   Run depending on the dict  Amount  Заповнити поле з ціною  1  1
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO LOOP
+  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
 Підтвердити відповідність за наявністю
@@ -113,7 +112,8 @@ Postcondition
 
 Змінити цінову пропозицію(по кожному лоту окремо)
   :FOR  ${i}  IN RANGE  1  ${lots amount}+1
-  \  Заповнити поле з ціною  ${i}  0.9
+  \  Run depending on the dict  Amount  Заповнити поле з ціною  ${i}  0.9
+  \  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
 Видалити останній файл до тендеру
@@ -132,9 +132,13 @@ Postcondition
 
 
 Визначити випадковий файл як конфіденційний
+	Run depending on the dict  Confidentiality  Визначити випадковий файл як конфіденційний продовження
+
+
+Визначити випадковий файл як конфіденційний продовження
 	${count}  Get Element Count  //*[@class='ivu-card ivu-card-bordered'][1]//*[@class="ivu-switch"]
 	${n}  random_number  1  ${count}
-	Run depending on the dict  Confidentiality  Confidentiality  1  ${n}
+	Confidentiality  1  ${n}
 
 
 Зазначивши причину конфіденційності
@@ -156,10 +160,10 @@ Postcondition
 Fill ESCO
     [Arguments]  ${number_of_lot}
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
-    input text  xpath=(${block without}[${number_of_lot}]//input)[1]  1
-    input text  xpath=(${block without}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block without}[${number_of_lot}]//input)[3]  95
-    input text  xpath=(${block without}[${number_of_lot}]//input)[6]  100
+    input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
+    input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
 ###    Useful indicators    ###
@@ -221,6 +225,10 @@ Delete file
 
 
 Вибрати всі доступні типи файлів
+	Run depending on the dict  Document type  Вибрати всі доступні типи файлів продовження
+
+
+Вибрати всі доступні типи файлів продовження
     ${number of file types}  Отримати всі доступні типи файлі зі словника
     :FOR  ${INDEX}  IN RANGE  1  ${number of file types}+1
     \  Створити та додати PDF файл  0
@@ -257,7 +265,8 @@ File description
 Run depending on the dict
     [Arguments]  ${tender_sign}  ${keyword}  @{arguments}
     ${variable}  get_tender_variables  ${tender_type}  ${tender_sign}
-    Run Keyword  ${keyword}  @{arguments}
+    Run Keyword If  ${variable} == ${True}
+    ...  Run Keyword  ${keyword}  @{arguments}
 
 
 Змінити ціну
