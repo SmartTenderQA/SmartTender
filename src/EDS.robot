@@ -8,9 +8,10 @@ ${close button(old)}  //div[@style]//button[@type='button' and @class='close']
 
 *** Keywords ***
 Підписати ЕЦП
-	${status}  Run Keyword And Return Status  Location Should Contain  test.
-	Run Keyword If  ${status} == ${True}  Підписати ЕЦП(new)
-	...  ELSE  Підписати ЕЦП(old)
+	Підписати ЕЦП(new)
+	#${status}  Run Keyword And Return Status  Location Should Contain  test.
+	#Run Keyword If  ${status} == ${True}  Підписати ЕЦП(new)
+	#...  ELSE  Підписати ЕЦП(old)
 
 
 Підписати ЕЦП(new)
