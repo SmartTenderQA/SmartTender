@@ -1985,7 +1985,7 @@ create_e-mail
   Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
   Sleep  1
   Location Should Contain  /ChangePassword/
-  Wait Until Page Contains Element  //h1  30
+  Wait Until Page Contains Element  //h2  30
   Element Should Contain  //h2  Зміна пароля
   Element Should Contain  (//*[@class="ivu-form-item-label"])[1]  Поточний пароль
   Element Should Contain  (//*[@class="ivu-form-item-label"])[2]  Новий пароль
