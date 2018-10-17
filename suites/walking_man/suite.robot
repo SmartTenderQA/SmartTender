@@ -221,7 +221,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   [Tags]  site  -test
   Зайти на сторінку пошуку elastic
   Виконати пошук в elastic  папір
-  Page Should Contain  Бумага
+  Page Should Contain  бумага
   Очистити фільтр пошуку elastic
 
 
