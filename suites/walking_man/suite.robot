@@ -1984,7 +1984,7 @@ create_e-mail
   Sleep  1
   Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
   Sleep  1
-  Location Should Contain  /zmina-parolyu/
+  Location Should Contain  /ChangePassword/
   Wait Until Page Contains Element  //h1  30
   Element Should Contain  //h1  Зміна пароля
   Element Should Contain  (//h1/..//span)[1]  Старий пароль
