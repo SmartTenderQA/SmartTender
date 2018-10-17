@@ -1986,11 +1986,10 @@ create_e-mail
   Sleep  1
   Location Should Contain  /ChangePassword/
   Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Зміна пароля
-  Element Should Contain  (//h1/..//span)[1]  Старий пароль
-  Element Should Contain  (//h1/..//span)[2]  Новий пароль
-  Element Should Contain  (//h1/..//span)[3]  Повторіть пароль
-  Page Should Contain Element  //*[@id="content"]//*[@class='button']
+  Element Should Contain  //h2  Зміна пароля
+  Element Should Contain  (//*[@class="ivu-form-item-label"])[1]  Поточний пароль
+  Element Should Contain  (//*[@class="ivu-form-item-label"])[2]  Новий пароль
+  Page Should Contain Element  //button[@type="button" and contains(., "Змінити пароль")]
 
 
 Перевірити вкладку Управління користувачами
