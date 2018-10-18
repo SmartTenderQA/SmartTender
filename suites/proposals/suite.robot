@@ -136,7 +136,7 @@ Postcondition
 
 
 Визначити випадковий файл як конфіденційний продовження
-	${count}  Get Element Count  //*[@class='ivu-card ivu-card-bordered'][1]]//*[@class="ivu-switch" or @class="ivu-switch-inner"]
+	${count}  Get Element Count  //*[@class="ivu-card ivu-card-bordered"][1]//*[@class="ivu-switch" or @class="ivu-switch-inner"]
 	${n}  random_number  1  ${count}
 	Confidentiality  1  ${n}
 
