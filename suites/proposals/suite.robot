@@ -20,7 +20,7 @@ ${EDS}                              ${block}[1]//div[@class="ivu-row"]//button
 ${EDS close}                        //*[@class="modal-dialog "]//button
 ${delete file}                      //div[@class="file-container"]/div[last()]/div/div[2]
 ${delete file confirm}              /div/div[2]//button[2]
-${switch}                           //*[@class="ivu-switch"]
+${switch}                           ]//*[@class="ivu-switch" or @class="ivu-switch-inner"]
 ${switch field}                     //*[@class="ivu-input-wrapper ivu-input-type"]/input
 ${wait}                             60
 
@@ -136,7 +136,7 @@ Postcondition
 
 
 Визначити випадковий файл як конфіденційний продовження
-	${count}  Get Element Count  //*[@class='ivu-card ivu-card-bordered'][1]//*[@class="ivu-switch"]|//*[@class='ivu-card ivu-card-bordered'][1]//*[@class="ivu-switch-inner"]
+	${count}  Get Element Count  //*[@class='ivu-card ivu-card-bordered'][1]]//*[@class="ivu-switch" or @class="ivu-switch-inner"]
 	${n}  random_number  1  ${count}
 	Confidentiality  1  ${n}
 
