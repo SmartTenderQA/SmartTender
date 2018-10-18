@@ -1062,7 +1062,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Перевірити випаючий список інструкцій
-  ${field}  Set Variable  (//*[@class='ivu-card-body'])[1]//span[contains(text(), "Інструкції для учасника")]
+  ${field}  Set Variable  (//*[@class='ivu-card-body'])[1]//span[contains(text(), "Інструкції для")]
   ${element from dropdown menu}  Set Variable  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
   Click Element  ${field}
   ${n}  Get Element Count  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
