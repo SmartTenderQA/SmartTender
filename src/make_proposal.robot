@@ -13,7 +13,7 @@ ${error3}                           Непередбачувана ситуац�
 ${error4}                           В даний момент вже йде подача/зміна пропозиції по тендеру від Вашої організації!
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
-${validation message}               css=.ivu-modal-content .ivu-modal-confirm-body>div:nth-child(2)
+${validation message}               //*[@class="ivu-modal-content"]//*[@class="ivu-modal-confirm-body"]//div[text()]
 ${ok button}                        //div[@class="ivu-modal-body"]/div[@class="ivu-modal-confirm"]//button
 ${ok button error}                  //*[@class='ivu-modal-content']//button[@class="ivu-btn ivu-btn-primary"]
 ${checkbox1}                        //*[@id="SelfEligible"]//input
