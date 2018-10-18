@@ -61,7 +61,6 @@ Start
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
-  debug
   Open Browser  ${start_page}  ${browser}  ${alies}  ${grid}
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
