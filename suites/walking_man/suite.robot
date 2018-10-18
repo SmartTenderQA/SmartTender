@@ -1062,18 +1062,20 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Перевірити випаючий список інструкцій
-  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
-  ${n}  Get Element Count  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class]
+  ${field}  Set Variable  (//*[@class='ivu-card-body'])[1]//span[contains(text(), "Інструкції для учасника")]
+  ${element from dropdown menu}  Set Variable  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
+  Click Element  ${field}
+  ${n}  Get Element Count  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
   ${list}  Create List
   :FOR  ${i}  IN RANGE  ${n}
   \  ${t}  Evaluate  str(${i}+1)
-  \  ${r}  Get Text  xpath=(//*[@class='ivu-card-body'])[1]//ul/li[@class][${t}]
+  \  ${r}  Get Text  ${element from dropdown menu}[${t}]
   \  Append To List  ${list}  ${r}
   List Should Contain Value  ${list}  Показати всі
   List Should Contain Value  ${list}  Інструкції загального напрямку
   List Should Contain Value  ${list}  Інструкції для організатора
   List Should Contain Value  ${list}  Інструкції для учасника
-  Click Element  xpath=(//*[@class='ivu-card-body'])[1]//*[@class='ivu-select-selection']/span[2]
+  Click Element  ${field}
   Sleep  2
 
 
