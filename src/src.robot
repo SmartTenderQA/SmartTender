@@ -32,6 +32,7 @@ ${role}                             None
 ${IP}
 ${test}                             http://test.smarttender.biz
 ${prod}                             http://smarttender.biz
+${grid}
 
                                     ###ЛОКАТОРИ###
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
@@ -60,7 +61,8 @@ Start
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
-  Open Browser  ${start_page}  ${browser}  ${alies}
+  debug
+  Open Browser  ${start_page}  ${browser}  ${alies}  ${grid}
   Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
 
 
