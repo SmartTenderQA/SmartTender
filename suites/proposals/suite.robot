@@ -20,7 +20,7 @@ ${EDS}                              ${block}[1]//div[@class="ivu-row"]//button
 ${EDS close}                        //*[@class="modal-dialog "]//button
 ${delete file}                      //div[@class="file-container"]/div[last()]/div/div[2]
 ${delete file confirm}              /div/div[2]//button[2]
-${switch}                           ]//*[@class="ivu-switch" or @class="ivu-switch-inner"]
+${switch}                           //*[@class="ivu-switch" or @class="ivu-switch-inner"]
 ${switch field}                     //*[@class="ivu-input-wrapper ivu-input-type"]/input
 ${wait}                             60
 
