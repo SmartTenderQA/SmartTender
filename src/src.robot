@@ -32,7 +32,7 @@ ${role}                             None
 ${IP}
 ${test}                             http://test.smarttender.biz
 ${prod}                             http://smarttender.biz
-${grid}
+${grid}								http://autotest.it.ua:4444/wd/hub
 
                                     ###ЛОКАТОРИ###
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
