@@ -197,6 +197,7 @@ Test Postcondition
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
 	Click Element  (${row})[${n}]
+	Sleep  2
 	${unit_name}  Get Text  (${row})[${n}]//td[3]
 	[Return]  ${unit_name}
 
