@@ -121,8 +121,9 @@ Postcondition
 
 
 Змінити тип файлу для кожного лоту
-    [Documentation]  choice last type of file for all lost and tender
-    Run Keyword If  "${blocks amount}" != "3"  Змінити тип файлу для кожного лоту продовження
+    Run Keyword If  "${blocks amount}" != "3"
+    ...  Run depending on the dict  Document type
+    ...  Змінити тип файлу для кожного лоту продовження
 
 
 Змінити тип файлу для кожного лоту продовження
