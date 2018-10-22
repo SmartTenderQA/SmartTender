@@ -21,7 +21,7 @@ ${EDS close}                        //*[@class="modal-dialog "]//button
 ${delete file}                      //div[@class="file-container"]/div[last()]/div/div[2]
 ${delete file confirm}              /div/div[2]//button[2]
 ${switch}                           //*[@class="ivu-switch" or @class="ivu-switch-inner"]
-${switch field}                     //*[@class="ivu-input-wrapper ivu-input-type"]/input
+${switch field}                     //input[@placeholder]
 ${wait}                             60
 
 
