@@ -3,9 +3,12 @@ ${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a
 ${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
 ${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 
-${first found element}              css=#tenders tbody>.head a.linkSubjTrading
-${last found element}               xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[last()]
+${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
+${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
+
+${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
+${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***

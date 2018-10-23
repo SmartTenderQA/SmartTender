@@ -26,8 +26,6 @@ ${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
 ${taryfy text}                       //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
-${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
-${torgy count tab}                   li:nth-child
 ${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
 ${item dogovory}                     xpath=//*[contains(@class, 'container')]//*[contains(@class, 'content-expanded')]/div[2]/*
@@ -49,7 +47,6 @@ ${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статус
 ${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
-${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
 ${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
 ${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
@@ -79,7 +76,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Відфільтрувати по формі торгів  Допорогові закупівлі
   Відфільтрувати по статусу торгів  Прийом пропозицій
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}  Допорогові закупівлі
   Перевірити кнопку подачі пропозиції
   Скасувати пропозицію за необхідністю
@@ -96,7 +93,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
   Відфільтрувати по статусу торгів  Прийом пропозицій
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
   Перевірити кнопку подачі пропозиції
   Скасувати пропозицію за необхідністю
@@ -364,7 +361,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
@@ -374,7 +371,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
@@ -384,7 +381,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
@@ -394,7 +391,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку комерційніх торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
@@ -425,7 +422,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Порахувати кількість торгів
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
   Перевірити тендерний документ
 
@@ -435,7 +432,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Перевірити заголовок державних закупівель
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   ${id}  Отримати UAID на сторінці з тендером
   ${link}  Сформувати пряме посилання на тендер  ${id}
   Перевірити відкриття тендера за посиланням  ${link}
@@ -473,7 +470,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -483,7 +480,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -494,7 +491,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
   Перевірка гарантійного внеску
@@ -505,7 +502,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -515,7 +512,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -525,7 +522,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -535,7 +532,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -545,7 +542,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -555,7 +552,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -584,7 +581,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити закладку неконкурентні процедури
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -595,7 +592,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити закладку неконкурентні процедури
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -606,7 +603,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити закладку неконкурентні процедури
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
 
@@ -683,7 +680,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -693,7 +690,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -703,7 +700,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів банків
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -746,7 +743,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   [Tags]  sales
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -756,7 +753,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -766,7 +763,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Run Keyword If  "${site}" == "test"  Перевірити тип процедури за зразком  ${info form for sales}  Аукціон
   Run Keyword If  "${site}" == "prod"  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
@@ -777,7 +774,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -787,7 +784,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Run Keyword If  "${site}" == "test"  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Run Keyword If  "${site}" == "prod"  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
@@ -798,7 +795,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
@@ -816,7 +813,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   [Tags]  rialto  -test
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
 
 
@@ -825,7 +822,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку RIALTO
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
 
 
@@ -834,7 +831,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку RIALTO
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
-  Перейти по результату пошуку  ${last found element}
+  Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
 
 

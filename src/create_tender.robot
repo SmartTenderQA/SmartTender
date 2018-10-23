@@ -20,20 +20,28 @@ Library     Faker/faker.py
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
+Відкрити сторінку заявок на участь в аукціоні
+  Wait Until Page Contains Element  //div[contains(@title, 'Заявки на участие в Аукционах')]  120
+  Wait Until Keyword Succeeds  120  3  Click Element  //div[contains(@title, 'Заявки на участие в Аукционах')]
+  Дочекатись закінчення загрузки сторінки(webclient)
+  Element Should Not Be Visible  //div[contains(@title, 'Заявки на участие в Аукционах')]
+  Element Should Be Visible  //td[contains(text(), "Заявки на участие в торгах ФГВ")]
+
+
 Натиснути кнопку публічних закупівель
   Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
   Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
   Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
-Пошук тендеру у webclient
-  [Arguments]  ${UAID}
-  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Номер тендер')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+Пошук об'єкта у webclient по полю
+  [Arguments]  ${UAID}  ${field}=Номер тендер
+  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
   Click Element  ${find tender field}
   Input Text  ${find tender field}  ${UAID}
   ${get}  Get Element Attribute  ${find tender field}  value
   ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
-  Run Keyword If  '${status}' == 'False'  Пошук тендеру у webclient  ${UAID}
+  Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  ${UAID}
   Press Key  ${find tender field}  \\13
 
 

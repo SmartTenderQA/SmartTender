@@ -94,7 +94,7 @@ ${wait}                             60
 
 *** Keywords ***
 Postcondition
-  Close All Browsers
+	Close All Browsers
 
 
 Заповнити поле з ціною для першого лоту

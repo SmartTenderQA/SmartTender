@@ -191,7 +191,6 @@ Test Postcondition
 	Set To Dictionary  ${data.lots[0]}  unit_name  ${unit_name}
 
 
-
 Вибрати довільну одиницю виміру
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}

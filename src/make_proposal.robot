@@ -192,3 +192,8 @@ Ignore error
 Завантажити файли на весь тендер
   :FOR  ${INDEX}  IN RANGE  0  ${lots amount}+1
   \  Створити та додати PDF файл  ${INDEX}
+
+
+Подати заявку на участь в sales
+	Click Element  //button[contains(., 'Взяти участь')]
+	Дочекатись закінчення загрузки сторінки

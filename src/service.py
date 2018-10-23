@@ -29,6 +29,20 @@ def get_user_variable(user, users_variable=None):
             'role': 'ssp_tender_owner',
             'site': 'test',
         },
+        'PPR_TEST_FGI': {
+            'login': 'PPR_TEST_FGI',
+            'password': 'qwerty123',
+            'name': u'Test FGI Public Enterprise',
+            'role': 'tender_owner',
+            'site': 'test',
+        },
+        'IT_RAV': {
+            'login': 'IT_RAV',
+            'password': 'qwerty123',
+            'name': u'IT-Руденко А.В.',
+            'role': 'tender_owner',
+            'site': 'test',
+        },
         'Bened': {
             'login': 'PPR_BV',
             'password': '123321',
@@ -273,10 +287,19 @@ def convert_datetime_to_smart_format(isodate, accuracy='s'):
     return date_string
 
 
-def compare_dates_smarttender(l, operator, r, day_first=True):
+def compare_dates_smarttender(l, operator, r):
     left = parse(l, parserinfo(True, False))
-    right = parse(r, parserinfo(True, False), dayfirst=day_first)
+    right = parse(r, parserinfo(True, False))
     return get_truth(left, operator, right)
+
+
+def get_truth(left, oper, right):
+    ops = {'>': operator.gt,
+           '<': operator.lt,
+           '>=': operator.ge,
+           '<=': operator.le,
+           '==': operator.eq}
+    return ops[oper](left, right)
 
 
 def sleep_to(time):
@@ -305,12 +328,3 @@ def get_tender_href_for_commercial_owner(value):
     href = list.group('href')
     ticket = list.group('ticket')
     return href, ticket
-
-
-def get_truth(inp, relate, cut):
-    ops = {'>': operator.gt,
-           '<': operator.lt,
-           '>=': operator.ge,
-           '<=': operator.le,
-           '==': operator.eq}
-    return ops[relate](inp, cut)
