@@ -25,7 +25,7 @@ def create_monitoring(id, name):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -81,7 +81,7 @@ def cancellation_monitoring(description, relatedParty, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -136,7 +136,7 @@ def decision(relatedParty, description, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -166,7 +166,7 @@ def change_monitoring_status(status, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -187,7 +187,7 @@ def conclusion_true(violationOccurred, description, stringsAttached, auditFindin
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -220,7 +220,7 @@ def conclusion_false(violationOccurred, relatedParty, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -245,7 +245,7 @@ def eliminationResolution(relatedParty, description, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -275,7 +275,7 @@ def make_a_dialogue(title, description, relatedParty, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -300,7 +300,7 @@ def stopped(description, relatedParty, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -326,7 +326,7 @@ def declined(description, relatedParty, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -352,7 +352,7 @@ def inspection(description, monitoring_ids):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
@@ -377,7 +377,7 @@ def sas_answer(title, description, relatedParty, relatedPost, id):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9987b551710b44699bf2ad10188bcf65',
+        'Authorization': 'Basic OTk4N2I1NTE3MTBiNDQ2OTliZjJhZDEwMTg4YmNmNjU6',
     }
 
     data = {
