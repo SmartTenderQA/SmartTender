@@ -62,7 +62,7 @@ Library     Faker/faker.py
 
 
 Заповнити auctionPeriod.startDate
-  ${startDate}  smart_get_time  1
+  ${startDate}  smart_get_time  5
   ${value}  Create Dictionary  startDate=${startDate}
   ${auctionPeriod}  Create Dictionary  auctionPeriod=${value}
   Set To Dictionary  ${data}  auctionPeriod=${auctionPeriod}
