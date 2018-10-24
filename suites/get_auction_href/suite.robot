@@ -158,6 +158,7 @@ If skipped create tender
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
