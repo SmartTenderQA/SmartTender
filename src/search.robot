@@ -17,9 +17,7 @@ ${torgy count tab}                   li:nth-child
   Виконати пошук тендера  ${tenderID}
   ${tender_href}=  Get Element Attribute  ${tender found}  href
   Go To  ${tender_href}
-  Run Keyword If  '${tender_href}' == ''  Run Keywords
-  ...  Log  ${tender_href}  WARN
-  ...  AND  Set Global Variable  ${tender_href}
+  Додаткова перевірка на тестові торги для продуктива
 
 
 Відкрити сторінку тестових торгів
@@ -97,3 +95,14 @@ ${torgy count tab}                   li:nth-child
   Wait Until Keyword Succeeds  30s  5  Run Keywords
   ...  Click Element  ${advanced search}
   ...  AND  Element Should Be Visible  xpath=//*[@class="dhxform_base"]//*[contains(text(), 'Згорнути пошук')]
+
+
+Додаткова перевірка на тестові торги для продуктива
+	${status}  Run Keyword And Return Status  Location Should Contain  test.
+	${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa="title"]|(//h3)[2]  [ТЕСТУВАННЯ]
+	Run Keyword If  ${status2} == ${False}  Fatal Error  це не тестовий тендер [ТЕСТУВАННЯ]
+	${tender_id}  Get Text  //h4/following-sibling::a
+	Go To  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=
+	Wait Until Page Contains Element  css=.text
+	Element Should Contain  css=.text  test
+	Go Back

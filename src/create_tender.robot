@@ -43,6 +43,7 @@ Library     Faker/faker.py
   ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
   Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  ${UAID}
   Press Key  ${find tender field}  \\13
+  Sleep  3
 
 
 Відкрити вікно створення тендеру
@@ -61,7 +62,7 @@ Library     Faker/faker.py
 
 
 Заповнити auctionPeriod.startDate
-  ${startDate}  smart_get_time  7
+  ${startDate}  smart_get_time  1
   ${value}  Create Dictionary  startDate=${startDate}
   ${auctionPeriod}  Create Dictionary  auctionPeriod=${value}
   Set To Dictionary  ${data}  auctionPeriod=${auctionPeriod}
@@ -99,9 +100,11 @@ Library     Faker/faker.py
 Заповнити та перевірити мінімальний крок аукціону
   [Arguments]  ${minimal_step_percent}
   ${selector}  Set Variable  xpath=(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[2]//input
+  Click Element  ${selector}
   Input Text  ${selector}  ${minimal_step_percent}
   Press Key  ${selector}  \\13
   ${got}  Get Element Attribute  ${selector}  value
+  ${got}  Evaluate  str(int(${got}))
   Should Be Equal  ${got}  ${minimal_step_percent}
 
 
@@ -136,7 +139,7 @@ Library     Faker/faker.py
 
 Заповнити title
   ${text}  create_sentence  5
-  ${title}  Set Variable  [Тестування] ${text}
+  ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
   Set To Dictionary  ${data}  title=${title}
   ${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Загальна назва')]/following-sibling::table//input
   Заповнити текстове поле  ${selector}  ${title}
@@ -172,6 +175,7 @@ Library     Faker/faker.py
   Input Text  ${selector}  ${percent}
   Press Key  ${selector}  \\13
   ${got}  Get Element Attribute  ${selector}  value
+  ${got}  Evaluate  str(int(${got}))
   Should Be Equal  ${got}  ${percent}
 
 

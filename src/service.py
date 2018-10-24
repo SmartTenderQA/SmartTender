@@ -78,13 +78,21 @@ def get_user_variable(user, users_variable=None):
             'role': 'tender_owner',
             'site': 'test',
         },
-        'tostorovich': {
+        'prod_provider1': {
             'login': 'ttostorovich@gmail.com',
             'password': 'qwedfgtyhj[s/',
             'name': u'Тестовый пользователь',
             'role': 'provider',
             'site': 'prod',
             'mail_password': 'qwedfgtyhj[s/',
+        },
+        'prod_provider2': {
+            'login': 'prodsmartprovider2@gmail.com',
+            'password': '0c5j1a',
+            'name': 'Qa.TestUser4Runner',
+            'role': 'provider',
+            'site': 'prod',
+            'mail_password': 'qwertyprod2',
         },
         'prod_owner': {
             'login': 'PPR_TEST_PROZORRO',
@@ -268,6 +276,15 @@ def smart_get_time(v=0, accuracy='m'):
         return ('{:%d.%m.%Y %H:%M:%S}'.format(time))
     elif accuracy == 'd':
         return ('{:%d.%m.%Y}'.format(time))
+
+
+def get_time_now_with_deviation(v, deviation):
+    delta = int(v)
+    if deviation == 'days':
+        time = datetime.now() + timedelta(days=delta)
+    elif deviation == 'minutes':
+        time = datetime.now() + timedelta(minutes=delta)
+    return ('{:%d.%m.%Y %H:%M}'.format(time))
 
 
 def convert_data_for_web_client(value):

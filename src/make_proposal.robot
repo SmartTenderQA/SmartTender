@@ -86,18 +86,11 @@ Ignore cancellation error
   ${button}  Run Keyword If  "${selector}" == "None"
   ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
   ...  ELSE  Set Variable  ${selector}
-  Додаткова перевірка на тестові торги для продуктива
   Page Should Contain Element  ${button}
   Open button  ${button}
   ${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@class='modal-dialog ']//h4
   Run Keyword If  "${status}" == "True"  Pass Execution  Прийом пропозицій завершений!
   Location Should Contain  /edit/
-
-
-Додаткова перевірка на тестові торги для продуктива
-  ${status}  Run Keyword And Return Status  Location Should Contain  test.
-  ${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa="title"]  [ТЕСТУВАННЯ]
-  Run Keyword If  ${status2} == ${False}  Fatal Error  це не тестовий тендер [ТЕСТУВАННЯ]
 
 
 Подати пропозицію
@@ -192,8 +185,3 @@ Ignore error
 Завантажити файли на весь тендер
   :FOR  ${INDEX}  IN RANGE  0  ${lots amount}+1
   \  Створити та додати PDF файл  ${INDEX}
-
-
-Подати заявку на участь в sales
-	Click Element  //button[contains(., 'Взяти участь')]
-	Дочекатись закінчення загрузки сторінки

@@ -15,120 +15,153 @@ ${webClient loading}                id=LoadingPanel
 
 *** Test Cases ***
 Створити тендер
-  [Tags]  create_tender
-  Switch Browser  tender_owner
-  Sleep  2
-  Відкрити сторінку для створення аукціону на продаж
-  Відкрити вікно створення тендеру
-  Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
-  Заповнити auctionPeriod.startDate
-  Заповнити value.amount
-  Заповнити minimalStep.percent
-  Заповнити dgfDecisionID
-  Заповнити dgfDecisionDate
-  Заповнити title
-  Заповнити dgfID
-  Заповнити description
-  Заповнити guarantee.amount
-  Заповнити items.description
-  Заповнити items.quantity
-  Заповнити items.unit.name
-  Заповнити items.classification.description
-  Заповнити procuringEntity.contactPoint.name
-  Зберегти чернетку
-  Оголосити тендер
-  Отримати та зберегти auctionID
-  Звебегти дані в файл
+	[Tags]  create_tender
+	Switch Browser  tender_owner
+	Sleep  2
+	Відкрити сторінку для створення аукціону на продаж
+	Відкрити вікно створення тендеру
+	Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
+	Заповнити auctionPeriod.startDate
+	Заповнити value.amount
+	Заповнити minimalStep.percent
+	Заповнити dgfDecisionID
+	Заповнити dgfDecisionDate
+	Заповнити title
+	Заповнити dgfID
+	Заповнити description
+	Заповнити guarantee.amount
+	Заповнити items.description
+	Заповнити items.quantity
+	Заповнити items.unit.name
+	Заповнити items.classification.description
+	Заповнити procuringEntity.contactPoint.name
+	Зберегти чернетку
+	Оголосити тендер
+	Отримати та зберегти auctionID
+	Звебегти дані в файл
 
 
 If skipped create tender
-  [Tags]  get_tender_data
-  ${json}  Get File  ${OUTPUTDIR}/artifact.json
-  ${data}  conver json to dict  ${json}
-  Set Global Variable  ${data}
+	[Tags]  get_tender_data
+	${json}  Get File  ${OUTPUTDIR}/artifact.json
+	${data}  conver json to dict  ${json}
+	Set Global Variable  ${data}
 
 
 Знайти тендер усіма користувачами
-  [Tags]  find_tender
-  [Template]  Знайти тендер користувачем
-  tender_owner
-  viewer
-  provider1
+	[Tags]  create_tender  get_tender_data
+	[Template]  Знайти тендер користувачем
+	tender_owner
+	viewer
+	provider1
+	provider2
 
 
-#Перевірити посилання на перегляд аукціону усіма користувачами
-#  [Tags]  get_auction_view_link
-#  [Template]  Перевірити посилання на перегляд аукціону
-#  tender_owner
-#  viewer
-#  provider1
+Подати заявку на участь в тендері першим учасником
+	[Tags]  create_tender  get_tender_data
+	Switch Browser  provider1
+	Пройти кваліфікацію для подачі пропозиції
 
 
-#Неможливість отримати посилання на участь в аукціоні без поданої пропозиції
+Підтвердити заявки на участь
+	[Tags]  create_tender  get_tender_data
+	Switch Browser  tender_owner
+	Підтвердити заявку  ${data['auctionID']}
 
 
-
-Подати пропозицію учасником
-  Switch Browser  provider1
-  Sleep  2
-  debug
-  Пройти кваліфікацію для подачі пропозиції  ${data['auctionID']}
-  Відкрити сторінку подачі пропозиції
-  Заповнити value.amount для подачі пропозиції
-  Подати пропозицію
+Отримати поcилання на участь в аукціоні першим учасником
+	[Tags]  create_tender  get_tender_data
+	Switch Browser  provider1
+	${auction_href}  Отримати посилання на участь в аукціоні
+	Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
+	Go Back
 
 
-
-Отримати поcилання на участь в аукціоні учасником
-
+Неможливість отримати поcилання на участь в аукціоні
+	[Tags]  create_tender  get_tender_data
+	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
+	viewer
+	tender_owner
+	provider2
 
 
 *** Keywords ***
 Відкрити вікна для всіх користувачів
-  Open Browser  ${start_page}  ${browser}  alias=tender_owner
-  Login  fgv_prod_owner
-  Go Back
-  Open Browser  ${start_page}  ${browser}  alias=viewer
-  Open Browser  ${start_page}  ${browser}  alias=provider1
-  Login  test_it.ua
-  ${data}  Create Dictionary
-  Set Global Variable  ${data}
+	Start  fgv_prod_owner  tender_owner
+	Go Back
+	Start  viewer_prod  viewer
+	Start  prod_provider1  provider1
+	Start  prod_provider2  provider2
+	${data}  Create Dictionary
+	Set Global Variable  ${data}
 
 
 Отримати та зберегти auctionID
-  ${auctionID}  Get Element Attribute  xpath=(//a[@href])[2]  text
-  Set To Dictionary  ${data}  auctionID=${auctionID}
+	${auctionID}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Set To Dictionary  ${data}  auctionID=${auctionID}
 
 
 Звебегти дані в файл
-  ${json}  conver dict to json  ${data}
-  Create File  ${OUTPUTDIR}/artifact.json  ${json}
+	${json}  conver dict to json  ${data}
+	Create File  ${OUTPUTDIR}/artifact.json  ${json}
 
 
 Знайти тендер користувачем
-  [Arguments]  ${role}
-  Switch Browser  ${role}
-  Sleep  2
-  Відкрити сторінку тестових торгів
-  Знайти тендер по auctionID  ${data['auctionID']}
-
-
-Перевірити посилання на перегляд аукціону
-  [Arguments]  ${role}
-  Switch Browser  ${role}
-  Sleep  2
-  Перейти на сторінку перегляду аукціону
-
-
-Перейти на сторінку перегляду аукціону
-  ${href}  Get Element Attribute
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	Відкрити сторінку тестових торгів
+	Знайти тендер по auctionID  ${data['auctionID']}
 
 
 Пройти кваліфікацію для подачі пропозиції
-  [Arguments]  ${tender_uaid}
-  Відкрити бланк подачі заявки
-  Додати файл для подачі заявки
-  Ввести ім'я для подачі заявки
-  Підтвердити відповідність для подачі заявки
-  Відправити заявку для подачі пропозиції та закрити валідаційне вікно
-  Підтвердити заявку  ${tender_uaid}
+	Відкрити бланк подачі заявки
+	Додати файл для подачі заявки
+	Ввести ім'я для подачі заявки
+	Підтвердити відповідність для подачі заявки
+	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
+
+
+Неможливість отримати поcилання на участь в аукціоні(keyword)
+	[Arguments]  ${user}
+	Switch Browser  ${user}
+	Reload Page
+	Run Keyword And Expect Error
+	...  Element '//button[@type="button" and contains(., "До аукціону")]' did not appear in 5 seconds.
+	...  Отримати посилання на участь в аукціоні
+
+
+Отримати посилання на участь в аукціоні
+	Reload Page
+	Натиснути кнопку  До аукціону
+	Натиснути кнопку  Взяти участь в аукціоні
+	${auction_href}  Отримати посилання
+	[Return]  ${auction_href}
+
+
+
+Натиснути кнопку
+	[Arguments]  ${text}
+	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
+	Wait Until Page Contains Element  ${selector}
+	Click Element  ${selector}
+
+
+Отримати посилання
+	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
+	Wait Until Page Contains Element  ${selector}  120
+	${auction_href}  Get Element Attribute  ${selector}  href
+	[Return]  ${auction_href}
+
+
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['value']['items']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
