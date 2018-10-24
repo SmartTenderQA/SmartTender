@@ -10,8 +10,11 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${UAID}                         UA-2018-09-14-000033-b
-${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
+${UAID}                         UA-2018-10-24-000142-a
+${tender_ID}                    112e3bb7ba0d4df38a9bb26ed06495ec
+
+#${UAID}                         UA-2018-09-14-000033-b
+#${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
 
 ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
