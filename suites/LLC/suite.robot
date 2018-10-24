@@ -41,6 +41,6 @@ ${content}  Приймаю умови Договору приєднання пр
   Run Keyword If  "${status}" == "False"  Run Keywords
   ...  Wait Until Page Contains Element  //*[.="Заміна оператора"]
   ...  AND  Wait Until Page Contains Element  //*[contains(text(),"${content}")]
-  ...  AND  Click Element   //*[contains(@class, "ivu-modal-close")]
-  ...  AND  Wait Until Page Does Not Contain  //*[contains(@class, "ivu-modal-close")]  15
+  ...  AND  Click Element   (//*[contains(@class, "ivu-modal-close")])[last()]
+  ...  AND  Wait Until Page Does Not Contain  (//*[contains(@class, "ivu-modal-close")])[last()]  15
   ...  AND  Location Should Be  https://smarttender.biz/
