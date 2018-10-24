@@ -173,9 +173,9 @@ Fill ESCO
     [Arguments]  ${block number}  ${list number}
 	Click Element  (${block}[${block number}]${useful indicators open})[${list number}]
     Sleep  .5
-    ${count}  Get Element Count  ${block}[${block number}]//*[@tabindex and contains(@class, 'visible')]${useful indicators list}
+    ${count}  Get Element Count  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}
     ${n}  random_number  1  ${count}
-    Click Element  ${block}[${block number}]//*[@tabindex and contains(@class, 'visible')]${useful indicators list}[${n}]
+    Click Element  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}[${n}]
     Sleep  2
 
 
