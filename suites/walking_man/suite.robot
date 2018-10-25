@@ -1620,7 +1620,6 @@ Check document for error
   Run Keyword If  "${status}" == "True"  Run Keywords
   ...  Відкрити сторінку гарантійного внеску
   ...  AND  Go Back
-  ...  AND  Виділити iFrame за необхідністю
 
 
 Перевірити необхідність наявності кнопки гарантійного внеску

@@ -87,7 +87,6 @@ ${torgy count tab}                   li:nth-child
   ${href}  Get Element Attribute  ${selector}  href
   ${href}  Поправили лінку для IP  ${href}
   Go To  ${href}
-  Виділити iFrame за необхідністю
   Дочекатись закінчення загрузки сторінки(skeleton)
 
 
