@@ -1606,7 +1606,6 @@ Check document for error
   ...  AND  Select Frame  css=iframe
   ...  AND  Відкрити сторінку гарантійного внеску
   ...  AND  Go To  ${location}
-  ...  AND  Виділити iFrame за необхідністю у лоті
 
 
 Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту

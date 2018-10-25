@@ -88,7 +88,7 @@ ${torgy count tab}                   li:nth-child
   ${href}  Поправили лінку для IP  ${href}
   Go To  ${href}
   Виділити iFrame за необхідністю
-  Дочекатись закінчення загрузки сторінки(webclient)
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Розгорнути розширений пошук
@@ -98,8 +98,11 @@ ${torgy count tab}                   li:nth-child
 
 
 Додаткова перевірка на тестові торги для продуктива
+	${selector}  Set Variable  //*[@data-qa="title"]|(//h3)[2]
+	Wait Until Element Is Visible  //*[@data-qa="title"]|(//h3)[2]  15
+	Sleep  1
 	${status}  Run Keyword And Return Status  Location Should Contain  test.
-	${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa="title"]|(//h3)[2]  [ТЕСТУВАННЯ]
+	${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  ${selector}  [ТЕСТУВАННЯ]
 	Run Keyword If  ${status2} == ${False}  Fatal Error  це не тестовий тендер [ТЕСТУВАННЯ]
 	${tender_id}  Get Text  //h4/following-sibling::a
 	Go To  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=

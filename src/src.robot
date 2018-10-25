@@ -146,16 +146,6 @@ Test Postcondition
   Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
 
 
-Виділити iFrame за необхідністю
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?tenderId=")]
-  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?tenderId=")]
-
-
-Виділити iFrame за необхідністю у лоті
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  //iframe[contains(@src, "/webparts/?idLot=")]
-  Run Keyword If  "${status}" == "True"  Select Frame  //iframe[contains(@src, "/webparts/?idLot=")]
-
-
 Scroll Page To Element XPATH
   [Arguments]    ${xpath}
   Run Keyword And Ignore Error
