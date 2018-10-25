@@ -767,7 +767,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 Звірити documents.datePublished запиту
   ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
-  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
+  ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "${data_cdb['title']}")]/../following-sibling::*//a/../following-sibling::*
   ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  s
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${site}
   Should Be Equal  ${status}  ${True}
