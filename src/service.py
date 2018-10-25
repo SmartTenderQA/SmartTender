@@ -291,7 +291,7 @@ def no_weekend(date):
     date = parse(date, parserinfo(True, False))
     if date.weekday() == 5 or date.weekday() == 6:
         date = date + timedelta(days=2)
-    return ('{:%d.%m.%Y %H:%M}'.format(date))
+    return ('{:%d.%m.%Y}'.format(date))
 
 
 def convert_data_for_web_client(value):
