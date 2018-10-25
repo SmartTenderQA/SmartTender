@@ -288,10 +288,10 @@ def get_time_now_with_deviation(v, deviation):
 
 
 def no_weekend(date):
-    d = parse(date, parserinfo(True, False))
-    if d.weekday() == 5 or d.weekday() == 6:
-        new_date = d + timedelta(days=2)
-    return ('{:%d.%m.%Y %H:%M}'.format(new_date))
+    date = parse(date, parserinfo(True, False))
+    if date.weekday() == 5 or date.weekday() == 6:
+        date = date + timedelta(days=2)
+    return ('{:%d.%m.%Y %H:%M}'.format(date))
 
 
 def convert_data_for_web_client(value):
