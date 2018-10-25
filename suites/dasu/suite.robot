@@ -768,7 +768,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 Звірити documents.datePublished запиту
   ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), '${data_cdb['title']}')]/../following-sibling::*//a/../following-sibling::*
-  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  m
+  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  s
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${site}
   Should Be Equal  ${status}  ${True}
 
@@ -851,7 +851,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 Перевірити documents.datePublished інформації про усунення порушення
   ${cdb_time}  Set Variable  ${data_cdb['eliminationReport']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]/div/div/div[2]
-  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  m
+  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  s
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
@@ -880,7 +880,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 Перевірити documents.datePublished позову
   ${cdb_time}  Set Variable  ${data_cdb['appeal']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]/div/div/div[2]
-  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  m
+  ${cdb_time}  convert_datetime_to_smart_format  ${cdb_time}  s
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
@@ -950,7 +950,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 Перевірити documents.datePublished пояснення з власної ініціативи
   ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  m
+  ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  s
   ${status}  compare_dates_smarttender  ${documents.datePublished}  ==  ${cdb_time}
   Should Be Equal  ${status}  ${True}
 
@@ -961,7 +961,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 
 Перевірити datePublished відповіді на пояснення з власної ініціативи
-  ${text}  Get Text  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row']//*[contains(@class, 'muted')]
+  ${text}  Get Text  (//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'])[last()]//*[contains(@class, 'muted')]
   ${date_site}  convert_data_from_the_page  ${text}  posts.datePublished
   ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['datePublished']}  m
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${date_site}
@@ -979,7 +979,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 
 Перевірити datePublished відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
-  ${text}  Get Text  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row']//*[contains(@class, 'muted')]
+  ${text}  Get Text  (//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'])[last()]//*[contains(@class, 'muted')]
   ${date_site}  convert_data_from_the_page  ${text}  posts.datePublished
   ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['datePublished']}  m
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${date_site}
@@ -1028,7 +1028,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 Перевірити date запиту
   [Arguments]  ${data_cdb}
-  ${text}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class="ivu-row"]//*[@class="text-muted"]
+  ${text}  Get Text  (//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class="ivu-row"])[last()]//*[@class="text-muted"]
   ${date_site}  convert_data_from_the_page  ${text}  decision.date
   ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['datePublished']}  m
   ${status}  compare_dates_smarttender  ${date_site}  ==  ${cdb_time}
@@ -1095,7 +1095,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 
 Перевірити documents.datePublished відповіді на запит
   ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  m
+  ${cdb_time}  convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  s
   ${status}  compare_dates_smarttender  ${documents.datePublished}  ==  ${cdb_time}
   Should Be Equal  ${status}  ${True}
 
