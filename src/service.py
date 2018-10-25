@@ -294,6 +294,12 @@ def no_weekend(date):
     return ('{:%d.%m.%Y}'.format(date))
 
 
+def add_day_for_date(date):
+    date = parse(date, parserinfo(True, False))
+    date = date + timedelta(days=1)
+    return ('{:%d.%m.%Y}'.format(date))
+
+
 def convert_data_for_web_client(value):
     without_spaces = value.replace(" ", "")
     without_dots = without_spaces.replace(".", "")

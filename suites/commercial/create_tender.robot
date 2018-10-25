@@ -21,7 +21,7 @@ ${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" a
 	Заповнити поле категорія тендера
 	Заповинити поле найменування тендера
 	Вибрати вид тендера  Відкриті торги. Аукціон
-	Натиснути "Додати"
+	Натиснути "Додати" та змінити дату за необхідністю
 
 
 Створити лоти
@@ -70,6 +70,7 @@ ${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" a
 *** Keywords ***
 Suite Precondition
 	Start  ${user}
+	debug
 	Wait Until Page Contains Element  ${button manage tenders}
 	Click Element  ${button manage tenders}
 	Wait Until Page Contains Element  ${button OK}
@@ -88,14 +89,13 @@ Test Postcondition
 ##########################################################
 Заповинити поле дата закінчення прийому пропозиції
 	${date}  smart_get_time  1  d
-	${no_weekend}  no_weekend  ${date}
 	Wait Until Keyword Succeeds
 	...  30
 	...  2
 	...  Ввести та перевірити введені дані в поле дати
 	...  Дата закінч. прийому
-	...  ${no_weekend}
-	${data}  Create Dictionary  end_date  ${no_weekend}
+	...  ${date}
+	${data}  Create Dictionary  end_date  ${date}
 	Set Global Variable  ${data}
 
 
@@ -255,3 +255,26 @@ Test Postcondition
 Підтвердити адреси електронної пошти
 	Wait Until Page Contains Element  //*[@data-name="OkButton"]
 	Натиснути "Додати"
+
+
+Натиснути "Додати" та змінити дату за необхідністю
+	${status}  Run Keyword And Return Status  Натиснути "Додати"
+	Run Keyword If  '${status}' == 'False'  Змінити дату
+
+
+Змінити дату
+	${new_date}  Отримати дату закінчення прийому пропозиції з валідаційного повідомлення
+	Wait Until Keyword Succeeds
+	...  30
+	...  2
+	...  Ввести та перевірити введені дані в поле дати
+	...  Дата закінч. прийому
+	...  ${new_date}
+	Set To Dictionary  ${data}  end_date  ${new_date}
+	Натиснути "Додати" та змінити дату за необхідністю
+
+
+Отримати дату закінчення прийому пропозиції з валідаційного повідомлення
+	${get}  Get Text  css=.message-content
+	${new_date}  Evaluate  re.search(r'[\\d.]+', '''${get}''').group(0)  re
+	[Return]  ${new_date}
