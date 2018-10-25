@@ -87,14 +87,15 @@ Test Postcondition
 
 ##########################################################
 Заповинити поле дата закінчення прийому пропозиції
-	${date}  smart_get_time  3  d
+	${date}  smart_get_time  1  d
+	${no_weekend}  no_weekend  ${date}
 	Wait Until Keyword Succeeds
 	...  30
 	...  2
 	...  Ввести та перевірити введені дані в поле дати
 	...  Дата закінч. прийому
-	...  ${date}
-	${data}  Create Dictionary  end_date  ${date}
+	...  ${no_weekend}
+	${data}  Create Dictionary  end_date  ${no_weekend}
 	Set Global Variable  ${data}
 
 
