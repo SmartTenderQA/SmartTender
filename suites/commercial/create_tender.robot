@@ -195,11 +195,18 @@ Test Postcondition
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
-	Click Element  (${row})[${n}]
-	Sleep  2
-	${unit_name}  Get Text  (${row})[${n}]//td[3]
-	Capture Page Screenshot
+	Вибрати довільну одиницю виміру Click  (${row})[${n}]
 	[Return]  ${unit_name}
+
+
+Вибрати довільну одиницю виміру Click
+	[Arguments]  ${selector}
+	Click Element  ${selector}
+	Sleep  2
+	${unit_name}  Get Text  ${selector}//td[3]
+	Capture Page Screenshot
+	${status}  Run Keyword And Return Status  Page Should Contain Element   ${selector}[contains(@class, 'selected')]
+	Run Keyword If  ${status} != ${True}  Вибрати довільну одиницю виміру Click  ${selector}
 
 
 Вказати кількість одиниць виміру для классифікатора ресурсів
