@@ -51,7 +51,6 @@ ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa=
 ${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
 ${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
-${count multiple lot checked}        0
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
@@ -799,12 +798,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити тип процедури  ${tender_type_procurement}
 
 
-Перевірка результатів тесту
-  [Tags]  non-critical  procurement
-  Log  ${count multiple lot checked}
-  Run Keyword if  '${count multiple lot checked}' == '0'  Fail  Didn't check any lot in multiplelot tender
-  [Teardown]  No Operation
-
 
 *** Keywords ***
 
@@ -1454,8 +1447,6 @@ Check document for error
   Sleep  1
   ${text}  Get Text  css=[data-qa="main-block"] [data-qa="title"]
   Should Be Equal  ${text}  ${lot name}
-  ${count multiple lot checked}  Evaluate  ${count multiple lot checked} + 1
-  Set Global Variable  ${count multiple lot checked}
   ${status}  Get Text  //*[@data-qa="status"]
   Run Keyword If  "${role}" != "tender_owner" and "${status}" != "Відмінений"  Run Keywords
   ...  Page Should Contain Element  //*[@data-qa="bid-button"]
