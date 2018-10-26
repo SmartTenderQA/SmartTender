@@ -198,6 +198,7 @@ Test Postcondition
 	Click Element  (${row})[${n}]
 	Sleep  2
 	${unit_name}  Get Text  (${row})[${n}]//td[3]
+	Capture Page Screenshot
 	[Return]  ${unit_name}
 
 
