@@ -16,6 +16,12 @@ Login
   Перевірити успішність авторизації
 
 
+Logout
+	Go To  ${start_page}
+	Click Element  ${logout}
+	Wait Until Page Does Not Contain Element  ${logout}
+
+
 Відкрити вікно авторизації
   Click Element  ${events}
   Click Element  ${login link}

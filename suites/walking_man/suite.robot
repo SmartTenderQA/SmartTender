@@ -68,6 +68,22 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 *** Test Cases ***
+Повідомлення
+  [Tags]  notification
+  Зайти на сторінку з контактами
+  Зайти на сторінку повідомлень
+  Перевірити заголовок сторінки повідомлень
+  Порахувати кількість повідомлень
+  Переглянути повідемлення
+  Закрити вікно з повідомленням
+  Logout
+  Зайти на сторінку з контактами
+  Перевірити відсутність дзвіночка(повідомлення)
+  [Teardown]  Run Keywords
+  ...  Log Location
+  ...  AND   Run Keyword If Test Failed  Capture Page Screenshot
+
+
 Особистий кабінет
   [Tags]  your_account
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
@@ -167,7 +183,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Блог
-  [Tags]  site  non-critical-test
+  [Tags]  site  -test
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -186,7 +202,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Договір
-  [Tags]  site  non-critical-test
+  [Tags]  site  -test
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
@@ -199,9 +215,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
-Повідомлення
-  [Tags]  site
-  Перевірити сторінку повідомлень
 
 Новини
   [Tags]  site
@@ -885,16 +898,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Location Should Contain  /pro-kompaniyu/kontakty/
 
 
-Перевірити сторінку повідомлень
-  Run Keyword If  '${user}' == 'ssp_tender_owner'  Run Keywords
-  ...  Зайти на сторінку з контактами
-  ...  AND  Зайти на сторінку повідомлень
-  ...  AND  Перевірити заголовок сторінки повідомлень
-  ...  AND  Порахувати кількість повідомлень
-  ...  AND  Переглянути повідемлення
-  ...  ELSE  Перевірити відсутність кнопки повідомлень
-
-
 Перевірити відсутність кнопки повідомлень
   Зайти на сторінку з контактами
   Element Should Not Be Visible  ${button messages}
@@ -920,6 +923,17 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Sleep  5
   ${message title}  Get Text  //table//div[contains(text(),'ТЕСТУВАННЯ')]
   Should Be Equal  ${title}  ${message title}
+
+
+Закрити вікно з повідомленням
+	${selector}  Set Variable  //*[@class="ivu-modal-close"]
+	Wait Until Page Contains Element  ${selector}
+	Click Element  ${selector}
+	Wait Until Element Is Not Visible  ${selector}
+
+
+Перевірити відсутність дзвіночка(повідомлення)
+	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку повідомлень
 
 
 Перевірити заголовок сторінки контактів
