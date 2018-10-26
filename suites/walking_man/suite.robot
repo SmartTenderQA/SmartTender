@@ -84,15 +84,18 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   ...  AND   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-Особистий кабінет
-  [Tags]  your_account
-  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
-  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
-  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
+Перевірка гарантійного внеску для open_eu
+  [Tags]  guarantee_amount  broken
+  Зайти на сторінку державних закупівель
+  Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
+  Виконати пошук тендера
+  Перейти по результату пошуку  (${first found element})[last()]
+  Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
+  Перевірка гарантійного внеску
 
 
 Сформувати рахунок-фактуру
-  [Tags]  invoice  -test
+  [Tags]  invoice  -test  broken
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку рахунка фактури
@@ -100,6 +103,13 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Натиснути сформувати рахунок
   Перевірити валідаційне повідомлення для сформованого рахунку
   Перевірити email рахунок-фактуру  ${amount}
+
+
+Особистий кабінет
+  [Tags]  your_account
+  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
+  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
+  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
 
 
 Аналітика участі
@@ -112,7 +122,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Налаштування підписки
-  [Tags]  your_account123  wait for Dimon
+  [Tags]  your_account  -test  -prod  broken
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку налаштування підписки
@@ -288,7 +298,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Питання та відповіді
-  [Documentation]  не работает на тесте
   [Tags]  site  -test
   Перейти на сторінку запитань
   Перевірити заголовок сторінки запитань
@@ -296,7 +305,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Курси валют
-  [Documentation]  страница валют отличается от прода
   [Tags]  site  -test
   Відкрити вікно курсів валют
   Перевірити шлях курсів валют
@@ -462,7 +470,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Відкриті торги з публікацією англійською мовою
-  [Documentation]  Перевірка гарантійного внеску відключена для prod
   [Tags]  procurement
   Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  ${TESTNAME}
@@ -470,7 +477,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
   Перевірити тендерний документ
-  Перевірка гарантійного внеску
 
 
 Переговорна процедура для потреб оборони
@@ -614,7 +620,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Інформаційні повідомлення
-  [Tags]  sales
   Зайти на сторінку аукціони на продаж активів держпідприємств
   Перевірити вкладку мала приватизація
   Вибрати тип процедури для малої приватизації
@@ -1557,7 +1562,6 @@ Check document for error
 
 
 Перевірка гарантійного внеску
-  Run Keyword If  '${site}' == 'prod'  Pass Execution  Відключено для старої сторінки детальної інформації
   ${data}  Отримати дані тендеру з cdb по id
   Set Global Variable  ${data}
   ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  title
