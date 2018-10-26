@@ -87,7 +87,7 @@ Postcondition
   ${min}  Evaluate  float(${amount})//2
   #${bid}  random_number  ${min}  ${float}
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${amount}
-  Set To Dictionary  ${data}  bid_value=${bid}
+  Set To Dictionary  ${data}  bid_value=${amount}
 
 
 Змінити кількість одиниць
