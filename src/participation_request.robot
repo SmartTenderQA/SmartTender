@@ -5,6 +5,7 @@ Library     Faker/faker.py
 *** Keywords ***
 Відкрити бланк подачі заявки
   Reload Page
+  Дочекатись закінчення загрузки сторінки(skeleton)
   Click Element  xpath=//button[@type='button']//*[contains(text(), 'Взяти участь')]
 
 
