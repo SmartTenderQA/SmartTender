@@ -688,7 +688,8 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Відфільтрувати по формі торгів  ${TESTNAME}
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
-
+  ${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
+  ...  ELSE  Set Variable  ${TESTNAME}
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
   Перевірити тендерний документ для commercial
 
