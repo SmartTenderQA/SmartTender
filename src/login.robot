@@ -33,9 +33,9 @@ Logout
   Fill Login  ${login}
   Fill Password  ${password}
   Click Element  ${login button}
+  Дочекатись закінчення загрузки сторінки
   Run Keyword If  "tender_owner" == "${role}"
   ...        Дочекатись закінчення загрузки сторінки(webclient)
-  ...  ELSE  Дочекатись закінчення загрузки сторінки
 
 
 Перевірити успішність авторизації
