@@ -115,7 +115,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 Аналітика участі
   [Tags]  your_account
   Відкрити сторінку аналітики
-  Вибрати минулий місяці при відсутності тендерів
+  Вибрати інший період аукціону  Минулий місяць
   Перевірити наявність діаграми та таблиці
   Перевірити роботу кругової діаграми
   Перевірити зміну періоду
@@ -1424,13 +1424,6 @@ Check document for error
   Дочекатись закінчення загрузки сторінки
   ${value}=  Get text  xpath=//*[@class="text-center"]/h3
   Should Contain  'Публічні закупівлі'  ${value}
-
-
-Вибрати минулий місяці при відсутності тендерів
-  ${number_of_tenders}  Get Text  ${num_of_tenders}
-  Run Keyword If  '${number_of_tenders}' == '0'  Вибрати інший період аукціону  Минулий місяць
-  ${number_of_tenders}  Get Text  ${num_of_tenders}
-  Run Keyword If  "${number_of_tenders}" == "0"  Fail  За минулий місяць повинні бути тендери
 
 
 Вибрати інший період аукціону

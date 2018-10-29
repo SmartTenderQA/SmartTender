@@ -84,7 +84,7 @@ Postcondition
   ...  ELSE  Set Variable  10000000
   ${amount}  Evaluate  '${max}'.replace(" ", "")
   ${float}  Evaluate  float(${amount})
-  ${min}  Evaluate  float(${amount})//2
+  ${min}  Evaluate  str(float(${amount})//2)
   #${bid}  random_number  ${min}  ${float}
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${float}
   Set To Dictionary  ${data}  bid_value=${float}
