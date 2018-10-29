@@ -83,11 +83,9 @@ Postcondition
   ${max}  Run Keyword If  ${status} == ${True}  Get Text  ${max price selector}
   ...  ELSE  Set Variable  10000000
   ${amount}  Evaluate  '${max}'.replace(" ", "")
-  ${float}  Evaluate  str(float(${amount}))
-  #${min}  Evaluate  float(${amount})//2
-  #${bid}  random_number  ${min}  ${float}
-  Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${float}
-  Set To Dictionary  ${data}  bid_value=${float}
+  ${bin}  Evaluate  str(int((float(${amount})))
+  Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${bin}
+  Set To Dictionary  ${data}  bid_value=${bin}
 
 
 Змінити кількість одиниць
