@@ -12,16 +12,6 @@ ${registration link}                        https://test.smarttender.biz/reestra
 
 
 *** Test Cases ***
-Залогінитися
-    [Tags]  Main
-    Reload and check
-
-prepearing for next step
-    Click Element  ${logout}
-    Click Element  ${events}
-    Click Element  ${login link}
-    Wait Until Page Contains Element  ${login field}  5
-
 Спроба залогінитися з невірними даними
     [Tags]  Main
     [Template]  Login with wrong data
@@ -74,7 +64,10 @@ prepearing for next step
 
 *** Keywords ***
 Precondition
-    Start  user1
+	Start  viewer_test
+	Click Element  ${events}
+    Click Element  ${login link}
+    Wait Until Page Contains Element  ${login field}  5
 
 Postcondition
     close all browsers
@@ -82,8 +75,8 @@ Postcondition
 Login with wrong data
     [Arguments]  ${name1}  ${name2}
     sleep  .2
-    Fill login  ${users_variables.${name1}.login}
-    Fill password  ${users_variables.${name2}.password}
+    Fill login  ${users_variables["${name1}"]["login"]}
+    Fill password  ${users_variables["${name2}"]["password"]}
     Click Element  ${login button}
     Wait Until Page Contains Element  ${error}  5
 
