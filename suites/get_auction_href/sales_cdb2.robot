@@ -20,6 +20,7 @@ ${webClient loading}                id=LoadingPanel
 	[Tags]  create_tender
 	Switch Browser  tender_owner
 	Sleep  2
+	debug
 	Відкрити сторінку для створення аукціону на продаж
 	Відкрити вікно створення тендеру
 	Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
