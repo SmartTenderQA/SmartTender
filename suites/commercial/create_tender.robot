@@ -18,6 +18,7 @@ ${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" a
 	[Tags]  create_tende
 	Натиснути додати(F7)  Додавання. Тендери
 	Заповинити поле дата закінчення прийому пропозиції
+	debug
 	Заповнити поле категорія тендера
 	Заповинити поле найменування тендера
 	Вибрати вид тендера  Відкриті торги. Аукціон
@@ -122,6 +123,7 @@ Test Postcondition
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
 	Click Element  (${row})[${n}]
+	Sleep  3
 	${classification_name}  Get Text  (${row})[${n}]
 	[Return]  ${classification_name}
 

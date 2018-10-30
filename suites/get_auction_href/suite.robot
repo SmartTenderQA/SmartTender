@@ -2,7 +2,9 @@
 Resource  ../../src/src.robot
 Suite Setup  Відкрити вікна для всіх користувачів
 Suite Teardown  Suite Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keywords
+...  Log Location
+...  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***

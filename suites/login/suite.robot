@@ -82,10 +82,8 @@ Postcondition
 Login with wrong data
     [Arguments]  ${name1}  ${name2}
     sleep  .2
-    ${login}=  get_user_variable  ${name1}  login
-    Fill login  ${login}
-    ${password}=  get_user_variable  ${name2}  password
-    Fill password  ${password}
+    Fill login  ${user_variables.${name1}.login}
+    Fill password  ${user_variables.${name2}.password}
     Click Element  ${login button}
     Wait Until Page Contains Element  ${error}  5
 
