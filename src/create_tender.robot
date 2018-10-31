@@ -278,7 +278,7 @@ Library     Faker/faker.py
   Sleep  .5
   ${count}  Get Element Count  ${selector}
   ${number}  random_number  1  ${count}
-  Click Element  ${selector}[${number}]
+  Click Element  (${selector})[${number}]
   ${text}  Get Element Attribute  ${input}  value
   Should Not Be Empty  ${text}
   [Return]  ${text}
