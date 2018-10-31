@@ -111,7 +111,7 @@ If skipped create tender
 	Switch Browser  ${role}
 	Sleep  2
 	Відкрити сторінку тестових торгів
-	Знайти тендер по auctionID  ${data['auctionID']}
+	Знайти тендер по ID  ${data['auctionID']}
 
 
 Пройти кваліфікацію для подачі пропозиції

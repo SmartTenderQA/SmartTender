@@ -12,7 +12,7 @@ ${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
-Знайти тендер по auctionID
+Знайти тендер по ID
   [Arguments]  ${tenderID}
   Виконати пошук тендера  ${tenderID}
   ${tender_href}=  Get Element Attribute  ${tender found}  href
@@ -103,8 +103,23 @@ ${torgy count tab}                   li:nth-child
 	${status}  Run Keyword And Return Status  Location Should Contain  test.
 	${status2}  Run Keyword If  ${status} == ${False}  Run Keyword And Return Status  Element Should Contain  ${selector}  [ТЕСТУВАННЯ]
 	Run Keyword If  ${status2} == ${False}  Fatal Error  це не тестовий тендер [ТЕСТУВАННЯ]
-	${tender_id}  Get Text  //h4/following-sibling::a
+	${tender_id}  Get Text  //h4/following-sibling::a|//*[@data-qa="prozorro-number"]//a
 	Go To  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=
 	Wait Until Page Contains Element  css=.text
 	Element Should Contain  css=.text  test
 	Go Back
+
+
+Пошук тендеру по title (webclient)
+    [Arguments]  ${tender title}
+    ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Узагальнена назва закупівлі')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+    Scroll Page To Element XPATH  ${find tender field}
+    Click Element  ${find tender field}
+    Input Text  ${find tender field}  ${tender title}
+    ${get}  Get Element Attribute  ${find tender field}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${tender title}
+    Run Keyword If  '${status}' == 'False'  Пошук тендеру по title у webclient  ${tender title}
+    Press Key  ${find tender field}  \\13
+    Дочекатись закінчення загрузки сторінки(webclient)
+    ${count tenders}  Get Matching Xpath Count  xpath=//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')]
+    Run Keyword And Ignore Error  Should Be Equal  ${count tenders}  1

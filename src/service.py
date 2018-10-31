@@ -15,7 +15,6 @@ from glob import glob
 import os
 import operator
 
-
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -267,6 +266,11 @@ def download_file_and_return_content(url):
     return file_content
 
 
+def get_only_numbers(value):
+    date = re.sub(r"\D", "", value)
+    return date
+
+
 def smart_get_time(v=0, accuracy='m'):
     delta = int(v)
     time = datetime.now() + timedelta(days=delta)
@@ -337,6 +341,16 @@ def sleep_to(time):
     now = datetime.now()
     subtract = end - now
     return subtract.seconds, now
+
+
+def wait_to_date(date_stamp):
+    date = parse(date_stamp)
+    now = datetime.now()
+    wait_seconds = (date - now).total_seconds()
+    wait_seconds += 2
+    if wait_seconds < 0:
+        return 0
+    return wait_seconds
 
 
 def convert_date_from_cdb(date):

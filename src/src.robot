@@ -156,3 +156,8 @@ Scroll Page To Element XPATH
 
 Scroll Page To Top
   Execute JavaScript  window.scrollTo(0,0);
+
+
+Check Prev Test Status
+  ${status}  Set Variable  ${PREV TEST STATUS}
+  Run Keyword If  '${status}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
