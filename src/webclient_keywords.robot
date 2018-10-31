@@ -44,10 +44,11 @@
 #					   TAB					  #
 ###############################################
 Активувати вкладку
-	[Arguments]  ${text}
+	[Arguments]  ${text}  ${end_to_xpath}=${Empty}
 	${current tab}  Set Variable  //*[contains(@class, "active-tab")]
 	${current tab name}  Get Text  ${current tab}//td[text()]
-	Run Keyword If  "${text}" != "${current tab name}"  Click Element  //li[contains(@class, "page-tab") and contains(., "${text}")]
+	Run Keyword If  "${text}" != "${current tab name}"  Click Element  //li[contains(@class, "page-tab") and contains(., "${text}")]${end_to_xpath}
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${current tab}//td[contains(text(), "${text}")]
 	Sleep  2
 
@@ -84,6 +85,13 @@
 	${get}  Get Text  //tr[contains(@class, "rowselected")]//td[4]
 	Should Contain  ${get}  ${stage}
 
+
+
+Змінити групу
+	[Arguments]  ${text}
+	Click Element  //*[contains(@title, 'Змінити групу: ')]
+	Wait Until Page Contains Element  //*[contains(text(), "${text}")]
+	Click Element  //*[contains(text(), "${text}")]
 
 ###############################################
 #				Alt+Right					  #

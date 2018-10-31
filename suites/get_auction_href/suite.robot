@@ -103,11 +103,6 @@ If skipped create tender
 	Set To Dictionary  ${data}  auctionID=${auctionID}
 
 
-Звебегти дані в файл
-	${json}  conver dict to json  ${data}
-	Create File  ${OUTPUTDIR}/artifact.json  ${json}
-
-
 Знайти тендер користувачем
 	[Arguments]  ${role}
 	Switch Browser  ${role}

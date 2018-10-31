@@ -13,6 +13,14 @@ Library     Faker/faker.py
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
 
 
+Відкрити сторінку Продаж/Оренда майна(тестові)
+  Wait Until Page Contains Element  xpath=//*[contains(text(), 'ProZorro.Продажі')]  15
+  Click Element  xpath=//*[contains(text(), 'ProZorro.Продажі')]
+  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
+  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
+  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
+
+
 Відкрити сторінку для створення публічних закупівель
   Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публичные закупки')]  120
   Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
@@ -36,7 +44,8 @@ Library     Faker/faker.py
 
 Пошук об'єкта у webclient по полю
   [Arguments]  ${UAID}  ${field}=Номер тендер
-  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+  ${count}  Set Variable  count(//div[@class="gridbox"]//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)
+  ${find tender field}  Set Variable  xpath=(//div[contains(@id, 'MainSted2PageControl') and @style='']//tr[@class=' has-system-column'])[1]/td[${count}+1]//input
   Click Element  ${find tender field}
   Input Text  ${find tender field}  ${UAID}
   ${get}  Get Element Attribute  ${find tender field}  value
@@ -54,19 +63,29 @@ Library     Faker/faker.py
 
 
 Вибрати тип процедури
-  [Arguments]  ${type}
-  Click Element  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
-  Click Element  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '${type}')]
-  ${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table//td[2]//input  value
-  Should Be Equal  ${taken}  ${type}
+	[Arguments]  ${type}
+	Click Element  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
+	Click Element  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '${type}')]
+	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table//td[2]//input  value
+	${status}  Run Keyword And Return Status  Should Be Equal  ${taken}  ${type}
+	Run Keyword If  '${status}' == 'False'  Вибрати тип процедури  ${type}
+
+
+Змінити мінімальну кількусть учасників
+	[Arguments]  ${quantity}
+  	Click Element  xpath=//*[contains(text(), 'Мінімальна кількість')]/following-sibling::table
+    Click Element  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '1')]
+  	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Мінімальна кількість')]/following-sibling::table//td[2]//input  value
+  	Should Be Equal  ${taken}  ${quantity}
+  	Set To Dictionary  ${data}  minimum_number_of_participants  ${quantity}
 
 
 Заповнити auctionPeriod.startDate
   ${startDate}  smart_get_time  5
+  Wait Until Keyword Succeeds  120  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
   ${value}  Create Dictionary  startDate=${startDate}
   ${auctionPeriod}  Create Dictionary  auctionPeriod=${value}
   Set To Dictionary  ${data}  auctionPeriod=${auctionPeriod}
-  Wait Until Keyword Succeeds  120  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
 
 
 Заповнити та перевірити дату старту електронного аукціону
@@ -149,7 +168,7 @@ Library     Faker/faker.py
   ${first}  random_number  10000000  99999999
   ${second}  random_number  10000  99999
   ${dgfID}  Set Variable  F${first}-${second}
-  ${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Номер лоту в ФГВ')]/following-sibling::table//input
+  ${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Номер лоту')]/following-sibling::table//input
   Заповнити текстове поле  ${selector}  ${dgfID}
 
 
@@ -193,12 +212,23 @@ Library     Faker/faker.py
   Run Keyword If  '${status}' != 'True'  Відкрити вкладку Тестовий аукціон
 
 
+
+Заповнити items.title
+	[Arguments]  ${field_name}=Найменування позиції
+	${title}  create_sentence  3
+	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), '${field_name}')]/following-sibling::*//input
+	Заповнити текстове поле  ${selector}  ${title}
+	${value}  Create Dictionary  title=${title}
+	Set To Dictionary  ${data}  items  ${value}
+
+
 Заповнити items.description
-  ${description}  create_sentence  10
-  ${value}  Create Dictionary  description=${description}
-  Set To Dictionary  ${data.value}  items=${value}
-  ${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Опис активу')]/following-sibling::*//input
-  Заповнити текстове поле  ${selector}  ${description}
+	[Arguments]  ${field_name}=Опис активу
+	${description}  create_sentence  10
+	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), '${field_name}')]/following-sibling::*//input
+	Заповнити текстове поле  ${selector}  ${description}
+	${value}  Create Dictionary  description=${description}
+	Set To Dictionary  ${data}  items  ${value}
 
 
 Заповнити items.quantity
@@ -282,3 +312,8 @@ Library     Faker/faker.py
   ${text}  Get Element Attribute  ${input}  value
   Should Not Be Empty  ${text}
   [Return]  ${text}
+
+
+Звебегти дані в файл
+	${json}  conver dict to json  ${data}
+	Create File  ${OUTPUTDIR}/artifact.json  ${json}

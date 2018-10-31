@@ -52,6 +52,7 @@ ${first element find tender}        //*[@id="tenders"]//tr[1]/td[2]/a
 ${bread crumbs}                     (//*[@class='ivu-breadcrumb-item-link'])
 ${bids search}                      //div[contains(text(), 'Пошук')]/..
 
+
 *** Keywords ***
 Suite Postcondition
   Close All Browsers
