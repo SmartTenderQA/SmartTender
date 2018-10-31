@@ -93,7 +93,7 @@ Library     Faker/faker.py
 Заповнити minimalStep.percent
   ${minimal_step_percent}  random_number  1  5
   ${value}  Create Dictionary  percent=${minimal_step_percent}
-  Set To Dictionary  ${data.value}  minimalStep=${value}
+  Set To Dictionary  ${data.value}  minimalStep=${value}users_variables
   Wait Until Keyword Succeeds  120  3  Заповнити та перевірити мінімальний крок аукціону  ${minimal_step_percent}
 
 

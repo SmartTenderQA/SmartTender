@@ -46,8 +46,8 @@ Logout
 
 
 Перевірити успішність авторизації організатора
-  Wait Until Page Does Not Contain Element  ${login button}
-  Wait Until Page Contains Element  css=.body-container #container  120
+  Wait Until Page Does Not Contain Element  ${login button}  120
+  Wait Until Page Contains Element  css=.body-container #container
 
 
 Перевірити успішність авторизації учасника

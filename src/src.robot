@@ -9,6 +9,7 @@ Library     String
 Library     DateTime
 Library     service.py
 Library     Faker/faker.py
+Variables   /home/testadm/users_variables.py
 Resource    search.robot
 Resource    make_proposal.robot
 Resource    participation_request.robot
@@ -82,18 +83,13 @@ Start
 
 Отримати дані користувача
   [Arguments]  ${user}
-  ${login}=     get_user_variable  ${user}  login
-  ${password}=  get_user_variable  ${user}  password
+  ${a}  Create Dictionary  a  ${users_variables}
+  ${users_variables}  Set Variable  ${a.a}
+  Set Global Variable  ${name}  ${users_variables.${user}.name}
+  Set Global Variable  ${role}  ${users_variables.${user}.role}
+  Set Global Variable  ${site}  ${users_variables.${user}.site}
 
-  ${name}=  get_user_variable  ${user}  name
-  Set Global Variable  ${name}
-
-  ${role}=  get_user_variable  ${user}  role
-  Set Global Variable  ${role}
-
-  ${site}=  get_user_variable  ${user}  site
-  Set Global Variable  ${site}
-  [Return]  ${login}  ${password}
+  [Return]  ${users_variables.${user}.login}  ${users_variables.${user}.password}
 
 
 Open button

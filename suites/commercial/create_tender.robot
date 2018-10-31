@@ -122,6 +122,7 @@ Test Postcondition
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
 	Click Element  (${row})[${n}]
+	Sleep  3
 	${classification_name}  Get Text  (${row})[${n}]
 	[Return]  ${classification_name}
 
@@ -201,7 +202,7 @@ Test Postcondition
 
 Вибрати довільну одиницю виміру Click
 	[Arguments]  ${selector}
-	Click Element  ${selector}
+	Click Element At Coordinates  ${selector}  -30  0
 	Sleep  2
 	${unit_name}  Get Text  ${selector}//td[3]
 	Capture Page Screenshot

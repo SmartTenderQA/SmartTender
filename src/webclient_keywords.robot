@@ -9,7 +9,7 @@
 	[Arguments]  ${field}  ${title}  ${additional_xpath}=${EMPTY}
 	[Documentation]  Відкриває довідник по найменування поля ${field} та перевіряє ${title} відкритого вікна
 	${input field}  Set Variable  ${additional_xpath}//*[contains(text(), "${field}")]/following-sibling::div
-	Click Element  ${input field}//input
+	Wait Until Keyword Succeeds  15  2  Click Element  ${input field}//input
 	Sleep  1
 	Click Element  ${input field}//td[contains(@title, 'F10')]
 	Дочекатись закінчення загрузки сторінки(webclient)
