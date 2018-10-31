@@ -44,7 +44,7 @@ Library     Faker/faker.py
 
 Пошук об'єкта у webclient по полю
   [Arguments]  ${UAID}  ${field}=Номер тендер
-  ${count}  Set Variable  count(//div[@class="gridbox"]//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)
+  ${count}  Set Variable  count(//div[@class="gridbox"]//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*|//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)
   ${find tender field}  Set Variable  xpath=(//div[contains(@id, 'MainSted2PageControl') and @style='']//tr[@class=' has-system-column'])[1]/td[${count}+1]//input
   Click Element  ${find tender field}
   Input Text  ${find tender field}  ${UAID}
@@ -240,24 +240,24 @@ Library     Faker/faker.py
 
 
 Заповнити items.unit.name
-  ${input}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Од. вим.')]/following-sibling::*//input
-  ${selector}  Set Variable  xpath=//*[contains(text(), 'ОВ. Найменування')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+  ${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Од. вим.')]/following-sibling::*//input
+  ${selector}  Set Variable  //*[contains(text(), 'ОВ. Найменування')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
   ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
   ${value}  Create Dictionary  name=${name}
   Set To Dictionary  ${data['items']}  unit  ${value}
 
 
 Заповнити items.classification.description
-  ${input}  Set Variable  xpath=(//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
-  ${selector}  Set Variable  xpath=//*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+  ${input}  Set Variable  (//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
+  ${selector}  Set Variable  //*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
   ${description}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
   ${value}  Create Dictionary  description=${description}
   Set To Dictionary  ${data['items']}  classification  ${value}
 
 
 Заповнити procuringEntity.contactPoint.name
-  ${input}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
-  ${selector}  Set Variable  xpath=//*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+  ${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
+  ${selector}  Set Variable  //*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
   ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
   ${dictionary}  Create Dictionary  name=${name}
   ${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
