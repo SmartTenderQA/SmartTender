@@ -1641,7 +1641,7 @@ Check document for error
 
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
-  Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
+  Wait Until Page Contains Element  //div[@id="pdf-main-container"]//*[@id="div-pdf-canvas"]|//*[@class="ivu-modal-content"]//img  10
 
 
 Розкрити меню в особистому кабінеті
