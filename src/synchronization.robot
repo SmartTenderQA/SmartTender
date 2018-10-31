@@ -25,9 +25,8 @@ Library     service.py
   ${DateEnd}  Set Variable  ${dict[1]}
   ${WorkStatus}  Set Variable  ${dict[2]}
   ${Success}  Set Variable  ${dict[3]}
-
-  ${compared_time}  compare_dates_synch  ${DateStart}  ${date_now}
-   ${status}  Run Keyword if  '${compared_time}' == '${True}' and '${DateEnd}' != '${EMPTY}' and '${WorkStatus}' != 'working' and '${WorkStatus}' != 'fail' and '${Success}' == 'true'
+  ${compared_time}  compare_dates_smarttender  ${DateStart}  <  ${date_now}
+  ${status}  Run Keyword if  '${compared_time}' == '${True}' and '${DateEnd}' != '${EMPTY}' and '${WorkStatus}' != 'working' and '${WorkStatus}' != 'fail' and '${Success}' == 'true'
   ...  Set Variable  Pass
   ...  ELSE  Reload Page
   Should Be Equal  ${status}  Pass
