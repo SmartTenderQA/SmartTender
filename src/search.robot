@@ -12,7 +12,7 @@ ${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
-Знайти тендер по auctionID
+Знайти тендер по ID
   [Arguments]  ${tenderID}
   Виконати пошук тендера  ${tenderID}
   ${tender_href}=  Get Element Attribute  ${tender found}  href

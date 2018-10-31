@@ -19,7 +19,7 @@ ${close button(old)}  //div[@style]//button[@type='button' and @class='close']
 	Вибрати тестовий ЦСК
 	Завантажити ключ
 	Ввести пароль ключа
-	Натиснути Підписати
+	Wait Until Keyword Succeeds  3m  10  Натиснути Підписати
 	Перевірити успішність піцдписання
 
 
