@@ -116,6 +116,7 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
 	wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
+	Sleep  3m
     Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
 	Підтвердити відповідність
