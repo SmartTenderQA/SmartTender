@@ -182,7 +182,7 @@ If skipped create tender
 Заповнити minimalStep.percent
 	${minimal_step_percent}  random_number  1  5
 	${value}  Create Dictionary  percent=${minimal_step_percent}
-	Set To Dictionary  ${data.value}  minimalStep=${value}users_variables
+	Set To Dictionary  ${data['value']}  minimalStep=${value}users_variables
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити мінімальний крок аукціону  ${minimal_step_percent}
 
 
@@ -230,7 +230,7 @@ If skipped create tender
 	Відкрити вкладку Гарантійний внесок
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити гарантійний внесок  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон
-	Set To Dictionary  ${data.value}  guarantee_percent=${guarantee_amount_percent}
+	Set To Dictionary  ${data['value']}  guarantee_percent=${guarantee_amount_percent}
 
 
 Заповнити items.description
@@ -246,7 +246,7 @@ If skipped create tender
 	${quantity}  random_number  1  1000
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input
 	Заповнити текстове поле  ${selector}  ${quantity}
-	Set To Dictionary  ${data.items}  quantity=${quantity}
+	Set To Dictionary  ${data['items']}  quantity=${quantity}
 
 
 Заповнити items.unit.name
