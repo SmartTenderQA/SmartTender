@@ -6,6 +6,7 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_trade_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -21,6 +22,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
   	Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
+    debug
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid щойно стореного тендера
@@ -69,12 +71,12 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
     Start  Bened  tender_owner
     Set Window Size  1280  1024
-    Start  viewer_test  viewer
-    Set Window Size  1280  1024
-    Start  user1  provider1
-    Set Window Size  1280  1024
-    Start  user2  provider2
-    Set Window Size  1280  1024
+    #Start  viewer_test  viewer
+    #Set Window Size  1280  1024
+    #Start  user1  provider1
+    #Set Window Size  1280  1024
+    #Start  user2  provider2
+    #Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 

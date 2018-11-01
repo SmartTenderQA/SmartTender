@@ -113,10 +113,8 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
 	Дочекатись дати закінчення періоду прийому пропозицій
-    ${auction_href}  Отримати посилання на участь в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
-
-
+    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні
+	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
 
 
 Подати пропозицію учасниками
@@ -303,7 +301,7 @@ If skipped create tender
 	Натиснути кнопку  До аукціону
 	Натиснути кнопку  Взяти участь в аукціоні
 	${auction_href}  Отримати посилання
-	[Return]  ${auction_href}
+	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
 
 
 Натиснути кнопку
@@ -323,7 +321,7 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
-	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
 	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
