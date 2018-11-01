@@ -278,6 +278,13 @@ Library     Faker/faker.py
   Sleep  3
   Wait Until Element Is Not Visible  ${webClient loading}  120
   Wait Until Element Is Not Visible  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
+  Run Keyword And Ignore Error  Підтвердити збереження чернетки
+
+
+Підтвердити збереження чернетки
+  Wait Until Page Contains  Оголосити закупівлю
+  Click Element  xpath=//*[@class="message-box"]//*[.='Ні']
+  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Оголосити тендер
