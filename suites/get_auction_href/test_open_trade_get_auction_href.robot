@@ -22,7 +22,6 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
   	Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    debug
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid щойно стореного тендера
@@ -71,12 +70,12 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
     Start  Bened  tender_owner
     Set Window Size  1280  1024
-    #Start  viewer_test  viewer
-    #Set Window Size  1280  1024
-    #Start  user1  provider1
-    #Set Window Size  1280  1024
-    #Start  user2  provider2
-    #Set Window Size  1280  1024
+    Start  viewer_test  viewer
+    Set Window Size  1280  1024
+    Start  user1  provider1
+    Set Window Size  1280  1024
+    Start  user2  provider2
+    Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
@@ -109,18 +108,17 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
 	Дочекатись дати закінчення періоду прийому пропозицій
-    ${auction_href}  Отримати посилання на участь в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
-
-
+    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні
+	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
 
 
 Подати пропозицію учасниками
     [Arguments]  ${role}
     Switch Browser  ${role}
-	Дочекатись дати початку періоду прийому пропозицій
+	wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
     Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
+	Підтвердити відповідність
 	Подати пропозицію
     Go Back
 
@@ -131,7 +129,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  17  minutes
+    ${date}  get_time_now_with_deviation  22  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -270,7 +268,7 @@ If skipped create tender
     Reload Page
     Wait Until Element Is Visible  //*[@data-qa="status"]  20
     ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}' != '${tender status}'  
+    Should Be Equal  '${status}'  '${tender status}'
 
 
 Отримати посилання на участь в аукціоні
@@ -278,7 +276,7 @@ If skipped create tender
 	Натиснути кнопку  До аукціону
 	Натиснути кнопку  Взяти участь в аукціоні
 	${auction_href}  Отримати посилання
-	[Return]  ${auction_href}
+	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
 
 
 Натиснути кнопку
@@ -298,7 +296,7 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
-	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
 	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
