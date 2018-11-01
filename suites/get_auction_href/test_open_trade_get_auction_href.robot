@@ -12,10 +12,8 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	Switch Browser  tender_owner
 	Перейти у розділ публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Допорогові закупівлі
-  	Заповнити startDate періоду пропозицій
+  	Вибрати тип процедури  Відкриті торги
   	Заповнити endDate періоду пропозицій
-  	Заповнити endDate періоду обговорення
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
   	Заповнити title для tender
@@ -23,8 +21,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
   	Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    Оголосити тендер
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid щойно стореного тендера
     Звебегти дані в файл
@@ -131,23 +128,10 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
-Заповнити endDate періоду обговорення
-    ${date}  get_time_now_with_deviation  5  minutes
-    ${value}  Create Dictionary  endDate=${date}
-    Set To Dictionary  ${data}  enquiryPeriod  ${value}
-    Заповнити Поле  //*[@data-name="DDM"]//input  ${date}
-
-
-Заповнити startDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  6  minutes
-    ${value}  Create Dictionary  startDate=${date}
-    Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити Поле  //*[@data-name="D_SCH"]//input    ${date}
-
-
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  17  minutes
-    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
+    ${value}  Create Dictionary  endDate=${date}
+    Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
@@ -284,7 +268,7 @@ If skipped create tender
     Reload Page
     Wait Until Element Is Visible  //*[@data-qa="status"]  20
     ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}'  '${tender status}'
+    Should Be Equal  '${status}' != '${tender status}'  
 
 
 Отримати посилання на участь в аукціоні
@@ -328,3 +312,14 @@ If skipped create tender
 	Switch Browser  ${role}
 	Reload Page
 	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні
+
+
+Оголосити закупівлю
+    Click Element  xpath=//*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Page Contains  Оголосити закупівлю
+    Click Element  xpath=//*[@class="message-box"]//*[.='Так']
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Підтвердити повідомлення про перевищення бюджету за необхідністю
+    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Відмовитись у повідомленні про накладання ЕЦП на тендер

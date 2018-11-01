@@ -295,7 +295,7 @@ If skipped create tender
     Reload Page
     Wait Until Element Is Visible  //*[@data-qa="status"]  20
     ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}' != '${tender status}'
+    Should Be Equal  '${status}'  '${tender status}'
 
 
 Отримати посилання на участь в аукціоні
