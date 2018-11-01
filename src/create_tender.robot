@@ -43,16 +43,25 @@ Library     Faker/faker.py
 
 
 Пошук об'єкта у webclient по полю
-  [Arguments]  ${UAID}  ${field}=Номер тендер
-  ${count}  Set Variable  count(//div[@class="gridbox"]//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*|//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)
-  ${find tender field}  Set Variable  xpath=(//div[contains(@id, 'MainSted2PageControl') and @style='']//tr[@class=' has-system-column'])[1]/td[${count}+1]//input
+  [Arguments]  ${value}  ${field}=Номер тендер
+  ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
   Click Element  ${find tender field}
-  Input Text  ${find tender field}  ${UAID}
+  Input Text  ${find tender field}  ${value}
   ${get}  Get Element Attribute  ${find tender field}  value
-  ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
-  Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  ${UAID}
+  ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+  Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  ${value}
   Press Key  ${find tender field}  \\13
-  Sleep  3
+  Sleep  1
+  #[Arguments]  ${UAID}  ${field}=Номер тендер
+  #${count}  Set Variable  count(//div[@class="gridbox"]//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*|//div[@style]//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)
+  #${find tender field}  Set Variable  xpath=(//div[contains(@id, 'MainSted2PageControl') and @style='']//tr[@class=' has-system-column'])[1]/td[${count}+1]//input
+  #Click Element  ${find tender field}
+  #Input Text  ${find tender field}  ${UAID}
+  #${get}  Get Element Attribute  ${find tender field}  value
+  #${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${UAID}
+  #Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  ${UAID}
+  #Press Key  ${find tender field}  \\13
+  #Sleep  3
 
 
 Відкрити вікно створення тендеру

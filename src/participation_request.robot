@@ -1,7 +1,5 @@
 *** Settings ***
 Library     Faker/faker.py
-test setup
-test teardown
 
 
 *** Keywords ***
