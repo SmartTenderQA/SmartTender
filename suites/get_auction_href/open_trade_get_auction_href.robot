@@ -20,6 +20,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
   	Заповнити title для tender
   	Заповнити description для tender
   	Додати предмет в тендер
+  	debug
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
