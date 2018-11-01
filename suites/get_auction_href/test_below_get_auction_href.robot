@@ -18,7 +18,6 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
   	Заповнити endDate періоду обговорення
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
-  	Заповнити contact для tender
   	Заповнити title для tender
   	Заповнити description для tender
   	Додати предмет в тендер
@@ -69,17 +68,15 @@ If skipped create tender
 
 
 
-
-
 *** Keywords ***
 Відкрити вікна для всіх користувачів
-    Start  prod_owner  tender_owner
+    Start  Bened  tender_owner
     Set Window Size  1280  1024
-    Start  viewer_prod  viewer
+    Start  viewer_test  viewer
     Set Window Size  1280  1024
-    Start  prod_provider1  provider1
+    Start  user1  provider1
     Set Window Size  1280  1024
-    Start  prod_provider2  provider2
+    Start  user2  provider2
     Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
@@ -130,32 +127,26 @@ If skipped create tender
 Перейти у розділ публічні закупівлі (тестові)
     Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
-    Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
-    Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
 
 
 Заповнити endDate періоду обговорення
-    ${value}  get_time_now_with_deviation  5  minutes
-    ${new_date}  get_only_numbers  ${value}
-    ${value}  Create Dictionary  endDate=${value}
+    ${date}  get_time_now_with_deviation  5  minutes
+    ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  enquiryPeriod  ${value}
-    Заповнити Поле  //*[@data-name="DDM"]//input  ${new_date}
+    Заповнити Поле  //*[@data-name="DDM"]//input  ${date}
 
 
 Заповнити startDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  6  minutes
-    ${new_date}  get_only_numbers  ${value}
-    ${value}  Create Dictionary  startDate=${value}
+    ${date}  get_time_now_with_deviation  6  minutes
+    ${value}  Create Dictionary  startDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити Поле  //*[@data-name="D_SCH"]//input    ${new_date}
+    Заповнити Поле  //*[@data-name="D_SCH"]//input    ${date}
 
 
 Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  17  minutes
-    ${new_date}  get_only_numbers  ${value}
-    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${value}
-    Заповнити Поле  //*[@data-name="D_SROK"]//input    ${new_date}
+    ${date}  get_time_now_with_deviation  17  minutes
+    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
+    Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
 Заповнити contact для tender
@@ -255,14 +246,12 @@ If skipped create tender
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
-    ${new_date}  get_only_numbers  ${value}
-    Заповнити Поле  xpath=//*[@data-name="DDATETO"]//input  ${new_date}
+    Заповнити Поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    ${new_date}  get_only_numbers  ${value}
-    Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${new_date}
+    Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
 Отримати tender_uaid щойно стореного тендера

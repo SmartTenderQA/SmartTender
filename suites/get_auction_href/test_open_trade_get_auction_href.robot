@@ -6,23 +6,26 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_trade_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
 	Перейти у розділ публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Переговорна процедура для потреб оборони
+  	Вибрати тип процедури  Відкриті торги
   	Заповнити endDate періоду пропозицій
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
-  	Заповнити contact для tender
   	Заповнити title для tender
   	Заповнити description для tender
   	Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
+    debug
     Оголосити закупівлю
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Отримати tender_uaid щойно стореного тендера
     Звебегти дані в файл
 
 
@@ -64,17 +67,15 @@ If skipped create tender
 
 
 
-
-
 *** Keywords ***
 Відкрити вікна для всіх користувачів
-    Start  prod_owner  tender_owner
+    Start  Bened  tender_owner
     Set Window Size  1280  1024
-    #Start  viewer_prod  viewer
+    #Start  viewer_test  viewer
     #Set Window Size  1280  1024
-    #Start  prod_provider1  provider1
+    #Start  user1  provider1
     #Set Window Size  1280  1024
-    #Start  prod_provider2  provider2
+    #Start  user2  provider2
     #Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
@@ -117,8 +118,7 @@ If skipped create tender
 Подати пропозицію учасниками
     [Arguments]  ${role}
     Switch Browser  ${role}
-    debug
-	Дочекатись статусу тендера  Прийом пропозицій
+	Дочекатись дати початку періоду прийому пропозицій
     Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
 	Подати пропозицію
@@ -128,17 +128,13 @@ If skipped create tender
 Перейти у розділ публічні закупівлі (тестові)
     Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
-    Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
-    Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
 
 
 Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  1  days
-    ${new_date}  get_only_numbers  ${value}
-    ${value}  Create Dictionary  endDate=${value}
+    ${date}  get_time_now_with_deviation  17  minutes
+    ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити Поле  //*[@data-name="D_SROK"]//input    ${new_date}
+    Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
 Заповнити contact для tender
@@ -238,14 +234,12 @@ If skipped create tender
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
-    ${new_date}  get_only_numbers  ${value}
-    Заповнити Поле  xpath=//*[@data-name="DDATETO"]//input  ${new_date}
+    Заповнити Поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    ${new_date}  get_only_numbers  ${value}
-    Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${new_date}
+    Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
 Отримати tender_uaid щойно стореного тендера
@@ -263,22 +257,20 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    Дочекатись статусу тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    Дочекатись статусу тендера  Аукціон
+    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
 
 
-Дочекатись статусу тендера
+Перевірити статусу тендера
     [Arguments]  ${tender status}
     Reload Page
     Wait Until Element Is Visible  //*[@data-qa="status"]  20
     ${status}  Get Text  //*[@data-qa="status"]
-    Run Keyword If  '${status}' != '${tender status}'  Run Keywords
-    ...  Sleep  1m
-    ...  AND  Дочекатись статусу тендера  ${tender status}
+    Should Be Equal  '${status}' != '${tender status}'  
 
 
 Отримати посилання на участь в аукціоні
@@ -333,18 +325,3 @@ If skipped create tender
     Підтвердити повідомлення про перевищення бюджету за необхідністю
     Підтвердити повідомлення про перевірку публікації документу за необхідністю
     Відмовитись у повідомленні про накладання ЕЦП на тендер
-    Пошук тендеру по title (webclient)  ${data['title']}
-    Отримати tender_uaid щойно стореного тендера
-
-
-Підтвердити повідомлення про перевищення бюджету за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Увага! Бюджет перевищує
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-Відмовитись у повідомленні про накладання ЕЦП на тендер
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на тендер?
-  Run Keyword If  '${status}' == 'True'  Run Keywords
-  ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo"]
-  ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
