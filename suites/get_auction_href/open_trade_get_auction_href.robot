@@ -336,15 +336,3 @@ If skipped create tender
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid щойно стореного тендера
 
-
-Підтвердити повідомлення про перевищення бюджету за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Увага! Бюджет перевищує
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-Відмовитись у повідомленні про накладання ЕЦП на тендер
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на тендер?
-  Run Keyword If  '${status}' == 'True'  Run Keywords
-  ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo"]
-  ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
