@@ -17,6 +17,7 @@ ${torgy count tab}                   li:nth-child
   Виконати пошук тендера  ${tenderID}
   ${tender_href}=  Get Element Attribute  ${tender found}  href
   Go To  ${tender_href}
+  Log  ${tender_href}  WARN
   Додаткова перевірка на тестові торги для продуктива
 
 

@@ -10,20 +10,25 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
+	debug
 	Перейти у розділ публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Переговорна процедура для потреб оборони
+  	Вибрати тип процедури  Допорогові закупівлі
+  	Заповнити startDate періоду пропозицій
   	Заповнити endDate періоду пропозицій
+  	Заповнити endDate періоду обговорення
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
   	Заповнити contact для tender
   	Заповнити title для tender
   	Заповнити description для tender
   	Додати предмет в тендер
-  	debug
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    Оголосити закупівлю
+    Оголосити тендер
+    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Отримати tender_uaid щойно стореного тендера
     Звебегти дані в файл
 
 
@@ -69,13 +74,13 @@ If skipped create tender
 
 *** Keywords ***
 Відкрити вікна для всіх користувачів
-    Start  prod_owner  tender_owner
+    Start  Bened  tender_owner
     Set Window Size  1280  1024
-    #Start  viewer_prod  viewer
+    #Start  viewer_test  viewer
     #Set Window Size  1280  1024
-    #Start  prod_provider1  provider1
+    #Start  user1  provider1
     #Set Window Size  1280  1024
-    #Start  prod_provider2  provider2
+    #Start  user2  provider2
     #Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
@@ -118,8 +123,7 @@ If skipped create tender
 Подати пропозицію учасниками
     [Arguments]  ${role}
     Switch Browser  ${role}
-    debug
-	Дочекатись статусу тендера  Прийом пропозицій
+	Дочекатись дати початку періоду прийому пропозицій
     Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
 	Подати пропозицію
@@ -134,11 +138,26 @@ If skipped create tender
     Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
 
 
-Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  1  days
+Заповнити endDate періоду обговорення
+    ${value}  get_time_now_with_deviation  5  minutes
     ${new_date}  get_only_numbers  ${value}
     ${value}  Create Dictionary  endDate=${value}
+    Set To Dictionary  ${data}  enquiryPeriod  ${value}
+    Заповнити Поле  //*[@data-name="DDM"]//input  ${new_date}
+
+
+Заповнити startDate періоду пропозицій
+    ${value}  get_time_now_with_deviation  6  minutes
+    ${new_date}  get_only_numbers  ${value}
+    ${value}  Create Dictionary  startDate=${value}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
+    Заповнити Поле  //*[@data-name="D_SCH"]//input    ${new_date}
+
+
+Заповнити endDate періоду пропозицій
+    ${value}  get_time_now_with_deviation  17  minutes
+    ${new_date}  get_only_numbers  ${value}
+    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input    ${new_date}
 
 
@@ -264,12 +283,12 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    Дочекатись статусу тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  2m  Дочекатись статусу тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    Дочекатись статусу тендера  Аукціон
+    wait until keyword succeeds  20m  2m  Дочекатись статусу тендера  Аукціон
 
 
 Дочекатись статусу тендера
@@ -323,17 +342,3 @@ If skipped create tender
 	Switch Browser  ${role}
 	Reload Page
 	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні
-
-
-Оголосити закупівлю
-    Click Element  xpath=//*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Page Contains  Оголосити закупівлю
-    Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити повідомлення про перевищення бюджету за необхідністю
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    Відмовитись у повідомленні про накладання ЕЦП на тендер
-    Пошук тендеру по title (webclient)  ${data['title']}
-    Отримати tender_uaid щойно стореного тендера
-
