@@ -48,7 +48,7 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s'))]/div
+${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s')) and not(contains(., '.rar'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s')) and not(contains(., '.rar'))]/div
 ${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
@@ -1641,7 +1641,7 @@ Check document for error
 
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
-  Wait Until Page Contains Element  css=div#pdf-main-container #div-pdf-canvas  10
+  Wait Until Page Contains Element  //div[@id="pdf-main-container"]//*[@id="div-pdf-canvas"]|//*[@class="ivu-modal-content"]//img  10
 
 
 Розкрити меню в особистому кабінеті

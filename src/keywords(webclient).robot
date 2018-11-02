@@ -1,6 +1,3 @@
-*** Settings ***
-
-
 *** Keywords ***
 ###############################################
 #					  F10					  #
@@ -44,10 +41,11 @@
 #					   TAB					  #
 ###############################################
 Активувати вкладку
-	[Arguments]  ${text}
+	[Arguments]  ${text}  ${end_to_xpath}=${Empty}
 	${current tab}  Set Variable  //*[contains(@class, "active-tab")]
 	${current tab name}  Get Text  ${current tab}//td[text()]
-	Run Keyword If  "${text}" != "${current tab name}"  Click Element  //li[contains(@class, "page-tab") and contains(., "${text}")]
+	Run Keyword If  "${text}" != "${current tab name}"  Click Element  //li[contains(@class, "page-tab") and contains(., "${text}")]${end_to_xpath}
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${current tab}//td[contains(text(), "${text}")]
 	Sleep  2
 
@@ -85,9 +83,65 @@
 	Should Contain  ${get}  ${stage}
 
 
+
+Змінити групу
+	[Arguments]  ${text}
+	Click Element  //*[contains(@title, 'Змінити групу: ')]
+	Wait Until Page Contains Element  //*[contains(text(), "${text}")]
+	Click Element  //*[contains(text(), "${text}")]
+
 ###############################################
 #				Alt+Right					  #
 ###############################################
 Натиснути надіслати вперед(Alt+Right)
 	Click Element  //*[contains(@title, "Alt+Right")]
 	Дочекатись закінчення загрузки сторінки(webclient)
+
+
+###############################################
+#				Other   					  #
+###############################################
+Додати документ до тендара власником (webclient)
+    Перейти на вкладку документи (webclient)
+    Додати документ власником
+
+
+Перейти на вкладку документи (webclient)
+    Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
+    Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]
+
+
+Додати документ власником
+    Click Element  xpath=//*[@data-name="BTADDATTACHMENT"]/div
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Page Contains Element  xpath=//*[@type='file'][1]
+    ${doc}=  create_fake_doc
+    ${path}  Set Variable  ${doc[0]}
+    ${name}  Set Variable  ${doc[1]}
+    Choose File  xpath=//*[@type='file'][1]  ${path}
+    Click Element  xpath=(//span[.='ОК'])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  ${name}
+
+
+Підтвердити повідомлення про перевищення бюджету за необхідністю
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Увага! Бюджет перевищує
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@class="message-box"]//*[.='Так']
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відмовитись у повідомленні про накладання ЕЦП на тендер
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на тендер?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  перевірте публікацію Вашого документу
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@title="OK"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
