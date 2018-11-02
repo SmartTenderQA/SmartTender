@@ -22,6 +22,7 @@ Resource    participation_request.robot
 Resource    search.robot
 Resource    synchronization.robot
 Resource    create_tender/keywords.robot
+Resource    get_auction_greff.robot
 
 
 *** Variables ***

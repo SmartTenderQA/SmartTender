@@ -144,3 +144,4 @@
     ...  Click Element  xpath=//*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
+
