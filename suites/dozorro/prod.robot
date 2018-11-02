@@ -491,14 +491,14 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 *** Keywords ***
 Підготувати користувачів
-    #Start  prod_owner  tender_owner
-    #Set Window Size  1280  1024
-    #Start  viewer_prod  viewer
-    #Set Window Size  1280  1024
+    Start  prod_owner  tender_owner
+    Set Window Size  1280  1024
+    Start  viewer_prod  viewer
+    Set Window Size  1280  1024
     Start  prod_provider1  provider
     Set Window Size  1280  1024
-    #Start  prod_provider2  provider2
-    #Set Window Size  1280  1024
+    Start  prod_provider2  provider2
+    Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
@@ -506,7 +506,7 @@ Postcondition
     Close All Browsers
 
 Відкрити сторінку відгуки Dozorro
-    Click Element At Coordinates  ${dozorro btn}  -40  0
+    Click Element At Coordinates  ${dozorro btn}  -30  0
     Дочекатись закінчення загрузки сторінки
 
 
