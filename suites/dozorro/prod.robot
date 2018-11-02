@@ -506,7 +506,7 @@ Postcondition
     Close All Browsers
 
 Відкрити сторінку відгуки Dozorro
-    Click Element At Coordinates  ${dozorro btn}  -30  0
+    Wait Until Keyword Succeeds  30  3  Click Element At Coordinates  ${dozorro btn}  -30  0
     Дочекатись закінчення загрузки сторінки
 
 
