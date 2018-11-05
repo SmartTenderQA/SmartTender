@@ -132,7 +132,7 @@ ${torgy count tab}                   li:nth-child
     Run Keyword And Ignore Error  Should Be Equal  ${count tenders}  1
 
 
-Перейти по результату пошуку
+Знайти тендер користувачем
 	[Arguments]  ${role}
 	Switch Browser  ${role}
 	Sleep  2
