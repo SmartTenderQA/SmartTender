@@ -252,7 +252,7 @@ If skipped create tender
 
 
 Надати рішення про допуск до аукціону учасника
-    [Arguments]  {i}
+    [Arguments]  ${i}
     ${selector}  Set Variable  (//*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
     Click Element  ${selector}
     Sleep  .5
