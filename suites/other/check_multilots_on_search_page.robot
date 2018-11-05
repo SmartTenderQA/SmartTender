@@ -58,7 +58,7 @@ ${page_number}                 2
   Set Global Variable  ${multi_lot_selector}  (//span[@class='Multilots']/ancestor::tr)[${number}]
   ${tender_info}  Get Text  xpath=${multi_lot_selector}/td[@class="col1"]/span
   Scroll Page To Element XPATH   xpath=${multi_lot_selector}
-  Click Element  xpath=${multi_lot_selector}
+  Click Element  xpath=${multi_lot_selector}/td/span
   ${detailed_tender_info}  Get Text  xpath=${multi_lot_selector}/following-sibling::tr[@class="content"]//td[@colspan="2"]
   ${status}  Run Keyword And Return Status  Should Be Equal  ${tender_info}  ${detailed_tender_info}
   Run Keyword If  ${status} == "Fail"  Розкрити мультилот  ${number}
