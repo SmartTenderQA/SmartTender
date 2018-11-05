@@ -538,7 +538,8 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 Розпочати моніторинг по тендеру
   [Arguments]  ${tender_ID}
   ${name}  create_sentence  1
-  ${data_cdb}  create_monitoring  ${tender_ID}  ${name}
+  ${data_cdb}  Wait Until Keyword Succeeds  60  5
+  ...  create_monitoring  ${tender_ID}  ${name}
   Log  ${data_cdb}
   ${data}  Create Dictionary  id  ${data_cdb['id']}
   Set Global Variable  ${data}
