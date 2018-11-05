@@ -185,3 +185,10 @@ Ignore error
 Завантажити файли на весь тендер
   :FOR  ${INDEX}  IN RANGE  0  ${lots amount}+1
   \  Створити та додати PDF файл  ${INDEX}
+
+
+Додати файл
+  [Arguments]  ${block}
+  ${doc}=  create_fake_doc
+  ${path}  Set Variable  ${doc[0]}
+  Choose File  xpath=(//input[@type="file"][1])[${block}]  ${path}

@@ -85,56 +85,6 @@ If skipped create tender
     Set Global Variable  ${data}
 
 
-Знайти тендер користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Sleep  2
-	Відкрити сторінку тестових торгів
-	Знайти тендер по ID  ${data['tender_uaid']}
-
-
-Звебегти дані в файл
-	${json}  conver dict to json  ${data}
-	Create File  ${OUTPUTDIR}/artifact.json  ${json}
-
-
-Заповнити Поле
-    [Arguments]  ${selector}  ${text}
-    Wait Until Page Contains Element  ${selector}
-    Click Element  ${selector}
-    Sleep  .5
-    Input Text  ${selector}  ${text}
-    Sleep  .5
-    Press Key  ${selector}  \\09
-    Sleep  1
-
-
-Отримати посилання на аукціон учасником
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	Дочекатись дати закінчення періоду прийому пропозицій
-    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні
-	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
-
-
-Подати пропозицію учасниками
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	Дочекатись дати початку періоду прийому пропозицій
-    Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-	Подати пропозицію
-    Go Back
-
-
-Перейти у розділ публічні закупівлі (тестові)
-    Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
-    Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
-    Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору тендерів')]
-
-
 Заповнити endDate періоду обговорення
     ${value}  get_time_now_with_deviation  5  minutes
     ${new_date}  get_only_numbers  ${value}
@@ -265,19 +215,6 @@ If skipped create tender
     Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${new_date}
 
 
-Отримати tender_uaid щойно стореного тендера
-    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Scroll Page To Element XPATH  ${find tender field}
-    ${uaid}  Get Text  ${find tender field}/a
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-
-
-Дочекатись дати
-    [Arguments]  ${date}
-    ${sleep}=  wait_to_date  ${date}
-    Sleep  ${sleep}
-
-
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
     wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
@@ -321,6 +258,7 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
+	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
 	Location Should Contain  bidder_id=
 	Sleep  2
@@ -332,8 +270,6 @@ If skipped create tender
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
-Перевірити можливість отримати посилання на аукціон користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Reload Page
-	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні
+
+
+

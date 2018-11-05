@@ -74,7 +74,8 @@ ${torgy count tab}                   li:nth-child
   Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
   Press Key  ${find tender field}  \\13
   Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
-  Wait Until Page Contains Element  ${tender found}
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
+  Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
   Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
 
 
@@ -129,3 +130,11 @@ ${torgy count tab}                   li:nth-child
     Дочекатись закінчення загрузки сторінки(webclient)
     ${count tenders}  Get Matching Xpath Count  xpath=//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')]
     Run Keyword And Ignore Error  Should Be Equal  ${count tenders}  1
+
+
+Знайти тендер користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	Відкрити сторінку тестових торгів
+	Знайти тендер по ID  ${data['tender_uaid']}

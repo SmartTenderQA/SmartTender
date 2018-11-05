@@ -6,25 +6,24 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
 	Перейти у розділ публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Допорогові закупівлі
-  	Заповнити startDate періоду пропозицій
+  	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
   	Заповнити endDate періоду пропозицій
-  	Заповнити endDate періоду обговорення
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
   	Заповнити title для tender
+  	Заповнити title_eng для tender
   	Заповнити description для tender
   	Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    Оголосити тендер
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid щойно стореного тендера
     Звебегти дані в файл
@@ -51,6 +50,11 @@ If skipped create tender
 	[Template]  Подати пропозицію учасниками
 	provider1
 	provider2
+
+
+Підтвердити прекваліфікацію для доступу до аукціону організатором
+    [Tags]  create_tender  get_tender_data
+    Підтвердити прекваліфікацію учасників
 
 
 Отримати поcилання на участь в аукціоні для учасників
@@ -82,23 +86,10 @@ If skipped create tender
     Set Global Variable  ${data}
 
 
-Заповнити endDate періоду обговорення
-    ${date}  get_time_now_with_deviation  5  minutes
-    ${value}  Create Dictionary  endDate=${date}
-    Set To Dictionary  ${data}  enquiryPeriod  ${value}
-    Заповнити Поле  //*[@data-name="DDM"]//input  ${date}
-
-
-Заповнити startDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  6  minutes
-    ${value}  Create Dictionary  startDate=${date}
-    Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити Поле  //*[@data-name="D_SCH"]//input    ${date}
-
-
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  17  minutes
-    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
+    ${date}  get_time_now_with_deviation  40  minutes
+    ${value}  Create Dictionary  endDate=${date}
+    Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
@@ -132,6 +123,13 @@ If skipped create tender
     Заповнити Поле  xpath=//*[@data-name="TITLE"]//input   ${title}
 
 
+Заповнити title_eng для tender
+    ${text_en}  create_sentence  5
+    ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
+    Set To Dictionary  ${data}  title_en  ${title_en}
+    Заповнити Поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
+
+
 Заповнити description для tender
     ${description}  create_sentence  15
     Set To Dictionary  ${data}  description  ${description}
@@ -140,6 +138,7 @@ If skipped create tender
 
 Додати предмет в тендер
     Заповнити description для item
+    Заповнити description_eng для item
     Заповнити quantity для item
     Заповнити id для item
     Заповнити unit.name для item
@@ -155,6 +154,13 @@ If skipped create tender
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}
     Заповнити Поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
+
+
+Заповнити description_eng для item
+    ${description_en}  create_sentence  5
+    ${value}  Create Dictionary  description_en=${description_en}
+    Set To Dictionary  ${data}  item  ${value}
+    Заповнити Поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
 
 
 Заповнити quantity для item
@@ -207,43 +213,14 @@ If skipped create tender
     Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
-Отримати tender_uaid щойно стореного тендера
-    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Scroll Page To Element XPATH  ${find tender field}
-    ${uaid}  Get Text  ${find tender field}/a
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-
-
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    Дочекатися статусу тендера  Аукціон
-
-
-Отримати посилання на участь в аукціоні
-	Reload Page
-	Натиснути кнопку  До аукціону
-	Натиснути кнопку  Взяти участь в аукціоні
-	${auction_href}  Отримати посилання
-	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
-
-
-Натиснути кнопку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-
-
-Отримати посилання
-	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
-	Wait Until Page Contains Element  ${selector}  60
-	${auction_href}  Get Element Attribute  ${selector}  href
-	[Return]  ${auction_href}
+    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
 
 
 Перейти та перевірити сторінку участі в аукціоні
@@ -261,6 +238,46 @@ If skipped create tender
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
+Підтвердити прекваліфікацію учасників
+    Switch Browser  tender_owner
+    Go To  https://smarttender.biz/webclient/
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Перейти у розділ публічні закупівлі (тестові)
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
+    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    :FOR  ${i}  IN RANGE  1  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
 
 
+Надати рішення про допуск до аукціону учасника
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (//*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    Click Element  ${selector}
+    Sleep  .5
+    Натиснути кнопку Просмотр (F4)
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  Отправить решение
+    Click Element  //*[@title="Допустить участника к аукциону"]
+    Sleep  .5
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
+    Sleep  .5
+    Click Element  //*[@title="Отправить решение"]
+    Погодитись з рішенням прекваліфікації
+    Відмовитись від накладання ЕЦП на кваліфікацію
 
+
+Погодитись з рішенням прекваліфікації
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Вы уверены в своем решении?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відмовитись від накладання ЕЦП на кваліфікацію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Наложить ЭЦП на квалификацию?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
