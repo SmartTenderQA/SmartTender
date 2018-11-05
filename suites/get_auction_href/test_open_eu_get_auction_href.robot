@@ -247,7 +247,7 @@ If skipped create tender
     Натиснути кнопку Перечитать (Shift+F4)
     Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
     ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
-    :FOR  ${i}  IN RANGE  ${count}+1
+    :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
 
 
