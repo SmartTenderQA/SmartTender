@@ -81,55 +81,6 @@ If skipped create tender
     Set Global Variable  ${data}
 
 
-Знайти тендер користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Sleep  2
-	Відкрити сторінку тестових торгів
-	Знайти тендер по ID  ${data['tender_uaid']}
-
-
-Звебегти дані в файл
-	${json}  conver dict to json  ${data}
-	Create File  ${OUTPUTDIR}/artifact.json  ${json}
-
-
-Заповнити Поле
-    [Arguments]  ${selector}  ${text}
-    Wait Until Page Contains Element  ${selector}
-    Click Element  ${selector}
-    Sleep  .5
-    Input Text  ${selector}  ${text}
-    Sleep  .5
-    Press Key  ${selector}  \\09
-    Sleep  1
-
-
-Отримати посилання на аукціон учасником
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	Дочекатись дати закінчення періоду прийому пропозицій
-    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні
-	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
-
-
-Подати пропозицію учасниками
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
-	Sleep  3m
-    Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-	Підтвердити відповідність
-	Подати пропозицію
-    Go Back
-
-
-Перейти у розділ публічні закупівлі (тестові)
-    Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  32  minutes
     ${value}  Create Dictionary  endDate=${date}
@@ -257,19 +208,6 @@ If skipped create tender
     Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
-Отримати tender_uaid щойно стореного тендера
-    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Scroll Page To Element XPATH  ${find tender field}
-    ${uaid}  Get Text  ${find tender field}/a
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-
-
-Дочекатись дати
-    [Arguments]  ${date}
-    ${sleep}=  wait_to_date  ${date}
-    Sleep  ${sleep}
-
-
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
     wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
@@ -278,36 +216,6 @@ If skipped create tender
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
     wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
-
-
-Перевірити статусу тендера
-    [Arguments]  ${tender status}
-    Reload Page
-    Wait Until Element Is Visible  //*[@data-qa="status"]  20
-    ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}'  '${tender status}'
-
-
-Отримати посилання на участь в аукціоні
-	Reload Page
-	Натиснути кнопку  До аукціону
-	Натиснути кнопку  Взяти участь в аукціоні
-	${auction_href}  Отримати посилання
-	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
-
-
-Натиснути кнопку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-
-
-Отримати посилання
-	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
-	Wait Until Page Contains Element  ${selector}  60
-	${auction_href}  Get Element Attribute  ${selector}  href
-	[Return]  ${auction_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні
@@ -325,19 +233,6 @@ If skipped create tender
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
-Перевірити можливість отримати посилання на аукціон користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Reload Page
-	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні
 
 
-Оголосити закупівлю
-    Click Element  xpath=//*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Page Contains  Оголосити закупівлю
-    Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити повідомлення про перевищення бюджету за необхідністю
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    Відмовитись у повідомленні про накладання ЕЦП на тендер
+

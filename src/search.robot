@@ -129,3 +129,11 @@ ${torgy count tab}                   li:nth-child
     Дочекатись закінчення загрузки сторінки(webclient)
     ${count tenders}  Get Matching Xpath Count  xpath=//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')]
     Run Keyword And Ignore Error  Should Be Equal  ${count tenders}  1
+
+
+Знайти тендер користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	Відкрити сторінку тестових торгів
+	Знайти тендер по ID  ${data['tender_uaid']}

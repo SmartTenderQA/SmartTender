@@ -222,3 +222,37 @@ Resource  ../loading.robot
 	Wait Until Element Is Not Visible  xpath=//*[@class='message-box']//*[contains(text(), 'Так')]
 	Sleep  3
 	Wait Until Element Is Not Visible  ${webClient loading}  120
+
+
+Заповнити Поле
+    [Arguments]  ${selector}  ${text}
+    Wait Until Page Contains Element  ${selector}
+    Click Element  ${selector}
+    Sleep  .5
+    Input Text  ${selector}  ${text}
+    Sleep  .5
+    Press Key  ${selector}  \\09
+    Sleep  1
+
+
+Перейти у розділ публічні закупівлі (тестові)
+    Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Отримати tender_uaid щойно стореного тендера
+    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
+    Scroll Page To Element XPATH  ${find tender field}
+    ${uaid}  Get Text  ${find tender field}/a
+    Set To Dictionary  ${data}  tender_uaid  ${uaid}
+
+
+Оголосити закупівлю
+    Click Element  xpath=//*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Page Contains  Оголосити закупівлю
+    Click Element  xpath=//*[@class="message-box"]//*[.='Так']
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Підтвердити повідомлення про перевищення бюджету за необхідністю
+    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Відмовитись у повідомленні про накладання ЕЦП на тендер

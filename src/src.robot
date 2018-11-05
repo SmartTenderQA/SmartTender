@@ -22,7 +22,7 @@ Resource    participation_request.robot
 Resource    search.robot
 Resource    synchronization.robot
 Resource    create_tender/keywords.robot
-Resource    get_auction_greff.robot
+Resource    get_auction_href.robot
 
 
 *** Variables ***
@@ -154,3 +154,9 @@ Scroll Page To Top
 Check Prev Test Status
   ${status}  Set Variable  ${PREV TEST STATUS}
   Run Keyword If  '${status}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
+
+
+Дочекатись дати
+    [Arguments]  ${date}
+    ${sleep}=  wait_to_date  ${date}
+    Sleep  ${sleep}
