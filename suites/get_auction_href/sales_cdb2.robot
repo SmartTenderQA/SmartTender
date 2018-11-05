@@ -8,6 +8,7 @@ Test Teardown  Run Keywords
 
 
 *** Variables ***
+${where}							test
 ${tender}                           Простой однолотовый
 ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text(), '${tender}') and @href]
 ${make proposal link}               xpath=//div[@class='row']//a[contains(@class, 'button')]
@@ -19,7 +20,9 @@ ${webClient loading}                id=LoadingPanel
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Змінити групу  Організатор. Реализация державного майна
+
+	debug
+	Run Keyword If  '${where}' == 'prod'  Змінити групу  Організатор. Реализация державного майна
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
 
@@ -44,20 +47,21 @@ ${webClient loading}                id=LoadingPanel
 	Заповнити guarantee.amount
 
 	Зберегти чернетку
-	Оголосити тендер
+	debug
+	#Оголосити тендер
 	Отримати та зберегти tender_id
 	Звебегти дані в файл
 
 
 If skipped create tender
-	[Tags]  get_tender_data
+	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
 
 Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender_data
+	[Tags]  create_tender  get_tender
 	[Template]  Знайти тендер користувачем
 	tender_owner
 	#viewer
@@ -66,39 +70,58 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері першим учасником
-	[Tags]  create_tender  get_tender_data
+	[Tags]  create_tender  get_tender
 	Switch Browser  provider1
 	Пройти кваліфікацію для подачі пропозиції
 
 
 Підтвердити заявки на участь
-	[Tags]  create_tender  get_tender_data
+	[Tags]  create_tender  get_tender
 	Switch Browser  tender_owner
-	Підтвердити заявку  ${data['tender_id']}  spf
+	Підтвердити заявку  ${data['tender_id']}  Для ФГИ
 
 
 Подати пропозицію
-	[Tags]  create_tender  get_tender_data
+	[Tags]  create_tender  get_tender
+	Switch Browser  provider1
+	Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
+	Заповнити поле з ціною  1  1
+	Подати пропозицію
+	Go Back
+
+
+Дочекатися початку аукціону
+	[Tags]  create_tender  get_tender
+	Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	Дочекатися статусу тендера  Аукціон
 	debug
+
 
 
 *** Keywords ***
 Відкрити вікна для всіх користувачів
-	Start  fgv_prod_owner  tender_owner
-	Go Back
-	#Start  viewer_prod  viewer
-	Start  prod_provider1  provider1
-	#Start  prod_provider2  provider2
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Start  IT_RAV  tender_owner
+	...  AND  No Operation
+#	...  AND  Go Back
+#	...  AND  Start  viewer_test  viewer
+#	...  AND  Start  user1  provider1
+#	...  AND  Start  user2  provider2
+	...  ELSE IF  '${where}' == 'prod'  Run Keywords
+	...  Start  fgv_prod_owner  tender_owner
+	...  AND  Go Back
+#	...  AND  Start  viewer_prod  viewer
+	...  AND  Start  prod_provider1  provider1
+#	...  AND  Start  prod_provider2  provider2
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  20  minutes
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
-	${value}  Create Dictionary  startDate=${startDate}
-	${auctionPeriod}  Create Dictionary  auctionPeriod=${value}
-	Set To Dictionary  ${data}  auctionPeriod  ${auctionPeriod}
+	${startDate}  get_time_now_with_deviation  30  minutes
+	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
+	${auctionPeriods}  Create Dictionary  startDate=${startDate}
+	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
 
 
 Заповнити items.postalcode
@@ -119,8 +142,8 @@ If skipped create tender
 
 
 Заповнити items.locality
-	${input}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
-	${selector}  Set Variable  xpath=//*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
+	${selector}  Set Variable  //*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${locality}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
 	Set To Dictionary  ${data['items']}  locality  ${locality}
 
@@ -145,6 +168,7 @@ If skipped create tender
 
 Отримати та зберегти tender_id
 	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Should Not Be Equal  ${tender_id}  ${EMPTY}
 	Set To Dictionary  ${data}  tender_id=${tender_id}
 
 

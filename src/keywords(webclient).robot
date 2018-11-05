@@ -69,8 +69,7 @@
 
 Закрити валідаційне вікно
 	[Arguments]  ${title}  ${response}
-	${button}  Set Variable
-	...  //*[contains(@class, "headerText") and contains(text(), "Зберегти документ?")]/ancestor::*//span[contains(text(), '${response}')]
+	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${response}')]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Wait Until Element Is Not Visible  ${button}

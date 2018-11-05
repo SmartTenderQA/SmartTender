@@ -280,15 +280,15 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
 
 
-Перевірити статусу тендера
+Перевірити статус тендера
     [Arguments]  ${tender status}
     Reload Page
     Wait Until Element Is Visible  //*[@data-qa="status"]  20

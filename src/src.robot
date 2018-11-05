@@ -154,3 +154,22 @@ Scroll Page To Top
 Check Prev Test Status
   ${status}  Set Variable  ${PREV TEST STATUS}
   Run Keyword If  '${status}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
+
+
+Дочекатися статусу тендера
+	[Arguments]  ${tender status}
+	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}
+
+
+Перевірити статус тендера
+    [Arguments]  ${tender status}
+    Reload Page
+    Wait Until Element Is Visible  //*[@data-qa="status"]  20
+    ${status}  Get Text  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
+    Should Be Equal  '${status}'  '${tender status}'
+
+
+Дочекатись дати
+    [Arguments]  ${date}
+    ${sleep}=  wait_to_date  ${date}
+    Sleep  ${sleep}

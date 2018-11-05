@@ -80,7 +80,7 @@ If skipped create tender
 
 
 Неможливість отримати поcилання на участь в аукціоні
-	[Tags]  create_tender1  get_tender
+	[Tags]  create_tender  get_tender
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
 	tender_owner

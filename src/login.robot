@@ -50,6 +50,7 @@ Logout
   Wait Until Page Contains Element  css=.body-container #container
 
 
+
 Перевірити успішність авторизації учасника
   Wait Until Page Does Not Contain Element  ${login button}
   Wait Until Page Contains  ${name}  10

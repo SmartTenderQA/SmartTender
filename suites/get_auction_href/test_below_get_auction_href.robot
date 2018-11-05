@@ -261,28 +261,14 @@ If skipped create tender
     Set To Dictionary  ${data}  tender_uaid  ${uaid}
 
 
-Дочекатись дати
-    [Arguments]  ${date}
-    ${sleep}=  wait_to_date  ${date}
-    Sleep  ${sleep}
-
-
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
+    Дочекатися статусу тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
-
-
-Перевірити статусу тендера
-    [Arguments]  ${tender status}
-    Reload Page
-    Wait Until Element Is Visible  //*[@data-qa="status"]  20
-    ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}'  '${tender status}'
+    Дочекатися статусу тендера  Аукціон
 
 
 Отримати посилання на участь в аукціоні
