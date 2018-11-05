@@ -6,7 +6,7 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_trade_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -50,6 +50,11 @@ If skipped create tender
 	[Template]  Подати пропозицію учасниками
 	provider1
 	provider2
+
+
+Підтвердити прекваліфікацію для доступу до аукціону організатором
+    [Tags]  create_tender  get_tender_data
+    Підтвердити прекваліфікацію учасників
 
 
 Отримати поcилання на участь в аукціоні для учасників
@@ -233,6 +238,46 @@ If skipped create tender
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
+Підтвердити прекваліфікацію учасників
+    Switch Browser  tender_owner
+    debug
+    Go To  https://smarttender.biz/webclient/
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Перейти у розділ публічні закупівлі (тестові)
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
+    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    :FOR  ${i}  IN RANGE  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
 
 
+Надати рішення про допуск до аукціону учасника
+    [Arguments]  {i}
+    ${selector}  Set Variable  (//*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    Click Element  ${selector}
+    Sleep  .5
+    Натиснути кнопку Просмотр (F4)
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  Отправить решение
+    Click Element  //*[@title="Допустить участника к аукциону"]
+    Sleep  .5
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
+    Sleep  .5
+    Click Element  //*[@title="Отправить решение"]
+    Погодитись з рішенням прекваліфікації
 
+
+Погодитись з рішенням прекваліфікації
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Вы уверены в своем решении?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відмовитись від накладання ЕЦП на кваліфікацію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Наложить ЭЦП на квалификацию?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
