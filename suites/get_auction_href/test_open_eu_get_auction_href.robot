@@ -240,7 +240,6 @@ If skipped create tender
 
 Підтвердити прекваліфікацію учасників
     Switch Browser  tender_owner
-    debug
     Go To  https://smarttender.biz/webclient/
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ публічні закупівлі (тестові)
@@ -267,6 +266,7 @@ If skipped create tender
     Sleep  .5
     Click Element  //*[@title="Отправить решение"]
     Погодитись з рішенням прекваліфікації
+    Відмовитись від накладання ЕЦП на кваліфікацію
 
 
 Погодитись з рішенням прекваліфікації
