@@ -682,7 +682,8 @@ Postcondition
   Switch Browser  ${username}
   Go to  ${data.tender_url}
   Відкрити сторінку відгуки Dozorro
-  ${text}  Get Text  xpath=(//*[@class="ivu-row"])[2]/../div[last()-1]/div
+  log to console  перевірити відображення
+  ${text}  Get Text  xpath=((//*[@data-qa="dozorro"]//div[@class="ivu-card-body"])[2]//div[contains(@style,"padding-left")])[last()]
   Should Be Equal  ${text}  ${data.review_text}
 
 
@@ -698,7 +699,8 @@ Postcondition
   [Arguments]  ${username}
   Switch Browser  ${username}
   ${title}  Get Text  xpath=(//*[@class="ivu-card-body"]//h5)[1]
-  Click Element  xpath=//div[@class="ivu-select-selection"]
+  Scroll Page To Element XPATH  xpath=//div[@data-qa="dozorro"]//div[@class="ivu-select-selection"]
+  Click Element  xpath=//div[@data-qa="dozorro"]//div[@class="ivu-select-selection"]
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=(//ul[@class="ivu-select-dropdown-list"])[1]/li[contains(text(), '${title}')]
   ${count_review}  Get Element Count  xpath=(//*[@class="ivu-card-body"]//h5)
   ${count_title}  Get Element Count  xpath=//h5[contains(text(), '${title}')]
@@ -755,7 +757,7 @@ Postcondition
 Можливість залишити коментар
   [Arguments]  ${username}
   Switch Browser  ${username}
-  Run Keyword And Expect Error  *  Element Should Be Visible  xpath=//*[@type="button"]//*[contains(text(), 'Додати')]
+  Run Keyword And Expect Error  *  Element Should Be Visible  xpath=//div[@data-qa="dozorro"]//*[@type="button"]//*[contains(text(), 'Додати')]
 
 
 
