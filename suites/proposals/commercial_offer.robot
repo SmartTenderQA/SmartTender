@@ -79,7 +79,9 @@ Postcondition
 
 Заповтини поле з ціною
   ${max price selector}  Set Variable  //*[contains(text(), "Краща ціна")]/../following-sibling::*//span
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${max price selector}
+  Wait Until Element Is Visible  ${max price selector}  20
+  ${value}  Get Text  ${max price selector}
+  ${status}  Run Keyword And Return Status  Should Not Be Empty  ${value}
   ${max}  Run Keyword If  ${status} == ${True}  Get Text  ${max price selector}
   ...  ELSE  Set Variable  10000000
   ${amount}  Evaluate  '${max}'.replace(" ", "")
