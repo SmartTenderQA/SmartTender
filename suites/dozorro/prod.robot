@@ -682,7 +682,6 @@ Postcondition
   Switch Browser  ${username}
   Go to  ${data.tender_url}
   Відкрити сторінку відгуки Dozorro
-  log to console  перевірити відображення
   ${text}  Get Text  xpath=((//*[@data-qa="dozorro"]//div[@class="ivu-card-body"])[2]//div[contains(@style,"padding-left")])[last()]
   Should Be Equal  ${text}  ${data.review_text}
 
