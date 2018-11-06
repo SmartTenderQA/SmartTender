@@ -102,7 +102,7 @@ def convert_tender_type(tender_type):
         'open_trade': u'Відкриті торги',
         'open_trade_eng': u'Відкриті торги з публікацією англійською мовою',
         'below_threshold': u'Допорогові закупівлі',
-        'negotiation_procedure': u'Переговорна процедура для потреб оборони',
+        'above_threshold_ua_defense': u'Переговорна процедура для потреб оборони',
         'competitive_dialog': u'Конкурентний діалог 1-ий етап',
         'competitive_dialog_eng': u'Конкурентний діалог з публікацією англійською мовою 1-ий етап',
         'ESCO': u'Відкриті торги для закупівлі енергосервісу',
