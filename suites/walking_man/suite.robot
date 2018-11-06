@@ -207,7 +207,7 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Зайти на сторінку пошуку elastic
   Виконати пошук в elastic  бумага
   ${status}  Run Keyword And Return Status  Page Should Contain  папір
-  Run Keyword If  ${status} == ${False}  Page Should Contain  папір
+  Run Keyword If  ${status} == ${False}  Wait Until Keyword Succeeds  15  3  Page Should Contain  папір
   Очистити фільтр пошуку elastic
 
 
