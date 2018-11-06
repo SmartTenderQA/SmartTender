@@ -515,7 +515,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   ${active tab}      Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and (contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
   Scroll Page To Element XPATH  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
-  Run Keyword If  '${status}' == 'False'  Click Element  ${tab}
+  Run Keyword If  '${status}' == 'False'  Wait Until Keyword Succeeds  15  3  Click Element  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Відкрити вкладку моніторингу
   Дочекатись закінчення загрузки сторінки
