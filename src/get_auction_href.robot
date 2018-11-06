@@ -10,7 +10,7 @@
     [Arguments]  ${role}
     Switch Browser  ${role}
 	Дочекатись дати закінчення періоду прийому пропозицій
-    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні
+    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні учасником
 	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
 
 
@@ -22,7 +22,7 @@
     Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
-	Підтвердити відповідність
+	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
 
@@ -35,24 +35,34 @@
     Should Be Equal  '${status}'  '${tender status}'
 
 
-Отримати посилання на участь в аукціоні
+Отримати посилання на участь в аукціоні учасником
 	Reload Page
-	log to console  Отримати посилання на участь в аукціоні
-	Натиснути кнопку  До аукціону
-	Натиснути кнопку  Взяти участь в аукціоні
-	${auction_href}  Отримати посилання
+	Натиснути кнопку "До аукціону"
+	${auction_href}  Отримати URL для участі в аукціоні
 	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
 
 
-Натиснути кнопку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
+Натиснути кнопку "До аукціону"
+	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]
+	Click Element  //*[@data-qa="button-poptip-participate-view"]
 
 
-Отримати посилання
-	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
+Отримати URL для участі в аукціоні
+	${selector}  Set Variable  //*[@data-qa="link-participate"]
+	Wait Until Page Contains Element  ${selector}  60
+	${auction_href}  Get Element Attribute  ${selector}  href
+	[Return]  ${auction_href}
+
+
+Отримати посилання на перегляд аукціону користувачем
+	Reload Page
+	Натиснути кнопку "До аукціону"
+	${auction_href}  Отримати URL для перегляду аукціону
+	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
+
+
+Отримати URL для перегляду аукціону
+    ${selector}  Set Variable  //*[@data-qa="link-view"]
 	Wait Until Page Contains Element  ${selector}  60
 	${auction_href}  Get Element Attribute  ${selector}  href
 	[Return]  ${auction_href}
@@ -62,7 +72,7 @@
 	[Arguments]  ${role}
 	Switch Browser  ${role}
 	Reload Page
-	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні
+	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні учасником
 
 
 Перейти та перевірити сторінку участі в аукціоні
