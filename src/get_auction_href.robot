@@ -11,7 +11,7 @@
     Switch Browser  ${role}
 	Дочекатись дати закінчення періоду прийому пропозицій
     Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні учасником
-	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl']}
+	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
 
 
 Подати пропозицію учасниками
@@ -39,7 +39,7 @@
 	Reload Page
 	Натиснути кнопку "До аукціону"
 	${auction_href}  Отримати URL для участі в аукціоні
-	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
+	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
 
 
 Натиснути кнопку "До аукціону"
@@ -58,7 +58,7 @@
 	Reload Page
 	Натиснути кнопку "До аукціону"
 	${auction_href}  Отримати URL для перегляду аукціону
-	Set To Dictionary  ${data}  auctionUrl  ${auction_href}
+	Set To Dictionary  ${data}  auctionUrl_view  ${auction_href}
 
 
 Отримати URL для перегляду аукціону

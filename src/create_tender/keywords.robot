@@ -122,13 +122,13 @@ Resource  ../loading.robot
 ###############################################
 Заповнити та перевірити поле с датою
 	[Arguments]  ${field_name}  ${time}
-#	${text}  convert_data_for_web_client  ${time}
-	${text}  Set Variable  ${time}
+	${text}  Run Keyword If  "${site}" == "prod"  convert_data_for_web_client  ${time}
+	...  ELSE  "${site}" == "test"  Set Variable  ${time}
 	# очистити поле с датою
 	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input
 	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input/../following-sibling::*
 	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
-	# заповнити дату
+#	заповнити дату
 	Input Text  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input    ${text}
 	${got}  Get Element Attribute  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input  value
 	Should Be Equal  ${got}  ${time}
@@ -196,6 +196,7 @@ Resource  ../loading.robot
 	Sleep  .5
 	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
 	Sleep  .5
+	Wait Until Page Contains Element  ${selector}  15
 	${count}  Get Element Count  ${selector}
 	${number}  random_number  1  ${count}
 	Click Element  (${selector})[${number}]
@@ -216,12 +217,21 @@ Resource  ../loading.robot
 	Wait Until Element Is Not Visible  ${webClient loading}  120
 	Wait Until Element Is Not Visible  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
 	Run Keyword And Ignore Error  Підтвердити збереження чернетки
+	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
 
 
 Підтвердити збереження чернетки
-	Wait Until Page Contains  Оголосити закупівлю
-	Click Element  xpath=//*[@class="message-box"]//*[.='Ні']
-	Дочекатись закінчення загрузки сторінки(webclient)
+	${status}  Run Keyword And Return Status  Wait Until Page Contains  Оголосити закупівлю
+	Run Keyword If  ${status} == ${True}  Run Keywords
+	...  Click Element  xpath=//*[@class="message-box"]//*[.='Ні']
+	...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Ігнорувати конфлікт
+	${status}  Run Keyword And Return Status  Wait Until Page Contains  Конфлікт при зверненні
+	Run Keyword If  ${status} == ${True}  Run Keywords
+	...  Click Element
+
 
 
 Оголосити тендер
@@ -244,7 +254,8 @@ Resource  ../loading.robot
 
 
 Ignore WebClient Error
-	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "Виняткова ситуація")]
+	[Arguments]  ${text}=Виняткова ситуація
+	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "${text}")]
 	${OK button}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "OK")]
 	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${window}
 	Run Keyword If  ${status} == ${True}  Run Keywords

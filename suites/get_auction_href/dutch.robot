@@ -60,7 +60,7 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері першим учасником
-	[Tags]  create_tender  get_tender
+	[Tags]  create_tender  get_tender1
 	Switch Browser  provider1
 	Пройти кваліфікацію для подачі пропозиції
 
@@ -91,9 +91,9 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
 	Start  fgv_prod_owner  tender_owner
 	Go Back
-#	Start  viewer_prod  viewer
-#	Start  prod_provider1  provider1
-#	Start  prod_provider2  provider2
+	Start  viewer_prod  viewer
+	Start  prod_provider1  provider1
+	Start  prod_provider2  provider2
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 

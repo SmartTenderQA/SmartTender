@@ -14,6 +14,9 @@ ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text
 ${make proposal link}               xpath=//div[@class='row']//a[contains(@class, 'button')]
 ${start_page}                       http://smarttender.biz
 ${webClient loading}                id=LoadingPanel
+&{type_dict}
+...  								rent=Оренда майна
+...  								sale=Продаж майна
 
 
 *** Test Cases ***
@@ -24,12 +27,10 @@ ${webClient loading}                id=LoadingPanel
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
 
-	Вибрати тип процедури  Оренда майна
+	Вибрати тип процедури  ${type_dict['${type}']}
 	Заповнити auctionPeriod.startDate
-	Заповнити tender.period
 	Заповнити value.amount
 	Заповнити minimalStep.percent
-	Змінити мінімальну кількусть учасників  1
 	Заповнити title
 	Заповнити dgfID
 	Заповнити description
@@ -45,9 +46,11 @@ ${webClient loading}                id=LoadingPanel
 
 	Заповнити guarantee.amount
 
-	Заповинити rent.duration
+	Run Keyword If  '${type}' == 'rent'  Run Keywords
+	...  Заповинити rent.duration
+	...  AND  Заповнити tender.period
+	...  AND  Змінити мінімальну кількусть учасників  1
 
-	debug
 	Зберегти чернетку
 	Оголосити тендер
 	Отримати та зберегти tender_id
@@ -67,13 +70,14 @@ If skipped create tender
 	tender_owner
 	#viewer
 	provider1
-	#provider2
+	provider2
 
 
 Подати заявку на участь в тендері першим учасником
 	[Tags]  create_tender  get_tender
-	Switch Browser  provider1
-	Пройти кваліфікацію для подачі пропозиції
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Пройти кваліфікацію для подачі пропозиції
 
 
 Підтвердити заявки на участь
@@ -84,18 +88,19 @@ If skipped create tender
 
 Подати пропозицію
 	[Tags]  create_tender  get_tender
-	Switch Browser  provider1
-	Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
-	Заповнити поле з ціною  1  1
-	Подати пропозицію
-	Go Back
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
+	\  Заповнити поле з ціною  1  1
+	\  Подати пропозицію
+	\  Go Back
 
 
 Дочекатися початку аукціону
 	[Tags]  create_tender  get_tender
+	debug
 	Дочекатись дати  ${data['auctionPeriods']['startDate']}
 	Дочекатися статусу тендера  Аукціон
-	debug
 
 
 
@@ -103,11 +108,11 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...  Start  Bened  tender_owner
-	...  AND  No Operation
-#	...  AND  Go Back
+	...  AND  Go Back
 #	...  AND  Start  viewer_test  viewer
-#	...  AND  Start  user1  provider1
-#	...  AND  Start  user2  provider2
+	...  AND  Start  user1  provider1
+	...  AND  Start  user2  provider2
+#	...  AND  No Operation
 	...  ELSE IF  '${where}' == 'prod'  Run Keywords
 	...  Start  fgv_prod_owner  tender_owner
 	...  AND  Go Back
@@ -251,6 +256,7 @@ If skipped create tender
 	Input Text  ${selector}  ${rent_duration}
 	Press Key  ${selector}  \\13
 	Set To Dictionary  ${data}  rent_duration=${rent_duration}
+	Відкрити вкладку Тестовий аукціон
 
 
 Заповнити items.title
