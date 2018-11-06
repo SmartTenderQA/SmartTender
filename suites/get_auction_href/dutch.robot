@@ -91,9 +91,9 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
 	Start  fgv_prod_owner  tender_owner
 	Go Back
-	Start  viewer_prod  viewer
-	Start  prod_provider1  provider1
-	Start  prod_provider2  provider2
+#	Start  viewer_prod  viewer
+#	Start  prod_provider1  provider1
+#	Start  prod_provider2  provider2
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 
@@ -166,8 +166,8 @@ If skipped create tender
 
 Заповнити auctionPeriod.startDate
 	${startDate}  smart_get_time  5
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
-	${auctionPeriods}  Create Dictionary  startDate=${startDate}
+	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
+	${auctionPeriods}  Create Dictionary  startDate  ${startDate}
 	Set To Dictionary  ${data}  auctionPeriods=${auctionPeriods}
 
 

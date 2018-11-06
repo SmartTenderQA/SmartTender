@@ -46,15 +46,20 @@ Logout
 
 
 Перевірити успішність авторизації організатора
-  Wait Until Page Does Not Contain Element  ${login button}  120
-  Wait Until Page Contains Element  css=.body-container #container
+	Wait Until Page Does Not Contain Element  ${login button}  120
+	Wait Until Page Contains Element  css=.body-container #container
+#	Закрити вікно Виберіть об`єкт
 
+
+Закрити вікно Виберіть об`єкт
+	Click Element  //a[@title="Вибір(Enter)"]
+	Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити успішність авторизації учасника
-  Wait Until Page Does Not Contain Element  ${login button}
-  Wait Until Page Contains  ${name}  10
-  Go To  ${start_page}
+	Wait Until Page Does Not Contain Element  ${login button}
+	Wait Until Page Contains  ${name}  10
+	Go To  ${start_page}
 
 
 Fill login

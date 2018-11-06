@@ -14,7 +14,7 @@ Resource  ../loading.robot
 
 
 Відкрити сторінку Продаж/Оренда майна(тестові)
-	${selector}  Set Variable  //*[contains(text(), 'ProZorro.Продажі') and contains(text(), '(тестові)')]
+	${selector}  Set Variable  //*[contains(text(), 'ProZorro.Продаж') and contains(text(), '(тестові)')]
 	Wait Until Page Contains Element  ${selector}  15
 	Click Element  ${selector}
 	Дочекатись закінчення загрузки сторінки(webclient)
@@ -56,6 +56,13 @@ Resource  ../loading.robot
   Run Keyword And Ignore Error  Click Element  ${selector}
   ${status}  Run Keyword And Return Status  Element Should Not Be Visible  ${selector}
   Run Keyword If  '${status}' != 'True'  Відкрити вкладку Гарантійний внесок
+
+
+Відкрити вкладку Умови договору оренди
+  ${selector}  Set Variable  xpath=//span[contains(text(), 'Умови договору оренди')]
+  Run Keyword And Ignore Error  Click Element  ${selector}
+  ${status}  Run Keyword And Return Status  Element Should Not Be Visible  ${selector}
+  Run Keyword If  '${status}' != 'True'  Відкрити вкладку Умови договору оренди
 
 
 Відкрити вкладку Тестовий аукціон
@@ -113,16 +120,17 @@ Resource  ../loading.robot
 ###############################################
 #				 Fill field					  #
 ###############################################
-Заповнити та перевірити дату старту електронного аукціону
-	[Arguments]  ${time}
-	${text}  convert_data_for_web_client  ${time}
+Заповнити та перевірити поле с датою
+	[Arguments]  ${field_name}  ${time}
+#	${text}  convert_data_for_web_client  ${time}
+	${text}  Set Variable  ${time}
 	# очистити поле с датою
-	Click Element  xpath=//*[contains(text(), 'День старту')]/following-sibling::table//input
-	Click Element  xpath=//*[contains(text(), 'День старту')]/following-sibling::table//input/../following-sibling::*
+	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input
+	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input/../following-sibling::*
 	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
 	# заповнити дату
-	Input Text  xpath=//*[contains(text(), 'День старту')]/following-sibling::table//input    ${text}
-	${got}  Get Element Attribute  xpath=//*[contains(text(), 'День старту')]/following-sibling::table//input  value
+	Input Text  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input    ${text}
+	${got}  Get Element Attribute  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input  value
 	Should Be Equal  ${got}  ${time}
 
 

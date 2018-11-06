@@ -20,21 +20,20 @@ ${webClient loading}                id=LoadingPanel
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-
-	debug
 	Run Keyword If  '${where}' == 'prod'  Змінити групу  Організатор. Реализация державного майна
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
 
 	Вибрати тип процедури  Оренда майна
 	Заповнити auctionPeriod.startDate
+	Заповнити tender.period
 	Заповнити value.amount
 	Заповнити minimalStep.percent
 	Змінити мінімальну кількусть учасників  1
 	Заповнити title
 	Заповнити dgfID
 	Заповнити description
-	Заповнити procuringEntity.contactPoint.name
+#	Заповнити procuringEntity.contactPoint.name
 
 	Заповнити items.title
 	Заповнити items.quantity
@@ -46,9 +45,11 @@ ${webClient loading}                id=LoadingPanel
 
 	Заповнити guarantee.amount
 
-	Зберегти чернетку
+	Заповинити rent.duration
+
 	debug
-	#Оголосити тендер
+	Зберегти чернетку
+	Оголосити тендер
 	Отримати та зберегти tender_id
 	Звебегти дані в файл
 
@@ -101,7 +102,7 @@ If skipped create tender
 *** Keywords ***
 Відкрити вікна для всіх користувачів
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...  Start  IT_RAV  tender_owner
+	...  Start  Bened  tender_owner
 	...  AND  No Operation
 #	...  AND  Go Back
 #	...  AND  Start  viewer_test  viewer
@@ -119,9 +120,16 @@ If skipped create tender
 
 Заповнити auctionPeriod.startDate
 	${startDate}  get_time_now_with_deviation  30  minutes
-	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити дату старту електронного аукціону  ${startDate}
+	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
+
+
+Заповнити tender.period
+	${tender_period}  get_time_now_with_deviation  30  minutes
+	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  Прийом пропозицій по  ${tender_period}
+	${tender_period}  Create Dictionary  tender_period  ${tender_period}
+	Set To Dictionary  ${data}  tender_period  ${tender_period}
 
 
 Заповнити items.postalcode
@@ -233,6 +241,16 @@ If skipped create tender
 	Відкрити вкладку Гарантійний внесок
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити гарантійний внесок  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон
+
+
+Заповинити rent.duration
+	Відкрити вкладку Умови договору оренди
+	${rent_duration}  random_number  1  5
+	${selector}  Set Variable  //*[@data-name="CONTRTERMSDURATION"]//input
+	Wait Until Page Contains Element  ${selector}  10
+	Input Text  ${selector}  ${rent_duration}
+	Press Key  ${selector}  \\13
+	Set To Dictionary  ${data}  rent_duration=${rent_duration}
 
 
 Заповнити items.title

@@ -50,7 +50,7 @@ def get_tender_variables(tender_type, tender_sign):
             'Confidentiality': False,
             'Sub information': False,
         },
-        'negotiation_procedure': {
+        'above_threshold_ua_defense': {
             'Amount': True,
             'Conformity': True,
             'Document type': True,
