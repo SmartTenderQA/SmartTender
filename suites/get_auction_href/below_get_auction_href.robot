@@ -10,7 +10,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Перейти у розділ публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Допорогові закупівлі
   	Заповнити startDate періоду пропозицій

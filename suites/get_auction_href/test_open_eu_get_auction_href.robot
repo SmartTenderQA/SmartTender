@@ -11,7 +11,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Перейти у розділ публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
   	Заповнити endDate періоду пропозицій
@@ -227,7 +227,7 @@ If skipped create tender
     Switch Browser  tender_owner
     Go To  https://smarttender.biz/webclient/
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Пошук тендеру по title (webclient)  ${data['title']}
     Натиснути кнопку Перечитать (Shift+F4)
     Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]

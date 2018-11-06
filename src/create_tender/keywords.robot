@@ -264,8 +264,9 @@ Ignore WebClient Error
     Sleep  1
 
 
-Перейти у розділ публічні закупівлі (тестові)
-    Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
+Перейти у розділ (webclient)
+    [Arguments]  ${name}
+    Click Element  xpath=(//*[@title="${name}"])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
 
