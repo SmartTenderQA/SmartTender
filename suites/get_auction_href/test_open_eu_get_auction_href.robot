@@ -90,7 +90,7 @@ If skipped create tender
     ${date}  get_time_now_with_deviation  40  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити Поле  //*[@data-name="D_SROK"]//input     ${date}
+    Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
 Заповнити contact для tender
@@ -106,34 +106,34 @@ If skipped create tender
     ${amount}  random_number  100000  100000000
     ${value}  Create Dictionary  amount=${amount}
     Set To Dictionary  ${data}  value  ${value}
-    Заповнити Поле  xpath=//*[@data-name="INITAMOUNT"]//input   ${amount}
+    Заповнити текстове поле  xpath=//*[@data-name="INITAMOUNT"]//input   ${amount}
 
 
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  5
     ${value}  Create Dictionary  percent=${minimal_step_percent}
     Set To Dictionary  ${data.value}  minimalStep  ${value}
-    Заповнити Поле  xpath=//*[@data-name="MINSTEP_PERCENT"]//input   ${minimal_step_percent}
+    Заповнити текстове поле  xpath=//*[@data-name="MINSTEP_PERCENT"]//input   ${minimal_step_percent}
 
 
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
     Set To Dictionary  ${data}  title  ${title}
-    Заповнити Поле  xpath=//*[@data-name="TITLE"]//input   ${title}
+    Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
 
 
 Заповнити title_eng для tender
     ${text_en}  create_sentence  5
     ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
     Set To Dictionary  ${data}  title_en  ${title_en}
-    Заповнити Поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
+    Заповнити текстове поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
 
 
 Заповнити description для tender
     ${description}  create_sentence  15
     Set To Dictionary  ${data}  description  ${description}
-    Заповнити Поле  xpath=//*[@data-name="DESCRIPT"]//textarea  ${description}
+    Заповнити текстове поле  xpath=//*[@data-name="DESCRIPT"]//textarea  ${description}
 
 
 Додати предмет в тендер
@@ -153,20 +153,20 @@ If skipped create tender
     ${description}  create_sentence  5
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}
-    Заповнити Поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
+    Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
 
 
 Заповнити description_eng для item
     ${description_en}  create_sentence  5
     ${value}  Create Dictionary  description_en=${description_en}
     Set To Dictionary  ${data}  item  ${value}
-    Заповнити Поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
+    Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
 
 
 Заповнити quantity для item
     ${quantity}  random_number  1  1000
     Set To Dictionary  ${data['item']}  quantity  ${quantity}
-    Заповнити Поле  xpath=//*[@data-name='QUANTITY']//input  ${quantity}
+    Заповнити текстове поле  xpath=//*[@data-name='QUANTITY']//input  ${quantity}
 
 
 Заповнити id для item
@@ -185,14 +185,14 @@ If skipped create tender
 
 Заповнити postalCode для item
     ${postal code}  random_number  10000  99999
-    Заповнити Поле  xpath=//*[@data-name='POSTALCODE']//input  ${postal code}
+    Заповнити текстове поле  xpath=//*[@data-name='POSTALCODE']//input  ${postal code}
     Set To Dictionary  ${data['item']}  postal code  ${postal code}
 
 
 Заповнити streetAddress для item
     ${address}  create_sentence  1
     ${address}  Set Variable  ${address[:-1]}
-    Заповнити Поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
+    Заповнити текстове поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
     Set To Dictionary  ${data['item']}  streetAddress  ${address}
 
 
@@ -205,37 +205,22 @@ If skipped create tender
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
-    Заповнити Поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
+    Заповнити текстове поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
+    Заповнити текстове поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статусу тендера  Аукціон
-
-
-Перейти та перевірити сторінку участі в аукціоні
-	[Arguments]  ${auction_href}
-	Go To  ${auction_href}
-	Підтвердити повідомлення про умови проведення аукціону
-	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
-	Location Should Contain  bidder_id=
-	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
-	Element Should Contain  //h4  Вхід на даний момент закритий.
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
 
 
 Підтвердити прекваліфікацію учасників

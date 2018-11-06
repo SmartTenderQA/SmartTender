@@ -160,7 +160,11 @@
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
-
+Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@title="OK"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 

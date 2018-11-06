@@ -224,7 +224,8 @@ Resource  ../loading.robot
 	Click Element  ${selector}
 	Wait Until Element Is Not Visible  ${selector}
 	Дочекатись закінчення загрузки сторінки(webclient)
-	${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@id="IMMessageBox_PWH-1T"]
+	Підтвердити повідомлення про перевірку публікації документу за необхідністю
+	${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@id="IMMessageBox_PWH-1T"]
 	Run Keyword If  ${status}  Fatal Error  Тендер не опубліковано
 
 
@@ -258,6 +259,7 @@ Ignore WebClient Error
 Перейти у розділ публічні закупівлі (тестові)
     Click Element  xpath=(//*[@title="Публічні закупівлі (тестові)"])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
 
 
 Отримати tender_uaid щойно стореного тендера
