@@ -216,8 +216,8 @@ Resource  ../loading.robot
 	Sleep  3
 	Wait Until Element Is Not Visible  ${webClient loading}  120
 	Wait Until Element Is Not Visible  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
-	Run Keyword And Ignore Error  Підтвердити збереження чернетки
 	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
+	Run Keyword And Ignore Error  Підтвердити збереження чернетки
 
 
 Підтвердити збереження чернетки
