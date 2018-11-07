@@ -38,7 +38,7 @@
 Отримати посилання на участь в аукціоні учасником
 	Reload Page
 	Натиснути кнопку "До аукціону"
-	${auction_href}  Отримати URL для участі в аукціоні (OLD)
+	${auction_href}  Отримати URL для участі в аукціоні
 	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
 
 
@@ -53,13 +53,6 @@
 	${auction_href}  Get Element Attribute  ${selector}  href
 	[Return]  ${auction_href}
 
-
-Отримати URL для участі в аукціоні (OLD)
-	Wait Until Keyword Succeeds  60  3  Click Element  //*[text()="До аукціону"]
-	Wait Until Keyword Succeeds  60  3  Click Element  //*[text()="Взяти участь в аукціоні"]
-	Wait Until Element Is Visible  //a[text()="До аукціону"]  30
-	${auction_href}  Get Element Attribute  //a[text()="До аукціону"]  href
-	[Return]  ${auction_href}
 
 Отримати посилання на перегляд аукціону користувачем
 	Reload Page
