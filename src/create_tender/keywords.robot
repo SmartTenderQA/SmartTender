@@ -262,7 +262,7 @@ Ignore WebClient Error
 	[Arguments]  ${text}=Виняткова ситуація
 	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "${text}")]
 	${OK button}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "OK")]
-	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${window}
+	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${window}
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Click Element  ${OK button}
 	...  AND  Дочекатись закінчення загрузки сторінки(webclient)
