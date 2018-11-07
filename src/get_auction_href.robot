@@ -14,19 +14,6 @@
 	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
 
 
-Подати пропозицію учасниками
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
-	Sleep  3m
-    Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-    Додати файл  1
-	Run Keyword And Ignore Error  Підтвердити відповідність
-	Подати пропозицію
-    Go Back
-
-
 Перевірити статус тендера
     [Arguments]  ${tender status}
     Reload Page
@@ -40,6 +27,14 @@
 	Натиснути кнопку "До аукціону"
 	${auction_href}  Отримати URL для участі в аукціоні
 	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
+
+Отримати посилання на участь в аукціоні користквачем
+    Reload Page
+	Натиснути кнопку "До аукціону"
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
+    ${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@data-qa="link-participate" and @disabled="disabled"]
+    Run Keyword If  ${status}  Fail  Кнопка взяти участь в аукціоні не активна
 
 
 Натиснути кнопку "До аукціону"
@@ -74,7 +69,7 @@
 	[Arguments]  ${role}
 	Switch Browser  ${role}
 	Reload Page
-	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні учасником
+	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні користквачем
 
 
 Перейти та перевірити сторінку участі в аукціоні

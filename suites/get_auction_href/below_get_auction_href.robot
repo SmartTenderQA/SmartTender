@@ -224,6 +224,18 @@ If skipped create tender
     wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
 
 
+Подати пропозицію учасниками
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Заповнити поле з ціною  1  1
+    Додати файл  1
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+    Go Back
+
+
 
 
 

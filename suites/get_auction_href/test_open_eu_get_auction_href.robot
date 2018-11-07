@@ -266,3 +266,15 @@ If skipped create tender
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Подати пропозицію учасниками
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Заповнити поле з ціною  1  1
+    Додати файл  1
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+    Go Back
