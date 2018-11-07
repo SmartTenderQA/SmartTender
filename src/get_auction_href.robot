@@ -51,6 +51,7 @@
 	${selector}  Set Variable  //*[@data-qa="link-participate"]
 	Wait Until Element Is Visible  ${selector}  120
 	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
+	Run Keyword If  '${auction_href}' == 'None'  Отримати URL для участі в аукціоні
 	[Return]  ${auction_href}
 
 
