@@ -14,24 +14,20 @@
 	Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
 
 
-Подати пропозицію учасниками
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
-	Sleep  3m
-    Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-    Додати файл  1
-	Run Keyword And Ignore Error  Підтвердити відповідність
-	Подати пропозицію
-    Go Back
-
-
 Отримати посилання на участь в аукціоні учасником
 	Reload Page
 	Натиснути кнопку "До аукціону"
 	${auction_href}  Отримати URL для участі в аукціоні
 	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
+
+
+Отримати посилання на участь в аукціоні користквачем
+    Reload Page
+	Натиснути кнопку "До аукціону"
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
+    ${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@data-qa="link-participate" and @disabled="disabled"]
+    Run Keyword If  ${status}  Fail  Кнопка взяти участь в аукціоні не активна
 
 
 Натиснути кнопку "До аукціону"
@@ -41,7 +37,8 @@
 
 Отримати URL для участі в аукціоні
 	${selector}  Set Variable  //*[@data-qa="link-participate"]
-	Wait Until Element Is Visible  ${selector}  120
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
 	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
 	Run Keyword If  '${auction_href}' == 'None'  Отримати URL для участі в аукціоні
 	[Return]  ${auction_href}
@@ -65,7 +62,7 @@
 	[Arguments]  ${role}
 	Switch Browser  ${role}
 	Reload Page
-	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні учасником
+	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні користквачем
 
 
 Перейти та перевірити сторінку участі в аукціоні
