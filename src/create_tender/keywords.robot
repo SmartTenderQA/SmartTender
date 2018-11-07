@@ -266,6 +266,7 @@ Ignore WebClient Error
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Click Element  ${OK button}
 	...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+	...  AND  Ignore WebClient Error  ${text}
 
 
 Заповнити Поле

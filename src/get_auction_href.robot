@@ -10,8 +10,8 @@
     [Arguments]  ${role}
     Switch Browser  ${role}
 	Дочекатись дати закінчення періоду прийому пропозицій
-    Wait Until Keyword Succeeds  10m  20s  Отримати посилання на участь в аукціоні учасником
-	Wait Until Keyword Succeeds  10m  20s  Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
+    Wait Until Keyword Succeeds  3m  2  Отримати посилання на участь в аукціоні учасником
+	Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
 
 
 Подати пропозицію учасниками
@@ -25,14 +25,6 @@
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
-
-
-Перевірити статус тендера
-    [Arguments]  ${tender status}
-    Reload Page
-    Wait Until Element Is Visible  //*[@data-qa="status"]  20
-    ${status}  Get Text  //*[@data-qa="status"]
-    Should Be Equal  '${status}'  '${tender status}'
 
 
 Отримати посилання на участь в аукціоні учасником

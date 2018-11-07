@@ -98,10 +98,13 @@ If skipped create tender
 
 Дочекатися початку аукціону
 	[Tags]  create_tender  get_tender
-	debug
-	Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	Дочекатися статусу тендера  Аукціон
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	\  Wait Until Keyword Succeeds  10m  30s  Перевірити статус тендера  Аукціон
 
+
+Перевірити
 
 
 *** Keywords ***
@@ -124,7 +127,7 @@ If skipped create tender
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  30  minutes
+	${startDate}  get_time_now_with_deviation  15  minutes
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}

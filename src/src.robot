@@ -162,6 +162,15 @@ Check Prev Test Status
 	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}
 
 
+Перевірити статус тендера
+    [Arguments]  ${tender_status}
+    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
+    Reload Page
+    Wait Until Element Is Visible  ${selector}  20
+    ${status}  Get Text  ${selector}
+    Should Be Equal  '${status}'  '${tender_status}'
+
+
 Дочекатись дати
     [Arguments]  ${date}
     ${sleep}=  wait_to_date  ${date}
