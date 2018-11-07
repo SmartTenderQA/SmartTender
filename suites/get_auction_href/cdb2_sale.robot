@@ -1,10 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Відкрити вікна для всіх користувачів
+Suite Setup  Створити словник
 Suite Teardown  Suite Postcondition
-Test Teardown  Run Keywords
-...  Log Location
-...  AND  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
@@ -22,13 +20,12 @@ ${webClient loading}                id=LoadingPanel
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
-	Switch Browser  tender_owner
+	Підготувати організатора
 	Run Keyword If  '${where}' == 'prod'  Змінити групу  Організатор. Реализация державного майна
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
 
 	Вибрати тип процедури  ${type_dict['${type}']}
-	Заповнити auctionPeriod.startDate
 	Заповнити value.amount
 	Заповнити minimalStep.percent
 	Заповнити title
@@ -51,10 +48,13 @@ ${webClient loading}                id=LoadingPanel
 	...  AND  Заповнити tender.period
 	...  AND  Змінити мінімальну кількусть учасників  1
 
+	Заповнити auctionPeriod.startDate
+
 	Зберегти чернетку
 	Оголосити тендер
 	Отримати та зберегти tender_id
 	Звебегти дані в файл
+	Close Browser
 
 
 If skipped create tender
@@ -66,11 +66,9 @@ If skipped create tender
 
 Знайти тендер усіма користувачами
 	[Tags]  create_tender  get_tender
-	[Template]  Знайти тендер користувачем
-	tender_owner
-	#viewer
-	provider1
-	provider2
+	Підготувати учасників
+	Знайти тендер користувачем	provider1
+	Знайти тендер користувачем	provider2
 
 
 Подати заявку на участь в тендері першим учасником
@@ -82,7 +80,6 @@ If skipped create tender
 
 Підтвердити заявки на участь
 	[Tags]  create_tender  get_tender
-	Switch Browser  tender_owner
 	Підтвердити заявку  ${data['tender_id']}  Для ФГИ
 
 
@@ -90,6 +87,8 @@ If skipped create tender
 	[Tags]  create_tender  get_tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
+	\  Reload Page
+	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
@@ -104,30 +103,38 @@ If skipped create tender
 	\  Wait Until Keyword Succeeds  10m  30s  Перевірити статус тендера  Аукціон
 
 
-Перевірити
+Отримати поcилання на участь в аукціоні
+	[Tags]  create_tender  get_tender
+	debug
+
 
 
 *** Keywords ***
-Відкрити вікна для всіх користувачів
+Підготувати організатора
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...  Start  Bened  tender_owner
 	...  AND  Go Back
-#	...  AND  Start  viewer_test  viewer
-	...  AND  Start  user1  provider1
-	...  AND  Start  user2  provider2
-#	...  AND  No Operation
 	...  ELSE IF  '${where}' == 'prod'  Run Keywords
 	...  Start  fgv_prod_owner  tender_owner
 	...  AND  Go Back
-#	...  AND  Start  viewer_prod  viewer
-	...  AND  Start  prod_provider1  provider1
-#	...  AND  Start  prod_provider2  provider2
+
+
+Підготувати учасників
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...       Start  user1  provider1
+	...  AND  Start  user2  provider2
+	...  ELSE IF  '${where}' == 'prod'  Run Keywords
+	...       Start  prod_provider1  provider1
+	...  AND  Start  prod_provider2  provider2
+
+
+Створити словник
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  15  minutes
+	${startDate}  get_time_now_with_deviation  18  minutes
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
@@ -183,7 +190,7 @@ If skipped create tender
 
 
 Отримати та зберегти tender_id
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[3]  text
 	Should Not Be Equal  ${tender_id}  ${EMPTY}
 	Set To Dictionary  ${data}  tender_id=${tender_id}
 
@@ -302,3 +309,4 @@ If skipped create tender
 	${dictionary}  Create Dictionary  name=${name}
 	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
 	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
+
