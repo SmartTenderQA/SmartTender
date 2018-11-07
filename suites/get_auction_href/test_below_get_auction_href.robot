@@ -206,13 +206,6 @@ If skipped create tender
     Заповнити текстове поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
-Отримати tender_uaid щойно стореного тендера
-    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Scroll Page To Element XPATH  ${find tender field}
-    ${uaid}  Get Text  ${find tender field}/a
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-
-
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
     wait until keyword succeeds  15m  5s  Перевірити статус тендера  Прийом пропозицій
@@ -244,4 +237,4 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
     Дочекатися статусу тендера  Аукціон
-    Отримати посилання на аукціон учасником
+    Отримати посилання на аукціон учасником  ${role}
