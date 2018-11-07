@@ -257,6 +257,7 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
     Дочекатися статусу тендера  Прийом пропозицій
+    Sleep  3m
     Подати пропозицію учасником
 
 
