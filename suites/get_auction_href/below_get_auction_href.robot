@@ -101,7 +101,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  17  minutes
+    ${value}  get_time_now_with_deviation  32  minutes
     ${new_date}  get_only_numbers  ${value}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input    ${new_date}
@@ -109,7 +109,7 @@ If skipped create tender
 
 Заповнити contact для tender
     ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     ${value}  Create Dictionary  name=${name}
     ${contactPoint}  Create Dictionary  contactPerson=${value}
@@ -170,14 +170,14 @@ If skipped create tender
 
 Заповнити id для item
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  id  ${name}
 
 
 Заповнити unit.name для item
     ${input}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  unit  ${name}
 
@@ -197,7 +197,7 @@ If skipped create tender
 
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  city  ${name}
 
