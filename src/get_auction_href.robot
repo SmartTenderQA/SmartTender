@@ -49,7 +49,8 @@
 
 Отримати URL для участі в аукціоні
 	${selector}  Set Variable  //*[@data-qa="link-participate"]
-	Wait Until Element Is Visible  ${selector}  120
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
 	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
 	Run Keyword If  '${auction_href}' == 'None'  Отримати URL для участі в аукціоні
 	[Return]  ${auction_href}
