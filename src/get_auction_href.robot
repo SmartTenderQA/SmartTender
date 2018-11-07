@@ -44,6 +44,16 @@
 	[Return]  ${auction_href}
 
 
+Отримати URL на перегляд
+	${selector}  Set Variable  //*[@data-qa="link-view"]
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
+	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
+	Run Keyword If  '${auction_href}' == 'None'  Отримати URL на перегляд
+	[Return]  ${auction_href}
+
+
+
 Отримати посилання на перегляд аукціону користувачем
 	Reload Page
 	Натиснути кнопку "До аукціону"

@@ -100,12 +100,35 @@ If skipped create tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	\  Wait Until Keyword Succeeds  10m  30s  Перевірити статус тендера  Аукціон
+	\  Wait Until Keyword Succeeds  10m  3s  Перевірити статус тендера  Аукціон
 
 
-Отримати поcилання на участь в аукціоні
+Отримати поcилання на участь та перегляд аукціону
 	[Tags]  create_tender  get_tender
-	debug
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Натиснути кнопку "До аукціону"
+	\  ${auction_participate_href}  Отримати URL для участі в аукціоні
+	\  ${auction_href}  			Отримати URL на перегляд
+
+
+
+Зберегти пряме посілання на тендер
+	[Tags]  create_tender  get_tender
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+	Close All Browsers
+
+
+Отримати поcилання на перегляд аукціону
+	[Tags]  create_tender  get_tender
+	[Setup]  Run Keywords  Підготувати організатора  Підготувати глядачів
+	:FOR  ${i}  IN  tender_owner  provider3  viewer
+	\  Switch Browser  ${i}
+	\  Go To  ${data['tender_href']}
+	\  Натиснути кнопку "До аукціону"
+	\  ${auction_href}  Отримати URL на перегляд
+	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
 
 
 
@@ -126,6 +149,12 @@ If skipped create tender
 	...  ELSE IF  '${where}' == 'prod'  Run Keywords
 	...       Start  prod_provider1  provider1
 	...  AND  Start  prod_provider2  provider2
+
+
+Підготувати глядачів
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...       Start  user3  provider3
+	...  AND  Start  viewer_test  viewer
 
 
 Створити словник
