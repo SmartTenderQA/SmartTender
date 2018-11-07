@@ -123,7 +123,7 @@ Resource  ../loading.robot
 Заповнити та перевірити поле с датою
 	[Arguments]  ${field_name}  ${time}
 	${text}  Run Keyword If  "${site}" == "prod"  convert_data_for_web_client  ${time}
-	...  ELSE  "${site}" == "test"  Set Variable  ${time}
+	...  ELSE IF  "${site}" == "test"  Set Variable  ${time}
 	# очистити поле с датою
 	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input
 	Click Element  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input/../following-sibling::*
@@ -243,6 +243,11 @@ Resource  ../loading.robot
 	Wait Until Element Is Not Visible  ${selector}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Підтвердити повідомлення про перевірку публікації документу за необхідністю
+	Ignore WebClient Error
+	Перевірка на успішність публікації тендера
+
+
+Перевірка на успішність публікації тендера
 	${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@id="IMMessageBox_PWH-1T"]
 	Run Keyword If  ${status}  Fatal Error  Тендер не опубліковано
 
@@ -261,7 +266,6 @@ Ignore WebClient Error
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Click Element  ${OK button}
 	...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-	...  Відкрити сторінку Продаж/Оренда майна(тестові)
 
 
 Заповнити Поле
