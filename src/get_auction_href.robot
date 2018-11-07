@@ -28,6 +28,7 @@
 	${auction_href}  Отримати URL для участі в аукціоні
 	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
 
+
 Отримати посилання на участь в аукціоні користквачем
     Reload Page
 	Натиснути кнопку "До аукціону"

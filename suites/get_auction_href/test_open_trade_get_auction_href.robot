@@ -52,7 +52,7 @@ If skipped create tender
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Подати пропозицію учасниками
+	[Template]  Прийняти участь у тендері учасником
 	provider1
 	provider2
 
@@ -200,18 +200,22 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+    wait until keyword succeeds  15m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
+    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
 
 
-Подати пропозицію учасниками
+Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
-	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+    Дочекатись дати початку періоду прийому пропозицій
+    Подати пропозицію учасником
+
+
+Подати пропозицію учасником
 	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1

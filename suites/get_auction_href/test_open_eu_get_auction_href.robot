@@ -47,7 +47,7 @@ If skipped create tender
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Подати пропозицію учасниками
+	[Template]  Прийняти участь у тендері учасником
 	provider1
 	provider2
 
@@ -215,26 +215,12 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+    wait until keyword succeeds  15m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
-
-
-Підтвердити прекваліфікацію учасників
-    Switch Browser  tender_owner
-    Go To  https://test.smarttender.biz/webclient/(S(ymhauxbniw5u1q4r0utic40a))/?testmode=1&proj=it_uk&tz=2
-	Дочекатись закінчення загрузки сторінки(webclient)
-	Wait Until Keyword Succeeds  60  3  Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
-    Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
-    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
-    :FOR  ${i}  IN RANGE  1  ${count}+1
-    \  Надати рішення про допуск до аукціону учасника  ${i}
-
+    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
@@ -267,11 +253,14 @@ If skipped create tender
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
-
-Подати пропозицію учасниками
+Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
-	wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+    Дочекатись дати початку періоду прийому пропозицій
+    Подати пропозицію учасником
+
+
+Подати пропозицію учасником
 	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
