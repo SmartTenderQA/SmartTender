@@ -11,7 +11,6 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	debug
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
@@ -77,12 +76,12 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
     Start  Bened  tender_owner
     Set Window Size  1280  1024
-    #Start  viewer_test  viewer
-    #Set Window Size  1280  1024
-    #Start  user1  provider1
-    #Set Window Size  1280  1024
-    #Start  user2  provider2
-    #Set Window Size  1280  1024
+    Start  viewer_test  viewer
+    Set Window Size  1280  1024
+    Start  user1  provider1
+    Set Window Size  1280  1024
+    Start  user2  provider2
+    Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
