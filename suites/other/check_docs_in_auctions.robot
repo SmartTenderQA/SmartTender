@@ -301,7 +301,7 @@ Setup
 
 Виконати перевірку файлів торгів prozorro
   [Arguments]  ${doc_number}
-  ${selector}  Set Variable  (//*[@data-qa="file-preview"])[${doc_number}]
+  ${selector}  Set Variable  (//*[@data-qa="file-name"])[${doc_number}]/following::*[@data-qa="file-preview"]
   :FOR  ${i}  IN RANGE  10
   \  Open Button  ${selector}  not_ip
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
