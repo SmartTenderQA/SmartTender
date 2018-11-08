@@ -192,7 +192,7 @@ Setup
   [Return]  ${move_next}
 
 
-Відкрити сторінку тендера
+Відкрити сторінку тендераcom
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  xpath=(//div[contains(@class, "filename")])
   ${button_selector}  Set Variable  xpath=(//a[contains(@class, "analysis-button")])[${tender_number}]
