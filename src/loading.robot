@@ -4,6 +4,7 @@ ${webClient loading}                //*[contains(@class, 'LoadingPanel')]
 ${circle loading}                   css=.loading_container .sk-circle
 ${skeleton loading}                 css=.skeleton-wrapper
 ${sales spin}                       css=.ivu-spin
+${docs spin}                        //div[contains(@style, "loading")]
 
 *** Keywords ***
 Дочекатись закінчення загрузки сторінки
@@ -24,6 +25,10 @@ ${sales spin}                       css=.ivu-spin
 
 Дочекатись закінчення загрузки сторінки(sales spin)
   Дочекатись закінчення загрузки сторінки по елементу  ${sales spin}
+
+
+Дочекатись загрузки документів в тендері
+  Дочекатись закінчення загрузки сторінки по елементу  ${docs spin}
 
 
 ###*** Keywords ***###
