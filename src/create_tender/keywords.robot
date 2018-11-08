@@ -288,13 +288,14 @@ Ignore WebClient Error
 
 
 Отримати tender_uaid та tender_href щойно стореного тендера
-    ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
+    ${find tender field}  Set Variable  (//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
     Scroll Page To Element XPATH  ${find tender field}
     ${uaid}  Get Text  ${find tender field}/a
-    ${href}  Get Element Attribute  ${find tender field}/following-sibling::td/a  href
+    ${href}  Get Element Attribute
+    ...  ${find tender field}/following-sibling::td/a|${find tender field}/preceding-sibling::td/a  href
     Set To Dictionary  ${data}  tender_uaid  ${uaid}
     Set To Dictionary  ${data}  tender_href  ${href}
-
+    Log  ${href}  WARN
 
 
 Оголосити закупівлю

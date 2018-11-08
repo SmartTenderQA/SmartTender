@@ -34,7 +34,7 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Підготувати учасників
+Підготувати учасників до участі в тендері
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  user1  provider1
@@ -55,7 +55,7 @@ If skipped create tender
     Підтвердити прекваліфікацію учасників
 
 
-Підготувати учасників
+Підготувати учасника для отримання ссилки на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  user1  provider1
@@ -67,7 +67,7 @@ If skipped create tender
 	Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
-Підготувати учасників
+Підготувати користувачів для отримання ссилки на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  viewer_test  viewer

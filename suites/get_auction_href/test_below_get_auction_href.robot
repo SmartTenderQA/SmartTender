@@ -43,7 +43,6 @@ If skipped create tender
     Start  user2  provider2
 
 
-
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
 	[Template]  Прийняти участь у тендері учасником
