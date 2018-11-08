@@ -147,7 +147,7 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
-	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
