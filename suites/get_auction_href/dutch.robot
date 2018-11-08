@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Відкрити вікна для всіх користувачів
+Suite Setup  Створити словник для теста
 Suite Teardown  Suite Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
@@ -18,6 +18,8 @@ ${webClient loading}                id=LoadingPanel
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
+	Start  fgv_prod_owner  tender_owner
+	Go Back
 	Switch Browser  tender_owner
 	Sleep  2
 	Відкрити сторінку для створення аукціону на продаж
@@ -50,37 +52,34 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender
-	[Template]  Знайти тендер користувачем
-	tender_owner
-	viewer
-	provider1
-	provider2
+Знайти тендер учасником
+	Start  prod_provider1  provider1
+	Знайти тендер користувачем	provider1
 
 
 Подати заявку на участь в тендері першим учасником
-	[Tags]  create_tender  get_tender1
 	Switch Browser  provider1
 	Пройти кваліфікацію для подачі пропозиції
 
 
 Підтвердити заявки на участь
-	[Tags]  create_tender  get_tender
 	Switch Browser  tender_owner
 	Підтвердити заявку  ${data['auctionID']}
 
 
 Отримати поcилання на участь в аукціоні першим учасником
-	[Tags]  create_tender  get_tender
 	Switch Browser  provider1
-	${auction_href}  Отримати посилання на участь в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
-	Go Back
+	Зберегти пряме посилання на тендер
+	Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_href}  Run Keyword And Expect Error  *  Отримати URL на перегляд
+	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Close Browser
 
 
 Неможливість отримати поcилання на участь в аукціоні
-	[Tags]  create_tender  get_tender
+	[Setup]  Run Keywords  Start  viewer_prod  viewer
+	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
 	tender_owner
@@ -88,12 +87,7 @@ If skipped create tender
 
 
 *** Keywords ***
-Відкрити вікна для всіх користувачів
-	Start  fgv_prod_owner  tender_owner
-	Go Back
-	Start  viewer_prod  viewer
-	Start  prod_provider1  provider1
-	Start  prod_provider2  provider2
+Створити словник для теста
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 
@@ -123,9 +117,9 @@ If skipped create tender
 	[Arguments]  ${user}
 	Switch Browser  ${user}
 	Reload Page
-	Run Keyword And Expect Error
-	...  Element '//button[@type="button" and contains(., "До аукціону")]' did not appear in 5 seconds.
-	...  Отримати посилання на участь в аукціоні
+	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
+	...  Натиснути кнопку "До аукціону"
+	...  AND  Отримати URL для участі в аукціоні
 
 
 Отримати посилання на участь в аукціоні
