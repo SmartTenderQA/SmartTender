@@ -198,20 +198,10 @@ def get_truth(left, oper, right):
     return ops[oper](left, right)
 
 
-def sleep_to(time):
-    end = (parse(time)).replace(tzinfo=None)
-    now = datetime.now()
-    subtract = end - now
-    return subtract.seconds, now
-
-
-def wait_to_date(date_stamp):
-    date = parse(date_stamp)
+def wait_to_date(date_stamp, day_first=True):
+    date = parse(date_stamp, dayfirst=day_first)
     now = datetime.now()
     wait_seconds = (date - now).total_seconds()
-    wait_seconds += 2
-    if wait_seconds < 0:
-        return 0
     return wait_seconds
 
 

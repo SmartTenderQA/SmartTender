@@ -172,6 +172,6 @@ Check Prev Test Status
 
 
 Дочекатись дати
-    [Arguments]  ${date}
-    ${sleep}=  wait_to_date  ${date}
+    [Arguments]  ${date}  ${day_first}=${True}
+    ${sleep}=  wait_to_date  ${date}  ${day_first}
     Sleep  ${sleep}

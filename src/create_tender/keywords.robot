@@ -78,7 +78,7 @@ Resource  ../loading.robot
 Пошук об'єкта у webclient по полю
 	[Arguments]  ${field}  ${value}
 	${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
-	Click Element  ${find tender field}
+	Wait Until Keyword Succeeds  10  1  Click Element  ${find tender field}
 	Input Text  ${find tender field}  ${value}
 	${get}  Get Element Attribute  ${find tender field}  value
 	${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}

@@ -64,13 +64,13 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер усіма користувачами
+Знайти тендер учасниками
 	Підготувати учасників
 	Знайти тендер користувачем	provider1
 	Знайти тендер користувачем	provider2
 
 
-Подати заявку на участь в тендері першим учасником
+Подати заявки на участь в тендері
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Пройти кваліфікацію для подачі пропозиції
@@ -91,26 +91,21 @@ If skipped create tender
 	\  Go Back
 
 
-Дочекатися початку аукціону
-	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	\  Wait Until Keyword Succeeds  10m  3s  Перевірити статус тендера  Аукціон
+Дочекатися початку аукціону першим учасником
+	Close Browser
+	Switch Browser  provider1
+	Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	Wait Until Keyword Succeeds  10m  3s  Перевірити статус тендера  Аукціон
 
 
-Отримати поcилання на участь та перегляд аукціону
-	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Натиснути кнопку "До аукціону"
-	\  ${auction_participate_href}  Отримати URL для участі в аукціоні
-	\  ${auction_href}  			Отримати URL на перегляд
-
-
-
-Зберегти пряме посілання на тендер
-	${tender_href}  Get Location
-	Set To Dictionary  ${data}  tender_href  ${tender_href}
-	Close All Browsers
+Отримати поcилання на участь та перегляд аукціону першим учасником
+	Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_href}  			Отримати URL на перегляд
+	Set Global Variable  		${auction_href}
+	Зберегти пряме посилання на тендер
+	Перевірити сторінку участі в аукціоні
+	Close Browser
 
 
 Отримати поcилання на перегляд аукціону
@@ -121,6 +116,7 @@ If skipped create tender
 	\  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
 	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
+
 
 
 *** Keywords ***
@@ -154,7 +150,7 @@ If skipped create tender
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  38  minutes
+	${startDate}  get_time_now_with_deviation  11  minutes
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
@@ -330,3 +326,22 @@ If skipped create tender
 	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
 	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
 
+
+Зберегти пряме посилання на тендер
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+	Close All Browsers
+
+
+Перевірити сторінку участі в аукціоні
+	debug
+#	Go To  ${auction_href}
+#	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
+#	Location Should Contain  bidder_id=
+#	Sleep  2
+#	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
+#	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
+#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
+#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
+#	Element Should Contain  //h4  Вхід на даний момент закритий.
