@@ -10,9 +10,9 @@
 
 Додати файл для подачі заявки
 	${selector}  Set Variable  //input[@type='file' and @accept]
-	${n}  Get Element Count  ${selector}
-	:FOR  ${i}  IN  ${n}
-	\  Wait Until Page Contains Element  ${selector}
+	Wait Until Page Contains Element  ${selector}
+	${n}  Get Element Count  ${selector}/..
+	:FOR  ${i}  IN RANGE  ${n}
     \  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
 	\  Choose File  ${selector}  ${file_path}
 
