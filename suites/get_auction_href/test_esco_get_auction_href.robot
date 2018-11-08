@@ -224,7 +224,7 @@ Fill ESCO
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Участик"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)

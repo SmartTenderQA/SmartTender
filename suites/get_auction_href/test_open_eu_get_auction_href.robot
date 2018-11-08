@@ -277,10 +277,9 @@ If skipped create tender
     Підтвердити закінчення розгляду учасників та перейти на наступну стадію
 
 
-
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Участик"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)
