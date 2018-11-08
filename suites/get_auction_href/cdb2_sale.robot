@@ -65,26 +65,22 @@ If skipped create tender
 
 
 Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender
 	Підготувати учасників
 	Знайти тендер користувачем	provider1
 	Знайти тендер користувачем	provider2
 
 
 Подати заявку на участь в тендері першим учасником
-	[Tags]  create_tender  get_tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Пройти кваліфікацію для подачі пропозиції
 
 
 Підтвердити заявки на участь
-	[Tags]  create_tender  get_tender
 	Підтвердити заявку  ${data['tender_id']}  Для ФГИ
 
 
 Подати пропозицію
-	[Tags]  create_tender  get_tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Reload Page
@@ -96,7 +92,6 @@ If skipped create tender
 
 
 Дочекатися початку аукціону
-	[Tags]  create_tender  get_tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Дочекатись дати  ${data['auctionPeriods']['startDate']}
@@ -104,7 +99,6 @@ If skipped create tender
 
 
 Отримати поcилання на участь та перегляд аукціону
-	[Tags]  create_tender  get_tender
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Натиснути кнопку "До аукціону"
@@ -114,22 +108,19 @@ If skipped create tender
 
 
 Зберегти пряме посілання на тендер
-	[Tags]  create_tender  get_tender
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
 	Close All Browsers
 
 
 Отримати поcилання на перегляд аукціону
-	[Tags]  create_tender  get_tender
 	[Setup]  Run Keywords  Підготувати організатора  Підготувати глядачів
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Switch Browser  ${i}
 	\  Go To  ${data['tender_href']}
-	\  Натиснути кнопку "До аукціону"
+	\  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
 	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
-
 
 
 *** Keywords ***
@@ -163,7 +154,7 @@ If skipped create tender
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  18  minutes
+	${startDate}  get_time_now_with_deviation  38  minutes
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}

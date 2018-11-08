@@ -35,6 +35,12 @@
 	Click Element  //*[@data-qa="button-poptip-participate-view"]
 
 
+Натиснути кнопку "Перегляд аукціону"
+	${selector}  Set Variable  //*[@data-qa="button-poptip-view"]
+	Wait Until Element Is Visible  ${selector}
+	Click Element  ${selector}
+
+
 Отримати URL для участі в аукціоні
 	${selector}  Set Variable  //*[@data-qa="link-participate"]
 	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
