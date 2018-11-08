@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Відкрити вікна для всіх користувачів
+Suite Setup     Авторизуватися організатором
 Suite Teardown  Suite Postcondition
 Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
@@ -37,27 +37,32 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender_data
-	[Template]  Знайти тендер користувачем
-	tender_owner
-	viewer
-	provider1
-	provider2
+Підготувати учасників до участі в тендері
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  prod_provider1  provider1
+    Start  prod_provider2  provider2
 
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Прийняти участь у тендері учасником
-	provider1
-	provider2
+	Дочекатись дати  ${data['tenderPeriod']['endDate']}
+	Прийняти участь у тендері учасником  provider1
+	Прийняти участь у тендері учасником  provider2
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	[Template]  Перевірити отримання ссилки на участь в аукціоні
-	provider1
-	provider2
+	Дочекатися статусу тендера  Аукціон
+    Перевірити отримання ссилки на участь в аукціоні  provider1
+
+
+Підготувати користувачів для отримання ссилки на аукціон
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  viewer_prod  viewer
+    Start  prod_owner  tender_owner
+    Start  test_it_ua  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -65,21 +70,13 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
-
-
+	provider3
 
 
 
 *** Keywords ***
-Відкрити вікна для всіх користувачів
+Авторизуватися організатором
     Start  prod_owner  tender_owner
-    Set Window Size  1280  1024
-    Start  viewer_prod  viewer
-    Set Window Size  1280  1024
-    Start  prod_provider1  provider1
-    Set Window Size  1280  1024
-    Start  prod_provider2  provider2
-    Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
@@ -227,13 +224,14 @@ If skipped create tender
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
+    Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Sleep  3m
     Подати пропозицію учасником
 
 
 Подати пропозицію учасником
-	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
 	Run Keyword And Ignore Error  Підтвердити відповідність
@@ -244,5 +242,30 @@ If skipped create tender
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
     Switch Browser  ${role}
-    Дочекатися статусу тендера  Аукціон
-    Отримати посилання на аукціон учасником  ${role}
+    Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+
+
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Підтвердити повідомлення про умови проведення аукціону
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
+	Location Should Contain  bidder_id=
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
+
+
+Перевірити можливість отримати посилання на аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Go to  ${data['tender_href']}
+	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
+	...  Натиснути кнопку "До аукціону"
+	...  AND  Отримати URL для участі в аукціоні
