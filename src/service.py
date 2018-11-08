@@ -50,7 +50,7 @@ def get_tender_variables(tender_type, tender_sign):
             'Confidentiality': False,
             'Sub information': False,
         },
-        'negotiation_procedure': {
+        'above_threshold_ua_defense': {
             'Amount': True,
             'Conformity': True,
             'Document type': True,
@@ -102,7 +102,7 @@ def convert_tender_type(tender_type):
         'open_trade': u'Відкриті торги',
         'open_trade_eng': u'Відкриті торги з публікацією англійською мовою',
         'below_threshold': u'Допорогові закупівлі',
-        'negotiation_procedure': u'Переговорна процедура для потреб оборони',
+        'above_threshold_ua_defense': u'Переговорна процедура для потреб оборони',
         'competitive_dialog': u'Конкурентний діалог 1-ий етап',
         'competitive_dialog_eng': u'Конкурентний діалог з публікацією англійською мовою 1-ий етап',
         'ESCO': u'Відкриті торги для закупівлі енергосервісу',
@@ -198,20 +198,10 @@ def get_truth(left, oper, right):
     return ops[oper](left, right)
 
 
-def sleep_to(time):
-    end = (parse(time)).replace(tzinfo=None)
-    now = datetime.now()
-    subtract = end - now
-    return subtract.seconds, now
-
-
-def wait_to_date(date_stamp):
-    date = parse(date_stamp)
+def wait_to_date(date_stamp, day_first=True):
+    date = parse(date_stamp, dayfirst=day_first)
     now = datetime.now()
     wait_seconds = (date - now).total_seconds()
-    wait_seconds += 2
-    if wait_seconds < 0:
-        return 0
     return wait_seconds
 
 

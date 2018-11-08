@@ -156,9 +156,24 @@ Check Prev Test Status
   Run Keyword If  '${status}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
 
 
+
+Дочекатися статусу тендера
+	[Arguments]  ${tender status}
+	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}
+
+
+Перевірити статус тендера
+    [Arguments]  ${tender_status}
+    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
+    Reload Page
+    Wait Until Element Is Visible  ${selector}  20
+    ${status}  Get Text  ${selector}
+    Should Be Equal  '${status}'  '${tender_status}'
+
+
 Дочекатись дати
-    [Arguments]  ${date}
-    ${sleep}=  wait_to_date  ${date}
+    [Arguments]  ${date}  ${day_first}=${True}
+    ${sleep}=  wait_to_date  ${date}  ${day_first}
     Sleep  ${sleep}
 
 
@@ -169,3 +184,4 @@ Check Prev Test Status
 
 Видалити кнопку "Замовити звонок"
   Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
+

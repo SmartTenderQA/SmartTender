@@ -10,7 +10,7 @@
 
 
 Додати файл для подачі заявки
-  Wait Until Page Contains Element  xpath=//input[@type='file' and @accept]
+  Wait Until Page Contains Element  xpath=//input[@type='file' and @accept]  30
   ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
   Choose File  xpath=//input[@type='file' and @accept]  ${file_path}
 
@@ -35,23 +35,23 @@
 #						Web Client								#
 #################################################################
 Підтвердити заявку
-	[Arguments]  ${tender_uaid/tender_type}  ${type}=${EMPTY}
+	[Arguments]  ${tender_uaid/tender_type}  ${type}=для ФГВ
 	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...  Go To  http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${tender_uaid/tender_type}","SUCCESS":"true"}&ticket=
-	...  AND  Wait Until Page Contains  True
+	...  Go To  http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=
+	...  AND  Element Should Contain  css=.text  True
 	...  AND  Go Back
 	...  ELSE
 	...  Підтвердити заявки на продуктиві організатором ${type}
 
 
-Підтвердити заявки на продуктиві організатором
+Підтвердити заявки на продуктиві організатором для ФГВ
     ${save location}  Get Location
 	Go To  https://smarttender.biz/webclient/(S(53j1ylozgwqn1knunzwbpbvr))/?tz=3
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
 	Відкрити вікно підтвердження заявок
-	Пошук об'єкта у webclient по полю  Найменування лоту  ${data['title']}
-	Підтвердити всі заявки
+	Wait Until Keyword Succeeds  20  2  Пошук об'єкта у webclient по полю  Найменування лоту  ${data['title']}
+	Підтвердити всі заявки для ФГВ
 	Go To  ${save location}
 
 
@@ -61,11 +61,10 @@
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
 	Відкрити вікно підтвердження заявок
-	debug
-#	Активувати вкладку  Заявки на участие в торгах ${type}  /preceding-sibling::*[1]
-#	Пошук об'єкта у webclient по полю  ${data['title']}  Найменування лоту
-#	Підтвердити всі заявки для ФГИ
-#	Go To  ${save location}
+	Активувати вкладку  Заявки на участие в торгах ФГИ  /preceding-sibling::*[1]
+	Wait Until Keyword Succeeds  20  2  Пошук об'єкта у webclient по полю ФГИ  Найменування лоту  ${data['title']}
+	Підтвердити всі заявки для ФГИ
+	Go To  ${save location}
 
 
 Відкрити вікно підтвердження заявок
@@ -74,7 +73,7 @@
 	Дочекатись закінчення загрузки сторінки(webclient)
 
 
-Підтвердити всі заявки
+Підтвердити всі заявки для ФГВ
 	${tab}  Set Variable  (//*[@class="gridbox"])[1]
 	${row}  Set Variable  ${tab}//tr[contains(@class, 'Row')]
 	${n}  Get Element Count  ${row}
@@ -92,7 +91,7 @@
 
 
 Підтвердити всі заявки для ФГИ
-	${tab}  Set Variable  (//td[contains(text(), 'Заявки на участие в торгах ФГВ')]/ancestor::td[@id])[last()]//div[contains(@id, 'MainSted2PageControl') and @style='']
+	${tab}  Set Variable  (//*[@class="gridbox"])[2]
 	${row}  Set Variable  ${tab}//tr[contains(@class, 'Row')]
 	${n}  Get Element Count  ${row}
 	:FOR  ${i}  IN RANGE  1  ${n}+1
@@ -105,10 +104,5 @@
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Click Element  //*[@id='pcModalMode_PW-1' and contains(., 'Решение')]//li[contains(., 'Принять')]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Ігнорувати гарантійний внесок
+	\  Закрити валідаційне вікно  Внимание! Гарантийного взноса недостаточно для подачи предложения!  Так
 	\  Element Should Contain  ${row}[${i}]//td[2]  Принята
-
-
-Ігнорувати гарантійний внесок
-	Run Keyword And Ignore Error
-	...  Закрити валідаційне вікно  Внимание! Гарантийного взноса недостаточно для подачи предложения!  Принять

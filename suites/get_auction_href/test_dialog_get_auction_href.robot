@@ -6,27 +6,20 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-*** Variables ***
-&{mode}
-...         open_trade=Відкриті торги
-...         defense=Переговорна процедура для потреб оборони
-
-
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v type:$type -i create_tender suites/get_auction_href/test_open_trade_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_dialog_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  ${mode.${type}}
+  	Вибрати тип процедури  Конкурентний діалог 1-ий етап
   	Заповнити endDate періоду пропозицій
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
   	Заповнити title для tender
   	Заповнити description для tender
   	Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
@@ -54,6 +47,18 @@ If skipped create tender
 	Прийняти участь у тендері учасником  provider2
 
 
+Підтвердити прекваліфікацію для доступу до аукціону організатором
+    [Tags]  create_tender  get_tender_data
+    Дочекатись початку періоду перкваліфікації
+    Підтвердити прекваліфікацію учасників
+
+
+Підготувати учасників для отримання посилання на аукціон
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
+
+
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
 	Дочекатись початку аукціону
@@ -77,6 +82,7 @@ If skipped create tender
 
 
 
+
 *** Keywords ***
 Авторизуватися організатором
     Start  Bened  tender_owner
@@ -85,7 +91,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  22  minutes
+    ${date}  get_time_now_with_deviation  32  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -212,6 +218,59 @@ If skipped create tender
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
+
+
+Підтвердити прекваліфікацію учасників
+    Close All Browsers
+    Start  Bened  tender_owner
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    :FOR  ${i}  IN RANGE  1  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
+    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+
+
+Надати рішення про допуск до аукціону учасника
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    Click Element  ${selector}
+    Sleep  .5
+    Натиснути кнопку Просмотр (F4)
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  Відіслати рішення
+    Click Element  //*[@title="Допустити до аукціону"]
+    Sleep  .5
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
+    Sleep  .5
+    Click Element  //*[@title="Відіслати рішення"]
+    Погодитись з рішенням прекваліфікації
+    Відмовитись від накладання ЕЦП на кваліфікацію
+
+
+Погодитись з рішенням прекваліфікації
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відмовитись від накладання ЕЦП на кваліфікацію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на кваліфікацію?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено? Перевести закупівлю на наступну стадію?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити отримання ссилки на участь в аукціоні

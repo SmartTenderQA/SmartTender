@@ -69,8 +69,7 @@
 
 Закрити валідаційне вікно
 	[Arguments]  ${title}  ${response}
-	${button}  Set Variable
-	...  //*[contains(@class, "headerText") and contains(text(), "Зберегти документ?")]/ancestor::*//span[contains(text(), '${response}')]
+	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${response}')]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Wait Until Element Is Not Visible  ${button}
@@ -99,6 +98,22 @@
 
 
 ###############################################
+#				Shift+F4   					  #
+###############################################
+Натиснути кнопку Перечитать (Shift+F4)
+    Click Element  //*[@title="Перечитать (Shift+F4)"]|//*[@title="Перечитати (Shift+F4)"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+###############################################
+#			       F4   					  #
+###############################################
+Натиснути кнопку Просмотр (F4)
+    Click Element  //*[@title="Просмотр (F4)"]|//*[@title="Перегляд (F4)"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+###############################################
 #				Other   					  #
 ###############################################
 Додати документ до тендара власником (webclient)
@@ -107,8 +122,8 @@
 
 
 Перейти на вкладку документи (webclient)
-    Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
-    Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]
+    Wait Until Keyword Succeeds  30  2  Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
+    Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]  15
 
 
 Додати документ власником
@@ -143,5 +158,14 @@
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@title="OK"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
 
 

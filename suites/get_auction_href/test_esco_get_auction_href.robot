@@ -6,26 +6,18 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-*** Variables ***
-&{mode}
-...         open_trade=Відкриті торги
-...         defense=Переговорна процедура для потреб оборони
-
-
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v type:$type -i create_tender suites/get_auction_href/test_open_trade_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_esco_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  ${mode.${type}}
-  	Заповнити endDate періоду пропозицій
-  	Заповнити amount для tender
-  	Заповнити minimalStep для tender
-  	Заповнити title для tender
-  	Заповнити description для tender
-  	Додати предмет в тендер
+	Заповнити endDate періоду пропозицій
+	Заповнити minimalStep для tender
+	Заповнити title для tender
+  	Заповнити title_eng для tender
+    Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
@@ -46,12 +38,25 @@ If skipped create tender
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
+    Start  user3  provider3
 
 
-Подати заявку на участь в тендері двома учасниками
+Подати заявку на участь в тендері трьома учасниками
 	[Tags]  create_tender  get_tender_data
-	Прийняти участь у тендері учасником  provider1
-	Прийняти участь у тендері учасником  provider2
+	:FOR  ${user}  IN  provider1  provider2  provider3
+	Прийняти участь у тендері учасником  ${user}
+
+
+Підтвердити прекваліфікацію для доступу до аукціону організатором
+    [Tags]  create_tender  get_tender_data
+    Дочекатись початку періоду перкваліфікації
+    Підтвердити прекваліфікацію учасників
+
+
+Підготувати учасників для отримання посилання на аукціон
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
 
 
 Отримати поcилання на участь в аукціоні для учасників
@@ -65,7 +70,7 @@ If skipped create tender
     Close All Browsers
     Start  viewer_test  viewer
     Start  Bened  tender_owner
-    Start  user3  provider3
+    Start  user4  provider4
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -73,7 +78,8 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
-	provider3
+	provider4
+
 
 
 
@@ -85,32 +91,16 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  22  minutes
+    ${date}  get_time_now_with_deviation  40  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
-
-
-Заповнити contact для tender
-    ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    ${value}  Create Dictionary  name=${name}
-    ${contactPoint}  Create Dictionary  contactPerson=${value}
-    Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
-
-
-Заповнити amount для tender
-    ${amount}  random_number  100000  100000000
-    ${value}  Create Dictionary  amount=${amount}
-    Set To Dictionary  ${data}  value  ${value}
-    Заповнити текстове поле  xpath=//*[@data-name="INITAMOUNT"]//input   ${amount}
+    Заповнити текстове поле  //*[@data-name="D_SROK"]//input  ${date}
 
 
 Заповнити minimalStep для tender
-    ${minimal_step_percent}  random_number  1  5
+    ${minimal_step_percent}  random_number  1  3
     ${value}  Create Dictionary  percent=${minimal_step_percent}
-    Set To Dictionary  ${data.value}  minimalStep  ${value}
+    Set To Dictionary  ${data}  minimalStep  ${value}
     Заповнити текстове поле  xpath=//*[@data-name="MINSTEP_PERCENT"]//input   ${minimal_step_percent}
 
 
@@ -121,22 +111,19 @@ If skipped create tender
     Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
 
 
-Заповнити description для tender
-    ${description}  create_sentence  15
-    Set To Dictionary  ${data}  description  ${description}
-    Заповнити текстове поле  xpath=//*[@data-name="DESCRIPT"]//textarea  ${description}
+Заповнити title_eng для tender
+    ${text_en}  create_sentence  5
+    ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
+    Set To Dictionary  ${data}  title_en  ${title_en}
+    Заповнити текстове поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
 
 
 Додати предмет в тендер
     Заповнити description для item
-    Заповнити quantity для item
-    Заповнити id для item
-    Заповнити unit.name для item
+    Заповнити description_eng для item
     Заповнити postalCode для item
     Заповнити streetAddress для item
     Заповнити locality для item
-    Заповнити endDate для item
-    Заповнити startDate для item
 
 
 Заповнити description для item
@@ -146,24 +133,11 @@ If skipped create tender
     Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
 
 
-Заповнити quantity для item
-    ${quantity}  random_number  1  1000
-    Set To Dictionary  ${data['item']}  quantity  ${quantity}
-    Заповнити текстове поле  xpath=//*[@data-name='QUANTITY']//input  ${quantity}
-
-
-Заповнити id для item
-    ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  id  ${name}
-
-
-Заповнити unit.name для item
-    ${input}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  unit  ${name}
+Заповнити description_eng для item
+    ${description_en}  create_sentence  5
+    ${value}  Create Dictionary  description_en=${description_en}
+    Set To Dictionary  ${data}  item  ${value}
+    Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
 
 
 Заповнити postalCode для item
@@ -186,32 +160,87 @@ If skipped create tender
     Set To Dictionary  ${data['item']}  city  ${name}
 
 
-Заповнити endDate для item
-    ${value}  get_time_now_with_deviation  2  days
-    Заповнити текстове поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
-
-
-Заповнити startDate для item
-    ${value}  get_time_now_with_deviation  1  days
-    Заповнити текстове поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
-
-
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
-    Подати пропозицію учасником
+    Sleep  2m
+    Подати пропозицію esco учасником
 
 
-Подати пропозицію учасником
-	Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-    Додати файл  1
+Подати пропозицію esco учасником
+	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Заповнити поле з ціною для першого лоту
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
+
+
+Заповнити поле з ціною для першого лоту
+    Fill ESCO  1
+
+
+Fill ESCO
+    [Arguments]  ${number_of_lot}
+    ${number_of_lot}  Evaluate  ${number_of_lot}+1
+    input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
+    input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
+
+
+Підтвердити прекваліфікацію учасників
+    Close All Browsers
+    Start  Bened  tender_owner
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    :FOR  ${i}  IN RANGE  1  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
+    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+
+
+Надати рішення про допуск до аукціону учасника
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    Click Element  ${selector}
+    Sleep  .5
+    Натиснути кнопку Просмотр (F4)
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  Відіслати рішення
+    Click Element  //*[@title="Допустити до аукціону"]
+    Sleep  .5
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
+    Sleep  .5
+    Click Element  //*[@title="Відіслати рішення"]
+    Погодитись з рішенням прекваліфікації
+    Відмовитись від накладання ЕЦП на кваліфікацію
+
+
+Погодитись з рішенням прекваліфікації
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відмовитись від накладання ЕЦП на кваліфікацію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на кваліфікацію?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено? Перевести закупівлю на наступну стадію?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити отримання ссилки на участь в аукціоні
@@ -232,8 +261,6 @@ If skipped create tender
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 

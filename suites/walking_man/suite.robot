@@ -203,12 +203,12 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 
 
 Перевірити elastic
-  [Tags]  site  -test
-  Зайти на сторінку пошуку elastic
-  Виконати пошук в elastic  бумага
-  ${status}  Run Keyword And Return Status  Page Should Contain  папір
-  Run Keyword If  ${status} == ${False}  Page Should Contain  папір
-  Очистити фільтр пошуку elastic
+	[Tags]  site  -test
+	Зайти на сторінку пошуку elastic
+	Виконати пошук в elastic  бумага
+	${status}  Run Keyword And Return Status  Page Should Contain  папір
+	Run Keyword If  not ${status}  Page Should Contain  Папір
+	Очистити фільтр пошуку elastic
 
 
 Договір

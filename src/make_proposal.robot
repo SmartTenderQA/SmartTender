@@ -11,6 +11,7 @@ ${error1}                           Не вдалося подати пропо�
 ${error2}                           Виникла помилка при збереженні пропозиції.
 ${error3}                           Непередбачувана ситуація
 ${error4}                           В даний момент вже йде подача/зміна пропозиції по тендеру від Вашої організації!
+${error5}
 ${cancellation succeed}             Пропозиція анульована.
 ${cancellation error1}              Не вдалося анулювати пропозицію.
 ${validation message}               //*[@class="ivu-modal-content"]//*[@class="ivu-modal-confirm-body"]//div[text()]
@@ -82,15 +83,19 @@ Ignore cancellation error
 
 
 Перевірити кнопку подачі пропозиції
-  [Arguments]  ${selector}=None
-  ${button}  Run Keyword If  "${selector}" == "None"
-  ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
-  ...  ELSE  Set Variable  ${selector}
-  Page Should Contain Element  ${button}
-  Open button  ${button}
-  ${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@class='modal-dialog ']//h4
-  Run Keyword If  "${status}" == "True"  Pass Execution  Прийом пропозицій завершений!
-  Location Should Contain  /edit/
+    [Arguments]  ${selector}=None
+    ${button}  Run Keyword If  "${selector}" == "None"
+    ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
+    ...  ELSE  Set Variable  ${selector}
+    Page Should Contain Element  ${button}
+    Open button  ${button}
+    Location Should Contain  /edit/
+    Wait Until Keyword Succeeds  5m  3  Перевірка на можливість подати пропозицію
+
+
+Перевірка на можливість подати пропозицію
+    Reload Page
+    Element Should Not Be Visible  //*[@class='modal-dialog ']//h4
 
 
 Подати пропозицію
