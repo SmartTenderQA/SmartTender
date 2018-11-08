@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Відкрити вікна для всіх користувачів
+Suite Setup     Авторизуватися організатором
 Suite Teardown  Suite Postcondition
 Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
@@ -36,13 +36,12 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender_data
-	[Template]  Знайти тендер користувачем
-	tender_owner
-	viewer
-	provider1
-	provider2
+Підготувати учасників
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
+    Start  user2  provider2
+
 
 
 Подати заявку на участь в тендері двома учасниками
@@ -56,7 +55,14 @@ If skipped create tender
 	[Tags]  create_tender  get_tender_data
 	[Template]  Перевірити отримання ссилки на участь в аукціоні
 	provider1
-	provider2
+
+
+Підготувати учасників
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  viewer_test  viewer
+    Start  Bened  tender_owner
+    Start  user3  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -64,19 +70,13 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
+	provider3
 
 
 
 *** Keywords ***
-Відкрити вікна для всіх користувачів
+Авторизуватися організатором
     Start  Bened  tender_owner
-    Set Window Size  1280  1024
-    Start  viewer_test  viewer
-    Set Window Size  1280  1024
-    Start  user1  provider1
-    Set Window Size  1280  1024
-    Start  user2  provider2
-    Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
@@ -219,6 +219,7 @@ If skipped create tender
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
+    Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Sleep  3m
     Подати пропозицію учасником

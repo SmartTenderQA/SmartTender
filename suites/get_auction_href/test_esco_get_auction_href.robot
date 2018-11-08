@@ -170,7 +170,8 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Sleep  2m
+    debug
     Подати пропозицію esco учасником
 
 
