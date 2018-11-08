@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Відкрити вікна для всіх користувачів
+Suite Setup     Авторизуватися організатором
 Suite Teardown  Suite Postcondition
 Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
@@ -11,7 +11,6 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-    debug
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Конкурентний діалог 1-ий етап
@@ -35,32 +34,48 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер усіма користувачами
-	[Tags]  create_tender  get_tender_data
-	[Template]  Знайти тендер користувачем
-	tender_owner
-	viewer
-	provider1
-	provider2
+Підготувати учасників
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
+    Start  user2  provider2
 
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Подати пропозицію учасниками
+	[Template]  Прийняти участь у тендері учасником
 	provider1
 	provider2
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
+    Дочекатись початку періоду перкваліфікації
+    debug
     Підтвердити прекваліфікацію учасників
+
+
+Підготувати учасників
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
+    Go to  ${data['tender_href']}
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	[Template]  Отримати посилання на аукціон учасником
-	provider1
-	provider2
+	Перевірити отримання ссилки на участь в аукціоні  provider1
+
+
+Підготувати учасників
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  viewer_test  viewer
+    Go to  ${data['tender_href']}
+    Start  Bened  tender_owner
+    Go to  ${data['tender_href']}
+    Start  user3  provider3
+    Go to  ${data['tender_href']}
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -68,19 +83,14 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
+	provider3
+
 
 
 
 *** Keywords ***
-Відкрити вікна для всіх користувачів
+Авторизуватися організатором
     Start  Bened  tender_owner
-    Set Window Size  1280  1024
-    #Start  viewer_test  viewer
-    #Set Window Size  1280  1024
-    #Start  user1  provider1
-    #Set Window Size  1280  1024
-    #Start  user2  provider2
-    #Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
@@ -199,24 +209,53 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
+    wait until keyword succeeds  15m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
+    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
+
+
+Прийняти участь у тендері учасником
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Go to  ${data['tender_href']}
+    Дочекатися статусу тендера  Прийом пропозицій
+    Sleep  3m
+    Подати пропозицію учасником
+
+
+Подати пропозицію учасником
+	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Заповнити поле з ціною  1  1
+    Додати файл  1
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+    Go Back
+
+
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Get text  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація
+
+
+Дочекатись початку аукціону
+    ${auction start date}  Get text  //*[@data-qa="auction-start"]//span[@data-qa]
+    Дочекатись дати  ${auction start date}
+    Дочекатися статусу тендера  Аукціон
 
 
 Підтвердити прекваліфікацію учасників
-    [Arguments]  ${type}
-    Switch Browser  tender_owner
-    Go To  https://smarttender.biz/webclient/
+    Close All Browsers
+    Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ (webclient)  ${type}
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Пошук тендеру по title (webclient)  ${data['title']}
     Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
-    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
     Підтвердити закінчення розгляду учасників та перейти на наступну стадію
@@ -224,31 +263,31 @@ If skipped create tender
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
-    Page Should Contain  Отправить решение
-    Click Element  //*[@title="Допустить участника к аукциону"]
+    Page Should Contain  Відіслати рішення
+    Click Element  //*[@title="Допустити до аукціону"]
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
-    Click Element  //*[@title="Отправить решение"]
+    Click Element  //*[@title="Відіслати рішення"]
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
 
 
 Погодитись з рішенням прекваліфікації
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Вы уверены в своем решении?
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Відмовитись від накладання ЕЦП на кваліфікацію
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Наложить ЭЦП на квалификацию?
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на кваліфікацію?
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
@@ -259,3 +298,10 @@ If skipped create tender
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Перевірити отримання ссилки на участь в аукціоні
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Дочекатись початку аукціону
+    Отримати посилання на аукціон учасником  ${role}
