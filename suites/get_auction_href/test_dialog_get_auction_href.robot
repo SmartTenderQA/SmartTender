@@ -43,39 +43,35 @@ If skipped create tender
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Прийняти участь у тендері учасником
-	provider1
-	provider2
+	Прийняти участь у тендері учасником  provider1
+	Прийняти участь у тендері учасником  provider2
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
     Дочекатись початку періоду перкваліфікації
-    debug
     Підтвердити прекваліфікацію учасників
 
 
-Підготувати учасника для отримання ссилки на аукціон
+Підготувати учасників для отримання посилання на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  user1  provider1
-    Go to  ${data['tender_href']}
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	Перевірити отримання ссилки на участь в аукціоні  provider1
+	Дочекатись закінчення прийому пропозицій
+	Дочекатися статусу тендера  Аукціон
+    Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Підготувати користувачів для отримання ссилки на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  viewer_test  viewer
-    Go to  ${data['tender_href']}
     Start  Bened  tender_owner
-    Go to  ${data['tender_href']}
     Start  user3  provider3
-    Go to  ${data['tender_href']}
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -104,7 +100,7 @@ If skipped create tender
 
 Заповнити contact для tender
     ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     ${value}  Create Dictionary  name=${name}
     ${contactPoint}  Create Dictionary  contactPerson=${value}
@@ -165,14 +161,14 @@ If skipped create tender
 
 Заповнити id для item
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  id  ${name}
 
 
 Заповнити unit.name для item
     ${input}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  unit  ${name}
 
@@ -192,7 +188,7 @@ If skipped create tender
 
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
+    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  city  ${name}
 
@@ -207,16 +203,6 @@ If skipped create tender
     Заповнити текстове поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
 
 
-Дочекатись дати початку періоду прийому пропозицій
-    Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  15m  30s  Перевірити статус тендера  Прийом пропозицій
-
-
-Дочекатись дати закінчення періоду прийому пропозицій
-    Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
-
-
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Switch Browser  ${role}
@@ -227,7 +213,7 @@ If skipped create tender
 
 
 Подати пропозицію учасником
-	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
+	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
 	Run Keyword And Ignore Error  Підтвердити відповідність
@@ -235,30 +221,30 @@ If skipped create tender
     Go Back
 
 
-Дочекатись початку періоду перкваліфікації
-    ${tender end date}  Get text  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
-    Дочекатись дати  ${tender end date}
-    Дочекатися статусу тендера  Прекваліфікація
-
-
-Дочекатись початку аукціону
-    ${auction start date}  Get text  //*[@data-qa="auction-start"]//span[@data-qa]
-    Дочекатись дати  ${auction start date}
-    Дочекатися статусу тендера  Аукціон
-
-
 Підтвердити прекваліфікацію учасників
+    Відкрити браузер під роллю організатора та знайти потрібний тендер
+    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    :FOR  ${i}  IN RANGE  1  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
+    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+
+
+Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    Run Keyword If  '${count}' == '0'  Run Keywords
+    ...  Sleep  30
+    ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    [Return]  ${count}
+
+
+Відкрити браузер під роллю організатора та знайти потрібний тендер
     Close All Browsers
     Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Пошук тендеру по title (webclient)  ${data['title']}
-    Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
-    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
-    :FOR  ${i}  IN RANGE  1  ${count}+1
-    \  Надати рішення про допуск до аукціону учасника  ${i}
-    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
 
 
 Надати рішення про допуск до аукціону учасника
@@ -303,5 +289,30 @@ If skipped create tender
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
     Switch Browser  ${role}
-    Дочекатись початку аукціону
-    Отримати посилання на аукціон учасником  ${role}
+    Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+
+
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Підтвердити повідомлення про умови проведення аукціону
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
+	Location Should Contain  bidder_id=
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
+
+
+Перевірити можливість отримати посилання на аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Go to  ${data['tender_href']}
+	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
+	...  Натиснути кнопку "До аукціону"
+	...  AND  Отримати URL для участі в аукціоні

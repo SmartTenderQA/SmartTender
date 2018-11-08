@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -v hub:None suites/other/check_multilots_on_search_page.robot
+# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
 *** Variables ***
 ${checked_single}              ${false}
 ${checked_multiple}            ${false}
@@ -61,7 +61,7 @@ ${page_number}                 2
   Click Element  xpath=${multi_lot_selector}/td/span
   ${detailed_tender_info}  Get Text  xpath=${multi_lot_selector}/following-sibling::tr[@class="content"]//td[@colspan="2"]
   ${status}  Run Keyword And Return Status  Should Be Equal  ${tender_info}  ${detailed_tender_info}
-  Run Keyword If  ${status} == "Fail"  Розкрити мультилот  ${number}
+  Run Keyword If  ${status} == ${false}  Розкрити мультилот  ${number}
 
 
 Перевірити лоти
@@ -89,6 +89,7 @@ ${page_number}                 2
   Scroll Page To Element XPATH   ${selector}
   Click Element  ${selector}
   Select Window  NEW
+  Дочекатись закінчення загрузки сторінки(skeleton)
   ${title_selector}  Set Variable  (//div[@data-qa="title"])[1]
   Wait Until Page Contains Element  ${title_selector}
   ${text}  Get Text  ${title_selector}
@@ -97,8 +98,8 @@ ${page_number}                 2
   Select Window  MAIN
 
 
-Видалити кнопку "Замовити звонок"
-  Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
+Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
 
 
 Перейти на наступну сторінку
