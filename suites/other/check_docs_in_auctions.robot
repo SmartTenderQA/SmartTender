@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 # robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i procurement -v type:proz -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i procurement -v hub:None suites/other/check_docs_in_auctions.robot
 *** Variables ***
 ${type}
 ${page_number}                 2
@@ -19,6 +19,7 @@ ${page_number}                 2
 *** Test Cases ***
 Зайти на стоінку закупівель
   [Tags]  commercial
+  Set Global Variable  ${type}  com
   Зайти на торговий майданчик
   Set To Dictionary  ${checks}  checked_signature=${true}
 
@@ -36,6 +37,7 @@ ${page_number}                 2
 
 Зайти на стоінку закупівель
   [Tags]  procurement
+  Set Global Variable  ${type}  proz
   Зайти на торговий майданчик
   Зайти на сторінку державних закупівель
 
@@ -53,6 +55,7 @@ ${page_number}                 2
 
 Зайти на сторінку банківських аукціонів
   [Tags]  bank_aucs
+  Set Global Variable  ${type}  proz
   Зайти на торговий майданчик
   Зайти на сторінку банківських аукціонів
 
@@ -192,7 +195,7 @@ Setup
   [Return]  ${move_next}
 
 
-Відкрити сторінку тендера
+Відкрити сторінку тендераcom
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  xpath=(//div[contains(@class, "filename")])
   ${button_selector}  Set Variable  xpath=(//a[contains(@class, "analysis-button")])[${tender_number}]
@@ -298,7 +301,7 @@ Setup
 
 Виконати перевірку файлів торгів prozorro
   [Arguments]  ${doc_number}
-  ${selector}  Set Variable  (//*[@data-qa="file-preview"])[${doc_number}]
+  ${selector}  Set Variable  (//*[@data-qa="file-name"])[${doc_number}]/following::*[@data-qa="file-preview"]
   :FOR  ${i}  IN RANGE  10
   \  Open Button  ${selector}  not_ip
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
