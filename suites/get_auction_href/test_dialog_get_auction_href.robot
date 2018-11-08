@@ -6,22 +6,21 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_dialog_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    debug
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
+  	Вибрати тип процедури  Конкурентний діалог 1-ий етап
   	Заповнити endDate періоду пропозицій
   	Заповнити amount для tender
   	Заповнити minimalStep для tender
   	Заповнити title для tender
-  	Заповнити title_eng для tender
   	Заповнити description для tender
   	Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
@@ -47,7 +46,7 @@ If skipped create tender
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	[Template]  Прийняти участь у тендері учасником
+	[Template]  Подати пропозицію учасниками
 	provider1
 	provider2
 
@@ -59,7 +58,7 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	[Template]  Перевірити отримання ссилки на участь в аукціоні
+	[Template]  Отримати посилання на аукціон учасником
 	provider1
 	provider2
 
@@ -76,18 +75,18 @@ If skipped create tender
 Відкрити вікна для всіх користувачів
     Start  Bened  tender_owner
     Set Window Size  1280  1024
-    Start  viewer_test  viewer
-    Set Window Size  1280  1024
-    Start  user1  provider1
-    Set Window Size  1280  1024
-    Start  user2  provider2
-    Set Window Size  1280  1024
+    #Start  viewer_test  viewer
+    #Set Window Size  1280  1024
+    #Start  user1  provider1
+    #Set Window Size  1280  1024
+    #Start  user2  provider2
+    #Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  40  minutes
+    ${date}  get_time_now_with_deviation  32  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -95,7 +94,7 @@ If skipped create tender
 
 Заповнити contact для tender
     ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     ${value}  Create Dictionary  name=${name}
     ${contactPoint}  Create Dictionary  contactPerson=${value}
@@ -123,13 +122,6 @@ If skipped create tender
     Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
 
 
-Заповнити title_eng для tender
-    ${text_en}  create_sentence  5
-    ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
-    Set To Dictionary  ${data}  title_en  ${title_en}
-    Заповнити текстове поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
-
-
 Заповнити description для tender
     ${description}  create_sentence  15
     Set To Dictionary  ${data}  description  ${description}
@@ -138,7 +130,6 @@ If skipped create tender
 
 Додати предмет в тендер
     Заповнити description для item
-    Заповнити description_eng для item
     Заповнити quantity для item
     Заповнити id для item
     Заповнити unit.name для item
@@ -156,13 +147,6 @@ If skipped create tender
     Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
 
 
-Заповнити description_eng для item
-    ${description_en}  create_sentence  5
-    ${value}  Create Dictionary  description_en=${description_en}
-    Set To Dictionary  ${data}  item  ${value}
-    Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
-
-
 Заповнити quantity для item
     ${quantity}  random_number  1  1000
     Set To Dictionary  ${data['item']}  quantity  ${quantity}
@@ -171,14 +155,14 @@ If skipped create tender
 
 Заповнити id для item
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  id  ${name}
 
 
 Заповнити unit.name для item
     ${input}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  unit  ${name}
 
@@ -198,7 +182,7 @@ If skipped create tender
 
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::div[4]//div[@class="dhxcombo_option_text"]/div[1]/div[@class="dhxcombo_cell_text"]
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     Set To Dictionary  ${data['item']}  city  ${name}
 
@@ -215,12 +199,28 @@ If skipped create tender
 
 Дочекатись дати початку періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  15m  30s  Перевірити статус тендера  Прийом пропозицій
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Прийом пропозицій
 
 
 Дочекатись дати закінчення періоду прийому пропозицій
     Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
+    wait until keyword succeeds  20m  30s  Перевірити статус тендера  Аукціон
+
+
+Підтвердити прекваліфікацію учасників
+    [Arguments]  ${type}
+    Switch Browser  tender_owner
+    Go To  https://smarttender.biz/webclient/
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Перейти у розділ (webclient)  ${type}
+    Пошук тендеру по title (webclient)  ${data['title']}
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
+    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    :FOR  ${i}  IN RANGE  1  ${count}+1
+    \  Надати рішення про допуск до аукціону учасника  ${i}
+    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
@@ -253,25 +253,9 @@ If skipped create tender
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
-Прийняти участь у тендері учасником
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-    Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
-    Подати пропозицію учасником
 
-
-Подати пропозицію учасником
-	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-    Додати файл  1
-	Run Keyword And Ignore Error  Підтвердити відповідність
-	Подати пропозицію
-    Go Back
-
-
-Перевірити отримання ссилки на участь в аукціоні
-    [Arguments]  ${role}
-    Switch Browser  ${role}
-    Дочекатися статусу тендера  Аукціон
-    Отримати посилання на аукціон учасником  ${role}
+Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено? Перевести закупівлю на наступну стадію?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)

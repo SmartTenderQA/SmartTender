@@ -122,8 +122,8 @@
 
 
 Перейти на вкладку документи (webclient)
-    Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
-    Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]
+    Wait Until Keyword Succeeds  30  2  Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
+    Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]  15
 
 
 Додати документ власником
