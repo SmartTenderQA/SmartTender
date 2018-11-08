@@ -46,14 +46,13 @@ If skipped create tender
 
 Подати заявку на участь в тендері двома учасниками
 	[Tags]  create_tender  get_tender_data
-	Дочекатись дати  ${data['tenderPeriod']['endDate']}
 	Прийняти участь у тендері учасником  provider1
 	Прийняти участь у тендері учасником  provider2
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	Дочекатися статусу тендера  Аукціон
+	Дочекатись початку аукціону
     Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
@@ -209,16 +208,6 @@ If skipped create tender
     ${value}  get_time_now_with_deviation  1  days
     ${new_date}  get_only_numbers  ${value}
     Заповнити Поле  xpath=//*[@data-name="DDATEFROM"]//input  ${new_date}
-
-
-Дочекатись дати початку періоду прийому пропозицій
-    Дочекатись дати  ${data['tenderPeriod']['startDate']}
-    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Прийом пропозицій
-
-
-Дочекатись дати закінчення періоду прийому пропозицій
-    Дочекатись дати  ${data['tenderPeriod']['endDate']}
-    wait until keyword succeeds  15m  5s  Перевірити статус тендера  Аукціон
 
 
 Прийняти участь у тендері учасником

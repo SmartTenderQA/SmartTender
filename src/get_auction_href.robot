@@ -53,6 +53,18 @@
 	[Return]  ${auction_href}
 
 
+Дочекатись початку аукціону
+    ${auction start date}  Get text  //*[@data-qa="auction-start"]//span[@data-qa]
+    Дочекатись дати  ${auction start date}
+    Дочекатися статусу тендера  Аукціон
+
+
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Get text  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація
+
+
 #Перевірити можливість отримати посилання на аукціон користувачем
 #	[Arguments]  ${role}
 #	Switch Browser  ${role}
