@@ -274,7 +274,7 @@ If skipped create tender
 	${quantity}  random_number  1  1000
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input
 	Заповнити текстове поле  ${selector}  ${quantity}
-	Set To Dictionary  ${data.items}  quantity  ${quantity}
+	Set To Dictionary  ${data['items']}  quantity  ${quantity}
 
 
 Заповнити items.unit.name
