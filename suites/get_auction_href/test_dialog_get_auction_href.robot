@@ -208,10 +208,11 @@ If skipped create tender
 
 
 Підтвердити прекваліфікацію учасників
+    [Arguments]  ${type}
     Switch Browser  tender_owner
     Go To  https://smarttender.biz/webclient/
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	Перейти у розділ (webclient)  ${type}
     Пошук тендеру по title (webclient)  ${data['title']}
     Натиснути кнопку Перечитать (Shift+F4)
     Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]

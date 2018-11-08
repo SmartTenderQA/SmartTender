@@ -177,12 +177,13 @@ If skipped create tender
 Подати пропозицію esco учасником
 	wait until keyword succeeds  3m  5s  Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною для першого лоту
+	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
 
 
 Заповнити поле з ціною для першого лоту
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
+    Fill ESCO  1
 
 
 Fill ESCO

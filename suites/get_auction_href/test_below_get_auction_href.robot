@@ -96,7 +96,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  17  minutes
+    ${date}  get_time_now_with_deviation  25  minutes
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
 
