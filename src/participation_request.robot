@@ -2,7 +2,6 @@
 #################################################################
 #							Web									#
 #################################################################
-
 Відкрити бланк подачі заявки
   Reload Page
   Дочекатись закінчення загрузки сторінки(skeleton)
@@ -10,9 +9,12 @@
 
 
 Додати файл для подачі заявки
-  Wait Until Page Contains Element  xpath=//input[@type='file' and @accept]  30
-  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-  Choose File  xpath=//input[@type='file' and @accept]  ${file_path}
+	${selector}  Set Variable  //input[@type='file' and @accept]
+	${n}  Get Element Count  ${selector}
+	:FOR  ${i}  IN  ${n}
+	\  Wait Until Page Contains Element  ${selector}
+    \  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
+	\  Choose File  ${selector}  ${file_path}
 
 
 Ввести ім'я для подачі заявки
@@ -34,6 +36,14 @@
 #################################################################
 #						Web Client								#
 #################################################################
+Пройти кваліфікацію для подачі пропозиції
+	Відкрити бланк подачі заявки
+	Додати файл для подачі заявки
+	Ввести ім'я для подачі заявки
+	Підтвердити відповідність для подачі заявки
+	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
+
+
 Підтвердити заявку
 	[Arguments]  ${tender_uaid/tender_type}  ${type}=для ФГВ
 	Run Keyword If  '${site}' == 'test'  Run Keywords

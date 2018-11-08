@@ -7,11 +7,6 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 ${where}							test
-${tender}                           Простой однолотовый
-${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text(), '${tender}') and @href]
-${make proposal link}               xpath=//div[@class='row']//a[contains(@class, 'button')]
-${start_page}                       http://smarttender.biz
-${webClient loading}                id=LoadingPanel
 &{type_dict}
 ...  								rent=Оренда майна
 ...  								sale=Продаж майна
@@ -149,20 +144,6 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  14  minutes
-	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
-	${auctionPeriods}  Create Dictionary  startDate=${startDate}
-	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
-
-
-Заповнити tender.period
-	${tender_period}  get_time_now_with_deviation  30  minutes
-	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  Прийом пропозицій по  ${tender_period}
-	${tender_period}  Create Dictionary  tender_period  ${tender_period}
-	Set To Dictionary  ${data}  tender_period  ${tender_period}
-
-
 Вибрати довільне місто
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}
@@ -195,14 +176,6 @@ If skipped create tender
 	Знайти тендер по ID  ${data['tender_id']}
 
 
-Пройти кваліфікацію для подачі пропозиції
-	Відкрити бланк подачі заявки
-	Додати файл для подачі заявки
-	Ввести ім'я для подачі заявки
-	Підтвердити відповідність для подачі заявки
-	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
-
-
 Заповнити value.amount
 	${amount}  random_number  100000  100000000
 	${value}  Create Dictionary  amount=${amount}
@@ -213,9 +186,8 @@ If skipped create tender
 
 Заповнити minimalStep.percent
 	${minimal_step_percent}  random_number  1  5
-	${value}  Create Dictionary  percent=${minimal_step_percent}
-	Set To Dictionary  ${data.value}  minimalStep=${value}users_variables
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити мінімальний крок аукціону  ${minimal_step_percent}
+	Set To Dictionary  ${data.value}  minimalStep_percent  ${minimal_step_percent}
 
 
 Заповнити title
@@ -248,6 +220,20 @@ If skipped create tender
 	Відкрити вкладку Гарантійний внесок
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити гарантійний внесок  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон
+
+
+Заповнити auctionPeriod.startDate
+       ${startDate}  get_time_now_with_deviation  14  minutes
+       Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
+       ${auctionPeriods}  Create Dictionary  startDate=${startDate}
+       Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
+
+
+Заповнити tender.period
+       ${tender_period}  get_time_now_with_deviation  30  minutes
+       Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  Прийом пропозицій по  ${tender_period}
+       ${tender_period}  Create Dictionary  tender_period  ${tender_period}
+       Set To Dictionary  ${data}  tender_period  ${tender_period}
 
 
 Заповинити rent.duration
