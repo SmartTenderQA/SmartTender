@@ -51,7 +51,7 @@ If skipped create tender
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
-    debug
+    Дочекатись початку періоду перкваліфікації
     Підтвердити прекваліфікацію учасників
 
 
@@ -59,12 +59,12 @@ If skipped create tender
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  user1  provider1
+    Go to  ${data['tender_href']}
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	[Template]  Перевірити отримання ссилки на участь в аукціоні
-	provider1
+	Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Підготувати учасників
@@ -171,7 +171,6 @@ If skipped create tender
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Sleep  2m
-    debug
     Подати пропозицію esco учасником
 
 
@@ -196,46 +195,60 @@ Fill ESCO
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Get text  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація
+
+
+Дочекатись початку аукціону
+    ${auction start date}  Get text  //*[@data-qa="auction-start"]//span[@data-qa]
+    Дочекатись дати  ${auction start date}
+    Дочекатися статусу тендера  Аукціон
+
+
 Підтвердити прекваліфікацію учасників
+    Close All Browsers
     Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
     Пошук тендеру по title (webclient)  ${data['title']}
     Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Преквалификация"]
-    ${count}  Get Element Count  //*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
     Підтвердити закінчення розгляду учасників та перейти на наступну стадію
 
 
+
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Участник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Участик"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
-    Page Should Contain  Отправить решение
-    Click Element  //*[@title="Допустить участника к аукциону"]
+    Page Should Contain  Відіслати рішення
+    Click Element  //*[@title="Допустити до аукціону"]
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
-    Click Element  //*[@title="Отправить решение"]
+    Click Element  //*[@title="Відіслати рішення"]
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
 
 
 Погодитись з рішенням прекваліфікації
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Вы уверены в своем решении?
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Відмовитись від накладання ЕЦП на кваліфікацію
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Наложить ЭЦП на квалификацию?
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на кваліфікацію?
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
@@ -246,3 +259,10 @@ Fill ESCO
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Перевірити отримання ссилки на участь в аукціоні
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Дочекатись початку аукціону
+    Отримати посилання на аукціон учасником  ${role}
