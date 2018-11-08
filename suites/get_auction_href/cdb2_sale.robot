@@ -104,7 +104,7 @@ If skipped create tender
 	${auction_href}  			Отримати URL на перегляд
 	Set Global Variable  		${auction_href}
 	Зберегти пряме посилання на тендер
-	Перевірити сторінку участі в аукціоні
+	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
 	Close Browser
 
 
@@ -150,7 +150,7 @@ If skipped create tender
 
 
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  11  minutes
+	${startDate}  get_time_now_with_deviation  14  minutes
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
 	${auctionPeriods}  Create Dictionary  startDate=${startDate}
 	Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
@@ -161,30 +161,6 @@ If skipped create tender
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  Прийом пропозицій по  ${tender_period}
 	${tender_period}  Create Dictionary  tender_period  ${tender_period}
 	Set To Dictionary  ${data}  tender_period  ${tender_period}
-
-
-Заповнити items.postalcode
-	${postalcode}  random_number  10000  99999
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Індекс')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${postalcode}
-	${dict}  Create Dictionary
-	Set To Dictionary  ${data}  items  ${dict}
-	Set To Dictionary  ${data['items']}  postalcode  ${postalcode}
-
-
-Заповнити items.strretaddress
-	${text}  create_sentence  1
-	${strretaddress}  Set Variable  ${text[:-1]}
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Вулиця')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${strretaddress}
-	Set To Dictionary  ${data['items']}  strretaddress  ${strretaddress}
-
-
-Заповнити items.locality
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
-	${selector}  Set Variable  //*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	${locality}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	Set To Dictionary  ${data['items']}  locality  ${locality}
 
 
 Вибрати довільне місто
@@ -206,7 +182,7 @@ If skipped create tender
 
 
 Отримати та зберегти tender_id
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[3]  text
+	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
 	Should Not Be Equal  ${tender_id}  ${EMPTY}
 	Set To Dictionary  ${data}  tender_id=${tender_id}
 
@@ -290,32 +266,51 @@ If skipped create tender
 	${title}  create_sentence  3
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), '${field_name}')]/following-sibling::*//input
 	Заповнити текстове поле  ${selector}  ${title}
-	${value}  Create Dictionary  title=${title}
-	Set To Dictionary  ${data}  items  ${value}
+	${dict}  Create Dictionary  title=${title}
+	Set To Dictionary  ${data}  items  ${dict}
 
 
 Заповнити items.quantity
 	${quantity}  random_number  1  1000
-	${value}  Create Dictionary  quantity=${quantity}
-	Set To Dictionary  ${data}  items=${value}
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input
 	Заповнити текстове поле  ${selector}  ${quantity}
+	Set To Dictionary  ${data.items}  quantity  ${quantity}
 
 
 Заповнити items.unit.name
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Од. вим.')]/following-sibling::*//input
 	${selector}  Set Variable  //*[contains(text(), 'ОВ. Найменування')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	${value}  Create Dictionary  name=${name}
-	Set To Dictionary  ${data['items']}  unit  ${value}
+	Set To Dictionary  ${data['items']}  unit_name  ${name}
 
 
 Заповнити items.classification.description
 	${input}  Set Variable  (//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
 	${selector}  Set Variable  //*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${description}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	${value}  Create Dictionary  description=${description}
-	Set To Dictionary  ${data['items']}  classification  ${value}
+	Set To Dictionary  ${data['items']}  classification_description  ${description}
+
+
+Заповнити items.postalcode
+	${postalcode}  random_number  10000  99999
+	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Індекс')]/following-sibling::table//input
+	Заповнити текстове поле  ${selector}  ${postalcode}
+	Set To Dictionary  ${data['items']}  postalcode  ${postalcode}
+
+
+Заповнити items.strretaddress
+	${text}  create_sentence  1
+	${strretaddress}  Set Variable  ${text[:-1]}
+	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Вулиця')]/following-sibling::table//input
+	Заповнити текстове поле  ${selector}  ${strretaddress}
+	Set To Dictionary  ${data['items']}  strretaddress  ${strretaddress}
+
+
+Заповнити items.locality
+	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
+	${selector}  Set Variable  //*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
+	${locality}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+	Set To Dictionary  ${data['items']}  locality  ${locality}
 
 
 Заповнити procuringEntity.contactPoint.name
@@ -330,18 +325,17 @@ If skipped create tender
 Зберегти пряме посилання на тендер
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
-	Close All Browsers
 
 
 Перевірити сторінку участі в аукціоні
-	debug
-#	Go To  ${auction_href}
-#	Wait Until Page Contains Element  //*[@class="page-header"]//h2  120
-#	Location Should Contain  bidder_id=
-#	Sleep  2
-#	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
-#	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
-#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
-#	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
-#	Element Should Contain  //h4  Вхід на даний момент закритий.
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
+	Location Should Contain  bidder_id=
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit_name']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
