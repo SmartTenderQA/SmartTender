@@ -287,11 +287,14 @@ Ignore WebClient Error
     Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
 
 
-Отримати tender_uaid щойно стореного тендера
+Отримати tender_uaid та tender_href щойно стореного тендера
     ${find tender field}  Set Variable  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
     Scroll Page To Element XPATH  ${find tender field}
     ${uaid}  Get Text  ${find tender field}/a
+    ${href}  Get Element Attribute  ${find tender field}/following-sibling::td/a  href
     Set To Dictionary  ${data}  tender_uaid  ${uaid}
+    Set To Dictionary  ${data}  tender_href  ${href}
+
 
 
 Оголосити закупівлю

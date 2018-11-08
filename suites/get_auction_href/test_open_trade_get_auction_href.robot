@@ -30,7 +30,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
     Зберегти чернетку
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
-    Отримати tender_uaid щойно стореного тендера
+    Отримати tender_uaid та tender_href щойно стореного тендера
     Звебегти дані в файл
 
 
