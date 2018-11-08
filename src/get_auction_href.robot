@@ -53,15 +53,6 @@
 	[Return]  ${auction_href}
 
 
-Дочекатись початку аукціону
-    ${selector}  Set Variable  //*[@data-qa="auction-start"]//span[@data-qa]
-    Wait Until Element Is Visible  ${selector}  30
-    Sleep  1
-    ${auction start date}  Get text  ${selector}
-    Дочекатись дати  ${auction start date}
-    Дочекатися статусу тендера  Аукціон
-
-
 Дочекатись початку періоду перкваліфікації
     ${selector}  Set Variable  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
     Wait Until Element Is Visible  ${selector}  30
@@ -69,6 +60,15 @@
     ${tender end date}  Get text  ${selector}
     Дочекатись дати  ${tender end date}
     Дочекатися статусу тендера  Прекваліфікація
+
+
+Дочекатись закінчення прийому пропозицій
+    ${selector}  Set Variable  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
+    Wait Until Element Is Visible  ${selector}  30
+    Sleep  1
+    ${tender end date}  Get text  ${selector}
+    Дочекатись дати  ${tender end date}
+
 
 
 #Перевірити можливість отримати посилання на аукціон користувачем

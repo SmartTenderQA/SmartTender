@@ -52,7 +52,8 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Tags]  create_tender  get_tender_data
-	Дочекатись початку аукціону
+	Дочекатись закінчення прийому пропозицій
+	Дочекатися статусу тендера  Аукціон
     Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
@@ -97,7 +98,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  32  minutes
+    ${value}  get_time_now_with_deviation  22  minutes
     ${new_date}  get_only_numbers  ${value}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${value}
     Заповнити Поле  //*[@data-name="D_SROK"]//input    ${new_date}
