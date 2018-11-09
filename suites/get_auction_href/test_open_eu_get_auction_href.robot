@@ -225,7 +225,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
 
@@ -249,7 +249,7 @@ If skipped create tender
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
     Натиснути кнопку Перечитать (Shift+F4)
     Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
-    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Sleep  30
     ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -266,7 +266,7 @@ If skipped create tender
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)
@@ -308,7 +308,7 @@ If skipped create tender
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

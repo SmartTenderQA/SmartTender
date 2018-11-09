@@ -39,18 +39,26 @@ If skipped create tender
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
+    Start  user3  provider3
 
 
-Подати заявку на участь в тендері двома учасниками
+Подати заявку на участь в тендері трьома учасниками на 1-му етапі
 	[Tags]  create_tender  get_tender_data
-	Прийняти участь у тендері учасником  provider1
-	Прийняти участь у тендері учасником  provider2
+	:FOR  ${user}  IN  provider1  provider2  provider3
+	\  Прийняти участь у тендері учасником на 1-му етапі  ${user}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
     Дочекатись початку періоду перкваліфікації
+    debug
     Підтвердити прекваліфікацію учасників
+
+
+
+
+
+
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -92,7 +100,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  32  minutes
+    ${date}  get_time_now_with_deviation  38  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -208,14 +216,30 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
+
+
+Прийняти участь у тендері учасником на 1-му етапі
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Go to  ${data['tender_href']}
+    Дочекатися статусу тендера  Прийом пропозицій
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
+    Подати пропозицію учасником на 1-му етапі
 
 
 Подати пропозицію учасником
 	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+    Go Back
+
+
+Подати пропозицію учасником на 1-му етапі
+	Перевірити кнопку подачі пропозиції
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
@@ -232,7 +256,7 @@ If skipped create tender
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
     Натиснути кнопку Перечитать (Shift+F4)
     Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
-    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1]
+    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Sleep  30
     ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -249,7 +273,7 @@ If skipped create tender
 
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[3]//tr[contains(@class,"Row")]//td[@class and @title][1])[${i}]
+    ${selector}  Set Variable  (//*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3])[${i}]
     Click Element  ${selector}
     Sleep  .5
     Натиснути кнопку Просмотр (F4)
@@ -291,7 +315,7 @@ If skipped create tender
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

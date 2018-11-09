@@ -62,7 +62,7 @@ If skipped create tender
     Close All Browsers
     Start  viewer_prod  viewer
     Start  prod_owner  tender_owner
-    Start  test_it_ua  provider3
+    #Start  test_it_ua  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -70,7 +70,7 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
-	provider3
+	#provider3
 
 
 
@@ -216,7 +216,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
 
@@ -234,7 +234,7 @@ If skipped create tender
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

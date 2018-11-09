@@ -202,7 +202,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
 
@@ -220,7 +220,7 @@ If skipped create tender
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні
