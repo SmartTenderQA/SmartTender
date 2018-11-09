@@ -19,8 +19,8 @@
 
 
 Натиснути кнопку "До аукціону"
-	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]
-	Click Element  //*[@data-qa="button-poptip-participate-view"]
+	Wait Until Element Is Visible  //*[@data-qa="bid-button"]
+	Click Element  //*[@data-qa="bid-button"]
 	Дочекатись отримання посилань на аукціон
 
 

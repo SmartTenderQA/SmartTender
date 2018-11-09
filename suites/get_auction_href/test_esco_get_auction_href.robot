@@ -44,7 +44,7 @@ If skipped create tender
 Подати заявку на участь в тендері трьома учасниками
 	[Tags]  create_tender  get_tender_data
 	:FOR  ${user}  IN  provider1  provider2  provider3
-	Прийняти участь у тендері учасником  ${user}
+	\  Прийняти участь у тендері учасником  ${user}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
