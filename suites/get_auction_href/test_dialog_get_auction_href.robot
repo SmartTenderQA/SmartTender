@@ -39,13 +39,14 @@ If skipped create tender
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
+    Start  user3  provider3
 
 
-Подати заявку на участь в тендері двома учасниками на 1-му етапі
+Подати заявку на участь в тендері трьома учасниками на 1-му етапі
 	[Tags]  create_tender  get_tender_data
-	Прийняти участь у тендері учасником на 1-му етапі  provider1
-	Прийняти участь у тендері учасником на 1-му етапі  provider2
-    debug
+	:FOR  ${user}  IN  provider1  provider2  provider3
+	\  Прийняти участь у тендері учасником на 1-му етапі  ${user}
+
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
@@ -215,7 +216,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
 
@@ -224,7 +225,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Sleep  3m
+    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником на 1-му етапі
 
 
