@@ -71,6 +71,13 @@
     Дочекатись дати  ${tender end date}
 
 
+Дочекатись закінчення періоду прекваліфікації
+    ${selector}  Set Variable  //*[@data-qa="prequalification"]//*[@data-qa="date-end"]
+    Wait Until Element Is Visible  ${selector}  30
+    Sleep  1
+    ${tender end date}  Get text  ${selector}
+    Дочекатись дати  ${tender end date}
+
 
 #Перевірити можливість отримати посилання на аукціон користувачем
 #	[Arguments]  ${role}

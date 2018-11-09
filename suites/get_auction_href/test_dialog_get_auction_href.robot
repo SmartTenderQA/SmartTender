@@ -51,13 +51,33 @@ If skipped create tender
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
     Дочекатись початку періоду перкваліфікації
-    debug
     Підтвердити прекваліфікацію учасників
 
 
+Виконати дії для переведення тендера на 2-ий етап
+    [Tags]  create_tender  get_tender_data
+    Підтвердити організатором формування протоколу розгляду пропозицій
+    Start  user1  provider1
+    Дочекатись закінчення періоду прекваліфікації
+    Дочекатися статусу тендера  Очікування рішення організатора
+    Перейти до другої фази
+    Дочекатися учасником на рішення організатора
+    Перейти до другого етапу
+    Отримати tender_uaid та tender_href щойно стореного тендера
 
 
+Підготувати учасників до участі в тендері на 2-ий етап
+    [Tags]  create_tender  get_tender_data
+    Close All Browsers
+    Start  user1  provider1
+    Start  user2  provider2
+    Start  user3  provider3
 
+
+Подати заявку на участь в тендері трьома учасниками на 2-му етапі
+	[Tags]  create_tender  get_tender_data
+	:FOR  ${user}  IN  provider1  provider2  provider3
+	\  Прийняти участь у тендері учасником  ${user}
 
 
 
@@ -279,14 +299,16 @@ If skipped create tender
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  Відіслати рішення
-    Click Element  //*[@title="Допустити до аукціону"]
+    Click Element  //div[@title="Допустити учасника до аукціону"
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
     Click Element  //*[@title="Відіслати рішення"]
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
+    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Погодитись з рішенням прекваліфікації
@@ -308,6 +330,54 @@ If skipped create tender
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Підтвердити формування протоколу розгляду пропозицій за необхідністью
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Підтвердити організатором формування протоколу розгляду пропозицій
+    Натиснути кнопку Перечитать (Shift+F4)
+    Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Підтвердити формування протоколу розгляду пропозицій за необхідністью
+
+
+Підтвердити перехід до другої фази за необхідністью
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Перейти до другої фази?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Перейти до другої фази
+    Switch Browser  tender_owner
+    Wait Until Keyword Succeeds  5  1  Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    ${status}  Run Keyword And Return Status  Підтвердити перехід до другої фази за необхідністью
+    Run Keyword If  '${status}' == 'False'  Перейти до другої фази
+
+
+Дочекатися учасником на рішення організатора
+    Switch Browser  provider1
+    Дочекатися статусу тендера  Завершено
+    Close Browser
+
+
+Перейти до другого етапу
+    Switch Browser  tender_owner
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${status}  Run Keyword And Return Status  Wait Until Element Is Visible  //*[@title="До 2-го етапу"]
+    Run Keyword If  '${status}' == 'False'  Перейти до другого етапу
+    Click Element  //*[@title="До 2-го етапу"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
+
+
+
 
 
 Перевірити отримання ссилки на участь в аукціоні
