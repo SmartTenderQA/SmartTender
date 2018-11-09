@@ -41,6 +41,8 @@
 Отримати URL для участі в аукціоні
 	${selector}  Set Variable  //*[@data-qa="link-participate"]
 	${auction_href}  Get Element Attribute  ${selector}  href
+	${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@data-qa="link-participate" and @disabled="disabled"]
+    Run Keyword If  ${status}  Fail  Кнопка взяти участь в аукціоні не активна
 	Run Keyword If  '${auction_href}' == 'None'  Отримати URL для участі в аукціоні
 	[Return]  ${auction_href}
 
