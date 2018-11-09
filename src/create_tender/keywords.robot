@@ -1,6 +1,8 @@
 *** Settings ***
 Library     Collections
 Resource  ../loading.robot
+Resource  cdb1_sale_propery.robot
+
 
 *** Keywords ***
 ###############################################
@@ -131,6 +133,7 @@ Resource  ../loading.robot
 #	заповнити дату
 	Input Text  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input    ${text}
 	${got}  Get Element Attribute  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input  value
+	Press Key  xpath=//*[contains(text(), '${field_name}')]/following-sibling::table//input  \\13
 	Should Be Equal  ${got}  ${time}
 
 
@@ -147,26 +150,27 @@ Resource  ../loading.robot
 
 Заповнити та перевірити дату Рішення Дирекції
 	[Arguments]  ${time}
-	${text}  convert_data_for_web_client  ${time}
+	${text}  Run Keyword If  "${site}" == "prod"  convert_data_for_web_client  ${time}
+	...  ELSE IF  "${site}" == "test"  Set Variable  ${time}
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Дата')]/following-sibling::table//input
 	# очистити поле с датою
 	Click Element  ${selector}
 	Click Element  ${selector}/../following-sibling::*
 	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
 	# заповнити дату
-	Input Text  ${selector}    ${text}
+	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Should Be Equal  ${got}  ${time}
 
 
 Заповнити та перевірити гарантійний внесок
-  [Arguments]  ${percent}
-  ${selector}  Set Variable  xpath=//*[@data-name="GUARANTEE_AMOUNT_PERCENT"]//input
-  Input Text  ${selector}  ${percent}
-  Press Key  ${selector}  \\13
-  ${got}  Get Element Attribute  ${selector}  value
-  ${got}  Evaluate  str(int(${got}))
-  Should Be Equal  ${got}  ${percent}
+  	[Arguments]  ${percent}
+  	${selector}  Set Variable  xpath=//*[@data-name="GUARANTEE_AMOUNT_PERCENT"]//input
+  	Input Text  ${selector}  ${percent}
+  	Press Key  ${selector}  \\13
+  	${got}  Get Element Attribute  ${selector}  value
+  	${got}  Evaluate  str(int(${got}))
+  	Should Be Equal  ${got}  ${percent}
 
 
 ################################################################
@@ -187,6 +191,7 @@ Resource  ../loading.robot
 	Sleep  .5
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
+	Press Key  ${selector}  \\13
 	Should Be Equal  ${got}  ${text}
 
 
@@ -307,3 +312,9 @@ Ignore WebClient Error
     Підтвердити повідомлення про перевищення бюджету за необхідністю
     Підтвердити повідомлення про перевірку публікації документу за необхідністю
     Відмовитись у повідомленні про накладання ЕЦП на тендер
+
+
+Отримати та зберегти tender_id
+	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
+	Should Not Be Equal  ${tender_id}  ${EMPTY}
+	Set To Dictionary  ${data}  tender_id=${tender_id}

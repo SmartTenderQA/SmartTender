@@ -7,14 +7,6 @@ Test Teardown  Run Keywords
 ...  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 
-*** Variables ***
-${tender}                           Простой однолотовый
-${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text(), '${tender}') and @href]
-${make proposal link}               xpath=//div[@class='row']//a[contains(@class, 'button')]
-${start_page}                       http://smarttender.biz
-${webClient loading}                id=LoadingPanel
-
-
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -105,14 +97,6 @@ If skipped create tender
 	Знайти тендер по ID  ${data['auctionID']}
 
 
-Пройти кваліфікацію для подачі пропозиції
-	Відкрити бланк подачі заявки
-	Додати файл для подачі заявки
-	Ввести ім'я для подачі заявки
-	Підтвердити відповідність для подачі заявки
-	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
-
-
 Неможливість отримати поcилання на участь в аукціоні(keyword)
 	[Arguments]  ${user}
 	Switch Browser  ${user}
@@ -147,6 +131,7 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
+	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Location Should Contain  bidder_id=
 	Sleep  2
