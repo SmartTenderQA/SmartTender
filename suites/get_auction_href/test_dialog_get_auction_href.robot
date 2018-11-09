@@ -80,7 +80,6 @@ If skipped create tender
 	\  Прийняти участь у тендері учасником  ${user}
 
 
-
 Підготувати учасників для отримання посилання на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
@@ -99,7 +98,7 @@ If skipped create tender
     Close All Browsers
     Start  viewer_test  viewer
     Start  Bened  tender_owner
-    Start  user3  provider3
+    Start  user4  provider4
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -107,7 +106,7 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
-	provider3
+	provider4
 
 
 
