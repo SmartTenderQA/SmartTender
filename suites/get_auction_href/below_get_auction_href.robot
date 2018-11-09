@@ -62,7 +62,7 @@ If skipped create tender
     Close All Browsers
     Start  viewer_prod  viewer
     Start  prod_owner  tender_owner
-    Start  test_it_ua  provider3
+    #Start  test_it_ua  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -70,7 +70,7 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
-	provider3
+	#provider3
 
 
 

@@ -109,7 +109,9 @@
 #			       F4   					  #
 ###############################################
 Натиснути кнопку Просмотр (F4)
-    Click Element  //*[@title="Просмотр (F4)"]|//*[@title="Перегляд (F4)"]
+    ${selector}  Set Variable  //*[@title="Просмотр (F4)"]|//*[@title="Перегляд (F4)"]
+    Wait Util Element Is Visible  ${selector}  15
+    Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
 
 

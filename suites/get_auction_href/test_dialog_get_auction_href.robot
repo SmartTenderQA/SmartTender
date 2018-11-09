@@ -41,16 +41,23 @@ If skipped create tender
     Start  user2  provider2
 
 
-Подати заявку на участь в тендері двома учасниками
+Подати заявку на участь в тендері двома учасниками на 1-му етапі
 	[Tags]  create_tender  get_tender_data
-	Прийняти участь у тендері учасником  provider1
-	Прийняти участь у тендері учасником  provider2
-
+	Прийняти участь у тендері учасником на 1-му етапі  provider1
+	Прийняти участь у тендері учасником на 1-му етапі  provider2
+    debug
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     [Tags]  create_tender  get_tender_data
     Дочекатись початку періоду перкваліфікації
+    debug
     Підтвердити прекваліфікацію учасників
+
+
+
+
+
+
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -92,7 +99,7 @@ If skipped create tender
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  32  minutes
+    ${date}  get_time_now_with_deviation  38  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -212,10 +219,26 @@ If skipped create tender
     Подати пропозицію учасником
 
 
+Прийняти участь у тендері учасником на 1-му етапі
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Go to  ${data['tender_href']}
+    Дочекатися статусу тендера  Прийом пропозицій
+    Sleep  3m
+    Подати пропозицію учасником на 1-му етапі
+
+
 Подати пропозицію учасником
 	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+    Go Back
+
+
+Подати пропозицію учасником на 1-му етапі
+	Перевірити кнопку подачі пропозиції
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
