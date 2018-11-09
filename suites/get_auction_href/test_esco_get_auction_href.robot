@@ -12,7 +12,6 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	[Tags]  create_tender
 	Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
-	debug
 	Відкрити вікно створення тендеру
 	Заповнити endDate періоду пропозицій
 	Заповнити minimalStep для tender
