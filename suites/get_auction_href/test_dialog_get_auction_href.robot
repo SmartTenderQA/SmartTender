@@ -274,7 +274,6 @@ If skipped create tender
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
     Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
     ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Sleep  30

@@ -202,8 +202,6 @@ Fill ESCO
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
     Натиснути кнопку Перечитать (Shift+F4)
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Element Is Visible  //*[@data-placeid="CRITERIA"]//td[text()="Прекваліфікація"]
     ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Sleep  30
@@ -227,14 +225,16 @@ Fill ESCO
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  Відіслати рішення
-    Click Element  //*[@title="Допустити до аукціону"]
+    Click Element  //div[@title="Допустити учасника до аукціону"
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
+    Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
     Click Element  //*[@title="Відіслати рішення"]
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
+    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Погодитись з рішенням прекваліфікації
