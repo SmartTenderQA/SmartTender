@@ -64,7 +64,6 @@ If skipped create tender
 	Зберегти пряме посилання на тендер
 	Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	${auction_href}  Run Keyword And Expect Error  *  Отримати URL на перегляд
 	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 	Close Browser
 
