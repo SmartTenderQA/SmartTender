@@ -217,7 +217,7 @@ Resource  cdb1_sale_propery.robot
 
 
 Зберегти чернетку
-	Click Element  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
+	Wait Until Keyword Succeeds  10  2  Click Element  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
 	Sleep  3
 	Wait Until Element Is Not Visible  ${webClient loading}  120
 	Wait Until Element Is Not Visible  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
