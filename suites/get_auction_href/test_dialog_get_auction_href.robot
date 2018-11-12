@@ -85,6 +85,7 @@ If skipped create tender
     [Tags]  create_tender  get_tender_data
     Close All Browsers
     Start  user1  provider1
+    Go to  ${data['tender_href']}
 
 
 Отримати поcилання на участь в аукціоні для учасників
