@@ -51,6 +51,7 @@ ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronna
   [Tags]  test  utg  ukroboronprom  uspa
   Input text  ${search field}  Тендернезнайдено.Тадам!
   Дочекатись закінчення загрузки сторінки
+  Дочекатись закінчення загрузки сторінки(skeleton)
   Click Element  ${search button}
   Дочекатись закінчення загрузки сторінки
   Sleep  .5
