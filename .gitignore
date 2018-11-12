@@ -6,4 +6,6 @@
 debug.log
 /src/service.pyc
 
+users_variables.py
+
 *.pyc
