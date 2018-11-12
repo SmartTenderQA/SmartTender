@@ -50,6 +50,7 @@
 	Run Keyword If  '${site}' == 'test'  Run Keywords
 	...  Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=');
 	...  AND  Select Window  New
+	...  AND  Wait Until Page Contains Element  css=.text
 	...  AND  Element Should Contain  css=.text  True
 	...  AND  Close Window
 	...  AND  Select Window  undefined

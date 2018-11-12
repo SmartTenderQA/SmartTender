@@ -111,10 +111,12 @@ ${torgy count tab}                   li:nth-child
 
 Перевірити тендер по API на тестовість
 	${tender_id}  Get Text  //h4/following-sibling::a|//*[@data-qa="prozorro-number"]//a
-	Go To  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=
+	Execute Javascript  window.open('http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=');
+	Select Window  New
 	Wait Until Page Contains Element  css=.text
 	Element Should Contain  css=.text  test
-	Go Back
+	Close Window
+	Select Window  undefined
 
 
 Пошук тендеру по title (webclient)
