@@ -60,9 +60,9 @@ If skipped create tender
 Підготувати користувачів для отримання ссилки на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
-    Start  viewer_prod  viewer
+    Start  prod_viewer  viewer
     Start  prod_owner  tender_owner
-    #Start  test_it_ua  provider3
+    #Start  prod_provider  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні

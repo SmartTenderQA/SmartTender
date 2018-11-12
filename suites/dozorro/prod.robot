@@ -493,7 +493,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Підготувати користувачів
     Start  prod_owner  tender_owner
     Set Window Size  1280  1024
-    Start  viewer_prod  viewer
+    Start  prod_viewer  viewer
     Set Window Size  1280  1024
     Start  prod_provider1  provider
     Set Window Size  1280  1024

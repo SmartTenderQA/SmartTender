@@ -69,7 +69,7 @@ If skipped create tender
 
 Неможливість отримати поcилання на участь в аукціоні
 	[Setup]  Run Keywords  Close Browser
-	...  AND  Start  viewer_prod  viewer
+	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
