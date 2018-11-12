@@ -295,7 +295,9 @@ Setup
   \  Open Button  ${selector}  not_ip
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
   \  Exit For Loop If  ${status} == ${true}
-  Location Should Contain  ${doc_type}
+  ${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type}
+  ${upper_doc_type}  Run Keyword If  ${lowercase_status} != ${true}  Convert To Uppercase  ${doc_type}
+  Run Keyword If  ${lowercase_status} != ${true}  Location Should Contain  ${upper_doc_type}
   Check document for error
 
 

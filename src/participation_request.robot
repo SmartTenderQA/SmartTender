@@ -48,9 +48,12 @@
 Підтвердити заявку
 	[Arguments]  ${tender_uaid/tender_type}  ${type}=для ФГВ
 	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...  Go To  http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=
+	...  Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=');
+	...  AND  Select Window  New
+	...  AND  Wait Until Page Contains Element  css=.text
 	...  AND  Element Should Contain  css=.text  True
-	...  AND  Go Back
+	...  AND  Close Window
+	...  AND  Select Window  undefined
 	...  ELSE
 	...  Підтвердити заявки на продуктиві організатором ${type}
 
