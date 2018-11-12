@@ -8,6 +8,7 @@
 	${input field}  Set Variable  ${additional_xpath}//*[contains(text(), "${field}")]/following-sibling::div
 	Wait Until Keyword Succeeds  15  2  Click Element  ${input field}//input
 	Sleep  1
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  ${input field}//td[contains(@title, 'F10')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  //*[@class="dxpc-headerContent" and contains(., "${title}")]  10

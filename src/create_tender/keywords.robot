@@ -9,7 +9,7 @@ Resource  cdb1_sale_propery.robot
 #				Open_Page					  #
 ###############################################
 Відкрити сторінку для створення аукціону на продаж
-  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
+  Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
   Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
   Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
@@ -18,7 +18,7 @@ Resource  cdb1_sale_propery.robot
 Відкрити сторінку Продаж/Оренда майна(тестові)
 	${selector}  Set Variable  //*[contains(text(), 'ProZorro.Продаж') and contains(text(), '(тестові)')]
 	Wait Until Page Contains Element  ${selector}  15
-	Click Element  ${selector}
+	Wait Until Keyword Succeeds  15  2  Click Element  ${selector}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Run Keyword If  '${where}' == 'prod'  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
 	Run Keyword If  '${where}' == 'prod'  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
