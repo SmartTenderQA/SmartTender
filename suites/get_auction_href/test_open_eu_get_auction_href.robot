@@ -271,13 +271,16 @@ If skipped create tender
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  Відіслати рішення
-    Click Element  //div[@title="Допустити учасника до аукціону"
+    Click Element  //div[@title="Допустити учасника до аукціону"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Element Is Visible  (//*[@data-type="CheckBox"]//td/span)[1]  10
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
     Click Element  //*[@title="Відіслати рішення"]
+    Дочекатись закінчення загрузки сторінки(webclient)
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
     Дочекатись закінчення загрузки сторінки(webclient)
