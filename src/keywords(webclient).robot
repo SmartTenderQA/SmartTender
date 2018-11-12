@@ -165,7 +165,9 @@
 Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
     Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@title="OK"]
+    ...  Click Element  //*[@title="Очистити"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+    ...  AND  Click Element  //*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 

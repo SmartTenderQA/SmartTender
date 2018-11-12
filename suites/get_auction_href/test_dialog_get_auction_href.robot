@@ -58,6 +58,7 @@ If skipped create tender
     [Tags]  create_tender  get_tender_data
     Підтвердити організатором формування протоколу розгляду пропозицій
     Start  user1  provider1
+    Go to  ${data['tender_href']}
     Дочекатись закінчення періоду прекваліфікації
     Дочекатися статусу тендера  Очікування рішення організатора
     Перейти до другої фази
@@ -276,7 +277,7 @@ If skipped create tender
     Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
     Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Sleep  30
+    ...  Sleep  60
     ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     [Return]  ${count}
 
@@ -297,13 +298,16 @@ If skipped create tender
     Натиснути кнопку Просмотр (F4)
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  Відіслати рішення
-    Click Element  //div[@title="Допустити учасника до аукціону"
+    Click Element  //div[@title="Допустити учасника до аукціону"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Element Is Visible  (//*[@data-type="CheckBox"]//td/span)[1]  10
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[1]
     Sleep  .5
     Click Element  (//*[@data-type="CheckBox"]//td/span)[2]
     Sleep  .5
     Click Element  //*[@title="Відіслати рішення"]
+    Дочекатись закінчення загрузки сторінки(webclient)
     Погодитись з рішенням прекваліфікації
     Відмовитись від накладання ЕЦП на кваліфікацію
     Дочекатись закінчення загрузки сторінки(webclient)
@@ -339,16 +343,14 @@ If skipped create tender
 
 Підтвердити організатором формування протоколу розгляду пропозицій
     Натиснути кнопку Перечитать (Shift+F4)
-    Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    ${status}  Run Keyword And Return Status
+    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Run Keyword If  '${status}' != 'True'  Run Keywords
+    ...  Sleep  60
+    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
     Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
     Підтвердити формування протоколу розгляду пропозицій за необхідністью
-
-
-Підтвердити перехід до другої фази за необхідністью
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Перейти до другої фази?
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перейти до другої фази
@@ -357,6 +359,13 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки(webclient)
     ${status}  Run Keyword And Return Status  Підтвердити перехід до другої фази за необхідністью
     Run Keyword If  '${status}' == 'False'  Перейти до другої фази
+
+
+
+Підтвердити перехід до другої фази за необхідністью
+    Wait Until Page Contains  Перейти до другої фази?
+    Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Дочекатися учасником на рішення організатора
@@ -372,10 +381,10 @@ If skipped create tender
     Run Keyword If  '${status}' == 'False'  Перейти до другого етапу
     Click Element  //*[@title="До 2-го етапу"]
     Дочекатись закінчення загрузки сторінки(webclient)
-    Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
-
-
-
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  //*[@title="OK"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити отримання ссилки на участь в аукціоні
@@ -389,9 +398,9 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
+	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
-	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}

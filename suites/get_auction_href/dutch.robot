@@ -131,9 +131,9 @@ If skipped create tender
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
+	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
-	Location Should Contain  bidder_id=
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
