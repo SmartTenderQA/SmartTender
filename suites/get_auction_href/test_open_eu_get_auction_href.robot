@@ -166,7 +166,7 @@ If skipped create tender
 
 
 Заповнити description_eng для item
-    ${description_en}  create_sentence  5git
+    ${description_en}  create_sentence  5
     Set To Dictionary  ${data['item']}  description_en  ${description_en}
     Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
 
