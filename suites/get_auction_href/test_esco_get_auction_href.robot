@@ -258,6 +258,7 @@ Fill ESCO
     ${status}  Run Keyword And Return Status
     ...  Натиснути кнопку "Надіслати вперед"
     Run Keyword If  '${status}' != 'True'  Перейти до стадії Аукціон
+    ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
     ${stage}  get text  ${first tender}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
     ${status}  Run Keyword And Return Status  Should Contain  ${stage}  Аукціон
     Run Keyword If  '${status}' != 'True'  Оновити дані першого в списку тендера (webclient)
