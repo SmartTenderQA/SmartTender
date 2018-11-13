@@ -52,6 +52,7 @@ If skipped create tender
     Дочекатись початку періоду перкваліфікації
     Підтвердити прекваліфікацію учасників
     Підтвердити організатором формування протоколу розгляду пропозицій
+    Перейти до стадії Аукціон
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -250,3 +251,15 @@ Fill ESCO
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Перейти до стадії Аукціон
+    Оновити дані першого в списку тендера (webclient)
+    ${status}  Run Keyword And Return Status
+    ...  Натиснути кнопку "Надіслати вперед"
+    Run Keyword If  '${status}' != 'True'  Перейти до стадії Аукціон
+    ${stage}  get text  ${first tender}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
+    ${status}  Run Keyword And Return Status  Should Contain  ${stage}  Аукціон
+    Run Keyword If  '${status}' != 'True'  Оновити дані першого в списку тендера (webclient)
+
+

@@ -232,3 +232,15 @@
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
+
+Натиснути кнопку "Надіслати вперед"
+    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Оновити дані першого в списку тендера (webclient)
+    ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+    Click Element  ${first tender}
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути кнопку Перечитать (Shift+F4)
+
