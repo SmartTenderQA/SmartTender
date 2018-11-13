@@ -136,7 +136,7 @@ If skipped create tender
 Підготувати глядачів
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...       Start  user3  provider3
-	...  AND  Start  viewer_test  viewer
+	...  AND  Start  test_viewer  viewer
 
 
 Створити словник

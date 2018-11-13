@@ -64,7 +64,7 @@ ${registration link}                        https://test.smarttender.biz/reestra
 
 *** Keywords ***
 Precondition
-	Start  viewer_test
+	Start  test_viewer
 	Click Element  ${events}
     Click Element  ${login link}
     Wait Until Page Contains Element  ${login field}  5

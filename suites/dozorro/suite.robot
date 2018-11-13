@@ -491,7 +491,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Підготувати користувачів
   ${data}  Create Dictionary
   Set Global Variable  ${data}
-  Start  viewer_test   viewer
+  Start  test_viewer   viewer
   Start  Bened         tender_owner
   Start  user2         provider2
   Start  user1         provider

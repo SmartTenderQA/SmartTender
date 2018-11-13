@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
 *** Variables ***
 ${checked_single}              ${false}
 ${checked_multiple}            ${false}
