@@ -65,6 +65,7 @@ If skipped create tender
     Дочекатися учасником на рішення організатора
     Перейти до другого етапу
     Отримати tender_uaid та tender_href щойно стореного тендера
+    Опублікувати процедуру
 
 
 Підготувати учасників до участі в тендері на 2-ий етап
@@ -305,7 +306,7 @@ If skipped create tender
 
 
 Підтвердити перехід до другої фази за необхідністью
-    Wait Until Page Contains  Перейти до другої фази?
+    Wait Until Page Contains  Перейти до другої фази?  10
     Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     Дочекатись закінчення загрузки сторінки(webclient)
 
@@ -327,6 +328,26 @@ If skipped create tender
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  //*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Опублікувати процедуру
+    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${status}  Run Keyword And Return Status
+    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Run Keyword If  '${status}' != 'True'  Run Keywords
+    ...  Sleep  60
+    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
+    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Підтвердити публікацію процедури
+
+
+Підтвердити публікацію процедури
+    Wait Until Page Contains  Опублікувати процедуру?  10
+    Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити отримання ссилки на участь в аукціоні
