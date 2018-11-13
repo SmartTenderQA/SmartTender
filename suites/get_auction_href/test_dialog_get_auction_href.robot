@@ -282,6 +282,8 @@ If skipped create tender
 
 
 Підтвердити організатором формування протоколу розгляду пропозицій
+    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
     Натиснути кнопку Перечитать (Shift+F4)
     ${status}  Run Keyword And Return Status
     ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]

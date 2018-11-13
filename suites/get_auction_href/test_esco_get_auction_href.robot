@@ -12,6 +12,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	[Tags]  create_tender
 	Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
+	debug
 	Відкрити вікно створення тендеру
 	Заповнити endDate періоду пропозицій
 	Заповнити minimalStep для tender
@@ -51,6 +52,7 @@ If skipped create tender
     [Tags]  create_tender  get_tender_data
     Дочекатись початку періоду перкваліфікації
     Підтвердити прекваліфікацію учасників
+    Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -228,3 +230,24 @@ Fill ESCO
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
+
+
+Підтвердити організатором формування протоколу розгляду пропозицій
+    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${status}  Run Keyword And Return Status
+    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Run Keyword If  '${status}' != 'True'  Run Keywords
+    ...  Sleep  60
+    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
+    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Підтвердити формування протоколу розгляду пропозицій за необхідністью
+
+
+Підтвердити формування протоколу розгляду пропозицій за необхідністью
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
