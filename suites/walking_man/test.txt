@@ -1,6 +1,5 @@
 -d test_output
 -n non-critical
--n non-critical
 -n non-critical-test
 
 -e -test

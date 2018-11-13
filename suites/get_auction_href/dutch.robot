@@ -64,13 +64,12 @@ If skipped create tender
 	Зберегти пряме посилання на тендер
 	Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	${auction_href}  Run Keyword And Expect Error  *  Отримати URL на перегляд
 	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
-	Close Browser
 
 
 Неможливість отримати поcилання на участь в аукціоні
-	[Setup]  Run Keywords  Start  viewer_prod  viewer
+	[Setup]  Run Keywords  Close Browser
+	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
@@ -247,7 +246,15 @@ If skipped create tender
 Заповнити procuringEntity.contactPoint.name
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
 	${selector}  Set Variable  //*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+	# get from Вибрати та повернути елемент у випадаючому списку
+	Click Element  ${input}
+	Sleep  .5
+	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
+	Sleep  .5
+	Wait Until Page Contains Element  ${selector}  15
+	Click Element  (${selector})[1]
+	${name}  Get Element Attribute  ${input}  value
+	#####################
 	${dictionary}  Create Dictionary  name=${name}
 	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
 	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
