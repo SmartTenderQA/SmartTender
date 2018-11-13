@@ -485,7 +485,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
   Login  ${login}  ${password}
 
-  ${login}  ${password}  Отримати дані користувача  viewer_test
+  ${login}  ${password}  Отримати дані користувача  test_viewer
   ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=viewer
 

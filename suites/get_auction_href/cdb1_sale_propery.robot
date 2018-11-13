@@ -99,7 +99,7 @@ If skipped create tender
 
 Підготувати глядачів
 	Start  user3  provider3
-	Start  viewer_test  viewer
+	Start  test_viewer  viewer
 
 
 Знайти тендер користувачем

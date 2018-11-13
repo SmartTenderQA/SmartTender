@@ -99,7 +99,7 @@ If skipped create tender
 Підготувати користувачів для отримання ссилки на аукціон
     [Tags]  create_tender  get_tender_data
     Close All Browsers
-    Start  viewer_test  viewer
+    Start  test_viewer  viewer
     Start  Bened  tender_owner
     Start  user4  provider4
 
