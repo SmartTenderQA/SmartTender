@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
+# robot --consolecolors on -L TRACE:INFO -v user:viewer_test.0 -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
 *** Variables ***
 ${checked_single}              ${false}
 ${checked_multiple}            ${false}
@@ -34,8 +34,9 @@ ${page_number}                 2
 
 
 Підрахувати кількість мультилотів на сторінці
-  Wait Until Page Contains Element  //span[@class='Multilots']
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  //span[@class='Multilots']  15
   Wait Until Page Contains   Конкурентні процедури
+  Run Keyword If  ${status} == ${false}  Перейти на наступну сторінку
   ${mulilots_on_page}  Get Element Count  //span[@class='Multilots']
   [Return]  ${mulilots_on_page}
 
