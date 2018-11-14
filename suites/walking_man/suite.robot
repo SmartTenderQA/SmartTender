@@ -1019,6 +1019,7 @@ Test Postcondition
   Select Frame  css=iframe
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
   Run Keyword if  ${count} < 5  Fail  Хто сховав Питання та відповіді?!
+  Unselect Frame
 
 
 Перевірити заголовок, комерційніх торгів
@@ -1219,6 +1220,7 @@ Test Postcondition
   ${is link2}  Get Element Attribute  ${exchange link2}  href
   Should Contain  ${is link1}  ${should link1}
   Should Contain  ${is link2}  ${should link2}
+  Unselect Frame
 
 
 Відфільтрувати по статусу торгів
