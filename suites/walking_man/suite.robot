@@ -1489,6 +1489,7 @@ Test Postcondition
   Location Should Contain  /publichni-zakupivli-prozorro-plany/
   Select Frame  css=iFrame
   Page Should Contain Element  css=#main-section .title-plan
+  Unselect Frame
 
 
 Зайти на сторінку пошуку elastic
