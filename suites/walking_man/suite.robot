@@ -1804,6 +1804,7 @@ create_e-mail
   Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
   Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
   Page Should Contain Element  css=.ivu-card-body>button[type="button"]
+  Unselect Frame
 
 
 Перевірити вкладку Профіль компанії
