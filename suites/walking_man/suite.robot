@@ -205,6 +205,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 Перевірити elastic
 	[Tags]  site  -test
 	Зайти на сторінку пошуку elastic
+	Очистити Фільтр Пошуку Elastic
 	Виконати пошук в elastic  бумага
 	${status}  Run Keyword And Return Status  Page Should Contain  папір
 	Run Keyword If  not ${status}  Page Should Contain  Папір
@@ -640,7 +641,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Оренда майна
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
@@ -651,7 +652,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Продаж майна
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
 	Відфільтрувати по формі торгів_new
@@ -661,7 +662,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Англійський аукціон. Мала приватизація
-	[Tags]  sales1
+	[Tags]  sales
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -675,7 +676,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
-	[Tags]  sales1  -test
+	[Tags]  sales  -test
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -687,7 +688,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Об'єкти приватизації
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -696,7 +697,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Реєстр інформаційних повідомлень
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -1299,6 +1300,7 @@ Test Postcondition
   ${should}  Set variable    Продаж і оренда майна/активів Державних підприємств
   ${is}  Get Text  ${taryfy text}[4]
   Should Be Equal  ${is}  ${should}
+  Unselect Frame
 
 
 Відкрити особистий кабінет
