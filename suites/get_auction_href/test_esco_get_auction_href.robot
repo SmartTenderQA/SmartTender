@@ -6,7 +6,7 @@ Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -i create_tender suites/get_auction_href/test_esco_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_esco_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -14,14 +14,14 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
 If skipped create tender
-	[Tags]  get_tender_data
+	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
 
 Підготувати учасників до участі в тендері
-    [Tags]  create_tender  get_tender_data
+    [Tags]  create_tender  get_tender
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2

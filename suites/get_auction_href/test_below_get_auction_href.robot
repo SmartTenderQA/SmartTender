@@ -13,7 +13,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
 If skipped create tender
-	[Tags]  get_tender_data
+	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
