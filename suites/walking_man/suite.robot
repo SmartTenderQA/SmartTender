@@ -1146,6 +1146,7 @@ Test Postcondition
 Зайти на сторінку аукціони на продаж активів держпідприємств
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
