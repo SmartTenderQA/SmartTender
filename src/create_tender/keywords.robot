@@ -2,6 +2,12 @@
 Library     Collections
 Resource  ../loading.robot
 Resource  cdb1_sale_propery.robot
+Resource  prod_below_propery.robot
+Resource  test_below_propery.robot
+Resource  test_dialog_propery.robot
+Resource  test_esco_propery.robot
+Resource  test_open_eu_propery.robot
+Resource  test_open_trade_propery.robot
 
 
 *** Keywords ***
@@ -11,7 +17,7 @@ Resource  cdb1_sale_propery.robot
 Відкрити сторінку для створення аукціону на продаж
   Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
   Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
-  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
+  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]/following::*[contains(text(), 'OK')]
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
 
 

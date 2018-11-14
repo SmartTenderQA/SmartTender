@@ -83,7 +83,7 @@
 
 Відкрити вікно підтвердження заявок
 	Wait Until Page Contains Element  //*[@title="Заявки на участие в аукционах Prozorro.Sale"]
-	Click Element  //*[@title="Заявки на участие в аукционах Prozorro.Sale"]
+	Wait Until Keyword Succeeds  16  2  Click Element  //*[@title="Заявки на участие в аукционах Prozorro.Sale"]
 	Дочекатись закінчення загрузки сторінки(webclient)
 
 

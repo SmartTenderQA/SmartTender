@@ -87,8 +87,8 @@
 Змінити групу
 	[Arguments]  ${text}
 	Click Element  //*[contains(@title, 'Змінити групу: ')]
-	Wait Until Page Contains Element  //*[contains(text(), "${text}")]
-	Click Element  //*[contains(text(), "${text}")]
+	Wait Until Page Contains Element  //*[@class="dx-vam" and text()="${text}"]
+	Click Element  //*[@class="dx-vam" and text()="${text}"]
 
 ###############################################
 #				Alt+Right					  #

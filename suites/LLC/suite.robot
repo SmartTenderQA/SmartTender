@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Test Teardown  Test Postcondition
+Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 Suite Setup  Start  LLC
 Suite Teardown  Suite Postcondition
 
