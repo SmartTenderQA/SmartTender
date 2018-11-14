@@ -46,7 +46,7 @@ ${torgy count tab}                   li:nth-child
 Відфільтрувати по формі торгів_new
 	[Arguments]  ${type}=${TESTNAME}
 	Розгорнути елемент у фільтрі_new  Вид торгів
-	Операція над чекбоксом square  ${TESTNAME}  select
+	Операція над чекбоксом square  ${type}  select
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
