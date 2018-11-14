@@ -1192,6 +1192,7 @@ Test Postcondition
   ${is link2}  Get Element Attribute  ${contract link2}  href
   Should Be Equal  ${is link1}  ${should link1}
   Should Be Equal  ${is link2}  ${should link2}
+  Unselect Frame
 
 
 Відкрити вікно курсів валют
@@ -1489,6 +1490,7 @@ Test Postcondition
   Location Should Contain  /publichni-zakupivli-prozorro-plany/
   Select Frame  css=iFrame
   Page Should Contain Element  css=#main-section .title-plan
+  Unselect Frame
 
 
 Зайти на сторінку пошуку elastic
