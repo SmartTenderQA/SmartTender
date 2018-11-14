@@ -1192,6 +1192,7 @@ Test Postcondition
   ${is link2}  Get Element Attribute  ${contract link2}  href
   Should Be Equal  ${is link1}  ${should link1}
   Should Be Equal  ${is link2}  ${should link2}
+  Unselect Frame
 
 
 Відкрити вікно курсів валют
