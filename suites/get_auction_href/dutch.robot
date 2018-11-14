@@ -132,6 +132,11 @@ If skipped create tender
 	Go To  ${auction_href}
 	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
+	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+#	:FOR  ${i}  IN RANGE  50
+#	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+#	\  Exit For Loop If  ${status} == ${false}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
@@ -249,7 +254,12 @@ If skipped create tender
 	# get from Вибрати та повернути елемент у випадаючому списку
 	Click Element  ${input}
 	Sleep  .5
-	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
+	:FOR  ${i}  IN RANGE  10
+	\  Wait Until Keyword Succeeds  20  2  Click Element  ${input}
+	\  Sleep  .5
+	\  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${input}/../following-sibling::*
+	\  Exit For Loop If  ${status} == ${true}
+	Click Element  ${input}/../following-sibling::*
 	Sleep  .5
 	Wait Until Page Contains Element  ${selector}  15
 	Click Element  (${selector})[1]
