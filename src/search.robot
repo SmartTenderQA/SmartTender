@@ -6,6 +6,7 @@ ${find tender field}                xpath=//input[@placeholder="Введіть �
 ${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
+${small privatization item}			//*[@class="content-block"]/div//a[@href]
 
 ${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
 ${torgy count tab}                   li:nth-child
@@ -40,6 +41,23 @@ ${torgy count tab}                   li:nth-child
   Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
   Sleep  1
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
+
+
+Відфільтрувати по формі торгів_new
+	[Arguments]  ${type}=${TESTNAME}
+	Розгорнути елемент у фільтрі_new  Вид торгів
+	Операція над чекбоксом square  ${type}  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Розгорнути елемент у фільтрі_new
+	[Arguments]  ${element}
+	${selector}  Set Variable  //p[contains(text(), "${element}")]
+	Wait Until Page Contains Element  ${selector}
+	${class}  Get Element Attribute  ${selector}//i  class
+	${expand_status}  Run Keyword And Return Status  Should Contain  ${class}  down
+	Run Keyword If  ${expand_status} == ${False}  Click Element  ${selector}
+
 
 
 Відфільтрувати по статусу торгів
@@ -79,6 +97,13 @@ ${torgy count tab}                   li:nth-child
   Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
 
 
+Виконати пошук_new
+	${search_button}  Set Variable  css=.search-field button
+	Wait Until Page Contains Element  ${search_button}
+	Click Element  ${search_button}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
 Перевірити унікальність результату пошуку
   ${count}  Get Element Count  ${tender found}
   Should Be Equal  '${count}'  '1'
@@ -90,6 +115,12 @@ ${torgy count tab}                   li:nth-child
   ${href}  Поправили лінку для IP  ${href}
   Go To  ${href}
   Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Перейти по результату пошуку_new
+	[Arguments]  ${selector}
+	Click Element  ${selector}
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Розгорнути розширений пошук
