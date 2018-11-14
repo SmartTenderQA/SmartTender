@@ -144,7 +144,7 @@ ${torgy count tab}                   li:nth-child
 	${tender_id}  Get Text  //h4/following-sibling::a|//*[@data-qa="prozorro-number"]//a
 	Execute Javascript  window.open('http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=');
 	Select Window  New
-	Wait Until Page Contains Element  css=.text
+	Wait Until Keyword Succeeds  30  3  Page Should Contain Element  css=.text
 	Element Should Contain  css=.text  test
 	Close Window
 	Select Window  undefined
