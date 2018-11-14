@@ -4,15 +4,15 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Допорогові закупівлі
-  	Заповнити startDate періоду пропозицій
-  	Заповнити endDate періоду пропозицій
-  	Заповнити endDate періоду обговорення
-  	Заповнити amount для tender
-  	Заповнити minimalStep для tender
-  	Заповнити contact для tender
-  	Заповнити title для tender
-  	Заповнити description для tender
-  	Додати предмет в тендер
+  	prod_below_propery.Заповнити startDate періоду пропозицій
+  	prod_below_propery.Заповнити endDate періоду пропозицій
+  	prod_below_propery.Заповнити endDate періоду обговорення
+  	prod_below_propery.Заповнити amount для tender
+  	prod_below_propery.Заповнити minimalStep для tender
+  	prod_below_propery.Заповнити contact для tender
+  	prod_below_propery.Заповнити title для tender
+  	prod_below_propery.Заповнити description для tender
+  	prod_below_propery.Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити тендер
