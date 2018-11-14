@@ -4,12 +4,12 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  ${mode.${type}}
-  	Заповнити endDate періоду пропозицій
-  	Заповнити amount для tender
-  	Заповнити minimalStep для tender
-  	Заповнити title для tender
-  	Заповнити description для tender
-  	Додати предмет в тендер
+  	test_open_trade_propery.Заповнити endDate періоду пропозицій
+  	test_open_trade_propery.Заповнити amount для tender
+  	test_open_trade_propery.Заповнити minimalStep для tender
+  	test_open_trade_propery.Заповнити title для tender
+  	test_open_trade_propery.Заповнити description для tender
+  	test_open_trade_propery.Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
@@ -64,15 +64,15 @@
 
 
 Додати предмет в тендер
-    Заповнити description для item
-    Заповнити quantity для item
-    Заповнити id для item
-    Заповнити unit.name для item
-    Заповнити postalCode для item
-    Заповнити streetAddress для item
-    Заповнити locality для item
-    Заповнити endDate для item
-    Заповнити startDate для item
+    test_open_trade_propery.Заповнити description для item
+    test_open_trade_propery.Заповнити quantity для item
+    test_open_trade_propery.Заповнити id для item
+    test_open_trade_propery.Заповнити unit.name для item
+    test_open_trade_propery.Заповнити postalCode для item
+    test_open_trade_propery.Заповнити streetAddress для item
+    test_open_trade_propery.Заповнити locality для item
+    test_open_trade_propery.Заповнити endDate для item
+    test_open_trade_propery.Заповнити startDate для item
 
 
 Заповнити description для item
