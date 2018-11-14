@@ -21,7 +21,6 @@ If skipped create tender
 
 
 Підготувати учасників до участі в тендері
-    [Tags]  create_tender  get_tender
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
