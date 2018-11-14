@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+Test Setup  Test Precondition
 Test Teardown  Test Postcondition
 Suite Setup  Відкрити головну сторінку SmartTender.biz під потрібною роллю
 Suite Teardown  Suite Postcondition
@@ -29,7 +30,7 @@ ${taryfy text}                       //*[@class="body-content"]//ul[@class="nav 
 ${client banner}                     css=.container .row .ivu-card-body
 ${item plan}                         css=tr[data-planid] a
 ${item dogovory}                     xpath=//*[contains(@class, 'container')]//*[contains(@class, 'content-expanded')]/div[2]/*
-${auction active items}              xpath=//tbody/tr[@class='head']|//*[@id='hotTrades']/div/div
+${auction active items}              //tbody/tr[@class='head']|//*[@id='hotTrades']/div/div|//*[@class="panel-body"]
 ${auction active header}             css=.ivu-card-body h4
 ${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
 ${RegisterAnchor}                    css=#RegisterAnchor
@@ -48,8 +49,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${tender doc exept EDS}              xpath=//*[@data-qa="documents-block"]//*[contains(@class, "filename") and not(contains(., 'sign.p7s')) and not(contains(., '.rar'))]/div|//*[contains(@class, "filename") and not(contains(., 'sign.p7s')) and not(contains(., '.rar'))]/div
-${tender doc exept EDS commercial}   //*[contains(@class, 'filename')]//span
 ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
@@ -65,6 +64,7 @@ ${not collapsed menu button your account}         //*[contains(@class, "page-con
 ${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
 ${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
+${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 *** Test Cases ***
@@ -343,7 +343,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
-  Перевірити тендерний документ
 
 
 Відкриті торги. Аналіз пропозицій
@@ -353,7 +352,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
-  Перевірити тендерний документ
 
 
 Запит пропозицій
@@ -363,7 +361,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
-  Перевірити тендерний документ
 
 
 Відкриті торги. Аналіз ринку
@@ -373,7 +370,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
-  Перевірити тендерний документ
 
 
 Перевірити список доступних торгів для Комерційні торги Продажі
@@ -400,7 +396,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${info form1}
-  Перевірити тендерний документ
 
 
 Перевірка посилання на тендер (з порталу)
@@ -444,7 +439,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Відкриті торги
@@ -454,7 +448,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Відкриті торги з публікацією англійською мовою
@@ -464,7 +457,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Переговорна процедура для потреб оборони
@@ -474,7 +466,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Відкриті торги для закупівлі енергосервісу
@@ -484,7 +475,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Конкурентний діалог 2-ий етап
@@ -494,7 +484,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Конкурентний діалог з публікацією англійською мовою 2-ий етап
@@ -504,7 +493,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Конкурентний діалог 1-ий етап
@@ -514,7 +502,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Конкурентний діалог з публікацією англійською мовою 1-ий етап
@@ -524,7 +511,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
@@ -549,7 +535,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Переговорна процедура
@@ -560,7 +545,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Переговорна процедура (скорочена)
@@ -571,7 +555,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури  ${tender_type_procurement}
-  Перевірити тендерний документ
 
 
 Державні закупівлі прозорро Плани
@@ -614,7 +597,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
 
 
 Продаж майна банків, що ліквідуються
@@ -624,7 +606,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
 
 
 Голландський аукціон
@@ -634,7 +615,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
   Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
 
 
 Майно
@@ -645,7 +625,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Вибрати тип активу та виконати пошук  ${TESTNAME}
   Перейти по результату пошуку  ${auction active item}
   Перевірити тип процедури  ${info form4}
-  Перевірити тендерний документ для commercial
 
 
 Права вимоги
@@ -655,85 +634,67 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Вибрати тип активу та виконати пошук  ${TESTNAME}
   Перейти по результату пошуку  ${auction active item}
   Перевірити тип процедури  ${info form4}
-  Перевірити тендерний документ для commercial
 
 
 Оренда майна
-  [Tags]  sales
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Перевірити заголовок аукціони на продаж активів держпідприємств
-  Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
+	[Tags]  sales
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
+	Відфільтрувати по формі торгів_new
+	Виконати пошук_new
+	Перейти по результату пошуку_new  (${auction active items})//h4//a
+	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
 Продаж майна
-  [Tags]  sales
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
+	[Tags]  sales
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Відфільтрувати по формі торгів_new
+	Виконати пошук_new
+	Перейти по результату пошуку_new  (${auction active items})//h4//a
+	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон. Мала приватизація
-  [Tags]  sales
-  ${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
-  ...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  ${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
-  ...  ELSE  Set Variable  ${TESTNAME}
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
+	[Tags]  sales
+	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
+	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Відфільтрувати по формі торгів_new
+	Виконати пошук_new
+	Перейти по результату пошуку_new  (${auction active items})//h4//a
+	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
+	...  ELSE  Set Variable  ${TESTNAME}
+	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
-  [Tags]  sales
-  ${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
-  ...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
-  Перевірити тендерний документ для commercial
+	[Tags]  sales  -test
+	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
+	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Відфільтрувати по формі торгів_new
+	Виконати пошук_new
+	Перейти по результату пошуку_new  (${auction active items})//h4//a
+	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
 Об'єкти приватизації
-  [Tags]  sales
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Перевірити вкладку мала приватизація
-  Вибрати тип процедури для малої приватизації
-  Порахувати кількість торгів малої приватизації
-  Перевірити пошук малої приватизації
-  Перевірити тендерний документ для commercial
+	[Tags]  sales
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Активувати вкладку  Реєстр об'єктів приватизації
+	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
+	Перейти по результату пошуку_new  ${small privatization item}
+	Перевірити тип процедури за зразком  ${breadcrumbs}[last()]  Об'єкт приватизації
 
 
-Інформаційні повідомлення
-  [Tags]  sales
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Перевірити вкладку мала приватизація
-  Вибрати тип процедури для малої приватизації
-  Порахувати кількість торгів малої приватизації
-  Перевірити пошук малої приватизації
-  Перевірити тендерний документ для commercial
-
-
-Аукціони
-  [Tags]  sales
-  Зайти на сторінку аукціони на продаж активів держпідприємств
-  Перевірити вкладку мала приватизація
-  Вибрати тип процедури для малої приватизації
-  Порахувати кількість торгів малої приватизації
-  Перевірити пошук малої приватизації
-  Перевірити тендерний документ для commercial
+Реєстр інформаційних повідомлень
+	[Tags]  sales
+	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Активувати вкладку  Реєстр об'єктів приватизації
+	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
+	Перейти по результату пошуку_new  ${small privatization item}
+	Перевірити тип процедури за зразком  ${breadcrumbs}[last()]  Інформаційне повідомлення
 
 
 Запит цінових пропозицій
@@ -776,6 +737,17 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
   Start  ${user}
   Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
+
+
+Test Precondition
+	${location}  Get Location
+	Run Keyword If  '${start_page}' != '${location}'  Go To  ${start_page}
+
+
+Test Postcondition
+  Log Location
+  Run Keyword If Test Failed  Capture Page Screenshot
+  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
 
 Зайти на сторінку про компанію
@@ -1167,12 +1139,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
 
 
-Перевірити заголовок аукціони на продаж активів держпідприємств
-  ${should}  Set variable  Аукціони на продаж активів держпідприємств
-  ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
-  Should Be Equal  ${is}  ${should}
-
-
 Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
   ${count}  Get Element Count  ${auction active items}
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
@@ -1327,51 +1293,6 @@ ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
   Should Be Equal  ${is}  ${should}
 
 
-Перевірити тендерний документ
-  Run Keyword If  '${site}' == 'prod'  Run Keyword
-  ...  Run Keyword If  '${IP}' == ''  Перевірити тендерний документ не для IP
-
-
-Перевірити тендерний документ не для IP
-  ${commercial}  Run Keyword And Return Status  Location Should Contain  /komertsiyni-torgy
-  Run Keyword If  "${commercial}" == "True"  Перевірити тендерний документ для commercial
-  ...  ELSE  Перевірити тендерний документ для procurement
-
-
-Перевірити тендерний документ для commercial
-  ${status}  Перевірити наявність документа для commercial
-  Run Keyword If  '${status}' == '${True}'  Run Keywords
-  ...  Mouse over  ${tender doc exept EDS commercial}
-  ...  AND  Wait Until Page Contains Element  //*[contains(@class, 'filename')]//a[@href][1]
-  ...  AND  Open Button  //*[contains(@class, 'filename')]//a[@href][1]  not_ip
-  ...  AND  Check document for error
-
-
-Перевірити тендерний документ для procurement
-  ${status}  Перевірити наявність документа
-  Run Keyword If  '${status}' == '${True}'  Run Keywords
-  ...  Mouse over  ${tender doc exept EDS}
-  ...  AND  Wait Until Page Contains Element  (//*[@class="ivu-poptip-content"]//a[@href and contains(text(), "Переглянути")])[1]  5
-  ...  AND  Open Button  (//*[@class="ivu-poptip-content"]//a[@href and contains(text(), "Переглянути")])[1]  not_ip
-  ...  AND  Check document for error
-
-
-Check document for error
-  Run Keyword And Expect Error  *  Location Should Contain  error
-  Run Keyword And Expect Error  *  Page Should Contain  an error
-  Go Back
-
-
-Перевірити наявність документа
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS}
-  [Return]  ${status}
-
-
-Перевірити наявність документа для commercial
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${tender doc exept EDS commercial}
-  [Return]  ${status}
-
-
 Відкрити особистий кабінет
   Page Should Contain Element  ${personal account}
   Click Element  ${personal account}
@@ -1462,13 +1383,6 @@ Check document for error
   ${tenders_after}  get_number  ${tenders_after}
   ${tenders_after}  Evaluate  int(${tenders_after})
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
-
-
-Перевірити вкладку мала приватизація
-  Sleep  1
-  Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  Location Should Contain  /small-privatization/
 
 
 Вибрати тип процедури для малої приватизації
@@ -1971,13 +1885,24 @@ create_e-mail
   ${id}  Get Text  ${prozorro-number}
   [Return]  ${id}
 
+
 Сформувати пряме посилання на тендер
   [Arguments]  ${id}
   ${link to tender}  Set Variable  ${start page}/publichni-zakupivli-prozorro/${id}
   [Return]  ${link to tender}
+
 
 Перевірити відкриття тендера за посиланням
   [Arguments]  ${link to tender}
   Go To  ${link to tender}
   Дочекатись закінчення загрузки сторінки(skeleton)
   Отримати UAID на сторінці з тендером
+
+
+Активувати вкладку
+	[Arguments]  ${text}=Реєстр об'єктів приватизації
+	${selector}  Set Variable  //*[contains(@class, "tab-pane") and contains(., "${text}")]
+	${class}  Get Element Attribute  ${selector}  class
+	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
+	Run Keyword If  ${tab status} == ${False}  Click Element  ${selector}
+	Дочекатись закінчення загрузки сторінки(skeleton)

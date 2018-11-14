@@ -127,13 +127,6 @@ conver json to dict
   [Return]  ${path}  ${name}  ${content}
 
 
-Test Postcondition
-  Log Location
-  Run Keyword If Test Failed  Capture Page Screenshot
-  Go To  ${start_page}
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
-
-
 Перевірити користувача
   ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
   Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
@@ -185,3 +178,18 @@ Check Prev Test Status
 Видалити кнопку "Замовити звонок"
   Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
 
+
+Операція над чекбоксом square
+	[Arguments]  ${field_text}  ${action}
+	${selector}  Set Variable  //label[contains(., "${field_text}")]//input[@type="checkbox"]
+	Run Keyword  ${action} Checkbox  ${selector}
+
+
+Активувати перемикач на сторінці пошуку малої приватизації
+	[Arguments]  ${field_text}
+	${selector}  Set Variable  //input[@type="radio"]/ancestor::label[contains(., "${field_text}")]
+	${class}  Get Element Attribute  ${selector}  class
+	${status}  Run Keyword And Return Status  Should Contain  ${class}  checked
+	Run Keyword If  ${status} == ${False}  Run Keywords
+	...  Click Element  ${selector}
+	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
