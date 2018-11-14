@@ -661,7 +661,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
-Англійський аукціон. Мала приватизація
+Аукціон. Мала приватизація
 	[Tags]  sales
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
