@@ -84,15 +84,15 @@
 
 
 Додати предмет в тендер
-    Заповнити description для item
-    Заповнити quantity для item
-    Заповнити id для item
-    Заповнити unit.name для item
-    Заповнити postalCode для item
-    Заповнити streetAddress для item
-    Заповнити locality для item
-    Заповнити endDate для item
-    Заповнити startDate для item
+    prod_below_propery.Заповнити description для item
+    prod_below_propery.Заповнити quantity для item
+    prod_below_propery.Заповнити id для item
+    prod_below_propery.Заповнити unit.name для item
+    prod_below_propery.Заповнити postalCode для item
+    prod_below_propery.Заповнити streetAddress для item
+    prod_below_propery.Заповнити locality для item
+    prod_below_propery.Заповнити endDate для item
+    prod_below_propery.Заповнити startDate для item
 
 
 Заповнити description для item
