@@ -1817,6 +1817,7 @@ create_e-mail
   Element Should Contain  css=#FormLayout_1_0  Основна інформація
   Element Should Contain  css=#FormLayout_1_1  Додаткова інформація
   Page Should Contain Element  css=#BTSUBMIT_CD
+  Unselect Frame
 
 
 Перевірити вкладку Змінити пароль
