@@ -205,6 +205,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 Перевірити elastic
 	[Tags]  site  -test
 	Зайти на сторінку пошуку elastic
+	Очистити Фільтр Пошуку Elastic
 	Виконати пошук в elastic  бумага
 	${status}  Run Keyword And Return Status  Page Should Contain  папір
 	Run Keyword If  not ${status}  Page Should Contain  Папір
@@ -640,7 +641,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Оренда майна
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
@@ -651,7 +652,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Продаж майна
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
 	Відфільтрувати по формі торгів_new
@@ -660,8 +661,8 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
 
 
-Англійський аукціон. Мала приватизація
-	[Tags]  sales1
+Аукціон. Мала приватизація
+	[Tags]  sales
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -675,7 +676,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
-	[Tags]  sales1  -test
+	[Tags]  sales  -test
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -687,7 +688,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Об'єкти приватизації
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -696,7 +697,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Реєстр інформаційних повідомлень
-	[Tags]  sales1
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -1018,6 +1019,7 @@ Test Postcondition
   Select Frame  css=iframe
   ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
   Run Keyword if  ${count} < 5  Fail  Хто сховав Питання та відповіді?!
+  Unselect Frame
 
 
 Перевірити заголовок, комерційніх торгів
@@ -1144,6 +1146,7 @@ Test Postcondition
 Зайти на сторінку аукціони на продаж активів держпідприємств
   Click Element  ${komertsiyni-torgy icon}
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
@@ -1218,6 +1221,7 @@ Test Postcondition
   ${is link2}  Get Element Attribute  ${exchange link2}  href
   Should Contain  ${is link1}  ${should link1}
   Should Contain  ${is link2}  ${should link2}
+  Unselect Frame
 
 
 Відфільтрувати по статусу торгів
@@ -1299,6 +1303,7 @@ Test Postcondition
   ${should}  Set variable    Продаж і оренда майна/активів Державних підприємств
   ${is}  Get Text  ${taryfy text}[4]
   Should Be Equal  ${is}  ${should}
+  Unselect Frame
 
 
 Відкрити особистий кабінет
@@ -1802,6 +1807,7 @@ create_e-mail
   Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
   Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
   Page Should Contain Element  css=.ivu-card-body>button[type="button"]
+  Unselect Frame
 
 
 Перевірити вкладку Профіль компанії
@@ -1814,6 +1820,7 @@ create_e-mail
   Element Should Contain  css=#FormLayout_1_0  Основна інформація
   Element Should Contain  css=#FormLayout_1_1  Додаткова інформація
   Page Should Contain Element  css=#BTSUBMIT_CD
+  Unselect Frame
 
 
 Перевірити вкладку Змінити пароль
