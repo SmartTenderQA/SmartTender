@@ -96,12 +96,19 @@
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Click Element  ${row}[${i}]//img[contains(@src, 'checkBoxUnchecked')][last()]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Sleep  180
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'qe0102')]
-	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Click Element  //*[@id='pcModalMode_PW-1' and contains(., 'Решение')]//li[contains(., 'Принять')]
-	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Element Should Contain  ${row}[${i}]//td[2]  Принята
+	\  Підтвердити заявку для ФГВ  ${i}  ${row}
+
+
+Підтвердити заявку для ФГВ
+    [Arguments]  ${i}  ${row}
+    Sleep  30
+	Click Element  ${row}[${i}]//img[contains(@src, 'qe0102')]
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Click Element  //*[@id='pcModalMode_PW-1' and contains(., 'Решение')]//li[contains(., 'Принять')]
+	Дочекатись закінчення загрузки сторінки(webclient)
+	${status}  Run Keyword And Return Status  Element Should Contain  ${row}[${i}]//td[2]  Принята
+	Run Keyword If  ${status} == ${false}  Закрити валідаційне вікно  Тендер, на який ви хочете подати пропозицію не існує! Перевірте правильність посилання  ОК
+	Run Keyword If  ${status} == ${false}  Підтвердити заявку для ФГВ  ${i}  ${row}
 
 
 Підтвердити всі заявки для ФГИ
