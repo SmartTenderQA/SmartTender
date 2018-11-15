@@ -21,6 +21,7 @@ ${page_number}                 2
 Зайти на стоінку закупівель
   [Tags]  commercial
   Set Global Variable  ${type}  com
+  Set To Dictionary  ${checks}  checked_signature=${true}
   Зайти на торговий майданчик
 
 
@@ -97,7 +98,7 @@ Setup
 
 Завершити виконання тестуtest
   ${status}  Run keyword and return status  Dictionary Should Contain Value  ${checks}  ${true}
-  Exit For Loop If  ${status} == ${true}
+  Exit For Loop If  ${checks.checked_doc} == ${true} or ${checks.checked_docx} == ${true} or ${checks.checked_pdf} == ${true} or ${checks.checked_image} == ${true}
 
 
 Завершити виконання тестуprod
