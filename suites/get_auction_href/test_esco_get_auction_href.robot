@@ -170,8 +170,7 @@ Fill ESCO
     ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
     Оновити дані першого в списку тендера (webclient)
     Натиснути кнопку "Надіслати вперед"
-    Дочекатись закінчення загрузки сторінки(webclient)
     ${stage}  get text  ${first tender}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    ${status}  Run Keyword And Return Status  Should Contain  ${stage}  Аукціон
+    Should Contain  ${stage}  Аукціон
 
 
