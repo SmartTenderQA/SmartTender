@@ -115,7 +115,7 @@ Fill ESCO
     [Arguments]  ${role}
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
@@ -170,8 +170,7 @@ Fill ESCO
     ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
     Оновити дані першого в списку тендера (webclient)
     Натиснути кнопку "Надіслати вперед"
-    Дочекатись закінчення загрузки сторінки(webclient)
     ${stage}  get text  ${first tender}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    ${status}  Run Keyword And Return Status  Should Contain  ${stage}  Аукціон
+    Should Contain  ${stage}  Аукціон
 
 

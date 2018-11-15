@@ -11,8 +11,7 @@ Library     service.py
 Library     Faker/faker.py
 
 Variables   /home/testadm/users_variables.py
-Variables   users_variables.py
-
+Variables   ../users_variables.py
 Resource    EDS.robot
 Resource    email.robot
 Resource    keywords(webclient).robot
