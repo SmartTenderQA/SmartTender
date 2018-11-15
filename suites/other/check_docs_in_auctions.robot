@@ -5,12 +5,13 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
 # robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i procurement -v hub:None suites/other/check_docs_in_auctions.robot
 *** Variables ***
 ${type}
+${site}                        prod
 ${page_number}                 2
 &{checks}                      checked_doc=${false}  checked_docx=${false}  checked_image=${false}  checked_pdf=${false}  checked_signature=${false}
 @{image_format}                png  jpg  jpeg  gif  gif  tif  tiff  bmp
@@ -21,7 +22,6 @@ ${page_number}                 2
   [Tags]  commercial
   Set Global Variable  ${type}  com
   Зайти на торговий майданчик
-  Set To Dictionary  ${checks}  checked_signature=${true}
 
 
 Перевірка тендерів на сторінці пошука
@@ -31,7 +31,7 @@ ${page_number}                 2
   \  Видалити кнопку "Замовити звонок"
   \  Видалити кнопку "Поставити запитання"
   \  Перевірити тендери  ${tenders_on_page}
-  \  Завершити виконання тесту
+  \  Run Keyword  Завершити виконання тесту${site}
   \  Перейти на наступну сторінку
 
 
@@ -49,7 +49,7 @@ ${page_number}                 2
   \  Видалити кнопку "Замовити звонок"
   \  Видалити кнопку "Поставити запитання"
   \  Перевірити тендери  ${tenders_on_page}
-  \  Завершити виконання тесту
+  \  Run Keyword  Завершити виконання тесту${site}
   \  Перейти на наступну сторінку
 
 
@@ -75,8 +75,9 @@ ${page_number}                 2
 Setup
   [Arguments]  ${user}  ${alies}=alies
   clear_test_output
-  ${status}  Run Keyword And Return Status  Should Contain  ${user}  test
-  Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_doc=${true}  checked_image=${true}  checked_signature=${true}
+  ${status}  Run Keyword And Return Status  Should Contain  ${user}  prod
+  Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_image=${true}
+  ...  ELSE  Set Global Variable  ${site}  test
   ${login}  ${password}  Отримати дані користувача  ${user}
   ${start_page}  Отримати стартову сторінку  ${site}
   Змінити стартову сторінку для IP
@@ -94,7 +95,12 @@ Setup
   Set Global Variable  ${page_number}
 
 
-Завершити виконання тесту
+Завершити виконання тестуtest
+  ${status}  Run keyword and return status  Dictionary Should Contain Value  ${checks}  ${true}
+  Exit For Loop If  ${status} == ${true}
+
+
+Завершити виконання тестуprod
   ${status}  Run keyword and return status  Dictionary Should Not Contain Value  ${checks}  ${false}
   Exit For Loop If  ${status} == ${true}
 
@@ -141,7 +147,7 @@ Setup
   \  ${doc_quantity}  Перевірити наявність документів в тендері  ${items}
   \  Continue For Loop If  ${doc_quantity} < 1
   \  Перевірити документ  ${doc_quantity}
-  \  Завершити виконання тесту
+  \  Run Keyword  Завершити виконання тесту${site}
 
 
 Розкрити тендер
