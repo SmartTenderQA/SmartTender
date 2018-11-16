@@ -133,7 +133,7 @@ If skipped create tender
 	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
 	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
-	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
 #	:FOR  ${i}  IN RANGE  50
 #	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
 #	\  Exit For Loop If  ${status} == ${false}
