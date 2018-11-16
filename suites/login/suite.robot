@@ -69,7 +69,7 @@ Login with wrong data
 Залогінитися та перевірити користувача prod
 	Login With Correct Data  prod_provider			#role:provider
 	Login With Correct Data  prod_owner  			#role:tender_owner
-	Login With Correct Data  prod_ssp_tender_owner	#role:ssp_tender_owner
+	Login With Correct Data  prod_ssp_owner			#role:ssp_tender_owner
 
 
 Login with correct data
