@@ -2,10 +2,11 @@
 Resource  ../../src/src.robot
 Suite Setup     Авторизуватися організатором
 Suite Teardown  Suite Postcondition
-Test Setup      Check Prev Test Status
+#Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -20,9 +21,14 @@ If skipped create tender
 
 
 Підготувати учасників до участі в тендері
+    [Setup]  Check Prev Test Status
     Close All Browsers
     Start  user1  provider1
-    Start  user2  provider2
+    #Start  user2  provider2
+
+
+Перевірка відображення даних створеного тендера на сторінці
+    Перевірка відображення даних тендера на сторінці  provider1
 
 
 Подати заявку на участь в тендері двома учасниками
@@ -31,6 +37,7 @@ If skipped create tender
 
 
 Отримати поcилання на участь в аукціоні для учасників
+	[Setup]  Check Prev Test Status
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
     Перевірити отримання ссилки на участь в аукціоні  provider1
@@ -56,6 +63,42 @@ If skipped create tender
     Start  Bened  tender_owner
     ${data}  Create Dictionary
     Set Global Variable  ${data}
+
+
+Перевірка відображення даних тендера на сторінці
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Go to  ${data['tender_href']}
+    Перевірити коректність даних на сторінці  ['title']
+    Перевірити коректність даних на сторінці  ['description']
+    Перевірити коректність даних на сторінці  ['tender_uaid']
+    Перевірити коректність даних на сторінці  ['item']['description']
+    Перевірити коректність даних на сторінці  ['item']['city']
+    Перевірити коректність даних на сторінці  ['item']['streetAddress']
+    Перевірити коректність даних на сторінці  ['item']['postal code']
+    #Перевірити коректність даних на сторінці  ['item']['id']
+    #TODO  Распарсить на єтапе создания тендера
+    Перевірити коректність даних на сторінці  ['item']['unit']
+    Перевірити коректність даних на сторінці  ['item']['quantity']
+    Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
+    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
+    Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
+    Перевірити коректність даних на сторінці  ['value']['amount']
+    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
+
+
+
+Перевірити коректність даних на сторінці
+    [Arguments]  ${field}  ${selector}=${${field}}
+    ${value}  Get Text  ${selector}
+    ${field value}  Парсінг за необхідністью  ${field}  ${value}
+    Should Be Equal  ${field value}  ${data${field}}
+
+
+Парсінг за необхідністью
+    [Arguments]  ${field}  ${value}
+    ${result}  convert_page_values  ${field}  ${value}
+    [Return]  ${result}
 
 
 Прийняти участь у тендері учасником
