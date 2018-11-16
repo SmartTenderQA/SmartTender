@@ -1,6 +1,6 @@
 *** Variables ***
 ${EDS_block}    //*[@data-qa="modal-eds"]
-${passwod}      291263
+${passwod}      29121963
 ${iframe}       //iframe[contains(@src, 'EDS')]
 ${close button(old)}  //div[@style]//button[@type='button' and @class='close']
 
