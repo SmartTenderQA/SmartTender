@@ -24,7 +24,7 @@ If skipped create tender
     [Setup]  Check Prev Test Status
     Close All Browsers
     Start  user1  provider1
-    #Start  user2  provider2
+    Start  user2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -76,8 +76,8 @@ If skipped create tender
     Перевірити коректність даних на сторінці  ['item']['city']
     Перевірити коректність даних на сторінці  ['item']['streetAddress']
     Перевірити коректність даних на сторінці  ['item']['postal code']
-    #Перевірити коректність даних на сторінці  ['item']['id']
-    #TODO  Распарсить на єтапе создания тендера
+    Перевірити коректність даних на сторінці  ['item']['id']
+    Перевірити коректність даних на сторінці  ['item']['id title']
     Перевірити коректність даних на сторінці  ['item']['unit']
     Перевірити коректність даних на сторінці  ['item']['quantity']
     Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
@@ -85,20 +85,6 @@ If skipped create tender
     Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
     Перевірити коректність даних на сторінці  ['value']['amount']
     Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
-
-
-
-Перевірити коректність даних на сторінці
-    [Arguments]  ${field}  ${selector}=${${field}}
-    ${value}  Get Text  ${selector}
-    ${field value}  Парсінг за необхідністью  ${field}  ${value}
-    Should Be Equal  ${field value}  ${data${field}}
-
-
-Парсінг за необхідністью
-    [Arguments]  ${field}  ${value}
-    ${result}  convert_page_values  ${field}  ${value}
-    [Return]  ${result}
 
 
 Прийняти участь у тендері учасником
