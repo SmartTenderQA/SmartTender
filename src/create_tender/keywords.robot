@@ -15,7 +15,7 @@ Resource  test_open_trade_propery.robot
 #				Open_Page					  #
 ###############################################
 Відкрити сторінку для створення аукціону на продаж
-  Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
+  Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони ФГВ(тестові)')]
   Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
   Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]/following::*[contains(text(), 'OK')]
   Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
