@@ -1,7 +1,7 @@
 *** Keywords ***
 Створити тендер
 	[Arguments]  ${auction_type}
-	Відкрити сторінку Аукціони ФГВ(тестові)
+	Відкрити сторінку Аукціони ФГВ(test)
 	Відкрити вікно створення тендеру
 	Вибрати тип процедури  ${auction_type}
 	Заповнити value.amount
@@ -34,13 +34,6 @@
 #########################################################
 #	                  Keywords							#
 #########################################################
-Відкрити сторінку Аукціони ФГВ(тестові)
-	${selector}  Set Variable  //*[contains(text(), 'Аукціони ФГВ(тестові)')]
-	Wait Until Page Contains Element  ${selector}  15
-	Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Заповнити auctionPeriod.startDate
 	${startDate}  get_time_now_with_deviation  8  minutes
     Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
