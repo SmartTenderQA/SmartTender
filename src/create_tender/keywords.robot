@@ -14,11 +14,20 @@ Resource  test_open_trade_propery.robot
 ###############################################
 #				Open_Page					  #
 ###############################################
-Відкрити сторінку для створення аукціону на продаж
+Відкрити сторінку Аукціони ФГВ(test)
+	${selector}  Set Variable  //*[contains(text(), 'Аукціони ФГВ(тестові)')]
+	Wait Until Page Contains Element  ${selector}  15
+	Click Element  ${selector}
+	Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Відкрити сторінку Аукціони ФГВ(prod)
+  ${selector}  Set Variable  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
   Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
-  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
-  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]/following::*[contains(text(), 'OK')]
-  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
+  Дочекатись закінчення загрузки сторінки(webclient)
+  ${status}  Run Keyword And Return Status  Wait Until Keyword Succeeds  15  3  Element Should Be Visible  ${selector}
+  Run Keyword If  ${status} == ${true}  Wait Until Keyword Succeeds  20  2  Click Element  ${selector}/following::*[contains(text(), 'OK')]
+  Run Keyword If  ${status} == ${true}  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  ${selector}
 
 
 Відкрити сторінку Продаж/Оренда майна(тестові)
