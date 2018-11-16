@@ -14,7 +14,7 @@ Test Teardown  Run Keywords
 	Go Back
 	Switch Browser  tender_owner
 	Sleep  2
-	Відкрити сторінку для створення аукціону на продаж
+	Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 	Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
 	Заповнити auctionPeriod.startDate
