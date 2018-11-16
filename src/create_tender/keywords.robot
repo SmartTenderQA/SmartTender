@@ -22,12 +22,13 @@ Resource  test_open_trade_propery.robot
 
 
 Відкрити сторінку Аукціони ФГВ(prod)
-  ${selector}  Set Variable  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
-  Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
-  Дочекатись закінчення загрузки сторінки(webclient)
-  ${status}  Run Keyword And Return Status  Wait Until Keyword Succeeds  15  3  Element Should Be Visible  ${selector}
-  Run Keyword If  ${status} == ${true}  Wait Until Keyword Succeeds  20  2  Click Element  ${selector}/following::*[contains(text(), 'OK')]
-  Run Keyword If  ${status} == ${true}  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  ${selector}
+    ${selector}  Set Variable  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
+    Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    ${status}  Run Keyword And Return Status  Wait Until Keyword Succeeds  15  3  Element Should Be Visible  ${selector}
+    Run Keyword If  ${status} == ${true}  Run Keywords
+    ...  Wait Until Keyword Succeeds  20  2  Click Element  ${selector}/following::*[contains(text(), 'OK')]
+    ...  AND  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  ${selector}
 
 
 Відкрити сторінку Продаж/Оренда майна(тестові)
@@ -41,24 +42,24 @@ Resource  test_open_trade_propery.robot
 
 
 Відкрити сторінку для створення публічних закупівель
-  Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публичные закупки')]  120
-  Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
-  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
-  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+    Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публичные закупки')]  120
+    Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
+    Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
+    Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
 Відкрити сторінку заявок на участь в аукціоні
-  Wait Until Page Contains Element  //div[contains(@title, 'Заявки на участие в Аукционах')]  120
-  Wait Until Keyword Succeeds  120  3  Click Element  //div[contains(@title, 'Заявки на участие в Аукционах')]
-  Дочекатись закінчення загрузки сторінки(webclient)
-  Element Should Not Be Visible  //div[contains(@title, 'Заявки на участие в Аукционах')]
-  Element Should Be Visible  //td[contains(text(), "Заявки на участие в торгах ФГВ")]
+    Wait Until Page Contains Element  //div[contains(@title, 'Заявки на участие в Аукционах')]  120
+    Wait Until Keyword Succeeds  120  3  Click Element  //div[contains(@title, 'Заявки на участие в Аукционах')]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Element Should Not Be Visible  //div[contains(@title, 'Заявки на участие в Аукционах')]
+    Element Should Be Visible  //td[contains(text(), "Заявки на участие в торгах ФГВ")]
 
 
 Натиснути кнопку публічних закупівель
-  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
-  Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
-  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
+    Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
+    Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
+    Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
 Відкрити вікно створення тендеру
