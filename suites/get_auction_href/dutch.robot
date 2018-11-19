@@ -10,11 +10,12 @@ Test Teardown  Run Keywords
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
-	Start  fgv_prod_owner  tender_owner
+	Run Keyword If  "${site}" == "prod"  Start  fgv_prod_owner  tender_owner
+	...  ELSE  Start  Bened  tender_owner
 	Go Back
 	Switch Browser  tender_owner
 	Sleep  2
-	Відкрити сторінку для створення аукціону на продаж
+	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 	Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
 	Заповнити auctionPeriod.startDate
@@ -30,10 +31,10 @@ Test Teardown  Run Keywords
 	Заповнити items.quantity
 	Заповнити items.unit.name
 	Заповнити items.classification.description
-	Заповнити procuringEntity.contactPoint.name
+	Run Keyword  Заповнити procuringEntity.contactPoint.name.${site}
 	Зберегти чернетку
 	Оголосити тендер
-	Отримати та зберегти auctionID
+	Run Keyword  Отримати та зберегти tender_id.${site}
 	Звебегти дані в файл
 
 
@@ -45,7 +46,8 @@ If skipped create tender
 
 
 Знайти тендер учасником
-	Start  prod_provider1  provider1
+	Run Keyword If  "${site}" == "prod"  Start  prod_provider1  provider1
+	...  ELSE  Start  user1  provider1
 	Знайти тендер користувачем	provider1
 
 
@@ -56,19 +58,24 @@ If skipped create tender
 
 Підтвердити заявки на участь
 	Switch Browser  tender_owner
-	Підтвердити заявку  ${data['auctionID']}
+	Підтвердити заявку  ${data['tender_id']}
 
 
 Отримати поcилання на участь в аукціоні першим учасником
 	Switch Browser  provider1
 	Зберегти пряме посилання на тендер
+	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
+	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
 	Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
 	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Неможливість отримати поcилання на участь в аукціоні
-	[Setup]  Run Keywords  Close Browser
+	[Setup]  Run Keyword If  "${site}" == "test"  Run Keywords  Close Browser
+	...  AND  Start  test_viewer  viewer
+	...  AND  Start  user2  provider2
+	...  ELSE  Run Keywords  Close Browser
 	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
@@ -83,9 +90,14 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Отримати та зберегти auctionID
-	${auctionID}  Get Element Attribute  xpath=(//a[@href])[2]  text
-	Set To Dictionary  ${data}  auctionID=${auctionID}
+Отримати та зберегти tender_id.prod
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
+Отримати та зберегти tender_id.test
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
 
 
 Знайти тендер користувачем
@@ -93,7 +105,7 @@ If skipped create tender
 	Switch Browser  ${role}
 	Sleep  2
 	Відкрити сторінку тестових торгів
-	Знайти тендер по ID  ${data['auctionID']}
+	Знайти тендер по ID  ${data['tender_id']}
 
 
 Неможливість отримати поcилання на участь в аукціоні(keyword)
@@ -133,13 +145,14 @@ If skipped create tender
 	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
 	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+	Run Keyword If  ${status} != ${true}  Sleep  30
 	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
 #	:FOR  ${i}  IN RANGE  50
 #	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
 #	\  Exit For Loop If  ${status} == ${false}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
@@ -248,7 +261,7 @@ If skipped create tender
 	Set To Dictionary  ${data['items']}  classification  ${value}
 
 
-Заповнити procuringEntity.contactPoint.name
+Заповнити procuringEntity.contactPoint.name.prod
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
 	${selector}  Set Variable  //*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	# get from Вибрати та повернути елемент у випадаючому списку
@@ -264,6 +277,16 @@ If skipped create tender
 	Wait Until Page Contains Element  ${selector}  15
 	Click Element  (${selector})[1]
 	${name}  Get Element Attribute  ${input}  value
+	#####################
+	${dictionary}  Create Dictionary  name=${name}
+	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
+	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
+
+
+Заповнити procuringEntity.contactPoint.name.test
+	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
+	${name}  Get Element Attribute  ${input}  value
+	Should Not Be Empty  ${name}
 	#####################
 	${dictionary}  Create Dictionary  name=${name}
 	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}

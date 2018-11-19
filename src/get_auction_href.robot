@@ -25,6 +25,26 @@
 	Дочекатись отримання посилань на аукціон
 
 
+Натиснути кнопку "Додати документи"
+    Reload Page
+    ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
+#    Wait Until Page Contains Element  ${selector}
+#    Scroll Page To Element XPATH  ${selector}
+    Wait Until Element Is Visible  ${selector}
+    Click Element  ${selector}
+
+
+Натиснути кнопку "Підтвердити пропозицію"
+    Wait Until Element Is Visible  //span[contains(text(), "Підтвердити пропозицію")]
+    Click Element  //span[contains(text(), "Підтвердити пропозицію")]
+    Дочекатись закінчення загрузки сторінки(circle)
+    Wait Until Element Is Visible  //span[contains(text(), "Так")]
+    Click Element  //span[contains(text(), "Так")]
+    Дочекатись закінчення загрузки сторінки(circle)
+    Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
+    Open Button  //a[contains(text(), "Перейти")]
+
+
 Натиснути кнопку "Перегляд аукціону"
 	${selector}  Set Variable  //*[@data-qa="button-poptip-view"]
 	Wait Until Element Is Visible  ${selector}
