@@ -17,6 +17,7 @@
     Отримати tender_uaid та tender_href щойно стореного тендера
     Звебегти дані в файл
 
+
 #########################################################
 #	                  Keywords							#
 #########################################################
@@ -92,7 +93,11 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  id  ${name}
+    ${name}  Get Element Attribute  ${input}  value
+    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
+    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
+    Set To Dictionary  ${data['item']}  id  ${id}
+    Set To Dictionary  ${data['item']}  id title  ${id title}
 
 
 Заповнити unit.name для item
@@ -119,6 +124,7 @@
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+    ${name}  Get Element Attribute  ${input}  value
     Set To Dictionary  ${data['item']}  city  ${name}
 
 

@@ -15,6 +15,7 @@ ${['tenderPeriod']['endDate']}          //*[@data-qa="tendering-period"]//*[@dat
 ${['enquiryPeriod']['endDate']}         //*[@data-qa="enquiry-period"]//*[@data-qa="date-end"]
 ${['value']['amount']}                  //*[@data-qa="budget-amount"]
 ${['value']['minimalStep']['percent']}  //*[@data-qa="budget-min-step"]//span[1]
+${['contactPerson']['name']}            //*[text()="Контактна особа"]/following-sibling::div//*[@data-qa="value"]
 
 
 
