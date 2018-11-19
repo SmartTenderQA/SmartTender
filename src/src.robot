@@ -9,6 +9,7 @@ Library     String
 Library     DateTime
 Library     service.py
 Library     Faker/faker.py
+Library     seo.py
 
 Variables   /home/testadm/users_variables.py
 Variables   ../users_variables.py
