@@ -4,7 +4,6 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
-  	debug
   	test_open_eu_propery.Заповнити endDate періоду пропозицій
   	test_open_eu_propery.Заповнити amount для tender
   	test_open_eu_propery.Заповнити minimalStep для tender
