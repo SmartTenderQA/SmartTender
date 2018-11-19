@@ -24,6 +24,7 @@ Resource    search.robot
 Resource    synchronization.robot
 Resource    create_tender/keywords.robot
 Resource    get_auction_href.robot
+Resource    tenders_view.robot
 
 
 *** Variables ***
