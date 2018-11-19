@@ -572,7 +572,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Державні закупівлі прозорро Договори
-	[Tags]  procurement  non-critical-prod
+	[Tags]  procurement  non-critical-prod  non-critical-test
 	Зайти на сторінку державних закупівель
 	Перевірити закладку закупівлі договори
 	Порахувати кількість договорів
