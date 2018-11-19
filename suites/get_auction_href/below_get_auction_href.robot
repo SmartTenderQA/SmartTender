@@ -11,7 +11,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Авторизуватися організатором
-	test_below_propery.Створити тендер
+	prod_below_propery.Створити тендер
 
 
 If skipped create tender

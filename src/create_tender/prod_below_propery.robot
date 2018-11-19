@@ -140,7 +140,7 @@
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
     ${name}  Set Variable  Мюнхен
-    Заповнити текстове поле  ${input}  ${name}
+    Заповнити Поле  ${input}  ${name}
     ${name}  Get Element Attribute  ${input}  value
     Set To Dictionary  ${data['item']}  city  ${name}
 
