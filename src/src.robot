@@ -9,6 +9,7 @@ Library     String
 Library     DateTime
 Library     service.py
 Library     Faker/faker.py
+Library     seo.py
 
 Variables   /home/testadm/users_variables.py
 Variables   ../users_variables.py
@@ -23,6 +24,7 @@ Resource    search.robot
 Resource    synchronization.robot
 Resource    create_tender/keywords.robot
 Resource    get_auction_href.robot
+Resource    tenders_view.robot
 
 
 *** Variables ***

@@ -64,7 +64,7 @@ If skipped create tender
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
 	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	${auction_href}  			Отримати URL на перегляд
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
