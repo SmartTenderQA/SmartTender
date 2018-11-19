@@ -99,7 +99,11 @@ If skipped create tender
 
 
 Подати пропозицію учасником
-	wait until keyword succeeds  60  3  Перевірити кнопку подачі пропозиції
+	${status}  run keyword and return status  Перевірити кнопку подачі пропозиції
+	Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Sleep  60
+    ...  AND  Reload Page
+    ...  AND  Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
 	Run Keyword And Ignore Error  Підтвердити відповідність
