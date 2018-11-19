@@ -6,6 +6,7 @@
 import sys
 import urllib2
 import json
+import re
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -19,6 +20,9 @@ def get_seo_data(data_type, status, page_href):
         'keywords': 4,
         'seotext': 5
     }
+
+    page_href = re.sub(r'htt[^//]+//', '', page_href)
+    page_href = page_href[page_href.find('/'):]
 
     url = 'https://'
     if(status == 'test'):

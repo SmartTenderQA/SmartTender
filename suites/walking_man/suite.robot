@@ -1099,8 +1099,7 @@ Test Postcondition
 Перевірити SEO
   [Arguments]  ${is}  ${seo_field}
   ${url}  Get Location
-  ${loc}  Remove String  ${url}  https://  test.  smarttender.biz
-  ${should}  get_seo_data  ${seo_field}  ${site}  ${loc}
+  ${should}  get_seo_data  ${seo_field}  ${site}  ${url}
   Should Be Equal  ${is}  ${should}
 
 
