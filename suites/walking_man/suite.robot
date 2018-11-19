@@ -87,6 +87,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 Перевірка гарантійного внеску для open_eu
   [Tags]  guarantee_amount  broken
   Зайти на сторінку державних закупівель
+  Зайти на сторінку державних закупівель
   Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
   Виконати пошук тендера
   Перейти по результату пошуку  (${first found element})[last()]
@@ -572,13 +573,15 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 Державні закупівлі прозорро Договори
-	[Tags]  procurement  non-critical-prod
+	[Tags]  procurement
 	Зайти на сторінку державних закупівель
 	Перевірити закладку закупівлі договори
 	Порахувати кількість договорів
 	${id}  Отримати id першого договору
 	Перейти по результату пошуку  ${item dogovory}//h4/a
 	Перевірити заголовок договору для закупок  ${id}
+	#[Teardown]  Перевірити закладку закупівлі договори SEO
+
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
@@ -1089,6 +1092,15 @@ Test Postcondition
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(4)
   ${should}  Set variable  Комерційні торги та публічні закупівлі в системі ProZorro - Договори
   ${is}  Get Text  ${novyny text}
+  ${error_status}  Run Keyword And Return Status  Should Be Equal  ${is}  ${should}
+  Run Keyword If  ${error_status}==${False}  Перевірити SEO  ${is}  h1
+
+
+Перевірити SEO
+  [Arguments]  ${is}  ${seo_field}
+  ${url}  Get Location
+  ${loc}  Remove String  ${url}  https://  test.  smarttender.biz
+  ${should}  get_seo_data  ${seo_field}  ${site}  ${loc}
   Should Be Equal  ${is}  ${should}
 
 
