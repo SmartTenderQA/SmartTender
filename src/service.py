@@ -241,7 +241,7 @@ def convert_page_values(field, value):
         elif 'streetAddress' in field:
             ret = list.group('street')
     elif 'unit' in field or 'quantity' in field:
-        list = re.search(u'(?P<quantity>\d+) (?P<unit>\D+)', value)
+        list = re.search(u'(?P<quantity>\d+) (?P<unit>\D+.+)', value)
         if 'unit' in field:
             ret = list.group('unit')
         elif 'quantity' in field:
