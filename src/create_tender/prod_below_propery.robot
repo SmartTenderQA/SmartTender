@@ -133,7 +133,7 @@
 
 Заповнити streetAddress для item
     ${address}  get_some_uuid
-    ЗЗаповнити Поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
+    Заповнити Поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
     Set To Dictionary  ${data['item']}  streetAddress  ${address}
 
 
