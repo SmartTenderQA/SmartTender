@@ -24,8 +24,8 @@ If skipped create tender
 Підготувати учасників до участі в тендері
     [Setup]  Check Prev Test Status
     Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
+    Start  prod_provider1  provider1
+    Start  prod_provider1  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -103,11 +103,7 @@ If skipped create tender
 
 
 Подати пропозицію учасником
-	${status}  run keyword and return status  Перевірити кнопку подачі пропозиції
-	Run Keyword If  '${status}' == 'False'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Reload Page
-    ...  AND  Перевірити кнопку подачі пропозиції
+	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
     Додати файл  1
 	Run Keyword And Ignore Error  Підтвердити відповідність
