@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Авторизуватися організатором
+Suite Setup     Створити словник
 Suite Teardown  Suite Postcondition
 #Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
@@ -10,6 +10,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
+	Авторизуватися організатором
 	test_below_propery.Створити тендер
 
 
@@ -59,10 +60,13 @@ If skipped create tender
 
 
 *** Keywords ***
-Авторизуватися організатором
-    Start  Bened  tender_owner
+Створити словник
     ${data}  Create Dictionary
     Set Global Variable  ${data}
+
+
+Авторизуватися організатором
+    Start  Bened  tender_owner
 
 
 Перевірка відображення даних тендера на сторінці
@@ -73,7 +77,7 @@ If skipped create tender
     Перевірити коректність даних на сторінці  ['description']
     Перевірити коректність даних на сторінці  ['tender_uaid']
     Перевірити коректність даних на сторінці  ['item']['description']
-    #Перевірити коректність даних на сторінці  ['item']['city']
+    Перевірити коректність даних на сторінці  ['item']['city']
     Перевірити коректність даних на сторінці  ['item']['streetAddress']
     Перевірити коректність даних на сторінці  ['item']['postal code']
     Перевірити коректність даних на сторінці  ['item']['id']
