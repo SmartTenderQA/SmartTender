@@ -748,7 +748,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
-  Start  ${user}
+  Start in grid  ${user}
   Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
 
 
