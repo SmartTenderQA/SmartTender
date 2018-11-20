@@ -18,11 +18,11 @@ eMail login
   Click Element  css=[data-g-label="Sign in"]
   Wait Until Page Contains Element  ${field_login}
   Wait Until Keyword Succeeds  20  2
-  ...  Input Text  ${field_login}  ${users_variables.${user}.login}
+  ...  Input Password  ${field_login}  ${users_variables["${user}"]["login"]}
   Click Element  ${button_next}
   Wait Until Page Contains Element  ${field_password}
   Wait Until Keyword Succeeds  20  2
-  ...  Input Text  ${field_password}  ${users_variables.${user}.password}
+  ...  Input Password  ${field_password}  ${users_variables["${user}"]["password"]}
   Click Element  ${button_next}
   #Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
 
@@ -32,3 +32,18 @@ eMail login
   ${button}  Set Variable  //*[@name="${name}"]
   ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}
   Run Keyword If  '${status}' == 'True'  Click Element  ${button}
+
+
+Відкрити лист в email
+    [Arguments]  ${text}
+    Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
+    Click Element  xpath=//*[contains(text(),'${text}')]/../../..
+    Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
+
+
+Перейти за посиланням в листі
+    [Arguments]  ${text}
+    ${count}  Get Element Count  //img[@class='ajT']
+    sleep  0.5
+    Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
+    Click Element  partial link=${text}
