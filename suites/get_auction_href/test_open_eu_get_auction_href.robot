@@ -1,8 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Авторизуватися організатором
+Suite Setup     Створити словник
 Suite Teardown  Suite Postcondition
-Test Setup      Check Prev Test Status
+#Test Setup      Check Prev Test Status
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
@@ -10,6 +10,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
+	Авторизуватися організатором
 	test_open_eu_propery.Створити тендер
 
 
@@ -21,9 +22,15 @@ If skipped create tender
 
 
 Підготувати учасників до участі в тендері
+    [Setup]  Check Prev Test Status
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
+
+
+Перевірка відображення даних створеного тендера на сторінці
+    [Tags]  view
+    Перевірка відображення даних тендера на сторінці  provider1
 
 
 Подати заявку на участь в тендері двома учасниками
@@ -44,6 +51,7 @@ If skipped create tender
 
 
 Отримати поcилання на участь в аукціоні для учасників
+	[Setup]  Check Prev Test Status
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
     Перевірити отримання ссилки на участь в аукціоні  provider1
@@ -65,10 +73,33 @@ If skipped create tender
 
 
 *** Keywords ***
-Авторизуватися організатором
-    Start  Bened  tender_owner
+Створити словник
     ${data}  Create Dictionary
     Set Global Variable  ${data}
+
+
+Авторизуватися організатором
+    Start  Bened  tender_owner
+
+
+Перевірка відображення даних тендера на сторінці
+    [Arguments]  ${role}
+    Switch Browser  ${role}
+    Go to  ${data['tender_href']}
+    Перевірити коректність даних на сторінці  ['title']
+    Перевірити коректність даних на сторінці  ['description']
+    Перевірити коректність даних на сторінці  ['tender_uaid']
+    Перевірити коректність даних на сторінці  ['item']['description']
+    Перевірити коректність даних на сторінці  ['item']['city']
+    Перевірити коректність даних на сторінці  ['item']['streetAddress']
+    Перевірити коректність даних на сторінці  ['item']['postal code']
+    Перевірити коректність даних на сторінці  ['item']['id']
+    Перевірити коректність даних на сторінці  ['item']['id title']
+    Перевірити коректність даних на сторінці  ['item']['unit']
+    Перевірити коректність даних на сторінці  ['item']['quantity']
+    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
+    Перевірити коректність даних на сторінці  ['value']['amount']
+    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
 
 
 Прийняти участь у тендері учасником
