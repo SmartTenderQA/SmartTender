@@ -144,8 +144,8 @@ Ignore error
 
 
 Порахувати Кількість Лотів
-  ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
-  run keyword if  '${blocks amount}'<'3'
+  ${blocks amount}=  get matching xpath count  //*[@class='ivu-card ivu-card-bordered']
+  run keyword if  ${blocks amount} < 3
   ...  fatal error  Нету нужных елементов на странице(не та страница)
   ${lots amount}  evaluate  ${blocks amount}-2
   Set Global Variable  ${lots amount}
