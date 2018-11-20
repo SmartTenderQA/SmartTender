@@ -25,7 +25,7 @@ If skipped create tender
     [Setup]  Check Prev Test Status
     Close All Browsers
     Start  prod_provider1  provider1
-    Start  prod_provider1  provider2
+    Start  prod_provider2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
