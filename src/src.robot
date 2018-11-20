@@ -35,8 +35,11 @@ ${role}                             None
 ${IP}
 ${test}                             https://test.smarttender.biz
 ${prod}                             https://smarttender.biz
-${grid}
 
+${alies}                              alies
+${hub}                                http://autotest.it.ua:4444/wd/hub
+${platform}                           ANY
+${capability}                         chrome
 
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
 ${logout}                           id=LogoutBtn
