@@ -116,7 +116,7 @@ Postcondition
 
 Заповнити поле з ціною для першого лоту
   Run depending on the dict  Amount  Заповнити поле з ціною  1  1
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
+  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1  60
 
 
 Підтвердити відповідність за наявністю
@@ -176,11 +176,11 @@ Postcondition
 
 ###    ESCO    ###
 Fill ESCO
-    [Arguments]  ${number_of_lot}
+    [Arguments]  ${number_of_lot}  ${percent}=95
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
