@@ -52,8 +52,7 @@
     ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
     ${value}  Create Dictionary  name=${name}
-    ${contactPoint}  Create Dictionary  contactPerson=${value}
-    Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
+    Set To Dictionary  ${data}  contactPerson  ${value}
 
 
 Заповнити amount для tender
@@ -112,7 +111,11 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  id  ${name}
+    ${name}  Get Element Attribute  ${input}  value
+    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
+    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
+    Set To Dictionary  ${data['item']}  id  ${id}
+    Set To Dictionary  ${data['item']}  id title  ${id title}
 
 
 Заповнити unit.name для item
@@ -129,16 +132,16 @@
 
 
 Заповнити streetAddress для item
-    ${address}  create_sentence  1
-    ${address}  Set Variable  ${address[:-1]}
+    ${address}  get_some_uuid
     Заповнити Поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
     Set To Dictionary  ${data['item']}  streetAddress  ${address}
 
 
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+    ${name}  Set Variable  Мюнхен
+    Заповнити Поле  ${input}  ${name}
+    ${name}  Get Element Attribute  ${input}  value
     Set To Dictionary  ${data['item']}  city  ${name}
 
 

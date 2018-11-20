@@ -6,23 +6,31 @@
     ...  AND  Wait Until Element Is Not Visible  xpath=//button[@class="btn btn-success"]
 
 
-#Отримати посилання на аукціон учасником
-#   Wait Until Keyword Succeeds  3m  2  Отримати посилання на участь в аукціоні учасником
-#	Перейти та перевірити сторінку участі в аукціоні  ${data['auctionUrl_participate']}
-
-
-#Отримати посилання на участь в аукціоні учасником
-#	Reload Page
-#	Натиснути кнопку "До аукціону"
-#	${auction_href}  Отримати URL для участі в аукціоні
-#	Set To Dictionary  ${data}  auctionUrl_participate  ${auction_href}
-
-
 Натиснути кнопку "До аукціону"
     Reload Page
 	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]  30
 	Click Element  //*[@data-qa="button-poptip-participate-view"]
 	Дочекатись отримання посилань на аукціон
+
+
+Натиснути кнопку "Додати документи"
+    Reload Page
+    ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
+#    Wait Until Page Contains Element  ${selector}
+#    Scroll Page To Element XPATH  ${selector}
+    Wait Until Element Is Visible  ${selector}
+    Click Element  ${selector}
+
+
+Натиснути кнопку "Підтвердити пропозицію"
+    Wait Until Element Is Visible  //span[contains(text(), "Підтвердити пропозицію")]
+    Click Element  //span[contains(text(), "Підтвердити пропозицію")]
+    Дочекатись закінчення загрузки сторінки(circle)
+    Wait Until Element Is Visible  //span[contains(text(), "Так")]
+    Click Element  //span[contains(text(), "Так")]
+    Дочекатись закінчення загрузки сторінки(circle)
+    Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
+    Open Button  //a[contains(text(), "Перейти")]
 
 
 Натиснути кнопку "Перегляд аукціону"
@@ -67,6 +75,7 @@
 
 Дочекатись закінчення прийому пропозицій
     ${selector}  Set Variable  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
+    Reload Page
     Wait Until Element Is Visible  ${selector}  30
     Sleep  1
     ${tender end date}  Get text  ${selector}
@@ -75,24 +84,10 @@
 
 Дочекатись закінчення періоду прекваліфікації
     ${selector}  Set Variable  //*[@data-qa="prequalification"]//*[@data-qa="date-end"]
+    Reload Page
     Wait Until Element Is Visible  ${selector}  30
     Sleep  1
     ${tender end date}  Get text  ${selector}
     Дочекатись дати  ${tender end date}
 
-
-#Перевірити можливість отримати посилання на аукціон користувачем
-#	[Arguments]  ${role}
-#	Switch Browser  ${role}
-#	Reload Page
-#	Run Keyword And Expect Error  *  Отримати посилання на участь в аукціоні користквачем
-
-
-#Отримати посилання на участь в аукціоні користквачем
-#   Reload Page
-#	Натиснути кнопку "До аукціону"
-#	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
-#	Wait Until Page Does Not Contain Element  ${auction loading}  30
-#   ${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@data-qa="link-participate" and @disabled="disabled"]
-#   Run Keyword If  ${status}  Fail  Кнопка взяти участь в аукціоні не активна
 

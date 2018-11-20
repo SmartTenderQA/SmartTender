@@ -2,7 +2,9 @@
 Resource  ../../src/src.robot
 Suite Setup  Start  ${user}
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keywords
+...  Log Location
+...  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
@@ -23,6 +25,7 @@ ${delete file confirm}              /div/div[2]//button[2]
 ${switch}                           //*[@class="ivu-switch" or @class="ivu-switch-inner"]
 ${switch field}                     //input[@placeholder]
 ${wait}                             60
+${no tender}                        False
 
 
 *** Test Cases ***
@@ -33,7 +36,7 @@ ${wait}                             60
 	Відфільтрувати по статусу торгів  Прийом пропозицій
 	${date}  smart_get_time  1  d
 	Відфільтрувати по даті кінця прийому пропозиції від  ${date}
-	Виконати пошук тендера
+	Виконати пошук тендера для подачі пропозиції
 	Перейти по результату пошуку  ${first found element}
 	Додаткова перевірка на тестові торги для продуктива
 	Перевірити кнопку подачі пропозиції
@@ -43,25 +46,30 @@ ${wait}                             60
 
 
 Перевірити неможливість подати пропозіцію без заповнення жодного поля
+	Завершити тест якщо не знайдено тендер
 	Перевірити неможливість подати пропозицію
 
 
 Зповнити необхідні поля
+    Завершити тест якщо не знайдено тендер
 	Заповнити поле з ціною для першого лоту
 	Підтвердити відповідність за наявністю
 	Створити та додати файл до тендеру в цілому(тільки для open_trade_eng)
 
 
 Подати пропозицію з мінімальною кількістю заповнених полів
+	Завершити тест якщо не знайдено тендер
 	Подати пропозицію
 
 
 Підписати ЕЦП
 	[Tags]  EDS
+    Завершити тест якщо не знайдено тендер
     Підписати ЕЦП
 
 
 Внести зміни у пропозицію
+	Завершити тест якщо не знайдено тендер
 	Розгорнути усі лоти
 	Змінити цінову пропозицію(по кожному лоту окремо)
 	Завантажити файли на весь тендер
@@ -75,24 +83,29 @@ ${wait}                             60
 
 
 Подати змінену цінову пропозицію
+    Завершити тест якщо не знайдено тендер
     Подати пропозицію
 
 
 Накласти ЕЦП на виправлену пропозицію
 	[Tags]  EDS
+	Завершити тест якщо не знайдено тендер
 	Підписати ЕЦП
 
 
 Скасувати пропозицію на процедуру/лот
+    Завершити тест якщо не знайдено тендер
     Скасувати пропозицію
 
 
 Перевірити неможливість подати пропозицію
+    Завершити тест якщо не знайдено тендер
     Перевірити неможливість подати пропозицію
 
 
 Перевірити неможливість накласти ЕЦП
 	[Tags]  EDS
+    Завершити тест якщо не знайдено тендер
     Run Keyword And Expect Error  *  Підписати ЕЦП
 
 
@@ -103,7 +116,7 @@ Postcondition
 
 Заповнити поле з ціною для першого лоту
   Run depending on the dict  Amount  Заповнити поле з ціною  1  1
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
+  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1  60
 
 
 Підтвердити відповідність за наявністю
@@ -163,11 +176,11 @@ Postcondition
 
 ###    ESCO    ###
 Fill ESCO
-    [Arguments]  ${number_of_lot}
+    [Arguments]  ${number_of_lot}  ${percent}=95
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 

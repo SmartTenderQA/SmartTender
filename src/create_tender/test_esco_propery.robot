@@ -75,14 +75,14 @@
 
 
 Заповнити streetAddress для item
-    ${address}  create_sentence  1
-    ${address}  Set Variable  ${address[:-1]}
+    ${address}  get_some_uuid
     Заповнити текстове поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
     Set To Dictionary  ${data['item']}  streetAddress  ${address}
 
 
 Заповнити locality для item
     ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Місто"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+    ${name}  Set Variable  Мюнхен
+    Заповнити текстове поле  ${input}  ${name}
+    ${name}  Get Element Attribute  ${input}  value
     Set To Dictionary  ${data['item']}  city  ${name}

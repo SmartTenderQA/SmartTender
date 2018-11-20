@@ -144,8 +144,8 @@ Ignore error
 
 
 Порахувати Кількість Лотів
-  ${blocks amount}=  get matching xpath count  .//*[@class='ivu-card ivu-card-bordered']
-  run keyword if  '${blocks amount}'<'3'
+  ${blocks amount}=  get matching xpath count  //*[@class='ivu-card ivu-card-bordered']
+  Run Keyword If  ${blocks amount} < 3
   ...  fatal error  Нету нужных елементов на странице(не та страница)
   ${lots amount}  evaluate  ${blocks amount}-2
   Set Global Variable  ${lots amount}
@@ -197,3 +197,19 @@ Ignore error
   ${doc}=  create_fake_doc
   ${path}  Set Variable  ${doc[0]}
   Choose File  xpath=(//input[@type="file"][1])[${block}]  ${path}
+
+
+Виконати пошук тендера для подачі пропозиції
+  [Arguments]  ${id}=None
+  Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
+  Press Key  ${find tender field}  \\13
+  Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
+  Run Keyword If  '${status}' == 'False'  Run Keywords
+  ...  Set Global Variable  ${no tender}  ${True}
+  ...  AND  Pass Execution  Не знайдено жодного тендера
+  Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
+
+
+Завершити тест якщо не знайдено тендер
+    Run Keyword If  ${no tender} == ${True}  Pass Execution  Не знайдено жодного тендера
