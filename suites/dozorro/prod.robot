@@ -491,13 +491,13 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 *** Keywords ***
 Підготувати користувачів
-    Start  prod_owner  tender_owner
+    Start in grid  prod_owner  tender_owner
     Set Window Size  1280  1024
-    Start  prod_viewer  viewer
+    Start in grid  prod_viewer  viewer
     Set Window Size  1280  1024
-    Start  prod_provider1  provider
+    Start in grid  prod_provider1  provider
     Set Window Size  1280  1024
-    Start  prod_provider2  provider2
+    Start in grid  prod_provider2  provider2
     Set Window Size  1280  1024
     ${data}  Create Dictionary
     Set Global Variable  ${data}
