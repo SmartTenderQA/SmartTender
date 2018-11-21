@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Start  ${user}
+Suite Setup  Start in grid  ${user}
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 

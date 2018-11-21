@@ -46,7 +46,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 *** Keywords ***
 Precondition
-	Run Keyword  Start  ${user}
+	Run Keyword  Start in grid  ${user}
 
 
 Postcondition
