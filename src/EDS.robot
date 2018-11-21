@@ -20,7 +20,7 @@ ${close button(old)}  //div[@style]//button[@type='button' and @class='close']
 	Завантажити ключ
 	Ввести пароль ключа
 	Wait Until Keyword Succeeds  3m  10  Натиснути Підписати
-	Перевірити успішність піцдписання
+	Перевірити успішність підписання
 
 
 Підписати ЕЦП(old)
@@ -59,7 +59,7 @@ ${close button(old)}  //div[@style]//button[@type='button' and @class='close']
 	Reload Page
 
 
-Перевірити успішність піцдписання
+Перевірити успішність підписання
 	${now}  smart_get_time
 	${get}  Get Text  //button[contains(., 'ЕЦП')]/following-sibling::*//*[@class="smt-tooltip"]
 	${parse}  Evaluate  "${get}".replace("sign.p7s - ", "")
