@@ -7,7 +7,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 &{type_dict}
-...  								propery=Продаж майна банків, що ліквідуються
+...  								property=Продаж майна банків, що ліквідуються
 ...  								requirements=Продаж права вимоги за кредитними договорами
 
 
@@ -15,7 +15,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Підготувати організатора
-	cdb1_sale_propery.Створити тендер  ${type_dict['${type}']}
+	cdb1_sale_property.Створити тендер  ${type_dict['${type}']}
 	Close Browser
 
 
