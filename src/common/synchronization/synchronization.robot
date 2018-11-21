@@ -9,6 +9,7 @@ Library     service.py
   #Log to console  synchronization has started ${date_now}
   Wait Until Keyword Succeeds  20m  3  Дочекатись синхронізації продовження  ${mode}  ${date_now}
 
+
 Дочекатись синхронізації продовження
   [Arguments]  ${mode}  ${date_now}
   ${n}  synchronization_map  ${mode}
