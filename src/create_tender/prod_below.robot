@@ -4,15 +4,15 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Допорогові закупівлі
-  	prod_below_property.Заповнити startDate періоду пропозицій
-  	prod_below_property.Заповнити endDate періоду пропозицій
-  	prod_below_property.Заповнити endDate періоду обговорення
-  	prod_below_property.Заповнити amount для tender
-  	prod_below_property.Заповнити minimalStep для tender
-  	prod_below_property.Заповнити contact для tender
-  	prod_below_property.Заповнити title для tender
-  	prod_below_property.Заповнити description для tender
-  	prod_below_property.Додати предмет в тендер
+  	prod_below.Заповнити startDate періоду пропозицій
+  	prod_below.Заповнити endDate періоду пропозицій
+  	prod_below.Заповнити endDate періоду обговорення
+  	prod_below.Заповнити amount для tender
+  	prod_below.Заповнити minimalStep для tender
+  	prod_below.Заповнити contact для tender
+  	prod_below.Заповнити title для tender
+  	prod_below.Заповнити description для tender
+  	prod_below.Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити тендер
@@ -83,15 +83,15 @@
 
 
 Додати предмет в тендер
-    prod_below_property.Заповнити description для item
-    prod_below_property.Заповнити quantity для item
-    prod_below_property.Заповнити id для item
-    prod_below_property.Заповнити unit.name для item
-    prod_below_property.Заповнити postalCode для item
-    prod_below_property.Заповнити streetAddress для item
-    prod_below_property.Заповнити locality для item
-    prod_below_property.Заповнити endDate для item
-    prod_below_property.Заповнити startDate для item
+    prod_below.Заповнити description для item
+    prod_below.Заповнити quantity для item
+    prod_below.Заповнити id для item
+    prod_below.Заповнити unit.name для item
+    prod_below.Заповнити postalCode для item
+    prod_below.Заповнити streetAddress для item
+    prod_below.Заповнити locality для item
+    prod_below.Заповнити endDate для item
+    prod_below.Заповнити startDate для item
 
 
 Заповнити description для item

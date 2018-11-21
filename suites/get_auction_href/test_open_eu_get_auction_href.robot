@@ -11,7 +11,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Авторизуватися організатором
-	test_open_eu_property.Створити тендер
+	test_open_eu.Створити тендер
 
 
 If skipped create tender
