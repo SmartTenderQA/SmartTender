@@ -9,8 +9,8 @@ email precondition
   [Arguments]  ${user}
   Open Browser  https://www.google.com/gmail/about/#  chrome  email
   eMail login  ${user}
-  #Закрити валідаційне вікно в email  welcome_dialog_next
-  #Закрити валідаційне вікно в email  ok
+  Run Keyword And Ignore Error  Закрити валідаційне вікно в email  welcome_dialog_next
+  Run Keyword And Ignore Error  Закрити валідаційне вікно в email  ok
 
 
 eMail login
@@ -22,28 +22,29 @@ eMail login
   Click Element  ${button_next}
   Wait Until Page Contains Element  ${field_password}
   Wait Until Keyword Succeeds  20  2
-  ...  Input Password  ${field_password}  ${users_variables["${user}"]["password"]}
+  ...  Input Password  ${field_password}  ${users_variables["${user}"]["mail_password"]}
   Click Element  ${button_next}
-  #Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
+  sleep  0.5
+  Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
 
 
 Закрити валідаційне вікно в email
   [Arguments]  ${name}
   ${button}  Set Variable  //*[@name="${name}"]
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}  2
   Run Keyword If  '${status}' == 'True'  Click Element  ${button}
 
 
 Відкрити лист в email
-    [Arguments]  ${text}
-    Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
-    Click Element  xpath=//*[contains(text(),'${text}')]/../../..
-    Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
+  [Arguments]  ${text}
+  Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
+  Click Element  xpath=//td[@id]//span[contains(text(), '${text}')]
+  Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
 
 
 Перейти за посиланням в листі
-    [Arguments]  ${text}
-    ${count}  Get Element Count  //img[@class='ajT']
-    sleep  0.5
-    Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
-    Click Element  partial link=${text}
+  [Arguments]  ${text}
+  ${count}  Get Element Count  //img[@class='ajT']
+  sleep  0.5
+  Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
+  Click Element  partial link=${text}
