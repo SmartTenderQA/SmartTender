@@ -1,8 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
-Suite Setup  Start in grid  LLC
-Suite Teardown  Suite Postcondition
+Suite Setup  Start  LLC
+Suite Teardown  Close All Browsers
 
 
 *** Variables ***

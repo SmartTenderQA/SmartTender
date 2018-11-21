@@ -3,11 +3,11 @@
 	Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
 	Відкрити вікно створення тендеру
-	test_esco_propery.Заповнити endDate періоду пропозицій
-	test_esco_propery.Заповнити minimalStep для tender
-	test_esco_propery.Заповнити title для tender
-  	test_esco_propery.Заповнити title_eng для tender
-    test_esco_propery.Додати предмет в тендер
+	test_esco_property.Заповнити endDate періоду пропозицій
+	test_esco_property.Заповнити minimalStep для tender
+	test_esco_property.Заповнити title для tender
+  	test_esco_property.Заповнити title_eng для tender
+    test_esco_property.Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
@@ -48,11 +48,11 @@
 
 
 Додати предмет в тендер
-    test_esco_propery.Заповнити description для item
-    test_esco_propery.Заповнити description_eng для item
-    test_esco_propery.Заповнити postalCode для item
-    test_esco_propery.Заповнити streetAddress для item
-    test_esco_propery.Заповнити locality для item
+    test_esco_property.Заповнити description для item
+    test_esco_property.Заповнити description_eng для item
+    test_esco_property.Заповнити postalCode для item
+    test_esco_property.Заповнити streetAddress для item
+    test_esco_property.Заповнити locality для item
 
 
 Заповнити description для item

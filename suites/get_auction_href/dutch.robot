@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Suite Setup  Створити словник для теста
-Suite Teardown  Suite Postcondition
+Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords
 ...  Log Location
 ...  AND  Run Keyword If Test Failed  Capture Page Screenshot

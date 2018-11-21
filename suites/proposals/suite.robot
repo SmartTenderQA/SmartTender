@@ -195,7 +195,7 @@ Fill ESCO
     [Documentation]  takes block number and list number
     [Arguments]  ${block number}  ${list number}
 	Click Element  (${block}[${block number}]${useful indicators open})[${list number}]
-    Sleep  .5
+    Wait Until Element Is Visible  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}  10
     ${count}  Get Element Count  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}
     ${n}  random_number  1  ${count}
     Click Element  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}[${n}]

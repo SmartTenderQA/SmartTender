@@ -4,7 +4,7 @@ Library  DateTime
 Library  dasu_service.py
 Library  monitoring_owner.py
 Suite Setup  Підготувати користувачів
-Suite Teardown  Suite Postcondition
+Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
@@ -483,7 +483,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   ${login}  ${password}  Отримати дані користувача  dasu
   ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=tender_owner
-  Login  ${login}  ${password}
+  Авторизуватися  ${login}  ${password}
 
   ${login}  ${password}  Отримати дані користувача  test_viewer
   ${start_page}  Отримати стартову сторінку  ${site}
@@ -492,7 +492,7 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   ${login}  ${password}  Отримати дані користувача  user1
   ${start_page}  Отримати стартову сторінку  ${site}
   Open Browser  ${start_page}  ${browser}  alias=provider
-  Login  ${login}  ${password}
+  Авторизуватися  ${login}  ${password}
 
 
 Перейти за посиланням по dasu

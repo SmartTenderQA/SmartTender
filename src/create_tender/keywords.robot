@@ -1,10 +1,10 @@
 *** Settings ***
 Library     Collections
 Resource  ../loading.robot
-Resource  cdb1_sale_propery.robot
-Resource  prod_below_propery.robot
-Resource  test_below_propery.robot
-Resource  test_dialog_propery.robot
+Resource  cdb1_sale_property.robot
+Resource  prod_below_property.robot
+Resource  test_below_property.robot
+Resource  test_dialog_property.robot
 Resource  test_esco_propery.robot
 Resource  test_open_eu_propery.robot
 Resource  test_open_trade_propery.robot

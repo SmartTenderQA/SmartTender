@@ -10,7 +10,7 @@ ${}     css=li.loginButton a
 
 *** Test Cases ***
 Залогінитися
-  Login  user1
+  Авторизуватися  user1
   debug
 
 *** Keywords ***

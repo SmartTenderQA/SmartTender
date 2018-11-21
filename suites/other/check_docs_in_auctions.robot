@@ -87,7 +87,7 @@ Setup
   ...  ELSE IF    '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP
   ...  ELSE IF    '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}
   ...  ELSE IF    '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
-  Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
+  Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
 
 
 Перейти на наступну сторінку
