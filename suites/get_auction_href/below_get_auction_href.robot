@@ -24,8 +24,8 @@ If skipped create tender
 Підготувати учасників до участі в тендері
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
-    Start  prod_provider1  provider1
-    Start  prod_provider2  provider2
+    Start in grid in grid  prod_provider1  provider1
+    Start in grid  prod_provider2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -47,9 +47,9 @@ If skipped create tender
 
 Підготувати користувачів для отримання ссилки на аукціон
     Close All Browsers
-    Start  prod_viewer  viewer
-    Start  prod_owner  tender_owner
-    #Start  prod_provider  provider3
+    Start in grid  prod_viewer  viewer
+    Start in grid  prod_owner  tender_owner
+    #Start in grid  prod_provider  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -67,7 +67,7 @@ If skipped create tender
 
 
 Авторизуватися організатором
-    Start  prod_owner  tender_owner
+    Start in grid  prod_owner  tender_owner
 
 
 Перевірка відображення даних тендера на сторінці

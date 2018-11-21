@@ -24,8 +24,8 @@ If skipped create tender
 Підготувати учасників до участі в тендері
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
+    Start in grid  user1  provider1
+    Start in grid  user2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -46,7 +46,7 @@ If skipped create tender
 
 Підготувати учасників для отримання посилання на аукціон
     Close All Browsers
-    Start  user1  provider1
+    Start in grid  user1  provider1
     Go to  ${data['tender_href']}
 
 
@@ -59,9 +59,9 @@ If skipped create tender
 
 Підготувати користувачів для отримання ссилки на аукціон
     Close All Browsers
-    Start  test_viewer  viewer
-    Start  Bened  tender_owner
-    Start  user3  provider3
+    Start in grid  test_viewer  viewer
+    Start in grid  Bened  tender_owner
+    Start in grid  user3  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -79,7 +79,7 @@ If skipped create tender
 
 
 Авторизуватися організатором
-    Start  Bened  tender_owner
+    Start in grid  Bened  tender_owner
 
 
 Перевірка відображення даних тендера на сторінці
@@ -139,7 +139,7 @@ If skipped create tender
 
 Відкрити браузер під роллю організатора та знайти потрібний тендер
     Close All Browsers
-    Start  Bened  tender_owner
+    Start in grid  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Пошук тендеру по title (webclient)  ${data['title']}
