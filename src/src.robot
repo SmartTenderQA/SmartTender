@@ -21,7 +21,7 @@ Resource    pages/login/login.robot
 Resource    make_proposal.robot
 Resource    participation_request.robot
 Resource    search.robot
-Resource    synchronization.robot
+Resource    common/synchronization/synchronization.robot
 Resource    create_tender/keywords.robot
 Resource    get_auction_href.robot
 Resource    tenders_view.robot
