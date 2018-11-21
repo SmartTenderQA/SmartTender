@@ -67,7 +67,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 
 *** Keywords ***
 Precondition
-	Start  user1
+	Start in grid  user1
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 
