@@ -222,6 +222,7 @@ Fill ESCO
 	:FOR  ${j}  IN RANGE  1  ${i}+1
 	\  Вибрати випадковий неціновий показник  ${block useful indicator}  ${j}
 	${block useful indicator}  Evaluate  ${block useful indicator}+1
+	Set Global Variable  ${block useful indicator}
 
 
 
