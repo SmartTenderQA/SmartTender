@@ -480,19 +480,22 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
   ${data}  Create Dictionary  id  ${id_for_skip_creating}
   Set Global Variable  ${data}
 
-  ${login}  ${password}  Отримати дані користувача  dasu
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Open Browser  ${start_page}  ${browser}  alias=tender_owner
-  Авторизуватися  ${login}  ${password}
+  Start in grid  dasu  tender_owner
+  #${login}  ${password}  Отримати дані користувача  dasu
+  #${start_page}  Отримати стартову сторінку  ${site}
+  #Open Browser  ${start_page}  ${browser}  alias=tender_owner
+  #Авторизуватися  ${login}  ${password}
 
-  ${login}  ${password}  Отримати дані користувача  test_viewer
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Open Browser  ${start_page}  ${browser}  alias=viewer
+  Start in grid  test_viewer  viewer
+  #${login}  ${password}  Отримати дані користувача  test_viewer
+  #${start_page}  Отримати стартову сторінку  ${site}
+  #Open Browser  ${start_page}  ${browser}  alias=viewer
 
-  ${login}  ${password}  Отримати дані користувача  user1
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Open Browser  ${start_page}  ${browser}  alias=provider
-  Авторизуватися  ${login}  ${password}
+  Start in grid  user1  provider
+  #${login}  ${password}  Отримати дані користувача  user1
+  #${start_page}  Отримати стартову сторінку  ${site}
+  #Open Browser  ${start_page}  ${browser}  alias=provider
+  #Авторизуватися  ${login}  ${password}
 
 
 Перейти за посиланням по dasu

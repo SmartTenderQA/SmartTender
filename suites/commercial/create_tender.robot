@@ -69,7 +69,7 @@ ${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" a
 
 *** Keywords ***
 Suite Precondition
-	Start  ${user}
+	Start in grid  ${user}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${button manage tenders}
 	Click Element  ${button manage tenders}
