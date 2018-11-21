@@ -1,17 +1,15 @@
 *** Keywords ***
 Створити тендер
-	Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    Switch Browser  tender_owner
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
-  	test_open_eu_property.Заповнити endDate періоду пропозицій
-  	test_open_eu_property.Заповнити amount для tender
-  	test_open_eu_property.Заповнити minimalStep для tender
-  	test_open_eu_property.Заповнити title для tender
-  	test_open_eu_property.Заповнити title_eng для tender
-  	test_open_eu_property.Заповнити description для tender
-  	test_open_eu_property.Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
+  	Вибрати тип процедури  Конкурентний діалог 1-ий етап
+  	test_dialog.Заповнити endDate періоду пропозицій
+  	test_dialog.Заповнити amount для tender
+  	test_dialog.Заповнити minimalStep для tender
+  	test_dialog.Заповнити title для tender
+  	test_dialog.Заповнити description для tender
+  	test_dialog.Додати предмет в тендер
     Зберегти чернетку
     Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
@@ -23,7 +21,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  40  minutes
+    ${date}  get_time_now_with_deviation  38  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -59,13 +57,6 @@
     Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
 
 
-Заповнити title_eng для tender
-    ${text_en}  create_sentence  5
-    ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
-    Set To Dictionary  ${data}  title_en  ${title_en}
-    Заповнити текстове поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
-
-
 Заповнити description для tender
     ${description}  create_sentence  15
     Set To Dictionary  ${data}  description  ${description}
@@ -73,16 +64,15 @@
 
 
 Додати предмет в тендер
-    test_open_eu_property.Заповнити description для item
-    test_open_eu_property.Заповнити description_eng для item
-    test_open_eu_property.Заповнити quantity для item
-    test_open_eu_property.Заповнити id для item
-    test_open_eu_property.Заповнити unit.name для item
-    test_open_eu_property.Заповнити postalCode для item
-    test_open_eu_property.Заповнити streetAddress для item
-    test_open_eu_property.Заповнити locality для item
-    test_open_eu_property.Заповнити endDate для item
-    test_open_eu_property.Заповнити startDate для item
+    test_dialog.Заповнити description для item
+    test_dialog.Заповнити quantity для item
+    test_dialog.Заповнити id для item
+    test_dialog.Заповнити unit.name для item
+    test_dialog.Заповнити postalCode для item
+    test_dialog.Заповнити streetAddress для item
+    test_dialog.Заповнити locality для item
+    test_dialog.Заповнити endDate для item
+    test_dialog.Заповнити startDate для item
 
 
 Заповнити description для item
@@ -90,12 +80,6 @@
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}
     Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
-
-
-Заповнити description_eng для item
-    ${description_en}  create_sentence  5
-    Set To Dictionary  ${data['item']}  description_en  ${description_en}
-    Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
 
 
 Заповнити quantity для item
@@ -108,11 +92,7 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    ${name}  Get Element Attribute  ${input}  value
-    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
-    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
-    Set To Dictionary  ${data['item']}  id  ${id}
-    Set To Dictionary  ${data['item']}  id title  ${id title}
+    Set To Dictionary  ${data['item']}  id  ${name}
 
 
 Заповнити unit.name для item
