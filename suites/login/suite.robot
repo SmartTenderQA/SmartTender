@@ -19,7 +19,7 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 #robot --consolecolors on -L TRACE:INFO -d test_output -v env:test suites/login/suite.robot
 *** Test Cases ***
 Спроба залогінитися з невірними даними
-    [Template]  Login with wrong data
+    [Template]  Авторизуватися with wrong data
     empty  empty
     user1  empty
     empty  user1
@@ -76,9 +76,9 @@ Login with correct data
 	[Arguments]  ${user}
 	Go To  ${start page}
     ${login}  ${password}  Отримати дані користувача  ${user}
-    Login  ${login}  ${password}
+    Авторизуватися  ${login}  ${password}
     Reload and check
-	Logout
+	Завершити сеанс користувача
 
 
 Reload and check

@@ -3,7 +3,7 @@ Resource  ../../src/src.robot
 Test Setup  Test Precondition
 Test Teardown  Test Postcondition
 Suite Setup  Відкрити головну сторінку SmartTender.biz під потрібною роллю
-Suite Teardown  Suite Postcondition
+Suite Teardown  Close All Browsers
 
 
 *** Variables ***
@@ -76,7 +76,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   Порахувати кількість повідомлень
   Переглянути повідемлення
   Закрити вікно з повідомленням
-  Logout
+  Завершити сеанс користувача
   Зайти на сторінку з контактами
   Перевірити відсутність дзвіночка(повідомлення)
   [Teardown]  Run Keywords
@@ -761,6 +761,11 @@ Test Postcondition
   Log Location
   Run Keyword If Test Failed  Capture Page Screenshot
   Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
+
+
+Перевірити користувача
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
+  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
 
 
 Зайти на сторінку про компанію

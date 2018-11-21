@@ -3,7 +3,7 @@ Resource  ../../src/src.robot
 Resource  ../../src/webclient_keywords.robot
 Test Teardown  Test Postcondition
 Suite Setup  Suite Precondition
-Suite Teardown  Suite Postcondition
+Suite Teardown  Close All Browsers
 
 
 *** Variables ***

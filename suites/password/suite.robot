@@ -20,17 +20,17 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     [Tags]  change_password
     Перейти на сторінку зміни пароля
     Змінити пароль  ${password}  ${new password}
-	Logout
+	Завершити сеанс користувача
     Переконатися в зміні пароля
   	Залогінитися  ${login}  ${new password}
     Перейти на сторінку зміни пароля
     Змінити пароль  ${new password}  ${password}
-  	Logout
+  	Завершити сеанс користувача
 
 
 Відновлення пароля через email
     [Tags]  reset_password
-    Logout
+    Завершити сеанс користувача
     Перейти на сторінку відновлення пароля
     Відправити лист на пошту
     email precondition  ${user}
@@ -41,7 +41,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
   	Залогінитися  ${login}  ${new password}
     Перейти на сторінку зміни пароля
     Змінити пароль  ${new password}  ${password}
-  	Logout
+  	Завершити сеанс користувача
 
 
 *** Keywords ***
@@ -56,7 +56,7 @@ Postcondition
 Залогінитися
 	[Arguments]  ${login}  ${password}
 	Go To  ${start page}
-    Login  ${login}  ${password}
+    Авторизуватися  ${login}  ${password}
 
 
 Перейти на сторінку зміни пароля
@@ -77,7 +77,7 @@ Postcondition
 
 Переконатися в зміні пароля
   	Go To  ${start page}
-    ${status}  Run Keyword And Return Status  Login  ${login}  ${password}
+    ${status}  Run Keyword And Return Status  Авторизуватися  ${login}  ${password}
     Should Be Equal  ${status}  ${False}
 
 

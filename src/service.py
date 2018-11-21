@@ -213,10 +213,13 @@ def convert_date_from_cdb(date):
 
 
 def clear_test_output():
-    for filename in glob("*.pdf"):
+    for filename in glob("test_output/*.pdf"):
         os.remove(filename)
 
-    for filename in glob("*.png"):
+    for filename in glob("test_output/*.png"):
+        os.remove(filename)
+
+    for filename in glob("test_output/*.doc"):
         os.remove(filename)
 
 

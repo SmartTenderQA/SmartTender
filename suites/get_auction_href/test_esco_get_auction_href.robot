@@ -1,8 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Suite Setup     Створити словник
-Suite Teardown  Suite Postcondition
-#Test Setup      Check Prev Test Status
+Suite Teardown  Close All Browsers
+#Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
@@ -22,7 +22,7 @@ If skipped create tender
 
 
 Підготувати учасників до участі в тендері
-    [Setup]  Check Prev Test Status
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
     Start  user1  provider1
     Start  user2  provider2
@@ -51,7 +51,7 @@ If skipped create tender
 
 
 Отримати поcилання на участь в аукціоні для учасників
-	[Setup]  Check Prev Test Status
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
     Перевірити отримання ссилки на участь в аукціоні  provider1

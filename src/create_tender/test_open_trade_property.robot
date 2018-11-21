@@ -3,18 +3,16 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Допорогові закупівлі
-  	test_below_propery.Заповнити startDate періоду пропозицій
-  	test_below_propery.Заповнити endDate періоду пропозицій
-  	test_below_propery.Заповнити endDate періоду обговорення
-  	test_below_propery.Заповнити amount для tender
-  	test_below_propery.Заповнити minimalStep для tender
-  	test_below_propery.Заповнити title для tender
-  	test_below_propery.Заповнити description для tender
-  	test_below_propery.Додати предмет в тендер
+  	Вибрати тип процедури  ${mode.${type}}
+  	test_open_trade_property.Заповнити endDate періоду пропозицій
+  	test_open_trade_property.Заповнити amount для tender
+  	test_open_trade_property.Заповнити minimalStep для tender
+  	test_open_trade_property.Заповнити title для tender
+  	test_open_trade_property.Заповнити description для tender
+  	test_open_trade_property.Додати предмет в тендер
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    Оголосити тендер
+    Оголосити закупівлю
     Пошук тендеру по title (webclient)  ${data['title']}
     Отримати tender_uaid та tender_href щойно стореного тендера
     Звебегти дані в файл
@@ -23,23 +21,10 @@
 #########################################################
 #	                  Keywords							#
 #########################################################
-Заповнити endDate періоду обговорення
-    ${date}  get_time_now_with_deviation  5  minutes
-    ${value}  Create Dictionary  endDate=${date}
-    Set To Dictionary  ${data}  enquiryPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="DDM"]//input  ${date}
-
-
-Заповнити startDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  6  minutes
-    ${value}  Create Dictionary  startDate=${date}
-    Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="D_SCH"]//input    ${date}
-
-
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  25  minutes
-    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
+    ${date}  get_time_now_with_deviation  22  minutes
+    ${value}  Create Dictionary  endDate=${date}
+    Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
@@ -80,15 +65,15 @@
 
 
 Додати предмет в тендер
-    test_below_propery.Заповнити description для item
-    test_below_propery.Заповнити quantity для item
-    test_below_propery.Заповнити id для item
-    test_below_propery.Заповнити unit.name для item
-    test_below_propery.Заповнити postalCode для item
-    test_below_propery.Заповнити streetAddress для item
-    test_below_propery.Заповнити locality для item
-    test_below_propery.Заповнити endDate для item
-    test_below_propery.Заповнити startDate для item
+    test_open_trade_property.Заповнити description для item
+    test_open_trade_property.Заповнити quantity для item
+    test_open_trade_property.Заповнити id для item
+    test_open_trade_property.Заповнити unit.name для item
+    test_open_trade_property.Заповнити postalCode для item
+    test_open_trade_property.Заповнити streetAddress для item
+    test_open_trade_property.Заповнити locality для item
+    test_open_trade_property.Заповнити endDate для item
+    test_open_trade_property.Заповнити startDate для item
 
 
 Заповнити description для item

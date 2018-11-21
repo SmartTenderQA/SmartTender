@@ -11,13 +11,13 @@ Library     service.py
 Library     Faker/faker.py
 Library     seo.py
 
-Variables   /home/testadm/users_variables.py
-Variables   ../users_variables.py
+
+Resource  	keywords.robot
 Resource    EDS.robot
 Resource    email.robot
 Resource    keywords(webclient).robot
 Resource    loading.robot
-Resource    login.robot
+Resource    pages/login/login.robot
 Resource    make_proposal.robot
 Resource    participation_request.robot
 Resource    search.robot
@@ -25,6 +25,8 @@ Resource    synchronization.robot
 Resource    create_tender/keywords.robot
 Resource    get_auction_href.robot
 Resource    tenders_view.robot
+Resource    elements/actions.robot
+Resource  	pages/search_small_privatization/search_small_privatization.robot
 
 
 *** Variables ***
@@ -42,7 +44,6 @@ ${platform}                           ANY
 ${capability}                         chrome
 
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
-${logout}                           id=LogoutBtn
 ${error}                            id=loginErrorMsg
 ${komertsiyni-torgy icon}           //*[@id="main"]//a[2]/img
 ${link to make proposal button}     css=[class='show-control button-lot']
@@ -56,116 +57,82 @@ ${bids search}                      //div[contains(text(), 'Пошук')]/..
 
 
 *** Keywords ***
-Suite Postcondition
-  Close All Browsers
-
-
 Start
-  [Arguments]  ${user}  ${alies}=alies
-  clear_test_output
-  ${login}  ${password}  Отримати дані користувача  ${user}
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Змінити стартову сторінку для IP
-  Open Browser  ${start_page}  ${browser}  ${alies}
-  Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
+	[Arguments]  ${user}  ${alies}=alies
+	clear_test_output
+	${login}  ${password}  Отримати дані користувача  ${user}
+	${start_page}  Отримати стартову сторінку  ${site}
+	Змінити стартову сторінку для IP
+	Open Browser  ${start_page}  ${browser}  ${alies}
+	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
 
 
 Start in grid
-  [Arguments]  ${user}  ${alies}=alies
-  clear_test_output
-  ${login}  ${password}  Отримати дані користувача  ${user}
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Змінити стартову сторінку для IP
-  Run Keyword If  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:WIN10
-  ...  ELSE IF    '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP
-  ...  ELSE IF    '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}
-  ...  ELSE IF    '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
-  Run Keyword If  "${role}" != "viewer"  Login  ${login}  ${password}
-
-
-Змінити стартову сторінку для IP
-  ${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
-  ...  ELSE  Set Variable  ${start_page}
-  Set Global Variable  ${start_page}
-
-
-Отримати стартову сторінку
-  [Arguments]  ${site}
-  ${start_page}  Run Keyword If  "${site}" == "prod"  Set Variable  ${prod}
-  ...  ELSE  Set Variable  ${test}
-  Set Global Variable  ${start_page}
-  [Return]  ${start_page}
-
-
-Отримати дані користувача
-  [Arguments]  ${user}
-  ${a}  Create Dictionary  a  ${users_variables}
-  ${users_variables}  Set Variable  ${a.a}
-  Set Global Variable  ${name}  ${users_variables.${user}.name}
-  Set Global Variable  ${role}  ${users_variables.${user}.role}
-  Set Global Variable  ${site}  ${users_variables.${user}.site}
-  [Return]  ${users_variables.${user}.login}  ${users_variables.${user}.password}
+	[Arguments]  ${user}  ${alies}=alies
+	clear_test_output
+	${login}  ${password}  Отримати дані користувача  ${user}
+	${start_page}  Отримати стартову сторінку  ${site}
+	Змінити стартову сторінку для IP
+	Run Keyword If  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:WIN10
+	...  ELSE IF    '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP
+	...  ELSE IF    '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}
+	...  ELSE IF    '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
+	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
 
 
 Open button
-  [Documentation]   відкривае лінку з локатора у поточному вікні
-  [Arguments]  ${selector}  ${ip}=None
-  ${href}=  Get Element Attribute  ${selector}  href
-  ${href}  Run Keyword If  "${ip}" == "None"  Поправили лінку для IP  ${href}
-  ...  ELSE  Set Variable  ${href}
-  Go To  ${href}
-
-
-Поправили лінку для IP
-  [Arguments]  ${href}
-  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
-  ...  ELSE  Set Variable  ${href}
-  [Return]  ${href}
+	[Documentation]   відкривае лінку з локатора у поточному вікні
+	[Arguments]  ${selector}  ${ip}=None
+	${href}=  Get Element Attribute  ${selector}  href
+	${href}  Run Keyword If  "${ip}" == "None"  Поправили лінку для IP  ${href}
+	...  ELSE  Set Variable  ${href}
+	Go To  ${href}
 
 
 conver dict to json
-  [Arguments]  ${dict}
-  ${json}  evaluate  json.dumps(${dict})  json
-  [Return]  ${json}
+	[Arguments]  ${dict}
+	${json}  evaluate  json.dumps(${dict})  json
+	[Return]  ${json}
 
 
 conver json to dict
-  [Arguments]  ${json}
-  ${dict}  Evaluate  json.loads('''${json}''')  json
-  [Return]  ${dict}
-
-
-Створити та додати файл
-  [Arguments]  ${selector}
-  ${file}  create_fake_doc
-  ${path}  Set Variable  ${file[0]}
-  ${name}  Set Variable  ${file[1]}
-  ${content}  Set Variable  ${file[2]}
-  Choose File  ${selector}  ${path}
-  [Return]  ${path}  ${name}  ${content}
-
-
-Перевірити користувача
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
-  Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
+	[Arguments]  ${json}
+	${dict}  Evaluate  json.loads('''${json}''')  json
+	[Return]  ${dict}
 
 
 Scroll Page To Element XPATH
-  [Arguments]    ${xpath}
-  Run Keyword And Ignore Error
-  ...  Execute JavaScript  document.evaluate('${xpath.replace("xpath=", "")}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
-  Run Keyword And Ignore Error
-  ...  Execute JavaScript  document.evaluate("${xpath.replace('xpath=', '')}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
+	[Arguments]    ${xpath}
+	Run Keyword And Ignore Error
+	...  Execute JavaScript  document.evaluate('${xpath.replace("xpath=", "")}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
+	Run Keyword And Ignore Error
+	...  Execute JavaScript  document.evaluate("${xpath.replace('xpath=', '')}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
 
 
 Scroll Page To Top
-  Execute JavaScript  window.scrollTo(0,0);
+	Execute JavaScript  window.scrollTo(0,0);
 
 
-Check Prev Test Status
-  ${status}  Set Variable  ${PREV TEST STATUS}
-  Run Keyword If  '${status}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
+Stop The Whole Test Execution If Previous Test Failed
+	Run Keyword If  '${PREV TEST STATUS}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
 
+
+Дочекатись дати
+    [Arguments]  ${date}  ${day_first}=${True}
+    ${sleep}=  wait_to_date  ${date}  ${day_first}
+    Sleep  ${sleep}
+
+
+##############################################################################
+# This shouldn't be here
+##############################################################################
+Видалити кнопку "Поставити запитання"
+	Wait Until Element Is Visible  //div[contains(@class, "widget-button-i24523139185")]
+	Execute JavaScript  document.querySelector("div[class*=widget-button-i24523139185]").remove()
+
+
+Видалити кнопку "Замовити звонок"
+	Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
 
 
 Дочекатися статусу тендера
@@ -181,33 +148,3 @@ Check Prev Test Status
     ${status}  Get Text  ${selector}
     Should Be Equal  '${status}'  '${tender_status}'
 
-
-Дочекатись дати
-    [Arguments]  ${date}  ${day_first}=${True}
-    ${sleep}=  wait_to_date  ${date}  ${day_first}
-    Sleep  ${sleep}
-
-
-Видалити кнопку "Поставити запитання"
-  Wait Until Element Is Visible  //div[contains(@class, "widget-button-i24523139185")]
-  Execute JavaScript  document.querySelector("div[class*=widget-button-i24523139185]").remove()
-
-
-Видалити кнопку "Замовити звонок"
-  Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
-
-
-Операція над чекбоксом square
-	[Arguments]  ${field_text}  ${action}
-	${selector}  Set Variable  //label[contains(., "${field_text}")]//input[@type="checkbox"]
-	Run Keyword  ${action} Checkbox  ${selector}
-
-
-Активувати перемикач на сторінці пошуку малої приватизації
-	[Arguments]  ${field_text}
-	${selector}  Set Variable  //input[@type="radio"]/ancestor::label[contains(., "${field_text}")]
-	${class}  Get Element Attribute  ${selector}  class
-	${status}  Run Keyword And Return Status  Should Contain  ${class}  checked
-	Run Keyword If  ${status} == ${False}  Run Keywords
-	...  Click Element  ${selector}
-	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
