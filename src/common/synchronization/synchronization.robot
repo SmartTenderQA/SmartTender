@@ -1,6 +1,6 @@
 *** Settings ***
 Library     synchronization.py
-Library     service.py
+Library     src/service.py
 
 *** Keywords ***
 Дочекатись синхронізації

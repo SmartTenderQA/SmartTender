@@ -24,7 +24,7 @@ If skipped create tender
 Підготувати учасників до участі в тендері
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
-    Start in grid in grid  prod_provider1  provider1
+    Start in grid  prod_provider1  provider1
     Start in grid  prod_provider2  provider2
 
 
