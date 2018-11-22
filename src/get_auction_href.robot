@@ -25,10 +25,10 @@
 Натиснути кнопку "Підтвердити пропозицію"
     Wait Until Element Is Visible  //span[contains(text(), "Підтвердити пропозицію")]
     Click Element  //span[contains(text(), "Підтвердити пропозицію")]
-    Дочекатись закінчення загрузки сторінки(circle)
+    Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //span[contains(text(), "Так")]
     Click Element  //span[contains(text(), "Так")]
-    Дочекатись закінчення загрузки сторінки(circle)
+    Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
     Open Button  //a[contains(text(), "Перейти")]
 
