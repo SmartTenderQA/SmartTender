@@ -28,8 +28,8 @@ Variables   ../users_variables.py
   [Return]  ${users_variables.${user}.login}  ${users_variables.${user}.password}
 
 
-Поправили лінку для IP
-  [Arguments]  ${href}
-  ${href}  Run Keyword If  '${IP}' != ''  convert_url  ${href}  ${IP}
+Поправити лінку для IP
+  [Arguments]  ${href}  ${IP}=None
+  ${href}  Run Keyword If  '${IP}' != '${None}'  convert_url  ${href}  ${IP}
   ...  ELSE  Set Variable  ${href}
   [Return]  ${href}

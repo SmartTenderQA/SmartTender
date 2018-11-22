@@ -82,10 +82,9 @@ Start in grid
 
 Open button
 	[Documentation]   відкривае лінку з локатора у поточному вікні
-	[Arguments]  ${selector}  ${ip}=None
+	[Arguments]  ${selector}
 	${href}=  Get Element Attribute  ${selector}  href
-	${href}  Run Keyword If  "${ip}" == "None"  Поправили лінку для IP  ${href}
-	...  ELSE  Set Variable  ${href}
+	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
 
 
