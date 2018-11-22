@@ -60,10 +60,9 @@ Postcondition
 
 
 Перейти на сторінку зміни пароля
-    Click Element  id=LoginAnchor
-    Wait Until Page Contains Element  id=main-menu
-    Click Element  xpath=//*[@id="personalsettings"]/../..
-    Click Element  xpath=//a[contains(@href,'ChangePassword')]
+    Click Element  xpath=//a[contains(text(),'Заходи SmartTender')]
+    Click Element  xpath=//*[contains(@class,'fa-user')]
+    Click Element  xpath=//*[contains(@class,'fa-key')]
     Wait Until Page Contains Element  css=form
 
 
