@@ -4,9 +4,9 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Допорогові закупівлі
+  	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
-  	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити amount для tender
   	test_below.Заповнити minimalStep для tender
   	test_below.Заповнити title для tender
