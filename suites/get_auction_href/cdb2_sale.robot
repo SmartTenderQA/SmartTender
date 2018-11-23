@@ -117,26 +117,26 @@ If skipped create tender
 *** Keywords ***
 Підготувати організатора
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...  Start in grid  Bened  tender_owner
+	...  Start  Bened  tender_owner
 	...  AND  Go Back
 	...  ELSE IF  '${where}' == 'prod'  Run Keywords
-	...  Start in grid  fgv_prod_owner  tender_owner
+	...  Start  fgv_prod_owner  tender_owner
 	...  AND  Go Back
 
 
 Підготувати учасників
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...       Start in grid  user1  provider1
-	...  AND  Start in grid  user2  provider2
+	...       Start  user1  provider1
+	...  AND  Start  user2  provider2
 	...  ELSE IF  '${where}' == 'prod'  Run Keywords
-	...       Start in grid  prod_provider1  provider1
-	...  AND  Start in grid  prod_provider2  provider2
+	...       Start  prod_provider1  provider1
+	...  AND  Start  prod_provider2  provider2
 
 
 Підготувати глядачів
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...       Start in grid  user3  provider3
-	...  AND  Start in grid  test_viewer  viewer
+	...       Start  user3  provider3
+	...  AND  Start  test_viewer  viewer
 
 
 Створити словник
