@@ -8,11 +8,11 @@ Library     OperatingSystem
 Library     String
 Library     DateTime
 Library     service.py
-Library     Faker/faker.py
 Library     seo.py
 
 
 Resource  	keywords.robot
+Resource    Faker/faker.robot
 Resource    EDS.robot
 Resource    email.robot
 Resource    keywords(webclient).robot
