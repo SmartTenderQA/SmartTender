@@ -112,7 +112,7 @@ ${torgy count tab}                   li:nth-child
 Перейти по результату пошуку
   [Arguments]  ${selector}
   ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Поправили лінку для IP  ${href}
+  ${href}  Поправити лінку для IP  ${href}
   Go To  ${href}
   Дочекатись закінчення загрузки сторінки(skeleton)
 
