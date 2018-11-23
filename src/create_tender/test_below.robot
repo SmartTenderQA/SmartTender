@@ -4,9 +4,9 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
   	Вибрати тип процедури  Допорогові закупівлі
+  	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
-  	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити amount для tender
   	test_below.Заповнити minimalStep для tender
   	test_below.Заповнити title для tender
@@ -108,6 +108,7 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
+    Sleep  1
     ${name}  Get Element Attribute  ${input}  value
     ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
     ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re

@@ -238,7 +238,10 @@ Setup
 Відкрити сторінку аукціона
   [Arguments]  ${auc_number}
   ${selector}  Set Variable  (//div[contains(@class, "filename")])
-  Click Element  xpath=(//tr[@class="head"])[${auc_number}]//a
+  ${status}  Run Keyword And Return Status  Click Element  xpath=(//tr[@class="head"])[${auc_number}]//a
+  Run Keyword If  ${status} == ${False}  Run Keywords  Scroll Page To Element XPATH  xpath=(//tr[@class="head"])[${auc_number}]//td[@class="col2"]
+  ...  AND  Sleep  5
+  ...  AND  Click Element  xpath=(//tr[@class="head"])[${auc_number}]//a
   Select Window  NEW
   Дочекатись закінчення загрузки сторінки(skeleton)
   ${docs_on_page}  Get Element Count  ${selector}
@@ -303,7 +306,7 @@ Setup
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  (//*[@data-qa="file-preview"])[${doc_number}]
   :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}  not_ip
+  \  Open Button  ${selector}
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
   \  Exit For Loop If  ${status} == ${true}
   ${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type}
@@ -316,7 +319,7 @@ Setup
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  (//*[@data-qa="file-name"])[${doc_number}]/following::*[@data-qa="file-preview"]
   :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}  not_ip
+  \  Open Button  ${selector}
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
   \  Exit For Loop If  ${status} == ${true}
   Check document for error

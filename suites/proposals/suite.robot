@@ -122,7 +122,7 @@ Postcondition
 
 Заповнити поле з ціною для першого лоту
   Run depending on the dict  Amount  Заповнити поле з ціною  1  1
-  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1  60
+  Run Keyword If  "${tender_type}" == "ESCO"  Fill ESCO  1
 
 
 Підтвердити відповідність за наявністю
