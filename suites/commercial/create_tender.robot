@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Resource  ../../src/webclient_keywords.robot
 Test Teardown  Test Postcondition
 Suite Setup  Suite Precondition
 Suite Teardown  Close All Browsers
@@ -104,7 +103,9 @@ Test Postcondition
 	${date input}  Set Variable
 	...  //*[contains(text(), "${field_name}")]/following-sibling::*[@data-type="DateEdit"]//input
 	Input Text  ${date input}  ${date}
+	Sleep  .5
 	Click Element  //*[contains(text(), "${field_name}")]
+	Sleep  .5
 	${get}  Get Element Attribute  ${date input}  value
 	Should Be Equal  ${get}  ${date}
 
