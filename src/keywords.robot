@@ -29,7 +29,7 @@ Variables   ../users_variables.py
 
 
 Поправити лінку для IP
-  [Arguments]  ${href}  ${IP}=None
-  ${href}  Run Keyword If  '${IP}' != '${None}'  convert_url  ${href}  ${IP}
+  [Arguments]  ${href}
+  ${href}  Run Keyword If  ${IP} != ${EMPTY}  convert_url  ${href}  ${IP}
   ...  ELSE  Set Variable  ${href}
   [Return]  ${href}
