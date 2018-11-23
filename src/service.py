@@ -143,6 +143,8 @@ def smart_get_time(v=0, accuracy='m'):
         return ('{:%d.%m.%Y %H:%M:%S}'.format(time))
     elif accuracy == 'd':
         return ('{:%d.%m.%Y}'.format(time))
+    elif accuracy == 'h':
+        return ('{:%H:%M}'.format(time))
 
 
 def get_time_now_with_deviation(v, deviation):

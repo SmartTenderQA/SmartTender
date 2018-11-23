@@ -8,22 +8,31 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${login}                    ${users_variables["${user}"]["login"]}
 ${password}                 ${users_variables["${user}"]["password"]}
-${new password}             qwerty123
+${new password}             qwerty12345
 ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'btn-success')]
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v user:user4 suites/password/suite.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v user:user4 suites/password/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:user4 suites/password/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:user4 suites/password/suite.robot
 
 *** Test Cases ***
-Залогінитися та змінити пароль користувача
+Перевірити лінк на зміну пароля
     [Tags]  change_password
-    Перейти на сторінку зміни пароля
+    Перейти до зміни пароля (вікно навігації)
+    Go To  ${start page}
+    Run Keyword  Перейти до зміни пароля (особистий кабінет) ${role}
+    Go To  ${start page}
+
+
+Змінити пароль користувача
+    [Tags]  change_password
+    Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${password}  ${new password}
 	Завершити сеанс користувача
     Переконатися в зміні пароля
-  	Залогінитися  ${login}  ${new password}
-    Перейти на сторінку зміни пароля
+    Авторизуватися  ${login}  ${new password}
+    Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${new password}  ${password}
   	Завершити сеанс користувача
 
@@ -35,11 +44,11 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Відправити лист на пошту
     email precondition  ${user}
     Відкрити лист в email  SmartTender: Відновлення паролю
-    Перейти за посиланням в листі  Відновити пароль
+    Перейти за посиланням в листі  Відновити пароль→
     Відновити пароль
     Переконатися в зміні пароля
-  	Залогінитися  ${login}  ${new password}
-    Перейти на сторінку зміни пароля
+    Авторизуватися  ${login}  ${new password}
+    Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${new password}  ${password}
   	Завершити сеанс користувача
 
@@ -47,23 +56,45 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 *** Keywords ***
 Precondition
 	Run Keyword  Start in grid  ${user}
+	Go To  ${start page}
 
 
 Postcondition
     Close All Browsers
 
 
-Залогінитися
-	[Arguments]  ${login}  ${password}
-	Go To  ${start page}
-    Авторизуватися  ${login}  ${password}
+Перейти до зміни пароля (вікно навігації)
+  	Go To  ${start page}
+    Click Element  xpath=//a[contains(text(),'Заходи SmartTender')]
+    Click Element  xpath=//*[contains(@class,'fa-user')]
+    Click Element  xpath=//*[contains(@class,'fa-key')]
+    Page Should Contain  Зміна пароля
 
 
-Перейти на сторінку зміни пароля
+Перейти до зміни пароля (особистий кабінет) provider
     Click Element  id=LoginAnchor
     Wait Until Page Contains Element  id=main-menu
     Click Element  xpath=//*[@id="personalsettings"]/../..
-    Click Element  xpath=//a[contains(@href,'ChangePassword')]
+    Click Element  xpath=//*[contains(@class,'fa-key')]
+    Page Should Contain  Зміна пароля
+
+
+Перейти до зміни пароля (особистий кабінет) tender_owner
+    Click Element  id=LoginAnchor
+    Дочекатись Закінчення Загрузки Сторінки
+    Run Keyword If  '${site}' == 'test'
+    ...  Click Element  xpath=//*[@title='${login}']
+    Sleep  0.5
+    Click Element  xpath=//*[.='Змінити свій пароль']
+    Дочекатись Закінчення Загрузки Сторінки
+    Page Should Contain Element  xpath=//*[.='Зміна пароля']
+
+
+
+Перейти на сторінку зміни пароля
+    Click Element  xpath=//a[contains(text(),'Заходи SmartTender')]
+    Click Element  xpath=//*[contains(@class,'fa-user')]
+    Click Element  xpath=//*[contains(@class,'fa-key')]
     Wait Until Page Contains Element  css=form
 
 
@@ -76,9 +107,9 @@ Postcondition
 
 
 Переконатися в зміні пароля
-  	Go To  ${start page}
     ${status}  Run Keyword And Return Status  Авторизуватися  ${login}  ${password}
     Should Be Equal  ${status}  ${False}
+    Go To  ${start page}
 
 
 Перейти на сторінку відновлення пароля
@@ -95,5 +126,7 @@ Postcondition
 
 Відновити пароль
     Select Window  New
+    sleep  0.5
+    Дочекатись Закінчення Загрузки Сторінки
     Input Password  xpath=//input[@placeholder='']  ${new password}
     Click Element  ${submit btn locator}

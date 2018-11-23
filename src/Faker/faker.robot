@@ -1,6 +1,6 @@
 *** Settings ***
-Documentation    Suite description
 Library  			faker.py
+
 
 *** Keywords ***
 Створити та додати файл

@@ -306,7 +306,7 @@ Setup
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  (//*[@data-qa="file-preview"])[${doc_number}]
   :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}  not_ip
+  \  Open Button  ${selector}
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
   \  Exit For Loop If  ${status} == ${true}
   ${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type}
@@ -319,7 +319,7 @@ Setup
   [Arguments]  ${doc_number}
   ${selector}  Set Variable  (//*[@data-qa="file-name"])[${doc_number}]/following::*[@data-qa="file-preview"]
   :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}  not_ip
+  \  Open Button  ${selector}
   \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
   \  Exit For Loop If  ${status} == ${true}
   Check document for error
