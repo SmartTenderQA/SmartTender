@@ -42,17 +42,17 @@ ${field_password}       //input[@type="password"]
 
 Перевірити наявність листа за темою
   [Arguments]  ${title}
-  ${time now}  smart_get_time  0  h
-  ${time}  Get Text  //*[@class='xW xY ']
-  ${is}  compare_dates_smarttender  ${time now}  >=  ${time}
-  Should Be Equal  ${is}  ${True}
-  ${is}  Get Text  //*[@class='Cp']//tr
-  Should Contain  ${is}  ${title}
+  ${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
+  ${time is}  Get Text  //*[@class='xW xY ']
+  ${time}  compare_dates_smarttender  ${time now -1 min}  <=  ${time is}
+  Should Be Equal  ${time}  ${True}
+  ${title is}  Get Text  //*[@class='Cp']//tr
+  Should Contain  ${title is}  ${title}
 
 
 Відкрити лист в email за темою
   [Arguments]  ${title}
-  Wait Until Keyword Succeeds  5 min  10 s  Перевірити наявність листа за темою  ${title}
+  Wait Until Keyword Succeeds  5 min  3 s  Перевірити наявність листа за темою  ${title}
   Click Element  xpath=//td[@id]//span[contains(text(), '${title}')]
   Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
 
@@ -70,3 +70,10 @@ ${field_password}       //input[@type="password"]
   Click Element  xpath=//a[contains(text(),'Відновити пароль→')]
   Select Window  New
   sleep  0.5
+
+
+Перевірити вкладений файл за назвою
+  [Arguments]  ${should}  ${title}
+  Click Element  //a[contains(., '${title}')]
+  ${text}  Evaluate  str(${should})
+  Wait Until Page Contains  ${text}  10

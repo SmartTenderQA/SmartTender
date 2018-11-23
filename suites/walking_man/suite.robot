@@ -94,16 +94,16 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
   Перевірка гарантійного внеску
 
-
+#robot --consolecolors on -L TRACE:INFO -d test_output -t 'Сформувати рахунок-фактуру' -v hub:None -v user:user1 suites/walking_man/suite.robot
 Сформувати рахунок-фактуру
   [Tags]  invoice  -test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку рахунка фактури
   ${amount}  Сгенерувати та ввести суму до оплати
-  #Натиснути сформувати рахунок
-  #Перевірити валідаційне повідомлення для сформованого рахунку
-  #{error_status}  Run Keyword And Return Status  Перевірити email рахунок-фактуру  ${amount}
+  Натиснути сформувати рахунок
+  Перевірити валідаційне повідомлення для сформованого рахунку
+  Перевірити email рахунок-фактуру  ${amount}
 
 
 Особистий кабінет
@@ -1609,41 +1609,28 @@ Test Postcondition
   Input Text  //*[@class="ivu-card-body"]//input  ${amount}
   ${get}  Get Element Attribute  //*[@class="ivu-card-body"]//input  value
   Run Keyword If  "${get}" == ""  Сгенерувати та ввести суму до оплати
-  Click Element  (//*[@class="ivu-card-body"]//button)[1]
   [Return]  ${amount}
 
 
 Натиснути сформувати рахунок
   ${selector}  Set Variable  //*[@class="ivu-card-body"]//button
-  Click Element  (${selector})[3]
+  Click Element  (${selector})[last()]
   Дочекатись закінчення загрузки сторінки
   Wait Until Page Does Not Contain  ${selector}
 
 
 Перевірити валідаційне повідомлення для сформованого рахунку
-  Element Should Contain  css=.ivu-alert-desc  Рахунок сформований і найближчим часом буде відправлений на електронну адресу Вашої компанії
+  Element Should Contain  css=.ivu-alert-desc  Рахунок сформований
+  Element Should Contain  css=.ivu-alert-desc  відправлений на електронну адресу Вашої компанії
 
 
 Перевірити email рахунок-фактуру
   [Arguments]  ${amount}
   Розпочати роботу з Gmail  ${user}
-  Відкрити перший лист Рахунок за Надання послуг
-  Звірити дані в pdf файлі  ${amount}
+  Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
+  Перевірити вкладений файл за назвою  ${amount}  Рахунок
   Close Browser
   Switch Browser  1
-
-
-Відкрити перший лист Рахунок за Надання послуг
-  Wait Until Keyword Succeeds  60  2
-  ...  Click Element  //td[@id]//span[contains(text(), "SmartTender - Рахунок за Надання послуг")]
-
-
-Звірити дані в pdf файлі
-  [Arguments]  ${amount}
-  Mouse Over  //a[contains(., 'Рахунок')]
-  Click Element  //a[contains(., 'Рахунок')]
-  ${text}  Evaluate  str(${amount})
-  Wait Until Page Contains  ${text}  30
 
 
 Відкрити сторінку налаштування підписки
