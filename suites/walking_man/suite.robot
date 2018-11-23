@@ -1626,7 +1626,7 @@ Test Postcondition
 
 Перевірити email рахунок-фактуру
   [Arguments]  ${amount}
-  email precondition  ${user}
+  Розпочати роботу з Gmail  ${user}
   Відкрити перший лист Рахунок за Надання послуг
   Звірити дані в pdf файлі  ${amount}
   Close Browser

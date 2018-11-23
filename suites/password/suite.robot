@@ -1,8 +1,8 @@
 *** Settings ***
 Resource        ../../src/src.robot
-Suite Setup  Precondition
+Suite Setup     Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
@@ -15,14 +15,11 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 #robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:user4 suites/password/suite.robot
 #robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
 #robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:user4 suites/password/suite.robot
-
+#robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
 *** Test Cases ***
-Перевірити лінк на зміну пароля
+Перевірити можливість змінити пароль (особистий кабінет)
     [Tags]  change_password
-    Перейти до зміни пароля (вікно навігації)
-    Go To  ${start page}
     Run Keyword  Перейти до зміни пароля (особистий кабінет) ${role}
-    Go To  ${start page}
 
 
 Змінити пароль користувача
@@ -30,33 +27,29 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${password}  ${new password}
 	Завершити сеанс користувача
-    Переконатися в зміні пароля
+    Переконатися що пароль змінено
     Авторизуватися  ${login}  ${new password}
     Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${new password}  ${password}
-  	Завершити сеанс користувача
 
 
 Відновлення пароля через email
     [Tags]  reset_password
-    Завершити сеанс користувача
     Перейти на сторінку відновлення пароля
-    Відправити лист на пошту
-    email precondition  ${user}
-    Відкрити лист в email  SmartTender: Відновлення паролю
+    Відправити лист "Відновлення паролю" на пошту
+    Розпочати роботу з Gmail  ${user}
+    Відкрити лист в email за темою  SmartTender: Відновлення паролю
     Перейти за посиланням в листі  Відновити пароль→
-    Відновити пароль
-    Переконатися в зміні пароля
+    Ввести новий пароль
+    Переконатися що пароль змінено
     Авторизуватися  ${login}  ${new password}
     Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${new password}  ${password}
-  	Завершити сеанс користувача
 
 
 *** Keywords ***
 Precondition
-	Run Keyword  Start in grid  ${user}
-	Go To  ${start page}
+   	Run Keyword  Start in grid  ${user}
 
 
 Postcondition
@@ -80,15 +73,12 @@ Postcondition
 
 
 Перейти до зміни пароля (особистий кабінет) tender_owner
-    Click Element  id=LoginAnchor
-    Дочекатись Закінчення Загрузки Сторінки
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
     Sleep  0.5
     Click Element  xpath=//*[.='Змінити свій пароль']
     Дочекатись Закінчення Загрузки Сторінки
     Page Should Contain Element  xpath=//*[.='Зміна пароля']
-
 
 
 Перейти на сторінку зміни пароля
@@ -106,27 +96,26 @@ Postcondition
     Wait Until Page Contains Element  xpath=//div[contains(@class,'alert')]
 
 
-Переконатися в зміні пароля
+Переконатися що пароль змінено
     ${status}  Run Keyword And Return Status  Авторизуватися  ${login}  ${password}
     Should Be Equal  ${status}  ${False}
     Go To  ${start page}
 
 
 Перейти на сторінку відновлення пароля
+    Завершити Сеанс Користувача
     Click Element  id=LoginAnchor
     Click Element  xpath=//div[@id='sm_content']//div[@class='forgot']/a
     Wait Until Page Contains Element  xpath=//div[@id='warningMessage']
 
 
-Відправити лист на пошту
+Відправити лист "Відновлення паролю" на пошту
     Input Password  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]  ${login}
     Click Element  ${submit btn locator}
-    Wait Until Page Contains  e-mail ${login}
+    Дочекатись Закінчення Загрузки Сторінки
 
 
-Відновити пароль
-    Select Window  New
-    sleep  0.5
+Ввести новий пароль
     Дочекатись Закінчення Загрузки Сторінки
     Input Password  xpath=//input[@placeholder='']  ${new password}
     Click Element  ${submit btn locator}
