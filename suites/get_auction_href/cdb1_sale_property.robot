@@ -88,18 +88,18 @@ If skipped create tender
 
 
 Підготувати організатора
-	Start in grid  Bened  tender_owner
+	Start  Bened  tender_owner
 	Go Back
 
 
 Підготувати учасників
-	Start in grid  user1  provider1
-	Start in grid  user2  provider2
+	Start  user1  provider1
+	Start  user2  provider2
 
 
 Підготувати глядачів
-	Start in grid  user3  provider3
-	Start in grid  test_viewer  viewer
+	Start  user3  provider3
+	Start  test_viewer  viewer
 
 
 Знайти тендер користувачем
