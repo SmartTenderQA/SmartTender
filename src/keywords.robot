@@ -3,6 +3,10 @@ Variables   /home/testadm/users_variables.py
 Variables   ../users_variables.py
 
 
+*** Variables ***
+${IP}
+
+
 *** Keywords ***
 Змінити стартову сторінку для IP
   ${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
@@ -30,6 +34,6 @@ Variables   ../users_variables.py
 
 Поправити лінку для IP
   [Arguments]  ${href}
-  ${href}  Run Keyword If  ${IP} != ${EMPTY}  convert_url  ${href}  ${IP}
+  ${href}  Run Keyword If  '${IP}' != '${EMPTY}'  convert_url  ${href}  ${IP}
   ...  ELSE  Set Variable  ${href}
   [Return]  ${href}

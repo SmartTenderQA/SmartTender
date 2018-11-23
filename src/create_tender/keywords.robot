@@ -198,6 +198,7 @@ Resource  test_open_trade.robot
 ################################################################
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
+	Clear Element Text  ${selector}
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
