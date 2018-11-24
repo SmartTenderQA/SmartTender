@@ -63,7 +63,7 @@ Resource  test_open_trade.robot
 
 Відкрити вікно створення тендеру
   Wait Until Keyword Succeeds  30  3  Run Keywords
-  ...  Click Element  xpath=//*[contains(text(), 'Додати')]
+  ...  Click Element  xpath=//a[@title="Додати (F7)"]
   ...  AND  Wait Until Element Is Not Visible  ${webClient loading}  120
   ...  AND  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
 
@@ -197,7 +197,6 @@ Resource  test_open_trade.robot
 ################################################################
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
-	Clear Element Text  ${selector}
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
@@ -205,6 +204,7 @@ Resource  test_open_trade.robot
 	[Arguments]  ${selector}  ${text}
 	Click Element  ${selector}
 	Sleep  .5
+	Clear Element Text  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13

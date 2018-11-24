@@ -5,7 +5,7 @@ ${field_password}       //input[@type="password"]
 
 
 *** Keywords ***
-eMail login
+Авторизуватися в Gmail
 	[Arguments]  ${user}
 	Click Element  css=[data-g-label="Sign in"]
 	Wait Until Page Contains Element  ${field_login}
@@ -20,6 +20,12 @@ eMail login
 	Run Keyword And Ignore Error  Click Element  //*[text()='Done' or text()='Готово']
 
 
+Закрити валідаційне вікно (за необходністю)
+	Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
+	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  welcome_dialog_next
+	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  ok
+
+
 Закрити валідаційне вікно в email
 	[Arguments]  ${name}
 	${button}  Set Variable  //*[@name="${name}"]
@@ -27,11 +33,14 @@ eMail login
 	Run Keyword If  '${status}' == 'True'  Click Element  ${button}
 
 
-Перевірити наявність листа
-	[Arguments]  ${text}
-	${time now}  smart_get_time  0  h
-	${time}  Get Text  //*[@class='xW xY ']
-	${is}  compare_dates_smarttender  ${time now}  >=  ${time}
-	Should Be Equal  ${is}  ${True}
-	${is}  Get Text  //*[@class='Cp']//tr
-	Should Contain  ${is}  ${text}  AND
+Перевірити наявність листа за темою
+	[Arguments]  ${title}
+	${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
+	${time is}  Get Text  //*[@class='xW xY ']
+	${time}  compare_dates_smarttender  ${time now -1 min}  <=  ${time is}
+	Should Be Equal  ${time}  ${True}
+	${title is}  Get Text  //*[@class='Cp']//tr
+	Should Contain  ${title is}  ${title}
+
+
+
