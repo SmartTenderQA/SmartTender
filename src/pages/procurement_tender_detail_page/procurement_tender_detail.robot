@@ -24,6 +24,19 @@ ${['contactPerson']['name']}            //*[text()="Контактна особ�
 
 
 *** Keywords ***
+Перевірити кнопку подачі пропозиції
+    [Arguments]  ${selector}=None
+    ${button}  Run Keyword If  "${selector}" == "None"
+    ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
+    ...  ELSE  Set Variable  ${selector}
+    Page Should Contain Element  ${button}
+    Open button  ${button}
+    Location Should Contain  /edit/
+    Wait Until Keyword Succeeds  5m  3  Run Keywords
+    ...  Reload Page  AND
+    ...  Element Should Not Be Visible  //*[@class='modal-dialog ']//h4
+
+
 Перевірити коректність даних на сторінці
     [Arguments]  ${field}  ${selector}=${${field}}
     ${value}  Get Text  ${selector}
@@ -35,3 +48,4 @@ ${['contactPerson']['name']}            //*[text()="Контактна особ�
     [Arguments]  ${field}  ${value}
     ${result}  convert_page_values  ${field}  ${value}
     [Return]  ${result}
+

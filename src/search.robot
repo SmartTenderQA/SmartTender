@@ -88,13 +88,14 @@ ${torgy count tab}                   li:nth-child
 
 
 Виконати пошук тендера
-  [Arguments]  ${id}=None
-  Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
-  Press Key  ${find tender field}  \\13
-  Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
-  Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
-  Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
+	[Arguments]  ${id}=None
+	Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
+	Press Key  ${find tender field}  \\13
+	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
+	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
+	Run Keyword If  '${status}' == 'False'  Run Keywords
+	...  Fail  Не знайдено жодного тендера  AND
+	Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
 
 
 Виконати пошук_new
@@ -171,3 +172,4 @@ ${torgy count tab}                   li:nth-child
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_uaid']}
+
