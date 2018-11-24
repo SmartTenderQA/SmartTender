@@ -1,5 +1,4 @@
 *** Settings ***
-Library     Collections
 Resource  ../loading.robot
 Resource  cdb1_sale_property.robot
 Resource  prod_below.robot

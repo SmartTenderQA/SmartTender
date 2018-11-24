@@ -18,7 +18,6 @@ ${choice file button}               //button[@data-toggle="dropdown"]
 ${file button path}                 //div[@class="file-container"]/div
 ${choice file list}                 //div[@class="dropdown open"]//li
 ${sub field}                        //*[@id="lotSubcontracting0"]/textarea[1]
-${EDS}                              ${block}[1]//div[@class="ivu-row"]//button
 ${EDS close}                        //*[@class="modal-dialog "]//button
 ${delete file}                      //div[@class="file-container"]/div[last()]/div/div[2]
 ${delete file confirm}              /div/div[2]//button[2]

@@ -7,26 +7,41 @@ Library     DebugLibrary
 Library     OperatingSystem
 Library     String
 Library     DateTime
-Library     service.py
-Library     seo.py
 
 
-Resource  	keywords.robot
+Resource    common/email/email.robot
+Resource    common/get_auction_href/get_auction_href.robot
+Resource    common/header_old/header_old.robot
+Resource    common/loading/loading.robot
+Library     common/seo/seo.py
+Resource    common/synchronization/synchronization.robot
+
+
+Resource    create_tender/keywords.robot
+
+
+Resource    elements/actions.robot
+Resource    elements/webclient/webclient_elements.robot
+
+
 Resource    Faker/faker.robot
-Resource    EDS.robot
-Resource    email.robot
-Resource    keywords(webclient).robot
-Resource    loading.robot
+
+
+Resource    pages/auction/auction.robot
+Resource    pages/EDS/EDS.robot
 Resource    pages/login/login.robot
+Resource    pages/procurement_tender_detail_page/tenders_view.robot
+Resource  	pages/search_small_privatization/search_small_privatization.robot
+
+
+Resource    get_auction_href.robot
+Resource    keywords(webclient).robot
+Resource  	keywords.robot
 Resource    make_proposal.robot
 Resource    participation_request.robot
 Resource    search.robot
-Resource    common/synchronization/synchronization.robot
-Resource    create_tender/keywords.robot
-Resource    get_auction_href.robot
-Resource    tenders_view.robot
-Resource    elements/actions.robot
-Resource  	pages/search_small_privatization/search_small_privatization.robot
+Library     service.py
+
 
 
 *** Variables ***

@@ -1,3 +1,7 @@
+*** Settings ***
+Library  convert_page_values.py
+
+
 *** Variables ***
 ${['title']}                            //*[@data-qa="main-block"]//*[@data-qa="title"]
 ${['description']}                      //*[@data-qa="main-block"]//*[@data-qa="description"]/span

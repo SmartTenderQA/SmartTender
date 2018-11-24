@@ -1,10 +1,6 @@
 *** Settings ***
-Resource  	../../src.robot
 Resource    keywords.robot
-
-
-*** Variables ***
-${logout}                           id=LogoutBtn
+Resource  	../../common/header_old/header_old.robot
 
 
 *** Keywords ***
@@ -17,6 +13,5 @@ ${logout}                           id=LogoutBtn
 
 Завершити сеанс користувача
 	Go To  ${start_page}
-	Click Element  ${logout}
-	Wait Until Page Does Not Contain Element  ${logout}
+	Натиснути Вийти
 
