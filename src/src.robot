@@ -15,6 +15,7 @@ Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+Resource  	elements/other.robot
 
 
 Resource    create_tender/keywords.robot
@@ -30,6 +31,7 @@ Resource    Faker/faker.robot
 Resource    pages/auction/auction.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/login/login.robot
+Resource    pages/participation_request/participation_request.robot
 Resource    pages/procurement_tender_detail_page/tenders_view.robot
 Resource  	pages/search_small_privatization/search_small_privatization.robot
 
@@ -38,10 +40,8 @@ Resource    get_auction_href.robot
 Resource    keywords(webclient).robot
 Resource  	keywords.robot
 Resource    make_proposal.robot
-Resource    participation_request.robot
 Resource    search.robot
 Library     service.py
-
 
 
 *** Variables ***
@@ -140,15 +140,6 @@ Stop The Whole Test Execution If Previous Test Failed
 ##############################################################################
 # This shouldn't be here
 ##############################################################################
-Видалити кнопку "Поставити запитання"
-	Wait Until Element Is Visible  //div[contains(@class, "widget-button-i24523139185")]
-	Execute JavaScript  document.querySelector("div[class*=widget-button-i24523139185]").remove()
-
-
-Видалити кнопку "Замовити звонок"
-	Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
-
-
 Дочекатися статусу тендера
 	[Arguments]  ${tender status}
 	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}

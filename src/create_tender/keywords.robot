@@ -47,14 +47,6 @@ Resource  test_open_trade.robot
     Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 
 
-Відкрити сторінку заявок на участь в аукціоні
-    Wait Until Page Contains Element  //div[contains(@title, 'Заявки на участие в Аукционах')]  120
-    Wait Until Keyword Succeeds  120  3  Click Element  //div[contains(@title, 'Заявки на участие в Аукционах')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Element Should Not Be Visible  //div[contains(@title, 'Заявки на участие в Аукционах')]
-    Element Should Be Visible  //td[contains(text(), "Заявки на участие в торгах ФГВ")]
-
-
 Натиснути кнопку публічних закупівель
     Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Повторить попытку')]
     Run Keyword And Ignore Error  Click Element  xpath=//*[contains(text(), 'Публичные закупки')]
