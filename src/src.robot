@@ -31,6 +31,7 @@ Resource    Faker/faker.robot
 Resource    pages/auction/auction.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/login/login.robot
+Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource  	pages/search_small_privatization/search_small_privatization.robot
