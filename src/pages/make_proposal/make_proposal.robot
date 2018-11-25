@@ -1,5 +1,5 @@
 *** Settings ***
-Library     service.py
+Resource  			keywords.robot
 
 
 *** Variables ***

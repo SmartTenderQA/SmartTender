@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  ../loading.robot
+Resource  ../common/loading/loading.robot
 Resource  cdb1_sale_property.robot
 Resource  prod_below.robot
 Resource  test_below.robot

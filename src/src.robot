@@ -40,7 +40,6 @@ Resource  	pages/search_small_privatization/search_small_privatization.robot
 Resource    get_auction_href.robot
 Resource    keywords(webclient).robot
 Resource  	keywords.robot
-Resource    make_proposal.robot
 Resource    search.robot
 Library     service.py
 
