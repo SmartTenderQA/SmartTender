@@ -33,7 +33,12 @@ Resource  				keywords.robot
 
 
 Перевірити вкладений файл за назвою
-	[Arguments]  ${should}  ${title}
-	Click Element  //a[contains(., '${title}')]
-	${text}  Evaluate  str(${should})
-	Wait Until Page Contains  ${text}  10
+	[Arguments]  ${amount}  ${title}
+	Відкрити файл в листі за назвою  ${title}
+	Wait Until Page Contains  Ɋɚɡɨɦ ${amount},00
+
+
+Відкрити файл в листі за назвою
+    [Arguments]  ${title}
+   	Click Element  //a[contains(., '${title}')]
+   	Element Should Contain  //*[@class='aLF-aPX-aPU-awE']  ${title}

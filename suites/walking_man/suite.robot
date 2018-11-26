@@ -72,7 +72,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
   Перевірка гарантійного внеску
 
-#robot --consolecolors on -L TRACE:INFO -d test_output -t 'Сформувати рахунок-фактуру' -v hub:None -v user:user1 suites/walking_man/suite.robot
+
 Особистий кабінет
   [Tags]  your_account
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
