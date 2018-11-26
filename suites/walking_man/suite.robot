@@ -1602,37 +1602,6 @@ Test Postcondition
   Location Should Contain  /invoicepage/
 
 
-Сгенерувати та ввести суму до оплати
-  Wait Until Page Contains Element  //*[@class="ivu-card-body"]//input  60
-  ${n}  random_number  1  1000
-  ${amount}  Evaluate  ${n}*17
-  Input Text  //*[@class="ivu-card-body"]//input  ${amount}
-  ${get}  Get Element Attribute  //*[@class="ivu-card-body"]//input  value
-  Run Keyword If  "${get}" == ""  Сгенерувати та ввести суму до оплати
-  [Return]  ${amount}
-
-
-Натиснути сформувати рахунок
-  ${selector}  Set Variable  //*[@class="ivu-card-body"]//button
-  Click Element  (${selector})[last()]
-  Дочекатись закінчення загрузки сторінки
-  Wait Until Page Does Not Contain  ${selector}
-
-
-Перевірити валідаційне повідомлення для сформованого рахунку
-  Element Should Contain  css=.ivu-alert-desc  Рахунок сформований
-  Element Should Contain  css=.ivu-alert-desc  відправлений на електронну адресу Вашої компанії
-
-
-Перевірити email рахунок-фактуру
-  [Arguments]  ${amount}
-  Розпочати роботу з Gmail  ${user}
-  Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
-  Перевірити вкладений файл за назвою  ${amount}  Рахунок
-  Close Browser
-  Switch Browser  1
-
-
 Відкрити сторінку налаштування підписки
   Click Element  //*[contains(text(), "Налаштування підписки")]/ancestor::a
   Location Should Contain  /Subscription/
