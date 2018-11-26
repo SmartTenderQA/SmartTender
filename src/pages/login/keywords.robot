@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  	../common/loading/loading.robot
+Resource  	  ../common/loading/loading.robot
 
 *** Variables ***
 ${login link}                       id=SignIn

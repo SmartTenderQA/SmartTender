@@ -8,11 +8,9 @@ Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
-${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
 ${button taryfy}                     css=#MenuList a[href='/taryfy/']
 ${button podii}                      css=#LoginDiv [href='/podii/']
 ${button dogovir}                    css=#ContractButton
-${button messages}                   xpath=//*[contains(@class,'fa-bell')]
 ${dropdown navigation}               css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                       css=div[itemscope=itemscope] h1
@@ -22,7 +20,6 @@ ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
-${messages block}                    //*[contains(@class,'long-text')]/span
 ${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
@@ -49,7 +46,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
@@ -60,30 +56,12 @@ ${vidhuky}                           css=.ivu-row .ivu-card
 ${blog}                              css=.ivu-card-body>.ivu-row
 ${blog input}                        css=.ivu-card-body input
 ${blog search button}                css=.ivu-card-body button
-${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
-${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
 ${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 ${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 
 *** Test Cases ***
-Повідомлення
-  [Tags]  notification
-  Зайти на сторінку з контактами
-  Зайти на сторінку повідомлень
-  Перевірити заголовок сторінки повідомлень
-  Порахувати кількість повідомлень
-  Переглянути повідемлення
-  Закрити вікно з повідомленням
-  Завершити сеанс користувача
-  Зайти на сторінку з контактами
-  Перевірити відсутність дзвіночка(повідомлення)
-  [Teardown]  Run Keywords
-  ...  Log Location
-  ...  AND   Run Keyword If Test Failed  Capture Page Screenshot
-
-
 Перевірка гарантійного внеску для open_eu
   [Tags]  guarantee_amount  broken
   Зайти на сторінку державних закупівель
@@ -95,17 +73,6 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   Перевірка гарантійного внеску
 
 #robot --consolecolors on -L TRACE:INFO -d test_output -t 'Сформувати рахунок-фактуру' -v hub:None -v user:user1 suites/walking_man/suite.robot
-Сформувати рахунок-фактуру
-  [Tags]  invoice  -test
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку рахунка фактури
-  ${amount}  Сгенерувати та ввести суму до оплати
-  Натиснути сформувати рахунок
-  Перевірити валідаційне повідомлення для сформованого рахунку
-  Перевірити email рахунок-фактуру  ${amount}
-
-
 Особистий кабінет
   [Tags]  your_account
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
@@ -241,7 +208,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 Контакти
   [Tags]  site
-  Зайти на сторінку з контактами
+  Зайти на сторінку contacts
   Перевірити заголовок сторінки контактів
   Порахувати кількість контактів
   Перевірити заголовок контакту
@@ -837,49 +804,6 @@ Test Postcondition
   Run Keyword And Expect Error  *  Get Text  css=#News
 
 
-Зайти на сторінку з контактами
-  Click Element  ${button kontakty}
-  Location Should Contain  /pro-kompaniyu/kontakty/
-
-
-Перевірити відсутність кнопки повідомлень
-  Зайти на сторінку з контактами
-  Element Should Not Be Visible  ${button messages}
-
-
-Зайти на сторінку повідомлень
-  Click Element  ${button messages}
-  Location Should Contain  /povidomlenya/
-
-
-Перевірити заголовок сторінки повідомлень
-  ${should header}  Set Variable  Повідомлення
-  ${is header}  Get Text  xpath=//*[@type='flex']//h1
-  Should Be Equal  ${is header}  ${should header}
-
-Порахувати кількість повідомлень
-  ${count}  Get Element Count  ${messages block}
-  Run Keyword if  '${count}' == '0'  Fail  Де повідомлення?
-
-Переглянути повідемлення
-  ${title}  Get Text  (${messages block})[1]
-  Click Element  (${messages block})[1]
-  Sleep  5
-  ${message title}  Get Text  //table//div[contains(text(),'ТЕСТУВАННЯ')]
-  Should Be Equal  ${title}  ${message title}
-
-
-Закрити вікно з повідомленням
-	${selector}  Set Variable  //*[@class="ivu-modal-close"]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-	Wait Until Element Is Not Visible  ${selector}
-
-
-Перевірити відсутність дзвіночка(повідомлення)
-	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку повідомлень
-
-
 Перевірити заголовок сторінки контактів
   Sleep  5
   ${should header}  Set Variable  Контакти SmartTender
@@ -1324,28 +1248,6 @@ Test Postcondition
   Unselect Frame
 
 
-Відкрити особистий кабінет
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /webparts/
-  Page Should Contain Element  css=.sidebar-menu
-  Page Should Contain Element  css=.main-content
-
-
-Відкрити особистий кабінет webcliend
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /webclient/
-
-
-Відкрити особистий кабінет для ssp_tender_owner
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /cabinet/registry/privatization-objects
-  Page Should Contain Element  css=.action-block [type="button"]
-  Page Should Contain Element  css=.content-block .asset-card
-
-
 Перевірити сторінку окремого лота в мультилоті
   Go Back
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
@@ -1590,16 +1492,6 @@ Test Postcondition
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
   Wait Until Page Contains Element  //div[@id="pdf-main-container"]//*[@id="div-pdf-canvas"]|//*[@class="ivu-modal-content"]//img  10
-
-
-Розкрити меню в особистому кабінеті
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${not collapsed menu button your account}
-  Run Keyword If  "${status}" != "True"  Click Element  ${collapsed menu button your account}
-
-
-Відкрити сторінку рахунка фактури
-  Click Element  //*[contains(text(), "Сформувати рахунок-фактуру")]/ancestor::a
-  Location Should Contain  /invoicepage/
 
 
 Відкрити сторінку налаштування підписки

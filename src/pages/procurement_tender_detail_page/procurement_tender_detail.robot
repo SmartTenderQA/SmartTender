@@ -1,5 +1,6 @@
 *** Settings ***
-Library  convert_page_values.py
+Library  		convert_page_values.py
+Resource  		keywords.robot
 
 
 *** Variables ***
@@ -48,4 +49,18 @@ ${['contactPerson']['name']}            //*[text()="Контактна особ�
     [Arguments]  ${field}  ${value}
     ${result}  convert_page_values  ${field}  ${value}
     [Return]  ${result}
+
+
+Отрымати статус тендера
+    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
+    Wait Until Element Is Visible  ${selector}
+    ${status}  Get Text  ${selector}
+    [Return]  ${status}
+
+
+Дочекатися статусу тендера
+    [Arguments]  ${tender status}  ${time}=20m
+    Wait Until Keyword Succeeds  ${time}  30s  Run Keywords
+    ...  Reload Page
+    ...  AND  Статус тендера повинен бути  ${tender status}
 

@@ -15,6 +15,10 @@ Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+
+
+Resource  	elements/webclient/webclient_elements.robot
+Resource  	elements/actions.robot
 Resource  	elements/other.robot
 
 
@@ -30,24 +34,27 @@ Resource    Faker/faker.robot
 
 Resource    pages/auction/auction.robot
 Resource    pages/EDS/EDS.robot
+Resource    pages/invoice/invoice.robot
 Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
+Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
-Resource  	pages/search_small_privatization/search_small_privatization.robot
+Resource	pages/search_small_privatization/search_small_privatization.robot
+Resource	pages/start_page/start_page.robot
 
 
 Resource    get_auction_href.robot
 Resource    keywords(webclient).robot
-Resource  	keywords.robot
-Resource    search.robot
-Library     service.py
+Resource	keywords.robot
+Resource	search.robot
+Library		service.py
 
 
 *** Variables ***
 ${tab_keybutton}					\\13
-${browser}                          chrome
-${file path}                        src/
+${browser}							chrome
+${file path}						src/
 ${role}                             None
 ${IP}
 ${test}                             https://test.smarttender.biz
@@ -135,21 +142,4 @@ Stop The Whole Test Execution If Previous Test Failed
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
     Sleep  ${sleep}
-
-
-##############################################################################
-# This shouldn't be here
-##############################################################################
-Дочекатися статусу тендера
-	[Arguments]  ${tender status}
-	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}
-
-
-Перевірити статус тендера
-    [Arguments]  ${tender_status}
-    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
-    Reload Page
-    Wait Until Element Is Visible  ${selector}  20
-    ${status}  Get Text  ${selector}
-    Should Be Equal  '${status}'  '${tender_status}'
 

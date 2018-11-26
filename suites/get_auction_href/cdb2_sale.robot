@@ -90,7 +90,7 @@ If skipped create tender
 	Close Browser
 	Switch Browser  provider1
 	Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	Wait Until Keyword Succeeds  10m  3s  Перевірити статус тендера  Аукціон
+	Дочекатися статусу тендера  Аукціон  10m
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником

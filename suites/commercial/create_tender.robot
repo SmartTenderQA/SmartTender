@@ -72,8 +72,7 @@ Suite Precondition
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${button manage tenders}
 	Click Element  ${button manage tenders}
-	Wait Until Page Contains Element  ${button OK}
-	Click Element  ${button OK}
+	Натиснути OkButton
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${tab MAIN}
 
@@ -170,10 +169,10 @@ Test Postcondition
 	${lot_name}  Заповнити поле найменування для класифікатора
 	Set To Dictionary  ${data.lots[0]}  lot_name  ${lot_name}
 	Вибрати одиниці виміру для классифікатора ресурсів
-	Натиснути "Додати"
+	Натиснути OkButton
 	Підтвердити вибір(F10)
 	Вказати кількість одиниць виміру для классифікатора ресурсів
-	Run Keyword And Ignore Error  Натиснути "Додати"
+	Run Keyword And Ignore Error  Натиснути OkButton
 
 
 Заповнити поле найменування для класифікатора
@@ -264,12 +263,11 @@ Test Postcondition
 
 
 Підтвердити адреси електронної пошти
-	Wait Until Page Contains Element  //*[@data-name="OkButton"]
-	Натиснути "Додати"
+	Натиснути OkButton
 
 
 Натиснути "Додати" та змінити дату за необхідністю
-	${status}  Run Keyword And Return Status  Натиснути "Додати"
+	${status}  Run Keyword And Return Status  Натиснути OkButton
 	Run Keyword If  '${status}' == 'False'  Змінити дату
 
 
