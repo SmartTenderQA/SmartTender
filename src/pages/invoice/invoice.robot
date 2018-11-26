@@ -1,5 +1,6 @@
 *** Keywords ***
 Ввести суму до оплати
+	[Arguments]  ${amount}
 	${input field}  Set Variable  //*[@class="ivu-card-body"]//input
 	Wait Until Page Contains Element  ${input field}  60
 	Input Text  ${input field}  ${amount}
