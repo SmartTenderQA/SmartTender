@@ -14,7 +14,8 @@ ${page_number}                 2
 
 *** Test Cases ***
 Відкрити сторінку з пошуком
-  Зайти на сторінку державних закупівель
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
 
 
 Перевірка мультилотів на сторінці пошука
@@ -27,12 +28,6 @@ ${page_number}                 2
 
 
 *** Keywords ***
-Зайти на сторінку державних закупівель
-  Click Element  xpath=(${komertsiyni-torgy icon})
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[2]/a
-
-
 Підрахувати кількість мультилотів на сторінці
   ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  //span[@class='Multilots']  15
   Wait Until Page Contains   Конкурентні процедури

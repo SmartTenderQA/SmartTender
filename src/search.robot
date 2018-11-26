@@ -8,9 +8,6 @@ ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 
-${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
-${torgy count tab}                   li:nth-child
-
 
 *** Keywords ***
 Знайти тендер по ID
@@ -28,12 +25,6 @@ ${torgy count tab}                   li:nth-child
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
   Location Should Contain  /test-tenders/
-
-
-Зайти на сторінку комерційніх торгів
-  ${komertsiyni-torgy icon}  Set Variable  xpath=//*[@id="main"]//a[2]/img
-  Click Element  ${komertsiyni-torgy icon}
-  Location Should Contain  /komertsiyni-torgy/
 
 
 Відфільтрувати по формі торгів
