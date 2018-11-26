@@ -35,12 +35,8 @@ ${field_password}       //input[@type="password"]
 
 Перевірити наявність листа за темою
 	[Arguments]  ${title}
+	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
 	${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
-	${time is}  Get Text  //*[@class='xW xY ']
+	${time is}  Get Text  ${time selector}
 	${time}  compare_dates_smarttender  ${time now -1 min}  <=  ${time is}
 	Should Be Equal  ${time}  ${True}
-	${title is}  Get Text  //*[@class='Cp']//tr
-	Should Contain  ${title is}  ${title}
-
-
-
