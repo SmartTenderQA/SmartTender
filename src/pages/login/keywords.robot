@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  	../common/loading/loading.robot
+Resource  	  ../../common/loading/loading.robot
 
 *** Variables ***
 ${login link}                       id=SignIn
@@ -43,7 +43,7 @@ Fill password
 Перевірити успішність авторизації
   Run Keyword If
   ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора
-  ...  ELSE IF  "provider" in "${role}"  Перевірити успішність авторизації учасника
+  ...  ELSE IF  "provider" in "${role}" or 'ssp_tender_owner' == '${role}'  Перевірити успішність авторизації учасника
   ...  ELSE IF  "viewer" == "${role}"  No Operation
 
 

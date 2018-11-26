@@ -1,5 +1,5 @@
 *** Keywords ***
-Натиснути "Додати"
+Натиснути OkButton
 	${button}  Set Variable  //*[@data-name="OkButton"]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}

@@ -4,10 +4,10 @@ Library  			faker.py
 
 *** Keywords ***
 Створити та додати файл
-  [Arguments]  ${selector}
-  ${path}  ${name}  ${content}  Створити файл
-  Choose File  ${selector}  ${path}
-  [Return]  ${path}  ${name}  ${content}
+	[Arguments]  ${selector}
+	${path}  ${name}  ${content}  Створити файл
+	Choose File  ${selector}  ${path}
+	[Return]  ${path}  ${name}  ${content}
 
 
 Створити файл
