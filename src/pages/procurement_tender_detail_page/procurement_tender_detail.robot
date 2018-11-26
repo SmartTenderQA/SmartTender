@@ -4,6 +4,8 @@ Resource  		keywords.robot
 
 
 *** Variables ***
+${['procedure-type']}                   //*[@data-qa="procedure-type"]//div[2]
+${['status']}                           //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
 ${['title']}                            //*[@data-qa="main-block"]//*[@data-qa="title"]
 ${['description']}                      //*[@data-qa="main-block"]//*[@data-qa="description"]/span
 ${['tender_uaid']}                      //*[@data-qa="prozorro-number"]//a/span
@@ -21,6 +23,8 @@ ${['enquiryPeriod']['endDate']}         //*[@data-qa="enquiry-period"]//*[@data-
 ${['value']['amount']}                  //*[@data-qa="budget-amount"]
 ${['value']['minimalStep']['percent']}  //*[@data-qa="budget-min-step"]//span[1]
 ${['contactPerson']['name']}            //*[text()="Контактна особа"]/following-sibling::div//*[@data-qa="value"]
+${['prozorro-id']}						//*[@data-qa="prozorro-id"]//*[@data-qa="value"]
+${['prozorro-number']}                  //*[@data-qa='prozorro-number']//a/span
 
 
 
@@ -38,24 +42,12 @@ ${['contactPerson']['name']}            //*[text()="Контактна особ�
     ...  Element Should Not Be Visible  //*[@class='modal-dialog ']//h4
 
 
-Перевірити коректність даних на сторінці
-    [Arguments]  ${field}  ${selector}=${${field}}
-    ${value}  Get Text  ${selector}
-    ${field value}  Парсінг за необхідністью  ${field}  ${value}
-    Should Be Equal  ${field value}  ${data${field}}
-
-
-Парсінг за необхідністью
-    [Arguments]  ${field}  ${value}
-    ${result}  convert_page_values  ${field}  ${value}
-    [Return]  ${result}
-
-
-Отрымати статус тендера
-    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
-    Wait Until Element Is Visible  ${selector}
-    ${status}  Get Text  ${selector}
-    [Return]  ${status}
+Отритами дані зі сторінки
+	[Arguments]  ${field}
+	${selector}  Отримати локатор по назві поля	${field}
+	${value}  Get Text  ${selector}
+	${field value}  Парсінг за необхідністью  ${field}  ${value}
+	[Return]  ${field value}
 
 
 Дочекатися статусу тендера
@@ -64,3 +56,6 @@ ${['contactPerson']['name']}            //*[text()="Контактна особ�
     ...  Reload Page
     ...  AND  Статус тендера повинен бути  ${tender status}
 
+
+Перевірити гарантійний внесок
+	guarantee_amount.Перевірка гарантійного внеску
