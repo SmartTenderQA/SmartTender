@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Start in grid  ${user}
+Suite Setup  Start  ${user}
 Suite Teardown  Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
