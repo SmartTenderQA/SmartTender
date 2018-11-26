@@ -4,7 +4,7 @@ ${personal account}                  xpath=//*[@id='MenuList']//*[contains(@clas
 
 
 *** Keywords ***
-Зайти на сторінку з контактами
+Зайти на сторінку contacts
 	Click Element  ${button kontakty}
 	Location Should Contain  /pro-kompaniyu/kontakty/
 
