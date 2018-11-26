@@ -648,7 +648,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
