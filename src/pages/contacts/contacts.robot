@@ -9,5 +9,5 @@ ${button messages}                   xpath=//*[contains(@class,'fa-bell')]
 
 
 Перевірити відсутність дзвіночка(povidomlenya)
-	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку повідомлень
+	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку povidomlenya
 
