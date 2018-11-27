@@ -40,7 +40,8 @@ ${page_number}                 2
   [Tags]  procurement
   Set Global Variable  ${type}  proz
   Зайти на торговий майданчик
-  Зайти на сторінку державних закупівель
+  Натиснути На торговельний майданчик
+  Перейти на сторінку публічні закупівлі
 
 
 Перевірка тендерів на сторінці пошука
@@ -116,7 +117,7 @@ Setup
 
 
 Зайти на торговий майданчик
-  Click Element  xpath=(${komertsiyni-torgy icon})
+  Натиснути На торговельний майданчик
   Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
 
 
@@ -125,11 +126,6 @@ Setup
   Click Element  //div[@id="MainMenuTenders"]//li[3]/a
   Wait Until Element Is Visible  //*[contains(@class, "btn-search")]//*
   Click Element  //*[contains(@class, "btn-search")]//*
-
-
-Зайти на сторінку державних закупівель
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[2]/a
 
 
 Зайти на сторінку комерційних закупівель
@@ -220,6 +216,7 @@ Setup
   \  Scroll Page To Element XPATH  ${selector}[${doc}]
   \  ${text}  Get Text  ${selector}[${doc}]
   \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
+  \  Set Suite Variable   ${doc}
   \  Exit For Loop If  ${status} == ${true}
   Mouse Over  ${selector}[${doc}]//span
   Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
@@ -293,6 +290,7 @@ Setup
   \  Scroll Page To Element XPATH  ${selector}[${doc}]
   \  ${text}  Get Text  ${selector}[${doc}]
   \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
+  \  Set Suite Variable   ${doc}
   \  Exit For Loop If  ${status} == ${true}
   Mouse Over  ${selector}[${doc}]//span
   Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]

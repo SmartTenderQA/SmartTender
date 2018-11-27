@@ -9,6 +9,7 @@ Library     String
 Library     DateTime
 
 
+Resource    common/cdb_api_data/get_api_data.robot
 Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
@@ -34,13 +35,16 @@ Resource    Faker/faker.robot
 
 Resource    pages/auction/auction.robot
 Resource    pages/EDS/EDS.robot
+Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/invoice/invoice.robot
+Resource    pages/komertsiyni_torgy/komertsiyni_torgy.robot
 Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
 Resource    pages/personal_account/personal_account.robot
 Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
+Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
 Resource	pages/search_small_privatization/search_small_privatization.robot
 Resource	pages/start_page/start_page.robot
 
@@ -68,7 +72,6 @@ ${capability}                         chrome
 
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
 ${error}                            id=loginErrorMsg
-${komertsiyni-torgy icon}           //*[@id="main"]//a[2]/img
 ${link to make proposal button}     css=[class='show-control button-lot']
 ${iframe open tender}               //div[@class="container"]/iframe
 ${make proposal button}             //*[@id="tenderPage"]//a[@class='btn button-lot cursor-pointer']
@@ -77,6 +80,9 @@ ${derzavni zakupku}                 //*[@id="MainMenuTenders"]//ul[1]/li[2]/a
 ${first element find tender}        //*[@id="tenders"]//tr[1]/td[2]/a
 ${bread crumbs}                     (//*[@class='ivu-breadcrumb-item-link'])
 ${bids search}                      //div[contains(text(), 'Пошук')]/..
+
+${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
+${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
