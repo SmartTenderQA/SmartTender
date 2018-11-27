@@ -1,10 +1,8 @@
 *** Variables ***
 ${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
-${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
 ${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 
-${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
-${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
+
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 
@@ -25,13 +23,6 @@ ${small privatization item}			//*[@class="content-block"]/div//a[@href]
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
   Location Should Contain  /test-tenders/
-
-
-Відфільтрувати по формі торгів
-  [Arguments]  ${type}=${TESTNAME}
-  Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
-  Sleep  1
-  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
 
 
 Відфільтрувати по формі торгів_new
@@ -65,19 +56,6 @@ ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 	Press Key  ${input}  \\13
 
 
-Розгорнути розширений пошук та випадаючий список видів торгів
-  [Arguments]  ${check from list}=${TESTNAME}
-  ${dropdown menu for bid forms}  Set Variable  xpath=//label[contains(text(),'Форми ')]/../../ul
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${advanced search}
-  ...  AND  Run Keyword And Expect Error  *  Click Element  ${advanced search}
-  Sleep  2
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${dropdown menu for bid forms}
-  ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
-  ...  AND  Wait Until Page Contains Element  xpath=//li[contains(@class,'dropdown-item') and text()='${check from list}']
-
-
 Виконати пошук тендера
 	[Arguments]  ${id}=None
 	Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
@@ -99,14 +77,6 @@ ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 Перевірити унікальність результату пошуку
   ${count}  Get Element Count  ${tender found}
   Should Be Equal  '${count}'  '1'
-
-
-Перейти по результату пошуку
-  [Arguments]  ${selector}
-  ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Поправити лінку для IP  ${href}
-  Go To  ${href}
-  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перейти по результату пошуку_new

@@ -14,6 +14,7 @@ Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
+Resource    common/search/old_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
 
@@ -77,7 +78,6 @@ ${iframe open tender}               //div[@class="container"]/iframe
 ${make proposal button}             //*[@id="tenderPage"]//a[@class='btn button-lot cursor-pointer']
 ${make proposal button new}         //*[@id="tenderDetail"]//a[@class="show-control button-lot"]
 ${derzavni zakupku}                 //*[@id="MainMenuTenders"]//ul[1]/li[2]/a
-${first element find tender}        //*[@id="tenders"]//tr[1]/td[2]/a
 ${bread crumbs}                     (//*[@class='ivu-breadcrumb-item-link'])
 ${bids search}                      //div[contains(text(), 'Пошук')]/..
 
