@@ -216,6 +216,7 @@ Setup
   \  Scroll Page To Element XPATH  ${selector}[${doc}]
   \  ${text}  Get Text  ${selector}[${doc}]
   \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
+  \  Set Suite Variable   ${doc}
   \  Exit For Loop If  ${status} == ${true}
   Mouse Over  ${selector}[${doc}]//span
   Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
@@ -289,6 +290,7 @@ Setup
   \  Scroll Page To Element XPATH  ${selector}[${doc}]
   \  ${text}  Get Text  ${selector}[${doc}]
   \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
+  \  Set Suite Variable   ${doc}
   \  Exit For Loop If  ${status} == ${true}
   Mouse Over  ${selector}[${doc}]//span
   Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
