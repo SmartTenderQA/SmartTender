@@ -404,7 +404,6 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 	Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
 
-
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
 	[Tags]  procurement
 	[Setup]  Run Keywords
@@ -581,7 +580,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
@@ -593,7 +592,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 	Відфільтрувати по формі торгів_new  ${TESTNAME}
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Об'єкти приватизації

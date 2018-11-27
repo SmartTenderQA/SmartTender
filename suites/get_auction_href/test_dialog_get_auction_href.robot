@@ -159,35 +159,6 @@ If skipped create tender
     Go Back
 
 
-Відкрити браузер під роллю організатора та знайти потрібний тендер
-    Close All Browsers
-    Start  Bened  tender_owner
-	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
-
-
-Підтвердити формування протоколу розгляду пропозицій за необхідністью
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій?
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Підтвердити організатором формування протоколу розгляду пропозицій
-    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${status}  Run Keyword And Return Status
-    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Run Keyword If  '${status}' != 'True'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
-    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити формування протоколу розгляду пропозицій за необхідністью
-
-
 Перейти до другої фази
     Switch Browser  tender_owner
     Wait Until Keyword Succeeds  5  1  Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
@@ -230,7 +201,7 @@ If skipped create tender
     Run Keyword If  '${status}' != 'True'  Run Keywords
     ...  Sleep  60
     ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
-    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Натиснути надіслати вперед(Alt+Right)
     Дочекатись закінчення загрузки сторінки(webclient)
     Підтвердити публікацію процедури
 

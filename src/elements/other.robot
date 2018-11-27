@@ -5,4 +5,5 @@
 
 
 Видалити кнопку "Замовити звонок"
+    Wait Until Element Is Visible  //*[@id="callback-btn"]
 	Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
