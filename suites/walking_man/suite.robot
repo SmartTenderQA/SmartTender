@@ -373,7 +373,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 	...  AND  Перейти на сторінку публічні закупівлі
 	...  AND  Перевірити заголовок вкладки Конкурентні процедури
 	...  AND  Порахувати кількість торгів
-	...  AND  ...  AND  old_search.Розгорнути Розширений Пошук
+	...  AND  old_search.Розгорнути Розширений Пошук
   	...  AND  Click Element  ${dropdown menu for bid forms}
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Допорогові закупівлі

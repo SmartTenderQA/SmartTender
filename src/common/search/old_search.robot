@@ -1,7 +1,12 @@
+*** Settings ***
+Resource    keywords.robot
+
+
 *** Variable ***
 ${advanced search}                 		//div[contains(text(),'Розширений пошук')]/..
 ${dropdown menu for bid forms}			//label[contains(text(),'Форми ')]/../../ul
 ${first found element}      	        //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
+${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 
 
 *** Keywords ***
@@ -27,3 +32,13 @@ ${first found element}      	        //*[@id='tenders']//tbody/*[@class='head']/
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
 	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Виконати пошук тендера
+	[Arguments]  ${id}=None
+	Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
+	Press Key  ${find tender field}  \\13
+	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
+	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
+	Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
+	Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку

@@ -1,8 +1,4 @@
 *** Variables ***
-${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
-${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
-
-
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 
@@ -23,6 +19,14 @@ ${small privatization item}			//*[@class="content-block"]/div//a[@href]
   Mouse Over  ${button komertsiyni-torgy}
   Click Element  ${dropdown navigation}[href='/test-tenders/']
   Location Should Contain  /test-tenders/
+
+
+Перейти по результату пошуку
+  [Arguments]  ${selector}
+  ${href}  Get Element Attribute  ${selector}  href
+  ${href}  Поправити лінку для IP  ${href}
+  Go To  ${href}
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Відфільтрувати по формі торгів_new
@@ -56,27 +60,11 @@ ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 	Press Key  ${input}  \\13
 
 
-Виконати пошук тендера
-	[Arguments]  ${id}=None
-	Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
-	Press Key  ${find tender field}  \\13
-	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
-	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
-	Run Keyword If  '${status}' == 'False'  Run Keywords
-	...  Fail  Не знайдено жодного тендера  AND
-	Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
-
-
 Виконати пошук_new
 	${search_button}  Set Variable  css=.search-field button
 	Wait Until Page Contains Element  ${search_button}
 	Click Element  ${search_button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Перевірити унікальність результату пошуку
-  ${count}  Get Element Count  ${tender found}
-  Should Be Equal  '${count}'  '1'
 
 
 Перейти по результату пошуку_new
