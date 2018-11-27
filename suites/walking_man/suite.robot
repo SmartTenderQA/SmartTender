@@ -594,7 +594,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів  ${TESTNAME}
 	Виконати пошук тендера
 	Перейти по результату пошуку  (${first found element})[last()]
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Майно
