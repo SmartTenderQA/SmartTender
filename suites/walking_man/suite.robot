@@ -660,7 +660,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів_new  ${TESTNAME}
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Об'єкти приватизації
