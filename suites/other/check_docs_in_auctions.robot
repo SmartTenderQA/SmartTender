@@ -40,7 +40,6 @@ ${page_number}                 2
   [Tags]  procurement
   Set Global Variable  ${type}  proz
   Зайти на торговий майданчик
-  Натиснути На торговельний майданчик
   Перейти на сторінку публічні закупівлі
 
 
