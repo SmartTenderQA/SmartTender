@@ -455,7 +455,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Виконати пошук тендера
 	Перейти по результату пошуку  (${first found element})[last()]
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	ППеревірити тип процедури_new
+	Перевірити тип процедури_new
 
 
 Конкурентний діалог 1-ий етап
@@ -594,7 +594,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів  ${TESTNAME}
 	Виконати пошук тендера
 	Перейти по результату пошуку  (${first found element})[last()]
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Майно
@@ -648,7 +648,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
@@ -660,7 +660,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів_new  ${TESTNAME}
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Об'єкти приватизації
