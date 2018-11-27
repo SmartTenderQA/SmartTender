@@ -19,8 +19,9 @@ Resource  				keywords.robot
 
 Перейти за посиланням в листі
 	[Arguments]  ${title}
+	${link selector}  xpath=//a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	Click Element  xpath=//a[contains(text(),'Відновити пароль→')]
+	Wait Until Keyword Succeeds  10  1  Click Element  ${link selector}
 	Select Window  New
 	sleep  0.5
 
@@ -40,5 +41,5 @@ Resource  				keywords.robot
 
 Відкрити файл в листі за назвою
     [Arguments]  ${title}
-   	Click Element  //a[contains(., '${title}')]
+   	Click Element  (//a[contains(., '${title}')])[last()]
    	Element Should Contain  //*[@class='aLF-aPX-aPU-awE']  ${title}

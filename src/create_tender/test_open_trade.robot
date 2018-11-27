@@ -3,7 +3,7 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  ${mode.${type}}
+  	Вибрати тип процедури  Відкриті торги
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
