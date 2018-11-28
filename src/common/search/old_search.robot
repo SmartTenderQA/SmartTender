@@ -28,7 +28,7 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
-	${selector}  Set Variable  xpath=(${first found element})[${n}]
+	${selector}  Set Variable  (${first found element})[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}

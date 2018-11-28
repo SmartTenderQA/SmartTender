@@ -584,34 +584,37 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 Запит цінових пропозицій
 	[Tags]  rialto
-	Зайти на сторінку RIALTO
+	Натиснути На торговельний майданчик
+	old_search.Активувати вкладку RIALTO
 	Перевірити заголовок RIALTO
 	Порахувати кількість торгів RIALTO
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${tender_type_procurement}
+	Перевірити тип процедури для закупівель
 
 
 Простий тендер
 	[Tags]  rialto
-	Зайти на сторінку RIALTO
+	Натиснути На торговельний майданчик
+	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${tender_type_procurement}
+	Перевірити тип процедури для закупівель
 
 
 Двохетапний тендер
 	[Tags]  rialto
-	Зайти на сторінку RIALTO
+	Натиснути На торговельний майданчик
+	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${tender_type_procurement}
+	Перевірити тип процедури для закупівель
 
 
 
@@ -988,22 +991,6 @@ Test Postcondition
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
 
-Зайти на сторінку RIALTO
-  Натиснути На торговельний майданчик
-  Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(5)
-
-
-Перевірити заголовок RIALTO
-  ${should}  Set variable  Торги RIALTO
-  ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(5)
-  Should Be Equal  ${is}  ${should}
-
-
-Порахувати кількість торгів RIALTO
-  ${count}  Get Element Count  ${auction active items}
-  Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
-
-
 Відкрити вікно договору
   Click Element  ${button dogovir}
   Sleep  3
@@ -1056,15 +1043,6 @@ Test Postcondition
   [Arguments]  ${status}
   Click Element  ${dropdown menu for bid statuses}
   Click Element  xpath=//li[text()='${status}']
-
-
-Перевірити тип процедури
-	[Arguments]  ${selector}  ${type}=${TESTNAME}
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
-	Sleep  .5
-	${is}  Get Text  ${selector}
-	Should Contain  ${is}  ${type}
 
 
 Перевірити тип процедури для закупівель
@@ -1653,3 +1631,12 @@ create_e-mail
 Перевірити наявність планів
 	${count}  plany.Порахувати кількість плану
 	Run Keyword if  '${count}' == '0'  Fail  Як це ми без плану?!
+
+
+Перевірити тип процедури
+	[Arguments]  ${selector}  ${type}=${TESTNAME}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
+	Sleep  .5
+	${is}  Get Text  ${selector}
+	Should Contain  ${is}  ${type}

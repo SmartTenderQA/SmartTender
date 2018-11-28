@@ -10,25 +10,27 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-#${UAID}                         UA-2018-10-24-000142-a
-#${tender_ID}                    112e3bb7ba0d4df38a9bb26ed06495ec
-
-${UAID}                         UA-2018-11-23-000044-c
-${tender_ID}                    0819267bac844f06963b0b99069e5d36
-
-#${UAID}                         UA-2018-09-14-000033-b
-#${tender_ID}                    74d3873fc8f54cc3ad9b0badc5256b34
-
-${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
+&{data}
+${UAID}                         UA-2018-11-28-000004-b
+${tender_ID}                    50ddceece0bb4d3282a01c3988b22724
 
 
 *** Test Cases ***
 ################################################################
 #                           DRAFT                              #
 ################################################################
+Створити тендер та отримати UAID
+  [Tags]  create_tender
+  Switch Browser  tender_owner
+  Maximize Browser Window
+  test_open_trade.Створити тендер
+  Отримати UAID та tender_Id для створеного тендера
+
+
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
+
 
 Скасувати моніторинг
   [Tags]  cancellation
@@ -479,10 +481,17 @@ ${id_for_skip_creating}         cea81769df5d48a7a6c46be14fdf12a1
 #                                                                                               #
 #################################################################################################
 *** Keywords ***
-Підготувати користувачів
-  ${data}  Create Dictionary  id  ${id_for_skip_creating}
-  Set Global Variable  ${data}
+Отримати UAID та tender_Id для створеного тендера
+  Set Global Variable  ${UAID}  ${data['tender_uaid']}
+  Go To  ${data['tender_href']}
+  Дочекатись закінчення загрузки сторінки
+  ${id}  Get Text  //*[@data-qa='prozorro-id']//*[@data-qa='value']
+  Set Global Variable  ${tender_ID}  ${id}
+  Close Window
+  Start  dasu  tender_owner
 
+
+Підготувати користувачів
   Start  dasu  tender_owner
 
   Start  test_viewer  viewer

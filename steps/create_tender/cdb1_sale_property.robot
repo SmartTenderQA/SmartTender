@@ -3,7 +3,11 @@
 	[Arguments]  ${auction_type}
 	Відкрити сторінку Аукціони ФГВ(test)
 	Відкрити вікно створення тендеру
-	Вибрати тип процедури  ${auction_type}
+<<<<<<< HEAD
+	create_tender.Вибрати тип процедури  ${auction_type}
+=======
+	create_tender_keywords.Вибрати тип процедури  ${auction_type}
+>>>>>>> d826a7b8c6b549a323f8ad3434ae6e9e817f6a3e
 	Заповнити value.amount
 	Заповнити minimalStep.percent
 	Заповнити dgfDecisionID

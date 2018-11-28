@@ -18,20 +18,15 @@
 
 
 Дочекатись початку періоду перкваліфікації
-    ${selector}  Set Variable  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
-    Wait Until Element Is Visible  ${selector}  30
-    Sleep  1
-    ${tender end date}  Get text  ${selector}
+    Reload Page
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
     Дочекатись дати  ${tender end date}
     Дочекатися статусу тендера  Прекваліфікація
 
 
 Дочекатись закінчення прийому пропозицій
-    ${selector}  Set Variable  //*[@data-qa="tendering-period"]//*[@data-qa="date-end"]
     Reload Page
-    Wait Until Element Is Visible  ${selector}  30
-    Sleep  1
-    ${tender end date}  Get text  ${selector}
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
     Дочекатись дати  ${tender end date}
 
 

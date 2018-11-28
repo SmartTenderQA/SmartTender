@@ -1,18 +1,23 @@
 *** Keywords ***
 Створити тендер
     Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Конкурентний діалог 1-ий етап
-  	test_dialog.Заповнити endDate періоду пропозицій
-  	test_dialog.Заповнити amount для tender
-  	test_dialog.Заповнити minimalStep для tender
-  	test_dialog.Заповнити title для tender
-  	test_dialog.Заповнити description для tender
-  	test_dialog.Додати предмет в тендер
+<<<<<<< HEAD
+  	create_tender.Вибрати тип процедури  Відкриті торги
+=======
+  	create_tender_keywords.Вибрати тип процедури  Відкриті торги
+>>>>>>> d826a7b8c6b549a323f8ad3434ae6e9e817f6a3e
+  	test_open_trade.Заповнити endDate періоду пропозицій
+  	test_open_trade.Заповнити amount для tender
+  	test_open_trade.Заповнити minimalStep для tender
+  	test_open_trade.Заповнити title для tender
+  	test_open_trade.Заповнити description для tender
+  	test_open_trade.Додати предмет в тендер
+    Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
-    Пошук тендеру по title (webclient)  ${data['title']}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
     Отримати tender_uaid та tender_href щойно стореного тендера
     Звебегти дані в файл
 
@@ -21,7 +26,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  38  minutes
+    ${date}  get_time_now_with_deviation  120  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
@@ -64,15 +69,15 @@
 
 
 Додати предмет в тендер
-    test_dialog.Заповнити description для item
-    test_dialog.Заповнити quantity для item
-    test_dialog.Заповнити id для item
-    test_dialog.Заповнити unit.name для item
-    test_dialog.Заповнити postalCode для item
-    test_dialog.Заповнити streetAddress для item
-    test_dialog.Заповнити locality для item
-    test_dialog.Заповнити endDate для item
-    test_dialog.Заповнити startDate для item
+    test_open_trade.Заповнити description для item
+    test_open_trade.Заповнити quantity для item
+    test_open_trade.Заповнити id для item
+    test_open_trade.Заповнити unit.name для item
+    test_open_trade.Заповнити postalCode для item
+    test_open_trade.Заповнити streetAddress для item
+    test_open_trade.Заповнити locality для item
+    test_open_trade.Заповнити endDate для item
+    test_open_trade.Заповнити startDate для item
 
 
 Заповнити description для item
@@ -92,7 +97,12 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  id  ${name}
+    Sleep  1
+    ${name}  Get Element Attribute  ${input}  value
+    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
+    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
+    Set To Dictionary  ${data['item']}  id  ${id}
+    Set To Dictionary  ${data['item']}  id title  ${id title}
 
 
 Заповнити unit.name для item

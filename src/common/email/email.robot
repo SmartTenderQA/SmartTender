@@ -19,7 +19,7 @@ Resource  				keywords.robot
 
 Перейти за посиланням в листі
 	[Arguments]  ${title}
-	${link selector}  xpath=//a[contains(text(),'${title}')]
+	${link selector}  Set Variable  xpath=//a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
 	Wait Until Keyword Succeeds  10  1  Click Element  ${link selector}
 	Select Window  New

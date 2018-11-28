@@ -4,24 +4,10 @@
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Wait Until Element Is Not Visible  ${button}
+	#Wait Until Element Is Not Visible  ${button}
 
 
-Закрити вікно
-	[Arguments]  ${title}
-	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/../../div[contains(@class, 'close')]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Wait Until Page Does Not Contain Element  ${button}
 
-
-Закрити валідаційне вікно
-	[Arguments]  ${title}  ${response}
-	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${response}')]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Wait Until Element Is Not Visible  ${button}
-	Sleep  3
 
 
 Перевірити стадію тендера
@@ -60,24 +46,10 @@
     Page Should Contain  ${name}
 
 
-Підтвердити повідомлення про перевищення бюджету за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Увага! Бюджет перевищує
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Відмовитись у повідомленні про накладання ЕЦП на тендер
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на тендер?
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnNo"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  перевірте публікацію Вашого документу
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
@@ -96,6 +68,7 @@
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
     Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+    Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Відкрити браузер під роллю організатора та знайти потрібний тендер
@@ -103,7 +76,7 @@
     Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -138,6 +111,7 @@
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
+
 Погодитись з рішенням прекваліфікації
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
     Run Keyword If  '${status}' == 'True'  Run Keywords
@@ -157,11 +131,6 @@
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Натиснути кнопку "Надіслати вперед"
-    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Оновити дані першого в списку тендера (webclient)
@@ -190,3 +159,4 @@
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
