@@ -291,7 +291,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Перевірити комерційні закупівлі prod
-	[Tags]  commercial  -prod
+	[Tags]  commercial  -test
 	[Setup]  No Operation
 	[Template]  Перевірити комерційні закупівлі за назвою
 	Відкриті торги. Аукціон
@@ -301,7 +301,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Перевірити комерційні закупівлі test
-	[Tags]  commercial  -test
+	[Tags]  commercial  -prod
 	[Setup]  No Operation
 	[Template]  Перевірити комерційні закупівлі за назвою
 	Відкриті торги. Аукціон
@@ -325,7 +325,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Аукціон на продаж. Відкриті торги
-	[Tags]  commercial  -test
+	[Tags]  commercial1  -test
 	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
