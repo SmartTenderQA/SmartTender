@@ -626,7 +626,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
-  Start  ${user}
+  Start In Grid  ${user}
   Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
 
 
@@ -648,9 +648,10 @@ Test Postcondition
 
 Перевірити Конкурентні процедури за назвою
 	[Arguments]  ${name}
-	Test Precondition
-	Натиснути На торговельний майданчик
-	old_search.Активувати вкладку Державних закупівель
+	#Test Precondition
+	#Натиснути На торговельний майданчик
+	#old_search.Активувати вкладку Державних закупівель
+	Go To  ${start_page}/publichni-zakupivli-prozorro/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -661,10 +662,11 @@ Test Postcondition
 
 Перевірити Неконкурентні процедури за назвою
 	[Arguments]  ${name}
-	Test Precondition
-	Натиснути На торговельний майданчик
-	old_search.Активувати вкладку Державних закупівель
-	old_search.Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
+	#Test Precondition
+	#Натиснути На торговельний майданчик
+	#old_search.Активувати вкладку Державних закупівель
+	#old_search.Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
+	Go To  ${start_page}/publichni-zakupivli-prozorro-nekonkurentni/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
