@@ -40,7 +40,7 @@ Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/invoice/invoice.robot
-Resource    pages/komertsiyni_torgy/komertsiyni_torgy.robot
+Resource    pages/komertsiyni_torgy_tender_detail_page/komertsiyni_torgy_tender_detail_page.robot
 Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
