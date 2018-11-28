@@ -1,6 +1,5 @@
 *** Variables ***
 ${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
-${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
 ${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 ${first tender}                     (//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
 
@@ -8,8 +7,6 @@ ${first found element}              //*[@id='tenders']//tbody/*[@class='head']//
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
-${small privatization item}			//*[@class="content-block"]/div//a[@href]
-${advanced search}                  //div[contains(text(),'Розширений пошук')]/..
 
 *** Keywords ***
 Знайти тендер по ID
@@ -37,22 +34,6 @@ ${advanced search}                  //div[contains(text(),'Розширений 
   Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Відфільтрувати по формі торгів_new
-	[Arguments]  ${type}=${TESTNAME}
-	Розгорнути елемент у фільтрі_new  Вид торгів
-	Операція над чекбоксом square  ${type}  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Розгорнути елемент у фільтрі_new
-	[Arguments]  ${element}
-	${selector}  Set Variable  //p[contains(text(), "${element}")]
-	Wait Until Page Contains Element  ${selector}
-	${class}  Get Element Attribute  ${selector}//i  class
-	${expand_status}  Run Keyword And Return Status  Should Contain  ${class}  down
-	Run Keyword If  ${expand_status} == ${False}  Click Element  ${selector}
-
-
 
 Відфільтрувати по статусу торгів
 	[Arguments]  ${status}
@@ -73,18 +54,6 @@ ${advanced search}                  //div[contains(text(),'Розширений 
 	Wait Until Page Contains Element  ${search_button}
 	Click Element  ${search_button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Перейти по результату пошуку_new
-	[Arguments]  ${selector}
-	Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Розгорнути розширений пошук
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...  Click Element  ${advanced search}
-  ...  AND  Element Should Be Visible  xpath=//*[@class="dhxform_base"]//*[contains(text(), 'Згорнути пошук')]
 
 
 Додаткова перевірка на тестові торги для продуктива

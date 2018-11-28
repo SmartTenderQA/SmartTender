@@ -27,7 +27,6 @@ ${taryfy text}                      //*[@class="body-content"]//ul[@class="nav n
 ${client banner}                    css=.container .row .ivu-card-body
 ${auction active items}             //tbody/tr[@class='head']|//*[@id='hotTrades']/div/div|//*[@class="panel-body"]
 ${auction active header}            css=.ivu-card-body h4
-${auction active item}              css=.ivu-row>div>div[class="ivu-card-body"] a
 ${RegisterAnchor}                   css=#RegisterAnchor
 ${instruktsii link}                 css=#LoginDiv a[href='/instruktсii/']
 ${h1 header text}                   css=#main h1
@@ -38,10 +37,8 @@ ${exchange link1}                   xpath=//div[@class='bank-view'][1]//a
 ${exchange link2}                   xpath=//div[@class='bank-view'][2]//a
 ${contract link1}                   css=li:nth-child(1)>a
 ${contract link2}                   css=li:nth-child(2)>a
-${advanced search2}                 xpath=//span[contains(text(),'Розгорнути')]
 ${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
 ${info form for sales}              xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
-${info form4}                       xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                        //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
 ${num_of_tenders}                   xpath=(//*[@class="num"])[3]
 ${analytics_page}                   /ParticipationAnalytic/?segment=3&organizationId=226
@@ -54,7 +51,6 @@ ${blog}                             css=.ivu-card-body>.ivu-row
 ${blog input}                       css=.ivu-card-body input
 ${blog search button}               css=.ivu-card-body button
 ${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
-${breadcrumbs}					    //*[contains(@class, "breadcrumbs")]//li
 ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 
@@ -159,17 +155,18 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 Перевірити elastic
 	[Tags]  site  -test
 	Зайти на сторінку пошуку elastic
-	Очистити Фільтр Пошуку Elastic
+	new_search.Очистити фільтр пошуку
 	Виконати пошук в elastic  бумага
 	${status}  Run Keyword And Return Status  Page Should Contain  папір
 	Run Keyword If  not ${status}  Page Should Contain  Папір
-	Очистити фільтр пошуку elastic
+	new_search.Очистити фільтр пошуку
 
 
 Договір
   [Tags]  site  -test
   Відкрити вікно договору
-  Перевірити заголовок договору
+  # todo
+  #Перевірити заголовок договору
   Перевірити перший абзац договору
   Перевірити лінки в тексті договору
 
@@ -330,8 +327,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 Аукціон на продаж. Відкриті торги
 	[Tags]  commercial  -test
-	Натиснути На торговельний майданчик
-	old_search.Активувати вкладку Комерційні торги за типом  Продажі
+	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -423,7 +419,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Договори
 	old_search.Активувати вкладку Державних закупівель за типом  Договори
-	Перевірити наявність договорів
+	Перевірити наявність торгів(new_search)
 	${id}  Отримати uaid договору за номером  1
 	new_search.Перейти по результату пошуку за номером  1
 	Перевірити заголовок договору  ${id}
@@ -432,131 +428,131 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 Перевірити список доступних торгів для Аукціони на продаж активів банків
 	[Tags]  sales
 	[Setup]  Run Keywords
-	...  Test Precondition
-	...  AND  Зайти на сторінку аукціони на продаж активів банків
-	...  AND  Перевірити заголовок аукціони на продаж активів банків
-	...  AND  Перевірити вкладку аукціони на продаж активів банків
-	...  AND  Порахувати кількість аукціонів на продаж
-	...  AND  old_search.Розгорнути Розширений Пошук
-  	...  AND  Click Element  ${dropdown menu for bid forms}
+	...  Test Precondition  								AND
+	...  Натиснути На торговельний майданчик  				AND
+	...  old_search.Активувати вкладку ФГВ  				AND
+	...  Перевірити назву вкладки ФГВ  						AND
+	...  Перевірити заголовок вкладки ФГВ  Аукціони			AND
+	...  Перевірити заголовок вкладки ФГВ  Реєстр активів	AND
+	...  old_search.Розгорнути Розширений Пошук  			AND
+  	...  Click Element  ${dropdown menu for bid forms}
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Продаж права вимоги за кредитними договорами
 	Продаж майна банків, що ліквідуються
 	Голландський аукціон
 
 
-Продаж права вимоги за кредитними договорами
+Перевірити аукціони
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів банків
-	old_search.Розгорнути Розширений Пошук
-	old_search.Вибрати Тип Процедури  ${TESTNAME}
-	old_search.Виконати пошук тендера
-	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${info form for sales}
+	[Setup]  No Operation
+	[Template]  Перевірити аукціони за назвою
+	Продаж права вимоги за кредитними договорами
+	Продаж майна банків, що ліквідуються
+	Голландський аукціон
 
 
-Продаж майна банків, що ліквідуються
+Перевірити реєстр активів Майно
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів банків
-	old_search.Розгорнути Розширений Пошук
-	old_search.Вибрати Тип Процедури  ${TESTNAME}
-	old_search.Виконати пошук тендера
-	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${info form for sales}
+	Натиснути На торговельний майданчик
+	Активувати вкладку ФГВ
+	Активувати вкладку ФГВ за типом  Реєстр активів
+	Перевірити наявність активів
+	dgf-registry.Розгорнути детальний пошук
+	dgf-registry.Вибрати тип активу  Майно
+	dgf-registry.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для активу  Майно
 
 
-Голландський аукціон
+Перевірити реєстр активів Права вимоги
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів банків
-	old_search.Розгорнути Розширений Пошук
-	old_search.Вибрати Тип Процедури  ${TESTNAME}
-	old_search.Виконати пошук тендера
-	old_search.Перейти по результату пошуку за номером  last()
-	Перевірити тип процедури  ${info form for sales}
-
-
-Майно
-	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів банків
-	Перевірити вкладку активи
-	Порахувати кількість прав
-	Вибрати тип активу та виконати пошук  ${TESTNAME}
-	Перейти по результату пошуку  ${auction active item}
-	Перевірити тип процедури  ${info form4}
-
-
-Права вимоги
-	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів банків
-	Перевірити вкладку активи
-	Вибрати тип активу та виконати пошук  ${TESTNAME}
-	Перейти по результату пошуку  ${auction active item}
-	Перевірити тип процедури  ${info form4}
+	[Setup]  Go To  ${start_page}/dgf-registry/
+	dgf-registry.Розгорнути детальний пошук
+	dgf-registry.Вибрати тип активу  Права вимоги
+	dgf-registry.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для активу  Права вимоги
 
 
 Оренда майна
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів держпідприємств
-	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
-	Очистити Фільтр Пошуку Elastic
-	Відфільтрувати по формі торгів_new
-	Виконати пошук_new
-	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}
+	Натиснути На торговельний майданчик
+  	Активувати вкладку ФГИ
+	new_search.Очистити фільтр пошуку
+	new_search.Розгорнути фільтр  Вид торгів
+	new_search.Операція над чекбоксом  Оренда майна  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для аукціонів  Оренда майна
 
 
 Продаж майна
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів держпідприємств
-	Очистити Фільтр Пошуку Elastic
-	Відфільтрувати по формі торгів_new
-	Виконати пошук_new
-	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}
+	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	new_search.Очистити фільтр пошуку
+	new_search.Розгорнути фільтр  Вид торгів
+	new_search.Операція над чекбоксом  Продаж майна  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для аукціонів  Продаж майна
 
 
 Аукціон. Мала приватизація
 	[Tags]  sales
+	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
-	Зайти на сторінку аукціони на продаж активів держпідприємств
-	Очистити Фільтр Пошуку Elastic
-	Відфільтрувати по формі торгів_new  ${TESTNAME}
-	Виконати пошук_new
-	Перейти по результату пошуку_new  (${auction active items})//h4//a
+	new_search.Очистити фільтр пошуку
+	new_search.Розгорнути фільтр  Вид торгів
+	new_search.Операція над чекбоксом  ${TESTNAME}  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
-	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
+	Перевірити тип процедури для аукціонів  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
 	[Tags]  sales  -test
+	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
-	Зайти на сторінку аукціони на продаж активів держпідприємств
-	Очистити Фільтр Пошуку Elastic
-	Відфільтрувати по формі торгів_new  ${TESTNAME}
-	Виконати пошук_new
-	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
+	new_search.Очистити фільтр пошуку
+	new_search.Розгорнути фільтр  Вид торгів
+	new_search.Операція над чекбоксом  ${TESTNAME}  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для аукціонів  ${TESTNAME}
+
+
+Оренда землі
+	[Tags]  sales
+	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	new_search.Очистити фільтр пошуку
+	new_search.Розгорнути фільтр  Вид торгів
+	new_search.Операція над чекбоксом  Оренда землі  select
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для аукціонів  Оренда землі
+
 
 
 Об'єкти приватизації
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Натиснути На торговельний майданчик
+  	Активувати вкладку ФГИ
 	Активувати вкладку  Реєстр об'єктів приватизації
-	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
-	Перейти по результату пошуку_new  ${small privatization item}
-	Перевірити тип процедури  ${breadcrumbs}[last()]  Об'єкт приватизації
+	small_privatization_search.Активувати перемемик процедури на  Об'єкти приватизації
+	small_privatization_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для малої приватизації  Об'єкт приватизації
 
 
 Реєстр інформаційних повідомлень
 	[Tags]  sales
-	Зайти на сторінку аукціони на продаж активів держпідприємств
+	Натиснути На торговельний майданчик
+  	Активувати вкладку ФГИ
 	Активувати вкладку  Реєстр об'єктів приватизації
-	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
-	Перейти по результату пошуку_new  ${small privatization item}
-	Перевірити тип процедури  ${breadcrumbs}[last()]  Інформаційне повідомлення
+	small_privatization_search.Активувати перемемик процедури на  Реєстр інформаційних повідомлень
+	small_privatization_search.Перейти по результату пошуку за номером  1
+	Перевірити тип процедури для малої приватизації  Інформаційне повідомлення
 
 
 Запит цінових пропозицій
@@ -636,9 +632,6 @@ Test Postcondition
 
 Перевірити Конкурентні процедури за назвою
 	[Arguments]  ${name}
-	#Test Precondition
-	#Натиснути На торговельний майданчик
-	#old_search.Активувати вкладку Державних закупівель
 	Go To  ${start_page}/publichni-zakupivli-prozorro/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
@@ -650,10 +643,6 @@ Test Postcondition
 
 Перевірити Неконкурентні процедури за назвою
 	[Arguments]  ${name}
-	#Test Precondition
-	#Натиснути На торговельний майданчик
-	#old_search.Активувати вкладку Державних закупівель
-	#old_search.Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
 	Go To  ${start_page}/publichni-zakupivli-prozorro-nekonkurentni/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
@@ -661,6 +650,16 @@ Test Postcondition
 	old_search.Перейти по результату пошуку за номером  last()
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	Перевірити тип процедури для закупівель  ${name}
+
+
+Перевірити аукціони за назвою
+	[Arguments]  ${name}
+	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${name}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури для аукціонів  ${name}
 
 
 Зайти на сторінку про компанію
@@ -911,14 +910,14 @@ Test Postcondition
 	Run Keyword if  '${n}' == '0'  Fail  Як це нема торгів?!
 
 
-Перевірити наявність договорів
+Перевірити наявність торгів(new_search)
 	${n}  new_search.Порахувати кількість торгів
 	Run Keyword if  '${n}' == '0'  Fail  Як це нема торгів?!
 
 
-Зайти на сторінку аукціони на продаж активів банків
-  Натиснути На торговельний майданчик
-  Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(3)
+Перевірити наявність активів
+	${n}  Порахувати активи
+	Run Keyword if  '${n}' == '0'  Fail  Як це нема активів?!
 
 
 Перевірити заголовок аукціони на продаж активів банків
@@ -933,28 +932,12 @@ Test Postcondition
   Should Be Equal  ${is}  ${should}
 
 
-Порахувати кількість аукціонів на продаж
-  ${count}  Get Element Count  ${auction active items}
-  Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
-
-
 Перевірити вкладку активи
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   Дочекатись закінчення загрузки сторінки
   ${should}  Set variable  Реєстр активів ФГВФО
   ${is}  Get Text  ${auction active header}
   Should Be Equal  ${is}  ${should}
-
-
-Порахувати кількість прав
-  ${count}  Get Element Count  ${auction active item}
-  Run Keyword if  '${count}' == '0'  Fail  Як це без прав?!
-
-
-Зайти на сторінку аукціони на продаж активів держпідприємств
-  Натиснути На торговельний майданчик
-  Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
-  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
@@ -1015,6 +998,13 @@ Test Postcondition
   Click Element  ${dropdown menu for bid statuses}
   Click Element  xpath=//li[text()='${status}']
 
+# todo
+Перевірити тип процедури для малої приватизації
+	[Arguments]  ${type}
+	${breadcrumbs}  Set Variable  //*[contains(@class, "breadcrumbs")]//li
+	${is}  Get Text  ${breadcrumbs}[last()]
+	Should Contain  ${is}  ${type}
+
 
 Перевірити тип процедури для комерційних торгів
 	[Arguments]  ${text}=${TESTNAME}
@@ -1028,19 +1018,22 @@ Test Postcondition
 	Should Contain  ${is}  ${text}
 
 
+Перевірити тип процедури для аукціонів
+	[Arguments]  ${text}=${TESTNAME}
+	${is}  auction_detail_page.Отримати тип процедури
+	Should Contain  ${is}  ${text}
+
+
+Перевірити тип процедури для активу
+	[Arguments]  ${text}=${TESTNAME}
+	${is}  asset_detail_page.Отримати тип активу
+	Should Contain  ${is}  ${text}
+
+
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
   Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
-
-
-Вибрати тип активу та виконати пошук
-  [Arguments]  ${selector}
-  Click Element  ${advanced search2}
-  Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
-  Wait Until Page Contains Element  xpath=//li[contains(text(),'${selector}')]
-  Click Element  xpath=//li[contains(text(),'${selector}')]
-  Дочекатись закінчення загрузки сторінки(sales spin)
 
 
 Зайти на сторінку тарифів
@@ -1200,14 +1193,6 @@ Test Postcondition
   Click Element  ${elastic search button}
   Дочекатись закінчення загрузки сторінки(skeleton)
   Wait Until Page Contains Element  ${elastic search clean filter}
-
-
-Очистити фільтр пошуку elastic
-	${status}  Run Keyword And Return Status  Page Should Contain Element  ${elastic search clean filter}
-	Run Keyword If  ${status} == ${True}  Run Keywords
-	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}
-	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
-	...  AND  Wait Until Element Is Not Visible  ${elastic search clean filter}
 
 
 Зайти на сторінку блогу
@@ -1538,7 +1523,7 @@ create_e-mail
 
 
 Активувати вкладку
-	[Arguments]  ${text}=Реєстр об'єктів приватизації
+	[Arguments]  ${text}
 	${selector}  Set Variable  //*[contains(@class, "tab-pane") and contains(., "${text}")]
 	${class}  Get Element Attribute  ${selector}  class
 	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
@@ -1609,11 +1594,3 @@ create_e-mail
 	${count}  plany.Порахувати кількість плану
 	Run Keyword if  '${count}' == '0'  Fail  Як це ми без плану?!
 
-
-Перевірити тип процедури
-	[Arguments]  ${selector}  ${type}=${TESTNAME}
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
-	Sleep  .5
-	${is}  Get Text  ${selector}
-	Should Contain  ${is}  ${type}

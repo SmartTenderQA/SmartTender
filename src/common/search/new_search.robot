@@ -1,5 +1,5 @@
 *** Variables ***
-${item dogovory}		  	//*[contains(@class, 'container')]//*[contains(@class, 'content-expanded')]/div[2]/*
+${item dogovory}		  	//*[@class="panel panel-default panel-highlight"]
 
 
 *** Keywords ***
@@ -23,3 +23,29 @@ ${item dogovory}		  	//*[contains(@class, 'container')]//*[contains(@class, 'con
 	Wait Until Page Contains Element  ${selector}  10
 	${id}  Get Text  ${selector}
 	[Return]  ${id}
+
+
+Очистити фільтр пошуку
+	${status}  Run Keyword And Return Status  Page Should Contain Element  ${elastic search clean filter}
+	Run Keyword If  ${status} == ${True}  Run Keywords
+	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}
+	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
+	...  AND  Wait Until Element Is Not Visible  ${elastic search clean filter}
+
+
+
+Операція над чекбоксом
+	[Documentation]  ${action} == select|unselect
+	[Arguments]  ${field_text}  ${action}
+	${selector}  Set Variable  //label[contains(., "${field_text}")]//input[@type="checkbox"]
+	Run Keyword  ${action} Checkbox  ${selector}
+
+
+Розгорнути фільтр
+	[Documentation]  example: Вид торгів, Статус, Область....
+	[Arguments]  ${element}
+	${selector}  Set Variable  //p[contains(text(), "${element}")]
+	Wait Until Page Contains Element  ${selector}
+	${class}  Get Element Attribute  ${selector}//i  class
+	${expand_status}  Run Keyword And Return Status  Should Contain  ${class}  down
+	Run Keyword If  ${expand_status} == ${False}  Click Element  ${selector}
