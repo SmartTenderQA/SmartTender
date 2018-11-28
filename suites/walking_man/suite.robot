@@ -7,68 +7,68 @@ Suite Teardown  Close All Browsers
 
 
 *** Variables ***
-${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
-${button taryfy}                     css=#MenuList a[href='/taryfy/']
-${button podii}                      css=#LoginDiv [href='/podii/']
-${button dogovir}                    css=#ContractButton
-${dropdown navigation}               css=#MenuList div.dropdown li>a
-${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
-${header text}                       css=div[itemscope=itemscope] h1
-${novyny text}                       css=[class="row content"] h1
-${news block}                        css=.ivu-row-undefined-space-between
-${news search input}                 css=.ivu-card-body input
-${news search button}                css=.ivu-card-body button
-${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
-${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
-${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
-${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
-${vakansii text}                     css=.container>div.row>div
-${taryfy text}                       //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
-${client banner}                     css=.container .row .ivu-card-body
-${auction active items}              //tbody/tr[@class='head']|//*[@id='hotTrades']/div/div|//*[@class="panel-body"]
-${auction active header}             css=.ivu-card-body h4
-${auction active item}               css=.ivu-row>div>div[class="ivu-card-body"] a
-${RegisterAnchor}                    css=#RegisterAnchor
-${instruktsii link}                  css=#LoginDiv a[href='/instruktсii/']
-${h1 header text}                    css=#main h1
-${feedback link}                     css=.footer-feedback a
-${site map}                          css=a[href='/karta-saytu/']
-${exchange rates header}             css=#content h1
-${exchange link1}                    xpath=//div[@class='bank-view'][1]//a
-${exchange link2}                    xpath=//div[@class='bank-view'][2]//a
-${contract link1}                    css=li:nth-child(1)>a
-${contract link2}                    css=li:nth-child(2)>a
-${advanced search2}                  xpath=//span[contains(text(),'Розгорнути')]
-${dropdown menu for bid statuses}    xpath=//label[contains(text(),'Статуси')]/../../ul
-${info form1}                        xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
-${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
-${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
-${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${num_of_tenders}                    xpath=(//*[@class="num"])[3]
-${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
-${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
-${elastic search input}              css=.ivu-card-bordered input
-${elastic search button}             css=.ivu-card-bordered button
-${elastic search clean filter}       css=.tag-holder button
-${vidhuky}                           css=.ivu-row .ivu-card
-${blog}                              css=.ivu-card-body>.ivu-row
-${blog input}                        css=.ivu-card-body input
-${blog search button}                css=.ivu-card-body button
-${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
-${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
-${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
+${button pro-kompaniyu}             css=.with-drop>a[href='/pro-kompaniyu/']
+${button taryfy}                    css=#MenuList a[href='/taryfy/']
+${button podii}                     css=#LoginDiv [href='/podii/']
+${button dogovir}                   css=#ContractButton
+${dropdown navigation}              css=#MenuList div.dropdown li>a
+${pro-kompaniyu text}               xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
+${header text}                      css=div[itemscope=itemscope] h1
+${novyny text}                      css=[class="row content"] h1
+${news block}                       css=.ivu-row-undefined-space-between
+${news search input}                css=.ivu-card-body input
+${news search button}               css=.ivu-card-body button
+${kontakty text}                    css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
+${kontakty block}                   css=div[itemscope=itemscope]>div.ivu-card
+${nashi-klienty text}               xpath=(//*[@class="row text-center"]//b)[1]
+${nashi-klienty text1}              xpath=(//*[@class="row text-center"]//b)[2]
+${vakansii text}                    css=.container>div.row>div
+${taryfy text}                      //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
+${client banner}                    css=.container .row .ivu-card-body
+${auction active items}             //tbody/tr[@class='head']|//*[@id='hotTrades']/div/div|//*[@class="panel-body"]
+${auction active header}            css=.ivu-card-body h4
+${auction active item}              css=.ivu-row>div>div[class="ivu-card-body"] a
+${RegisterAnchor}                   css=#RegisterAnchor
+${instruktsii link}                 css=#LoginDiv a[href='/instruktсii/']
+${h1 header text}                   css=#main h1
+${feedback link}                    css=.footer-feedback a
+${site map}                         css=a[href='/karta-saytu/']
+${exchange rates header}            css=#content h1
+${exchange link1}                   xpath=//div[@class='bank-view'][1]//a
+${exchange link2}                   xpath=//div[@class='bank-view'][2]//a
+${contract link1}                   css=li:nth-child(1)>a
+${contract link2}                   css=li:nth-child(2)>a
+${advanced search2}                 xpath=//span[contains(text(),'Розгорнути')]
+${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
+${info form1}                       xpath=//*[@data-qa='tender-header-detail-biddingForm']/div[2]|//*[@id='tenderPage']//h1
+${info form for sales}              xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
+${info form4}                       xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
+${first lot}                        //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
+${num_of_tenders}                   xpath=(//*[@class="num"])[3]
+${analytics_page}                   /ParticipationAnalytic/?segment=3&organizationId=226
+${tender_type_procurement}          //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
+${elastic search input}             css=.ivu-card-bordered input
+${elastic search button}            css=.ivu-card-bordered button
+${elastic search clean filter}      css=.tag-holder button
+${vidhuky}                          css=.ivu-row .ivu-card
+${blog}                             css=.ivu-card-body>.ivu-row
+${blog input}                       css=.ivu-card-body input
+${blog search button}               css=.ivu-card-body button
+${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
+${breadcrumbs}					    //*[contains(@class, "breadcrumbs")]//li
+${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 
 *** Test Cases ***
 Особистий кабінет
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
   ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
 
 
 Аналітика участі
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Відкрити сторінку аналітики
   Вибрати інший період аукціону  Минулий місяць
   Перевірити наявність діаграми та таблиці
@@ -91,7 +91,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Заявки на отримання тендерного забезпечення
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку Заявки на отримання тендерного забезпечення
@@ -99,35 +99,35 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Юридична допомога
-  [Tags]  your_account  prod  test  -ip
+  [Tags]  your_account    -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Отримати юридичну допомогу
 
 
 Особисті дані користувача
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Профіль компанії
 
 
 Змінити пароль
-  [Tags]  your_account  -ip  prod  test
+  [Tags]  your_account    -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Змінити пароль
 
 
 Управління користувачами
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Управління користувачами
 
 
 Звіти
-  [Tags]  your_account  prod  test
+  [Tags]  your_account
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку Звіти
@@ -140,7 +140,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відгуки
-  [Tags]  site  prod  -test
+  [Tags]  site  -test
   Зайти на сторінку відгуків
   Перевірити заголовок відгуків
   Перевірити наявність відгуків
@@ -148,7 +148,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Блог
-  [Tags]  site  prod  -test
+  [Tags]  site  -test
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -158,7 +158,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити elastic
-	[Tags]  site  prod  -test
+	[Tags]  site  -test
 	Зайти на сторінку пошуку elastic
 	Очистити Фільтр Пошуку Elastic
 	Виконати пошук в elastic  бумага
@@ -168,7 +168,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Договір
-  [Tags]  site  prod  -test
+  [Tags]  site  -test
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
@@ -176,14 +176,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Про компанію
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку про компанію
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
 
 Новини
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку з новинами
   Перевірити заголовок сторінки з новинами
   Порахувати кількість новин
@@ -194,7 +194,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Контакти
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку contacts
   Перевірити заголовок сторінки контактів
   Порахувати кількість контактів
@@ -202,7 +202,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 З ким ми працюємо
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку клієнтів
   Перевірити заголовок сторінки клієнтів
   Порахувати кількість клієнтів
@@ -215,7 +215,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Тарифи
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку тарифів
   Перевірити кількість закладок
   Закладка Публічні закупівлі
@@ -225,14 +225,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Події
-  [Tags]  site  prod  test
+  [Tags]  site
   Зайти на сторінку с подіями
   Превірити заголовок сторінки подій
   Перевірити наявність календаря
 
 
 Реєстрація
-  [Tags]  site  prod  test
+  [Tags]  site
   Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
   Зайти на сторінку реєстрації
   Перевірити заголовок сторінки реєстрації
@@ -240,28 +240,28 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Інструкції
-  [Tags]  site  prod  test
+  [Tags]  site
   Відкрити сторінку інструкцій
   Перевірити заголовок сторінки інструкцій
   Перевірити випаючий список інструкцій
 
 
 Карта сайту
-  [Tags]  site  prod  test
+  [Tags]  site
   Перейти на сторінку карти сайту
   Перевірити заголовок сторінки карта сайта
   Порахувати кількість єлементів сторінки карта сайту
 
 
 Питання та відповіді
-  [Tags]  site  prod  -test
+  [Tags]  site  -test
   Перейти на сторінку запитань
   Перевірити заголовок сторінки запитань
   Порахувати кількість запитань
 
 
 Курси валют
-  [Tags]  site  prod  -test
+  [Tags]  site  -test
   Відкрити вікно курсів валют
   Перевірити шлях курсів валют
   Перевірити заголовок курсів валют
@@ -269,7 +269,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити наявність всіх видів торгів в випадаючому списку
-  [Tags]  commercial  prod  test
+  [Tags]  commercial
   [Setup]  Run Keywords
   ...  Test Precondition
   ...  AND  Натиснути На торговельний майданчик
@@ -296,7 +296,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аукціон
-  [Tags]  commercial  prod  test
+  [Tags]  commercial
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -306,7 +306,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аналіз пропозицій
-  [Tags]  commercial  prod  -test
+  [Tags]  commercial  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -316,7 +316,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Запит пропозицій
-  [Tags]  commercial  prod  -test
+  [Tags]  commercial  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -326,7 +326,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аналіз ринку
-  [Tags]  commercial  prod  -test
+  [Tags]  commercial  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -336,7 +336,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Комерційні торги Продажі
-  [Tags]  commercial  prod  -test
+  [Tags]  commercial  -test
   [Setup]  Run Keywords
   ...  Test Precondition
   ...  AND  Натиснути На торговельний майданчик
@@ -353,7 +353,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон на продаж. Відкриті торги
-  [Tags]  commercial  prod  -test
+  [Tags]  commercial  -test
   Натиснути На торговельний майданчик
   Перевірити вкладку комерційних продаж
   Перевірити наявність торгів
@@ -365,7 +365,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Конкурентні процедури
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Натиснути На торговельний майданчик
@@ -390,7 +390,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити процедури закупівель
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	[Setup]  No Operation
 	[Template]  Перевірити Конкурентні процедури за назвою
 	Допорогові закупівлі
@@ -405,7 +405,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Натиснути На торговельний майданчик
@@ -421,7 +421,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити Державні закупівлі прозорро Неконкурентні процедури
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	[Setup]  No Operation
 	[Template]  Перевірити Неконкурентні процедури за назвою
 	Звіт про укладений договір
@@ -430,7 +430,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Державні закупівлі прозорро Плани
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Плани
@@ -442,7 +442,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Державні закупівлі прозорро Договори
-	[Tags]  procurement  prod  test
+	[Tags]  procurement
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Договори
@@ -454,7 +454,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Зайти на сторінку аукціони на продаж активів банків
@@ -470,7 +470,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж права вимоги за кредитними договорами
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -480,7 +480,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж майна банків, що ліквідуються
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -490,7 +490,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Голландський аукціон
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -500,7 +500,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Майно
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
 	Перевірити вкладку активи
 	Порахувати кількість прав
@@ -510,7 +510,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Права вимоги
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
 	Перевірити вкладку активи
 	Вибрати тип активу та виконати пошук  ${TESTNAME}
@@ -519,7 +519,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Оренда майна
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
@@ -530,7 +530,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж майна
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
 	Відфільтрувати по формі торгів_new
@@ -540,7 +540,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон. Мала приватизація
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -554,7 +554,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
-	[Tags]  sales  prod  -test
+	[Tags]  sales  -test
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -566,7 +566,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Об'єкти приватизації
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -575,7 +575,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Реєстр інформаційних повідомлень
-	[Tags]  sales  prod  test
+	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -584,7 +584,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Запит цінових пропозицій
-	[Tags]  rialto  prod  test
+	[Tags]  rialto
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	Перевірити заголовок RIALTO
@@ -597,7 +597,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Простий тендер
-	[Tags]  rialto  prod  test
+	[Tags]  rialto
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук
@@ -608,7 +608,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Двохетапний тендер
-	[Tags]  rialto  prod  test
+	[Tags]  rialto
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук

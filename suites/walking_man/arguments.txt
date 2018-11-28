@@ -1,7 +1,4 @@
 -d test_output
 
--i prod
--i test
-
 -n non-critical-test
 -n non-critical-prod
