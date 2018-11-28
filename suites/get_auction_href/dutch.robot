@@ -46,6 +46,7 @@ If skipped create tender
 
 
 Знайти тендер учасником
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Run Keyword If  "${site}" == "prod"  Start  prod_provider1  provider1
 	...  ELSE  Start  user1  provider1
 	Знайти тендер користувачем	provider1
