@@ -46,8 +46,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${num_of_tenders}                    xpath=(//*[@class="num"])[3]
-${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
 ${elastic search input}              css=.ivu-card-bordered input
 ${elastic search button}             css=.ivu-card-bordered button
@@ -60,18 +58,17 @@ ${report}                            //*[@class="ivu-card-body"]//*[@class="favo
 ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
-
+#robot --consolecolors on -L TRACE:INFO -A suites/walking_man/prod.txt -v hub:None -v user:prod_provider1 -i your_account -i invoice1 suites/walking_man/suite.robot
 *** Test Cases ***
 Особистий кабінет
   [Tags]  your_account
-  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
-  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
-  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
+  Відкрити особистий кабінет
 
 
 Аналітика участі
   [Tags]  your_account
-  Відкрити сторінку аналітики
+  Відкрити сторінку "Аналітика"
+  Відкрити аналітику по конкурентах за назвою  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
   Вибрати інший період аукціону  Минулий місяць
   Перевірити наявність діаграми та таблиці
   Перевірити роботу кругової діаграми
@@ -94,45 +91,32 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 Заявки на отримання тендерного забезпечення
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку Заявки на отримання тендерного забезпечення
-  Перевірити сторінку Заявки на отримання тендерного забезпечення
+  Відкрити сторінку "Тендерне забезпечення"
 
 
 Юридична допомога
   [Tags]  your_account  -ip
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Отримати юридичну допомогу
+  Відкрити сторінку "Юридична допомога"
 
 
 Особисті дані користувача
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Профіль компанії
+  Відкрити сторінку "Профіль компанії"
 
 
 Змінити пароль
   [Tags]  your_account  -ip
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Змінити пароль
+  Відкрити сторінку "Змінити пароль" (особистий кабінет)
 
 
 Управління користувачами
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Управління користувачами
+  Відкрити сторінку "Управління користувачами"
 
 
 Звіти
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку Звіти
+  Відкрити сторінку "Звіти"
   Натиснути на фільтр Тільки обрані звіти  вимкнути
   Перевірити наявність звітів
   Прибрати з обраних усі звіти
@@ -1179,49 +1163,6 @@ Test Postcondition
   ...  AND  Page Should Contain Element  //*[@data-qa="jurist-help-dropdown"]
 
 
-Відкрити сторінку аналітики
-  Go to  ${start_page}${analytics_page}
-  Дочекатись закінчення загрузки сторінки
-  ${value}=  Get text  xpath=//*[@class="text-center"]/h3
-  Should Contain  'Публічні закупівлі'  ${value}
-
-
-Вибрати інший період аукціону
-  [Arguments]  ${period}
-  Click Element  xpath=//*[contains(@class, 'calendar')]
-  Click Element  xpath=//div[contains(text(), '${period}')]
-  Дочекатись закінчення загрузки сторінки
-
-
-Перевірити наявність діаграми та таблиці
-  ${diag}  Set Variable  xpath=(//*[@class="echarts"]//canvas)[1]
-  ${table}  Set Variable  xpath=//*[@class="ivu-table-header"]//tr
-  Element Should Be Visible  ${diag}
-  Element Should Be Visible  ${table}
-
-
-Перевірити роботу кругової діаграми
-  ${tenders_before}  Get Text  ${num_of_tenders}
-  ${tenders_before}  Evaluate  int(${tenders_before})
-  Element Should Be Visible  xpath=(//*[@class="echarts"]//canvas)[2]
-  Click Element At Coordinates  xpath=(//*[@class="echarts"]//canvas)[2]  80  0
-  Дочекатись закінчення загрузки сторінки
-  Wait Until Keyword Succeeds  1m  5s  Element Should Be Visible  xpath=//*[contains(@class, 'tag-checked')]
-  ${tenders_after}  Get Text  ${num_of_tenders}
-  ${tenders_after}  Evaluate  int(${tenders_after})
-  Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
-
-
-Перевірити зміну періоду
-  ${tenders_before}  Get Text  ${num_of_tenders}
-  ${tenders_before}  Evaluate  int(${tenders_before})
-  Вибрати інший період аукціону  Поточний рік
-  ${tenders_after}  Get Text  ${num_of_tenders}
-  ${tenders_after}  get_number  ${tenders_after}
-  ${tenders_after}  Evaluate  int(${tenders_after})
-  Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
-
-
 Вибрати тип процедури для малої приватизації
   Click Element  //*[contains(text(), "${TESTNAME}")]
   Дочекатись закінчення загрузки сторінки(skeleton)
@@ -1492,121 +1433,6 @@ create_e-mail
 Додати файл до openeu
   Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
   ...  ELSE  Створити та додати PDF файл  1
-
-
-Відкрити сторінку Заявки на отримання тендерного забезпечення
-  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Тендерне забезпечення")]/ancestor::a
-  Sleep  1
-
-
-Перевірити сторінку Заявки на отримання тендерного забезпечення
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Заявки на отримання тендерного забезпечення
-  Page Should Contain Element  //img[@src="/Images/Guarantee/guarantee-button.png"]
-
-
-Перевірити вкладку Отримати юридичну допомогу
-  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Юридична допомога")]/ancestor::a
-  Sleep  1
-  Select frame  css=div.main-content iFrame
-  Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
-  Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
-  Page Should Contain Element  css=.ivu-card-body>button[type="button"]
-  Unselect Frame
-
-
-Перевірити вкладку Профіль компанії
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Профіль компанії")]/ancestor::a
-  Sleep  1
-  Select frame  css=div.main-content iFrame
-  Wait Until Page Contains Element  css=#FormLayout_1_0  30
-  Element Should Contain  css=#FormLayout_1_0  Основна інформація
-  Element Should Contain  css=#FormLayout_1_1  Додаткова інформація
-  Page Should Contain Element  css=#BTSUBMIT_CD
-  Unselect Frame
-
-
-Перевірити вкладку Змінити пароль
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /ChangePassword/
-  Wait Until Page Contains Element  //h2  30
-  Element Should Contain  //h2  Зміна пароля
-  Element Should Contain  (//*[@class="ivu-form-item-label"])[1]  Поточний пароль
-  Element Should Contain  (//*[@class="ivu-form-item-label"])[2]  Новий пароль
-  Page Should Contain Element  //button[@type="button" and contains(., "Змінити пароль")]
-
-
-Перевірити вкладку Управління користувачами
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Управління користувачами")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /UserManagement/
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Структура підприємства
-  Element Should Contain  //h5  Управління користувачами
-  ${tr for user}  Set Variable  css=.ivu-table-body .ivu-table-row
-  Page Should Contain Element  ${tr for user}
-
-
-Відкрити сторінку Звіти
-  Click Element  //*[contains(text(), "Звіти")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /Reports
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Звіти
-
-
-Перевірити наявність звітів
-  Page Should Contain Element  css=.ivu-card-body .favoriteStar
-
-
-Додати в обрані випадковій звіт та вернути назву
-  ${count}  Get Element Count  ${report}
-  ${n}  random_number  1  ${count}
-  Click Element  (${report})[${n}]
-  ${name}  Get Text  (${report})[${n}]/following-sibling::*//*[@title]
-  Sleep  3
-  [Return]  ${name}
-
-
-Перевірити фильтр Тільки обрані звіти
-  [Arguments]  ${name}
-  Натиснути на фільтр Тільки обрані звіти  увімкнути
-  ${count}  Get Element Count  ${report}
-  Should Be Equal  "${count}"  "1"
-  ${report name}  Get Text  ${report}/following-sibling::*//*[@title]
-  Should Be Equal  ${report name}  ${name}
-  Натиснути на фільтр Тільки обрані звіти  вимкнути
-  ${count}  Get Element Count  ${report}
-  Run Keyword if  ${count} < 2  Fail  Маловато будет(Отчетов)
-
-
-Натиснути на фільтр Тільки обрані звіти
-  [Arguments]  ${action}
-  ${switcher}  Set Variable  css=.ivu-switch
-  ${status}  Get Element Attribute  ${switcher} [value]  value
-  Run Keyword If  "${status}" == "false" and "${action}" == "увімкнути"
-  ...  Click Element  ${switcher}
-  Run Keyword If  "${status}" == "true" and "${action}" == "вимкнути"
-  ...  Click Element  ${switcher}
-  Sleep  3
-
-
-Прибрати з обраних усі звіти
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
-  Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
-  Sleep  5
-  Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
 
 
 Активувати вкладку

@@ -19,7 +19,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 *** Test Cases ***
 Перевірити можливість змінити пароль (особистий кабінет)
     [Tags]  change_password
-    Run Keyword  Перейти до зміни пароля (особистий кабінет) ${role}
+    Відкрити сторінку "Змінити пароль" (особистий кабінет)
 
 
 Змінити пароль користувача
@@ -62,23 +62,6 @@ Postcondition
     Click Element  xpath=//*[contains(@class,'fa-user')]
     Click Element  xpath=//*[contains(@class,'fa-key')]
     Page Should Contain  Зміна пароля
-
-
-Перейти до зміни пароля (особистий кабінет) provider
-    Click Element  id=LoginAnchor
-    Wait Until Page Contains Element  id=main-menu
-    Click Element  xpath=//*[@id="personalsettings"]/../..
-    Click Element  xpath=//*[contains(@class,'fa-key')]
-    Page Should Contain  Зміна пароля
-
-
-Перейти до зміни пароля (особистий кабінет) tender_owner
-    Run Keyword If  '${site}' == 'test'
-    ...  Click Element  xpath=//*[@title='${login}']
-    Sleep  0.5
-    Click Element  xpath=//*[.='Змінити свій пароль']
-    Дочекатись Закінчення Загрузки Сторінки
-    Page Should Contain Element  xpath=//*[.='Зміна пароля']
 
 
 Перейти на сторінку зміни пароля
