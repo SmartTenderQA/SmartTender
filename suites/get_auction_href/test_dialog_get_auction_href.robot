@@ -12,12 +12,16 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	[Tags]  create_tender
 	Авторизуватися організатором
 	test_dialog.Створити тендер
-	Пошук тендеру по title (webclient)  ${data['title']}
+
+
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-    Set To Dictionary  ${data}  tender_href  ${href}
-    Log  ${href}  WARN
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
     Звебегти дані в файл
     Close All Browsers
 
@@ -34,17 +38,17 @@ If skipped create tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Start  user1  provider1
     Перевірка відображення даних тендера на сторінці  provider1
-    Close All Browsers
 
 
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
+	Close All Browsers
 	:FOR  ${i}  IN  1  2  3
 	\  Start  user${i}  provider${i}
 	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
+	\  Close Browser
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
-    Close All Browsers
     Start  user1  provider1
     Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
@@ -53,8 +57,8 @@ If skipped create tender
 Відкрити браузер під роллю організатора та знайти тендер
     Close All Browsers
     Start  Bened  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 
 Підтвердити прекваліфікацію всіх учасників

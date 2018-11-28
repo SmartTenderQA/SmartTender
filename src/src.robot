@@ -18,6 +18,7 @@ Resource    common/loading/loading.robot
 Resource    common/search/old_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+Resource    common(webclient)/validation/validation.robot
 
 
 Resource  	elements/webclient/webclient_elements.robot
@@ -49,6 +50,10 @@ Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
 Resource	pages/search_small_privatization/search_small_privatization.robot
 Resource	pages/start_page/start_page.robot
+Resource    pages(webclient)/desktop/desktop.robot
+Resource    pages(webclient)/main_page/main_page.robot
+Resource    pages(webclient)/main_page/header.robot
+Resource    pages(webclient)/create_tender/create_tender.robot
 
 
 Resource    get_auction_href.robot

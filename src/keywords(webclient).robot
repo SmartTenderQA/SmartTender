@@ -4,33 +4,10 @@
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Wait Until Element Is Not Visible  ${button}
+	#Wait Until Element Is Not Visible  ${button}
 
 
-Закрити вікно
-	[Arguments]  ${title}
-	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/../../div[contains(@class, 'close')]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Wait Until Page Does Not Contain Element  ${button}
 
-
-Закрити валідаційне вікно
-	[Arguments]  ${title}  ${action}
-	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${action}')]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Wait Until Element Is Not Visible  ${button}
-	Sleep  3
-
-
-Закрити валідаційне вікно (Так/Ні)
-	[Arguments]  ${title}  ${action}
-	${button}  Set Variable
-	...  //*[@id="MessageBoxContent"]//p[contains(text(),"${title}")]/ancestor::*[@id="MessageBoxContent"]//*[@class="messagebox-button-cell"]//span[text()="${action}"]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Sleep  3
 
 
 Перевірити стадію тендера
@@ -76,13 +53,6 @@
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
-Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  перевірте публікацію Вашого документу
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@title="OK"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
     Run Keyword If  '${status}' == 'True'  Run Keywords
@@ -106,7 +76,7 @@
     Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -163,11 +133,6 @@
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
 
 
-Натиснути кнопку "Надіслати вперед"
-    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Оновити дані першого в списку тендера (webclient)
     ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
     Click Element  ${first tender}
@@ -194,15 +159,4 @@
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Отримати tender_uaid вибраного тендера
-    ${uaid}   Get Text  ${first tender}/a
-    [Return]  ${uaid}
-
-
-Отримати tender_href вибраного тендера
-    ${href}  Get Element Attribute
-    ...  ${first tender}/following-sibling::td/a|${first tender}/preceding-sibling::td/a  href
-    [Return]  ${href}
 

@@ -3,7 +3,7 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Відкриті торги
+  	create_tender.Вибрати тип процедури  Відкриті торги
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
@@ -13,7 +13,7 @@
     Додати документ до тендара власником (webclient)
     Зберегти чернетку
     Оголосити закупівлю
-    Пошук тендеру по title (webclient)  ${data['title']}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
     Отримати tender_uaid та tender_href щойно стореного тендера
     Звебегти дані в файл
 
