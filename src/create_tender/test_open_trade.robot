@@ -3,7 +3,7 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Відкриті торги
+  	create_tender_keywords.Вибрати тип процедури  Відкриті торги
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
@@ -22,7 +22,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  22  minutes
+    ${date}  get_time_now_with_deviation  120  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}

@@ -3,7 +3,7 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	Відкрити вікно створення тендеру
-  	Вибрати тип процедури  Конкурентний діалог 1-ий етап
+  	create_tender_keywords.Вибрати тип процедури  Конкурентний діалог 1-ий етап
   	test_dialog.Заповнити endDate періоду пропозицій
   	test_dialog.Заповнити amount для tender
   	test_dialog.Заповнити minimalStep для tender

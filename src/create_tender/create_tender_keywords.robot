@@ -112,10 +112,11 @@ Resource  test_open_trade.robot
 Вибрати тип процедури
 	[Arguments]  ${type}
 	Click Element  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
+    Sleep  .5
 	Click Element  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '${type}')]
 	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table//td[2]//input  value
 	${status}  Run Keyword And Return Status  Should Be Equal  ${taken}  ${type}
-	Run Keyword If  '${status}' == 'False'  Вибрати тип процедури  ${type}
+	Run Keyword If  '${status}' == 'False'  create_tender_keywords.Вибрати тип процедури  ${type}
 
 
 Змінити мінімальну кількусть учасників
@@ -196,11 +197,21 @@ Resource  test_open_trade.robot
 	[Arguments]  ${selector}  ${text}
 	Click Element  ${selector}
 	Sleep  .5
-	Clear Element Text  ${selector}
+	Очистити поле  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13
 	Should Be Equal  ${got}  ${text}
+
+
+Очистити поле
+    [Arguments]    ${selector}
+    :FOR    ${i}    IN RANGE    999999
+    \  ${text}  Get Element Attribute  ${selector}  value
+    \  ${length}  Get Length  ${text}
+    \  Exit For Loop If    ${length} == 0
+    \  Double Click Element  ${selector}
+    \  Press Key  ${selector}  \\8
 
 
 Вибрати та повернути елемент у випадаючому списку
