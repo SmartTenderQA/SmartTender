@@ -1,110 +1,118 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Start in grid  ${user}
+Suite Setup     Run Keywords
+                ...  Start in grid  ${user}  AND
+                ...  Натиснути На торговельний майданчик  AND
+                ...  Перейти на сторінку публічні закупівлі
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
 # robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
+
+
 *** Variables ***
 ${checked_single}              ${false}
 ${checked_multiple}            ${false}
-${page_number}                 2
+${multilot}                    //span[@class='Multilots']/ancestor::tr
 
 
 *** Test Cases ***
-Відкрити сторінку з пошуком
-  Зайти на сторінку державних закупівель
-
-
 Перевірка мультилотів на сторінці пошука
-  :FOR  ${i}  IN RANGE  1  5
-  \  Видалити кнопку "Замовити звонок"
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку  ${page}
   \  ${mulilots_on_page}  Підрахувати кількість мультилотів на сторінці
-  \  Перевірити мультилоти  ${mulilots_on_page}
-  \  Вийти з цикола при необхідності
-  \  Перейти на наступну сторінку
+  \  Розгорнути мультилотові тендери та перевірити їхні лоти  ${mulilots_on_page}
 
 
 *** Keywords ***
-Зайти на сторінку державних закупівель
-  Click Element  xpath=(${komertsiyni-torgy icon})
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[2]/a
-
-
-Підрахувати кількість мультилотів на сторінці
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  //span[@class='Multilots']  15
-  Wait Until Page Contains   Конкурентні процедури
-  Run Keyword If  ${status} == ${false}  Перейти на наступну сторінку
-  Continue For Loop If  ${status} == ${false}
-  ${mulilots_on_page}  Get Element Count  //span[@class='Multilots']
-  [Return]  ${mulilots_on_page}
-
-
-
-Перевірити мультилоти
+Розгорнути мультилотові тендери та перевірити їхні лоти
   [Arguments]  ${mulilots_on_page}
-  :FOR  ${items}  IN RANGE  ${mulilots_on_page}
-  \  Розкрити мультилот  ${items} + 1
-  \  Перевірити лоти
-  \  Вийти з цикола при необхідності
+  :FOR  ${item}  IN RANGE  1  ${mulilots_on_page} + 1
+  \  Розгорнути мультилотовий тендер  ${item}
+  \  Перевірити лоти в мультилотовому тендері  ${item}
 
 
-Вийти з цикола при необхідності
-  Exit For Loop If  ${checked_single} == ${true} and ${checked_multiple} == ${true}
+Завершити виконання тесту якщо умови виконані
+  Pass Execution If  ${checked_single} == ${true} and ${checked_multiple} == ${true}  Всі типи тендерів перевірено
 
 
-Розкрити мультилот
+Отримати локатор потрібного тендера
+  [Arguments]  ${item}
+  ${multi_lot_selector}  Set Variable  (${multilot})[${number}]
+  [Return]  ${multi_lot_selector}
+
+
+Розгорнути мультилотовий тендер
   [Arguments]  ${number}
-  Set Global Variable  ${multi_lot_selector}  (//span[@class='Multilots']/ancestor::tr)[${number}]
+  ${multi_lot_selector}  Set Variable  (${multilot})[${number}]
   ${tender_info}  Get Text  xpath=${multi_lot_selector}/td[@class="col1"]/span
   Scroll Page To Element XPATH   xpath=${multi_lot_selector}
   Click Element  xpath=${multi_lot_selector}/td/span
   ${detailed_tender_info}  Get Text  xpath=${multi_lot_selector}/following-sibling::tr[@class="content"]//td[@colspan="2"]
   ${status}  Run Keyword And Return Status  Should Be Equal  ${tender_info}  ${detailed_tender_info}
-  Run Keyword If  ${status} == ${false}  Розкрити мультилот  ${number}
+  Run Keyword If  ${status} == ${false}  Розгорнути мультилотовий тендер  ${number}
 
 
-Перевірити лоти
+Перевірити лоти в мультилотовому тендері
+  [Arguments]  ${multiple tender number}
+  ${lots_quantity}  Порахувати кількість лотів в тендері  ${multiple tender number}
+  Перевірити кожний лот окремо  ${lots_quantity}  ${multiple tender number}
+
+
+Перевірити кожний лот окремо
+  [Arguments]  ${lots_quantity}  ${number of multiple tender}
+  :FOR  ${lot number}  IN RANGE  1  ${lots_quantity} + 1
+  \  Перейти на сторінку лота та перевірити назву  ${lot number}  ${number of multiple tender}
+  Run Keyword If  ${lots_quantity} == ${1}
+  ...  Set Global Variable  ${checked_single}  ${true}  ELSE
+  ...  Set Global Variable  ${checked_multiple}  ${true}
+  Завершити виконання тесту якщо умови виконані
+
+
+Порахувати кількість лотів в тендері
+  [Arguments]  ${multiple tender number}
+  ${multi_lot_selector}  Set Variable  (${multilot})[${multiple tender number}]
   ${selector}  Set Variable  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr
-  Wait until Element Is Visible  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr
+  Wait until Element Is Visible  ${selector}
   ${elements_quantity}  Get Element Count  ${selector}
   ${lots_quantity}  Evaluate  ${elements_quantity} - 1
-  Run Keyword If  ${lots_quantity} > ${1} and ${checked_multiple} == ${false}  Відкрити кожний лот  ${lots_quantity}
-  ...  ELSE IF  ${lots_quantity} == ${1} and ${checked_single} == ${false}  Run Keywords  Перейти на сторінку лота  1
-  ...  AND  Set Global Variable  ${checked_single}  ${true}
+  [Return]  ${lots_quantity}
 
 
-Відкрити кожний лот
-  [Arguments]  ${lots_quantity}
-  :FOR  ${items}  IN RANGE  ${lots_quantity}
-  \  Перейти на сторінку лота  ${items} + 1
-  Set Global Variable  ${checked_multiple}  ${true}
-
-
-Перейти на сторінку лота
-  [Arguments]  ${number}
-  ${number}  Evaluate  ${number}
-  ${lot_title}  Get Text  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${number}+1]/td[1]
-  ${selector}  Set Variable  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${number} + 1]/td[last()]/a[1]
+Перейти на сторінку лота та перевірити назву
+  [Arguments]  ${lot number}  ${number of multiple tender}
+  ${multi_lot_selector}  Set Variable  (${multilot})[${number of multiple tender}]
+  ${lot_title}  Get Text  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${lot number}+1]/td[1]
+  ${selector}  Set Variable  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${lot number} + 1]/td[last()]/a[1]
   Scroll Page To Element XPATH   ${selector}
   Click Element  ${selector}
   Select Window  NEW
   Дочекатись закінчення загрузки сторінки(skeleton)
-  ${title_selector}  Set Variable  (//div[@data-qa="title"])[1]
-  Wait Until Page Contains Element  ${title_selector}
-  ${text}  Get Text  ${title_selector}
-  Should Be Equal  ${text}  ${lot_title}
+  Перевірити назву на сторінці лота  ${lot_title}
   Close Window
   Select Window  MAIN
 
 
-Дочекатись закінчення загрузки сторінки(skeleton)
-  Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
+Перевірити назву на сторінці лота
+  [Arguments]  ${lot_title}
+  ${text}  Отритами дані зі сторінки  ['title']
+  Should Be Equal  ${text}  ${lot_title}
 
 
-Перейти на наступну сторінку
-    Click Element  //a[@class="pager-button" and text()=${page_number}]
-    ${page_number}  Evaluate  ${page_number} + 1
-    Set Global Variable  ${page_number}
+
+################################
+#         Keywords             #
+################################
+Перейти на сторінку
+  [Arguments]  ${page}
+  Set Test Variable  ${page}
+  Should Be True  ${page} != 6
+  Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"
+  Run Keyword If  '${page}' != '1'  Click Element  //a[@class="pager-button" and text()=${page}]
+
+
+Підрахувати кількість мультилотів на сторінці
+  #Дочекатись появи появи мультилоту або перейти до наступної сторінки
+  ${mulilots_on_page}  Get Element Count  ${multilot}
+  [Return]  ${mulilots_on_page}

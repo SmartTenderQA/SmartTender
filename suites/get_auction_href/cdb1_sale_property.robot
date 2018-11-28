@@ -37,11 +37,11 @@ If skipped create tender
 Подати заявки на участь в тендері
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
-	\  Пройти кваліфікацію для подачі пропозиції
+	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
-	Підтвердити заявку  ${data['tender_id']}
+	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
@@ -59,7 +59,7 @@ If skipped create tender
 	Close Browser
 	Switch Browser  provider1
 	Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	Wait Until Keyword Succeeds  10m  3s  Перевірити статус тендера  Аукціон
+	Дочекатися статусу тендера  Аукціон  10m
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
@@ -88,18 +88,18 @@ If skipped create tender
 
 
 Підготувати організатора
-	Start in grid  Bened  tender_owner
+	Start  Bened  tender_owner
 	Go Back
 
 
 Підготувати учасників
-	Start in grid  user1  provider1
-	Start in grid  user2  provider2
+	Start  user1  provider1
+	Start  user2  provider2
 
 
 Підготувати глядачів
-	Start in grid  user3  provider3
-	Start in grid  test_viewer  viewer
+	Start  user3  provider3
+	Start  test_viewer  viewer
 
 
 Знайти тендер користувачем

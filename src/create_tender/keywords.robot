@@ -1,6 +1,5 @@
 *** Settings ***
-Library     Collections
-Resource  ../loading.robot
+Resource  ../common/loading/loading.robot
 Resource  cdb1_sale_property.robot
 Resource  prod_below.robot
 Resource  test_below.robot
@@ -46,14 +45,6 @@ Resource  test_open_trade.robot
     Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
     Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
     Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
-
-
-Відкрити сторінку заявок на участь в аукціоні
-    Wait Until Page Contains Element  //div[contains(@title, 'Заявки на участие в Аукционах')]  120
-    Wait Until Keyword Succeeds  120  3  Click Element  //div[contains(@title, 'Заявки на участие в Аукционах')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Element Should Not Be Visible  //div[contains(@title, 'Заявки на участие в Аукционах')]
-    Element Should Be Visible  //td[contains(text(), "Заявки на участие в торгах ФГВ")]
 
 
 Натиснути кнопку публічних закупівель

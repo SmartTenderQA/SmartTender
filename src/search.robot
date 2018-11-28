@@ -6,11 +6,9 @@ ${first tender}                     (//tr[@class='evenRow rowselected'])[1]/td[c
 
 ${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
+
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
-
-${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
-${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
@@ -31,17 +29,12 @@ ${torgy count tab}                   li:nth-child
   Location Should Contain  /test-tenders/
 
 
-Зайти на сторінку комерційніх торгів
-  ${komertsiyni-torgy icon}  Set Variable  xpath=//*[@id="main"]//a[2]/img
-  Click Element  ${komertsiyni-torgy icon}
-  Location Should Contain  /komertsiyni-torgy/
-
-
-Відфільтрувати по формі торгів
-  [Arguments]  ${type}=${TESTNAME}
-  Розгорнути розширений пошук та випадаючий список видів торгів  ${type}
-  Sleep  1
-  Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
+Перейти по результату пошуку
+  [Arguments]  ${selector}
+  ${href}  Get Element Attribute  ${selector}  href
+  ${href}  Поправити лінку для IP  ${href}
+  Go To  ${href}
+  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Відфільтрувати по формі торгів_new
@@ -75,47 +68,11 @@ ${torgy count tab}                   li:nth-child
 	Press Key  ${input}  \\13
 
 
-Розгорнути розширений пошук та випадаючий список видів торгів
-  [Arguments]  ${check from list}=${TESTNAME}
-  ${dropdown menu for bid forms}  Set Variable  xpath=//label[contains(text(),'Форми ')]/../../ul
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${advanced search}
-  ...  AND  Run Keyword And Expect Error  *  Click Element  ${advanced search}
-  Sleep  2
-  Wait Until Keyword Succeeds  30s  5  Run Keywords
-  ...       Click Element  ${dropdown menu for bid forms}
-  ...  AND  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li
-  ...  AND  Wait Until Page Contains Element  xpath=//li[contains(@class,'dropdown-item') and text()='${check from list}']
-
-
-Виконати пошук тендера
-  [Arguments]  ${id}=None
-  Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
-  Press Key  ${find tender field}  \\13
-  Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
-  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
-  Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
-  Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
-
-
 Виконати пошук_new
 	${search_button}  Set Variable  css=.search-field button
 	Wait Until Page Contains Element  ${search_button}
 	Click Element  ${search_button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Перевірити унікальність результату пошуку
-  ${count}  Get Element Count  ${tender found}
-  Should Be Equal  '${count}'  '1'
-
-
-Перейти по результату пошуку
-  [Arguments]  ${selector}
-  ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Поправити лінку для IP  ${href}
-  Go To  ${href}
-  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перейти по результату пошуку_new
@@ -172,3 +129,4 @@ ${torgy count tab}                   li:nth-child
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_uaid']}
+

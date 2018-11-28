@@ -7,12 +7,10 @@ Library     DebugLibrary
 Library     OperatingSystem
 Library     String
 Library     DateTime
-Library     service.py
-Library     seo.py
-
 
 
 Resource  	keywords.robot
+
 
 Resource    common/cdb_api_data/get_api_data.robot
 Resource    common/email/email.robot
@@ -45,8 +43,19 @@ Resource    pages/login/login.robot
 Resource    make_proposal.robot
 Resource    participation_request.robot
 Resource    search.robot
+
+Resource    common/search/old_search.robot
+Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+
+
+Resource  	elements/webclient/webclient_elements.robot
+Resource  	elements/actions.robot
+Resource  	elements/other.robot
+
+
 Resource    create_tender/keywords.robot
+
 
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
@@ -63,14 +72,42 @@ Resource    pages(webclient)/main_page/main_page.robot
 
 Resource    get_auction_href.robot
 Resource    tenders_view.robot
+
+
 Resource    elements/actions.robot
-Resource  	pages/search_small_privatization/search_small_privatization.robot
+Resource    elements/webclient/webclient_elements.robot
+
+
+Resource    Faker/faker.robot
+
+
+Resource    pages/auction/auction.robot
+Resource    pages/EDS/EDS.robot
+Resource    pages/guarantee_amount/guarantee_amount.robot
+Resource    pages/invoice/invoice.robot
+Resource    pages/komertsiyni_torgy/komertsiyni_torgy.robot
+Resource    pages/login/login.robot
+Resource    pages/make_proposal/make_proposal.robot
+Resource    pages/participation_request/participation_request.robot
+Resource    pages/personal_account/personal_account.robot
+Resource    pages/povidomlenya/povidomlenya.robot
+Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
+Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
+Resource	pages/search_small_privatization/search_small_privatization.robot
+Resource	pages/start_page/start_page.robot
+
+
+Resource    get_auction_href.robot
+Resource    keywords(webclient).robot
+Resource	keywords.robot
+Resource	search.robot
+Library		service.py
 
 
 *** Variables ***
 ${tab_keybutton}					\\13
-${browser}                          chrome
-${file path}                        src/
+${browser}							chrome
+${file path}						src/
 ${role}                             None
 ${IP}
 ${test}                             https://test.smarttender.biz
@@ -83,15 +120,16 @@ ${capability}                         chrome
 
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
 ${error}                            id=loginErrorMsg
-${komertsiyni-torgy icon}           //*[@id="main"]//a[2]/img
 ${link to make proposal button}     css=[class='show-control button-lot']
 ${iframe open tender}               //div[@class="container"]/iframe
 ${make proposal button}             //*[@id="tenderPage"]//a[@class='btn button-lot cursor-pointer']
 ${make proposal button new}         //*[@id="tenderDetail"]//a[@class="show-control button-lot"]
 ${derzavni zakupku}                 //*[@id="MainMenuTenders"]//ul[1]/li[2]/a
-${first element find tender}        //*[@id="tenders"]//tr[1]/td[2]/a
 ${bread crumbs}                     (//*[@class='ivu-breadcrumb-item-link'])
 ${bids search}                      //div[contains(text(), 'Пошук')]/..
+
+${torgy top/bottom tab}              css=#MainMenuTenders ul:nth-child   #up-1 bottom-2
+${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
@@ -111,7 +149,7 @@ Start in grid
 	${login}  ${password}  Отримати дані користувача  ${user}
 	${start_page}  Отримати стартову сторінку  ${site}
 	Змінити стартову сторінку для IP
-	Run Keyword If  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  #platformName:WIN10
+	Run Keyword If  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:WIN10
 	...  ELSE IF    '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP
 	...  ELSE IF    '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}
 	...  ELSE IF    '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
@@ -158,30 +196,4 @@ Stop The Whole Test Execution If Previous Test Failed
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
     Sleep  ${sleep}
-
-
-##############################################################################
-# This shouldn't be here
-##############################################################################
-Видалити кнопку "Поставити запитання"
-	Wait Until Element Is Visible  //div[contains(@class, "widget-button-i24523139185")]
-	Execute JavaScript  document.querySelector("div[class*=widget-button-i24523139185]").remove()
-
-
-Видалити кнопку "Замовити звонок"
-	Execute JavaScript  document.getElementById("callback-btn").outerHTML = ""
-
-
-Дочекатися статусу тендера
-	[Arguments]  ${tender status}
-	Wait Until Keyword Succeeds  20m  30s  Перевірити статус тендера  ${tender status}
-
-
-Перевірити статус тендера
-    [Arguments]  ${tender_status}
-    ${selector}  Set Variable  //*[@data-qa="status"]|//*[@data-qa="auctionStatus"]
-    Reload Page
-    Wait Until Element Is Visible  ${selector}  20
-    ${status}  Get Text  ${selector}
-    Should Be Equal  '${status}'  '${tender_status}'
 

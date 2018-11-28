@@ -10,8 +10,8 @@ Test Teardown  Run Keywords
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
-	Run Keyword If  "${site}" == "prod"  Start in grid  fgv_prod_owner  tender_owner
-	...  ELSE  Start in grid  Bened  tender_owner
+	Run Keyword If  "${site}" == "prod"  Start  fgv_prod_owner  tender_owner
+	...  ELSE  Start  Bened  tender_owner
 	Go Back
 	Switch Browser  tender_owner
 	Sleep  2
@@ -46,19 +46,19 @@ If skipped create tender
 
 
 Знайти тендер учасником
-	Run Keyword If  "${site}" == "prod"  Start in grid  prod_provider1  provider1
-	...  ELSE  Start in grid  user1  provider1
+	Run Keyword If  "${site}" == "prod"  Start  prod_provider1  provider1
+	...  ELSE  Start  user1  provider1
 	Знайти тендер користувачем	provider1
 
 
 Подати заявку на участь в тендері першим учасником
 	Switch Browser  provider1
-	Пройти кваліфікацію для подачі пропозиції
+	Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
 	Switch Browser  tender_owner
-	Підтвердити заявку  ${data['tender_id']}
+	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Отримати поcилання на участь в аукціоні першим учасником
@@ -73,11 +73,11 @@ If skipped create tender
 
 Неможливість отримати поcилання на участь в аукціоні
 	[Setup]  Run Keyword If  "${site}" == "test"  Run Keywords  Close Browser
-	...  AND  Start in grid  test_viewer  viewer
-	...  AND  Start in grid  user2  provider2
+	...  AND  Start  test_viewer  viewer
+	...  AND  Start  user2  provider2
 	...  ELSE  Run Keywords  Close Browser
-	...  AND  Start in grid  prod_viewer  viewer
-	...  AND  Start in grid  prod_provider2  provider2
+	...  AND  Start  prod_viewer  viewer
+	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
 	tender_owner

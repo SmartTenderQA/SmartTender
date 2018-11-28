@@ -525,7 +525,7 @@ Postcondition
   Виконати пошук тендера
   Відфільтрувати по спаданню дати
   Перевірити чи тендер мультилот
-  Перейти по результату пошуку  ${first found element}
+  old_search.Перейти по результату пошуку за номером  1
   ${location}  Get Location
   Log  ${location}  WARN
   Set To Dictionary  ${data}  tender_url=${location}
@@ -538,7 +538,7 @@ Postcondition
   Виконати пошук тендера
   Відфільтрувати по спаданню дати
   Перевірити чи тендер мультилот
-  Перейти по результату пошуку  ${first found element}
+  old_search.Перейти по результату пошуку за номером  1
   ${location}  Get Location
   Log  ${location}  WARN
   Set To Dictionary  ${data}  tender_url=${location}

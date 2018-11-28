@@ -1,61 +1,11 @@
 *** Keywords ***
-#################################################################
-#							Web									#
-#################################################################
-Відкрити бланк подачі заявки
-  Reload Page
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  Click Element  xpath=//button[@type='button']//*[contains(text(), 'Взяти участь')]
-  Дочекатись закінчення загрузки сторінки
-
-
-Додати файл для подачі заявки
-	${selector}  Set Variable  //input[@type='file' and @accept]
-	Wait Until Page Contains Element  ${selector}
-	${n}  Get Element Count  ${selector}/..
-	:FOR  ${i}  IN RANGE  ${n}
-    \  ${file_path}  ${file_name}  ${file_content}=  create_fake_doc
-	\  Choose File  ${selector}  ${file_path}
-
-
-Ввести ім'я для подачі заявки
-  Input Text  xpath=//*[contains(text(), "Ім'я")]/following-sibling::*//input  Тостер
-
-
-Підтвердити відповідність для подачі заявки
-  Select Checkbox  xpath=//*[@class="group-line"]//input
-
-
-Відправити заявку для подачі пропозиції та закрити валідаційне вікно
-  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//button[@class="ivu-btn ivu-btn-primary pull-right ivu-btn-large"]
-  Wait Until Page Contains  Ваша заявка відправлена!  120
-  Sleep  3
-  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'Ваша заявка відправлена!') or contains(text(), 'Ваша заявка розглядається!')]/ancestor::*[@class='ivu-modal-content']//a
-  Wait Until Element Is Not Visible  xpath=//*[contains(text(), 'Ваша заявка відправлена!')]/ancestor::*[@class='ivu-modal-content']//a  20
-
-
-#################################################################
-#						Web Client								#
-#################################################################
-Пройти кваліфікацію для подачі пропозиції
-	Відкрити бланк подачі заявки
-	Додати файл для подачі заявки
-	Ввести ім'я для подачі заявки
-	Підтвердити відповідність для подачі заявки
-	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
-
-
-Підтвердити заявку
-	[Arguments]  ${tender_uaid/tender_type}  ${type}=для ФГВ
-	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...  Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=');
-	...  AND  Select Window  New
-	...  AND  Wait Until Page Contains Element  css=.text
-	...  AND  Element Should Contain  css=.text  True
-	...  AND  Close Window
-	...  AND  Select Window  undefined
-	...  ELSE
-	...  Підтвердити заявки на продуктиві організатором ${type}
+Підтвердити заявки на тесті
+	Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=');
+	Select Window  New
+	Wait Until Page Contains Element  css=.text
+	Element Should Contain  css=.text  True
+	Close Window
+	Select Window  undefined
 
 
 Підтвердити заявки на продуктиві організатором для ФГВ

@@ -8,11 +8,9 @@ Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${button pro-kompaniyu}              css=.with-drop>a[href='/pro-kompaniyu/']
-${button kontakty}                   css=.menu a[href='/pro-kompaniyu/kontakty/']
 ${button taryfy}                     css=#MenuList a[href='/taryfy/']
 ${button podii}                      css=#LoginDiv [href='/podii/']
 ${button dogovir}                    css=#ContractButton
-${button messages}                   xpath=//*[contains(@class,'fa-bell')]
 ${dropdown navigation}               css=#MenuList div.dropdown li>a
 ${pro-kompaniyu text}                xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
 ${header text}                       css=div[itemscope=itemscope] h1
@@ -22,7 +20,6 @@ ${news search input}                 css=.ivu-card-body input
 ${news search button}                css=.ivu-card-body button
 ${kontakty text}                     css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
 ${kontakty block}                    css=div[itemscope=itemscope]>div.ivu-card
-${messages block}                    //*[contains(@class,'long-text')]/span
 ${nashi-klienty text}                xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}               xpath=(//*[@class="row text-center"]//b)[2]
 ${vakansii text}                     css=.container>div.row>div
@@ -49,7 +46,6 @@ ${info form1}                        xpath=//*[@data-qa='tender-header-detail-bi
 ${info form for sales}               xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${info form4}                        xpath=//*[contains(text(), 'Тип активу')]/../following-sibling::div
 ${first lot}                         //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
-${personal account}                  xpath=//*[@id='MenuList']//*[contains(@class, 'loginButton')]//a[@id='LoginAnchor' and not(@class)]
 ${num_of_tenders}                    xpath=(//*[@class="num"])[3]
 ${analytics_page}                    /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}           //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
@@ -60,52 +56,12 @@ ${vidhuky}                           css=.ivu-row .ivu-card
 ${blog}                              css=.ivu-card-body>.ivu-row
 ${blog input}                        css=.ivu-card-body input
 ${blog search button}                css=.ivu-card-body button
-${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
-${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
 ${report}                            //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
-${prozorro-number}                   //*[@data-qa='prozorro-number']//a/span
 ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
+${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 
 *** Test Cases ***
-Повідомлення
-  [Tags]  notification
-  Зайти на сторінку з контактами
-  Зайти на сторінку повідомлень
-  Перевірити заголовок сторінки повідомлень
-  Порахувати кількість повідомлень
-  Переглянути повідемлення
-  Закрити вікно з повідомленням
-  Завершити сеанс користувача
-  Зайти на сторінку з контактами
-  Перевірити відсутність дзвіночка(повідомлення)
-  [Teardown]  Run Keywords
-  ...  Log Location
-  ...  AND   Run Keyword If Test Failed  Capture Page Screenshot
-
-
-Перевірка гарантійного внеску для open_eu
-  [Tags]  guarantee_amount  broken
-  Зайти на сторінку державних закупівель
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  Відкриті торги з публікацією англійською мовою
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}  Відкриті торги з публікацією англійською мовою
-  Перевірка гарантійного внеску
-
-
-Сформувати рахунок-фактуру
-  [Tags]  invoice  -test
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку рахунка фактури
-  ${amount}  Сгенерувати та ввести суму до оплати
-  #Натиснути сформувати рахунок
-  #Перевірити валідаційне повідомлення для сформованого рахунку
-  #{error_status}  Run Keyword And Return Status  Перевірити email рахунок-фактуру  ${amount}
-
-
 Особистий кабінет
   [Tags]  your_account
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
@@ -241,7 +197,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 Контакти
   [Tags]  site
-  Зайти на сторінку з контактами
+  Зайти на сторінку contacts
   Перевірити заголовок сторінки контактів
   Порахувати кількість контактів
   Перевірити заголовок контакту
@@ -318,11 +274,12 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   [Tags]  commercial
   [Setup]  Run Keywords
   ...  Test Precondition
-  ...  AND  Зайти на сторінку комерційніх торгів
+  ...  AND  Натиснути На торговельний майданчик
   ...  AND  Перевірити заголовок, комерційніх торгів
   ...  AND  Перевірити вкладку комерційніх закупівель
   ...  AND  Порахувати кількість торгів
-  ...  AND  Розгорнути розширений пошук та випадаючий список видів торгів  Відкриті торги. Аукціон
+  ...  AND  old_search.Розгорнути Розширений Пошук
+  ...  AND  Click Element  ${dropdown menu for bid forms}
   [Template]  Перевірити наявність тексту в випадаючому списку
   Відкриті торги. Аукціон
   Тендер на закупівлю. Аукціон
@@ -341,37 +298,41 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 Відкриті торги. Аукціон
   [Tags]  commercial
-  Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
+  Натиснути На торговельний майданчик
+  old_search.Розгорнути Розширений Пошук
+  old_search.Вибрати Тип Процедури  ${TESTNAME}
+  old_search.Виконати пошук тендера
+  old_search.Перейти по результату пошуку за номером  last()
   Перевірити тип процедури  ${info form1}
 
 
 Відкриті торги. Аналіз пропозицій
   [Tags]  commercial  -test
-  Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
+  Натиснути На торговельний майданчик
+  old_search.Розгорнути Розширений Пошук
+  old_search.Вибрати Тип Процедури  ${TESTNAME}
+  old_search.Виконати пошук тендера
+  old_search.Перейти по результату пошуку за номером  last()
   Перевірити тип процедури  ${info form1}
 
 
 Запит пропозицій
   [Tags]  commercial  -test
-  Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
+  Натиснути На торговельний майданчик
+  old_search.Розгорнути Розширений Пошук
+  old_search.Вибрати Тип Процедури  ${TESTNAME}
+  old_search.Виконати пошук тендера
+  old_search.Перейти по результату пошуку за номером  last()
   Перевірити тип процедури  ${info form1}
 
 
 Відкриті торги. Аналіз ринку
   [Tags]  commercial  -test
-  Зайти на сторінку комерційніх торгів
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
+  Натиснути На торговельний майданчик
+  old_search.Розгорнути Розширений Пошук
+  old_search.Вибрати Тип Процедури  ${TESTNAME}
+  old_search.Виконати пошук тендера
+  old_search.Перейти по результату пошуку за номером  last()
   Перевірити тип процедури  ${info form1}
 
 
@@ -379,10 +340,11 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
   [Tags]  commercial  -test
   [Setup]  Run Keywords
   ...  Test Precondition
-  ...  AND  Зайти на сторінку комерційніх торгів
+  ...  AND  Натиснути На торговельний майданчик
   ...  AND  Перевірити вкладку комерційних продаж
   ...  AND  Порахувати кількість торгів
-  ...  AND  Розгорнути розширений пошук та випадаючий список видів торгів  Аукціон на продаж. Відкриті торги
+  ...  AND  old_search.Розгорнути Розширений Пошук
+  ...  AND  Click Element  ${dropdown menu for bid forms}
   [Template]  Перевірити наявність тексту в випадаючому списку
   Тендер на продаж. Відкриті торги
   Аукціон на продаж. Відкриті торги
@@ -393,188 +355,125 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 
 Аукціон на продаж. Відкриті торги
   [Tags]  commercial  -test
-  Зайти на сторінку комерційніх торгів
+  Натиснути На торговельний майданчик
   Перевірити вкладку комерційних продаж
   Порахувати кількість торгів
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
+  old_search.Розгорнути Розширений Пошук
+  old_search.Вибрати Тип Процедури  ${TESTNAME}
+  old_search.Виконати пошук тендера
+  old_search.Перейти по результату пошуку за номером  last()
   Перевірити тип процедури  ${info form1}
 
 
-Перевірка посилання на тендер (з порталу)
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Перевірити заголовок державних закупівель
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  ${id}  Отримати UAID на сторінці з тендером
-  ${link}  Сформувати пряме посилання на тендер  ${id}
-  Перевірити відкриття тендера за посиланням  ${link}
-
-
 Перевірити список доступних торгів для Державні закупівлі прозорро Конкурентні процедури
-  [Tags]  procurement
-  [Setup]  Run Keywords
-  ...  Test Precondition
-  ...  AND  Зайти на сторінку державних закупівель
-  ...  AND  Перевірити заголовок державних закупівель
-  ...  AND  Перевірити закладку конкурентні процедури
-  ...  AND  Порахувати кількість торгів
-  ...  AND  Розгорнути розширений пошук та випадаючий список видів торгів  Допорогові закупівлі
-  [Template]  Перевірити наявність тексту в випадаючому списку
-  Допорогові закупівлі
-  Відкриті торги
-  Відкриті торги з публікацією англійською мовою
-  Переговорна процедура для потреб оборони
-  Відкриті торги для закупівлі енергосервісу
-  Конкурентний діалог 2-ий етап
-  Конкурентний діалог з публікацією англійською мовою 2-ий етап
-  Звіт про укладений договір
-  Переговорна процедура
-  Переговорна процедура (скорочена)
-  Конкурентний діалог 1-ий етап
-  Конкурентний діалог з публікацією англійською мовою 1-ий етап
+	[Tags]  procurement
+	[Setup]  Run Keywords
+	...  Test Precondition
+	...  AND  Натиснути На торговельний майданчик
+	...  AND  Перейти на сторінку публічні закупівлі
+	...  AND  Перевірити заголовок вкладки Конкурентні процедури
+	...  AND  Порахувати кількість торгів
+	...  AND  old_search.Розгорнути Розширений Пошук
+  	...  AND  Click Element  ${dropdown menu for bid forms}
+	[Template]  Перевірити наявність тексту в випадаючому списку
+	Допорогові закупівлі
+	Відкриті торги
+	Відкриті торги з публікацією англійською мовою
+	Переговорна процедура для потреб оборони
+	Відкриті торги для закупівлі енергосервісу
+	Конкурентний діалог 2-ий етап
+	Конкурентний діалог з публікацією англійською мовою 2-ий етап
+	Звіт про укладений договір
+	Переговорна процедура
+	Переговорна процедура (скорочена)
+	Конкурентний діалог 1-ий етап
+	Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
 
-Допорогові закупівлі
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Відкриті торги
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Відкриті торги з публікацією англійською мовою
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Переговорна процедура для потреб оборони
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Відкриті торги для закупівлі енергосервісу
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Конкурентний діалог 2-ий етап
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Конкурентний діалог з публікацією англійською мовою 2-ий етап
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Конкурентний діалог 1-ий етап
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
-
-
-Конкурентний діалог з публікацією англійською мовою 1-ий етап
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+Перевірити процедури закупівель
+	[Tags]  procurement
+	[Template]  Перевірити процедуру для закупівель за назвою
+	Допорогові закупівлі
+	Відкриті торги
+	Відкриті торги з публікацією англійською мовою
+	Переговорна процедура для потреб оборони
+	Відкриті торги для закупівлі енергосервісу
+	Конкурентний діалог 2-ий етап
+	Конкурентний діалог з публікацією англійською мовою 2-ий етап
+	Конкурентний діалог 1-ий етап
+	Конкурентний діалог з публікацією англійською мовою 1-ий етап
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
-  [Tags]  procurement
-  [Setup]  Run Keywords
-  ...  Test Precondition
-  ...  AND  Зайти на сторінку державних закупівель
-  ...  AND  Перевірити заголовок державних закупівель
-  ...  AND  Перевірити закладку неконкурентні процедури
-  ...  AND  Порахувати кількість торгів
-  ...  AND  Розгорнути розширений пошук та випадаючий список видів торгів  Звіт про укладений договір
-  [Template]  Перевірити наявність тексту в випадаючому списку
-  Звіт про укладений договір
-  Переговорна процедура
-  Переговорна процедура (скорочена)
+	[Tags]  procurement
+	[Setup]  Run Keywords
+	...  Test Precondition
+	...  AND  Натиснути На торговельний майданчик
+	...  AND  Перейти на сторінку публічні закупівлі
+	...  AND  Перевірити назву вкладки Державних закупівель
+	...  AND  Перевірити закладку неконкурентні процедури
+	...  AND  Порахувати кількість торгів
+	...  AND  old_search.Розгорнути Розширений Пошук
+  	...  AND  Click Element  ${dropdown menu for bid forms}
+	[Template]  Перевірити наявність тексту в випадаючому списку
+	Звіт про укладений договір
+	Переговорна процедура
+	Переговорна процедура (скорочена)
 
 
 Звіт про укладений договір
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  procurement
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
+	Перевірити закладку неконкурентні процедури
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Перевірити тип процедури для закупівель
 
 
 Переговорна процедура
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  procurement
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
+	Перевірити закладку неконкурентні процедури
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Перевірити тип процедури для закупівель
 
 
 Переговорна процедура (скорочена)
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Перевірити закладку неконкурентні процедури
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  procurement
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
+	Перевірити закладку неконкурентні процедури
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Перевірити тип процедури для закупівель
 
 
 Державні закупівлі прозорро Плани
-  [Tags]  procurement
-  Зайти на сторінку державних закупівель
-  Перевірити закладку закупівлі плани
-  Порахувати кількість плану
-  Перейти по результату пошуку  ${item plan}
-  Перевірити сторінку прозорро Плани
+	[Tags]  procurement
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
+	Перевірити закладку закупівлі плани
+	Порахувати кількість плану
+	Перейти по результату пошуку  ${item plan}
+	Перевірити сторінку прозорро Плани
 
 
 Державні закупівлі прозорро Договори
 	[Tags]  procurement
-	Зайти на сторінку державних закупівель
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
 	Перевірити закладку закупівлі договори
 	Порахувати кількість договорів
 	${id}  Отримати id першого договору
@@ -592,7 +491,8 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	...  AND  Перевірити заголовок аукціони на продаж активів банків
 	...  AND  Перевірити вкладку аукціони на продаж активів банків
 	...  AND  Порахувати кількість аукціонів на продаж
-	...  AND  Розгорнути розширений пошук та випадаючий список видів торгів  Продаж права вимоги за кредитними договорами
+	...  AND  old_search.Розгорнути Розширений Пошук
+  	...  AND  Click Element  ${dropdown menu for bid forms}
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Продаж права вимоги за кредитними договорами
 	Продаж майна банків, що ліквідуються
@@ -602,28 +502,31 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 Продаж права вимоги за кредитними договорами
 	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
-	Відфільтрувати по формі торгів  ${TESTNAME}
-	Виконати пошук тендера
-	Перейти по результату пошуку  (${first found element})[last()]
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${info form for sales}
 
 
 Продаж майна банків, що ліквідуються
 	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
-	Відфільтрувати по формі торгів  ${TESTNAME}
-	Виконати пошук тендера
-	Перейти по результату пошуку  (${first found element})[last()]
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${info form for sales}
 
 
 Голландський аукціон
 	[Tags]  sales
 	Зайти на сторінку аукціони на продаж активів банків
-	Відфільтрувати по формі торгів  ${TESTNAME}
-	Виконати пошук тендера
-	Перейти по результату пошуку  (${first found element})[last()]
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${info form for sales}
 
 
 Майно
@@ -653,7 +556,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів_new
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	Перевірити тип процедури  ${info form for sales}
 
 
 Продаж майна
@@ -663,7 +566,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів_new
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	Перевірити тип процедури  ${info form for sales}
 
 
 Аукціон. Мала приватизація
@@ -677,7 +580,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
@@ -689,7 +592,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Відфільтрувати по формі торгів_new  ${TESTNAME}
 	Виконати пошук_new
 	Перейти по результату пошуку_new  (${auction active items})//h4//a
-	Перевірити тип процедури за зразком  ${info form for sales}  ${TESTNAME}
+	Перевірити тип процедури  ${info form for sales}  ${TESTNAME}
 
 
 Об'єкти приватизації
@@ -698,7 +601,7 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
 	Перейти по результату пошуку_new  ${small privatization item}
-	Перевірити тип процедури за зразком  ${breadcrumbs}[last()]  Об'єкт приватизації
+	Перевірити тип процедури  ${breadcrumbs}[last()]  Об'єкт приватизації
 
 
 Реєстр інформаційних повідомлень
@@ -707,36 +610,39 @@ ${breadcrumbs}					     //*[contains(@class, "breadcrumbs")]//li
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
 	Перейти по результату пошуку_new  ${small privatization item}
-	Перевірити тип процедури за зразком  ${breadcrumbs}[last()]  Інформаційне повідомлення
+	Перевірити тип процедури  ${breadcrumbs}[last()]  Інформаційне повідомлення
 
 
 Запит цінових пропозицій
-  [Tags]  rialto
-  Зайти на сторінку RIALTO
-  Перевірити заголовок RIALTO
-  Порахувати кількість торгів RIALTO
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  rialto
+	Зайти на сторінку RIALTO
+	Перевірити заголовок RIALTO
+	Порахувати кількість торгів RIALTO
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${tender_type_procurement}
 
 
 Простий тендер
-  [Tags]  rialto
-  Зайти на сторінку RIALTO
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  rialto
+	Зайти на сторінку RIALTO
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${tender_type_procurement}
 
 
 Двохетапний тендер
-  [Tags]  rialto
-  Зайти на сторінку RIALTO
-  Відфільтрувати по формі торгів  ${TESTNAME}
-  Виконати пошук тендера
-  Перейти по результату пошуку  (${first found element})[last()]
-  Перевірити тип процедури  ${tender_type_procurement}
+	[Tags]  rialto
+	Зайти на сторінку RIALTO
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури  ${tender_type_procurement}
 
 
 
@@ -766,6 +672,18 @@ Test Postcondition
 Перевірити користувача
   ${status}  Run Keyword And Return Status  Wait Until Page Contains  ${name}  10
   Run Keyword If  "${status}" == "False"  Fatal Error  We have lost user
+
+
+Перевірити процедуру для закупівель за назвою
+	[Arguments]  ${name}
+	Натиснути На торговельний майданчик
+	Перейти на сторінку публічні закупівлі
+	old_search.Розгорнути Розширений Пошук
+	old_search.Вибрати Тип Процедури  ${name}
+	old_search.Виконати пошук тендера
+	old_search.Перейти по результату пошуку за номером  last()
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Перевірити тип процедури для закупівель
 
 
 Зайти на сторінку про компанію
@@ -835,49 +753,6 @@ Test Postcondition
   ${newlocation}  Get Location
   Should Not Be Equal  ${location}  ${newlocation}
   Run Keyword And Expect Error  *  Get Text  css=#News
-
-
-Зайти на сторінку з контактами
-  Click Element  ${button kontakty}
-  Location Should Contain  /pro-kompaniyu/kontakty/
-
-
-Перевірити відсутність кнопки повідомлень
-  Зайти на сторінку з контактами
-  Element Should Not Be Visible  ${button messages}
-
-
-Зайти на сторінку повідомлень
-  Click Element  ${button messages}
-  Location Should Contain  /povidomlenya/
-
-
-Перевірити заголовок сторінки повідомлень
-  ${should header}  Set Variable  Повідомлення
-  ${is header}  Get Text  xpath=//*[@type='flex']//h1
-  Should Be Equal  ${is header}  ${should header}
-
-Порахувати кількість повідомлень
-  ${count}  Get Element Count  ${messages block}
-  Run Keyword if  '${count}' == '0'  Fail  Де повідомлення?
-
-Переглянути повідемлення
-  ${title}  Get Text  (${messages block})[1]
-  Click Element  (${messages block})[1]
-  Sleep  5
-  ${message title}  Get Text  //table//div[contains(text(),'ТЕСТУВАННЯ')]
-  Should Be Equal  ${title}  ${message title}
-
-
-Закрити вікно з повідомленням
-	${selector}  Set Variable  //*[@class="ivu-modal-close"]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-	Wait Until Element Is Not Visible  ${selector}
-
-
-Перевірити відсутність дзвіночка(повідомлення)
-	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку повідомлень
 
 
 Перевірити заголовок сторінки контактів
@@ -1044,32 +919,10 @@ Test Postcondition
   Should Be Equal  ${is}  ${should}
 
 
-Порахувати кількість торгів
-  ${count}  Get Element Count  ${first element find tender}
-  Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
-
-
 Перевірити вкладку комерційних продаж
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   ${should}  Set variable  Продажі
   ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
-  Should Be Equal  ${is}  ${should}
-
-
-Зайти на сторінку державних закупівель
-  Click Element  ${komertsiyni-torgy icon}
-  Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(2)
-
-
-Перевірити заголовок державних закупівель
-  ${should}  Set variable  Публічні (державні) закупівлі PROZORRO
-  ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(2)
-  Should Be Equal  ${is}  ${should}
-
-
-Перевірити закладку конкурентні процедури
-  ${should}  Set variable  Конкурентні процедури
-  ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(1)
   Should Be Equal  ${is}  ${should}
 
 
@@ -1127,7 +980,7 @@ Test Postcondition
 
 
 Зайти на сторінку аукціони на продаж активів банків
-  Click Element  ${komertsiyni-torgy icon}
+  Натиснути На торговельний майданчик
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(3)
 
 
@@ -1162,7 +1015,7 @@ Test Postcondition
 
 
 Зайти на сторінку аукціони на продаж активів держпідприємств
-  Click Element  ${komertsiyni-torgy icon}
+  Натиснути На торговельний майданчик
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
   Дочекатись закінчення загрузки сторінки(skeleton)
 
@@ -1173,7 +1026,7 @@ Test Postcondition
 
 
 Зайти на сторінку RIALTO
-  Click Element  ${komertsiyni-torgy icon}
+  Натиснути На торговельний майданчик
   Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(5)
 
 
@@ -1249,20 +1102,17 @@ Test Postcondition
 
 
 Перевірити тип процедури
-  [Arguments]  ${selector}  ${type}=${TESTNAME}
-  Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
-  Sleep  .5
-  ${is}  Get Text  ${selector}
-  Should Contain  ${is}  ${type}
+	[Arguments]  ${selector}  ${type}=${TESTNAME}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Wait Until Keyword Succeeds  20  1  Wait Until Page Contains Element  ${selector}
+	Sleep  .5
+	${is}  Get Text  ${selector}
+	Should Contain  ${is}  ${type}
 
 
-Перевірити тип процедури за зразком
-  [Arguments]  ${selector}  ${should}
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  Wait Until Page Contains Element  ${selector}
-  Sleep  .5
-  ${is}  Get Text  ${selector}
-  Should Contain  ${is}  ${should}
+Перевірити тип процедури для закупівель
+	${is}  procurement_tender_detail.Отритами дані зі сторінки  ['procedure-type']
+	Should Contain  ${is}  ${TESTNAME}
 
 
 Перевірити наявність тексту в випадаючому списку
@@ -1322,28 +1172,6 @@ Test Postcondition
   ${is}  Get Text  ${taryfy text}[4]
   Should Be Equal  ${is}  ${should}
   Unselect Frame
-
-
-Відкрити особистий кабінет
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /webparts/
-  Page Should Contain Element  css=.sidebar-menu
-  Page Should Contain Element  css=.main-content
-
-
-Відкрити особистий кабінет webcliend
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /webclient/
-
-
-Відкрити особистий кабінет для ssp_tender_owner
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /cabinet/registry/privatization-objects
-  Page Should Contain Element  css=.action-block [type="button"]
-  Page Should Contain Element  css=.content-block .asset-card
 
 
 Перевірити сторінку окремого лота в мультилоті
@@ -1448,67 +1276,6 @@ Test Postcondition
   Should Be Equal  '${n}'  '1'
 
 
-Перевірка гарантійного внеску
-  ${data}  Отримати дані тендеру з cdb по id
-  Set Global Variable  ${data}
-  ${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  title
-  ${multiple_status_guarantee}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
-  Run Keyword If  "${multiple_status_guarantee}" == "True"  Перевірка гарантійного внеску для мультилоту
-  ...  ELSE IF  "${multiple_status}" == "False"  Перевірка гарантійного внеску для не мультилоту
-
-
-Перевірка гарантійного внеску для мультилоту
-  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
-  ${location}  Get Location
-  Run Keyword If  "${status}" == "True"  Run Keywords
-  ...  Open Button  ${first lot}
-  ...  AND  Select Frame  css=iframe
-  ...  AND  Відкрити сторінку гарантійного внеску
-  ...  AND  Go To  ${location}
-
-
-Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту
-  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][0]}  guarantee
-  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['lots'][0]['guarantee']}  amount
-  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
-  [Return]  ${ret}
-
-
-Перевірка гарантійного внеску для не мультилоту
-  ${status}  Перевірити необхідність наявності кнопки гарантійного внеску
-  Run Keyword If  "${status}" == "True"  Run Keywords
-  ...  Відкрити сторінку гарантійного внеску
-  ...  AND  Go Back
-
-
-Перевірити необхідність наявності кнопки гарантійного внеску
-  ${status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']}  guarantee
-  ${value}  Run Keyword If  "${status}" == "True"  Get From Dictionary  ${data['data']['guarantee']}  amount
-  ${ret}  Run Keyword If  "${status}" == "True" and "${value}" != "0.0"  Set Variable  True  ELSE  Set Variable  False
-  [Return]  ${ret}
-
-
-Отримати дані тендеру з cdb по id
-  ${id}  Get Text  //*[@data-qa="prozorro-id"]//div[2]//span|//*[@class="info_idcbd"]
-  Run Keyword If  "${site}" == "test"
-  ...  Create Session  api  https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/${id}
-  Run Keyword If  "${site}" == "prod"
-  ...  Create Session  api  https://public-api-sandbox.prozorro.gov.ua/api/0/tenders/${id}
-  ${data}  Get Request  api  \
-  ${data}  Set Variable  ${data.json()}
-  [Return]  ${data}
-
-
-Відкрити сторінку гарантійного внеску
-  Open Button  //*[@id="guarantee"]//a
-  Run Keyword If  "${role}" != "viewer"  Run Keywords
-  ...       Element Should Be Visible  //h4[contains(text(), "Оформлення заявки на тендерне забезпечення")]
-  ...  AND  Location Should Contain  /GuaranteePage/
-  ...  ELSE  Run Keywords
-  ...       Location Should Contain  .biz/Errors/
-  ...  AND  Element Should Contain  //h1/following-sibling::h2  Для просмотра страницы необходимо войти на сайт!
-
-
 Перевірити сторінку прозорро Плани
   Location Should Contain  /publichni-zakupivli-prozorro-plany/
   Select Frame  css=iFrame
@@ -1590,60 +1357,6 @@ Test Postcondition
 Відкрити та перевірити відгук
   Click Element  ${vidhuky}
   Wait Until Page Contains Element  //div[@id="pdf-main-container"]//*[@id="div-pdf-canvas"]|//*[@class="ivu-modal-content"]//img  10
-
-
-Розкрити меню в особистому кабінеті
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${not collapsed menu button your account}
-  Run Keyword If  "${status}" != "True"  Click Element  ${collapsed menu button your account}
-
-
-Відкрити сторінку рахунка фактури
-  Click Element  //*[contains(text(), "Сформувати рахунок-фактуру")]/ancestor::a
-  Location Should Contain  /invoicepage/
-
-
-Сгенерувати та ввести суму до оплати
-  Wait Until Page Contains Element  //*[@class="ivu-card-body"]//input  60
-  ${n}  random_number  1  1000
-  ${amount}  Evaluate  ${n}*17
-  Input Text  //*[@class="ivu-card-body"]//input  ${amount}
-  ${get}  Get Element Attribute  //*[@class="ivu-card-body"]//input  value
-  Run Keyword If  "${get}" == ""  Сгенерувати та ввести суму до оплати
-  Click Element  (//*[@class="ivu-card-body"]//button)[1]
-  [Return]  ${amount}
-
-
-Натиснути сформувати рахунок
-  ${selector}  Set Variable  //*[@class="ivu-card-body"]//button
-  Click Element  (${selector})[3]
-  Дочекатись закінчення загрузки сторінки
-  Wait Until Page Does Not Contain  ${selector}
-
-
-Перевірити валідаційне повідомлення для сформованого рахунку
-  Element Should Contain  css=.ivu-alert-desc  Рахунок сформований і найближчим часом буде відправлений на електронну адресу Вашої компанії
-
-
-Перевірити email рахунок-фактуру
-  [Arguments]  ${amount}
-  email precondition  ${user}
-  Відкрити перший лист Рахунок за Надання послуг
-  Звірити дані в pdf файлі  ${amount}
-  Close Browser
-  Switch Browser  1
-
-
-Відкрити перший лист Рахунок за Надання послуг
-  Wait Until Keyword Succeeds  60  2
-  ...  Click Element  //td[@id]//span[contains(text(), "SmartTender - Рахунок за Надання послуг")]
-
-
-Звірити дані в pdf файлі
-  [Arguments]  ${amount}
-  Mouse Over  //a[contains(., 'Рахунок')]
-  Click Element  //a[contains(., 'Рахунок')]
-  ${text}  Evaluate  str(${amount})
-  Wait Until Page Contains  ${text}  30
 
 
 Відкрити сторінку налаштування підписки
@@ -1916,23 +1629,6 @@ create_e-mail
   Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
   Sleep  5
   Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
-
-Отримати UAID на сторінці з тендером
-  ${id}  Get Text  ${prozorro-number}
-  [Return]  ${id}
-
-
-Сформувати пряме посилання на тендер
-  [Arguments]  ${id}
-  ${link to tender}  Set Variable  ${start page}/publichni-zakupivli-prozorro/${id}
-  [Return]  ${link to tender}
-
-
-Перевірити відкриття тендера за посиланням
-  [Arguments]  ${link to tender}
-  Go To  ${link to tender}
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  Отримати UAID на сторінці з тендером
 
 
 Активувати вкладку

@@ -24,8 +24,8 @@ If skipped create tender
 Підготувати учасників до участі в тендері
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
-    Start in grid  user1  provider1
-    Start in grid  user2  provider2
+    Start  user1  provider1
+    Start  user2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -46,7 +46,7 @@ If skipped create tender
 
 Підготувати учасників для отримання посилання на аукціон
     Close All Browsers
-    Start in grid  user1  provider1
+    Start  user1  provider1
     Go to  ${data['tender_href']}
 
 
@@ -59,9 +59,9 @@ If skipped create tender
 
 Підготувати користувачів для отримання ссилки на аукціон
     Close All Browsers
-    Start in grid  test_viewer  viewer
-    Start in grid  Bened  tender_owner
-    Start in grid  user3  provider3
+    Start  test_viewer  viewer
+    Start  Bened  tender_owner
+    Start  user3  provider3
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -79,7 +79,7 @@ If skipped create tender
 
 
 Авторизуватися організатором
-    Start in grid  Bened  tender_owner
+    Start  Bened  tender_owner
 
 
 Перевірка відображення даних тендера на сторінці
@@ -120,14 +120,6 @@ If skipped create tender
     Go Back
 
 
-Підтвердити прекваліфікацію учасників
-    Відкрити браузер під роллю організатора та знайти потрібний тендер
-    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    :FOR  ${i}  IN RANGE  1  ${count}+1
-    \  Надати рішення про допуск до аукціону учасника  ${i}
-    Підтвердити закінчення розгляду учасників та перейти на наступну стадію
-
-
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
     Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
@@ -135,14 +127,6 @@ If skipped create tender
     ...  Sleep  60
     ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     [Return]  ${count}
-
-
-Відкрити браузер під роллю організатора та знайти потрібний тендер
-    Close All Browsers
-    Start in grid  Bened  tender_owner
-	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Пошук тендеру по title (webclient)  ${data['title']}
 
 
 Перевірити отримання ссилки на участь в аукціоні
@@ -175,24 +159,3 @@ If skipped create tender
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
-
-
-Підтвердити організатором формування протоколу розгляду пропозицій
-    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${status}  Run Keyword And Return Status
-    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Run Keyword If  '${status}' != 'True'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
-    Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити формування протоколу розгляду пропозицій за необхідністью
-
-
-Підтвердити формування протоколу розгляду пропозицій за необхідністью
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій?
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
