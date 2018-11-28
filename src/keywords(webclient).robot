@@ -69,11 +69,20 @@
 
 
 Закрити валідаційне вікно
-	[Arguments]  ${title}  ${response}
-	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${response}')]
+	[Arguments]  ${title}  ${action}
+	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${action}')]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Wait Until Element Is Not Visible  ${button}
+	Sleep  3
+
+
+Закрити валідаційне вікно (Так/Ні)
+	[Arguments]  ${title}  ${action}
+	${button}  Set Variable
+	...  //*[@id="MessageBoxContent"]//p[contains(text(),"${title}")]/ancestor::*[@id="MessageBoxContent"]//*[@class="messagebox-button-cell"]//span[text()="${action}"]
+	Wait Until Page Contains Element  ${button}
+	Click Element  ${button}
 	Sleep  3
 
 
@@ -142,13 +151,6 @@
     Page Should Contain  ${name}
 
 
-Підтвердити повідомлення про перевищення бюджету за необхідністю
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Увага! Бюджет перевищує
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Відмовитись у повідомленні про накладання ЕЦП на тендер
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Накласти ЕЦП на тендер?
     Run Keyword If  '${status}' == 'True'  Run Keywords
@@ -178,6 +180,7 @@
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
     Підтвердити закінчення розгляду учасників та перейти на наступну стадію
+    Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -212,6 +215,7 @@
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
+
 Погодитись з рішенням прекваліфікації
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Ви впевнені у своєму рішенні?
     Run Keyword If  '${status}' == 'True'  Run Keywords
@@ -243,4 +247,36 @@
     Click Element  ${first tender}
     Дочекатись закінчення загрузки сторінки(webclient)
     Натиснути кнопку Перечитать (Shift+F4)
+
+
+Підтвердити організатором формування протоколу розгляду пропозицій
+    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${status}  Run Keyword And Return Status
+    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
+    Run Keyword If  '${status}' != 'True'  Run Keywords
+    ...  Sleep  60
+    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
+    Натиснути надіслати вперед(Alt+Right)
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Підтвердити формування протоколу розгляду пропозицій за необхідністью
+
+
+Підтвердити формування протоколу розгляду пропозицій за необхідністью
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій?
+    Run Keyword If  '${status}' == 'True'  Run Keywords
+    ...  Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
+    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Отримати tender_uaid вибраного тендера
+    ${uaid}   Get Text  ${first tender}/a
+    [Return]  ${uaid}
+
+
+Отримати tender_href вибраного тендера
+    ${href}  Get Element Attribute
+    ...  ${first tender}/following-sibling::td/a|${first tender}/preceding-sibling::td/a  href
+    [Return]  ${href}
 

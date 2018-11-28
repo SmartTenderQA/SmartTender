@@ -233,22 +233,6 @@ Resource  test_open_trade.robot
 	Create File  ${OUTPUTDIR}/artifact.json  ${json}
 
 
-Зберегти чернетку
-	Wait Until Keyword Succeeds  10  2  Click Element  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
-	Sleep  3
-	Wait Until Element Is Not Visible  ${webClient loading}  120
-	Wait Until Element Is Not Visible  xpath=//*[@id='pcModalMode_PW-1']//*[contains(text(), 'Додати')]
-	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
-	Run Keyword And Ignore Error  Підтвердити збереження чернетки
-
-
-Підтвердити збереження чернетки
-	${status}  Run Keyword And Return Status  Wait Until Page Contains  Оголосити закупівлю
-	Run Keyword If  ${status} == ${True}  Run Keywords
-	...  Click Element  xpath=//*[@class="message-box"]//*[.='Ні']
-	...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
 Ігнорувати конфлікт
 	${status}  Run Keyword And Return Status  Wait Until Page Contains  Конфлікт при зверненні
 	Run Keyword If  ${status} == ${True}  Run Keywords
@@ -302,33 +286,7 @@ Ignore WebClient Error
     Sleep  1
 
 
-Перейти у розділ (webclient)
-    [Arguments]  ${name}
-    Click Element  xpath=(//*[@title="${name}"])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Натиснути ОК у фільтрі "Умова відбору тендерів" за необхідністю
 
-
-Отримати tender_uaid та tender_href щойно стореного тендера
-    ${find tender field}  Set Variable  (//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Scroll Page To Element XPATH  ${find tender field}
-    ${uaid}  Get Text  ${find tender field}/a
-    ${href}  Get Element Attribute
-    ...  ${find tender field}/following-sibling::td/a|${find tender field}/preceding-sibling::td/a  href
-    Set To Dictionary  ${data}  tender_uaid  ${uaid}
-    Set To Dictionary  ${data}  tender_href  ${href}
-    Log  ${href}  WARN
-
-
-Оголосити закупівлю
-    Click Element  xpath=//*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Page Contains  Оголосити закупівлю
-    Click Element  xpath=//*[@class="message-box"]//*[.='Так']
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити повідомлення про перевищення бюджету за необхідністю
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    Відмовитись у повідомленні про накладання ЕЦП на тендер
 
 
 Отримати та зберегти tender_id

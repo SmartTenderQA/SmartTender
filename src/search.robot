@@ -2,6 +2,7 @@
 ${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
 ${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
 ${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
+${first tender}                     (//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
 
 ${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]

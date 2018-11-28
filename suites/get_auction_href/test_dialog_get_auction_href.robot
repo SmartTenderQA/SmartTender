@@ -12,6 +12,14 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	[Tags]  create_tender
 	Авторизуватися організатором
 	test_dialog.Створити тендер
+	Пошук тендеру по title (webclient)  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${uaid}
+    Set To Dictionary  ${data}  tender_href  ${href}
+    Log  ${href}  WARN
+    Звебегти дані в файл
+    Close All Browsers
 
 
 If skipped create tender
@@ -21,30 +29,40 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Підготувати учасників до участі в тендері
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start in grid  user1  provider1
-    Start in grid  user2  provider2
-    Start in grid  user3  provider3
-
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Start  user1  provider1
     Перевірка відображення даних тендера на сторінці  provider1
+    Close All Browsers
+
 
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
-	:FOR  ${user}  IN  provider1  provider2  provider3
-	\  Прийняти участь у тендері учасником на 1-му етапі  ${user}
+	:FOR  ${i}  IN  1  2  3
+	\  Start  user${i}  provider${i}
+	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
 
 
-Підтвердити прекваліфікацію для доступу до аукціону організатором
+Підготувати користувача та дочекатись початку періоду перкваліфікації
+    Close All Browsers
+    Start  user1  provider1
+    Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
-    Підтвердити прекваліфікацію учасників
+
+
+Відкрити браузер під роллю організатора та знайти тендер
+    Close All Browsers
+    Start  Bened  tender_owner
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    Пошук тендеру по title (webclient)  ${data['title']}
+
+
+Підтвердити прекваліфікацію всіх учасників
+    debug
 
 
 Виконати дії для переведення тендера на 2-ий етап
-    Підтвердити організатором формування протоколу розгляду пропозицій
-    Start in grid  user1  provider1
+    Start  user1  provider1
     Go to  ${data['tender_href']}
     Wait Until Keyword Succeeds  10m  10  Дочекатись закінчення періоду прекваліфікації
     Дочекатися статусу тендера  Очікування рішення організатора
@@ -271,3 +289,9 @@ If skipped create tender
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
+
+
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація
