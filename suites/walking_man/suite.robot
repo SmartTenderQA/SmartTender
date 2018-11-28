@@ -61,14 +61,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 *** Test Cases ***
 Особистий кабінет
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
   ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
   ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
 
 
 Аналітика участі
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Відкрити сторінку аналітики
   Вибрати інший період аукціону  Минулий місяць
   Перевірити наявність діаграми та таблиці
@@ -77,7 +77,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Налаштування підписки
-  [Tags]  your_account  -test  -prod  broken
+  [Tags]  your_account  broken  -prod  -test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку налаштування підписки
@@ -91,7 +91,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Заявки на отримання тендерного забезпечення
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку Заявки на отримання тендерного забезпечення
@@ -99,35 +99,35 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Юридична допомога
-  [Tags]  your_account  -ip
+  [Tags]  your_account  prod  test  -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Отримати юридичну допомогу
 
 
 Особисті дані користувача
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Профіль компанії
 
 
 Змінити пароль
-  [Tags]  your_account  -ip
+  [Tags]  your_account  -ip  prod  test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Змінити пароль
 
 
 Управління користувачами
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Управління користувачами
 
 
 Звіти
-  [Tags]  your_account
+  [Tags]  your_account  prod  test
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Відкрити сторінку Звіти
@@ -140,7 +140,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відгуки
-  [Tags]  site  -test
+  [Tags]  site  prod  -test
   Зайти на сторінку відгуків
   Перевірити заголовок відгуків
   Перевірити наявність відгуків
@@ -148,7 +148,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Блог
-  [Tags]  site  -test
+  [Tags]  site  prod  -test
   Зайти на сторінку блогу
   Перевірити загловок блогу
   Перевірити наявність блогів
@@ -158,7 +158,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити elastic
-	[Tags]  site  -test
+	[Tags]  site  prod  -test
 	Зайти на сторінку пошуку elastic
 	Очистити Фільтр Пошуку Elastic
 	Виконати пошук в elastic  бумага
@@ -168,7 +168,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Договір
-  [Tags]  site  -test
+  [Tags]  site  prod  -test
   Відкрити вікно договору
   Перевірити заголовок договору
   Перевірити перший абзац договору
@@ -176,14 +176,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Про компанію
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку про компанію
   Перевірити заголовок сторінки про компанію
   Перевірити текст сторінки про компанію
 
 
 Новини
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку з новинами
   Перевірити заголовок сторінки з новинами
   Порахувати кількість новин
@@ -194,7 +194,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Контакти
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку contacts
   Перевірити заголовок сторінки контактів
   Порахувати кількість контактів
@@ -202,7 +202,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 З ким ми працюємо
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку клієнтів
   Перевірити заголовок сторінки клієнтів
   Порахувати кількість клієнтів
@@ -215,7 +215,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Тарифи
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку тарифів
   Перевірити кількість закладок
   Закладка Публічні закупівлі
@@ -225,14 +225,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Події
-  [Tags]  site
+  [Tags]  site  prod  test
   Зайти на сторінку с подіями
   Превірити заголовок сторінки подій
   Перевірити наявність календаря
 
 
 Реєстрація
-  [Tags]  site
+  [Tags]  site  prod  test
   Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
   Зайти на сторінку реєстрації
   Перевірити заголовок сторінки реєстрації
@@ -240,28 +240,28 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Інструкції
-  [Tags]  site
+  [Tags]  site  prod  test
   Відкрити сторінку інструкцій
   Перевірити заголовок сторінки інструкцій
   Перевірити випаючий список інструкцій
 
 
 Карта сайту
-  [Tags]  site
+  [Tags]  site  prod  test
   Перейти на сторінку карти сайту
   Перевірити заголовок сторінки карта сайта
   Порахувати кількість єлементів сторінки карта сайту
 
 
 Питання та відповіді
-  [Tags]  site  -test
+  [Tags]  site  prod  -test
   Перейти на сторінку запитань
   Перевірити заголовок сторінки запитань
   Порахувати кількість запитань
 
 
 Курси валют
-  [Tags]  site  -test
+  [Tags]  site  prod  -test
   Відкрити вікно курсів валют
   Перевірити шлях курсів валют
   Перевірити заголовок курсів валют
@@ -269,13 +269,14 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити наявність всіх видів торгів в випадаючому списку
-  [Tags]  commercial
+  [Tags]  commercial  prod  test
   [Setup]  Run Keywords
   ...  Test Precondition
   ...  AND  Натиснути На торговельний майданчик
-  ...  AND  Перевірити заголовок, комерційніх торгів
-  ...  AND  Перевірити вкладку комерційніх закупівель
-  ...  AND  Порахувати кількість торгів
+  ...  AND  Перевірити назву вкладки Комерційні торги
+  ...  AND  Перевірити заголовок вкладки комерційні торги  Закупівлі
+  ...  AND  Перевірити заголовок вкладки комерційні торги  Продажі
+  ...  AND  Перевірити наявність торгів
   ...  AND  old_search.Розгорнути Розширений Пошук
   ...  AND  Click Element  ${dropdown menu for bid forms}
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -295,7 +296,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аукціон
-  [Tags]  commercial
+  [Tags]  commercial  prod  test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -305,7 +306,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аналіз пропозицій
-  [Tags]  commercial  -test
+  [Tags]  commercial  prod  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -315,7 +316,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Запит пропозицій
-  [Tags]  commercial  -test
+  [Tags]  commercial  prod  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -325,7 +326,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Відкриті торги. Аналіз ринку
-  [Tags]  commercial  -test
+  [Tags]  commercial  prod  -test
   Натиснути На торговельний майданчик
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -335,12 +336,12 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Комерційні торги Продажі
-  [Tags]  commercial  -test
+  [Tags]  commercial  prod  -test
   [Setup]  Run Keywords
   ...  Test Precondition
   ...  AND  Натиснути На торговельний майданчик
   ...  AND  Перевірити вкладку комерційних продаж
-  ...  AND  Порахувати кількість торгів
+  ...  AND  Перевірити наявність торгів
   ...  AND  old_search.Розгорнути Розширений Пошук
   ...  AND  Click Element  ${dropdown menu for bid forms}
   [Template]  Перевірити наявність тексту в випадаючому списку
@@ -352,10 +353,10 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон на продаж. Відкриті торги
-  [Tags]  commercial  -test
+  [Tags]  commercial  prod  -test
   Натиснути На торговельний майданчик
   Перевірити вкладку комерційних продаж
-  Порахувати кількість торгів
+  Перевірити наявність торгів
   old_search.Розгорнути Розширений Пошук
   old_search.Вибрати Тип Процедури  ${TESTNAME}
   old_search.Виконати пошук тендера
@@ -364,7 +365,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Конкурентні процедури
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Натиснути На торговельний майданчик
@@ -373,7 +374,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Неконкурентні процедури
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Плани
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Договори
-	...  AND  Перевірити наявність торгів для закупок
+	...  AND  Перевірити наявність торгів
 	...  AND  old_search.Розгорнути Розширений Пошук
   	...  AND  Click Element  ${dropdown menu for bid forms}
 	[Template]  Перевірити наявність тексту в випадаючому списку
@@ -389,7 +390,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити процедури закупівель
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	[Setup]  No Operation
 	[Template]  Перевірити Конкурентні процедури за назвою
 	Допорогові закупівлі
@@ -404,13 +405,13 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Державні закупівлі прозорро Неконкурентні процедури
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Натиснути На торговельний майданчик
 	...  AND  old_search.Активувати вкладку Державних закупівель
 	...  AND  Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
-	...  AND  Перевірити наявність торгів для закупок
+	...  AND  Перевірити наявність торгів
 	...  AND  old_search.Розгорнути Розширений Пошук
   	...  AND  Click Element  ${dropdown menu for bid forms}
 	[Template]  Перевірити наявність тексту в випадаючому списку
@@ -420,7 +421,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити Державні закупівлі прозорро Неконкурентні процедури
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	[Setup]  No Operation
 	[Template]  Перевірити Неконкурентні процедури за назвою
 	Звіт про укладений договір
@@ -429,7 +430,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Державні закупівлі прозорро Плани
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Плани
@@ -441,7 +442,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Державні закупівлі прозорро Договори
-	[Tags]  procurement
+	[Tags]  procurement  prod  test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Договори
@@ -453,7 +454,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	[Setup]  Run Keywords
 	...  Test Precondition
 	...  AND  Зайти на сторінку аукціони на продаж активів банків
@@ -469,7 +470,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж права вимоги за кредитними договорами
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -479,7 +480,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж майна банків, що ліквідуються
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -489,7 +490,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Голландський аукціон
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів банків
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -499,7 +500,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Майно
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів банків
 	Перевірити вкладку активи
 	Порахувати кількість прав
@@ -509,7 +510,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Права вимоги
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів банків
 	Перевірити вкладку активи
 	Вибрати тип активу та виконати пошук  ${TESTNAME}
@@ -518,7 +519,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Оренда майна
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Порахувати кількусть торгів Аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
@@ -529,7 +530,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Продаж майна
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Очистити Фільтр Пошуку Elastic
 	Відфільтрувати по формі торгів_new
@@ -539,7 +540,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон. Мала приватизація
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -553,7 +554,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
-	[Tags]  sales  -test
+	[Tags]  sales  prod  -test
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	Зайти на сторінку аукціони на продаж активів держпідприємств
@@ -565,7 +566,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Об'єкти приватизації
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -574,7 +575,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Реєстр інформаційних повідомлень
-	[Tags]  sales
+	[Tags]  sales  prod  test
 	Зайти на сторінку аукціони на продаж активів держпідприємств
 	Активувати вкладку  Реєстр об'єктів приватизації
 	Активувати перемикач на сторінці пошуку малої приватизації  ${TESTNAME}
@@ -583,7 +584,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Запит цінових пропозицій
-	[Tags]  rialto
+	[Tags]  rialto  prod  test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	Перевірити заголовок RIALTO
@@ -596,7 +597,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Простий тендер
-	[Tags]  rialto
+	[Tags]  rialto  prod  test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук
@@ -607,7 +608,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 
 Двохетапний тендер
-	[Tags]  rialto
+	[Tags]  rialto  prod  test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
 	old_search.Розгорнути Розширений Пошук
@@ -896,18 +897,6 @@ Test Postcondition
   Unselect Frame
 
 
-Перевірити заголовок, комерційніх торгів
-  ${should}  Set variable  Комерційні торги (тендери SmartTender)
-  ${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1) p
-  Should Be Equal  ${is}  ${should}
-
-
-Перевірити вкладку комерційніх закупівель
-  ${should}  Set variable  Закупівлі
-  ${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(1)
-  Should Be Equal  ${is}  ${should}
-
-
 Перевірити вкладку комерційних продаж
   Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(2)
   ${should}  Set variable  Продажі
@@ -937,7 +926,7 @@ Test Postcondition
   Should Be Equal  ${is}  ${should}
 
 
-Перевірити наявність торгів для закупок
+Перевірити наявність торгів
 	${n}  old_search.Порахувати кількість торгів
 	Run Keyword if  '${n}' == '0'  Fail  Як це нема торгів?!
 
@@ -1602,7 +1591,7 @@ create_e-mail
 
 Перевірити назву вкладки Комерційні торги
 	${should}  Set variable  Комерційні торги (тендери SmartTender)
-	${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1)
+	${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1) p
 	Should Be Equal  ${is}  ${should}
 
 
