@@ -1,4 +1,5 @@
 *** Settings ***
+** Settings **
 Library     Selenium2Library
 Library     BuiltIn
 Library     Collections
@@ -9,41 +10,11 @@ Library     String
 Library     DateTime
 
 
-Resource  	keywords.robot
-
-
-Resource    common/cdb_api_data/get_api_data.robot
+Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
-Library     common/seo/seo.py
-Resource    common/synchronization/synchronization.robot
-
-
-Resource  	elements/webclient/webclient_elements.robot
-Resource  	elements/actions.robot
-Resource  	elements/other.robot
-
-
-
-Resource    create_tender/keywords.robot
-
-
-Resource    elements/actions.robot
-Resource    elements/webclient/webclient_elements.robot
-
-
-Resource    Faker/faker.robot
-Resource    EDS.robot
-Resource    email.robot
-Resource    keywords(webclient).robot
-Resource    loading.robot
-Resource    pages/login/login.robot
-Resource    make_proposal.robot
-Resource    participation_request.robot
-Resource    search.robot
-
 Resource    common/search/old_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
@@ -55,23 +26,6 @@ Resource  	elements/other.robot
 
 
 Resource    create_tender/keywords.robot
-
-
-Resource    pages/make_proposal/make_proposal.robot
-Resource    pages/participation_request/participation_request.robot
-Resource    pages/personal_account/personal_account.robot
-Resource    pages/povidomlenya/povidomlenya.robot
-Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
-Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
-Resource	pages/search_small_privatization/search_small_privatization.robot
-Resource	pages/start_page/start_page.robot
-
-Resource    pages(webclient)/desktop/desktop.robot
-Resource    pages(webclient)/main_page/main_page.robot
-
-
-Resource    get_auction_href.robot
-Resource    tenders_view.robot
 
 
 Resource    elements/actions.robot
