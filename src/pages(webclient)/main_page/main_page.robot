@@ -1,7 +1,3 @@
-*** Settings ***
-Resource        keywords.robot
-
-
 *** Keywords ***
 Отримати tender_uaid вибраного тендера
     ${uaid}   Get Text  ${first tender}/a

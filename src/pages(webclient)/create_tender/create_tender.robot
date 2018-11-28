@@ -56,6 +56,28 @@
     Sleep  1
 
 
+Звебегти дані в файл
+	${json}  conver dict to json  ${data}
+	Create File  ${OUTPUTDIR}/artifact.json  ${json}
+
+
+Вибір об'екту
+	${selector}  set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "Вибір")]
+	Wait Until Page Contains Element  ${selector}
+	Click Element  ${selector}
+
+
+Отримати та зберегти tender_id
+	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
+	Should Not Be Equal  ${tender_id}  ${EMPTY}
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
+Зберегти пряме посилання на тендер
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+
+
 ###############################################
 #				 Fill field					  #
 ###############################################
@@ -108,3 +130,4 @@
   	${got}  Get Element Attribute  ${selector}  value
   	${got}  Evaluate  str(int(${got}))
   	Should Be Equal  ${got}  ${percent}
+
