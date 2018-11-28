@@ -26,7 +26,7 @@ Resource  	elements/actions.robot
 Resource  	elements/other.robot
 
 
-Resource    create_tender/keywords.robot
+Resource    create_tender/create_tender_keywords.robot
 
 
 Resource    elements/actions.robot
