@@ -48,6 +48,7 @@ Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
 Resource	pages/search_small_privatization/search_small_privatization.robot
 Resource	pages/start_page/start_page.robot
+Resource    pages/torgy_rialto/torgy_rialto.robot
 
 
 Resource    get_auction_href.robot
