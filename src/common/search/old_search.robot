@@ -5,7 +5,7 @@ Resource    keywords.robot
 *** Variable ***
 ${advanced search}                 		//div[contains(text(),'Розширений пошук')]/..
 ${dropdown menu for bid forms}			//label[contains(text(),'Форми ')]/../../ul
-${first found element}      	        //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
+${first found element}      	        (//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])
 ${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 
 
@@ -27,7 +27,7 @@ ${find tender field}                xpath=//input[@placeholder="Введіть �
 
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
-	${selector}  Set Variable  xpath=(${first found element})[${n}]
+	${selector}  Set Variable  ${first found element}[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}

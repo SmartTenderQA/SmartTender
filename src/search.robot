@@ -9,7 +9,7 @@ ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']
 
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
-
+${advanced search}                  //div[contains(text(),'Розширений пошук')]/..
 
 *** Keywords ***
 Знайти тендер по ID
