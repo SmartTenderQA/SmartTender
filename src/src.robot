@@ -16,6 +16,7 @@ Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/search/old_search.robot
+Resource    common/search/new_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
 Resource    common(webclient)/validation/validation.robot
@@ -37,6 +38,8 @@ Resource    Faker/faker.robot
 
 
 Resource    pages/auction/auction.robot
+Resource    pages/contacts/contacts.robot
+Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/invoice/invoice.robot
@@ -45,6 +48,8 @@ Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
 Resource    pages/personal_account/personal_account.robot
+Resource    pages/plany/plany.robot
+Resource    pages/plany_detail_page/plany_detail_page.robot
 Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot

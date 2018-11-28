@@ -1,5 +1,8 @@
 -d test_output
+
 -n non-critical
 -n non-critical-test
+-n non-critical-prod
 
+-e -prod
 -e -test
