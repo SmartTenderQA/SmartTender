@@ -62,6 +62,15 @@ Resource    pages(webclient)/main_page/header.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
 
 
+Resource    ../steps/create_tender/cdb1_sale_property.robot
+Resource    ../steps/create_tender/prod_below.robot
+Resource    ../steps/create_tender/test_below.robot
+Resource    ../steps/create_tender/test_dialog.robot
+Resource    ../steps/create_tender/test_esco.robot
+Resource    ../steps/create_tender/test_open_eu.robot
+Resource    ../steps/create_tender/test_open_trade.robot
+
+
 Resource    get_auction_href.robot
 Resource    keywords(webclient).robot
 Resource	keywords.robot

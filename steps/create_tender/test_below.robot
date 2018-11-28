@@ -3,11 +3,7 @@
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Відкрити вікно створення тендеру
-<<<<<<< HEAD
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
-=======
-  	create_tender_keywords.Вибрати тип процедури  Допорогові закупівлі
->>>>>>> d826a7b8c6b549a323f8ad3434ae6e9e817f6a3e
   	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
