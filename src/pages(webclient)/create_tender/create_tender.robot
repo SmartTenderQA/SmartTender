@@ -8,6 +8,12 @@
 	Run Keyword If  '${status}' == 'False'  Вибрати тип процедури  ${type}
 
 
+Зберегти чернетку
+    Натиснути додати (додавання тендеру)
+	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
+	Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
+
+
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити текстове поле  ${selector}  ${text}

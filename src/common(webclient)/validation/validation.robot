@@ -25,12 +25,6 @@
 	Sleep  3
 
 
-Зберегти чернетку
-    Натиснути OkButton
-	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
-	Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
-
-
 Підтвердити повідомлення про перевірку публікації документу за необхідністю
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  перевірте публікацію Вашого документу
     Run Keyword If  '${status}' == 'True'  Run Keywords
