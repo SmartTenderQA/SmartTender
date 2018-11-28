@@ -2,13 +2,8 @@
 Створити тендер
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-<<<<<<< HEAD
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Конкурентний діалог 1-ий етап
-=======
-	Відкрити вікно створення тендеру
-  	create_tender_keywords.Вибрати тип процедури  Конкурентний діалог 1-ий етап
->>>>>>> d826a7b8c6b549a323f8ad3434ae6e9e817f6a3e
   	test_dialog.Заповнити endDate періоду пропозицій
   	test_dialog.Заповнити amount для tender
   	test_dialog.Заповнити minimalStep для tender
