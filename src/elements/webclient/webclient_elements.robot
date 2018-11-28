@@ -60,3 +60,13 @@
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
 
+
+###############################################
+#			       Other  					  #
+###############################################
+Натиснути додати (додавання тендеру)
+    ${selector}  Set Variable  //a[@title="Додати"]//span[text()="Додати"]
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Element Should Not Be Visible  ${selector}
+
