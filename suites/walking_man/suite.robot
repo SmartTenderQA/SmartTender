@@ -165,8 +165,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 Договір
   [Tags]  site  -test
   Відкрити вікно договору
-  # todo
-  #Перевірити заголовок договору
+  Перевірити заголовок договору
   Перевірити перший абзац договору
   Перевірити лінки в тексті договору
 
@@ -422,7 +421,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 	Перевірити наявність торгів(new_search)
 	${id}  Отримати uaid договору за номером  1
 	new_search.Перейти по результату пошуку за номером  1
-	Перевірити заголовок договору  ${id}
+	dogovory.Перевірити заголовок договору  ${id}
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
@@ -948,6 +947,12 @@ Test Postcondition
 Відкрити вікно договору
   Click Element  ${button dogovir}
   Sleep  3
+
+
+Перевірити заголовок договору
+  ${should header}  Set Variable  Договір
+  ${is header}  Get Text  css=#ui-id-2
+  Should Be Equal  ${is header}  ${should header}
 
 
 Перевірити перший абзац договору
