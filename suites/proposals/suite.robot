@@ -32,7 +32,7 @@ ${no tender}                        False
 	Відкрити сторінку тестових торгів
 	${ua_tender_type}  convert_tender_type  ${tender_type}
 	old_search.Розгорнути Розширений Пошук
-	old_search.Вибрати Тип Процедури  ${TESTNAME}
+	old_search.Вибрати Тип Процедури  ${ua_tender_type}
 	Відфільтрувати по статусу торгів  Прийом пропозицій
 	${date}  smart_get_time  1  d
 	Відфільтрувати по даті кінця прийому пропозиції від  ${date}
