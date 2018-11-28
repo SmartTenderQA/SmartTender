@@ -10,13 +10,13 @@ ${find tender field}                xpath=//input[@placeholder="Введіть �
 
 
 *** Keywords ***
-Розгорнути розширений пошук
+Розгорнути розширений пошук (old)
 	Wait Until Keyword Succeeds  30s  5  Run Keywords
 	...  Click Element  ${advanced search}  AND
 	...  Run Keyword And Expect Error  *  Click Element  ${advanced search}
 
 
-Вибрати тип процедури
+Вибрати тип процедури (old)
 	[Arguments]  ${type}
 	Wait Until Keyword Succeeds  30s  5  Run Keywords
 	...  Click Element  ${dropdown menu for bid forms}  AND
