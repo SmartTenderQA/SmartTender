@@ -10,41 +10,70 @@ Resource    	keywords.robot
   Location Should Contain  /Subscription
 
 
-Перевірити блок запиту допомоги з налаштування підписки
-  Натиснути на кнопку Відправити запит
-  Перевірити вікно Запит налаштування підписки
-  Закрити вікно Запит налаштування підписки
+Натиснути на кнопку Відправити запит
+  Click Element  css=.btn-shadow.ivu-btn-success
+  Wait Until Page Contains Element  ${window header}
+  Element Should Contain  ${window header}  Запит налаштування підписки
 
 
-Перевірити блок Персональне запрошення організатора
-  Перевірити заголовок Персональне запрошення організатора
-  Перевірити перемикач Персональне запрошення організатора
+Закрити вікно Запит налаштування підписки
+  ${close button}  Set Variable  //*[@class="ivu-modal-mask" and not(contains(@style, "display: none"))]/following-sibling::*//*[contains(@class, "ivu-icon-ios-close-empty")]
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
 
 
-Перевірити блок E-mail адреси для дублювання всіх розсилок
-  Перевірити заголовок E-mail адреси для дублювання всіх розсилок
-  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
-  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+Перевірити заголовок Персональне запрошення організатора
+  ${element}  Set Variable  (//h4)[2]
+  Element Should Contain  ${element}  Персональне запрошення організатора
 
 
-Перевірити вкладки підписки для закупівель
+Перевірити перемикач Персональне запрошення організатора
+  ${switcher}  Set Variable  //*[@class="ivu-card-body" and contains(., "Персональне запрошення організатора")]//*[@tabindex]
+  ${status}  Get Element Attribute  ${switcher}/input  Value
+  Wait Until Keyword Succeeds  10  1  Click Element  ${switcher}
+  ${new_status}  Get Element Attribute  ${switcher}/input  Value
+  Should Not Be Equal  ${new_status}  ${status}
+
+
+Перевірити заголовок E-mail адреси для дублювання всіх розсилок
+  ${element}  Set Variable  (//h4)[3]
+  Element Should Contain  ${element}  E-mail адреси для дублювання всіх розсилок
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  ${mail}  create_e-mail
+  Ввести дані в поле E-mail  ${mail}
+  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+  ${n}  random_number  4  20
+  ${mail}  Generate Random String  ${n}  [LOWER]
+  Ввести дані в поле E-mail  ${mail}
+  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+
+
+Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії
+  [Arguments]  ${text}
+  ${selector}  Set Variable  //*[contains(@class, "ivu-tabs-nav")]//div[contains(@class, "ivu-tabs-tab")]
+  ${n}  Run Keyword If  "${text}" == "Публічні закупівлі" or "${text}" == "Аукціони на продаж активів банків"
+  ...  Set Variable  2
+  ...  ELSE IF  "${text}" == "RIALTO.Закупівлі" or "${text}" == "Аукціони на продаж активів держпідприємств"
+  ...  Set Variable  3
+  Click Element  ${selector}[${n}]
+  ${status}  Run Keyword And Return Status
+  ...  Page Should Contain Element  ${selector}[${n}][contains(@class, "active")]
   Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Публічні закупівлі
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  RIALTO.Закупівлі
-  Перевірити наявність всіх елементів в блоці категорії
-
-
-Перевірити вкладки підписки на продаж
-  Активувати тип торгів для підписки  на продаж
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Аукціони на продаж активів банків
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Аукціони на продаж активів держпідприємств
-  Перевірити наявність всіх елементів в блоці категорії
+  Run Keyword If  "${status}" != "True"  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  ${text}
 
 
 Активувати тип торгів для підписки
   [Arguments]  ${type}
-  Вибрати тип торгів  ${type}
-  Перевірити тип торгів
+  ${n}  Run Keyword If  "${type}" == "на продаж"  Set Variable  2
+  ...  ELSE IF  "${type}" == "на закупівлю"  Set Variable  1
+  Set Global Variable  ${tender type cb}  //*[contains(@class, "ivu-row-flex-space-between")]//label[${n}]
+  Click Element  ${tender type cb}
+  ${status}  Run Keyword And Return Status
+  ...  Page Should Contain Element  ${tender type cb}[contains(@class, "checked")]

@@ -17,9 +17,9 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 #robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:user4 suites/password/suite.robot
 #robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
 *** Test Cases ***
-Перевірити можливість змінити пароль (особистий кабінет)
+Перевірити можливість змінити пароль через особистий кабін
     [Tags]  change_password
-    Відкрити сторінку "Змінити пароль" (особистий кабінет)
+    Run Keyword  Відкрити сторінку "Змінити пароль" для ${role}
 
 
 Змінити пароль користувача
@@ -64,11 +64,19 @@ Postcondition
     Page Should Contain  Зміна пароля
 
 
-Перейти на сторінку зміни пароля
-    Click Element  xpath=//a[contains(text(),'Заходи SmartTender')]
-    Click Element  xpath=//*[contains(@class,'fa-user')]
-    Click Element  xpath=//*[contains(@class,'fa-key')]
-    Wait Until Page Contains Element  css=form
+Відкрити сторінку "Змінити пароль" для provider
+    start_page.Відкрити особистий кабінет
+    change_password.Відкрити сторінку за назвою  change_password
+
+
+
+Відкрити сторінку "Змінити пароль" для tender_owner
+    Run Keyword If  '${site}' == 'test'
+    ...  Click Element  xpath=//*[@title='${login}']
+    Sleep  0.5
+    Click Element  xpath=//*[.='Змінити свій пароль']
+    Дочекатись Закінчення Загрузки Сторінки
+    Page Should Contain Element  xpath=//*[.='Зміна пароля']
 
 
 Змінити пароль
