@@ -61,7 +61,7 @@ Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/main_page.robot
 Resource    pages(webclient)/main_page/header.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
-
+Resource    pages(webclient)/qualification/qualification.robot
 
 Resource    ../steps/create_tender/cdb1_sale_property.robot
 Resource    ../steps/create_tender/prod_below.robot

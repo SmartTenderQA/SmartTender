@@ -44,7 +44,7 @@ If skipped create tender
 	Close All Browsers
 	:FOR  ${i}  IN  1  2  3
 	\  Start  user${i}  provider${i}
-	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
+	\  Прийняти участь у тендері учасником  provider${i}
 	\  Close Browser
 
 
@@ -60,11 +60,15 @@ If skipped create tender
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
+
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     Дочекатись початку періоду перкваліфікації
+    debug
     Підтвердити прекваліфікацію учасників
-    Підтвердити організатором формування протоколу розгляду пропозицій
-    Перейти до стадії Аукціон
+
+
+Перейти до стадії аукціон
+    Wait Until Keyword Succeeds  10m  10s  Перейти до стадії закупівлі (webclient)  Аукціон
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -110,7 +114,7 @@ If skipped create tender
     Switch Browser  ${role}
     Go to  ${data['tender_href']}
     Перевірити коректність даних на сторінці  ['title']
-    Перевірити коректність даних на сторінці  ['description']
+    #Перевірити коректність даних на сторінці  ['description']
     Перевірити коректність даних на сторінці  ['tender_uaid']
     Перевірити коректність даних на сторінці  ['item']['description']
     Перевірити коректність даних на сторінці  ['item']['city']
@@ -187,15 +191,8 @@ Fill ESCO
 	...  AND  Отримати URL для участі в аукціоні
 
 
-Перейти до стадії Аукціон
-    Wait Until Keyword Succeeds  10m  10s  Дочекатись переходу до стадії аукціон (webclient)
 
 
-Дочекатись переходу до стадії аукціон (webclient)
-    ${first tender}  set variable  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
-    Оновити дані першого в списку тендера (webclient)
-    Натиснути кнопку "Надіслати вперед"
-    ${stage}  get text  ${first tender}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Should Contain  ${stage}  Аукціон
+
 
 

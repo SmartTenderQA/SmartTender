@@ -10,7 +10,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 #  robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i $variable suites/dozorro/prod.robot
 *** Variables ***
 
-${first found element}               xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[1]
+${first tender in search}            //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${dozorro btn}                       xpath=//*[@data-qa="tabs"]//*[contains(text(),'Dozorro')]
 ${review add}                        xpath=//*[@type='button']/*[contains(text(), 'Залишити відгук')]
 ${review submit}                     xpath=//button[@type="submit"]
@@ -511,7 +511,7 @@ Postcondition
 
 
 Перевірити чи тендер мультилот
-    ${status}  Run Keyword and Return Status  Element Should Be Visible  ${first found element}/../..//*[contains(text(),'Мультилоти')]
+    ${status}  Run Keyword and Return Status  Element Should Be Visible  ${first tender in search}/../..//*[contains(text(),'Мультилоти')]
     ${multylot}  Set Variable  ${status}
     Set Global Variable  ${multylot}
     Log  ${multylot}
@@ -566,7 +566,7 @@ Postcondition
 Відфільтрувати по спаданню дати
   Wait Until Keyword Succeeds  30s  5  Click Element  ${sort date}
   Wait Until Keyword Succeeds  30s  5  Click Element  ${sort date}
-  Wait Until Element Is Visible  ${first found element}
+  Wait Until Element Is Visible  ${first tender in search}
 
 
 ########################### ВІДГУК ###############################

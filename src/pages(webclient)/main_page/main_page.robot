@@ -1,3 +1,7 @@
+*** Variables ***
+${first tender webclient}         (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+
+
 *** Keywords ***
 Отримати tender_uaid вибраного тендера
     ${uaid}   Get Text  ${first tender}/a
@@ -9,6 +13,10 @@
     ...  ${first tender}/following-sibling::td/a|${first tender}/preceding-sibling::td/a  href
     [Return]  ${href}
 
+
+Вибрати перший тендер
+    Click Element  ${first tender webclient}
+    Дочекатись закінчення загрузки сторінки(webclient)
 
 ###############################################
 #				  Search					  #
