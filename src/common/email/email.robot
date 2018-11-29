@@ -29,7 +29,7 @@ Resource  				keywords.robot
 Розгорнути останній лист (за необхідність)
 	${count}  Get Element Count  //img[@class='ajT']
 	sleep  0.5
-	Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
+	Wait Until Keyword Succeeds  10 s  1 s  Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
 	sleep  1
 
 
@@ -41,5 +41,5 @@ Resource  				keywords.robot
 
 Відкрити файл в листі за назвою
     [Arguments]  ${title}
-   	Click Element  (//a[contains(., '${title}')])[last()]
+   	Wait Until Keyword Succeeds  10 s  1 s  Click Element  (//a[contains(., '${title}')])[last()]
    	Element Should Contain  //*[@class='aLF-aPX-aPU-awE']  ${title}
