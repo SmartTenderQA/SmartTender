@@ -1,9 +1,5 @@
-*** Settings ***
-Resource    keywords.robot
-
-
 *** Variable ***
-${advanced search}                 		//div[contains(text(),'Розширений пошук')]/..
+${expand search}                 		//div[contains(text(),'Розширений пошук')]/..
 ${dropdown menu for bid forms}			//label[contains(text(),'Форми ')]/../../ul
 ${first found element}      	        //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${find tender field}                	xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
@@ -13,8 +9,8 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 *** Keywords ***
 Розгорнути розширений пошук
 	Wait Until Keyword Succeeds  30s  5  Run Keywords
-	...  Click Element  ${advanced search}  AND
-	...  Run Keyword And Expect Error  *  Click Element  ${advanced search}
+	...  Click Element  ${expand search}  AND
+	...  Run Keyword And Expect Error  *  Click Element  ${expand search}
 
 
 Вибрати тип процедури
@@ -42,7 +38,6 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
 	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
 	Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
-	Run Keyword If  '${id}' != 'None'  Перевірити унікальність результату пошуку
 
 
 Порахувати кількість торгів
@@ -67,7 +62,7 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 
 Активувати вкладку ФГИ
 	Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
-	Дочекатись закінчення загрузки сторінки
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Активувати вкладку RIALTO
@@ -100,6 +95,5 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 	${i}  Run Keyword If
 	...  'Аукціони' == '${text}'  Set Variable  1  ELSE IF
 	...  'Реєстр активів' == '${text}'  Set Variable  2
-	${is}  Get Text  ${commercial tabs}(${i})
 	Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(${i})
 	Дочекатись закінчення загрузки сторінки(skeleton)

@@ -15,8 +15,10 @@ Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
-Resource    common/search/old_search.robot
+Resource    common/search/dgf-registry.robot
 Resource    common/search/new_search.robot
+Resource    common/search/old_search.robot
+Resource    common/search/small_privatization_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
 Resource    common(webclient)/validation/validation.robot
@@ -34,7 +36,9 @@ Resource    elements/webclient/webclient_elements.robot
 Resource    Faker/faker.robot
 
 
+Resource    pages/asset_detail_page/asset_detail_page.robot
 Resource    pages/auction/auction.robot
+Resource    pages/auction_detail_page/auction_detail_page.robot
 Resource    pages/contacts/contacts.robot
 Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
@@ -58,13 +62,15 @@ Resource    pages/plany_detail_page/plany_detail_page.robot
 Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
-Resource	pages/search_small_privatization/search_small_privatization.robot
 Resource	pages/start_page/start_page.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
+
 Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/main_page.robot
 Resource    pages(webclient)/main_page/header.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
+Resource    pages(webclient)/qualification/qualification.robot
+Resource    pages(webclient)/second_stage/second_stage.robot
 
 
 Resource    ../steps/create_tender/cdb1_sale_property.robot
