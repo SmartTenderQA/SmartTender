@@ -1,4 +1,12 @@
 *** Variables ***
+${tender found}                     //*[@id="tenders"]/tbody/*[@class="head"]//a[@href and @class="linkSubjTrading"]
+${advanced search}                  xpath=//div[contains(text(),'Розширений пошук')]/..
+${find tender field}                xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
+${first tender}                     (//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Номер тендеру')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
+
+${first found element}              //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
+${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
+
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${small privatization item}			//*[@class="content-block"]/div//a[@href]
 ${advanced search}                  //div[contains(text(),'Розширений пошук')]/..
@@ -100,19 +108,7 @@ ${advanced search}                  //div[contains(text(),'Розширений 
     Wait Until Element Is Visible  //*[@data-qa="title"]|(//h3)[2]  15
 
 
-Пошук тендеру по title (webclient)
-    [Arguments]  ${tender title}
-    ${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Узагальнена назва закупівлі')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
-    Scroll Page To Element XPATH  ${find tender field}
-    Click Element  ${find tender field}
-    Input Text  ${find tender field}  ${tender title}
-    ${get}  Get Element Attribute  ${find tender field}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${tender title}
-    Run Keyword If  '${status}' == 'False'  Пошук тендеру по title у webclient  ${tender title}
-    Press Key  ${find tender field}  \\13
-    Дочекатись закінчення загрузки сторінки(webclient)
-    ${count tenders}  Get Matching Xpath Count  xpath=//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')]
-    Run Keyword And Ignore Error  Should Be Equal  ${count tenders}  1
+
 
 
 Знайти тендер користувачем

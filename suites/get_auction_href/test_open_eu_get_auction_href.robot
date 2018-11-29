@@ -11,7 +11,20 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender
 	Авторизуватися організатором
+	debug
 	test_open_eu.Створити тендер
+
+
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
+    Звебегти дані в файл
+    Close All Browsers
 
 
 If skipped create tender
@@ -36,10 +49,24 @@ If skipped create tender
 Подати заявку на участь в тендері двома учасниками
 	Прийняти участь у тендері учасником  provider1
 	Прийняти участь у тендері учасником  provider2
+	Close All Browsers
 
 
-Підтвердити прекваліфікацію для доступу до аукціону організатором
+Підготувати користувача та дочекатись початку періоду перкваліфікації
+    Start  user1  provider1
+    Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
+
+
+Відкрити браузер під роллю організатора та знайти тендер
+    Close All Browsers
+    Start  Bened  tender_owner
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+
+
+Підтвердити прекваліфікацію всіх учасників
+    debug
     Підтвердити прекваліфікацію учасників
     Підтвердити формування протоколу розгляду пропозицій за необхідністью
 

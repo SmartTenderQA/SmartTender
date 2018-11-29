@@ -3,7 +3,7 @@ Resource  ../../src/src.robot
 Suite Setup     Run Keywords
                 ...  Start in grid  ${user}  AND
                 ...  Натиснути На торговельний майданчик  AND
-                ...  Перейти на сторінку публічні закупівлі
+                ...  old_search.Активувати вкладку Державних закупівель
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 

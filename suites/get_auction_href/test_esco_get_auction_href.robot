@@ -14,6 +14,18 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	test_esco.Створити тендер
 
 
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
+    Звебегти дані в файл
+    Close All Browsers
+
+
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
@@ -21,21 +33,32 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Підготувати учасників до участі в тендері
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
-    Start  user3  provider3
-
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Start  user1  provider1
     Перевірка відображення даних тендера на сторінці  provider1
 
-Подати заявку на участь в тендері трьома учасниками
-	:FOR  ${user}  IN  provider1  provider2  provider3
-	\  Прийняти участь у тендері учасником  ${user}
 
+Подати заявку на участь в тендері трьома учасниками на 1-му етапі
+	Close All Browsers
+	:FOR  ${i}  IN  1  2  3
+	\  Start  user${i}  provider${i}
+	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
+	\  Close Browser
+
+
+Підготувати користувача та дочекатись початку періоду перкваліфікації
+    Start  user1  provider1
+    Go to  ${data['tender_href']}
+    Дочекатись початку періоду перкваліфікації
+
+
+Відкрити браузер під роллю організатора та знайти тендер
+    Close All Browsers
+    Start  Bened  tender_owner
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     Дочекатись початку періоду перкваліфікації
@@ -131,7 +154,7 @@ Fill ESCO
     Start  Bened  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
-    Пошук тендеру по title (webclient)  ${data['title']}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 
 Перевірити отримання ссилки на участь в аукціоні

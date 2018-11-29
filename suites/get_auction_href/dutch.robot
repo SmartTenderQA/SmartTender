@@ -17,7 +17,7 @@ Test Teardown  Run Keywords
 	Sleep  2
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
-	Wait Until Keyword Succeeds  30  3  Вибрати тип процедури  Голландський аукціон
+	Wait Until Keyword Succeeds  30  3  create_tender.Вибрати тип процедури  Голландський аукціон
 	Заповнити auctionPeriod.startDate
 	Заповнити value.amount
 	Заповнити minimalStep.percent
@@ -46,6 +46,7 @@ If skipped create tender
 
 
 Знайти тендер учасником
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Run Keyword If  "${site}" == "prod"  Start  prod_provider1  provider1
 	...  ELSE  Start  user1  provider1
 	Знайти тендер користувачем	provider1

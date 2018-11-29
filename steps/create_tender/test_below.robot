@@ -1,29 +1,42 @@
 *** Keywords ***
 Створити тендер
     Switch Browser  tender_owner
-	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-	Відкрити вікно створення тендеру
-  	create_tender_keywords.Вибрати тип процедури  Конкурентний діалог 1-ий етап
-  	test_dialog.Заповнити endDate періоду пропозицій
-  	test_dialog.Заповнити amount для tender
-  	test_dialog.Заповнити minimalStep для tender
-  	test_dialog.Заповнити title для tender
-  	test_dialog.Заповнити description для tender
-  	test_dialog.Додати предмет в тендер
+	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	Натиснути додати(F7)  Додавання. Тендери
+  	create_tender.Вибрати тип процедури  Допорогові закупівлі
+  	test_below.Заповнити endDate періоду обговорення
+  	test_below.Заповнити startDate періоду пропозицій
+  	test_below.Заповнити endDate періоду пропозицій
+  	test_below.Заповнити amount для tender
+  	test_below.Заповнити minimalStep для tender
+  	test_below.Заповнити title для tender
+  	test_below.Заповнити description для tender
+  	test_below.Додати предмет в тендер
+    Додати документ до тендара власником (webclient)
     Зберегти чернетку
-    Оголосити закупівлю
-    Пошук тендеру по title (webclient)  ${data['title']}
-    Отримати tender_uaid та tender_href щойно стореного тендера
-    Звебегти дані в файл
+    Оголосити тендер
 
 
 #########################################################
 #	                  Keywords							#
 #########################################################
-Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  38  minutes
+Заповнити endDate періоду обговорення
+    ${date}  get_time_now_with_deviation  5  minutes
     ${value}  Create Dictionary  endDate=${date}
+    Set To Dictionary  ${data}  enquiryPeriod  ${value}
+    Заповнити текстове поле  //*[@data-name="DDM"]//input  ${date}
+
+
+Заповнити startDate періоду пропозицій
+    ${date}  get_time_now_with_deviation  6  minutes
+    ${value}  Create Dictionary  startDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
+    Заповнити текстове поле  //*[@data-name="D_SCH"]//input    ${date}
+
+
+Заповнити endDate періоду пропозицій
+    ${date}  get_time_now_with_deviation  25  minutes
+    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
     Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
 
 
@@ -64,15 +77,15 @@
 
 
 Додати предмет в тендер
-    test_dialog.Заповнити description для item
-    test_dialog.Заповнити quantity для item
-    test_dialog.Заповнити id для item
-    test_dialog.Заповнити unit.name для item
-    test_dialog.Заповнити postalCode для item
-    test_dialog.Заповнити streetAddress для item
-    test_dialog.Заповнити locality для item
-    test_dialog.Заповнити endDate для item
-    test_dialog.Заповнити startDate для item
+    test_below.Заповнити description для item
+    test_below.Заповнити quantity для item
+    test_below.Заповнити id для item
+    test_below.Заповнити unit.name для item
+    test_below.Заповнити postalCode для item
+    test_below.Заповнити streetAddress для item
+    test_below.Заповнити locality для item
+    test_below.Заповнити endDate для item
+    test_below.Заповнити startDate для item
 
 
 Заповнити description для item
@@ -92,7 +105,12 @@
     ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
     ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
     ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  id  ${name}
+    Sleep  1
+    ${name}  Get Element Attribute  ${input}  value
+    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
+    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
+    Set To Dictionary  ${data['item']}  id  ${id}
+    Set To Dictionary  ${data['item']}  id title  ${id title}
 
 
 Заповнити unit.name для item

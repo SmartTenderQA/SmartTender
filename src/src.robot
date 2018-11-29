@@ -1,4 +1,5 @@
 *** Settings ***
+** Settings **
 Library     Selenium2Library
 Library     BuiltIn
 Library     Collections
@@ -9,22 +10,21 @@ Library     String
 Library     DateTime
 
 
-Resource    common/cdb_api_data/get_api_data.robot
+Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/search/old_search.robot
+Resource    common/search/new_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+Resource    common(webclient)/validation/validation.robot
 
 
 Resource  	elements/webclient/webclient_elements.robot
 Resource  	elements/actions.robot
 Resource  	elements/other.robot
-
-
-Resource    create_tender/create_tender_keywords.robot
 
 
 Resource    elements/actions.robot
@@ -35,9 +35,11 @@ Resource    Faker/faker.robot
 
 
 Resource    pages/auction/auction.robot
+Resource    pages/contacts/contacts.robot
+Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
-Resource    pages/komertsiyni_torgy/komertsiyni_torgy.robot
+Resource    pages/komertsiyni_torgy_tender_detail_page/komertsiyni_torgy_tender_detail_page.robot
 Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/participation_request/participation_request.robot
@@ -48,14 +50,30 @@ Resource    pages/personal_account/legal_help/legal_help.robot
 Resource    pages/personal_account/tender_providing/tender_providing.robot
 Resource    pages/personal_account/change_password/change_password.robot
 Resource    pages/personal_account/company_profile/company_profile.robot
-Resource    pages/personal_account/report/report.robot
+Resource    pages/personal_account/reports/reports.robot
 Resource    pages/personal_account/user_management/user_management.robot
+Resource    pages/personal_account/subscription/subscription.robot
+Resource    pages/plany/plany.robot
+Resource    pages/plany_detail_page/plany_detail_page.robot
 Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
 Resource	pages/search_small_privatization/search_small_privatization.robot
 Resource	pages/start_page/start_page.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
+Resource    pages(webclient)/desktop/desktop.robot
+Resource    pages(webclient)/main_page/main_page.robot
+Resource    pages(webclient)/main_page/header.robot
+Resource    pages(webclient)/create_tender/create_tender.robot
+
+
+Resource    ../steps/create_tender/cdb1_sale_property.robot
+Resource    ../steps/create_tender/prod_below.robot
+Resource    ../steps/create_tender/test_below.robot
+Resource    ../steps/create_tender/test_dialog.robot
+Resource    ../steps/create_tender/test_esco.robot
+Resource    ../steps/create_tender/test_open_eu.robot
+Resource    ../steps/create_tender/test_open_trade.robot
 
 
 Resource    get_auction_href.robot

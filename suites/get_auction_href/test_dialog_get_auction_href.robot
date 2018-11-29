@@ -14,6 +14,18 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 	test_dialog.Створити тендер
 
 
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
+    Звебегти дані в файл
+    Close All Browsers
+
+
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
@@ -21,29 +33,39 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Підготувати учасників до участі в тендері
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
-    Start  user3  provider3
-
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Start  user1  provider1
     Перевірка відображення даних тендера на сторінці  provider1
 
+
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
-	:FOR  ${user}  IN  provider1  provider2  provider3
-	\  Прийняти участь у тендері учасником на 1-му етапі  ${user}
+	Close All Browsers
+	:FOR  ${i}  IN  1  2  3
+	\  Start  user${i}  provider${i}
+	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
+	\  Close Browser
 
 
-Підтвердити прекваліфікацію для доступу до аукціону організатором
+Підготувати користувача та дочекатись початку періоду перкваліфікації
+    Start  user1  provider1
+    Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
-    Підтвердити прекваліфікацію учасників
+
+
+Відкрити браузер під роллю організатора та знайти тендер
+    Close All Browsers
+    Start  Bened  tender_owner
+	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+
+
+Підтвердити прекваліфікацію всіх учасників
+    debug
 
 
 Виконати дії для переведення тендера на 2-ий етап
-    Підтвердити організатором формування протоколу розгляду пропозицій
     Start  user1  provider1
     Go to  ${data['tender_href']}
     Wait Until Keyword Succeeds  10m  10  Дочекатись закінчення періоду прекваліфікації
@@ -242,3 +264,9 @@ If skipped create tender
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
+
+
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація
