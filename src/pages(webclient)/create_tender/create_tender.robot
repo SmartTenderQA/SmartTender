@@ -78,6 +78,28 @@
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
 
 
+Вибрати вид тендера
+	[Arguments]  ${tender_type}
+	Заповнити поле за допомогою(F10)
+	...  Вид тендер
+	...  Прості довідники
+	...  ${tender_type}
+	Set To Dictionary  ${data}  tender_type  ${tender_type}
+
+
+Заповнити поле за допомогою(F10)
+	[Arguments]  ${field_name}  ${window_title}  ${choise_text}
+	Відкрити вікно(F10)  ${field_name}   ${window_title}
+	Вибрати потрібний вид тендера  ${choise_text}
+	Підтвердити вибір(F10)
+	Перевірити вибір(F10)  ${field_name}  ${choise_text}
+
+
+Вибрати потрібний вид тендера
+	[Arguments]  ${text}
+	Click Element  //td[contains(text(), "${text}")]
+
+
 ###############################################
 #				 Fill field					  #
 ###############################################

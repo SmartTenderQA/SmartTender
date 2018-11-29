@@ -10,10 +10,6 @@
 
 
 
-Перевірити стадію тендера
-	[Arguments]  ${stage}
-	${get}  Get Text  //tr[contains(@class, "rowselected")]//td[4]
-	Should Contain  ${get}  ${stage}
 
 
 Змінити групу

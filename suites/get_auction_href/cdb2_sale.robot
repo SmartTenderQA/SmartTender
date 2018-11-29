@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Створити словник
+Suite Setup  Створити словник  data
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -136,11 +136,6 @@ If skipped create tender
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...       Start  user3  provider3
 	...  AND  Start  test_viewer  viewer
-
-
-Створити словник
-	${data}  Create Dictionary
-	Set Global Variable  ${data}
 
 
 Вибрати довільне місто

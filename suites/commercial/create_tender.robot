@@ -5,16 +5,10 @@ Suite Setup  Suite Precondition
 Suite Teardown  Close All Browsers
 
 
-*** Variables ***
-${button manage tenders}				//*[@title='Управління тендерами']
-${button OK}							//*[@data-name="OkButton"]
-
-${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" and contains(., "ГОЛОВНА")]
-
-
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tende
+	Перейти у розділ (webclient)  Управління тендерами
 	Натиснути додати(F7)  Додавання. Тендери
 	Заповинити поле дата закінчення прийому пропозиції
 	Заповнити поле категорія тендера
@@ -69,12 +63,7 @@ ${tab MAIN}  							//*[contains(@class, "dxtc-activeTab")]//*[@class="dx-vam" a
 *** Keywords ***
 Suite Precondition
 	Start in grid  ${user}
-	Дочекатись закінчення загрузки сторінки(webclient)
-	Wait Until Page Contains Element  ${button manage tenders}
-	Click Element  ${button manage tenders}
-	Натиснути OkButton
-	Дочекатись закінчення загрузки сторінки(webclient)
-	Wait Until Page Contains Element  ${tab MAIN}
+	Створити словник  data
 
 
 Test Postcondition
@@ -132,34 +121,8 @@ Test Postcondition
 Заповинити поле найменування тендера
 	${textarea}  Set Variable  //*[contains(text(), "Найм. тендера")]/following-sibling::table//textarea
 	${text}  create_sentence  4
-	Input Text  ${textarea}  ${text}
-	Press Key  ${textarea}  \\09
-	${get}  Get Element Attribute  ${textarea}  value
-	Should Be Equal  ${get}  ${text}
+	Заповнити текстове поле  ${textarea}  ${text}
 	Set To Dictionary  ${data}  tender_name  ${text}
-
-
-############################################################
-Вибрати вид тендера
-	[Arguments]  ${tender_type}
-	Заповнити поле за допомогою(F10)
-	...  Вид тендер
-	...  Прості довідники
-	...  ${tender_type}
-	Set To Dictionary  ${data}  tender_type  ${tender_type}
-
-
-Заповнити поле за допомогою(F10)
-	[Arguments]  ${field_name}  ${window_title}  ${choise_text}
-	Відкрити вікно(F10)  ${field_name}   ${window_title}
-	Вибрати потрібний вид тендера  ${choise_text}
-	Підтвердити вибір(F10)
-	Перевірити вибір(F10)  ${field_name}  ${choise_text}
-
-
-Вибрати потрібний вид тендера
-	[Arguments]  ${text}
-	Click Element  //td[contains(text(), "${text}")]
 
 
 ############################################################
@@ -178,10 +141,7 @@ Test Postcondition
 Заповнити поле найменування для класифікатора
 	${input}  Set Variable  //*[contains(text(), "Найменування")]/following-sibling::table//input
 	${text}  create_sentence  4
-	Input Text  ${input}  ${text}
-	Press Key  ${input}  \\13
-	${get}  Get Element Attribute  ${input}  value
-	Should Be Equal  ${get}  ${text}
+	Заповнити текстове поле  ${input}  ${text}
 	[Return]  ${text}
 
 
@@ -287,3 +247,5 @@ Test Postcondition
 	${get}  Get Text  css=.message-content
 	${new_date}  Evaluate  re.search(r'[\\d.]+', '''${get}''').group(0)  re
 	[Return]  ${new_date}
+
+
