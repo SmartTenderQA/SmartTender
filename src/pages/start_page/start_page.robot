@@ -24,15 +24,15 @@ ${komertsiyni-torgy icon}			//*[@id="main"]//a[2]/img
 
 
 Відкрити особистий кабінет webcliend
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /webclient/
+	Page Should Contain Element  ${personal account}
+	Click Element  ${personal account}
+	Location Should Contain  /webclient/
 
 
 Відкрити особистий кабінет для ssp_tender_owner
-  Page Should Contain Element  ${personal account}
-  Click Element  ${personal account}
-  Location Should Contain  /cabinet/registry/privatization-objects
-  Page Should Contain Element  css=.action-block [type="button"]
-  Page Should Contain Element  css=.content-block .asset-card
+	Page Should Contain Element  ${personal account}
+	Click Element  ${personal account}
+	Location Should Contain  /cabinet/registry/privatization-objects
+	Page Should Contain Element  css=.action-block [type="button"]
+	Page Should Contain Element  css=.content-block .asset-card
 

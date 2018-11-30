@@ -1,8 +1,24 @@
 *** Variables ***
-${item dogovory}		  	//*[@class="panel panel-default panel-highlight"]
+${item dogovory}		  			//*[@class="panel panel-default panel-highlight"]
+${elastic search input}             css=.ivu-card-bordered input
+${elastic search button}            css=.ivu-card-bordered button
+${elastic search clean filter}      css=.tag-holder button
 
 
 *** Keywords ***
+Ввести фразу для пошуку
+	[Arguments]  ${text}
+	Input Text  ${elastic search input}  ${text}
+	${get}  Get Element Attribute  ${elastic search input}  value
+	Should Be Equal  ${text}  ${get}
+
+
+Натиснути кнопку пошуку
+	Click Element  ${elastic search button}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Wait Until Page Contains Element  ${elastic search clean filter}
+
+
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  xpath=(${item dogovory}//h4/a)[${n}]
@@ -49,3 +65,4 @@ ${item dogovory}		  	//*[@class="panel panel-default panel-highlight"]
 	${class}  Get Element Attribute  ${selector}//i  class
 	${expand_status}  Run Keyword And Return Status  Should Contain  ${class}  down
 	Run Keyword If  ${expand_status} == ${False}  Click Element  ${selector}
+
