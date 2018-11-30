@@ -11,6 +11,6 @@ Resource    	keywords.robot
     [Arguments]  ${item}
     Розкрити меню в особистому кабінеті за необхідністю
     Розкрити під-меню в особистому кабінеті за необхідністю  ${item}
-    Click Element  ${${item}}
+    Open button  ${${item}}
     Дочекатись закінчення загрузки сторінки
     Run Keyword  ${item}.Перевірити сторінку

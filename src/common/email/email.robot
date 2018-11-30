@@ -21,7 +21,7 @@ Resource  				keywords.robot
 	[Arguments]  ${title}
 	${link selector}  Set Variable  xpath=//a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	Wait Until Keyword Succeeds  10  1  Click Element  ${link selector}
+	Click Element  (${link selector})[last()]
 	Select Window  New
 	sleep  0.5
 
