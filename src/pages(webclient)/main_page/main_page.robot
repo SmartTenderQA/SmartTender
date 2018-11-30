@@ -14,9 +14,20 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
     [Return]  ${href}
 
 
+Отримати посилання на вибраний тендер по значку "Планета"
+	Click Element  //tr[contains(@class, "rowselected")]//td[3]
+	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
+	${value}  Get Element Attribute  //*[@id="pcCustomDialog_PW-1"]//a  onclick
+	${href}  ${ticket}  get_tender_href_for_commercial_owner  ${value}
+	Go To  ${href}${ticket}
+	Location Should Contain  ?ticket=
+	[Return]  ${href}
+
+
 Вибрати перший тендер
     Click Element  ${first tender webclient}
     Дочекатись закінчення загрузки сторінки(webclient)
+
 
 ###############################################
 #				  Search					  #

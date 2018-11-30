@@ -6,20 +6,14 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${login}                    ${users_variables["${user}"]["login"]}
-${password}                 ${users_variables["${user}"]["password"]}
 ${new password}             qwerty12345
 ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'btn-success')]
 
-#Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:user4 suites/password/suite.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -i change_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:user4 suites/password/suite.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -i reset_password -v hub:None -v user:test_tender_owner suites/password/suite.robot
+
 *** Test Cases ***
-Перевірити можливість змінити пароль через особистий кабін
+Перевірити можливість змінити пароль через особистий кабінет
     [Tags]  change_password
-    Run Keyword  Відкрити сторінку "Змінити пароль" для ${role}
+    Run Keyword  Перевірити сторінку "Змінити пароль" для ${role}
 
 
 Змінити пароль користувача
@@ -49,7 +43,9 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 *** Keywords ***
 Precondition
-   	Run Keyword  Start in grid  ${user}
+   	Start in grid  ${user}
+   	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
+	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
 
 
 Postcondition
@@ -64,13 +60,12 @@ Postcondition
     Page Should Contain  Зміна пароля
 
 
-Відкрити сторінку "Змінити пароль" для provider
+Перевірити сторінку "Змінити пароль" для provider
     start_page.Відкрити особистий кабінет
-    change_password.Відкрити сторінку за назвою  change_password
+    personal_account.Відкрити сторінку за назвою  change_password
 
 
-
-Відкрити сторінку "Змінити пароль" для tender_owner
+Перевірити сторінку "Змінити пароль" для tender_owner
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
     Sleep  0.5

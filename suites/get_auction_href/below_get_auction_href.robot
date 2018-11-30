@@ -93,7 +93,7 @@ If skipped create tender
     Перевірити коректність даних на сторінці  ['description']
     Перевірити коректність даних на сторінці  ['tender_uaid']
     Перевірити коректність даних на сторінці  ['contactPerson']['name']
-    Перевірити коректність даних на сторінці  ['item']['description']
+    Перевірити коректність даних на сторінці  ['item']['title']
     Перевірити коректність даних на сторінці  ['item']['city']
     Перевірити коректність даних на сторінці  ['item']['streetAddress']
     Перевірити коректність даних на сторінці  ['item']['postal code']
@@ -143,7 +143,7 @@ If skipped create tender
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.

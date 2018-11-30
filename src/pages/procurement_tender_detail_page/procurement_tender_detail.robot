@@ -9,7 +9,7 @@ ${['status']}                           //*[@data-qa="status"]|//*[@data-qa="auc
 ${['title']}                            //*[@data-qa="main-block"]//*[@data-qa="title"]
 ${['description']}                      //*[@data-qa="main-block"]//*[@data-qa="description"]/span
 ${['tender_uaid']}                      //*[@data-qa="prozorro-number"]//a/span
-${['item']['description']}              //*[@data-qa="nomenclature-title"]
+${['item']['title']}                    //*[@data-qa="nomenclature-title"]
 ${['item']['city']}                     //*[@data-qa="nomenclature-delivery-address"]
 ${['item']['streetAddress']}            //*[@data-qa="nomenclature-delivery-address"]
 ${['item']['postal code']}              //*[@data-qa="nomenclature-delivery-address"]
