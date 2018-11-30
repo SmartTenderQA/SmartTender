@@ -12,7 +12,6 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 *** Variables ***
 ${type}
 ${site}                        prod
-${page_number}                 2
 &{checks}                      checked_doc=${false}  checked_docx=${false}  checked_image=${false}  checked_pdf=${false}  checked_signature=${false}
 @{image_format}                png  jpg  jpeg  gif  gif  tif  tiff  bmp
 
@@ -27,13 +26,11 @@ ${page_number}                 2
 
 Перевірка тендерів на сторінці пошука
   [Tags]  commercial
-  :FOR  ${pages}  IN RANGE  1  5
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку  ${page}
   \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Видалити кнопку "Замовити звонок"
-  \  Видалити кнопку "Поставити запитання"
   \  Перевірити тендери  ${tenders_on_page}
   \  Run Keyword  Завершити виконання тесту${site}
-  \  Перейти на наступну сторінку
 
 
 Зайти на стоінку закупівель
@@ -45,13 +42,11 @@ ${page_number}                 2
 
 Перевірка тендерів на сторінці пошука
   [Tags]  procurement
-  :FOR  ${pages}  IN RANGE  1  5
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку  ${page}
   \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Видалити кнопку "Замовити звонок"
-  \  Видалити кнопку "Поставити запитання"
   \  Перевірити тендери  ${tenders_on_page}
   \  Run Keyword  Завершити виконання тесту${site}
-  \  Перейти на наступну сторінку
 
 
 Зайти на сторінку банківських аукціонів
@@ -63,13 +58,11 @@ ${page_number}                 2
 
 Перевірка тендерів на сторінці пошука
   [Tags]  bank_aucs
-  :FOR  ${pages}  IN RANGE  1  5
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку  ${page}
   \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Видалити кнопку "Замовити звонок"
-  \  Видалити кнопку "Поставити запитання"
   \  Відкрити сторінку аукціона та перевірити документи  ${tenders_on_page}
   \  Завершити перевірку аукціонів
-  \  Перейти на наступну сторінку
 
 
 *** Keywords ***
@@ -90,14 +83,16 @@ Setup
   Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
 
 
-Перейти на наступну сторінку
-  ${selector}  Set Variable  //a[@class="pager-button" and text()=${page_number}]
-  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
-# Вийти з цикла якщо не існує наступної сторінки
-  Run Keyword If  ${status} == ${false}  Exit For Loop
-  Click Element  ${selector}
-  ${page_number}  Evaluate  ${page_number} + 1
-  Set Global Variable  ${page_number}
+Перейти на сторінку
+    [Arguments]  ${page}
+    Set Test Variable  ${page}
+    Should Be True  ${page} != 6
+    ${selector}  Set Variable  //a[@class="pager-button" and text()=${page}]
+    ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}
+    # Вийти з цикла якщо не існує наступної сторінки
+    Run Keyword If  ${status} == ${false}  Exit For Loop
+    Run Keyword If  '${page}' != '1'  Click Element  ${selector}
+    Run Keyword And Ignore Error  Run Keywords  Видалити кнопку "Замовити звонок"  Видалити кнопку "Поставити запитання"
 
 
 Завершити виконання тестуtest
