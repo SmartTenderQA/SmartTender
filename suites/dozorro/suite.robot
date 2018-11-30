@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 
-${first found element}               xpath=(//*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading'])[1]
+${first tender in search}            //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${dozorro btn}                       xpath=//*[@data-qa="tabs"]//*[contains(text(),'Dozorro')]
 ${review add}                        xpath=//*[@type='button']/*[contains(text(), 'Залишити відгук')]
 ${review submit}                     xpath=//button[@type="submit"]

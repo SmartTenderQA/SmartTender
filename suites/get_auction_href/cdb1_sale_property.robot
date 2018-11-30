@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Створити словник
+Suite Setup  Створити словник  data
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -82,11 +82,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Створити словник
-	${data}  Create Dictionary
-	Set Global Variable  ${data}
-
-
 Підготувати організатора
 	Start  Bened  tender_owner
 	Go Back

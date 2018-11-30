@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Створити словник для теста
+Suite Setup  Створити словник  data
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords
 ...  Log Location
@@ -86,11 +86,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Створити словник для теста
-	${data}  Create Dictionary
-	Set Global Variable  ${data}
-
-
 Отримати та зберегти tender_id.prod
 	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
 	Set To Dictionary  ${data}  tender_id=${tender_id}

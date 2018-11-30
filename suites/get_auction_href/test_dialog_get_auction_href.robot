@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Створити словник
+Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
 #Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
@@ -62,19 +62,36 @@ If skipped create tender
 
 
 Підтвердити прекваліфікацію всіх учасників
-    debug
+    Підтвердити прекваліфікацію учасників
 
 
-Виконати дії для переведення тендера на 2-ий етап
+Підготувати користувача та дочекатись очікування рішення організатора
     Start  user1  provider1
     Go to  ${data['tender_href']}
     Wait Until Keyword Succeeds  10m  10  Дочекатись закінчення періоду прекваліфікації
     Дочекатися статусу тендера  Очікування рішення організатора
+
+
+Виконати дії для переведення тендера на 2-ий етап
+    Switch Browser  tender_owner
     Перейти до другої фази
-    Дочекатися учасником на рішення організатора
+    Switch Browser  provider1
+    Дочекатися статусу тендера  Завершено
+    Switch Browser  tender_owner
     Перейти до другого етапу
-    Отримати tender_uaid та tender_href щойно стореного тендера
     Опублікувати процедуру
+
+
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
+    Звебегти дані в файл
+    Close All Browsers
 
 
 Підготувати учасників до участі в тендері на 2-ий етап
@@ -118,11 +135,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Створити словник
-    ${data}  Create Dictionary
-    Set Global Variable  ${data}
-
-
 Авторизуватися організатором
     Start  Bened  tender_owner
 
@@ -179,59 +191,6 @@ If skipped create tender
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
-
-
-Перейти до другої фази
-    Switch Browser  tender_owner
-    Wait Until Keyword Succeeds  5  1  Click Element  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    ${status}  Run Keyword And Return Status  Підтвердити перехід до другої фази за необхідністью
-    Run Keyword If  '${status}' == 'False'  Перейти до другої фази
-
-
-Підтвердити перехід до другої фази за необхідністью
-    Wait Until Page Contains  Перейти до другої фази?  10
-    Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
-    Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Дочекатися учасником на рішення організатора
-    Switch Browser  provider1
-    Дочекатися статусу тендера  Завершено
-    Close Browser
-
-
-Перейти до другого етапу
-    Switch Browser  tender_owner
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${status}  Run Keyword And Return Status  Wait Until Element Is Visible  //*[@title="До 2-го етапу"]
-    Run Keyword If  '${status}' == 'False'  Перейти до другого етапу
-    Click Element  //*[@title="До 2-го етапу"]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Умова відбору тендерів
-    Run Keyword If  '${status}' == 'True'  Run Keywords
-    ...  Click Element  //*[@title="OK"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
-
-
-Опублікувати процедуру
-    Click Element  (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${status}  Run Keyword And Return Status
-    ...  Wait Until Element Is Visible  //*[@class='dxr-lblContent']/*[contains(text(), 'Надіслати вперед')]
-    Run Keyword If  '${status}' != 'True'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Підтвердити організатором формування протоколу розгляду пропозицій
-    Натиснути надіслати вперед(Alt+Right)
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Підтвердити публікацію процедури
-
-
-Підтвердити публікацію процедури
-    Wait Until Page Contains  Опублікувати процедуру?  10
-    Click Element  xpath=//*[@id="IMMessageBoxBtnYes_CD"]
-    Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Перевірити отримання ссилки на участь в аукціоні
