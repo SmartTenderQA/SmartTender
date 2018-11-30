@@ -7,32 +7,12 @@ Suite Teardown  Close All Browsers
 
 
 *** Variables ***
-${button pro-kompaniyu}             css=.with-drop>a[href='/pro-kompaniyu/']
-${button taryfy}                    css=#MenuList a[href='/taryfy/']
 ${button podii}                     css=#LoginDiv [href='/podii/']
-${button dogovir}                   css=#ContractButton
-${dropdown navigation}              css=#MenuList div.dropdown li>a
-${pro-kompaniyu text}               xpath=//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
-${header text}                      css=div[itemscope=itemscope] h1
-${novyny text}                      css=[class="row content"] h1
-${news block}                       css=.ivu-row-undefined-space-between
-${news search input}                css=.ivu-card-body input
-${news search button}               css=.ivu-card-body button
 ${kontakty text}                    css=div[itemscope=itemscope]>div.ivu-card:nth-child(1) span
-${kontakty block}                   css=div[itemscope=itemscope]>div.ivu-card
-${nashi-klienty text}               xpath=(//*[@class="row text-center"]//b)[1]
-${nashi-klienty text1}              xpath=(//*[@class="row text-center"]//b)[2]
-${vakansii text}                    css=.container>div.row>div
-${taryfy text}                      //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
-${client banner}                    css=.container .row .ivu-card-body
 ${auction active items}             //tbody/tr[@class='head']|//*[@id='hotTrades']/div/div|//*[@class="panel-body"]
 ${auction active header}            css=.ivu-card-body h4
-${RegisterAnchor}                   css=#RegisterAnchor
 ${instruktsii link}                 css=#LoginDiv a[href='/instruktсii/']
-${h1 header text}                   css=#main h1
 ${feedback link}                    css=.footer-feedback a
-${site map}                         css=a[href='/karta-saytu/']
-${exchange rates header}            css=#content h1
 ${exchange link1}                   xpath=//div[@class='bank-view'][1]//a
 ${exchange link2}                   xpath=//div[@class='bank-view'][2]//a
 ${contract link1}                   css=li:nth-child(1)>a
@@ -43,13 +23,6 @@ ${first lot}                        //*[@data-qa="lot-list-block"]//*[@data-qa="
 ${num_of_tenders}                   xpath=(//*[@class="num"])[3]
 ${analytics_page}                   /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}          //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
-${elastic search input}             css=.ivu-card-bordered input
-${elastic search button}            css=.ivu-card-bordered button
-${elastic search clean filter}      css=.tag-holder button
-${vidhuky}                          css=.ivu-row .ivu-card
-${blog}                             css=.ivu-card-body>.ivu-row
-${blog input}                       css=.ivu-card-body input
-${blog search button}               css=.ivu-card-body button
 ${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
@@ -94,7 +67,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Юридична допомога
-  [Tags]  your_account    -ip
+  [Tags]  your_account  -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Отримати юридичну допомогу
@@ -108,7 +81,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Змінити пароль
-  [Tags]  your_account    -ip
+  [Tags]  your_account  -ip
   Відкрити особистий кабінет
   Розкрити меню в особистому кабінеті
   Перевірити вкладку Змінити пароль
@@ -135,132 +108,132 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Відгуки
-  [Tags]  site  -test
-  Зайти на сторінку відгуків
-  Перевірити заголовок відгуків
-  Перевірити наявність відгуків
-  Відкрити та перевірити відгук
+	[Tags]  site  -test
+	Навести мишку на  Про компанію
+	Натиснути на елемент з випадаючого списка  Відгуки
+	Перевірити заголовок сторінки відгуків
+	Перевірити наявність відгуків
+	vidhuky.Відкрити відгук
 
 
 Блог
-  [Tags]  site  -test
-  Зайти на сторінку блогу
-  Перевірити загловок блогу
-  Перевірити наявність блогів
-  ${title}  Перевірити пошук на сторінці блогів
-  Відкрити Блог
-  Перевірити відкритий блог  ${title}
-
-
-Перевірити elastic
 	[Tags]  site  -test
-	Зайти на сторінку пошуку elastic
-	new_search.Очистити фільтр пошуку
-	Виконати пошук в elastic  бумага
-	${status}  Run Keyword And Return Status  Page Should Contain  папір
-	Run Keyword If  not ${status}  Page Should Contain  Папір
-	new_search.Очистити фільтр пошуку
+	Навести мишку на  Про компанію
+	Натиснути на елемент з випадаючого списка  Блог
+	blog.Перевірити загловок блогу
+	Перевірити наявність блогів
+	${title}  blog.Отримати назву блогу за номером  1
+	blog.Ввести текст для пошуку  ${title}
+	blog.Виконати пошук
+	Перевірити результат пошуку на сторінці блогів
+	blog.Відкрити Блог за номером  1
+	Перевірити відкритий блог  ${title}
 
 
 Договір
-  [Tags]  site  -test
-  Відкрити вікно договору
-  Перевірити заголовок договору
-  Перевірити перший абзац договору
-  Перевірити лінки в тексті договору
+	[Tags]  site  -test
+	header_old.Відкрити вікно договору
+	contract.Перевірити заголовок договору
+	contract.Перевірити перший абзац договору
+	contract.Перевірити лінки в тексті договору
 
 
 Про компанію
-  [Tags]  site
-  Зайти на сторінку про компанію
-  Перевірити заголовок сторінки про компанію
-  Перевірити текст сторінки про компанію
+	[Tags]  site
+	header_old.Відкрити Сторінку Про Компанію
+	pro_kompaniyu.Перевірити заголовок сторінки
+	pro_kompaniyu.Звірити початок тексту на сторінці
 
 
 Новини
-  [Tags]  site
-  Зайти на сторінку з новинами
-  Перевірити заголовок сторінки з новинами
-  Порахувати кількість новин
-  Перевірити пошук(Click button)
-  Перевірити пошук(ENTER)
-  Переглянути новину
-  Перевірити лінк хлібних крох
+	[Tags]  site
+	Навести мишку на  Про компанію
+	Натиснути на елемент з випадаючого списка  Новини
+	Перевірити заголовок сторінки з новинами
+	Перевірити наявність новин
+	Перевірити пошук новин через  click
+	Перевірити пошук новин через  press
+	${title}  Отримати заголовк новини за номером  1
+	novyny.Відкрити новину за номером  1
+	Перевірити заголовок відкритої новини  ${title}
+	#Перевірити лінк хлібних для новин
 
 
 Контакти
-  [Tags]  site
-  Зайти на сторінку contacts
-  Перевірити заголовок сторінки контактів
-  Порахувати кількість контактів
-  Перевірити заголовок контакту
+	[Tags]  site
+	Зайти на сторінку contacts
+	Перевірити наявність контактів
 
 
 З ким ми працюємо
-  [Tags]  site
-  Зайти на сторінку клієнтів
-  Перевірити заголовок сторінки клієнтів
-  Порахувати кількість клієнтів
+	[Tags]  site
+	Навести мишку на  Про компанію
+	Натиснути на елемент з випадаючого списка  З ким ми працюємо
+	nashi_klienty.Перевірити заголовок
+	Перевірити наявність клієнтів
+	${count1}  nashi_klienty.Порахувати кількість клієнтів
+	nashi_klienty.Натиснути "Показати ще"
+	${count2}  nashi_klienty.Порахувати кількість клієнтів
+	Run Keyword If  ${count1} >= ${count2}  Fail  Кнопка "Показати ще" не працюе
 
 
 Вакансії
-  [Tags]  site
-  Зайти на сторінку вакансій
-  Перевірити заголовок сторінки вакансій
+	[Tags]  site
+	Навести мишку на  Про компанію
+	Натиснути на елемент з випадаючого списка  Вакансії
+	vakansii.Перевірити заголовок сторінки вакансій
 
 
 Тарифи
-  [Tags]  site
-  Зайти на сторінку тарифів
-  Перевірити кількість закладок
-  Закладка Публічні закупівлі
-  Закладка Комерційні торги
-  Закладка Продаж активів банків, що ліквідуються (ФГВФО)
-  Закладка Продаж і оренда майна/активів Державних підприємств
-
-
-Події
-  [Tags]  site
-  Зайти на сторінку с подіями
-  Превірити заголовок сторінки подій
-  Перевірити наявність календаря
+	[Tags]  site
+	Відкрити сторінку Тарифів
+	taryfy.Перевірити кількість закладок
+	taryfy.Активувати вкладку  Публічні закупівлі ProZorro та торги RIALTO
+	taryfy.Активувати вкладку  Комерційні торги
+	taryfy.Активувати вкладку  Продаж активів банків, що ліквідуються (ФГВФО)
+	taryfy.Активувати вкладку  Продаж і оренда майна/активів Державних підприємств
 
 
 Реєстрація
-  [Tags]  site
-  Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
-  Зайти на сторінку реєстрації
-  Перевірити заголовок сторінки реєстрації
-  Перевірити підзаголовок сторінки реєстрації
+	[Tags]  site
+	Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
+	header_old.Відкрити сторінку Реєстрація
 
 
 Інструкції
-  [Tags]  site
-  Відкрити сторінку інструкцій
-  Перевірити заголовок сторінки інструкцій
-  Перевірити випаючий список інструкцій
+	[Tags]  site
+	header_old.Відкрити сторінку інструкцій
+	Перевірити наявність інструкцій
+	instruktcii.Вибрати з видаючого списку  Показати всі
+	Перевірити наявність інструкцій
+	instruktcii.Вибрати з видаючого списку  Інструкції загального напрямку
+	Перевірити наявність інструкцій
+	instruktcii.Вибрати з видаючого списку  Інструкції для організатора
+	Перевірити наявність інструкцій
+	instruktcii.Вибрати з видаючого списку  Інструкції для учасника
+	Перевірити наявність інструкцій
 
 
 Карта сайту
-  [Tags]  site
-  Перейти на сторінку карти сайту
-  Перевірити заголовок сторінки карта сайта
-  Порахувати кількість єлементів сторінки карта сайту
+	[Tags]  site
+	Відкрити сторінку Карта сайту
+	Порахувати кількість єлементів сторінки карта сайту
 
 
-Питання та відповіді
-  [Tags]  site  -test
-  Перейти на сторінку запитань
-  Перевірити заголовок сторінки запитань
-  Порахувати кількість запитань
+Запитання та відповіді
+	[Tags]  site  -test
+	Навести мишку на  Торговий майданчик
+	Натиснути на елемент з випадаючого списка  Запитання та відповіді
+	zapytannya_i_vidpovidi.Перевірити заголовок сторінки
+	Перевірити наявність запитань
 
 
 Курси валют
-  [Tags]  site  -test
-  Відкрити вікно курсів валют
-  Перевірити шлях курсів валют
-  Перевірити заголовок курсів валют
-  Перевірити лінки курсів валют
+	[Tags]  site  -test
+	Навести мишку на  Торговий майданчик
+	Натиснути на елемент з випадаючого списка  Курси валют
+	kursy_valyut.Перевірити заголовок сторінки
+	kursy_valyut.Перевірити посилання
 
 
 Перевірити наявність всіх видів торгів в випадаючому списку
@@ -325,7 +298,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Аукціон на продаж. Відкриті торги
-	[Tags]  commercial1  -test
+	[Tags]  commercial  -test
 	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
@@ -558,8 +531,8 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 	[Tags]  rialto
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку RIALTO
-	Перевірити заголовок RIALTO
-	Порахувати кількість торгів RIALTO
+	Перевірити назву вкладки RIALTO
+	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -569,8 +542,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 Простий тендер
 	[Tags]  rialto
-	Натиснути На торговельний майданчик
-	old_search.Активувати вкладку RIALTO
+	[Setup]  Go To  ${start_page}/torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -580,8 +552,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 Двохетапний тендер
 	[Tags]  rialto
-	Натиснути На торговельний майданчик
-	old_search.Активувати вкладку RIALTO
+	[Setup]  Go To  ${start_page}/torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -661,225 +632,58 @@ Test Postcondition
 	Перевірити тип процедури для аукціонів  ${name}
 
 
-Зайти на сторінку про компанію
-  Click Element  ${button pro-kompaniyu}
-  Location Should Contain  pro-kompaniyu
+Перевірити наявність новин
+	${count}  novyny.Порахувати кількість новин
+	Run Keyword if  '${count}' == '0'  Fail  Де новини?
 
 
-Перевірити заголовок сторінки про компанію
-  ${should header}  Set Variable  Про майданчик SmartTender
-  ${is header}  Get Text  ${header text}
-  Should Be Equal  ${is header}  ${should header}
+Перевірити пошук новин через
+	[Arguments]  ${action}
+	${title}  novyny.Отримати заголовк новини за номером  1
+	novyny.Ввести текст для пошуку  ${title}
+	novyny.Виконати пошук  ${action}
+	${count}  novyny.Порахувати кількість новин
+	Run Keyword if  '${count}' != '1'  Fail  Має залишитися тільки один
+	Reload Page
 
 
-Перевірити текст сторінки про компанію
-  ${should text}  Set variable  Раді вітати Вас на електронному торговельному майданчику SmartTender!
-  ${is text}  Get Text  ${pro-kompaniyu text}
-  Should Contain  ${is text}  ${should text}
+Перевірити заголовок відкритої новини
+	[Arguments]  ${title}
+	${get}  Отримати заголовок відкритої новини
+	Should Be Equal  ${get}  ${title}
 
 
-Зайти на сторінку з новинами
-  Mouse Over  ${button pro-kompaniyu}
-  Click Element  ${dropdown navigation}[href='/novyny/']
-  Location Should Contain  novyny
-
-Перевірити заголовок сторінки з новинами
-  ${should}  Set Variable  Новини
-  ${is}  Get Text  ${novyny text}
-  Should Be Equal  ${is}  ${should}
+Перевірити лінк хлібних для новин
+	breadcrumbs.Перейти по хлібній крихті за номером  last()-1
 
 
-Порахувати кількість новин
-  ${count}  Get Element Count  ${news block}
-  Run Keyword if  '${count}' == '0'  Fail  Де новини?
-
-
-Перевірити пошук(ENTER)
-  ${text}  Get Text  ${news block} div>a
-  Input text  ${news search input}  ${text}
-  Press Key  ${news search input}  \\13
-  Дочекатись закінчення загрузки сторінки
-  ${count}  Get Element Count  ${news block}
-  Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
-  Reload Page
-
-
-Перевірити пошук(Click button)
-  ${text}  Get Text  ${news block} div>a
-  Input text  ${news search input}  ${text}
-  Click Element  ${news search button}
-  Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  120
-  ${count}  Get Element Count  ${news block}
-  Run Keyword if  '${count}' != '1'  Fail  Має бути тільки одна новина після пошуку
-  Reload Page
-
-
-Переглянути новину
-  Open Button  ${news block} div>a
-  ${header}  Get Text  css=h1
-  Should Not Be Empty  ${header}
-  ${news}  Get Text  css=#News
-  Should Not Be Empty  ${news}
-
-
-Перевірити лінк хлібних крох
-  ${location}  Get Location
-  Click element  xpath=//*[@class='ivu-breadcrumb']/a[last()]
-  ${newlocation}  Get Location
-  Should Not Be Equal  ${location}  ${newlocation}
-  Run Keyword And Expect Error  *  Get Text  css=#News
-
-
-Перевірити заголовок сторінки контактів
-  Sleep  5
-  ${should header}  Set Variable  Контакти SmartTender
-  ${is header}  Get Text  ${header text}
-  Should Be Equal  ${is header}  ${should header}
-
-
-Порахувати кількість контактів
-  ${count}  Get Element Count  ${kontakty block}
-  Run Keyword if  '${count}' == '0'  Fail  Нема до кого звертатися!
-
-
-Перевірити заголовок контакту
-  ${should text}  Set variable  З ПИТАНЬ
-  ${is text}  Get Text  ${kontakty text}
-  Should Contain  ${is text}  ${should text}
+Перевірити наявність контактів
+	${count}  contacts.Порахувати кількість контактів
+	Run Keyword if  '${count}' == '0'  Fail  Нема до кого звертатися!
 
 
 Зайти на сторінку клієнтів
-  Mouse Over  ${button pro-kompaniyu}
-  Click Element  ${dropdown navigation}[href='/nashi-klienty/']
-  Location Should Contain  /nashi-klienty/
+	Mouse Over  ${button pro-kompaniyu}
+	Click Element  ${dropdown navigation}[href='/nashi-klienty/']
+	Location Should Contain  /nashi-klienty/
 
 
-Перевірити заголовок сторінки клієнтів
-  Element Text Should Be  ${nashi-klienty text}  Індивідуальні рішення
-  Element Text Should Be  ${nashi-klienty text1}  Останнім часом до нас приєдналися
-
-
-Порахувати кількість клієнтів
-  ${count}  Get Element Count  ${client banner}
-  Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
-  Click Element  css=.container .row>button
-  Sleep  1
-  ${count}  Get Element Count  ${client banner}
-  Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
-
-
-Зайти на сторінку вакансій
-  Mouse Over  ${button pro-kompaniyu}
-  Click Element  ${dropdown navigation}[href='/vakansii/']
-  Location Should Contain  /vakansii/
-
-
-Перевірити заголовок сторінки вакансій
-  ${should}  Set variable  Вакансії
-  ${is}  Get Text  ${vakansii text}
-  Should Be Equal  ${is}  ${should}
-
-
-Зайти на сторінку с подіями
-  Click Element  ${button podii}
-  Location Should Contain  /podii/
-
-
-Превірити заголовок сторінки подій
-  ${should}  Set variable  Заходи SmartTender
-  ${is}  Get Text  ${novyny text}
-  Should Be Equal  ${is}  ${should}
-
-
-Перевірити наявність календаря
-  Page Should Contain Element  css=div#calendar[class]
-
-
-Зайти на сторінку реєстрації
-  Click Element  ${RegisterAnchor}
-  Location Should Contain  /reestratsiya/
-
-
-Перевірити заголовок сторінки реєстрації
-  ${should}  Set variable  Реєстрація
-  ${is}  Get Text  ${h1 header text}
-  Should Be Equal  ${is}  ${should}
-
-
-Перевірити підзаголовок сторінки реєстрації
-  ${should}  Set variable  Персональна інформація
-  ${is}  Get Text  css=.main-content h3
-  Should Be Equal  ${is}  ${should}
-
-
-Відкрити сторінку інструкцій
-  Click Element  xpath=//*[@href='/instruktcii/']
-  Location Should Contain  instruktcii
-  Дочекатись закінчення загрузки сторінки
-
-
-Перевірити заголовок сторінки інструкцій
-  ${get}  Get Text  xpath=//h1
-  Should Be Equal  ${get}  Інструкції
-
-
-Перевірити випаючий список інструкцій
-  ${field}  Set Variable  (//*[@class='ivu-card-body'])[1]//span[contains(text(), "Інструкції для")]
-  ${element from dropdown menu}  Set Variable  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
-  Click Element  ${field}
-  ${n}  Get Element Count  (//*[@class='ivu-card-body'])[1]//ul/li[@class]
-  ${list}  Create List
-  :FOR  ${i}  IN RANGE  ${n}
-  \  ${t}  Evaluate  str(${i}+1)
-  \  ${r}  Get Text  ${element from dropdown menu}[${t}]
-  \  Append To List  ${list}  ${r}
-  List Should Contain Value  ${list}  Показати всі
-  List Should Contain Value  ${list}  Інструкції загального напрямку
-  List Should Contain Value  ${list}  Інструкції для організатора
-  List Should Contain Value  ${list}  Інструкції для учасника
-  Click Element  ${field}
-  Sleep  2
-
-
-Перейти на сторінку карти сайту
-  Page Should Contain Element  ${site map}
-  ${location}  Get Location
-  Go to  ${location}/karta-saytu/
-  Location Should Contain  /karta-saytu/
-
-
-Перевірити заголовок сторінки карта сайта
-  ${should}  Set variable  Карта сайту
-  ${is}  Get Text  ${novyny text}
-  Should Be Equal  ${is}  ${should}
+Перевірити наявність клієнтів
+	${count}  nashi_klienty.Порахувати кількість клієнтів
+	Run Keyword if  ${count} < 5  Fail  Хто увів клієнтів?
 
 
 Порахувати кількість єлементів сторінки карта сайту
-  ${count}  Get Element Count  css=[class="row content"] li>a
+  ${count}  karta_saytu.Порахувати кількість елементів на сторінці
   ${number}  Run Keyword If
   ...  "${role}" == "viewer"  Set Variable  31
   ...  ELSE  Set Variable  30
   Run Keyword if  "${count}" < "${number}"  Fail  Нема всіх єлементів
 
 
-Перейти на сторінку запитань
-  Mouse Over  ${button komertsiyni-torgy}
-  Click Element  ${dropdown navigation}[href='/zapytannya-i-vidpovidi/']
-  Location Should Contain  /zapytannya-i-vidpovidi/
-  Дочекатись закінчення загрузки сторінки(circle)
-
-
-Перевірити заголовок сторінки запитань
-  ${should}  Set variable  Питання та відповіді
-  ${is}  Get Text  ${novyny text}
-  Should Be Equal  ${is}  ${should}
-
-
-Порахувати кількість запитань
-  Select Frame  css=iframe
-  ${count}  Get Element Count  css=#faqGroupTree>div>div.hover-div
-  Run Keyword if  ${count} < 5  Fail  Хто сховав Питання та відповіді?!
-  Unselect Frame
+Перевірити наявність запитань
+	${count}  zapytannya_i_vidpovidi.Порахувати кількість запитань
+	Run Keyword if  ${count} < 5  Fail  Хто сховав Питання та відповіді?!
 
 
 Перевірити закладку неконкурентні процедури
@@ -944,60 +748,6 @@ Test Postcondition
   Run Keyword if  '${count}' == '0'  Fail  Як це нема торгів?!
 
 
-Відкрити вікно договору
-  Click Element  ${button dogovir}
-  Sleep  3
-
-
-Перевірити заголовок договору
-  ${should header}  Set Variable  Договір
-  ${is header}  Get Text  css=#ui-id-2
-  Should Be Equal  ${is header}  ${should header}
-
-
-Перевірити перший абзац договору
-  Select Frame  css=#ui-id-1>iframe
-  ${should text}  Set Variable  Для участі у будь-якому статусі в електронних торгах (закупівлях) Вам необхідно укласти відповідний договір із Оператором електронного майданчика Smarttender.biz. Для цього Ви може скористатися Акцептом оферти (прийняття умов договору приєднання).
-  ${is text}  Get Text  css=p
-  Should Contain  ${is text}  ${should text}
-
-
-Перевірити лінки в тексті договору
-  ${should link1}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2015-003-pro-nadannya-informatsiynyh-poslug-pid-chas-provedennya-protsedur-publichnyh-zakupivel-prozorro-ta-zakupivel-rialto/
-  ${should link2}  Set Variable  https://smarttender.biz/instruktsii/dogovir-pryednannya-so-2016-001-pro-nadannya-poslug-z-organizatsii-ta-provedennya-vidkrytyh-elektronnyh-torgiv-auktsioniv/
-  ${is link1}  Get Element Attribute  ${contract link1}  href
-  ${is link2}  Get Element Attribute  ${contract link2}  href
-  Should Be Equal  ${is link1}  ${should link1}
-  Should Be Equal  ${is link2}  ${should link2}
-  Unselect Frame
-
-
-Відкрити вікно курсів валют
-  Mouse Over  ${button komertsiyni-torgy}
-  Click Element  ${dropdown navigation}[href='/kursy-valyut/']
-
-
-Перевірити шлях курсів валют
-  Location Should Contain  kursy-valyut
-
-
-Перевірити заголовок курсів валют
-  ${should header}  Set Variable  Курсы валют
-  ${is header}  Get Text  ${exchange rates header}
-  Should Be Equal  ${is header}  ${should header}
-
-
-Перевірити лінки курсів валют
-  Select Frame  css=#main #content iframe
-  ${should link1}  Set Variable  http://www.bank.gov.ua/control/uk/curmetal/currency/
-  ${should link2}  Set Variable  http://minfin.com.ua/currency/mb/archive/usd/
-  ${is link1}  Get Element Attribute  ${exchange link1}  href
-  ${is link2}  Get Element Attribute  ${exchange link2}  href
-  Should Contain  ${is link1}  ${should link1}
-  Should Contain  ${is link2}  ${should link2}
-  Unselect Frame
-
-
 Відфільтрувати по статусу торгів
   [Arguments]  ${status}
   Click Element  ${dropdown menu for bid statuses}
@@ -1039,50 +789,6 @@ Test Postcondition
   [Arguments]  ${bid form}
   Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
-
-
-Зайти на сторінку тарифів
-  Click Element  ${button taryfy}
-  Location Should Contain  /taryfy/
-
-
-Перевірити кількість закладок
-  Select Frame  css=iframe
-  ${count}  Get Element Count  ${taryfy text}
-  Run Keyword if  '${count}' != '4'  Fail  Не вірна кількість закладок тарифів
-
-
-Закладка Публічні закупівлі
-  Click Element  ${taryfy text}[1]
-  Page Should Contain Element  ${taryfy text}[1][@class="active"]
-  ${should}  Set variable   Публічні закупівлі ProZorro та торги RIALTO
-  ${is}  Get Text  ${taryfy text}[1]
-  Should Be Equal  ${is}  ${should}
-
-
-Закладка Комерційні торги
-  Click Element  ${taryfy text}[2]
-  Page Should Contain Element  ${taryfy text}[2][@class="active"]
-  ${should}  Set variable    Комерційні торги
-  ${is}  Get Text  ${taryfy text}[2]
-  Should Be Equal  ${is}  ${should}
-
-
-Закладка Продаж активів банків, що ліквідуються (ФГВФО)
-  Click Element  ${taryfy text}[3]
-  Page Should Contain Element  ${taryfy text}[3][@class="active"]
-  ${should}  Set variable    Продаж активів банків, що ліквідуються (ФГВФО)
-  ${is}  Get Text  ${taryfy text}[3]
-  Should Be Equal  ${is}  ${should}
-
-
-Закладка Продаж і оренда майна/активів Державних підприємств
-  Click Element  ${taryfy text}[4]
-  Page Should Contain Element  ${taryfy text}[4][@class="active"]
-  ${should}  Set variable    Продаж і оренда майна/активів Державних підприємств
-  ${is}  Get Text  ${taryfy text}[4]
-  Should Be Equal  ${is}  ${should}
-  Unselect Frame
 
 
 Перевірити сторінку окремого лота в мультилоті
@@ -1187,72 +893,20 @@ Test Postcondition
   Should Be Equal  '${n}'  '1'
 
 
-Зайти на сторінку пошуку elastic
-  Go To  ${start_page}/Participation/tenders/
-  Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Виконати пошук в elastic
-  [Arguments]  ${text}
-  Input Text  ${elastic search input}  ${text}
-  Click Element  ${elastic search button}
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  Wait Until Page Contains Element  ${elastic search clean filter}
-
-
-Зайти на сторінку блогу
-  Mouse Over  ${button pro-kompaniyu}
-  Click Element  ${dropdown navigation}[href='/blog/']
-  Location Should Contain  /blog/
-
-
-Перевірити загловок блогу
-   Element Should Contain  //h1  Блог
-
-
 Перевірити наявність блогів
-  ${count}  Get Element Count  ${blog}
-  Run Keyword if  ${count} < 1  Fail  2018+, не можна без блогів!
+	${count}  blog.Порахувати кількість блогів
+	Run Keyword if  ${count} < 1  Fail  2018+, не можна без блогів!
 
 
-Перевірити пошук на сторінці блогів
-  ${get}  Get Text  ${blog}>div a
-  Input Text  ${blog input}  ${get}
-  Click Element  ${blog search button}
-  Дочекатись закінчення загрузки сторінки
-  ${count}  Get Element Count  ${blog}
-  Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
-  [Return]  ${get}
-
-
-Відкрити Блог
-  Open Button  ${blog} a
+Перевірити результат пошуку на сторінці блогів
+	${count}  blog.Порахувати кількість блогів
+	Run Keyword if  ${count} != 1  Fail  Повинен залишитися тільки один БЛОГ!
 
 
 Перевірити відкритий блог
   [Arguments]  ${title}
-  Element Should Contain  //h1  ${title}
-  Page Should Contain Element  css=#NewsContent
-
-
-Зайти на сторінку відгуків
-  Mouse Over  ${button pro-kompaniyu}
-  Click Element  ${dropdown navigation}[href='/vidhuky/']
-  Location Should Contain  /vidhuky/
-
-
-Перевірити заголовок відгуків
-  Element Should Contain  //h1  Відгуки
-
-
-Перевірити наявність відгуків
-  ${count}  Get Element Count  ${vidhuky}
-  Run Keyword if  ${count} < 6  Fail  оу, а було як мінінмум 6 відгуків
-
-
-Відкрити та перевірити відгук
-  Click Element  ${vidhuky}
-  Wait Until Page Contains Element  //div[@id="pdf-main-container"]//*[@id="div-pdf-canvas"]|//*[@class="ivu-modal-content"]//img  10
+  ${get}  blog.Отримати заголовок відкритого блогу
+  Should Be Equal  ${get}  ${title}
 
 
 Відкрити сторінку налаштування підписки
@@ -1599,3 +1253,12 @@ create_e-mail
 	${count}  plany.Порахувати кількість плану
 	Run Keyword if  '${count}' == '0'  Fail  Як це ми без плану?!
 
+
+Перевірити наявність відгуків
+	${count}  vidhuky.Порахувати кількість відгуків
+	Run Keyword if  ${count} < 6  Fail  оу, а було як мінінмум 6 відгуків
+
+
+Перевірити наявність інструкцій
+	${count}  instruktcii.Порахувати кількість інструкції
+	Run Keyword if  ${count} < 2  Fail  Як це ми без інструкцій?!

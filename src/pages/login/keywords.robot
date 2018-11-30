@@ -3,7 +3,6 @@ Resource  	  ../../common/loading/loading.robot
 
 *** Variables ***
 ${login link}                       id=SignIn
-${events}                           xpath=//*[@id="LoginDiv"]//a[2]
 ${login button}                     xpath=//*[@id="loginForm"]/button[2]
 ${login field}                      id=login
 ${password field}                   id=password
@@ -13,7 +12,7 @@ ${close promt}                      xpath=//*[contains(@class, 'notification-pro
 
 *** Keywords ***
 Відкрити вікно авторизації
-  Click Element  ${events}
+  Відкрити сторінку Заходи SmartTender
   Click Element  ${login link}
   Sleep  2
 
