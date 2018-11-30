@@ -7,4 +7,5 @@
 	...  Create Session  api  https://public-api-sandbox.prozorro.gov.ua/api/0/tenders/${id}
 	${data}  Get Request  api  \
 	${data}  Set Variable  ${data.json()}
-	[Return]  ${data}
+	${cbd_data}  Set Variable  ${data['data']}
+	[Return]  ${cbd_data}

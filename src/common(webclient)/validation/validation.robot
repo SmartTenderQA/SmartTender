@@ -44,3 +44,9 @@ Ignore WebClient Error
 Перевірка на успішність публікації тендера
 	${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@id="IMMessageBox_PWH-1T"]
 	Run Keyword If  ${status}  Fatal Error  Тендер не опубліковано
+
+
+Перевірити стадію тендера
+	[Arguments]  ${stage}
+	${get}  Get Text  //tr[contains(@class, "rowselected")]//td[4]
+	Should Contain  ${get}  ${stage}
