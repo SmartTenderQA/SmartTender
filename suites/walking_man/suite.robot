@@ -298,7 +298,7 @@ ${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//spa
 
 
 Аукціон на продаж. Відкриті торги
-	[Tags]  commercial1  -test
+	[Tags]  commercial  -test
 	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
