@@ -19,7 +19,7 @@ Suite Teardown  Close All Browsers
 
 Створити лоти
 	[Tags]  create_tender
-	Активувати вкладку  Лоти
+	webclient_elements.Активувати вкладку  Лоти
 	Натиснути додати(F7)  Додавання лотів
 	Створити довільний классифікатор ресурсів
 	Закрити вікно додавання лотів
@@ -28,7 +28,7 @@ Suite Teardown  Close All Browsers
 
 Перевести тендер на другий єтап
 	[Tags]  create_tender
-	Активувати вкладку  Тендери
+	webclient_elements.Активувати вкладку  Тендери
 	Натиснути надіслати вперед(Alt+Right)
 	Закрити вікно  Запит на комерційну пропозицію_
 	Закрити валідаційне вікно  Зберегти документ?  Так
@@ -38,14 +38,14 @@ Suite Teardown  Close All Browsers
 
 Перевести тендер на третій єтап
 	[Tags]  create_tender
-	Активувати вкладку  Тендери
+	webclient_elements.Активувати вкладку  Тендери
 	Натиснути надіслати вперед(Alt+Right)
 	Перевірити стадію тендера  3.Затвердження запиту
 
 
 Перевести тендер на четвертий єтап
 	[Tags]  create_tender
-	Активувати вкладку  Тендери
+	webclient_elements.Активувати вкладку  Тендери
 	Натиснути надіслати вперед(Alt+Right)
 	Перевірити стадію тендера  4.Прийом комерційних пропозицій (Web-тендер online)
 
@@ -111,7 +111,7 @@ Test Postcondition
 
 
 Перевірити створений лот
-	Активувати вкладку  Лоти
+	webclient_elements.Активувати вкладку  Лоти
 	Первірити title створеного лоту
 	Первірити unit_amount створеного лоту
 	Первірити unit_name створеного лоту
@@ -134,12 +134,7 @@ Test Postcondition
 
 
 Натиснути на планету потрібного тендеру
-	Click Element  //tr[contains(@class, "rowselected")]//td[3]
-	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
-	${value}  Get Element Attribute  //*[@id="pcCustomDialog_PW-1"]//a  onclick
-	${href}  ${ticket}  get_tender_href_for_commercial_owner  ${value}
-	Go To  ${href}${ticket}
-	Location Should Contain  ?ticket=
+    ${href}  Отримати посилання на вибраний тендер по значку "Планета"
 	Set To Dictionary  ${data}  href  ${href}
 
 

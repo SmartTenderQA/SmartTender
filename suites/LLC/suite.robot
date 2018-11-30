@@ -33,7 +33,7 @@ ${content}  Приймаю умови Договору приєднання пр
 
 *** Keywords ***
 Закрити вікно LLC
-  Wait Until Page Contains Element  //*[@id="ui-id-2" and .="Заміна оператора"]
+  Wait Until Page Contains Element  //*[@id="ui-id-2" and .="Заміна оператора"]  20
   Click Element   css=[title=close]
   Wait Until Element Is Not Visible  css=[title=close]
 
