@@ -1,5 +1,6 @@
 *** Keywords ***
 Перевірити сторінку
+	Location Should Contain  /invoicepage/
 
 
 Ввести суму до оплати

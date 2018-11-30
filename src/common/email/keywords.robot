@@ -24,7 +24,7 @@ ${field_password}       //input[@type="password"]
 	Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
 	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  welcome_dialog_next
 	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  ok
-    Run Keyword And Ignore Error  Відмовитись отримувати сповіщення в email
+	Run Keyword And Ignore Error  Відмовитись отримувати сповіщення в email
 
 
 Закрити валідаційне вікно в email
