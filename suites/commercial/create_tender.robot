@@ -13,19 +13,15 @@ Suite Teardown  Close All Browsers
 	Заповинити поле дата закінчення прийому пропозиції
 	Заповнити поле категорія тендера
 	Заповинити поле найменування тендера
-	Вибрати вид тендера  Відкриті торги. Аукціон
+	Заповнити поле вид тендера
 	Натиснути "Додати" та змінити дату за необхідністю
 
 
 Створити лоти
 	[Tags]  create_tender
-	${list}  Create List
-	Set To Dictionary  ${data}  lots  ${list}
-	${lot}  Create Dictionary
-	Append To List  ${data.lots}  ${lot}
 	Активувати вкладку  Лоти
 	Натиснути додати(F7)  Додавання лотів
-	Створити классифікатор ресурсів
+	Створити довільний классифікатор ресурсів
 	Закрити вікно додавання лотів
 	Перевірити створений лот
 
@@ -56,8 +52,12 @@ Suite Teardown  Close All Browsers
 
 Перевірити посилання до на тендер організатором
 	[Tags]  create_tender
-	Натиснути на планету потібного тендеру
+	Натиснути на планету потрібного тендеру
 	Log  ${data}
+
+
+
+
 
 
 *** Keywords ***
@@ -70,7 +70,6 @@ Test Postcondition
 	Log Location
 	Run Keyword If Test Failed  Capture Page Screenshot
 	Log  ${data}
-	Set Global Variable  ${data}
 
 
 ##########################################################
@@ -79,114 +78,36 @@ Test Postcondition
 	Wait Until Keyword Succeeds
 	...  30
 	...  2
-	...  Ввести та перевірити введені дані в поле дати
-	...  Дата закінч. прийому
-	...  ${date}
-	${data}  Create Dictionary  end_date  ${date}
-	Set Global Variable  ${data}
+	...  Заповнити "Дата закінч. прийому"  ${date}
+	Set To Dictionary  ${data}  end_date   ${date}
 
 
-Ввести та перевірити введені дані в поле дати
-	[Arguments]  ${field_name}  ${date}
-	${date input}  Set Variable
-	...  //*[contains(text(), "${field_name}")]/following-sibling::*[@data-type="DateEdit"]//input
-	Input Text  ${date input}  ${date}
-	Sleep  .5
-	Click Element  //*[contains(text(), "${field_name}")]
-	Sleep  .5
-	${get}  Get Element Attribute  ${date input}  value
-	Should Be Equal  ${get}  ${date}
-
-
-##########################################################
 Заповнити поле категорія тендера
-	Відкрити вікно(F10)  Категорія тендера  Класифікація
-	${classification_name}  Вибрати довільну ЗЕЛЕНУ класифікацію
-	Підтвердити вибір(F10)
-	Перевірити вибір(F10)  Категорія тендера  ${classification_name}
+    ${classification_name}  Вибрати довілну категорію тендера
 	Set To Dictionary  ${data}  classification_name  ${classification_name}
 
 
-Вибрати довільну ЗЕЛЕНУ класифікацію
-	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//tbody//tr[@class]/td[@style="background-color: #D1FFA4"][last()]
-	${count}  Get Element Count  ${row}
-	${n}  random_number  1  ${count}
-	Click Element  (${row})[${n}]
-	Sleep  3
-	${classification_name}  Get Text  (${row})[${n}]
-	[Return]  ${classification_name}
-
-
-############################################################
 Заповинити поле найменування тендера
-	${textarea}  Set Variable  //*[contains(text(), "Найм. тендера")]/following-sibling::table//textarea
 	${text}  create_sentence  4
-	Заповнити текстове поле  ${textarea}  ${text}
+	Заповнити "Найм. тендера"  ${text}
 	Set To Dictionary  ${data}  tender_name  ${text}
 
 
+Заповнити поле вид тендера
+	${tender_type}  Вибрати вид тендера  Відкриті торги. Аукціон
+	Set To Dictionary  ${data}  tender_type  ${tender_type}
+
+
 ############################################################
-Створити классифікатор ресурсів
-	Відкрити вікно(F10)  Лот  Тендер. Классификатор ресурсов  //*[@id="pcModalMode_PW-1"]
-	Натиснути додати(F7)  Додавання. Класифікатор ресурсів  //*[@id="pcModalMode_PW-1"]
-	${lot_name}  Заповнити поле найменування для класифікатора
+Створити довільний классифікатор ресурсів
+	${lot_name}  ${unit_name}  ${amount}  Створити классифікатор ресурсів
+	${list}  Create List
+	Set To Dictionary  ${data}  lots  ${list}
+	${lot}  Create Dictionary
+	Append To List  ${data.lots}  ${lot}
 	Set To Dictionary  ${data.lots[0]}  lot_name  ${lot_name}
-	Вибрати одиниці виміру для классифікатора ресурсів
-	Натиснути OkButton
-	Підтвердити вибір(F10)
-	Вказати кількість одиниць виміру для классифікатора ресурсів
-	Run Keyword And Ignore Error  Натиснути OkButton
-
-
-Заповнити поле найменування для класифікатора
-	${input}  Set Variable  //*[contains(text(), "Найменування")]/following-sibling::table//input
-	${text}  create_sentence  4
-	Заповнити текстове поле  ${input}  ${text}
-	[Return]  ${text}
-
-
-Вибрати Одиниці виміру для классифікатора ресурсів
-	Відкрити вікно(F10)  Облікова ОВ  Одиниці виміру
-	${unit_name}  Вибрати довільну одиницю виміру
-	Підтвердити вибір(F10)
-	Перевірити вибір(F10)  Облікова ОВ  ${unit_name}
 	Set To Dictionary  ${data.lots[0]}  unit_name  ${unit_name}
-
-
-Вибрати довільну одиницю виміру
-	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
-	${count}  Get Element Count  ${row}
-	${n}  random_number  1  ${count}
-	${unit_name}  Вибрати довільну одиницю виміру Click  (${row})[${n}]
-	[Return]  ${unit_name}
-
-
-Вибрати довільну одиницю виміру Click
-	[Arguments]  ${selector}
-	Click Element At Coordinates  ${selector}  -30  0
-	Sleep  2
-	${unit_name}  Get Text  ${selector}//td[3]
-	Capture Page Screenshot
-	${status}  Run Keyword And Return Status  Page Should Contain Element   ${selector}[contains(@class, 'selected')]
-	Run Keyword If  ${status} != ${True}  Вибрати довільну одиницю виміру Click  ${selector}
-	[Return]  ${unit_name}
-
-
-Вказати кількість одиниць виміру для классифікатора ресурсів
-	${input_field}  Set Variable  //*[contains(text(), "Загальний обсяг")]/following-sibling::table//input
-	${amount}  random_number  1  1000
-	Input Text  ${input_field}  ${amount}
-	Press Key  ${input_field}  \\09
-	${get}  Get Element Attribute  ${input_field}  value
-	${str}  Evaluate  str(int(${get}))
-	Should Be Equal  ${str}  ${amount}
 	Set To Dictionary  ${data.lots[0]}  unit_amount  ${amount}
-
-
-Закрити вікно додавання лотів
-	${selector}  Set Variable  //*[@id="pcModalMode_PWH-1"]//*[@alt="Close"]
-	Click Element  ${selector}
-	Wait Until Element Is Not Visible  ${selector}  30
 
 
 Перевірити створений лот
@@ -212,7 +133,7 @@ Test Postcondition
 	Should Be Equal  ${get}  ${data.lots[0].unit_name}
 
 
-Натиснути на планету потібного тендеру
+Натиснути на планету потрібного тендеру
 	Click Element  //tr[contains(@class, "rowselected")]//td[3]
 	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
 	${value}  Get Element Attribute  //*[@id="pcCustomDialog_PW-1"]//a  onclick
@@ -227,7 +148,7 @@ Test Postcondition
 
 
 Натиснути "Додати" та змінити дату за необхідністю
-	${status}  Run Keyword And Return Status  Натиснути OkButton
+	${status}  Run Keyword And Return Status  Натиснути додати (додавання тендеру)
 	Run Keyword If  '${status}' == 'False'  Змінити дату
 
 
@@ -236,10 +157,8 @@ Test Postcondition
 	Wait Until Keyword Succeeds
 	...  30
 	...  2
-	...  Ввести та перевірити введені дані в поле дати
-	...  Дата закінч. прийому
-	...  ${new_date}
-	Set To Dictionary  ${data}  end_date  ${new_date}
+	...  Заповнити "Дата закінч. прийому"  ${new_date}
+	Set To Dictionary  ${data}  end_date   ${new_date}
 	Натиснути "Додати" та змінити дату за необхідністю
 
 

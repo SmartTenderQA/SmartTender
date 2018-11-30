@@ -58,11 +58,12 @@ Resource	pages/start_page/start_page.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
 
 Resource    pages(webclient)/desktop/desktop.robot
-Resource    pages(webclient)/main_page/main_page.robot
+Resource    pages(webclient)/main_page/actions.robot
 Resource    pages(webclient)/main_page/header.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
 Resource    pages(webclient)/qualification/qualification.robot
 Resource    pages(webclient)/second_stage/second_stage.robot
+Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.robot
 
 
 Resource    ../steps/create_tender/cdb1_sale_property.robot

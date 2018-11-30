@@ -17,13 +17,21 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
 	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tenderd_uai}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
-    Звебегти дані в файл
-    Close All Browsers
+    Зберегти словник у файл  ${data}  data
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    Створити словник  cdb
+    Go To  ${tender_href}
+    ${id}  Отритами дані зі сторінки  ['prozorro-id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 If skipped create tender
