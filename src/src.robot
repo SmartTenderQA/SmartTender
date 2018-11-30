@@ -1,5 +1,4 @@
 *** Settings ***
-** Settings **
 Library     Selenium2Library
 Library     BuiltIn
 Library     Collections
@@ -10,6 +9,7 @@ Library     String
 Library     DateTime
 
 
+Resource    common/breadcrumbs/breadcrumbs.robot
 Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
@@ -39,13 +39,20 @@ Resource    Faker/faker.robot
 Resource    pages/asset_detail_page/asset_detail_page.robot
 Resource    pages/auction/auction.robot
 Resource    pages/auction_detail_page/auction_detail_page.robot
+Resource    pages/blog/blog.robot
 Resource    pages/contacts/contacts.robot
+Resource    pages/contract/contract.robot
 Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
+Resource    pages/instruktcii/instruktcii.robot
+Resource    pages/karta_saytu/karta_saytu.robot
 Resource    pages/komertsiyni_torgy_tender_detail_page/komertsiyni_torgy_tender_detail_page.robot
+Resource    pages/kursy_valyut/kursy_valyut.robot
 Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
+Resource    pages/nashi_klienty/nashi_klienty.robot
+Resource    pages/novyny/novyny.robot
 Resource    pages/participation_request/participation_request.robot
 Resource    pages/personal_account/personal_account.robot
 Resource    pages/personal_account/invoice/invoice.robot
@@ -61,17 +68,23 @@ Resource    pages/personal_account/subscription/subscription.robot
 Resource    pages/plany/plany.robot
 Resource    pages/plany_detail_page/plany_detail_page.robot
 Resource    pages/povidomlenya/povidomlenya.robot
+Resource    pages/pro_kompaniyu/pro_kompaniyu.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
-Resource	pages/start_page/start_page.robot
+Resource	  pages/start_page/start_page.robot
+Resource	  pages/taryfy/taryfy.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
+Resource    pages/vakansii/vakansii.robot
+Resource    pages/vidhuky/vidhuky.robot
+Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
 
 Resource    pages(webclient)/desktop/desktop.robot
-Resource    pages(webclient)/main_page/main_page.robot
+Resource    pages(webclient)/main_page/actions.robot
 Resource    pages(webclient)/main_page/header.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
 Resource    pages(webclient)/qualification/qualification.robot
 Resource    pages(webclient)/second_stage/second_stage.robot
+Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.robot
 
 
 Resource    ../steps/create_tender/cdb1_sale_property.robot

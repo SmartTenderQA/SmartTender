@@ -56,9 +56,10 @@
     Sleep  1
 
 
-Звебегти дані в файл
-	${json}  conver dict to json  ${data}
-	Create File  ${OUTPUTDIR}/artifact.json  ${json}
+Зберегти словник у файл
+    [Arguments]  ${dict}  ${filename}
+	${json}  conver dict to json  ${dict}
+	Create File  ${OUTPUTDIR}/artifact_${filename}.json  ${json}
 
 
 Вибір об'екту
@@ -78,13 +79,7 @@
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
 
 
-Вибрати вид тендера
-	[Arguments]  ${tender_type}
-	Заповнити поле за допомогою(F10)
-	...  Вид тендер
-	...  Прості довідники
-	...  ${tender_type}
-	Set To Dictionary  ${data}  tender_type  ${tender_type}
+
 
 
 Заповнити поле за допомогою(F10)

@@ -35,7 +35,7 @@ Test Teardown  Run Keywords
 	Зберегти чернетку
 	Оголосити тендер
 	Run Keyword  Отримати та зберегти tender_id.${site}
-	Звебегти дані в файл
+	Зберегти словник у файл  ${data}  data
 
 
 If skipped create tender

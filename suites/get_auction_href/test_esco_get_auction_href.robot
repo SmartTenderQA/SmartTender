@@ -22,7 +22,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
-    Звебегти дані в файл
+    Зберегти словник у файл  ${data}  data
     Close All Browsers
 
 

@@ -20,3 +20,4 @@ ${komertsiyni-torgy icon}			//*[@id="main"]//a[2]/img
 
 Відкрити особистий кабінет
     Run Keyword  Відкрити особистий кабінет для ${role}
+

@@ -108,8 +108,8 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
   [Arguments]  ${page}
   Set Test Variable  ${page}
   Should Be True  ${page} != 6
-  Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"
   Run Keyword If  '${page}' != '1'  Click Element  //a[@class="pager-button" and text()=${page}]
+  Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"
 
 
 Підрахувати кількість мультилотів на сторінці

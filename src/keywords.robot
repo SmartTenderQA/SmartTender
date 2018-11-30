@@ -1,10 +1,7 @@
-*** Settings ***
-Variables   /home/testadm/users_variables.py
-Variables   ../users_variables.py
-
-
 *** Variables ***
 ${IP}
+${users_variables_path1}   /home/testadm/users_variables.py
+${users_variables_path2}   ../users_variables.py
 
 
 *** Keywords ***
@@ -24,6 +21,8 @@ ${IP}
 
 Отримати дані користувача
 	[Arguments]  ${user}
+	${status}  Run Keyword And Return Status  Import Variables  ${users_variables_path1}
+	Run Keyword If  ${status} == ${False}  Import Variables  ${users_variables_path2}
 	${a}  Create Dictionary  a  ${users_variables}
 	${users_variables}  Set Variable  ${a.a}
 	Set Global Variable  ${name}  ${users_variables.${user}.name}
