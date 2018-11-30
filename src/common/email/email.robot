@@ -19,9 +19,9 @@ Resource  				keywords.robot
 
 Перейти за посиланням в листі
 	[Arguments]  ${title}
-	${link selector}  Set Variable  xpath=//a[contains(text(),'${title}')]
+	${link selector}  Set Variable  //a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	Click Element  (${link selector})[last()]
+	Click Element  xpath=(${link selector})[last()]
 	Select Window  New
 	sleep  0.5
 
