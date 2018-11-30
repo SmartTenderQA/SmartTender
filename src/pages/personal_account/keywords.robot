@@ -17,6 +17,7 @@ ${paid_services}                                //i[@class='fa fa-shopping-bag']
 ${tender_providing}                             //i[@class='fa fa-university']//ancestor::a
 ${legal_help}                                   //i[@class='fa fa-graduation-cap']//ancestor::a
 ${personal_data}                                //i[@class='fa fa-user']//ancestor::a
+${user_profile}                                 //i[@class='fa fa-pencil-square-o']//ancestor::a
 ${company_profile}                              //i[@class='fa fa-building-o']//ancestor::a
 ${change_password}                              //i[@class='fa fa-key']//ancestor::a
 ${user_management}                              //i[@class='fa fa-users']//ancestor::a

@@ -40,19 +40,11 @@ Resource    	keywords.robot
   Element Should Contain  ${element}  E-mail адреси для дублювання всіх розсилок
 
 
-Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
-  ${mail}  create_e-mail
-  Ввести дані в поле E-mail  ${mail}
-  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
-  Click Element  ${close button}
-  Wait Until Page Does Not Contain Element  ${close button}
-
-
-Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
-  ${n}  random_number  4  20
-  ${mail}  Generate Random String  ${n}  [LOWER]
-  Ввести дані в поле E-mail  ${mail}
-  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+Ввести дані в поле E-mail
+  [Arguments]  ${mail}
+  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
+  Input Text  ${input field}//input  ${mail}
+  Click Element  ${input field}//button
 
 
 Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії

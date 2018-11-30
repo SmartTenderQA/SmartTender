@@ -60,7 +60,7 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 
 *** Test Cases ***
 Аналітика участі
-  [Tags]  your_account
+  [Tags]  your_account  -test
   start_page.Відкрити особистий кабінет
   personal_account.Відкрити сторінку за назвою  analytics
   Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
@@ -69,8 +69,8 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
   Should Be Equal  ${status}  ${True}
   ${status}  analytics.Перевірити відображення таблиці
   Should Be Equal  ${status}  ${True}
-  Перевірити роботу кругової діаграми
-  Перевірити роботу фільтра по періоду
+  analytics.Перевірити роботу кругової діаграми
+  Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
 
 
 Налаштування підписки
@@ -99,7 +99,10 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
 Особисті дані користувача
   [Tags]  your_account
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
-  personal_account.Відкрити сторінку за назвою  company_profile
+  Run Keyword If  '${site}' == 'prod'
+  ...  personal_account.Відкрити сторінку за назвою  company_profile
+  Run Keyword If  '${site}' == 'test'
+  ...  personal_account.Відкрити сторінку за назвою  user_profile
 
 
 Змінити пароль
@@ -119,10 +122,12 @@ ${last found multiple element}     		xpath=(//*[@id='tenders']//*[@class='head']
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  reports
   reports.Встановити фільтр Тільки обрані звіти  увімкнути
-  reports.Прибрати усі звіти з обраних
-  ${name}  Додати в обрані випадковій звіт та повернути назву
+  Прибрати усі звіти з обраних
   reports.Встановити фільтр Тільки обрані звіти  вимкнути
-  reports.Прибрати усі звіти з обраних
+  ${name}  Додати в обрані випадковій звіт та повернути назву
+  reports.Встановити фільтр Тільки обрані звіти  увімкнути
+  reports.Перевірити наявність звіту за назвою  ${name}
+  Прибрати усі звіти з обраних
 
 
 Відгуки
@@ -1314,16 +1319,11 @@ create_e-mail
   analytics.Вибрати конкурента з списка за номером  1
 
 
-Перевірити роботу кругової діаграми
-  ${tenders_before}  Отримати кількість торгів
-  Натиснути по діаграмі
-  ${tenders_after}  Отримати кількість торгів
-  Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
-
-
 Перевірити роботу фільтра по періоду
+  [Arguments]  ${before}  ${after}
+  analytics.Змінити період аукціону  ${before}
   ${tenders_before}  Отримати кількість торгів
-  Змінити період аукціону  Поточний рік
+  analytics.Змінити період аукціону  ${after}
   ${tenders_after}  Отримати кількість торгів
   Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
 
@@ -1340,24 +1340,46 @@ create_e-mail
 
 Перевірити блок E-mail адреси для дублювання всіх розсилок
   subscription.Перевірити заголовок E-mail адреси для дублювання всіх розсилок
-  subscription.Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
-  subscription.Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  ${mail}  create_e-mail
+  subscription.Ввести дані в поле E-mail  ${mail}
+  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+  ${n}  random_number  4  20
+  ${mail}  Generate Random String  ${n}  [LOWER]
+  subscription.Ввести дані в поле E-mail  ${mail}
+  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
 
 
 Перевірити вкладки підписки на закупівлю
   subscription.Активувати тип торгів для підписки  на продаж
-  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Публічні закупівлі
-  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  RIALTO.Закупівлі
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Публічні закупівлі
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  RIALTO.Закупівлі
 
 
 Перевірити вкладки підписки на продаж
   subscription.Активувати тип торгів для підписки  на продаж
-  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів банків
-  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів держпідприємств
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів банків
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів держпідприємств
+
+
+Прибрати усі звіти з обраних
+  :FOR  ${i}  IN RANGE  999999
+    \  ${count}  reports.Прибрати звіт з обраних
+    \  Exit For Loop If    ${count} == 0
 
 
 Додати в обрані випадковій звіт та повернути назву
-  ${report}  reports.Вибрати випадковий звіт
-  Додати звіт в обрані  ${report}
-  ${report name}  Отримати назву звіту за номером  ${report}
+  ${count}  reports.Отримати кількість звітів
+  ${report num}  random_number  1  ${count}
+  reports.Додати звіт в обрані за номером  ${report num}
+  ${report name}  reports.Отримати назву звіту за номером  ${report num}
   [Return]  ${report name}

@@ -17,13 +17,6 @@ ${window header}           //*[@class="ivu-modal-mask" and not(contains(@style, 
   Page Should Contain Element  (//*[@class="ivu-card-body" and contains(., "${text}")])[last()]
 
 
-Ввести дані в поле E-mail
-  [Arguments]  ${mail}
-  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
-  Input Text  ${input field}//input  ${mail}
-  Click Element  ${input field}//button
-
-
 Перевірити наявність перемикача для активування сповіщень
   ${element}  Set Variable  //*[@class="ivu-row" and contains(., "Періодичність оповіщення про публікацію")]//span[contains(@class, "ivu-switch")]
   Page Should Contain Element  ${element}

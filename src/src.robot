@@ -54,6 +54,7 @@ Resource    pages/personal_account/legal_help/legal_help.robot
 Resource    pages/personal_account/tender_providing/tender_providing.robot
 Resource    pages/personal_account/change_password/change_password.robot
 Resource    pages/personal_account/company_profile/company_profile.robot
+Resource    pages/personal_account/user_profile/user_profile.robot
 Resource    pages/personal_account/reports/reports.robot
 Resource    pages/personal_account/user_management/user_management.robot
 Resource    pages/personal_account/subscription/subscription.robot

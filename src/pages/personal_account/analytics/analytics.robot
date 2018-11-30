@@ -38,12 +38,20 @@ ${company name input}       //*[@class='ivu-input-wrapper ivu-input-type']//inpu
 
 
 Перевірити відображення діаграм
+  ${result}  Set Variable  ${True}
   : FOR  ${i}  IN RANGE  1  7
   \  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${diagram}[${i}]
-  \  Run Keyword If  ${status} == ${False}  [Return]  ${status}
+  \  ${result}  Evaluate  ${result} and ${status}
   [Return]  ${True}
 
 
 Перевірити відображення таблиці
   ${status}  Run Keyword And Return Status  Element Should Be Visible  //*[@class="ivu-table-header"]//tr
   [Return]  ${status}
+
+
+Перевірити роботу кругової діаграми
+  ${tenders_before}  Отримати кількість торгів
+  Натиснути по діаграмі
+  ${tenders_after}  Отримати кількість торгів
+  Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма

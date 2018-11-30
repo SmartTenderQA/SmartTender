@@ -19,13 +19,15 @@ ${report}               //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
   ...  Click Element  ${switcher}
   Run Keyword If  "${status}" == "true" and "${action}" == "вимкнути"
   ...  Click Element  ${switcher}
-  Sleep  2
+  Sleep  1
 
 
-Прибрати усі звіти з обраних
-  :FOR  ${i}  IN RANGE  999999
-    \  ${status}  Прибрати звіт з обраних
-    \  Exit For Loop If    ${status} == ${False}
+Прибрати звіт з обраних
+  ${count}  Отримати кількість звітів
+  Run Keyword If  ${count} > 0  Click Element  ${report}//*[@class="fa fa-star"]
+  Sleep  .5
+  ${count}  Отримати кількість звітів
+  [Return]  ${count}
 
 
 Отримати кількість звітів
@@ -33,7 +35,19 @@ ${report}               //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
   [Return]  ${count}
 
 
-Вибрати випадковий звіт
-  ${count}  Get Element Count  ${report}
-  ${n}  random_number  1  ${count}
-  [Return]  ${n}
+Перевірити наявність звіту за назвою
+  [Arguments]  ${report name}
+  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}/../a[not(@class)]//*[@title='${report name}']
+  [Return]  ${status}
+
+
+Додати звіт в обрані за номером
+  [Arguments]  ${num}
+  Click Element  (${report})[${num}]
+  Sleep  .5
+
+
+Отримати назву звіту за номером
+  [Arguments]  ${num}
+  ${report name}  Get Text  (${report})[${num}]/following-sibling::*//*[@title]
+  [Return]  ${report name}
