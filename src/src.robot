@@ -1,5 +1,4 @@
 *** Settings ***
-** Settings **
 Library     Selenium2Library
 Library     BuiltIn
 Library     Collections
@@ -47,7 +46,6 @@ Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/instruktcii/instruktcii.robot
-Resource    pages/invoice/invoice.robot
 Resource    pages/karta_saytu/karta_saytu.robot
 Resource    pages/komertsiyni_torgy_tender_detail_page/komertsiyni_torgy_tender_detail_page.robot
 Resource    pages/kursy_valyut/kursy_valyut.robot
@@ -57,14 +55,24 @@ Resource    pages/nashi_klienty/nashi_klienty.robot
 Resource    pages/novyny/novyny.robot
 Resource    pages/participation_request/participation_request.robot
 Resource    pages/personal_account/personal_account.robot
+Resource    pages/personal_account/invoice/invoice.robot
+Resource    pages/personal_account/analytics/analytics.robot
+Resource    pages/personal_account/legal_help/legal_help.robot
+Resource    pages/personal_account/tender_providing/tender_providing.robot
+Resource    pages/personal_account/change_password/change_password.robot
+Resource    pages/personal_account/company_profile/company_profile.robot
+Resource    pages/personal_account/user_profile/user_profile.robot
+Resource    pages/personal_account/reports/reports.robot
+Resource    pages/personal_account/user_management/user_management.robot
+Resource    pages/personal_account/subscription/subscription.robot
 Resource    pages/plany/plany.robot
 Resource    pages/plany_detail_page/plany_detail_page.robot
 Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/pro_kompaniyu/pro_kompaniyu.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
-Resource	pages/start_page/start_page.robot
-Resource	pages/taryfy/taryfy.robot
+Resource	  pages/start_page/start_page.robot
+Resource	  pages/taryfy/taryfy.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
 Resource    pages/vakansii/vakansii.robot
 Resource    pages/vidhuky/vidhuky.robot

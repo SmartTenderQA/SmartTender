@@ -1,4 +1,7 @@
 *** Keywords ***
+Перевірити сторінку
+
+
 Ввести суму до оплати
 	[Arguments]  ${amount}
 	${input field}  Set Variable  //*[@class="ivu-card-body"]//input

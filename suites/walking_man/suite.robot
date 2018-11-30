@@ -24,87 +24,79 @@ ${num_of_tenders}                   xpath=(//*[@class="num"])[3]
 ${analytics_page}                   /ParticipationAnalytic/?segment=3&organizationId=226
 ${tender_type_procurement}          //*[@data-qa="procedure-type"]//div[2]//*|//*[@class="info_form"]
 ${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
-${last found multiple element}		xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
+${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 
 *** Test Cases ***
-Особистий кабінет
-  [Tags]  your_account
-  Run Keyword If  '${role}' == 'provider'  Відкрити особистий кабінет
-  ...  ELSE IF  '${role}' == 'tender_owner'  Відкрити особистий кабінет webcliend
-  ...  ELSE IF  "ssp_tender_owner" in "${role}"  Відкрити особистий кабінет для ssp_tender_owner
-
-
 Аналітика участі
-  [Tags]  your_account
-  Відкрити сторінку аналітики
-  Вибрати інший період аукціону  Минулий місяць
-  Перевірити наявність діаграми та таблиці
-  Перевірити роботу кругової діаграми
-  Перевірити зміну періоду
+  [Tags]  your_account  -test
+  start_page.Відкрити особистий кабінет
+  personal_account.Відкрити сторінку за назвою  analytics
+  Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
+  analytics.Змінити період аукціону  Минулий місяць
+  ${status}  analytics.Перевірити відображення діаграм
+  Should Be Equal  ${status}  ${True}
+  ${status}  analytics.Перевірити відображення таблиці
+  Should Be Equal  ${status}  ${True}
+  analytics.Перевірити роботу кругової діаграми
+  Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
 
 
 Налаштування підписки
-  [Tags]  your_account  broken  -prod  -test
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку налаштування підписки
+  [Tags]  your_account
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  subscription
   Перевірити блок запиту допомоги з налаштування підписки
   Перевірити блок Персональне запрошення організатора
   Перевірити блок E-mail адреси для дублювання всіх розсилок
-  Перевірити вкладки підписки для закупівель
+  Перевірити вкладки підписки на закупівлю
   Перевірити вкладки підписки на продаж
-
-  Активувати тип торгів для підписки  на закупівлю
 
 
 Заявки на отримання тендерного забезпечення
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку Заявки на отримання тендерного забезпечення
-  Перевірити сторінку Заявки на отримання тендерного забезпечення
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  tender_providing
 
 
 Юридична допомога
   [Tags]  your_account  -ip
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Отримати юридичну допомогу
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  legal_help
 
 
 Особисті дані користувача
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Профіль компанії
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  Run Keyword If  '${site}' == 'prod'
+  ...  personal_account.Відкрити сторінку за назвою  company_profile
+  Run Keyword If  '${site}' == 'test'
+  ...  personal_account.Відкрити сторінку за назвою  user_profile
 
 
 Змінити пароль
   [Tags]  your_account  -ip
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Змінити пароль
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  change_password
 
 
 Управління користувачами
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Перевірити вкладку Управління користувачами
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  user_management
 
 
 Звіти
   [Tags]  your_account
-  Відкрити особистий кабінет
-  Розкрити меню в особистому кабінеті
-  Відкрити сторінку Звіти
-  Натиснути на фільтр Тільки обрані звіти  вимкнути
-  Перевірити наявність звітів
-  Прибрати з обраних усі звіти
-  ${name}  Додати в обрані випадковій звіт та вернути назву
-  Перевірити фильтр Тільки обрані звіти  ${name}
-  Прибрати з обраних усі звіти
+  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  personal_account.Відкрити сторінку за назвою  reports
+  reports.Встановити фільтр Тільки обрані звіти  увімкнути
+  Прибрати усі звіти з обраних
+  reports.Встановити фільтр Тільки обрані звіти  вимкнути
+  ${name}  Додати в обрані випадковій звіт та повернути назву
+  reports.Встановити фільтр Тільки обрані звіти  увімкнути
+  reports.Перевірити наявність звіту за назвою  ${name}
+  Прибрати усі звіти з обраних
 
 
 Відгуки
@@ -818,49 +810,6 @@ Test Postcondition
   ...  AND  Page Should Contain Element  //*[@data-qa="jurist-help-dropdown"]
 
 
-Відкрити сторінку аналітики
-  Go to  ${start_page}${analytics_page}
-  Дочекатись закінчення загрузки сторінки
-  ${value}=  Get text  xpath=//*[@class="text-center"]/h3
-  Should Contain  'Публічні закупівлі'  ${value}
-
-
-Вибрати інший період аукціону
-  [Arguments]  ${period}
-  Click Element  xpath=//*[contains(@class, 'calendar')]
-  Click Element  xpath=//div[contains(text(), '${period}')]
-  Дочекатись закінчення загрузки сторінки
-
-
-Перевірити наявність діаграми та таблиці
-  ${diag}  Set Variable  xpath=(//*[@class="echarts"]//canvas)[1]
-  ${table}  Set Variable  xpath=//*[@class="ivu-table-header"]//tr
-  Element Should Be Visible  ${diag}
-  Element Should Be Visible  ${table}
-
-
-Перевірити роботу кругової діаграми
-  ${tenders_before}  Get Text  ${num_of_tenders}
-  ${tenders_before}  Evaluate  int(${tenders_before})
-  Element Should Be Visible  xpath=(//*[@class="echarts"]//canvas)[2]
-  Click Element At Coordinates  xpath=(//*[@class="echarts"]//canvas)[2]  80  0
-  Дочекатись закінчення загрузки сторінки
-  Wait Until Keyword Succeeds  1m  5s  Element Should Be Visible  xpath=//*[contains(@class, 'tag-checked')]
-  ${tenders_after}  Get Text  ${num_of_tenders}
-  ${tenders_after}  Evaluate  int(${tenders_after})
-  Run Keyword if  ${tenders_before} < ${tenders_after}  Fail  Не працює кругова діаграма
-
-
-Перевірити зміну періоду
-  ${tenders_before}  Get Text  ${num_of_tenders}
-  ${tenders_before}  Evaluate  int(${tenders_before})
-  Вибрати інший період аукціону  Поточний рік
-  ${tenders_after}  Get Text  ${num_of_tenders}
-  ${tenders_after}  get_number  ${tenders_after}
-  ${tenders_after}  Evaluate  int(${tenders_after})
-  Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
-
-
 Вибрати тип процедури для малої приватизації
   Click Element  //*[contains(text(), "${TESTNAME}")]
   Дочекатись закінчення загрузки сторінки(skeleton)
@@ -909,114 +858,10 @@ Test Postcondition
   Should Be Equal  ${get}  ${title}
 
 
-Відкрити сторінку налаштування підписки
-  Click Element  //*[contains(text(), "Налаштування підписки")]/ancestor::a
-  Location Should Contain  /Subscription/
-
-
-Перевірити блок запиту допомоги з налаштування підписки
-  Click Element  css=.btn-shadow.ivu-btn-success
-  ${header}  Set Variable  //*[@class="ivu-modal-mask" and not(contains(@style, "display: none"))]/following-sibling::*//*[@class="ivu-modal-header-inner"]
-  Wait Until Page Contains Element  ${header}
-  Sleep  2
-  Element Should Contain  ${header}  Запит налаштування підписки
-  ${close button}  Set Variable  //*[@class="ivu-modal-mask" and not(contains(@style, "display: none"))]/following-sibling::*//*[contains(@class, "ivu-icon-ios-close-empty")]
-  Click Element  ${close button}
-  Wait Until Page Does Not Contain Element  ${close button}
-
-
-Перевірити блок Персональне запрошення організатора
-  Перевірити заголовок Персональне запрошення організатора
-  Перевірити перемикач Персональне запрошення організатора
-
-
-Перевірити заголовок Персональне запрошення організатора
-  ${element}  Set Variable  (//h4)[2]
-  Element Should Contain  ${element}  Персональне запрошення організатора
-
-
-Перевірити перемикач Персональне запрошення організатора
-  ${switcher}  Set Variable  //*[@class="ivu-card-body" and contains(., "Персональне запрошення організатора")]//*[@tabindex]
-  ${status}  Get Element Attribute  ${switcher}/input  Value
-  Click Element  ${switcher}
-  ${new_status}  Get Element Attribute  ${switcher}/input  Value
-  Should Not Be Equal  ${new_status}  ${status}
-
-
-Перевірити блок E-mail адреси для дублювання всіх розсилок
-  Перевірити заголовок E-mail адреси для дублювання всіх розсилок
-  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
-  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
-
-
-Перевірити заголовок E-mail адреси для дублювання всіх розсилок
-  ${element}  Set Variable  (//h4)[3]
-  Element Should Contain  ${element}  E-mail адреси для дублювання всіх розсилок
-
-
-Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
-  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
-  ${mail}  create_e-mail
-  Input Text  ${input field}//input  ${mail}
-  Click Element  ${input field}//button
-  Page Should Contain  ${mail}
-  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
-  Click Element  ${close button}
-  Wait Until Page Does Not Contain Element  ${close button}
-
-
-Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
-  ${element}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
-  ${n}  random_number  4  20
-  ${name}  Generate Random String  ${n}  [LOWER]
-  Input Text  ${element}//input  ${name}
-  Click Element  ${element}//button
-  Wait Until Keyword Succeeds  20  2
-  ...  Element Should Contain  css=.ivu-message-notice span  Неправильний формат електронної пошти
-
-
 create_e-mail
   ${n}  random_number  4  12
   ${name}  Generate Random String  ${n}  [LOWER]
   [Return]  ${name}@gmail.com
-
-
-Перевірити вкладки підписки для закупівель
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Публічні закупівлі
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  RIALTO.Закупівлі
-  Перевірити наявність всіх елементів в блоці категорії
-
-
-Перевірити вкладки підписки на продаж
-  Активувати тип торгів для підписки  на продаж
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Аукціони на продаж активів банків
-  Перевірити наявність всіх елементів в блоці категорії
-  Вибрати вкладку для підписки  Аукціони на продаж активів держпідприємств
-  Перевірити наявність всіх елементів в блоці категорії
-
-
-Активувати тип торгів для підписки
-  [Arguments]  ${type}
-  ${n}  Run Keyword If  "${type}" == "на продаж"  Set Variable  2
-  ...  ELSE IF  "${type}" == "на закупівлю"  Set Variable  1
-  ${element}  Set Variable  //*[contains(@class, "ivu-row-flex-space-between")]//label[${n}]
-  Click Element  ${element}
-  ${status}  Run Keyword And Return Status
-  ...  Page Should Contain Element  ${element}[contains(@class, "checked")]
-  Run Keyword If  "${status}" != "True"  Активувати тип торгів для підписки  ${type}
-
-
-Перевірити наявність перемикача для активування сповіщень
-  ${element}  Set Variable  //*[@class="ivu-row" and contains(., "Періодичність оповіщення про публікацію")]//span[contains(@class, "ivu-switch")]
-  Page Should Contain Element  ${element}
-
-
-Перевірити наявність блоку підписки
-  [Arguments]  ${text}
-  Page Should Contain Element  (//*[@class="ivu-card-body" and contains(., "${text}")])[last()]
 
 
 Перевірити блок Ключові слова
@@ -1035,28 +880,6 @@ create_e-mail
   ${element}  Set Variable  //*[@class="ivu-card-body" and contains(., "Ключові слова")]
 
 
-Вибрати вкладку для підписки
-  [Arguments]  ${text}
-  ${selector}  Set Variable  //*[contains(@class, "ivu-tabs-nav")]//div[contains(@class, "ivu-tabs-tab")]
-  ${n}  Run Keyword If  "${text}" == "Публічні закупівлі" or "${text}" == "Аукціони на продаж активів банків"
-  ...  Set Variable  2
-  ...  ELSE IF  "${text}" == "RIALTO.Закупівлі" or "${text}" == "Аукціони на продаж активів держпідприємств"
-  ...  Set Variable  3
-  Click Element  ${selector}[${n}]
-  ${status}  Run Keyword And Return Status
-  ...  Page Should Contain Element  ${selector}[${n}][contains(@class, "active")]
-  Run Keyword If  "${status}" != "True"  Вибрати вкладку для підписки  ${text}
-
-
-Перевірити наявність всіх елементів в блоці категорії
-  Перевірити наявність перемикача для активування сповіщень
-  Перевірити наявність блоку підписки  Категорії
-  Перевірити наявність блоку підписки  Ключові слова
-  Перевірити наявність блоку підписки  Мінус-слова
-  Перевірити наявність блоку підписки  Додаткові реквізити
-  Перевірити наявність блоку підписки  Реквізити організатора
-
-
 Розгорнути перший лот
   Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}[2]//button
 
@@ -1064,121 +887,6 @@ create_e-mail
 Додати файл до openeu
   Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
   ...  ELSE  Створити та додати PDF файл  1
-
-
-Відкрити сторінку Заявки на отримання тендерного забезпечення
-  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Тендерне забезпечення")]/ancestor::a
-  Sleep  1
-
-
-Перевірити сторінку Заявки на отримання тендерного забезпечення
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Заявки на отримання тендерного забезпечення
-  Page Should Contain Element  //img[@src="/Images/Guarantee/guarantee-button.png"]
-
-
-Перевірити вкладку Отримати юридичну допомогу
-  Click Element  //*[contains(text(), "Платні сервіси")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Юридична допомога")]/ancestor::a
-  Sleep  1
-  Select frame  css=div.main-content iFrame
-  Wait Until Page Contains Element  //*[@class="ivu-card-head"]//h4  30
-  Element Should Contain  //*[@class="ivu-card-head"]//h4  Отримати юридичну допомогу
-  Page Should Contain Element  css=.ivu-card-body>button[type="button"]
-  Unselect Frame
-
-
-Перевірити вкладку Профіль компанії
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Профіль компанії")]/ancestor::a
-  Sleep  1
-  Select frame  css=div.main-content iFrame
-  Wait Until Page Contains Element  css=#FormLayout_1_0  30
-  Element Should Contain  css=#FormLayout_1_0  Основна інформація
-  Element Should Contain  css=#FormLayout_1_1  Додаткова інформація
-  Page Should Contain Element  css=#BTSUBMIT_CD
-  Unselect Frame
-
-
-Перевірити вкладку Змінити пароль
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Змінити пароль")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /ChangePassword/
-  Wait Until Page Contains Element  //h2  30
-  Element Should Contain  //h2  Зміна пароля
-  Element Should Contain  (//*[@class="ivu-form-item-label"])[1]  Поточний пароль
-  Element Should Contain  (//*[@class="ivu-form-item-label"])[2]  Новий пароль
-  Page Should Contain Element  //button[@type="button" and contains(., "Змінити пароль")]
-
-
-Перевірити вкладку Управління користувачами
-  Click Element  //*[contains(text(), "Особисті дані")]/ancestor::a
-  Sleep  1
-  Click Element  //*[contains(text(), "Управління користувачами")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /UserManagement/
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Структура підприємства
-  Element Should Contain  //h5  Управління користувачами
-  ${tr for user}  Set Variable  css=.ivu-table-body .ivu-table-row
-  Page Should Contain Element  ${tr for user}
-
-
-Відкрити сторінку Звіти
-  Click Element  //*[contains(text(), "Звіти")]/ancestor::a
-  Sleep  1
-  Location Should Contain  /Reports
-  Wait Until Page Contains Element  //h1  30
-  Element Should Contain  //h1  Звіти
-
-
-Перевірити наявність звітів
-  Page Should Contain Element  css=.ivu-card-body .favoriteStar
-
-
-Додати в обрані випадковій звіт та вернути назву
-  ${count}  Get Element Count  ${report}
-  ${n}  random_number  1  ${count}
-  Click Element  (${report})[${n}]
-  ${name}  Get Text  (${report})[${n}]/following-sibling::*//*[@title]
-  Sleep  3
-  [Return]  ${name}
-
-
-Перевірити фильтр Тільки обрані звіти
-  [Arguments]  ${name}
-  Натиснути на фільтр Тільки обрані звіти  увімкнути
-  ${count}  Get Element Count  ${report}
-  Should Be Equal  "${count}"  "1"
-  ${report name}  Get Text  ${report}/following-sibling::*//*[@title]
-  Should Be Equal  ${report name}  ${name}
-  Натиснути на фільтр Тільки обрані звіти  вимкнути
-  ${count}  Get Element Count  ${report}
-  Run Keyword if  ${count} < 2  Fail  Маловато будет(Отчетов)
-
-
-Натиснути на фільтр Тільки обрані звіти
-  [Arguments]  ${action}
-  ${switcher}  Set Variable  css=.ivu-switch
-  ${status}  Get Element Attribute  ${switcher} [value]  value
-  Run Keyword If  "${status}" == "false" and "${action}" == "увімкнути"
-  ...  Click Element  ${switcher}
-  Run Keyword If  "${status}" == "true" and "${action}" == "вимкнути"
-  ...  Click Element  ${switcher}
-  Sleep  3
-
-
-Прибрати з обраних усі звіти
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  ${report}//*[@class="fa fa-star"]
-  Run Keyword If  ${status} == ${True}  Click Element  ${report}//*[@class="fa fa-star"]
-  Sleep  5
-  Run Keyword If  ${status} == ${True}  Прибрати з обраних усі звіти
 
 
 Активувати вкладку
@@ -1254,6 +962,79 @@ create_e-mail
 	Run Keyword if  '${count}' == '0'  Fail  Як це ми без плану?!
 
 
+Відкрити аналітику по конкуренту
+  [Arguments]  ${company name}
+  analytics.Відкрити вікно аналітика по конкурентам
+  analytics.Ввести назву компанії  ${company name}
+  analytics.Вибрати конкурента з списка за номером  1
+
+
+Перевірити роботу фільтра по періоду
+  [Arguments]  ${before}  ${after}
+  analytics.Змінити період аукціону  ${before}
+  ${tenders_before}  Отримати кількість торгів
+  analytics.Змінити період аукціону  ${after}
+  ${tenders_after}  Отримати кількість торгів
+  Run Keyword if  ${tenders_before} > ${tenders_after}  Fail  Не працює фільтрація по періоду
+
+
+Перевірити блок запиту допомоги з налаштування підписки
+  subscription.Натиснути на кнопку Відправити запит
+  subscription.Закрити вікно Запит налаштування підписки
+
+
+Перевірити блок Персональне запрошення організатора
+  subscription.Перевірити заголовок Персональне запрошення організатора
+  subscription.Перевірити перемикач Персональне запрошення організатора
+
+
+Перевірити блок E-mail адреси для дублювання всіх розсилок
+  subscription.Перевірити заголовок E-mail адреси для дублювання всіх розсилок
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
+  ${mail}  create_e-mail
+  subscription.Ввести дані в поле E-mail  ${mail}
+  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
+  Click Element  ${close button}
+  Wait Until Page Does Not Contain Element  ${close button}
+
+
+Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
+  ${n}  random_number  4  20
+  ${mail}  Generate Random String  ${n}  [LOWER]
+  subscription.Ввести дані в поле E-mail  ${mail}
+  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+
+
+Перевірити вкладки підписки на закупівлю
+  subscription.Активувати тип торгів для підписки  на продаж
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Публічні закупівлі
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  RIALTO.Закупівлі
+
+
+Перевірити вкладки підписки на продаж
+  subscription.Активувати тип торгів для підписки  на продаж
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів банків
+  subscription.Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  Аукціони на продаж активів держпідприємств
+
+
+Прибрати усі звіти з обраних
+  :FOR  ${i}  IN RANGE  999999
+    \  ${count}  reports.Прибрати звіт з обраних
+    \  Exit For Loop If    ${count} == 0
+
+
+Додати в обрані випадковій звіт та повернути назву
+  ${count}  reports.Отримати кількість звітів
+  ${report num}  random_number  1  ${count}
+  reports.Додати звіт в обрані за номером  ${report num}
+  ${report name}  reports.Отримати назву звіту за номером  ${report num}
+  [Return]  ${report name}
+
+
 Перевірити наявність відгуків
 	${count}  vidhuky.Порахувати кількість відгуків
 	Run Keyword if  ${count} < 6  Fail  оу, а було як мінінмум 6 відгуків
@@ -1262,3 +1043,4 @@ create_e-mail
 Перевірити наявність інструкцій
 	${count}  instruktcii.Порахувати кількість інструкції
 	Run Keyword if  ${count} < 2  Fail  Як це ми без інструкцій?!
+
