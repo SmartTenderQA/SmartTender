@@ -1,3 +1,8 @@
+*** Settings ***
+Resource        tender_tab.robot
+
+
+
 *** Keywords ***
 Вибрати тип процедури
 	[Arguments]  ${type}

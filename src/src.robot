@@ -72,7 +72,7 @@ Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
 
 Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/actions.robot
-Resource    pages(webclient)/main_page/header.robot
+Resource    pages(webclient)/main_page/main_page.robot
 Resource    pages(webclient)/create_tender/create_tender.robot
 Resource    pages(webclient)/qualification/qualification.robot
 Resource    pages(webclient)/second_stage/second_stage.robot

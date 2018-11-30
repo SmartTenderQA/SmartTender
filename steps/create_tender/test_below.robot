@@ -4,6 +4,7 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
+  	debug
   	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
@@ -24,60 +25,51 @@
     ${date}  get_time_now_with_deviation  5  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  enquiryPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="DDM"]//input  ${date}
+    Заповнити "Обговорення закупівлі до"  ${date}
 
 
 Заповнити startDate періоду пропозицій
     ${date}  get_time_now_with_deviation  6  minutes
     ${value}  Create Dictionary  startDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="D_SCH"]//input    ${date}
+    Заповнити "Прийом пропозицій з"  //*[@data-name="D_SCH"]//input    ${date}
 
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
-    Заповнити текстове поле  //*[@data-name="D_SROK"]//input     ${date}
-
-
-Заповнити contact для tender
-    ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    ${value}  Create Dictionary  name=${name}
-    ${contactPoint}  Create Dictionary  contactPerson=${value}
-    Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
+    Заповнити "Прийом пропозицій по"  //*[@data-name="D_SROK"]//input     ${date}
 
 
 Заповнити amount для tender
     ${amount}  random_number  100000  100000000
     ${value}  Create Dictionary  amount=${amount}
     Set To Dictionary  ${data}  value  ${value}
-    Заповнити текстове поле  xpath=//*[@data-name="INITAMOUNT"]//input   ${amount}
+    Заповнити "Очікувана вартість закупівлі"  ${amount}
 
 
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  5
     ${value}  Create Dictionary  percent=${minimal_step_percent}
     Set To Dictionary  ${data.value}  minimalStep  ${value}
-    Заповнити текстове поле  xpath=//*[@data-name="MINSTEP_PERCENT"]//input   ${minimal_step_percent}
+    Заповнити "Мінімальний крок аукціону"   ${minimal_step_percent}
 
 
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
     Set To Dictionary  ${data}  title  ${title}
-    Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
+    Заповнити "Узагальнена назва закупівлі"   ${title}
 
 
 Заповнити description для tender
     ${description}  create_sentence  15
     Set To Dictionary  ${data}  description  ${description}
-    Заповнити текстове поле  xpath=//*[@data-name="DESCRIPT"]//textarea  ${description}
+    Заповнити "Примітки до закупівлі"  ${description}
 
 
 Додати предмет в тендер
-    test_below.Заповнити description для item
+    test_below.Заповнити title для item
     test_below.Заповнити quantity для item
     test_below.Заповнити id для item
     test_below.Заповнити unit.name для item
@@ -88,27 +80,23 @@
     test_below.Заповнити startDate для item
 
 
-Заповнити description для item
-    ${description}  create_sentence  5
-    ${value}  Create Dictionary  description=${description}
+Заповнити title для item
+    ${title}  create_sentence  5
+    ${value}  Create Dictionary  title=${title}
     Set To Dictionary  ${data}  item  ${value}
-    Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
+    Заповнити "Назва предмета закупівлі"  ${title}
 
 
 Заповнити quantity для item
     ${quantity}  random_number  1  1000
     Set To Dictionary  ${data['item']}  quantity  ${quantity}
-    Заповнити текстове поле  xpath=//*[@data-name='QUANTITY']//input  ${quantity}
+    Заповнити "Об'єм постачання"  ${quantity}
 
 
 Заповнити id для item
-    ${input}  Set Variable  //*[@data-name='MAINCLASSIFICATION']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Код класифікації"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Sleep  1
-    ${name}  Get Element Attribute  ${input}  value
-    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${name}').group('id')  re
-    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${name}').group('title')  re
+    ${value}    Заповнити "Класифікація"
+    ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${value}').group('id')  re
+    ${id title}  Evaluate  re.search(r'(?P<title>\\D.+) ', u'${value}').group('title')  re
     Set To Dictionary  ${data['item']}  id  ${id}
     Set To Dictionary  ${data['item']}  id title  ${id title}
 
