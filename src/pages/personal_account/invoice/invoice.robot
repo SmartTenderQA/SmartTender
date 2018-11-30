@@ -1,4 +1,8 @@
 *** Keywords ***
+Перевірити сторінку
+	Location Should Contain  /invoicepage/
+
+
 Ввести суму до оплати
 	[Arguments]  ${amount}
 	${input field}  Set Variable  //*[@class="ivu-card-body"]//input

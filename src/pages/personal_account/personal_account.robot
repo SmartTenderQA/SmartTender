@@ -1,14 +1,16 @@
+*** Settings ***
+Resource    	keywords.robot
+
+
 *** Variables ***
-${not collapsed menu button your account}         //*[contains(@class, "page-container") and not(contains(@class, "collapsed"))]//*[@class="sidebar-collapse"]
-${collapsed menu button your account}             //*[contains(@class, "page-container") and contains(@class, "collapsed")]//*[@class="sidebar-collapse"]
+
 
 *** Keywords ***
-Розкрити меню в особистому кабінеті
-	${status}  Run Keyword And Return Status  Page Should Contain Element  ${not collapsed menu button your account}
-	Run Keyword If  "${status}" != "True"  Click Element  ${collapsed menu button your account}
-
-
-Відкрити сторінку рахунка фактури
-	Click Element  //*[contains(text(), "Сформувати рахунок-фактуру")]/ancestor::a
-	Location Should Contain  /invoicepage/
-
+Відкрити сторінку за назвою
+    [Documentation]  ${item} == analytics|calendar|new_tender_page...
+    [Arguments]  ${item}
+    Розкрити меню в особистому кабінеті за необхідністю
+    Розкрити під-меню в особистому кабінеті за необхідністю  ${item}
+    Click Element  ${${item}}
+    Дочекатись закінчення загрузки сторінки
+    Run Keyword  ${item}.Перевірити сторінку

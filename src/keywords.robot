@@ -25,6 +25,7 @@ ${users_variables_path2}   ../users_variables.py
 	Run Keyword If  ${status} == ${False}  Import Variables  ${users_variables_path2}
 	${a}  Create Dictionary  a  ${users_variables}
 	${users_variables}  Set Variable  ${a.a}
+	Set Global Variable  ${users_variables}
 	Set Global Variable  ${name}  ${users_variables.${user}.name}
 	Set Global Variable  ${role}  ${users_variables.${user}.role}
 	Set Global Variable  ${site}  ${users_variables.${user}.site}

@@ -24,11 +24,18 @@ ${field_password}       //input[@type="password"]
 	Wait Until Page Contains Element  xpath=//*[@class='nH']  timeout=10s
 	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  welcome_dialog_next
 	Run Keyword And Ignore Error  Закрити валідаційне вікно в email  ok
+	Run Keyword And Ignore Error  Відмовитись отримувати сповіщення в email
 
 
 Закрити валідаційне вікно в email
 	[Arguments]  ${name}
 	${button}  Set Variable  //*[@name="${name}"]
+	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}  2
+	Run Keyword If  '${status}' == 'True'  Click Element  ${button}
+
+
+Відмовитись отримувати сповіщення в email
+	${button}  Set Variable  //*[@id="link_enable_notifications_hide"]
 	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}  2
 	Run Keyword If  '${status}' == 'True'  Click Element  ${button}
 
