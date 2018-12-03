@@ -62,6 +62,8 @@
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${id}  Вибрати довільну ЗЕЛЕНУ класифікацію
 	Підтвердити вибір(F10)
+	Sleep  1
+	${id}  Get Element Attribute  ${input field}  value
 	[Return]  ${id}
 
 
