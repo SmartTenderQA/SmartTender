@@ -31,7 +31,7 @@
     ${date}  get_time_now_with_deviation  6  minutes
     ${value}  Create Dictionary  startDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити "Прийом пропозицій з"  //*[@data-name="D_SCH"]//input    ${date}
+    Заповнити "Прийом пропозицій з"  ${date}
 
 
 Заповнити endDate періоду пропозицій
