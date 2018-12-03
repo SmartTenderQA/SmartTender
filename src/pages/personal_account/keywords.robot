@@ -40,9 +40,21 @@ ${collapsed menu button your account}           //*[contains(@class, "page-conta
 
 
 Розкрити під-меню в особистому кабінеті за необхідністю
-    [Arguments]  ${item}
-    ${selector}  Set variable  ${${item}}
-	${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
-	Run Keyword If  "${status}" != "True"  Click Element  ${selector}//ancestor::li[contains(@class,'root-level')]
-	Wait Until Element Is Visible  ${selector}
+    [Arguments]  ${item name}
+    ${item locator}  Set variable  ${${item name}}
+	${status}  Run Keyword And Return Status  Element Should Be Visible  ${item locator}
+	Run Keyword If  "${status}" != "True"  Click Element  ${item locator}//ancestor::li[contains(@class,'root-level')]
+	Wait Until Element Is Visible  ${item locator}
+	Sleep  .5
+
+
+Натиснути на елемент в меню
+	[Arguments]  ${item name}
+	${item locator}  Set Variable  ${${item name}}
+	${item href}  Get Element Attribute  ${item locator}  href
+	${item should not open in new tab}  Run Keyword And Return Status  Should Contain  '${item href[-1]}'  '#'
+	Run Keyword If  ${item should not open in new tab} == ${True}
+	...  Click Element  ${item locator}
+	Run Keyword If  ${item should not open in new tab} == ${False}
+	...  Open button  ${item locator}
 	Sleep  .5
