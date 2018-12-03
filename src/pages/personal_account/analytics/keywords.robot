@@ -6,7 +6,7 @@ ${diagram}                  (//*[@class="echarts"]//canvas)
 *** Keywords ***
 Отримати кількість торгів
   ${count}  Get Text  ${num_of_tenders}
-  ${count}  Evaluate  int('${count}'.replace(',',''))
+  ${count}  Evaluate  int('${count}'.replace(',','').replace(' ',''))
   [Return]  ${count}
 
 
