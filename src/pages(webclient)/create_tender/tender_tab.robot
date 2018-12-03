@@ -1,3 +1,7 @@
+*** Settings ***
+Resource        keywords.robot
+
+
 *** Keywords ***
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
@@ -41,6 +45,17 @@
     Заповнити текстове поле  ${selector}  ${value}
 
 
+Заповнити "Контактна особа"
+    ${input field}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
+    Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Вибрати довільну персону з довідника персоналу
+    ${person}  Get Element Attribute  ${input field}  value
+    [Return]  ${person}
+
+
 Заповнити "Назва предмета закупівлі"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='KMAT']//input[not(contains(@type,'hidden'))]
@@ -56,7 +71,6 @@
 Заповнити "Класифікація"
     ${input field}  Set Variable  //*[@data-name="MAINCLASSIFICATION"]//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
-	Sleep  1
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
 	Дочекатись закінчення загрузки сторінки(webclient)

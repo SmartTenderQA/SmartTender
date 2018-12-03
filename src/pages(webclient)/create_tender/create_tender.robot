@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        tender_tab.robot
-
+Resource        keywords.robot
 
 
 *** Keywords ***
@@ -19,72 +19,10 @@ Resource        tender_tab.robot
 	Run Keyword And Ignore Error  Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
 
 
-Заповнити текстове поле
-	[Arguments]  ${selector}  ${text}
-	Wait Until Keyword Succeeds  30  3  Заповнити та перевірити текстове поле  ${selector}  ${text}
-
-
-Заповнити та перевірити текстове поле
-	[Arguments]  ${selector}  ${text}
-	Click Element  ${selector}
-	Sleep  .5
-	Clear Element Text  ${selector}
-	Input Text  ${selector}  ${text}
-	${got}  Get Element Attribute  ${selector}  value
-	Press Key  ${selector}  \\13
-	Should Be Equal  ${got}  ${text}
-
-
-Вибрати та повернути елемент у випадаючому списку
-	[Arguments]  ${input}  ${selector}
-	Click Element  ${input}
-	Sleep  .5
-	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
-	Sleep  .5
-	Wait Until Page Contains Element  ${selector}  15
-	${count}  Get Element Count  ${selector}
-	${number}  random_number  1  ${count}
-	Click Element  (${selector})[${number}]
-	${text}  Get Element Attribute  ${input}  value
-	Should Not Be Empty  ${text}
-	[Return]  ${text}
-
-
-Заповнити Поле
-    [Arguments]  ${selector}  ${text}
-    Wait Until Page Contains Element  ${selector}
-    Click Element  ${selector}
-    Sleep  .5
-    Input Text  ${selector}  ${text}
-    Sleep  .5
-    Press Key  ${selector}  \\09
-    Sleep  1
-
-
-Зберегти словник у файл
-    [Arguments]  ${dict}  ${filename}
-	${json}  conver dict to json  ${dict}
-	Create File  ${OUTPUTDIR}/artifact_${filename}.json  ${json}
-
-
 Вибір об'екту
 	${selector}  set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "Вибір")]
 	Wait Until Page Contains Element  ${selector}
 	Click Element  ${selector}
-
-
-Отримати та зберегти tender_id
-	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
-	Should Not Be Equal  ${tender_id}  ${EMPTY}
-	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
-Зберегти пряме посилання на тендер
-	${tender_href}  Get Location
-	Set To Dictionary  ${data}  tender_href  ${tender_href}
-
-
-
 
 
 Заповнити поле за допомогою(F10)

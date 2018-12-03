@@ -302,6 +302,11 @@ If skipped create tender
 	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
 
 
+Зберегти пряме посилання на тендер
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+
+
 Перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}

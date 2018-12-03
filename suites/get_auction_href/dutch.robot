@@ -96,6 +96,11 @@ If skipped create tender
 	Set To Dictionary  ${data}  tender_id=${tender_id}
 
 
+Зберегти пряме посилання на тендер
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+
+
 Знайти тендер користувачем
 	[Arguments]  ${role}
 	Switch Browser  ${role}
