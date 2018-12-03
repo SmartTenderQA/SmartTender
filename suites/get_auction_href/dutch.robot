@@ -109,6 +109,24 @@ If skipped create tender
 	Знайти тендер по ID  ${data['tender_id']}
 
 
+Натиснути кнопку "Додати документи"
+    Reload Page
+    ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
+    Wait Until Element Is Visible  ${selector}
+    Click Element  ${selector}
+
+
+Натиснути кнопку "Підтвердити пропозицію"
+    Wait Until Element Is Visible  //span[contains(text(), "Підтвердити пропозицію")]
+    Click Element  //span[contains(text(), "Підтвердити пропозицію")]
+    Дочекатись закінчення загрузки сторінки
+    Wait Until Element Is Visible  //span[contains(text(), "Так")]
+    Click Element  //span[contains(text(), "Так")]
+    Дочекатись закінчення загрузки сторінки
+    Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
+    Open Button  //a[contains(text(), "Перейти")]
+
+
 Неможливість отримати поcилання на участь в аукціоні(keyword)
 	[Arguments]  ${user}
 	Switch Browser  ${user}
