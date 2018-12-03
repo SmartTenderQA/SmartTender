@@ -33,6 +33,7 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 
 Виконати пошук тендера
 	[Arguments]  ${id}=None
+	Wait Until Page Contains Element  ${find tender field}
 	Run Keyword If  '${id}' != 'None'  Input Text  ${find tender field}  ${id}
 	Press Key  ${find tender field}  \\13
 	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}

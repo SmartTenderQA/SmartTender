@@ -22,6 +22,7 @@ ${elastic search clean filter}      css=.tag-holder button
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  xpath=(${item dogovory}//h4/a)[${n}]
+	Wait Until Page Contains Element  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
