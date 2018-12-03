@@ -18,10 +18,8 @@
 #	                  Keywords							#
 #########################################################
 Заповнити contact для tender
-    ${input}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="Прізвище"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    ${value}  Create Dictionary  name=${name}
+    ${person}  Заповнити "Контактна особа"
+    ${value}  Create Dictionary  name=${person}
     ${contactPoint}  Create Dictionary  contactPerson=${value}
     Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
 
@@ -50,7 +48,7 @@
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
     Set To Dictionary  ${data}  title  ${title}
-    Заповнити "Узагальнена назва закупівлі"   ${title}
+    Заповнити "Узагальнена назва закупівлі"  ${title}
 
 
 Заповнити description для tender

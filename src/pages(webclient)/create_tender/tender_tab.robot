@@ -39,6 +39,12 @@ Resource        keywords.robot
     Заповнити текстове поле  ${selector}  ${value}
 
 
+Заповнити "Узагальнена назва закупівлі ENG"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="TITLE_EN"]//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
 Заповнити "Примітки до закупівлі"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DESCRIPT"]//textarea
@@ -59,6 +65,12 @@ Resource        keywords.robot
 Заповнити "Назва предмета закупівлі"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='KMAT']//input[not(contains(@type,'hidden'))]
+    Заповнити текстове поле  ${selector}  ${value}
+
+
+Заповнити "Назва предмета закупівлі ENG"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="RESOURSENAME_EN"]//input[not(contains(@type,'hidden'))]
     Заповнити текстове поле  ${selector}  ${value}
 
 

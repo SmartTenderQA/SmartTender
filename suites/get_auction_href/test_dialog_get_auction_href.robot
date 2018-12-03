@@ -45,7 +45,7 @@ If skipped create tender
 	:FOR  ${i}  IN  1  2  3
 	\  Start  user${i}  provider${i}
 	\  Прийняти участь у тендері учасником на 1-му етапі  provider${i}
-	\  Close Browser
+	\  Close All Browsers
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
@@ -197,7 +197,7 @@ If skipped create tender
     [Arguments]  ${role}
     Switch Browser  ${role}
     Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 

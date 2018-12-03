@@ -20,28 +20,28 @@
     ${date}  get_time_now_with_deviation  40  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
-    Заповнити текстове поле  //*[@data-name="D_SROK"]//input  ${date}
+    Заповнити "Прийом пропозицій по"  ${date}
 
 
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  3
     ${value}  Create Dictionary  percent=${minimal_step_percent}
-    Set To Dictionary  ${data}  minimalStep  ${value}
-    Заповнити текстове поле  xpath=//*[@data-name="MINSTEP_PERCENT"]//input   ${minimal_step_percent}
+    Set To Dictionary  ${data.value}  minimalStep  ${value}
+    Заповнити "Мінімальний крок аукціону"   ${minimal_step_percent}
 
 
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
     Set To Dictionary  ${data}  title  ${title}
-    Заповнити текстове поле  xpath=//*[@data-name="TITLE"]//input   ${title}
+    Заповнити "Узагальнена назва закупівлі"  ${title}
 
 
 Заповнити title_eng для tender
     ${text_en}  create_sentence  5
     ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
     Set To Dictionary  ${data}  title_en  ${title_en}
-    Заповнити текстове поле  xpath=//*[@data-name="TITLE_EN"]//input   ${title_en}
+    Заповнити "Узагальнена назва закупівлі ENG"  ${title_en}
 
 
 Додати предмет в тендер
@@ -53,33 +53,31 @@
 
 
 Заповнити title для item
-    ${description}  create_sentence  5
-    ${value}  Create Dictionary  description=${description}
+    ${title}  create_sentence  5
+    ${value}  Create Dictionary  title=${title}
     Set To Dictionary  ${data}  item  ${value}
-    Заповнити текстове поле  xpath=(//*[@data-name='KMAT']//input)[1]  ${description}
+    Заповнити "Назва предмета закупівлі"  ${title}
 
 
 Заповнити description_eng для item
     ${description_en}  create_sentence  5
     Set To Dictionary  ${data['item']}  description_en  ${description_en}
-    Заповнити текстове поле  xpath=//*[@data-name="RESOURSENAME_EN"]//input[1]  ${description_en}
+    Заповнити "Назва предмета закупівлі ENG"  ${description_en}
 
 
 Заповнити postalCode для item
     ${postal code}  random_number  10000  99999
-    Заповнити текстове поле  xpath=//*[@data-name='POSTALCODE']//input  ${postal code}
+    Заповнити "Індекс"  ${postal code}
     Set To Dictionary  ${data['item']}  postal code  ${postal code}
 
 
 Заповнити streetAddress для item
     ${address}  get_some_uuid
-    Заповнити текстове поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
-    Set To Dictionary  ${data['item']}  streetAddress  ${address}
+    Заповнити "Вулиця"  ${address}
+    Set To Dictionary   ${data['item']}  streetAddress  ${address}
 
 
 Заповнити locality для item
-    ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${name}  Set Variable  Мюнхен
-    Заповнити текстове поле  ${input}  ${name}
-    ${name}  Get Element Attribute  ${input}  value
-    Set To Dictionary  ${data['item']}  city  ${name}
+    ${city}  Заповнити "Місто"  Мюнхен
+    Set To Dictionary  ${data['item']}  city  ${city}
+
