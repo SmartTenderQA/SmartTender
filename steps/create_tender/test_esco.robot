@@ -45,14 +45,14 @@
 
 
 Додати предмет в тендер
-    test_esco.Заповнити description для item
+    test_esco.Заповнити title для item
     test_esco.Заповнити description_eng для item
     test_esco.Заповнити postalCode для item
     test_esco.Заповнити streetAddress для item
     test_esco.Заповнити locality для item
 
 
-Заповнити description для item
+Заповнити title для item
     ${description}  create_sentence  5
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}

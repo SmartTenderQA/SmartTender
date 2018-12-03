@@ -4,7 +4,6 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
-  	debug
   	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
@@ -38,7 +37,7 @@
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
-    Заповнити "Прийом пропозицій по"  //*[@data-name="D_SROK"]//input     ${date}
+    Заповнити "Прийом пропозицій по"  ${date}
 
 
 Заповнити amount для tender
@@ -102,37 +101,33 @@
 
 
 Заповнити unit.name для item
-    ${input}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
-    ${selector}  Set Variable  //*[text()="ОВ. Найменування"]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-    ${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-    Set To Dictionary  ${data['item']}  unit  ${name}
+    ${unit name}  Заповнити "Одиниця виміру"
+    Set To Dictionary  ${data['item']}  unit  ${unit name}
 
 
 Заповнити postalCode для item
     ${postal code}  random_number  10000  99999
-    Заповнити текстове поле  xpath=//*[@data-name='POSTALCODE']//input  ${postal code}
+    Заповнити "Індекс"  ${postal code}
     Set To Dictionary  ${data['item']}  postal code  ${postal code}
 
 
 Заповнити streetAddress для item
     ${address}  get_some_uuid
-    Заповнити текстове поле  xpath=//*[@data-name='STREETADDR']//input  ${address}
-    Set To Dictionary  ${data['item']}  streetAddress  ${address}
+    Заповнити "Вулиця"  ${address}
+    Set To Dictionary   ${data['item']}  streetAddress  ${address}
 
 
 Заповнити locality для item
-    ${input}  Set Variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    ${name}  Set Variable  Мюнхен
-    Заповнити текстове поле  ${input}  ${name}
-    ${name}  Get Element Attribute  ${input}  value
-    Set To Dictionary  ${data['item']}  city  ${name}
-
-
-Заповнити endDate для item
-    ${value}  get_time_now_with_deviation  2  days
-    Заповнити текстове поле  xpath=//*[@data-name="DDATETO"]//input  ${value}
+    ${city}  Заповнити "Місто"  Мюнхен
+    Set To Dictionary  ${data['item']}  city  ${city}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    Заповнити текстове поле  xpath=//*[@data-name="DDATEFROM"]//input  ${value}
+    Заповнити "Строк поставки з"  ${value}
+
+
+Заповнити endDate для item
+    ${value}  get_time_now_with_deviation  2  days
+    Заповнити "Строк поставки по"  ${value}
+

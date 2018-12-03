@@ -80,7 +80,7 @@
 
 
 Додати предмет в тендер
-    prod_below.Заповнити description для item
+    prod_below.Заповнити title для item
     prod_below.Заповнити quantity для item
     prod_below.Заповнити id для item
     prod_below.Заповнити unit.name для item
@@ -91,7 +91,7 @@
     prod_below.Заповнити startDate для item
 
 
-Заповнити description для item
+Заповнити title для item
     ${description}  create_sentence  5
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}

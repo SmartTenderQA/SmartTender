@@ -70,7 +70,7 @@
 
 
 Додати предмет в тендер
-    test_open_eu.Заповнити description для item
+    test_open_eu.Заповнити title для item
     test_open_eu.Заповнити description_eng для item
     test_open_eu.Заповнити quantity для item
     test_open_eu.Заповнити id для item
@@ -82,7 +82,7 @@
     test_open_eu.Заповнити startDate для item
 
 
-Заповнити description для item
+Заповнити title для item
     ${description}  create_sentence  5
     ${value}  Create Dictionary  description=${description}
     Set To Dictionary  ${data}  item  ${value}

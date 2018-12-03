@@ -1,56 +1,56 @@
 *** Keywords ***
 Заповнити "Обговорення закупівлі до"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій з"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій по"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Очікувана вартість закупівлі"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="INITAMOUNT"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Мінімальний крок аукціону"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Узагальнена назва закупівлі"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="TITLE"]//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Примітки до закупівлі"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DESCRIPT"]//textarea
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Назва предмета закупівлі"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='KMAT']//input[not(contains(@type,'hidden'))]
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Об'єм постачання"
-    [Arguments]  ${date}
+    [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='QUANTITY']//input
-    Заповнити текстове поле  ${selector}  ${date}
+    Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Класифікація"
@@ -65,13 +65,48 @@
 	[Return]  ${id}
 
 
-Заповнити "Класифікація"
+Заповнити "Одиниця виміру"
     ${input field}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
 	Sleep  1
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
 	Дочекатись закінчення загрузки сторінки(webclient)
-	${id}  Вибрати довільну ЗЕЛЕНУ класифікацію
+	${unit}  Вибрати довільну одиницю виміру
 	Підтвердити вибір(F10)
-	[Return]  ${id}
+	[Return]  ${unit}
+
+
+Заповнити "Індекс"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name='QUANTITY']//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
+Заповнити "Вулиця"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name='STREETADDR']//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
+Заповнити "Місто"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
+    Заповнити текстове поле  ${selector}  ${value}
+    Sleep  1
+    ${city}  Get Element Attribute  ${selector}  value
+    [Return]  ${city}
+
+
+Заповнити "Строк поставки з"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
+Заповнити "Строк поставки по"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="DDATETO"]//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
