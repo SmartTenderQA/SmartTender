@@ -1,5 +1,6 @@
 *** Keywords ***
 Отримати дані тендеру з cdb по id
+    [Arguments]  ${id}
 	Run Keyword If  "${site}" == "test"
 	...  Create Session  api  https://lb.api-sandbox.openprocurement.org/api/2.4/tenders/${id}
 	Run Keyword If  "${site}" == "prod"

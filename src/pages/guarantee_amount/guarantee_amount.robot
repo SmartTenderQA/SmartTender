@@ -4,7 +4,8 @@ Resource    	keywords.robot
 
 *** Keywords ***
 Перевірка гарантійного внеску
-	${data}  Отримати дані тендеру з cdb по id
+    ${id}  Отритами дані зі сторінки  ['prozorro-id']
+	${data}  Отримати дані тендеру з cdb по id  ${id}
 	${multiple_status}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  title
 	${multiple_status_guarantee}  Run Keyword And Return Status  Get From Dictionary  ${data['data']['lots'][1]}  guarantee
 	Run Keyword If
