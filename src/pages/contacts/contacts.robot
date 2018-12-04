@@ -1,6 +1,5 @@
 *** Variables ***
 ${button messages}						xpath=//*[contains(@class,'fa-bell')]
-${header text}							css=div[itemscope=itemscope] h1
 ${kontakty block}						//div[@itemscope='itemscope']/div[contains(@class, 'ivu-card')]
 
 
@@ -8,7 +7,8 @@ ${kontakty block}						//div[@itemscope='itemscope']/div[contains(@class, 'ivu-c
 Зайти на сторінку povidomlenya
 	Click Element  ${button messages}
 	Location Should Contain  /povidomlenya/
-	${should header}  Set Variable  Контакти SmartTender
+	${header text}  Set Variable  //h1
+	${should header}  Set Variable  Повідомлення
 	${is header}  Get Text  ${header text}
 	Should Be Equal  ${is header}  ${should header}
 

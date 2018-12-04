@@ -158,7 +158,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 З ким ми працюємо
-	[Tags]  site
+	[Tags]  site  -test
 	Навести мишку на  Про компанію
 	Натиснути на елемент з випадаючого списка  З ким ми працюємо
 	nashi_klienty.Перевірити заголовок
