@@ -1,0 +1,96 @@
+*** Settings ***
+Resource  				../../src/src.robot
+
+Suite Setup  			Start  prod_ssp_owner
+Suite Teardown  		Close All Browsers
+Test Teardown  			Run Keywords
+						...  Log Location  AND
+						...  Run Keyword If Test Failed  Capture Page Screenshot
+#  robot --consolecolors on -L TRACE:INFO -d test_output suites/other/docs_upload_download.robot
+
+*** Test Cases ***
+Перейти до об'єктів малої приватизації
+    Відкрити сторінку тестових торгів
+    Активувати вкладку ФГВ
+    Перейти на вкладку "Реєстр об'єктів приватизації"
+
+
+Відкрити потрібний об'єкт
+    Вибрати режим сторінки  Кабинет
+    Перейти до об'єкта приватизації за назвою  [ТЕСТУВАННЯ] Перевірка загрузки документів
+
+
+Перевірка загрузки та вигрузки файлів
+    Натиснути кнопку "Коригувати об'єкт приватизації"
+    Створити та додати великий PDF файл з довгою назвою  first
+    Створити та додати великий PDF файл з довгою назвою  second
+    Натиснути кнопку "Внести зміни"
+    Перевірити усрішність додавання файлів  first  second
+
+
+
+
+Видалити загружені файли
+    Видалити файли з об'єкту приватизації
+
+
+
+
+
+*** Keywords ***
+Перейти на вкладку "Реєстр об'єктів приватизації"
+    Click Element  //*[@data-qa="registry"]
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    Element Should Be Visible
+    ...  //*[@class="tab-pane tab-pane-active"][@data-qa="registry"]
+
+
+Вибрати режим сторінки
+    [Arguments]  ${type}
+    ${selector}  Set Variable  //*[@data-qa="page-mode"]//span[text()="${type}"]
+    Click Element   ${selector}
+    Sleep  .5
+    Element Should Be Visible
+    ...  ${selector}/preceding-sibling::span[contains(@class,"radio-checked")]
+
+
+Перейти до об'єкта приватизації за назвою
+    [Arguments]  ${title}
+    ${selector}  Set Variable  //div[contains(@class,"asset-card")]//a[text()="${title}"]
+    Open Button  ${selector}
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    Wait Until Element Is Visible  //h3[text()="${title}"]
+
+
+Натиснути кнопку "Коригувати об'єкт приватизації"
+     Click Element  //*[@data-qa="button-to-edit-page"]
+     Дочекатись закінчення загрузки сторінки(skeleton)
+     Location Should Contain  /privatization-objects/edit/
+
+
+Створити та додати великий PDF файл з довгою назвою
+    [Arguments]  ${name}
+    ${long name}  Evaluate  '1' * 200 + ' ${name}'
+    ${content}  Evaluate  '${name} file ' * 1024 * 256
+    Create File  test_output/${long name}.pdf  ${content}
+	Choose File  xpath=(${button add file})  ${EXECDIR}/test_output/${long name}.pdf
+
+
+Натиснути кнопку "Внести зміни"
+    debug
+    Click Element  //*[@data-qa="button-success"]
+    Sleep  5
+    Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Перевірити усрішність додавання файлів
+    [Arguments]  @{file_names}
+    debug
+    :FOR  file  IN  ${file_names}
+    \  debug
+
+
+
+
+
+Видалити файли з об'єкту приватизації
