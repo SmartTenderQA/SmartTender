@@ -22,10 +22,13 @@ Test Teardown  			Run Keywords
 
 Перевірка загрузки та вигрузки файлів
     Натиснути кнопку "Коригувати об'єкт приватизації"
-    Створити та додати великий PDF файл з довгою назвою  first
-    Створити та додати великий PDF файл з довгою назвою  second
+    ${file path}  Створити та додати великий PDF файл з довгою назвою  first
+    ${md5 first}  Get md5  ${file path}
+    ${file path}  Створити та додати великий PDF файл з довгою назвою  second
+    ${md5 second}  Get md5  ${file path}
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
+    Перевірити можливість скачати файли
 
 
 
@@ -71,26 +74,51 @@ Test Teardown  			Run Keywords
 Створити та додати великий PDF файл з довгою назвою
     [Arguments]  ${name}
     ${long name}  Evaluate  '1' * 200 + ' ${name}'
+    ${file path}  Set Variable  test_output/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
-    Create File  test_output/${long name}.pdf  ${content}
-	Choose File  xpath=(${button add file})  ${EXECDIR}/test_output/${long name}.pdf
+    Create File  ${file path}  ${content}
+    Choose File  (${button add file})  ${EXECDIR}/${file path}
+    [Return]  ${file path}
 
 
 Натиснути кнопку "Внести зміни"
-    debug
-    Click Element  //*[@data-qa="button-success"]
-    Sleep  5
+    Click Element  //*[@data-qa="button-success"]/span
+    Sleep  3
     Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перевірити усрішність додавання файлів
     [Arguments]  @{file_names}
-    debug
-    :FOR  file  IN  ${file_names}
-    \  debug
+    ${i}  Evaluate  1
+    :FOR  ${file}  IN  @{file_names}
+    \  ${name}  Get Text  (//*[@data-qa="file-name"])[${i}]
+    \  ${name lenght}  Get Length  ${name}
+    \  Should Be True  ${name lenght} > 200
+    \  Should Contain  ${name}  ${file}
+    \  ${size}  Get Text  (//*[@data-qa="file-size"])[${i}]
+    \  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
+    \  ${size}  Evaluate  float(${size})
+    \  Should Be True  ${size} > 2
+    \  ${i}  Evaluate  ${i} + 1
 
 
+Перевірити можливість скачати файли
+    ${n}  Отримати кілкість документів обєкту приватизації
+    :FOR  ${file}  IN RANGE  1  ${n}+1
+    \  Mouse Over  (//*[@data-qa="file-name"])[${n}]/preceding-sibling::i
+    \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${n}]
+    \  Click Element  (//*[@data-qa="file-download"])[${n}]
+    \  Sleep  2
 
+
+Отримати кілкість документів обєкту приватизації
+    ${selector}  Set Variable  //*[@data-qa="file-name"]
+    ${count}  Get Element Count  ${selector}
+    [Return]  ${count}
 
 
 Видалити файли з об'єкту приватизації
+    ${n}  Отримати кілкість документів обєкту приватизації
+    Натиснути кнопку "Коригувати об'єкт приватизації"
+    :FOR  ${file}  IN RANGE  1  ${n}+1
+    \  Click Element  (//i[contains(@class,"icon-trash")])[${n}]

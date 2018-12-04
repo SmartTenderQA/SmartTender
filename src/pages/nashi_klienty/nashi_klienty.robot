@@ -1,7 +1,7 @@
 *** Variables ***
 ${nashi-klienty text}               xpath=(//*[@class="row text-center"]//b)[1]
 ${nashi-klienty text1}              xpath=(//*[@class="row text-center"]//b)[2]
-${client banner}                    css=.container .ivu-card-body
+${client banner}                    //*[contains(@class,"cardclient holder")]
 
 
 *** Keywords ***
