@@ -125,12 +125,12 @@ Test Postcondition
 Первірити unit_amount створеного лоту
 	${get}  Get Text  (//*[@class="objbox selectable objbox-scrollable"])[2]//tr[1+1]//td[4]
 	${int}  Evaluate  str(int(${get}))
-	Should Be Equal  ${int}  ${data.lots[0].unit_amount}
+	Should Contain  ${int}  ${data.lots[0].unit_amount}
 
 
 Первірити unit_name створеного лоту
 	${get}  Get Text  (//*[@class="objbox selectable objbox-scrollable"])[2]//tr[1+1]//td[5]
-	Should Be Equal  ${get}  ${data.lots[0].unit_name}
+	Should Contain  ${data.lots[0].unit_name}  ${get}
 
 
 Натиснути на планету потрібного тендеру
