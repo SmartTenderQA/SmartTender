@@ -5,6 +5,7 @@ Library  dasu_service.py
 Library  monitoring_owner.py
 Suite Setup  Підготувати користувачів
 Suite Teardown  Close All Browsers
+Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
