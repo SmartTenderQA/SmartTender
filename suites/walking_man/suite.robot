@@ -164,9 +164,10 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	nashi_klienty.Перевірити заголовок
 	Перевірити наявність клієнтів
 	${count1}  nashi_klienty.Порахувати кількість клієнтів
-	nashi_klienty.Натиснути "Показати ще"
-	${count2}  nashi_klienty.Порахувати кількість клієнтів
-	Run Keyword If  ${count1} >= ${count2}  Fail  Кнопка "Показати ще" не працюе
+	# Зі сторінки прибрали кнопку "Показати ще"
+	#nashi_klienty.Натиснути "Показати ще"
+	#${count2}  nashi_klienty.Порахувати кількість клієнтів
+	#Run Keyword If  ${count1} >= ${count2}  Fail  Кнопка "Показати ще" не працюе
 
 
 Вакансії

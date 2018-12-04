@@ -26,6 +26,7 @@ Test Teardown  			Run Keywords
     Створити та додати великий PDF файл з довгою назвою  second
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
+    Перевірити можливість скачати файли     first  second
 
 
 
@@ -77,20 +78,38 @@ Test Teardown  			Run Keywords
 
 
 Натиснути кнопку "Внести зміни"
-    debug
-    Click Element  //*[@data-qa="button-success"]
-    Sleep  5
+    Click Element  //*[@data-qa="button-success"]/span
+    Sleep  3
     Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перевірити усрішність додавання файлів
     [Arguments]  @{file_names}
-    debug
-    :FOR  file  IN  ${file_names}
+    ${i}  Evaluate  1
+    :FOR  ${file}  IN  @{file_names}
+    \  ${name}  Get Text  (//*[@data-qa="file-name"])[${i}]
+    \  ${name lenght}  Get Length  ${name}
+    \  Should Be True  ${name lenght} > 200
+    \  Should Contain  ${name}  ${file}
+    \  ${size}  Get Text  (//*[@data-qa="file-size"])[${i}]
+    \  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
+    \  ${size}  Evaluate  float(${size})
+    \  Should Be True  ${size} > 2
+
+
+Перевірити можливість скачати файли
+    ${n}  Отримати кілкість документів обєкту приватизації
+    :FOR  ${file}  IN RANGE  ${n}
     \  debug
 
 
 
 
+Отримати кілкість документів обєкту приватизації
+    ${selector}  Set Variable  //*[@data-qa="file-name"]
+    ${count}  Get Element Count  ${selector}
+    [Return]  ${count}
+
 
 Видалити файли з об'єкту приватизації
+    Натиснути кнопку "Коригувати об'єкт приватизації"
