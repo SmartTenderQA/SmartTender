@@ -2,7 +2,7 @@
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Run Keyword If  '${site}' == 'test'
-	...  Wait Until Keyword Succeeds  10  2  Заповнити та перевірити текстове поле  ${selector}  ${text}
+	...  Wait Until Keyword Succeeds  10  2  keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	...  ELSE IF  '${site}' == 'prod'
 	...  Wait Until Keyword Succeeds  10  2  Заповнити Поле  ${selector}  ${text}
 

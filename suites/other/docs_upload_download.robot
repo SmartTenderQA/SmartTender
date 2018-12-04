@@ -22,11 +22,14 @@ Test Teardown  			Run Keywords
 
 Перевірка загрузки та вигрузки файлів
     Натиснути кнопку "Коригувати об'єкт приватизації"
-    Створити та додати великий PDF файл з довгою назвою  first
-    Створити та додати великий PDF файл з довгою назвою  second
+    debug
+    ${file path}  Створити та додати великий PDF файл з довгою назвою  first
+    ${md5 first}  Get md5  ${file path}
+    ${file path}  Створити та додати великий PDF файл з довгою назвою  second
+    ${md5 second}  Get md5  ${file path}
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
-    Перевірити можливість скачати файли     first  second
+    Перевірити можливість скачати файли
 
 
 
@@ -72,9 +75,11 @@ Test Teardown  			Run Keywords
 Створити та додати великий PDF файл з довгою назвою
     [Arguments]  ${name}
     ${long name}  Evaluate  '1' * 200 + ' ${name}'
+    ${file path}  Set Variable  test_output/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
-    Create File  test_output/${long name}.pdf  ${content}
-	Choose File  xpath=(${button add file})  ${EXECDIR}/test_output/${long name}.pdf
+    Create File  ${file path}  ${content}
+    Choose File  (${button add file})  ${EXECDIR}/${file path}
+    [Return]  ${file path}
 
 
 Натиснути кнопку "Внести зміни"
@@ -95,14 +100,15 @@ Test Teardown  			Run Keywords
     \  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
     \  ${size}  Evaluate  float(${size})
     \  Should Be True  ${size} > 2
+    \  ${i}  Evaluate  ${i} + 1
 
 
 Перевірити можливість скачати файли
     ${n}  Отримати кілкість документів обєкту приватизації
-    :FOR  ${file}  IN RANGE  ${n}
-    \  debug
-
-
+    :FOR  ${file}  IN RANGE  1  ${n}+1
+    \  Mouse Over  (//*[@data-qa="file-name"])[${n}]/preceding-sibling::i
+    \  Wait Unril Element Is Visible  (//*[@data-qa="file-download"])[${n}]
+    \  Click Element  (//*[@data-qa="file-download"])[${n}]
 
 
 Отримати кілкість документів обєкту приватизації
