@@ -21,3 +21,24 @@
 	[Arguments]  ${field}
 	${selector}  Set Variable  ${${field}}
 	[Return]  ${selector}
+
+
+Дочекатись закінчення прийому пропозицій
+    Reload Page
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    Дочекатись дати  ${tender end date}
+
+
+Дочекатись закінчення періоду прекваліфікації
+    ${selector}  Set Variable  //*[@data-qa="prequalification"]//*[@data-qa="date-end"]
+    Reload Page
+    Wait Until Element Is Visible  ${selector}  30
+    Sleep  1
+    ${tender end date}  Get text  ${selector}
+    Дочекатись дати  ${tender end date}
+
+
+Дочекатись початку періоду перкваліфікації
+    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    Дочекатись дати  ${tender end date}
+    Дочекатися статусу тендера  Прекваліфікація

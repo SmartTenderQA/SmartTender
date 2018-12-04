@@ -70,3 +70,10 @@
     Дочекатись закінчення загрузки сторінки(webclient)
     Element Should Not Be Visible  ${selector}
 
+
+Натиснути OkButton
+	${button}  Set Variable  //*[@data-name="OkButton"]
+	Wait Until Page Contains Element  ${button}
+	Click Element  ${button}
+	Дочекатись закінчення загрузки сторінки(webclient)
+	#Wait Until Element Is Not Visible  ${button}

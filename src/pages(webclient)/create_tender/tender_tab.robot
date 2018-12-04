@@ -88,7 +88,6 @@ Resource        keywords.robot
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${id}  Вибрати довільну ЗЕЛЕНУ класифікацію
 	Підтвердити вибір(F10)
-	Sleep  1
 	${id}  Get Element Attribute  ${input field}  value
 	[Return]  ${id}
 
@@ -102,12 +101,13 @@ Resource        keywords.robot
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${unit}  Вибрати довільну одиницю виміру
 	Підтвердити вибір(F10)
+	${unit}  Get Element Attribute  ${input field}  value
 	[Return]  ${unit}
 
 
 Заповнити "Індекс"
     [Arguments]  ${value}
-    ${selector}  set variable  //*[@data-name='QUANTITY']//input
+    ${selector}  set variable  //*[@data-name='POSTALCODE']//input
     Заповнити текстове поле  ${selector}  ${value}
 
 

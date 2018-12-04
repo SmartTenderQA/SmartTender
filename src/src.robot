@@ -98,8 +98,6 @@ Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 
 
-Resource    get_auction_href.robot
-Resource    keywords(webclient).robot
 Resource	keywords.robot
 Resource	search.robot
 Library		service.py
