@@ -4,26 +4,26 @@
 	Відкрити сторінку Аукціони ФГВ(test)
 	Відкрити вікно створення тендеру
 	create_tender.Вибрати тип процедури  ${auction_type}
-	Заповнити value.amount
-	Заповнити minimalStep.percent
-	Заповнити dgfDecisionID
-	Заповнити dgfDecisionDate
+	cdb1_sale_property.Заповнити value.amount
+	cdb1_sale_property.Заповнити minimalStep.percent
+	cdb1_sale_property.Заповнити dgfDecisionID
+	cdb1_sale_property.Заповнити dgfDecisionDate
 
-	Заповнити title
-	Заповнити dgfID
-	Заповнити description
+	cdb1_sale_property.Заповнити title
+	cdb1_sale_property.Заповнити dgfID
+	cdb1_sale_property.Заповнити description
 
-	Заповнити items.title
-	Заповнити items.quantity
-	Заповнити items.unit.name
-	Заповнити items.classification.description
-	Заповнити items.postalcode
-	Заповнити items.strretaddress
-	Заповнити items.locality
+	cdb1_sale_property.Заповнити items.title
+	cdb1_sale_property.Заповнити items.quantity
+	cdb1_sale_property.Заповнити items.unit.name
+	cdb1_sale_property.Заповнити items.classification.description
+	cdb1_sale_property.Заповнити items.postalcode
+	cdb1_sale_property.Заповнити items.strretaddress
+	cdb1_sale_property.Заповнити items.locality
 
-	Заповнити guarantee.amount
+	cdb1_sale_property.Заповнити guarantee.amount
 
-	Заповнити auctionPeriod.startDate
+	cdb1_sale_property.Заповнити auctionPeriod.startDate
 
 	Зберегти чернетку
 	Оголосити тендер
