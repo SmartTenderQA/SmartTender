@@ -15,6 +15,8 @@ from glob import glob
 import os
 import operator
 import uuid
+import hashlib
+
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -235,3 +237,7 @@ def get_tender_href_for_commercial_owner(value):
 def get_some_uuid():
     value = str(uuid.uuid4())
     return value
+
+
+def get_md5(file):
+    return hashlib.md5(file).hexdigest()

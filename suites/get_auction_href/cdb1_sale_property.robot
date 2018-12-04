@@ -105,6 +105,12 @@ If skipped create tender
 	Знайти тендер по ID  ${data['tender_id']}
 
 
+Отримати та зберегти tender_id
+	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
+	Should Not Be Equal  ${tender_id}  ${EMPTY}
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
 Зберегти пряме посилання на тендер
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
