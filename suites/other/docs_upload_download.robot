@@ -21,7 +21,6 @@ Test Teardown  			Run Keywords
 
 
 Перевірка загрузки та вигрузки файлів
-    debug
     Натиснути кнопку "Коригувати об'єкт приватизації"
     ${file path}  Створити та додати великий PDF файл з довгою назвою  first
     ${md5 first}  Get md5  ${file path}
