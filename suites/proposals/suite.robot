@@ -82,6 +82,7 @@ ${no tender}                        False
 
 
 Перевірити присутність ЕЦП після зміни пропозиції
+	[Tags]  EDS
     ${status}  Run Keyword And Return Status  Перевірити успішність підписання
     Run Keyword If  ${status} == ${False}  Підписати ЕЦП
 
