@@ -77,6 +77,9 @@ Resource    pages/torgy_rialto/torgy_rialto.robot
 Resource    pages/vakansii/vakansii.robot
 Resource    pages/vidhuky/vidhuky.robot
 Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
+Resource    pages/small_privatization/small_privatization.robot
+Resource    pages/small_privatization_informational_message/small_privatization_informational_message.robot
+Resource    pages/small_privatization_object/small_privatization_object.robot
 
 Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/actions.robot
