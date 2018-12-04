@@ -118,12 +118,14 @@ Test Teardown  			Run Keywords
 
 Видалити файли з об'єкту приватизації
     ${n}  Отримати кілкість документів обєкту приватизації
+    Scroll Page To Top
     Натиснути кнопку "Коригувати об'єкт приватизації"
     :FOR  ${file}  IN RANGE  1  ${n}+1
     \  Click Element  (//i[contains(@class,"icon-trash")])[1]
     \  Wait Until Element Is Visible  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Click Element  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Sleep  .5
+    Scroll Page To Top
     Натиснути кнопку "Внести зміни"
     ${n}  Отримати кілкість документів обєкту приватизації
     Should Be Equal As Integers  ${n}  0
