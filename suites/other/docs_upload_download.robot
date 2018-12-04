@@ -21,6 +21,7 @@ Test Teardown  			Run Keywords
 
 
 Перевірка загрузки та вигрузки файлів
+    debug
     Натиснути кнопку "Коригувати об'єкт приватизації"
     ${file path}  Створити та додати великий PDF файл з довгою назвою  first
     ${md5 first}  Get md5  ${file path}
@@ -29,8 +30,6 @@ Test Teardown  			Run Keywords
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
     Перевірити можливість скачати файли
-
-
 
 
 Видалити загружені файли
@@ -121,4 +120,10 @@ Test Teardown  			Run Keywords
     ${n}  Отримати кілкість документів обєкту приватизації
     Натиснути кнопку "Коригувати об'єкт приватизації"
     :FOR  ${file}  IN RANGE  1  ${n}+1
-    \  Click Element  (//i[contains(@class,"icon-trash")])[${n}]
+    \  Click Element  (//i[contains(@class,"icon-trash")])[1]
+    \  Wait Until Element Is Visible  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
+    \  Click Element  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
+    \  Sleep  .5
+    Натиснути кнопку "Внести зміни"
+    ${n}  Отримати кілкість документів обєкту приватизації
+    Should Be Equal As Integers  ${n}  0
