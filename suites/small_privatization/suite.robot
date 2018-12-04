@@ -2,63 +2,49 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Variables ***
-${save btn locator}     //*[@data-qa='button-success']
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/suite.robot
 *** Test Cases ***
-Перейти до створення об'єкта малої приватизації
-    Перейти на сторінку реєстру приватизації
-    Натиснути кнопку створити об'єкт малої приватизації
+Створити об'єкт МП
+	small_privatization.Перейти на сторінку реєстру приватизації
+    small_privatization.Перейти до створення об'єкта малої приватизації
+	small_privatization_object.Заповнити необхідні поля
+	small_privatization_object.Зберегти чернетку об'єкту
+	small_privatization_object.Опублікувати об'єкт у реєстрі
+	small_privatization_object.Отримати UAID для об'єкту
 
 
-Перевірити неможливість створити об'єкт без заповнення жодного поля
-    Click Element  ${save btn locator}
-    Element Should Be Visible  //div[@class='ivu-message']
+Створити інформаційне повідомлення МП
+	Go To  ${start page}
+	small_privatization.Перейти на сторінку реєстру приватизації
+	small_privatization.Перейти до створення інформаційного повідомлення
+	small_privatization_informational_message.Заповнити необхідні поля 1 етап
+	small_privatization_informational_message.Зберегти чернетку повідомлення
+	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
+	small_privatization_informational_message.Перейти до коригування інформації
+	small_privatization_informational_message.Заповнити необхідні поля 2 етап
+	small_privatization_informational_message.Зберегти чернетку повідомлення
+	debug
+	small_privatization_informational_message.Натиснути передати на перевірку
+	small_privatization_informational_message.Отримати UAID для повідомлення
+	Зберегти словник у файл  ${data}  data
 
 
-Заповнити необхідні поля
-    Ввести унікальний код об'єкту
-
- 	Заповнити title
-    Заповнити description
-
-    Заповнити decision.title
-    Заповнити decision.number
-    Заповнити decision.date
-
-    Заповнити object.description
-    Заповнити object.kind
-    Заповнити object.count
-    Заповнити object.unit
-    Заповнити object.postalcode
-    Заповнити object.country
-    Заповнити object.city
-    Заповнити object.address
-
-    Створити об'єкт у реєстрі
-
-
-Перевірити збережену інформацію
-    Перевірити title
-    Перевірити description
-
-    Перевірити decision
-
-    Перевірити object.description
-    Перевірити object.kind
-    Перевірити object.amount
-    Перевірити object.address
+	debug
 
 
 *** Keywords ***
 Precondition
 	${data}  Create Dictionary
+	${object}  Create Dictionary
+	${message}  Create Dictionary
+	Set To Dictionary  ${data}  object  ${object}
+	Set To Dictionary  ${data}  message  ${message}
 	Set Global Variable  ${data}
     Start in grid  ${user}
     Go To  ${start_page}
@@ -67,154 +53,6 @@ Precondition
 Postcondition
     Log  ${data}
     Close All Browsers
-
-
-Перейти на сторінку реєстру приватизації
-    Click Element  (//div[@id='main']/div[@class='link-image']/*)[2]
-    Click Element  link=Аукціони на продаж активів держпідприємств
-    Дочекатись закінчення загрузки сторінки
-    Click Element  //*[@data-qa='registry']
-    Дочекатись закінчення загрузки сторінки
-    Click Element  //span[contains(text(),'Кабінет')]
-
-
-Натиснути кнопку створити об'єкт малої приватизації
-    Click Element  //*[@data-qa='button-create-privatization-object']
-    Дочекатись закінчення загрузки сторінки
-
-
-Ввести унікальний код об'єкту
-    ${id}  random_number  1000  10000
- 	Set To Dictionary  ${data}  id  ${id}
- 	Sleep  0.5
-    ${locator}  Set Variable  //*[@data-qa='input-check-exists-assets']/input
-    Input Text  ${locator}  ${id}
-    Click Element  //*[@data-qa='button-asset-checking']
-    Дочекатись закінчення загрузки сторінки
-    ${status}  Run Keyword And Return Status  Page Should Not Contain Element  ${locator}
-    Run Keyword If  ${status} == ${False}  Ввести унікальний код об'єкту
-
-
-Заповнити title
-	${text}  create_sentence  5
-	${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
-	${selector}  Set Variable  xpath=//*[@data-qa='input-title']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${title}
-	Set To Dictionary  ${data}  title=${title}
-
-
-Заповнити description
-	${description}  create_sentence  20
-	${selector}  Set Variable  xpath=//*[@data-qa='input-description']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${data}  description=${description}
-
-
-Заповнити decision.title
-	${title}  create_sentence  5
-	${selector}  Set Variable  xpath=//*[@data-qa='input-decision-title']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${title}
-	${dict}  Create Dictionary  title=${title}
-	Set To Dictionary  ${data}  decision  ${dict}
-
-
-Заповнити decision.number
-	${first}  random_number  1000  10000
-	${second}  random_number  100  1000
-	${number}  Set Variable  ${first}/${second}-${first}
-	${selector}  Set Variable  xpath=//*[@data-qa='input-decision-number']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${number}
-	Set To Dictionary  ${data['decision']}  number  ${number}
-
-
-Заповнити decision.date
-	${date}  smart_get_time  0  m
-	${selector}  Set Variable  xpath=//*[@data-qa='datepicker-decision-date']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${date}
-	Set To Dictionary  ${data['decision']}  date  ${date}
-
-
-Заповнити object.description
-	${description}  create_sentence  20
-	${selector}  Set Variable  xpath=//*[@data-qa='input-items-description']//*[@autocomplete="off"]
-	Заповнити текстове поле  ${selector}  ${description}
-	${dict}  Create Dictionary  description=${description}
-	Set To Dictionary  ${data}  object  ${dict}
-
-
-Заповнити object.kind
-    ${selector}  Set Variable  xpath=//*[@data-qa='select-items-object-kind']
-    Scroll Page To Element XPATH  ${selector}
-    Click Element  ${selector}
-    Sleep  .5
-    Click Element  ${selector}/div[@class='ivu-select-dropdown']//*[contains(text(),'102')]
-    ${kind}  Get Text  ${selector}//*[@class='ivu-select-selected-value']
-   	Should Not Be Empty  ${kind}
-	Set To Dictionary  ${data['object']}  kind  ${kind}
-
-
-Заповнити object.count
-	${first}  random_number  1  100000
-	${second}  random_number  1  1000
-    ${count}  Evaluate  str(round(float(${first})/float(${second}), 5))
-	${selector}  Set Variable  xpath=//*[@data-qa='input-item-count']//*[@autocomplete="off"]
-	Input Text  ${selector}  ${count}
-	Set To Dictionary  ${data['object']}  count  ${count}
-
-
-Заповнити object.unit
-    ${selector}  Set Variable  xpath=//*[@data-qa='select-item-unit']
-    Scroll Page To Element XPATH  ${selector}
-	${unit}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент з випадаючого списка  ${selector}  метри квадратні
-	Set To Dictionary  ${data['object']}  unit  ${unit}
-
-
-Заповнити object.postalcode
-	${postalcode}  random_number  10000  99999
-	${selector}  Set Variable  xpath=//div[contains(@class,'address-label') and not(contains(@class,'offset '))]//input[@type='text']
-	Заповнити текстове поле  ${selector}  ${postalcode}
-	Set To Dictionary  ${data['object']}  postalcode  ${postalcode}
-
-
-Заповнити object.country
-   	${selector}  Set Variable  xpath=//div[@class='ivu-col ivu-col-span-sm-9']
-	Scroll Page To Element XPATH  ${selector}
-    ${country}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент з випадаючого списка  ${selector}  Україна
-    Set To Dictionary  ${data['object']}  country  ${country}
-
-
-Заповнити object.city
-   	${selector}  Set Variable  xpath=//div[@class='ivu-col ivu-col-span-sm-10']
-    ${city}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент з випадаючого списка  ${selector}  Київ
-    Set To Dictionary  ${data['object']}  city  ${city}
-
-
-Заповнити object.address
-    ${address}  create_sentence  2
-   	${selector}  Set Variable  xpath=//*[@data-qa='component-item-address']/div[contains(@class,'ivu-form-item-required')]//input
-   	Заповнити текстове поле  ${selector}  ${address}
-    Set To Dictionary  ${data['object']}  address  ${address}
-
-
-Вибрати та повернути елемент з випадаючого списка
-    [Arguments]  ${selector}  ${value}
-  	${item}  Set Variable  ${selector}//ul[@class='ivu-select-dropdown-list']//*[contains(text(),'${value}')]
-  	${input}  Set Variable  ${selector}//input[@type='text']
-    Click Element  ${input}
-    Sleep  .5
-    Input Text  ${input}  ${value}
-    Sleep  .5
-    Wait Until Page Contains Element  ${item}
-    Click Element  ${item}
-    ${text}  Get Element Attribute  ${input}  value
-   	Should Not Be Empty  ${text}
-    [Return]  ${text}
-
-
-Створити об'єкт у реєстрі
-    Scroll Page To Element XPATH  ${save btn locator}
-    Click Element  ${save btn locator}
-    Дочекатись Закінчення Загрузки Сторінки
 
 
 Перевірити title
