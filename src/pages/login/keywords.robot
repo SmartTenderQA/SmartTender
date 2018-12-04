@@ -53,6 +53,7 @@ Fill password
 
 
 Перевірити успішність авторизації організатора
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Does Not Contain Element  ${login button}  120
 	Wait Until Page Contains Element  css=.body-container #container
 #	Закрити вікно Виберіть об`єкт
