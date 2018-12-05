@@ -18,19 +18,21 @@ Test Teardown  			Run Keywords
 Відкрити потрібний об'єкт
     Вибрати режим сторінки  Кабинет
     Перейти до об'єкта приватизації за назвою  [ТЕСТУВАННЯ] Перевірка загрузки документів
+    Видалити файли з об'єкту приватизації
 
 
 Перевірка загрузки та вигрузки файлів
     Натиснути кнопку "Коригувати об'єкт приватизації"
-    ${1 file path}  ${1 full name}  Створити та додати великий PDF файл з довгою назвою  first
-    ${md5 first}  Get md5  ${1 file path}
-    ${2 file path}  ${2 full name}  Створити та додати великий PDF файл з довгою назвою  second
-    ${md5 second}  Get md5  ${2 file path}
+    ${1 full name}  Створити та додати великий PDF файл з довгою назвою  first
+    ${md5 first}  Get md5  ${EXECDIR}/test_output/${1 full name}
+    ${2 full name}  Створити та додати великий PDF файл з довгою назвою  second
+    ${md5 second}  Get md5  ${EXECDIR}/test_output/${2 full name}
     Натиснути кнопку "Внести зміни"
-    Перевірити усрішність додавання файлів  first      second
+    Перевірити усрішність додавання файлів  first  second
     Перевірити можливість скачати файли     ${1 full name}  ${2 full name}
-    #${now md5 first}  Get md5  ${EXECDIR}/test_output/downloads/${1 full name}
-    #${now md5 second}  Get md5  ${EXECDIR}/test_output/downloads/${2 full name}
+    ${now md5 first}  Get md5  ${EXECDIR}/test_output/downloads/${1 full name}
+    ${now md5 second}  Get md5  ${EXECDIR}/test_output/downloads/${2 full name}
+
 
 Видалити загружені файли
     Видалити файли з об'єкту приватизації
@@ -78,7 +80,7 @@ Test Teardown  			Run Keywords
     Create File  ${file path}  ${content}
     Choose File  (${button add file})  ${EXECDIR}/${file path}
     ${full name}  Set Variable  ${long name}.pdf
-    [Return]  ${file path}  ${full name}
+    [Return]  ${full name}
 
 
 Натиснути кнопку "Внести зміни"
@@ -105,12 +107,12 @@ Test Teardown  			Run Keywords
 Перевірити можливість скачати файли
     [Arguments]  @{file names}
     ${n}  Отримати кілкість документів обєкту приватизації
-    :FOR  ${file}  IN RANGE  1  ${n}+1
-    \  Mouse Over  (//*[@data-qa="file-name"])[${n}]/preceding-sibling::i
-    \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${n}]
-    \  ${link}  Get Element Attribute  (//*[@data-qa="file-preview"])[${n}]  href
+    :FOR  ${i}  IN RANGE  1  ${n}+1
+    \  Mouse Over  (//*[@data-qa="file-name"])[${i}]/preceding-sibling::i
+    \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${i}]
+    \  ${link}  Get Element Attribute  (//*[@data-qa="file-preview"])[${i}]  href
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
-    \  download_file_to_my_path  ${link}  ${EXECDIR}/test_output/downloads/${file names[${n}-1]}
+    \  download_file_to_my_path  ${link}  ${EXECDIR}/test_output/downloads/${file names[${i}-1]}
     \  Sleep  3
 
 

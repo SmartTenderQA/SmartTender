@@ -14,6 +14,16 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
     [Return]  ${href}
 
 
+Отримати та зберегти tender_id.prod
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
+Отримати та зберегти tender_id.test
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
 Отримати посилання на вибраний тендер по значку "Планета"
 	Click Element  //tr[contains(@class, "rowselected")]//td[3]
 	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
