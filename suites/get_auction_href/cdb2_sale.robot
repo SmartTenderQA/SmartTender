@@ -138,6 +138,16 @@ If skipped create tender
 	...  AND  Start  test_viewer  viewer
 
 
+Отримати та зберегти tender_id.prod
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
+Отримати та зберегти tender_id.test
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
 Вибрати довільне місто
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}
@@ -156,10 +166,10 @@ If skipped create tender
 	[Return]  ${locality}
 
 
-Отримати та зберегти tender_id
-	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
-	Should Not Be Equal  ${tender_id}  ${EMPTY}
-	Set To Dictionary  ${data}  tender_id=${tender_id}
+#Отримати та зберегти tender_id
+#	${tender_id}  Get Element Attribute  (//tr[contains(@class, 'Row')])[1]//a[not(contains(@href, 'smart'))]  text
+#	Should Not Be Equal  ${tender_id}  ${EMPTY}
+#	Set To Dictionary  ${data}  tender_id=${tender_id}
 
 
 Знайти тендер користувачем
