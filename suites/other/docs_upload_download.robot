@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Start in grid  prod_ssp_owner
+Suite Setup  			Start  prod_ssp_owner
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -24,14 +24,16 @@ Test Teardown  			Run Keywords
 Перевірка загрузки та вигрузки файлів
     Натиснути кнопку "Коригувати об'єкт приватизації"
     ${1 full name}  Створити та додати великий PDF файл з довгою назвою  first
-    ${md5 first}  Get md5  ${EXECDIR}/test_output/${1 full name}
+    ${md5 first}  get_checksum_md5  ${EXECDIR}/test_output/${1 full name}
     ${2 full name}  Створити та додати великий PDF файл з довгою назвою  second
-    ${md5 second}  Get md5  ${EXECDIR}/test_output/${2 full name}
+    ${md5 second}  get_checksum_md5  ${EXECDIR}/test_output/${2 full name}
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
     Перевірити можливість скачати файли     ${1 full name}  ${2 full name}
-    ${now md5 first}  Get md5  ${EXECDIR}/test_output/downloads/${1 full name}
-    ${now md5 second}  Get md5  ${EXECDIR}/test_output/downloads/${2 full name}
+    ${now md5 first}  get_checksum_md5  ${EXECDIR}/test_output/downloads/${1 full name}
+    ${now md5 second}  get_checksum_md5  ${EXECDIR}/test_output/downloads/${2 full name}
+    Should Be Equal  ${md5 first}   ${now md5 first}
+    Should Be Equal  ${md5 second}  ${now md5 second}
 
 
 Видалити загружені файли
@@ -75,10 +77,10 @@ Test Teardown  			Run Keywords
 Створити та додати великий PDF файл з довгою назвою
     [Arguments]  ${name}
     ${long name}  Evaluate  '1' * 200 + ' ${name}'
-    ${file path}  Set Variable  test_output/${long name}.pdf
+    ${file path}  Set Variable  ${EXECDIR}/test_output/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
-    Choose File  (${button add file})  ${EXECDIR}/${file path}
+    Choose File  ${button add file}  ${file path}
     ${full name}  Set Variable  ${long name}.pdf
     [Return]  ${full name}
 

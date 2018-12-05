@@ -246,5 +246,9 @@ def get_some_uuid():
     return value
 
 
-def get_md5(file):
-    return hashlib.md5(file).hexdigest()
+def get_checksum_md5(file):
+    hasher = hashlib.md5()
+    with open(file, 'rb') as afile:
+        buf = afile.read()
+        hasher.update(buf)
+        return hasher.hexdigest()
