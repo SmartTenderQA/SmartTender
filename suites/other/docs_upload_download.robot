@@ -22,17 +22,17 @@ Test Teardown  			Run Keywords
 
 Перевірка загрузки та вигрузки файлів
     Натиснути кнопку "Коригувати об'єкт приватизації"
-    ${file path}  Створити та додати великий PDF файл з довгою назвою  first
-    ${md5 first}  Get md5  ${file path}
-    ${file path}  Створити та додати великий PDF файл з довгою назвою  second
-    ${md5 second}  Get md5  ${file path}
+    ${1 file path}  ${1 full name}  Створити та додати великий PDF файл з довгою назвою  first
+    ${md5 first}  Get md5  ${1 file path}
+    ${2 file path}  ${2 full name}  Створити та додати великий PDF файл з довгою назвою  second
+    ${md5 second}  Get md5  ${2 file path}
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first      second
-    Перевірити можливість скачати файли     first.pdf  second.pdf
-
+    Перевірити можливість скачати файли     ${1 full name}  ${2 full name}
+    #${now md5 first}  Get md5  ${EXECDIR}/test_output/downloads/${1 full name}
+    #${now md5 second}  Get md5  ${EXECDIR}/test_output/downloads/${2 full name}
 
 Видалити загружені файли
-    debug
     Видалити файли з об'єкту приватизації
 
 
@@ -77,7 +77,8 @@ Test Teardown  			Run Keywords
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
     Choose File  (${button add file})  ${EXECDIR}/${file path}
-    [Return]  ${file path}
+    ${full name}  Set Variable  ${long name}.pdf
+    [Return]  ${file path}  ${full name}
 
 
 Натиснути кнопку "Внести зміни"
