@@ -12,8 +12,8 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 &{data}
-${UAID}                         UA-2018-11-28-000004-b
-${tender_ID}                    50ddceece0bb4d3282a01c3988b22724
+${UAID}                         UA-2018-12-04-000012-a
+${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
 
 
 *** Test Cases ***
