@@ -86,16 +86,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Отримати та зберегти tender_id.prod
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
-	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
-Отримати та зберегти tender_id.test
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
-	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
 Зберегти пряме посилання на тендер
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}

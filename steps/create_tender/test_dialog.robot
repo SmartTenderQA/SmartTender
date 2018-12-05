@@ -26,7 +26,8 @@
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  38  minutes
-    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
+    ${value}  Create Dictionary  endDate=${date}
+    Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити "Прийом пропозицій по"  ${date}
 
 
