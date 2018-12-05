@@ -29,7 +29,7 @@ Test Teardown  			Run Keywords
     ${md5 second}  get_checksum_md5  ${OUTPUTDIR}/${2 full name}
     Натиснути кнопку "Внести зміни"
     Перевірити усрішність додавання файлів  first  second
-    Create Directory  ${OUTPUTDIR}/downloads/
+    Створити папку загрузок
     Перевірити можливість скачати файли     ${1 full name}  ${2 full name}
     ${now md5 first}  get_checksum_md5  ${OUTPUTDIR}/downloads/${1 full name}
     ${now md5 second}  get_checksum_md5  ${OUTPUTDIR}/downloads/${2 full name}
@@ -45,6 +45,10 @@ Test Teardown  			Run Keywords
 
 
 *** Keywords ***
+Створити папку загрузок
+    Create Directory  ${OUTPUTDIR}/downloads/
+
+
 Перейти на вкладку "Реєстр об'єктів приватизації"
     Click Element  //*[@data-qa="registry"]
     Дочекатись закінчення загрузки сторінки(skeleton)
