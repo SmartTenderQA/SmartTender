@@ -21,7 +21,7 @@ def check_response(data):
 
 
 def create_monitoring(id, name):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings'
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings'
 
     headers = {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ def create_monitoring(id, name):
 
 
 def cancellation_monitoring(description, relatedParty, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings' + '/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings' + '/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ def cancellation_monitoring(description, relatedParty, id):
 
 
 def get_monitoring_data(id, field=None, title=None):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
     r = requests.get(url)
 
     if title is not None:
@@ -132,7 +132,7 @@ def get_monitoring_data(id, field=None, title=None):
 
 
 def decision(relatedParty, description, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ def decision(relatedParty, description, id):
 
 
 def change_monitoring_status(status, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ def change_monitoring_status(status, id):
 
 
 def conclusion_true(violationOccurred, description, stringsAttached, auditFinding, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -216,7 +216,7 @@ def conclusion_true(violationOccurred, description, stringsAttached, auditFindin
 
 
 def conclusion_false(violationOccurred, relatedParty, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -241,7 +241,7 @@ def conclusion_false(violationOccurred, relatedParty, id):
 
 
 def eliminationResolution(relatedParty, description, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ def eliminationResolution(relatedParty, description, id):
 
 
 def make_a_dialogue(title, description, relatedParty, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
 
     headers = {
         'Content-Type': 'application/json',
@@ -296,7 +296,7 @@ def make_a_dialogue(title, description, relatedParty, id):
 
 
 def stopped(description, relatedParty, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -322,7 +322,7 @@ def stopped(description, relatedParty, id):
 
 
 def declined(description, relatedParty, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -348,7 +348,7 @@ def declined(description, relatedParty, id):
 
 
 def inspection(description, monitoring_ids):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/inspections'
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/inspections'
 
     headers = {
         'Content-Type': 'application/json',
@@ -373,7 +373,7 @@ def inspection(description, monitoring_ids):
 
 
 def sas_answer(title, description, relatedParty, relatedPost, id):
-    url = 'https://audit-api-sb.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
+    url = 'https://audit-api-sandbox.prozorro.gov.ua/api/2.4/monitorings/' + str(id) + '/posts'
 
     headers = {
         'Content-Type': 'application/json',
