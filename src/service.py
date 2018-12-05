@@ -6,6 +6,7 @@
 import sys
 import re
 import urllib2
+import requests
 
 from iso8601 import parse_date
 from datetime import datetime, timedelta
@@ -129,6 +130,12 @@ def download_file_and_return_content(url):
     response = urllib2.urlopen(url)
     file_content = response.read()
     return file_content
+
+
+def download_file_to_my_path(url, path):
+    r = requests.get(url)
+    with open(path, 'wb') as f:
+        f.write(r.content)
 
 
 def get_only_numbers(value):

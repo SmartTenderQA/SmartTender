@@ -27,11 +27,12 @@ Test Teardown  			Run Keywords
     ${file path}  Створити та додати великий PDF файл з довгою назвою  second
     ${md5 second}  Get md5  ${file path}
     Натиснути кнопку "Внести зміни"
-    Перевірити усрішність додавання файлів  first  second
-    Перевірити можливість скачати файли
+    Перевірити усрішність додавання файлів  first      second
+    Перевірити можливість скачати файли     first.pdf  second.pdf
 
 
 Видалити загружені файли
+    debug
     Видалити файли з об'єкту приватизації
 
 
@@ -101,12 +102,15 @@ Test Teardown  			Run Keywords
 
 
 Перевірити можливість скачати файли
+    [Arguments]  @{file names}
     ${n}  Отримати кілкість документів обєкту приватизації
     :FOR  ${file}  IN RANGE  1  ${n}+1
     \  Mouse Over  (//*[@data-qa="file-name"])[${n}]/preceding-sibling::i
     \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${n}]
-    \  Click Element  (//*[@data-qa="file-download"])[${n}]
-    \  Sleep  2
+    \  ${link}  Get Element Attribute  (//*[@data-qa="file-preview"])[${n}]  href
+    \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
+    \  download_file_to_my_path  ${link}  ${EXECDIR}/test_output/downloads/${file names[${n}-1]}
+    \  Sleep  3
 
 
 Отримати кілкість документів обєкту приватизації
