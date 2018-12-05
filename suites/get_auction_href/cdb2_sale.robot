@@ -46,7 +46,7 @@ ${where}							test
 
 	Зберегти чернетку
 	Оголосити тендер
-	Run Keyword  Отримати та зберегти tender_id.${site}
+	Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
 	Close Browser
 

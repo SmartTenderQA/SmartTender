@@ -99,6 +99,16 @@ If skipped create tender
 	Знайти тендер по ID  ${data['tender_id']}
 
 
+Отримати та зберегти tender_id.prod
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
+Отримати та зберегти tender_id.test
+	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
+
+
 Натиснути кнопку "Додати документи"
     Reload Page
     ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
