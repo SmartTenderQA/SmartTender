@@ -26,7 +26,7 @@
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  3
     ${value}  Create Dictionary  percent=${minimal_step_percent}
-    Set To Dictionary  ${data.value}  minimalStep  ${value}
+    Set To Dictionary  ${data}  minimalStep  ${value}
     Заповнити "Мінімальний крок аукціону"   ${minimal_step_percent}
 
 
