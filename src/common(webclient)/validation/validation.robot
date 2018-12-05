@@ -13,7 +13,8 @@
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Wait Until Element Is Not Visible  ${button}
-	Sleep  3
+	Sleep  1
+	Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Закрити валідаційне вікно (Так/Ні)
