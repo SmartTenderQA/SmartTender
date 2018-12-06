@@ -2,26 +2,32 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keywords
+...  Log Location
+...  AND  Run Keyword If Test Failed  Capture Page Screenshot
+...  AND  Зберегти словник у файл  ${data}  data
 
 
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/suite.robot
 *** Test Cases ***
 Створити об'єкт МП
-	small_privatization.Перейти на сторінку реєстру приватизації
+	small_privatization.Перейти на сторінку малої приватизації
+	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
     small_privatization.Перейти до створення об'єкта малої приватизації
 	small_privatization_object.Заповнити необхідні поля
 	small_privatization_object.Зберегти чернетку об'єкту
 	small_privatization_object.Опублікувати об'єкт у реєстрі
-	small_privatization_object.Отримати UAID для об'єкту
+	small_privatization_object.Отримати UAID для Об'єкту
+	Зберегти словник у файл  ${data}  data
 
 
 Створити інформаційне повідомлення МП
 	Go To  ${start page}
-	small_privatization.Перейти на сторінку реєстру приватизації
+	small_privatization.Перейти на сторінку малої приватизації
+	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
 	small_privatization.Перейти до створення інформаційного повідомлення
 	small_privatization_informational_message.Заповнити необхідні поля 1 етап
 	small_privatization_informational_message.Зберегти чернетку повідомлення
@@ -29,24 +35,108 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 	small_privatization_informational_message.Перейти до коригування інформації
 	small_privatization_informational_message.Заповнити необхідні поля 2 етап
 	small_privatization_informational_message.Зберегти чернетку повідомлення
-	debug
 	small_privatization_informational_message.Натиснути передати на перевірку
-	small_privatization_informational_message.Отримати UAID для повідомлення
+	Wait Until Keyword Succeeds  5 min  5 sec  small_privatization_informational_message.Дочекатися статусу повідомлення Опубліковано
+	small_privatization_informational_message.Отримати UAID для Повідомлення
 	Зберегти словник у файл  ${data}  data
 
 
+Дочекатися початку аукціону
+	Wait Until Keyword Succeeds  15 min  10 sec  small_privatization_auction.Дочекатися статусу повідомлення Аукціон
+	small_privatization_informational_message.Перейти до аукціону
+	small_privatization_auction.Отримати UAID для Аукціону
+	Зберегти словник у файл  ${data}  data
+
+
+Знайти тендер учасниками
+	Підготувати учасників
+	Знайти аукціон користувачем  provider1
+	Зберегти пряме посилання на тендер
+	Switch Browser  provider2
+	Go To  ${data['tender_href']}
+
+
+Подати заявки на участь в тендері
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Подати заявку для подачі пропозиції
+
+
+Підтвердити заявки на участь
+	Підтвердити заявки на участь у тендері  ${data['tender_id']}
+
+
+Подати пропозицію
+	### case3 ###
+	########
 	debug
+
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Reload Page
+	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
+	\  Заповнити поле з ціною  1  1
+	\  Подати пропозицію
+	\  Go Back
+
+
+Дочекатися початку аукціону першим учасником
+	### case4 ###
+	Close Browser
+	Switch Browser  provider1
+	#Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	Дочекатися статусу тендера  Аукціон  10m
+
+
+Отримати поcилання на участь та перегляд аукціону першим учасником
+	### case5 ###
+	Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
+	${auction_href}  			Отримати URL на перегляд
+	Set Global Variable  		${auction_href}
+	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Close Browser
 
 
 *** Keywords ***
+case3
+	:FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Reload Page
+	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
+	\  Заповнити поле з ціною  1  1
+	\  Подати пропозицію
+	\  Go Back
+
+
+case4
+	Close Browser
+	Switch Browser  provider1
+	#Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	Дочекатися статусу тендера  Аукціон  10m
+
+
+case5
+	Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
+	${auction_href}  			Отримати URL на перегляд
+	Set Global Variable  		${auction_href}
+	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Close Browser
+
+
 Precondition
 	${data}  Create Dictionary
 	${object}  Create Dictionary
 	${message}  Create Dictionary
+	${auction}  Create Dictionary
 	Set To Dictionary  ${data}  object  ${object}
 	Set To Dictionary  ${data}  message  ${message}
+	Set To Dictionary  ${data}  auction  ${auction}
 	Set Global Variable  ${data}
-    Start in grid  ${user}
+    Start in grid  ssp_tender_owner  tender_owner
     Go To  ${start_page}
 
 
@@ -55,55 +145,45 @@ Postcondition
     Close All Browsers
 
 
-Перевірити title
-    ${is}  Get Text  //div[@class='ivu-card-body']//h3
-    ${should}  Get From Dictionary  ${data}  title
-    Should Be Equal  ${is}  ${should}
+Підготувати організатора
+	Run Keyword If  '${site}' == 'test'  Run Keywords
+	...  Start  bened  tender_owner1
+	...  AND  Go Back
+	...  ELSE IF  '${site}' == 'prod'  Run Keywords
+	...  Start  prod_tender_owner  tender_owner1
+	...  AND  Go Back
 
 
-Перевірити description
-    ${is}  Get Text  //div[@class='ivu-card-body']//*[@class='text-justify']
-    ${should}  Get From Dictionary  ${data}  description
-    Should Be Equal  ${is}  ${should}
+Підготувати учасників
+	Run Keyword If  '${site}' == 'test'  Run Keywords
+	...       Start  user1  provider1
+	...  AND  Start  user2  provider2
+	...  ELSE IF  '${site}' == 'prod'  Run Keywords
+	...       Start  prod_provider1  provider1
+	...  AND  Start  prod_provider2  provider2
 
 
-Перевірити decision
-    ${is}  Get Text  (//*[@data-qa='value'])[2]
-    ${title}  Get From Dictionary  ${data['decision']}  title
-    ${number}  Get From Dictionary  ${data['decision']}  number
-    ${date}  Get From Dictionary  ${data['decision']}  date
-    Should Contain  ${is}  ${title}
-    Should Contain  ${is}  ${number}
-    Should Contain  ${is}  ${date}
+Підготувати глядачів
+	Run Keyword If  '${site}' == 'test'  Run Keywords
+	...       Start  user3  provider3
+	...  AND  Start  test_viewer  viewer
+	...  ELSE IF  '${site}' == 'prod'  Run Keywords
+	...       Start  prod_provider  provider3
+	...  AND  Start  prod_viewer  viewer
 
 
-Перевірити object.description
-    ${is}  Get Text  (//*[@data-qa='item']//*[@data-qa='value'])[1]
-    ${should}  Get From Dictionary  ${data['object']}  description
-    Should Be Equal  ${is}  ${should}
+Зберегти пряме посилання на тендер
+	${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
 
 
-Перевірити object.kind
-    ${is}  Get Text  (//*[@data-qa='item']//*[@data-qa='value'])[2]
-    ${should}  Get From Dictionary  ${data['object']}  kind
-    Should Be Equal  ${is}  ${should}
-
-
-Перевірити object.amount
-    ${is}  Get Text  (//*[@data-qa='item']//*[@data-qa='value'])[3]
-    ${count}  Get From Dictionary  ${data['object']}  count
-    ${unit}  Get From Dictionary  ${data['object']}  unit
-    Should Contain  ${is}  ${count}
-    Should Contain  ${is}  ${unit}
-
-
-Перевірити object.address
-    ${is}  Get Text  (//*[@data-qa='item']//*[@data-qa='value'])[4]
-    ${postalcode}  Get From Dictionary  ${data['object']}  postalcode
-    ${country}  Get From Dictionary  ${data['object']}  country
-    ${city}  Get From Dictionary  ${data['object']}  city
-    ${address}  Get From Dictionary  ${data['object']}  address
-    Should Contain  ${is}  ${postalcode}
-    Should Contain  ${is}  ${country}
-    Should Contain  ${is}  ${city}
-    Should Contain  ${is}  ${address}
+Знайти аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	small_privatization.Перейти на сторінку малої приватизації
+	Input Text  //input[@placeholder='Введіть фразу для пошуку']  ${data['tender_id']}
+	Click Element  //div[@class='ivu-input-group-append']//button[@type='button']
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Click Element  //*[@class='panel-body']//*[contains(@class,'xs-7')]
+	Дочекатись закінчення загрузки сторінки(skeleton)

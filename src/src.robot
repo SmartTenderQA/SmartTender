@@ -80,6 +80,7 @@ Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
 Resource    pages/small_privatization/small_privatization.robot
 Resource    pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message.robot
 Resource    pages/small_privatization/small_privatization_object/small_privatization_object.robot
+Resource    pages/small_privatization/small_privatization_auction/small_privatization_auction.robot
 
 Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/actions.robot

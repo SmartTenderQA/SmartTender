@@ -15,6 +15,6 @@ Resource  			keywords_webclient.robot
 Підтвердити заявки на участь у тендері
 	[Arguments]  ${tender_uaid/tender_type}  ${type}=для ФГВ
 	Run Keyword If  '${site}' == 'test'
-	...  Підтвердити заявки на тесті  ELSE
-	...  Підтвердити заявки на продуктиві організатором ${type}
+	...  Підтвердити заявки на тесті  ${tender_uaid/tender_type}
+	...  ELSE  Підтвердити заявки на продуктиві організатором ${type}
 

@@ -32,7 +32,8 @@
 Вибрати довільну одиницю виміру
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}
-	${n}  random_number  1  ${count}
+	#${n}  random_number  1  ${count}
+	${n}  random_number  1  15
 	${unit_name}  Вибрати довільну одиницю виміру Click  (${row})[${n}]
 	[Return]  ${unit_name}
 

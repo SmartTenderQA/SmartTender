@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  keywords.robot
+
 
 *** Variables ***
 
@@ -31,7 +31,8 @@ Resource  keywords.robot
 
 Опублікувати об'єкт у реєстрі
 	${publish btn}  Set Variable  //*[@data-qa='button-publish-asset']
-	Wait Until Element Is Visible  ${publish btn}
+	Wait Until Element Is Visible  ${publish btn}  10
+   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
     Дочекатись Закінчення Загрузки Сторінки
@@ -141,10 +142,9 @@ Resource  keywords.robot
 	Set To Dictionary  ${data['object']}  document-name  ${doc[1]}
 
 
-Отримати UAID для об'єкту
+Отримати UAID для Об'єкту
 	Reload Page
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
+    Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
-	Run Keyword If  '${UAID}' == ''
-	...  Отримати UAID для об'єкту
     Set To Dictionary  ${data['object']}  UAID  ${UAID}
