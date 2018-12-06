@@ -2,7 +2,7 @@
 Resource  ../../src/src.robot
 Suite Setup  Створити словник  data
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
 
 
 *** Variables ***

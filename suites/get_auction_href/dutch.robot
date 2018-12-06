@@ -4,7 +4,7 @@ Suite Setup  Створити словник  data
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords
 ...  Log Location
-...  AND  Run Keyword If Test Failed  Capture Page Screenshot
+...  AND  Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
 
 
 *** Test Cases ***
