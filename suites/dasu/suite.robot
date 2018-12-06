@@ -12,22 +12,23 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 &{data}
-${UAID}                         UA-2018-12-04-000012-a
-${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
+#${UAID}                         UA-2018-12-04-000012-a
+#${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
 
 
 *** Test Cases ***
 ################################################################
-#                           DRAFT                              #
+#                     CREATE NEW TENDER                        #
 ################################################################
 Створити тендер та отримати UAID
   [Tags]  create_tender
-  Switch Browser  tender_owner
-  Maximize Browser Window
   test_open_trade.Створити тендер
   Отримати UAID та tender_Id для створеного тендера
 
 
+################################################################
+#                           DRAFT                              #
+################################################################
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
@@ -483,8 +484,9 @@ ${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
 #################################################################################################
 *** Keywords ***
 Отримати UAID та tender_Id для створеного тендера
-  Set Global Variable  ${UAID}  ${data['tender_uaid']}
-  Go To  ${data['tender_href']}
+  ${uaid}  Get Text  (//*[contains(text(),'UA')])[1]
+  Set Global Variable  ${UAID}  ${uaid}
+  Open Button  (//a[contains(@href,'smarttender.biz')])[1]
   Дочекатись закінчення загрузки сторінки
   ${id}  Get Text  //*[@data-qa='prozorro-id']//*[@data-qa='value']
   Set Global Variable  ${tender_ID}  ${id}
