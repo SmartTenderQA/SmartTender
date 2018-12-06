@@ -25,6 +25,7 @@ ${company name input}       //*[@class='ivu-input-wrapper ivu-input-type']//inpu
 Вибрати конкурента з списка за номером
   [Arguments]  ${i}
   ${item}  Set Variable  //tbody[@class='ivu-table-tbody']//tr[${i}]//a
+  Wait Until Page Contains Element  ${item}
   Wait Until Element Is Visible  ${item}
   Open button  ${item}
   Дочекатись закінчення загрузки сторінки
