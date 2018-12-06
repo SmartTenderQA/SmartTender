@@ -46,7 +46,7 @@ Test Teardown  Run Keywords
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
 	Log To Console  lot-href=${data['tender_href']}
-	Close Browsers
+	Close Browser
 
 
 Знайти аукціон учасниками
