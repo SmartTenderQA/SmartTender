@@ -21,6 +21,7 @@ Test Teardown  Run Keywords
 	small_privatization_object.Зберегти чернетку об'єкту
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
+	Log To Console  object-UAID=${data['object']['UAID']}
 
 
 Створити інформаційне повідомлення МП
@@ -36,12 +37,15 @@ Test Teardown  Run Keywords
 	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
 	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано
 	small_privatization_informational_message.Отримати UAID для Повідомлення
+	Log To Console  message-UAID=${data['message']['UAID']}
 
 
 Дочекатися початку прийому пропозицій
 	Wait Until Keyword Succeeds  15 min  30 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон
 	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
+	Log To Console  lot-id=${data['tender_id']}
+	Log To Console  lot-href=${data['tender_href']}
 	Close Browsers
 
 
