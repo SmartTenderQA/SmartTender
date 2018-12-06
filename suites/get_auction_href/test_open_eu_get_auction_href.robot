@@ -139,15 +139,6 @@ If skipped create tender
     Go Back
 
 
-Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
-    Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    [Return]  ${count}
-
-
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
     Switch Browser  ${role}
