@@ -1,6 +1,7 @@
 *** Keywords ***
 Підтвердити заявки на тесті
-	Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${data['tender_id']}","SUCCESS":"true"}&ticket=');
+	[Arguments]  ${tender_id}
+	Execute Javascript  window.open('http://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={"IDLOT":"${tender_id}","SUCCESS":"true"}&ticket=');
 	Select Window  New
 	Wait Until Page Contains Element  css=.text
 	Element Should Contain  css=.text  True

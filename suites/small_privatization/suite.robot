@@ -2,13 +2,16 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keywords
+...  Log Location
+...  AND  Run Keyword If Test Failed  Capture Page Screenshot
+...  AND  Зберегти словник у файл  ${data}  data
 
 
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/suite.robot
 *** Test Cases ***
 Створити об'єкт МП
 	small_privatization.Перейти на сторінку малої приватизації
@@ -44,12 +47,8 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 	small_privatization_auction.Отримати UAID для Аукціону
 	Зберегти словник у файл  ${data}  data
 
-	########
-	debug
-
 
 Знайти тендер учасниками
-	### case1 ###
 	Підготувати учасників
 	Знайти аукціон користувачем  provider1
 	Зберегти пряме посилання на тендер
@@ -58,7 +57,6 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 Подати заявки на участь в тендері
-	### case2 ###
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -70,6 +68,9 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 Подати пропозицію
 	### case3 ###
+	########
+	debug
+
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Reload Page
@@ -99,21 +100,6 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
 *** Keywords ***
-########### kostil #############
-case1
-	Підготувати учасників
-	Знайти аукціон користувачем  provider1
-	Зберегти пряме посилання на тендер
-	Switch Browser  provider2
-	Go To  ${data['tender_href']}
-
-
-case2
-	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Подати заявку для подачі пропозиції
-
-
 case3
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
@@ -139,7 +125,6 @@ case5
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
 	Close Browser
-### End kostil ###
 
 
 Precondition
@@ -202,4 +187,3 @@ Postcondition
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	Click Element  //*[@class='panel-body']//*[contains(@class,'xs-7')]
 	Дочекатись закінчення загрузки сторінки(skeleton)
-
