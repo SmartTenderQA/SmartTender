@@ -2,10 +2,8 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keywords
-...  Log Location
-...  AND  Run Keyword If Test Failed  Capture Page Screenshot
-
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+...  AND  Log Location
 
 *** Variables ***
 
@@ -132,8 +130,29 @@ Postcondition
 	Run Keyword If  '${site}' == 'test'  Run Keywords
 	...       Start  user3  provider3
 	...  AND  Start  test_viewer  viewer
-	...  AND  Start  bened  tender_owner
+	...  AND  Start  Bened  tender_owner
 	...  ELSE IF  '${site}' == 'prod'  Run Keywords
 	...       Start  prod_provider  provider3
 	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_tender_owner  tender_owner
+
+
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Location Should Contain  bidder_id=
+	Підтвердити повідомлення про умови проведення аукціону
+	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+	Run Keyword If  ${status} != ${true}  Sleep  30
+	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
+#	:FOR  ${i}  IN RANGE  50
+#	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+#	\  Exit For Loop If  ${status} == ${false}
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
