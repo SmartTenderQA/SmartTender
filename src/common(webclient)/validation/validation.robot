@@ -12,8 +12,8 @@
 	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${action}')]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Element Is Not Visible  ${button}
-	Sleep  3
 
 
 Закрити валідаційне вікно (Так/Ні)
@@ -22,7 +22,7 @@
 	...  //*[@id="MessageBoxContent"]//p[contains(text(),"${title}")]/ancestor::*[@id="MessageBoxContent"]//*[@class="messagebox-button-cell"]//span[text()="${action}"]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
-	Sleep  3
+	Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Підтвердити повідомлення про перевірку публікації документу за необхідністю

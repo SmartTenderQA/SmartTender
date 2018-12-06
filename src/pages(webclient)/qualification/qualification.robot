@@ -16,6 +16,7 @@ ${participant}          //*[@title="Учасник"]/ancestor::div[@class="gridb
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    Вибрати перший тендер
     Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${participant}
     Run Keyword If  '${count}' == '0'  Run Keywords
