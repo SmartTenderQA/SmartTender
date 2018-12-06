@@ -5,7 +5,7 @@
 
 
 *** Keywords ***
-Заповнити необхідні поля 1 етап
+Заповнити всі обов'язкові поля 1 етап
 	small_privatization_informational_message.Ввести унікальний код об'єкту
 	small_privatization_informational_message.Заповнити decision.title
 	small_privatization_informational_message.Заповнити decision.number
@@ -13,7 +13,7 @@
     small_privatization_informational_message.Прикріпити документ
 
 
-Заповнити необхідні поля 2 етап
+Заповнити всі обов'язкові поля 2 етап
 	small_privatization_informational_message.Заповнити conditions.date
 	small_privatization_informational_message.Заповнити conditions.period
 	small_privatization_informational_message.Заповнити conditions.startPrice
@@ -28,7 +28,7 @@
 
 
 
-Зберегти чернетку повідомлення
+Зберегти чернетку інформаційного повідомлення
 	${save btn}  Set variable  //div[@class='ivu-col ivu-col-span-6']//button[@type='button']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
@@ -173,7 +173,7 @@
 	Set To Dictionary  ${data['message']['bank']['requisites']}  description  ${description}
 
 
-Натиснути передати на перевірку
+Передати на перевірку інформаційне повідомлення
 	${send-to-verification btn}  Set Variable  //*[@data-qa='button-send-to-verification']
 	Wait Until Element Is Visible  ${send-to-verification btn}  10
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
@@ -182,13 +182,24 @@
     Дочекатись Закінчення Загрузки Сторінки
 
 
-Дочекатися статусу повідомлення Опубліковано
+Дочекатися статусу повідомлення
+	[Arguments]  ${message status}
 	Reload Page
     Дочекатись закінчення загрузки сторінки(skeleton)
-    ${message status should}  Set Variable  Опубліковано
+    ${message status should}  Set Variable  ${message status}
 	${message status locator}  Set Variable  //h4[contains(@class,'action-block-item')]
 	${message status is}  Get Text  ${message status locator}
 	Should Be Equal  ${message status should}  ${message status is}
+
+
+Перейти до аукціону
+	Reload Page
+    Дочекатись закінчення загрузки сторінки(skeleton)
+	${auction locator}  Set Variable  //a[contains(text(),'Перейти до аукціону')]
+	Scroll Page To Element XPATH  ${auction locator}
+	Element Should Be Visible  ${auction locator}
+	Click Element  ${auction locator}
+	Дочекатись Закінчення Загрузки Сторінки
 
 
 Отримати UAID для Повідомлення
@@ -196,10 +207,3 @@
 	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
     Set To Dictionary  ${data['message']}  UAID  ${UAID}
-
-
-Перейти до аукціону
-	${auction locator}  Set Variable  //a[contains(text(),'Перейти до аукціону')]
-	Scroll Page To Element XPATH  ${auction locator}
-	Click Element  ${auction locator}
-    Дочекатись Закінчення Загрузки Сторінки
