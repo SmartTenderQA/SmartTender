@@ -21,119 +21,123 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 #                           DRAFT                              #
 ################################################################
 Створити тендер та отримати UAID
-  [Tags]  create_tender
-  Switch Browser  tender_owner
-  Maximize Browser Window
-  test_open_trade.Створити тендер
-  Отримати UAID та tender_Id для створеного тендера
+     [Tags]  create_tender
+    Switch Browser  tender_owner
+    Maximize Browser Window
+    test_open_trade.Створити тендер
+    Отримати UAID та tender_Id для створеного тендера
 
 
 Розпочати моніторинг
-  [Tags]  create_monitoring
-  Розпочати моніторинг по тендеру  ${tender_ID}
+    [Tags]  create_monitoring
+    Розпочати моніторинг по тендеру  ${tender_ID}
 
 
 Скасувати моніторинг
-  [Tags]  cancellation
-  Скасувати моніторинг по тендеру
+    [Tags]  cancellation
+    Скасувати моніторинг по тендеру
 
 
 Активувати моніторинг
-  [Tags]  activation
-  Сформувати рішення по моніторингу
-  Перевести моніторинг в статус  active
+    [Tags]  activation
+    Сформувати рішення по моніторингу
+    Перевести моніторинг в статус  active
 
 
 Знайти тендер по ідентифікатору
-  [Tags]  find_tender
-  Switch Browser  tender_owner
-  Перейти у webclient за необхідністю
-  Змінити мову на укр.
-  Відкрити сторінку для створення публічних закупівель
-  Пошук об'єкта у webclient по полю  Номер тендер  ${UAID}
+    [Tags]  find_tender
+    Switch Browser  tender_owner
+    Перейти у webclient за необхідністю
+    Змінити мову на укр.
+    Відкрити сторінку для створення публічних закупівель
+    Пошук об'єкта у webclient по полю  Номер тендер  ${UAID}
 
 
 Відкрити сторінку моніторингу
-  [Tags]  open_monitoring_page
-  Перейти за посиланням по dasu
-  Відкрити вкладку моніторингу
-  ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
-  Log  ${monitoring_id}  WARN
-  Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
+    [Tags]  open_monitoring_page
+    Перейти за посиланням по dasu
+    Відкрити вкладку моніторингу
+    ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
+    Log  ${monitoring_id}  WARN
+    Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
 
 
 
 Перевірити відображення інформації нового моніторингу
-  [Tags]  open_monitoring_page123
-  Отримати дані моніторингу по API
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Звірити статус моніторингу
-  \  Звірити дату створення
-  \  Звірити адитора
+    [Tags]  open_monitoring_page123
+    Отримати дані моніторингу по API
+    Звірити статус моніторингу
+    Звірити дату створення
+    Звірити адитора
+    Close Browser
+    :FOR  ${username}  IN  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Звірити статус моніторингу
+    \  Звірити дату створення
+    \  Звірити адитора
+    \  Close Browser
 
 
 ################################################################
 #                          CANCELLED                           #
 ################################################################
 Перевірити відображення інформації скасованого моніторингу
-  [Tags]  cancellation
-  Отримати дані моніторингу по API
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Звірити статус моніторингу
-  \  Звірити опис сказування
+    [Tags]  cancellation
+    Отримати дані моніторингу по API
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Звірити статус моніторингу
+    \  Звірити опис сказування
+    \  Close Browser
 
 
 ################################################################
 #                         ACTIVE                               #
 ################################################################
 Перевірити відображення інформації моніторингу після активації
-  [Tags]  activation
-  Отримати дані моніторингу по API
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Звірити статус моніторингу
-  \  Звірити опис рішення
-  \  Звірити дату рішення
+    [Tags]  activation
+    Отримати дані моніторингу по API
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Звірити статус моніторингу
+    \  Звірити опис рішення
+    \  Звірити дату рішення
+    \  Close Browser
 
 
 ################################################################
 #               MAKE A DIALOG INDIVIDUALLY                     #
 ################################################################
 Неможливість подати пояснення з валсної ініціативи для ролей: viewer, provider
-  [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
+    [Tags]  make_a_dialogue_individually
+    :FOR  ${username}  IN  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
+    \  Close Browser
 
 
 Подати пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  Switch Browser  tender_owner
-  Відкрити бланк пояснення з власної ініціативи
-  ${title}  Заповнити поле предмет пояснення з власної ініціативи
-  ${description}  Заповнити поле опис пояснення з власної ініціативи
-  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
-  Відправити пояснення з власної ініціативи
-  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+    [Tags]  make_a_dialogue_individually
+    Відкрити тендер від лиця  tender_owner
+    Відкрити бланк пояснення з власної ініціативи
+    ${title}  Заповнити поле предмет пояснення з власної ініціативи
+    ${description}  Заповнити поле опис пояснення з власної ініціативи
+    ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+    Відправити пояснення з власної ініціативи
+    Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+    Close Browser
 
 
 Перевірити відображення пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити date пояснення з власної ініціативи
-  \  Перевірити title пояснення з власної ініціативи
-  \  Перевірити description пояснення з власної ініціативи
-  \  Перевірити documents.title пояснення з власної ініціативи
-  \  Перевірити documents.datePublished пояснення з власної ініціативи
+    [Tags]  make_a_dialogue_individually
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+     \  Відкрити тендер від лиця  ${username}
+     \  Перевірити date пояснення з власної ініціативи
+     \  Перевірити title пояснення з власної ініціативи
+     \  Перевірити description пояснення з власної ініціативи
+     \  Перевірити documents.title пояснення з власної ініціативи
+     \  Перевірити documents.datePublished пояснення з власної ініціативи
+     \  Close Browser
 
 
 Надати відповіть на пояснення з власної ініціативи органом ДАСУ
@@ -143,14 +147,13 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 
 
 Перевірити відображення відповіді на пояснення з власної ініціативи органом ДАСУ
-  [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити title відповіді на пояснення з власної ініціативи
-  \  Перевірити datePublished відповіді на пояснення з власної ініціативи
-  \  Перевірити description відповіді на пояснення з власної ініціативи
+    [Tags]  make_a_dialogue_individually
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Перевірити title відповіді на пояснення з власної ініціативи
+    \  Перевірити datePublished відповіді на пояснення з власної ініціативи
+    \  Перевірити description відповіді на пояснення з власної ініціативи
+    \  Close Browser
 
 
 Підписати ЕЦП для пояснення з власної ініціативи
@@ -168,46 +171,46 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 
 
 Перевірити відображення інформаціїї запиту
-  [Tags]  make_a_dialogue
-  Отримати дані про останній запит
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити title запиту  ${data_cdb}
-  \  Перевірити description запиту  ${data_cdb}
-  \  Перевірити date запиту  ${data_cdb}
+    [Tags]  make_a_dialogue
+    Отримати дані про останній запит
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Перевірити title запиту  ${data_cdb}
+    \  Перевірити description запиту  ${data_cdb}
+    \  Перевірити date запиту  ${data_cdb}
+    \  Close Browser
 
 
 Неможливість відповісти на запит для ролей: viewer, provider
-  [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
+    [Tags]  make_a_dialogue
+    :FOR  ${username}  IN  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
+    \  Close Browser
 
 
 Відповісти на запит
-  [Tags]  make_a_dialogue
-  Switch Browser  tender_owner
-  Відкрити бланк відповіді на запит
-  ${title}  Заповнити title відповіді на запит
-  ${description}  Заповнити description відповіді на запит
-  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogueAnswer-files']//input
-  Відправити відповідь на запит
-  Перевірити відправлені дані відповіді на запит  ${title}  ${description}  ${name}
+    [Tags]  make_a_dialogue
+    Відкрити тендер від лиця  tender_owner
+    Відкрити бланк відповіді на запит
+    ${title}  Заповнити title відповіді на запит
+    ${description}  Заповнити description відповіді на запит
+    ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogueAnswer-files']//input
+    Відправити відповідь на запит
+    Перевірити відправлені дані відповіді на запит  ${title}  ${description}  ${name}
+    Close Browser
 
 
 Перевірити відображення інформації про відповідь на запит
-  [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
-  \  Відкрити вкладку моніторингу
-  \  Перевірити date відповіді на запит
-  \  Перевірити title відповіді на запит
-  \  Перевірити description відповіді на запит
-  \  Перевірити documents.title відповіді на запит
-  \  Перевірити documents.datePublished відповіді на запит
+    [Tags]  make_a_dialogue
+    :FOR  ${username}  IN  tender_owner  provider  viewer
+    \  Відкрити тендер від лиця  ${username}
+    \  Перевірити date відповіді на запит
+    \  Перевірити title відповіді на запит
+    \  Перевірити description відповіді на запит
+    \  Перевірити documents.title відповіді на запит
+    \  Перевірити documents.datePublished відповіді на запит
+    \  Close Browser
 
 
 #Підписати ЕЦП для відповіді на запит
