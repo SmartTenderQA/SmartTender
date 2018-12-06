@@ -3,7 +3,7 @@ Resource  ../../src/src.robot
 Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
 #Test Setup      Stop The Whole Test Execution If Previous Test Failed
-Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
 
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
@@ -137,15 +137,6 @@ If skipped create tender
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
-
-
-Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    Натиснути кнопку Перечитать (Shift+F4)
-    ${count}  Get Element Count  //*[@title="Учасник"]/ancestor::div[@class="gridbox"]//tr[contains(@class,"Row")]//td[3]
-    Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Sleep  60
-    ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    [Return]  ${count}
 
 
 Перевірити отримання ссилки на участь в аукціоні
