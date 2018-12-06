@@ -37,7 +37,8 @@
 
 Опублікувати інформаційне повідомлення у реєстрі
 	${publish btn}  Set Variable  //*[@data-qa='button-publish-information-message']
-	Wait Until Element Is Visible  ${publish btn}
+	Wait Until Element Is Visible  ${publish btn}  10
+   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
     Дочекатись Закінчення Загрузки Сторінки
@@ -83,18 +84,20 @@
 Перейти до Коригування інформації
 	${edit btn}  Set Variable  //*[@data-qa='button-to-edit-page']
    	Wait Until Element Is Visible  ${edit btn}
+   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
     Scroll Page To Element XPATH  ${edit btn}
 	Click Element  ${edit btn}
     Дочекатись Закінчення Загрузки Сторінки
 
 
 Заповнити conditions.date
-	${date + 15 min}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=15))  modules=datetime
+	${delta}  Set Variable  13
+	${date + delta min}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta})))  modules=datetime
 	${selector}  Set Variable  //*[contains(text(),'Дата проведення аукціону')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + 15 min}
+	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta min}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
-	${conditions}  Create Dictionary  date  ${date + 15 min}
+	${conditions}  Create Dictionary  date  ${date + delta min}
 	Set To Dictionary  ${data['message']}  conditions  ${conditions}
 
 
@@ -172,16 +175,31 @@
 
 Натиснути передати на перевірку
 	${send-to-verification btn}  Set Variable  //*[@data-qa='button-send-to-verification']
-	Wait Until Element Is Visible  ${send-to-verification btn}
+	Wait Until Element Is Visible  ${send-to-verification btn}  10
+   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${send-to-verification btn}
 	Click Element  ${send-to-verification btn}
     Дочекатись Закінчення Загрузки Сторінки
 
 
-Отримати UAID для повідомлення
+Дочекатися статусу повідомлення Опубліковано
 	Reload Page
-    Дочекатись Закінчення Загрузки Сторінки
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    ${message status should}  Set Variable  Опубліковано
+	${message status locator}  Set Variable  //h4[contains(@class,'action-block-item')]
+	${message status is}  Get Text  ${message status locator}
+	Should Be Equal  ${message status should}  ${message status is}
+
+
+Отримати UAID для Повідомлення
+	Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
+	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
-	Run Keyword If  '${UAID}' == ''
-	...  Отримати UAID для об'єкту
     Set To Dictionary  ${data['message']}  UAID  ${UAID}
+
+
+Перейти до аукціону
+	${auction locator}  Set Variable  //a[contains(text(),'Перейти до аукціону')]
+	Scroll Page To Element XPATH  ${auction locator}
+	Click Element  ${auction locator}
+    Дочекатись Закінчення Загрузки Сторінки
