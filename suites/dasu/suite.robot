@@ -12,8 +12,8 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Variables ***
 &{data}
-${UAID}                         UA-2018-12-04-000012-a
-${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
+${UAID}                         UA-2018-12-05-000048-b
+${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 
 
 *** Test Cases ***
@@ -60,10 +60,7 @@ ${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
   Log  ${monitoring_id}  WARN
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
-  :FOR  ${username}  IN  viewer  provider
-  \  Switch Browser  ${username}
-  \  Go To  ${data['location']}
-  \  Відкрити вкладку моніторингу
+
 
 
 Перевірити відображення інформації нового моніторингу
@@ -367,7 +364,8 @@ ${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
   [Tags]  appeal
   :FOR  ${username}  IN  provider  viewer
   \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error  *  Вікрити бланк позову
+  \  Run Keyword And Expect Error
+    Вікрити бланк позову
 
 
 Опублікувати позов
@@ -482,6 +480,15 @@ ${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
 #                                                                                               #
 #################################################################################################
 *** Keywords ***
+Відкрити тендер від лиця
+  [Arguments]  ${username}
+  Run Keyword If  "${username}" == "provider"  Start  user1  provider
+  Run Keyword If  "${username}" == "viewer"  Start  test_viewer  viewer
+  Run Keyword If  "${username}" == "tender_owner"  Start  dasu  tender_owner
+  Go To  ${data['location']}
+  Відкрити вкладку моніторингу
+
+
 Отримати UAID та tender_Id для створеного тендера
   Set Global Variable  ${UAID}  ${data['tender_uaid']}
   Go To  ${data['tender_href']}
