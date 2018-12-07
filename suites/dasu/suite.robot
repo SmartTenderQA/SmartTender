@@ -24,6 +24,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
   [Tags]  create_tender
   test_open_trade.Створити тендер
   Отримати UAID та tender_Id для створеного тендера
+  Повернутися на головну сторінку особистого кабінету
 
 
 ################################################################
@@ -48,6 +49,7 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 Знайти тендер по ідентифікатору
   [Tags]  find_tender
   Switch Browser  tender_owner
+  Натиснути Повторить попытку (за необхідністю)
   Перейти у webclient за необхідністю
   Змінити мову на укр.
   Відкрити сторінку для створення публічних закупівель
@@ -490,9 +492,20 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
   Дочекатись закінчення загрузки сторінки
   ${id}  Get Text  //*[@data-qa='prozorro-id']//*[@data-qa='value']
   Set Global Variable  ${tender_ID}  ${id}
+
+
+Повернутися на головну сторінку особистого кабінету
   Click Element  //*[@class='fa fa-user']
   Click Element  //a[contains(text(),'Особистий кабінет')]
   Дочекатись закінчення загрузки сторінки
+
+
+Натиснути Повторить попытку (за необхідністю)
+	${again locator}  Set Variable  //*[contains(text(),'Повторить попытку.')]
+	${again status}  Run Keyword And Return Status  Page Should Contain Element  ${again locator}
+	Run Keyword If  ${again status} == ${True}
+	...  Click Element  ${again locator}
+	Дочекатись закінчення загрузки сторінки
 
 
 Підготувати користувачів

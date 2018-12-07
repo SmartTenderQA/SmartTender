@@ -4,6 +4,7 @@ Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
+...  AND  Log  ${data}
 
 *** Variables ***
 
@@ -93,7 +94,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Setup]  Підготувати глядачів
-	[Template]  dutch.Неможливість отримати поcилання на участь в аукціоні(keyword)
+	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner
 	provider3
@@ -104,12 +105,10 @@ Precondition
 	${data}  Create Dictionary
 	${object}  Create Dictionary
 	${message}  Create Dictionary
-	${auction}  Create Dictionary
 	Set To Dictionary  ${data}  object  ${object}
 	Set To Dictionary  ${data}  message  ${message}
 	Set Global Variable  ${data}
-    Start in grid  ssp_tender_owner  tender_owner
-    #Go To  ${start_page}
+    Start  ssp_tender_owner  tender_owner
 
 
 Postcondition
@@ -145,14 +144,21 @@ Postcondition
 	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
 	Run Keyword If  ${status} != ${true}  Sleep  30
 	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
-#	:FOR  ${i}  IN RANGE  50
-#	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
-#	\  Exit For Loop If  ${status} == ${false}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['object']['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['count']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
+
+
+Неможливість отримати поcилання на участь в аукціоні глядачем
+	[Arguments]  ${user}
+	Switch Browser  ${user}
+	Reload Page
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
+	...  Натиснути кнопку "До аукціону"
+	...  AND  Отримати URL для участі в аукціоні
