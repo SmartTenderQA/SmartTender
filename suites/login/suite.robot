@@ -42,6 +42,8 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 *** Keywords ***
 Precondition
 	Run Keyword  Start in grid  ${env}_viewer
+	### udali
+	debug
 	Click Element  ${events}
     Click Element  ${login link}
     Wait Until Page Contains Element  ${login field}  5
