@@ -41,6 +41,7 @@
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
+    Sleep  3
     Дочекатись Закінчення Загрузки Сторінки
 
 
