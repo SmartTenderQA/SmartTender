@@ -146,7 +146,7 @@
 
 Заповнити items.city
    	${selector}  Set Variable  xpath=//div[@class='ivu-col ivu-col-span-sm-10']
-    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Київ (Київська обл.)
+    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Харків
     Set To Dictionary  ${data['object']['item']}  city  ${city}
 
 
