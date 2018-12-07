@@ -17,7 +17,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization.Увімкнути тестовий режим (за необхідністю)
     small_privatization.Перейти до створення об'єкта малої приватизації
 	small_privatization_object.Заповнити всі обов'язкові поля
-	small_privatization_object.Зберегти чернетку об'єкту
+	small_privatization_object.Зберегти зміни об'єкту
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
 	Log To Console  object-UAID=${data['object']['UAID']}

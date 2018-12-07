@@ -10,31 +10,47 @@ Test Teardown  			Run Keywords
 
 *** Test Cases ***
 Перейти до об'єктів малої приватизації
-    Відкрити сторінку тестових торгів
-    Активувати вкладку ФГВ
-    Перейти на вкладку "Реєстр об'єктів приватизації"
+    small_privatization.Перейти на сторінку малої приватизації
+    small_privatization.Перейти на сторінку реєстр об'єктів приватизації
 
 
-Відкрити потрібний об'єкт
-    Вибрати режим сторінки  Кабинет
-    Перейти до об'єкта приватизації за назвою  [ТЕСТУВАННЯ] Перевірка загрузки документів
-    Видалити файли з об'єкту приватизації
+Виконати пошук потрібного обєкту
+    small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
+    #new_search.Ввести фразу для пошуку  UA-AR-P-2018-12-07-000002-2
+    #small_privatization_search.Натиснути кнопку пошуку
+    small_privatization_search.Перейти по результату пошуку за номером  3
 
 
-Перевірка загрузки та вигрузки файлів
-    Натиснути кнопку "Коригувати об'єкт приватизації"
-    ${1 full name}  Створити та додати великий PDF файл з довгою назвою  first
-    ${md5 first}  get_checksum_md5  ${OUTPUTDIR}/${1 full name}
-    ${2 full name}  Створити та додати великий PDF файл з довгою назвою  second
-    ${md5 second}  get_checksum_md5  ${OUTPUTDIR}/${2 full name}
-    Натиснути кнопку "Внести зміни"
-    Перевірити усрішність додавання файлів  first  second
+Створити файли розміром більше 2mb та з довгою назвою
+    ${1 full name}  Створити великий PDF файл з довгою назвою  first
+    Set Global Variable  ${1 full name}
+    ${2 full name}  Створити великий PDF файл з довгою назвою  second
+    Set Global Variable  ${2 full name}
+
+
+Загрузити файли до об'єкту приватизації
+    Видалити файли з об'єкту приватизації  # На випадок якщо, файли не видалились коли тест зафейлився
+    small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
+    Загрузити файли  ${1 full name}  ${2 full name}
+    small_privatization_object.Зберегти зміни об'єкту
+
+
+Перевірка загрузки файлів
+    Перевірити усрішність додавання файлів  ${1 full name}  ${2 full name}
+
+
+Скачати загружені файли
     Створити папку загрузок
-    Перевірити можливість скачати файли     ${1 full name}  ${2 full name}
-    ${now md5 first}  get_checksum_md5  ${OUTPUTDIR}/downloads/${1 full name}
+    Скачати файли об'єкту приватизації     ${1 full name}  ${2 full name}
+
+
+Порівняти контрольні сумми файлів до загрузки та після скачування
+    ${md5 first}       get_checksum_md5  ${OUTPUTDIR}/${1 full name}
+    ${now md5 first}   get_checksum_md5  ${OUTPUTDIR}/downloads/${1 full name}
+    Should Be Equal    ${md5 first}      ${now md5 first}
+    ${md5 second}      get_checksum_md5  ${OUTPUTDIR}/${2 full name}
     ${now md5 second}  get_checksum_md5  ${OUTPUTDIR}/downloads/${2 full name}
-    Should Be Equal  ${md5 first}   ${now md5 first}
-    Should Be Equal  ${md5 second}  ${now md5 second}
+    Should Be Equal    ${md5 second}     ${now md5 second}
 
 
 Видалити загружені файли
@@ -49,53 +65,20 @@ Test Teardown  			Run Keywords
     Create Directory  ${OUTPUTDIR}/downloads/
 
 
-Перейти на вкладку "Реєстр об'єктів приватизації"
-    Click Element  //*[@data-qa="registry"]
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    Element Should Be Visible
-    ...  //*[@class="tab-pane tab-pane-active"][@data-qa="registry"]
+Загрузити файли
+    [Arguments]  @{file_names}
+    :FOR  ${file}  IN  @{file_names}
+    \  Choose File  ${button add file}  ${OUTPUTDIR}/${file}
 
 
-Вибрати режим сторінки
-    [Arguments]  ${type}
-    ${selector}  Set Variable  //*[@data-qa="page-mode"]//span[text()="${type}"]
-    Click Element   ${selector}
-    Sleep  .5
-    Element Should Be Visible
-    ...  ${selector}/preceding-sibling::span[contains(@class,"radio-checked")]
-
-
-Перейти до об'єкта приватизації за назвою
-    [Arguments]  ${title}
-    ${selector}  Set Variable  //div[contains(@class,"asset-card")]//a[text()="${title}"]
-    Open Button  ${selector}
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    Wait Until Element Is Visible  //h3[text()="${title}"]
-
-
-Натиснути кнопку "Коригувати об'єкт приватизації"
-     Click Element  //*[@data-qa="button-to-edit-page"]
-     Дочекатись закінчення загрузки сторінки(skeleton)
-     Location Should Contain  /privatization-objects/edit/
-
-
-Створити та додати великий PDF файл з довгою назвою
+Створити великий PDF файл з довгою назвою
     [Arguments]  ${name}
     ${long name}  Evaluate  '1' * 200 + ' ${name}'
     ${file path}  Set Variable  ${OUTPUTDIR}/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
-    Choose File  ${button add file}  ${file path}
     ${full name}  Set Variable  ${long name}.pdf
     [Return]  ${full name}
-
-
-Натиснути кнопку "Внести зміни"
-    Click Element  //*[@data-qa="button-success"]/span
-    Sleep  3
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    ${status}  Run Keyword And Return Status  Element Should Not Be visible  //*[@data-qa="button-success"]/span
-    Run Keyword If  '${status}' == 'False'  Натиснути кнопку "Внести зміни"
 
 
 Перевірити усрішність додавання файлів
@@ -105,42 +88,36 @@ Test Teardown  			Run Keywords
     \  ${name}  Get Text  (//*[@data-qa="file-name"])[${i}]
     \  ${name lenght}  Get Length  ${name}
     \  Should Be True  ${name lenght} > 200
-    \  Should Contain  ${name}  ${file}
-    \  ${size}  Get Text  (//*[@data-qa="file-size"])[${i}]
-    \  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
-    \  ${size}  Evaluate  float(${size})
-    \  Should Be True  ${size} > 2
+    \  Should Be Equal  ${name}  ${file}
+    #\  ${size}  Get Text  (//*[@data-qa="file-size"])[${i}]
+    #\  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
+    #\  ${size}  Evaluate  float(${size})
+    #\  Should Be True  ${size} > 2
     \  ${i}  Evaluate  ${i} + 1
 
 
-Перевірити можливість скачати файли
+Скачати файли об'єкту приватизації
     [Arguments]  @{file names}
-    ${n}  Отримати кілкість документів обєкту приватизації
+    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
     :FOR  ${i}  IN RANGE  1  ${n}+1
     \  Mouse Over  (//*[@data-qa="file-name"])[${i}]/preceding-sibling::i
     \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${i}]
     \  ${link}  Get Element Attribute  (//*[@data-qa="file-preview"])[${i}]  href
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
-    \  download_file_to_my_path  ${link}  ${EXECDIR}/test_output/downloads/${file names[${i}-1]}
+    \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file names[${i}-1]}
     \  Sleep  3
 
 
-Отримати кілкість документів обєкту приватизації
-    ${selector}  Set Variable  //*[@data-qa="file-name"]
-    ${count}  Get Element Count  ${selector}
-    [Return]  ${count}
-
 
 Видалити файли з об'єкту приватизації
-    ${n}  Отримати кілкість документів обєкту приватизації
-    Scroll Page To Top
-    Натиснути кнопку "Коригувати об'єкт приватизації"
+    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
+    #Scroll Page To Top
+    small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
     :FOR  ${file}  IN RANGE  1  ${n}+1
     \  Click Element  (//i[contains(@class,"icon-trash")])[1]
     \  Wait Until Element Is Visible  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Click Element  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Sleep  .5
-    Scroll Page To Top
-    Натиснути кнопку "Внести зміни"
-    ${n}  Отримати кілкість документів обєкту приватизації
+    small_privatization_object.Зберегти зміни об'єкту
+    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
     Should Be Equal As Integers  ${n}  0

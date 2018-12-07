@@ -5,6 +5,20 @@
 
 
 *** Keywords ***
+Натиснути кнопку "Коригувати об'єкт приватизації"
+     ${selector}  Set Variable  //*[@data-qa="button-to-edit-page"]
+     Scroll Page To Element XPATH  ${selector}
+     Click Element  ${selector}
+     Дочекатись закінчення загрузки сторінки(skeleton)
+     Location Should Contain  /privatization-objects/edit/
+
+
+Отримати кілкість документів обєкту приватизації
+    ${selector}  Set Variable  //*[@data-qa="file-name"]
+    ${count}  Get Element Count  ${selector}
+    [Return]  ${count}
+
+
 Заповнити всі обов'язкові поля
 	small_privatization_object.Увімкнути тестовий режим (за необхідністю)
 	small_privatization_object.Заповнити title
@@ -23,7 +37,7 @@
     small_privatization_object.Прикріпити документ
 
 
-Зберегти чернетку об'єкту
+Зберегти зміни об'єкту
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}

@@ -14,6 +14,16 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
 	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
+Вибрати режим сторінки об'єктів приватизації
+    [Arguments]  ${type}
+    [Documentation]  Вибираємо режим сторінки. "Кабінет"  або "ПУблічний режим"
+    ${selector}  Set Variable  //*[@data-qa="page-mode"]//span[text()="${type}"]
+    Click Element   ${selector}
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    Element Should Be Visible
+    ...  ${selector}/preceding-sibling::span[contains(@class,"radio-checked")]
+
+
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  (${privatization item}//a)[${n}]
@@ -21,3 +31,9 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
 	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Натиснути кнопку пошуку
+	Click Element  ${elastic search button}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Wait Until Page Contains Element  //*[@class="tag-holder"]
