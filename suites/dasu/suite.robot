@@ -490,8 +490,9 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
   Дочекатись закінчення загрузки сторінки
   ${id}  Get Text  //*[@data-qa='prozorro-id']//*[@data-qa='value']
   Set Global Variable  ${tender_ID}  ${id}
-  Close Window
-  Start  dasu  tender_owner
+  Click Element  //*[@class='fa fa-user']
+  Click Element  //a[contains(text(),'Особистий кабінет')]
+  Дочекатись закінчення загрузки сторінки
 
 
 Підготувати користувачів
