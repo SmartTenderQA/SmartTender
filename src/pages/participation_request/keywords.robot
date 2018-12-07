@@ -4,7 +4,6 @@
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	Click Element  xpath=//button[@type='button']//*[contains(text(), 'Взяти участь')]
 	Дочекатись закінчення загрузки сторінки
-	#Пропустити оплату гарантійного внеску (за необхідністю)
 
 
 Додати файл для подачі заявки
@@ -30,10 +29,3 @@
 	Sleep  3
 	Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'Ваша заявка відправлена!') or contains(text(), 'Ваша заявка розглядається!')]/ancestor::*[@class='ivu-modal-content']//a
 	Wait Until Element Is Not Visible  xpath=//*[contains(text(), 'Ваша заявка відправлена!')]/ancestor::*[@class='ivu-modal-content']//a  20
-
-
-Пропустити оплату гарантійного внеску (за необхідністю)
-	${invoice btn}  Set Variable  //button[contains(@class,'pull-right')]
-	Page Should Contain Element  ${invoice btn}
-	Click Element  ${invoice btn}
-	Wait Until Page Does Not Contain Element  ${invoice btn}

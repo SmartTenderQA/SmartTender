@@ -5,7 +5,8 @@
 
 
 *** Keywords ***
-Заповнити необхідні поля
+Заповнити всі обов'язкові поля
+	small_privatization_object.Увімкнути тестовий режим (за необхідністю)
 	small_privatization_object.Заповнити title
     small_privatization_object.Заповнити description
     small_privatization_object.Заповнити decision.title
@@ -38,9 +39,15 @@
     Дочекатись Закінчення Загрузки Сторінки
 
 
+Увімкнути тестовий режим (за необхідністю)
+	${switcher}  Set Variable  //*[@data-qa='switch-test-mode']
+	${switcher status}  Get Element Attribute  ${switcher}//input  value
+	Run Keyword If  '${switcher status}' == 'false'  Click Element  ${switcher}
+
+
 Заповнити title
 	${text}  create_sentence  5
-	${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
+	${title}  Set Variable  ${text}
 	${selector}  Set Variable  xpath=//*[@data-qa='input-title']//*[@autocomplete="off"]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
 	Set To Dictionary  ${data['object']}  title  ${title}

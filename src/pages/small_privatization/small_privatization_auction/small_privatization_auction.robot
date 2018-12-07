@@ -5,22 +5,33 @@
 
 
 *** Keywords ***
-Дочекатися статусу повідомлення Аукціон
-	Reload Page
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    ${message status should}  Set Variable  Аукціон
-	${message status locator}  Set Variable  //h4[contains(@class,'action-block-item')]
-	${message status is}  Get Text  ${message status locator}
-	Should Be Equal  ${message status should}  ${message status is}
-	${auction locator}  Set Variable  //a[contains(text(),'Перейти до аукціону')]
-	Page Should Contain Element  ${auction locator}
-	Element Should Be Visible  ${auction locator}
-
-
-Отримати UAID для Аукціону
+Отримати UAID та href для Аукціону
     Дочекатись Закінчення Загрузки Сторінки
     Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
 	Run Keyword If  '${UAID}' == ''
 	...  Отримати UAID для Аукціону
     Set To Dictionary  ${data}  tender_id  ${UAID}
+    ${tender_href}  Get Location
+	Set To Dictionary  ${data}  tender_href  ${tender_href}
+
+
+Знайти аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	small_privatization.Перейти на сторінку малої приватизації
+	Input Text  //input[@placeholder='Введіть фразу для пошуку']  ${data['tender_id']}
+	Click Element  //div[@class='ivu-input-group-append']//button[@type='button']
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	Click Element  (//*[@class='panel-body']//*[contains(@class,'xs-7')])[1]
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Дочекатися початку аукціону
+	Reload Page
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    ${auction status should}  Set Variable  Аукціон
+	${auction status locator}  Set Variable  //*[@data-qa='auctionStatus']
+	${auction status is}  Get Text  ${auction status locator}
+	Should Be Equal  ${auction status should}  ${auction status is}

@@ -1,6 +1,8 @@
 -d test_output
 -L TRACE:INFO
 
+-i create_tender
+
 -i create_monitoring
 -i activation
 
