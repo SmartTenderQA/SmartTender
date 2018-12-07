@@ -6,6 +6,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
 
+
 *** Variables ***
 
 #Запуск
@@ -90,6 +91,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
 	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
+	\  Close Browser
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
@@ -157,7 +159,7 @@ Postcondition
 Неможливість отримати поcилання на участь в аукціоні глядачем
 	[Arguments]  ${user}
 	Switch Browser  ${user}
-	Reload Page
+	Go to  ${data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"

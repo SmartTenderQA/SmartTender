@@ -116,7 +116,7 @@
 Заповнити items.count
 	${first}  random_number  1  100000
 	${second}  random_number  1  1000
-    ${count}  Evaluate  str(round(float(${first})/float(${second}), 5))
+    ${count}  Evaluate  str(round(float(${first})/float(${second}), 3))
 	${selector}  Set Variable  xpath=//*[@data-qa='input-item-count']//*[@autocomplete="off"]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${count}
 	Set To Dictionary  ${data['object']['item']}  count  ${count}
@@ -145,7 +145,7 @@
 
 Заповнити items.city
    	${selector}  Set Variable  xpath=//div[@class='ivu-col ivu-col-span-sm-10']
-    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Київ
+    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Київ (Київська обл.)
     Set To Dictionary  ${data['object']['item']}  city  ${city}
 
 
