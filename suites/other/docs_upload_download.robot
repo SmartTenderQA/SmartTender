@@ -94,6 +94,8 @@ Test Teardown  			Run Keywords
     Click Element  //*[@data-qa="button-success"]/span
     Sleep  3
     Дочекатись закінчення загрузки сторінки(skeleton)
+    ${status}  Run Keyword And Return Status  Element Should Not Be visible  //*[@data-qa="button-success"]/span
+    Run Keyword If  '${status}' == 'False'  Натиснути кнопку "Внести зміни"
 
 
 Перевірити усрішність додавання файлів
