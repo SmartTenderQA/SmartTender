@@ -5,7 +5,6 @@ Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
-...  AND  debug
 
 
 *** Variables ***
@@ -83,7 +82,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Switch Browser  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
-	\  Перевірити кнопку подачі пропозиції
+	\  Натиснути на кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
 	\  Go Back
@@ -178,8 +177,7 @@ Postcondition
 	...  AND  Отримати URL для участі в аукціоні
 
 
-# todo
-Перевірити кнопку подачі пропозиції
+Натиснути на кнопку подачі пропозиції
     ${button}  Set Variable  //*[contains(text(), 'Подача пропозиції')]
     Page Should Contain Element  ${button}
     Open button  ${button}

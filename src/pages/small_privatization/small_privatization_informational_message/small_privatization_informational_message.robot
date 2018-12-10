@@ -93,7 +93,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Заповнити conditions.date
 	${delta}  Set Variable  13
-	${date + delta min}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta})))  modules=datetime
+	${date + delta min}  smart_get_time  4  s
 	${selector}  Set Variable  //*[contains(text(),'Дата проведення аукціону')]/following-sibling::*//input
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta min}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
@@ -154,7 +154,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Заповнити bank.Requisites.type
 	${selector}  Set Variable  //*[contains(text(),'Тип реквізиту')]/../following-sibling::*
-	${type}  Вибрати та повернути елемент з випадаючого списку  ${selector}  Номер рахунку
+	${type}  Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  Номер рахунку
 	${dict}  Create Dictionary  type  ${type}
 	${Requisites}  Create Dictionary  type  ${type}
 	Set To Dictionary  ${data['message']['bank']}  requisites  ${Requisites}
