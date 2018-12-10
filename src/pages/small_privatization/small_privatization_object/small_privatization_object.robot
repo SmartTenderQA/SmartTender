@@ -20,7 +20,6 @@
 
 
 Заповнити всі обов'язкові поля
-	small_privatization_object.Увімкнути тестовий режим (за необхідністю)
 	small_privatization_object.Заповнити title
     small_privatization_object.Заповнити description
     small_privatization_object.Заповнити decision.title
@@ -51,12 +50,6 @@
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
     Дочекатись Закінчення Загрузки Сторінки
-
-
-Увімкнути тестовий режим (за необхідністю)
-	${switcher}  Set Variable  //*[@data-qa='switch-test-mode']
-	${switcher status}  Get Element Attribute  ${switcher}//input  value
-	Run Keyword If  '${switcher status}' == 'false'  Click Element  ${switcher}
 
 
 Заповнити title

@@ -18,7 +18,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  об'єкт
 	small_privatization_object.Заповнити всі обов'язкові поля
 	small_privatization_object.Прикріпити документ
@@ -34,7 +35,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  інформаційне повідомлення
 	small_privatization_informational_message.Заповнити всі обов'язкові поля 1 етап
 	small_privatization_informational_message.Прикріпити документ

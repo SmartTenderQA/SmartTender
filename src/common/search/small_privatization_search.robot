@@ -46,6 +46,7 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  (${privatization item}//a)[${n}]
+	Wait Until Element Is Visible  ${selector}  10
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
