@@ -65,6 +65,10 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
   Log  ${monitoring_id}  WARN
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
+  :FOR  ${username}  IN  viewer  provider
+  \  Switch Browser  ${username}
+  \  Go To  ${data['location']}
+  \  Відкрити вкладку моніторингу
 
 
 
@@ -369,8 +373,7 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
   [Tags]  appeal
   :FOR  ${username}  IN  provider  viewer
   \  Switch Browser  ${username}
-  \  Run Keyword And Expect Error
-    Вікрити бланк позову
+  \  Run Keyword And Expect Error  *  Вікрити бланк позову
 
 
 Опублікувати позов
