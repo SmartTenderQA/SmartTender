@@ -6,7 +6,7 @@ Library  monitoring_owner.py
 Suite Setup  Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Setup  Stop The Whole Test Execution If Previous Test Failed
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Test Postcondition
 
 
 
@@ -16,18 +16,22 @@ ${UAID}                         UA-2018-12-05-000048-b
 ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 
 
+
+
 *** Test Cases ***
 ################################################################
-#                           DRAFT                              #
+#                     CREATE NEW TENDER                        #
 ################################################################
 Створити тендер та отримати UAID
   [Tags]  create_tender
-  Switch Browser  tender_owner
-  Maximize Browser Window
   test_open_trade.Створити тендер
   Отримати UAID та tender_Id для створеного тендера
+  Повернутися на головну сторінку особистого кабінету
 
 
+################################################################
+#                           DRAFT                              #
+################################################################
 Розпочати моніторинг
   [Tags]  create_monitoring
   Розпочати моніторинг по тендеру  ${tender_ID}
@@ -47,6 +51,7 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
 Знайти тендер по ідентифікатору
   [Tags]  find_tender
   Switch Browser  tender_owner
+  Натиснути Повторить попытку (за необхідністю)
   Перейти у webclient за необхідністю
   Змінити мову на укр.
   Відкрити сторінку для створення публічних закупівель
@@ -489,14 +494,32 @@ ${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
   Відкрити вкладку моніторингу
 
 
+Test Postcondition
+  Log Location
+  Run Keyword If Test Failed  Capture Page Screenshot
+
+
 Отримати UAID та tender_Id для створеного тендера
-  Set Global Variable  ${UAID}  ${data['tender_uaid']}
-  Go To  ${data['tender_href']}
+  ${uaid}  Get Text  (//*[contains(text(),'UA')])[1]
+  Set Global Variable  ${UAID}  ${uaid}
+  Open Button  (//a[contains(@href,'smarttender.biz')])[1]
   Дочекатись закінчення загрузки сторінки
   ${id}  Get Text  //*[@data-qa='prozorro-id']//*[@data-qa='value']
   Set Global Variable  ${tender_ID}  ${id}
-  Close Window
-  Start  dasu  tender_owner
+
+
+Повернутися на головну сторінку особистого кабінету
+  Click Element  //*[@class='fa fa-user']
+  Click Element  //a[contains(text(),'Особистий кабінет')]
+  Дочекатись закінчення загрузки сторінки
+
+
+Натиснути Повторить попытку (за необхідністю)
+	${again locator}  Set Variable  //*[contains(text(),'Повторить попытку.')]
+	${again status}  Run Keyword And Return Status  Page Should Contain Element  ${again locator}
+	Run Keyword If  ${again status} == ${True}
+	...  Click Element  ${again locator}
+	Дочекатись закінчення загрузки сторінки
 
 
 Підготувати користувачів

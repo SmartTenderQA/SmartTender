@@ -5,7 +5,22 @@
 
 
 *** Keywords ***
-Заповнити необхідні поля
+Натиснути кнопку "Коригувати об'єкт приватизації"
+     ${selector}  Set Variable  //*[@data-qa="button-to-edit-page"]
+     Scroll Page To Element XPATH  ${selector}
+     Click Element  ${selector}
+     Дочекатись закінчення загрузки сторінки(skeleton)
+     Location Should Contain  /privatization-objects/edit/
+
+
+Отримати кілкість документів обєкту приватизації
+    ${selector}  Set Variable  //*[@data-qa="file-name"]
+    ${count}  Get Element Count  ${selector}
+    [Return]  ${count}
+
+
+Заповнити всі обов'язкові поля
+	small_privatization_object.Увімкнути тестовий режим (за необхідністю)
 	small_privatization_object.Заповнити title
     small_privatization_object.Заповнити description
     small_privatization_object.Заповнити decision.title
@@ -22,10 +37,11 @@
     small_privatization_object.Прикріпити документ
 
 
-Зберегти чернетку об'єкту
+Зберегти зміни об'єкту
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
+    Sleep  3
     Дочекатись Закінчення Загрузки Сторінки
 
 
@@ -38,9 +54,15 @@
     Дочекатись Закінчення Загрузки Сторінки
 
 
+Увімкнути тестовий режим (за необхідністю)
+	${switcher}  Set Variable  //*[@data-qa='switch-test-mode']
+	${switcher status}  Get Element Attribute  ${switcher}//input  value
+	Run Keyword If  '${switcher status}' == 'false'  Click Element  ${switcher}
+
+
 Заповнити title
 	${text}  create_sentence  5
-	${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
+	${title}  Set Variable  ${text}
 	${selector}  Set Variable  xpath=//*[@data-qa='input-title']//*[@autocomplete="off"]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
 	Set To Dictionary  ${data['object']}  title  ${title}
@@ -95,7 +117,7 @@
 Заповнити items.count
 	${first}  random_number  1  100000
 	${second}  random_number  1  1000
-    ${count}  Evaluate  str(round(float(${first})/float(${second}), 5))
+    ${count}  Evaluate  str(round(float(${first})/float(${second}), 3))
 	${selector}  Set Variable  xpath=//*[@data-qa='input-item-count']//*[@autocomplete="off"]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${count}
 	Set To Dictionary  ${data['object']['item']}  count  ${count}
@@ -124,7 +146,7 @@
 
 Заповнити items.city
    	${selector}  Set Variable  xpath=//div[@class='ivu-col ivu-col-span-sm-10']
-    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Київ
+    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Ввести та повернути елемент з випадаючого списку  ${selector}  Харків
     Set To Dictionary  ${data['object']['item']}  city  ${city}
 
 

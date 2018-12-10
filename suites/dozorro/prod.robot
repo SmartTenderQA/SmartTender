@@ -557,13 +557,13 @@ Postcondition
   Wait Until Keyword Succeeds  30s  5  Click Element  ${take_part}
 
 
-Фільтр Організатор
+Фільтр Організатор  #TODO необхідність цього кейворда?
   Click Element  ${org_field}
   Input Text  ${org_field}  Демо орг
   Wait Until Keyword Succeeds  30s  5  Click Element  xpath=//*[contains(text(), '111111111')]
 
 
-Відфільтрувати по спаданню дати
+Відфільтрувати по спаданню дати  #TODO необхідність цього кейворда?
   Wait Until Keyword Succeeds  30s  5  Click Element  ${sort date}
   Wait Until Keyword Succeeds  30s  5  Click Element  ${sort date}
   Wait Until Element Is Visible  ${first tender in search}
@@ -603,9 +603,11 @@ Postcondition
 
 Відправити відгук
   Click Element  ${review submit}
-  Wait Until Element Is Not Visible  ${review submit}  20s
   Дочекатись закінчення загрузки сторінки
-  Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  20s
+  ${status}  Run Keyword And Return Status
+  ...  Wait Until Element Is Not Visible  ${review submit}  10s
+  Run Keyword If  '${status}' == 'False'  Відправити відгук
+  Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  10s
 
 
 Надати відгук виду 2, 10

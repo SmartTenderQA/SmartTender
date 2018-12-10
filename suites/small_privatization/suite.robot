@@ -2,10 +2,9 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keywords
-...  Log Location
-...  AND  Run Keyword If Test Failed  Capture Page Screenshot
-...  AND  Зберегти словник у файл  ${data}  data
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+...  AND  Log Location
+...  AND  Log  ${data}
 
 
 *** Variables ***
@@ -16,42 +15,43 @@ Test Teardown  Run Keywords
 Створити об'єкт МП
 	small_privatization.Перейти на сторінку малої приватизації
 	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
+	small_privatization.Увімкнути тестовий режим (за необхідністю)
     small_privatization.Перейти до створення об'єкта малої приватизації
-	small_privatization_object.Заповнити необхідні поля
-	small_privatization_object.Зберегти чернетку об'єкту
+	small_privatization_object.Заповнити всі обов'язкові поля
+	small_privatization_object.Зберегти зміни об'єкту
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
-	Зберегти словник у файл  ${data}  data
+	Log To Console  object-UAID=${data['object']['UAID']}
 
 
 Створити інформаційне повідомлення МП
-	Go To  ${start page}
 	small_privatization.Перейти на сторінку малої приватизації
 	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
 	small_privatization.Перейти до створення інформаційного повідомлення
-	small_privatization_informational_message.Заповнити необхідні поля 1 етап
-	small_privatization_informational_message.Зберегти чернетку повідомлення
+	small_privatization_informational_message.Заповнити всі обов'язкові поля 1 етап
+	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
 	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
 	small_privatization_informational_message.Перейти до коригування інформації
-	small_privatization_informational_message.Заповнити необхідні поля 2 етап
-	small_privatization_informational_message.Зберегти чернетку повідомлення
-	small_privatization_informational_message.Натиснути передати на перевірку
-	Wait Until Keyword Succeeds  5 min  5 sec  small_privatization_informational_message.Дочекатися статусу повідомлення Опубліковано
+	small_privatization_informational_message.Заповнити всі обов'язкові поля 2 етап
+	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
+	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
+	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано
 	small_privatization_informational_message.Отримати UAID для Повідомлення
-	Зберегти словник у файл  ${data}  data
+	Log To Console  message-UAID=${data['message']['UAID']}
 
 
-Дочекатися початку аукціону
-	Wait Until Keyword Succeeds  15 min  10 sec  small_privatization_auction.Дочекатися статусу повідомлення Аукціон
-	small_privatization_informational_message.Перейти до аукціону
-	small_privatization_auction.Отримати UAID для Аукціону
-	Зберегти словник у файл  ${data}  data
+Дочекатися початку прийому пропозицій
+	Wait Until Keyword Succeeds  15 min  30 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон
+	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Перейти до аукціону
+	small_privatization_auction.Отримати UAID та href для Аукціону
+	Log To Console  lot-id=${data['tender_id']}
+	Log To Console  lot-href=${data['tender_href']}
+	Close Browser
 
 
-Знайти тендер учасниками
+Знайти аукціон учасниками
 	Підготувати учасників
-	Знайти аукціон користувачем  provider1
-	Зберегти пряме посилання на тендер
+	small_privatization_auction.Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
 	Go To  ${data['tender_href']}
 
@@ -66,11 +66,7 @@ Test Teardown  Run Keywords
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
-Подати пропозицію
-	### case3 ###
-	########
-	debug
-
+Подати пропозицію учасниками
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Reload Page
@@ -81,77 +77,45 @@ Test Teardown  Run Keywords
 	\  Go Back
 
 
-Дочекатися початку аукціону першим учасником
-	### case4 ###
-	Close Browser
+Дочекатися початку аукціону
 	Switch Browser  provider1
-	#Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	Дочекатися статусу тендера  Аукціон  10m
+	Wait Until Keyword Succeeds  20 min  30 sec  small_privatization_auction.Дочекатися початку аукціону
 
 
-Отримати поcилання на участь та перегляд аукціону першим учасником
-	### case5 ###
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
-	${auction_href}  			Отримати URL на перегляд
-	Set Global Variable  		${auction_href}
-	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
-	Close Browser
+Отримати поcилання на участь учасниками
+    :FOR  ${i}  IN  1  2
+	\  Switch Browser  provider${i}
+	\  Натиснути кнопку "До аукціону"
+	\  ${viewer_href}  Отримати URL на перегляд
+    \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
+	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
+	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
+	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
+	\  Close Browser
+
+
+Перевірити неможливість отримати поcилання на участь в аукціоні
+	[Setup]  Підготувати глядачів
+	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
+	viewer
+	tender_owner
+	provider3
 
 
 *** Keywords ***
-case3
-	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Reload Page
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
-	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
-	\  Заповнити поле з ціною  1  1
-	\  Подати пропозицію
-	\  Go Back
-
-
-case4
-	Close Browser
-	Switch Browser  provider1
-	#Дочекатись дати  ${data['auctionPeriods']['startDate']}
-	Дочекатися статусу тендера  Аукціон  10m
-
-
-case5
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
-	${auction_href}  			Отримати URL на перегляд
-	Set Global Variable  		${auction_href}
-	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
-	Close Browser
-
-
 Precondition
 	${data}  Create Dictionary
 	${object}  Create Dictionary
 	${message}  Create Dictionary
-	${auction}  Create Dictionary
 	Set To Dictionary  ${data}  object  ${object}
 	Set To Dictionary  ${data}  message  ${message}
-	Set To Dictionary  ${data}  auction  ${auction}
 	Set Global Variable  ${data}
-    Start in grid  ssp_tender_owner  tender_owner
-    Go To  ${start_page}
+    Start  ssp_tender_owner  tender_owner
 
 
 Postcondition
     Log  ${data}
     Close All Browsers
-
-
-Підготувати організатора
-	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...  Start  bened  tender_owner1
-	...  AND  Go Back
-	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...  Start  prod_tender_owner  tender_owner1
-	...  AND  Go Back
 
 
 Підготувати учасників
@@ -167,23 +131,36 @@ Postcondition
 	Run Keyword If  '${site}' == 'test'  Run Keywords
 	...       Start  user3  provider3
 	...  AND  Start  test_viewer  viewer
+	...  AND  Start  Bened  tender_owner
 	...  ELSE IF  '${site}' == 'prod'  Run Keywords
 	...       Start  prod_provider  provider3
 	...  AND  Start  prod_viewer  viewer
+	...  AND  Start  prod_tender_owner  tender_owner
 
 
-Зберегти пряме посилання на тендер
-	${tender_href}  Get Location
-	Set To Dictionary  ${data}  tender_href  ${tender_href}
-
-
-Знайти аукціон користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Location Should Contain  bidder_id=
+	Підтвердити повідомлення про умови проведення аукціону
+	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+	Run Keyword If  ${status} != ${true}  Sleep  30
+	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
-	small_privatization.Перейти на сторінку малої приватизації
-	Input Text  //input[@placeholder='Введіть фразу для пошуку']  ${data['tender_id']}
-	Click Element  //div[@class='ivu-input-group-append']//button[@type='button']
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['object']['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['count']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['unit']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
+
+
+Неможливість отримати поcилання на участь в аукціоні глядачем
+	[Arguments]  ${user}
+	Switch Browser  ${user}
+	Go to  ${data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	Click Element  //*[@class='panel-body']//*[contains(@class,'xs-7')]
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
+	...  Натиснути кнопку "До аукціону"
+	...  AND  Отримати URL для участі в аукціоні

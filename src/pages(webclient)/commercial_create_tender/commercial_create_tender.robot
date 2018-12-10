@@ -6,6 +6,8 @@ Resource        keywords.robot
 Заповнити "Дата закінч. прийому"
     [Arguments]  ${date}
     ${date input}  Set Variable  //*[@data-name="D_SROK"]//input
+    Clear Element Text  ${date input}
+    Sleep  .5
 	Input Text  ${date input}  ${date}
 	Sleep  .5
 	Click Element  ${date input}

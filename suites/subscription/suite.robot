@@ -11,7 +11,6 @@ ${}     css=li.loginButton a
 *** Test Cases ***
 Залогінитися
   Авторизуватися  user1
-  debug
 
 *** Keywords ***
 Precondition

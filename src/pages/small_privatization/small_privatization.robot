@@ -21,6 +21,13 @@
     Дочекатись закінчення загрузки сторінки(skeleton)
 
 
+Увімкнути тестовий режим (за необхідністю)
+	${switcher}  Set Variable  //*[@data-qa='test-mode-switch']
+	${switcher status}  Get Element Attribute  ${switcher}//input  value
+	Run Keyword If  '${switcher status}' == 'false'  Click Element  ${switcher}
+
+
+
 Перейти до створення об'єкта малої приватизації
     Click Element  //span[contains(text(),'Кабінет')]
     Дочекатись Закінчення Загрузки Сторінки
