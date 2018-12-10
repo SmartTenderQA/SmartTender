@@ -507,7 +507,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	Натиснути На торговельний майданчик
   	Активувати вкладку ФГИ
-	Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Об'єкти приватизації
 	small_privatization_search.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для малої приватизації  Об'єкт приватизації
@@ -517,7 +517,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	Натиснути На торговельний майданчик
   	Активувати вкладку ФГИ
-	Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Реєстр інформаційних повідомлень
 	small_privatization_search.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для малої приватизації  Інформаційне повідомлення
@@ -891,15 +891,6 @@ create_e-mail
 Додати файл до openeu
   Run Keyword If  '${multiple status}' == 'multiple'  Створити та додати PDF файл  2
   ...  ELSE  Створити та додати PDF файл  1
-
-
-Активувати вкладку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //*[contains(@class, "tab-pane") and contains(., "${text}")]
-	${class}  Get Element Attribute  ${selector}  class
-	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
-	Run Keyword If  ${tab status} == ${False}  Wait Until Keyword Succeeds  10  1  Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перевірити заголовок вкладки комерційні торги

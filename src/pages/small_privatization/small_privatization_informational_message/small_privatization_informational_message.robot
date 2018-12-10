@@ -2,6 +2,8 @@
 
 
 *** Variables ***
+${auction locator}			(//a[contains(text(),'Перейти до аукціону')])
+
 
 
 *** Keywords ***
@@ -10,7 +12,6 @@
 	small_privatization_informational_message.Заповнити decision.title
 	small_privatization_informational_message.Заповнити decision.number
 	small_privatization_informational_message.Заповнити decision.date
-    small_privatization_informational_message.Прикріпити документ
 
 
 Заповнити всі обов'язкові поля 2 етап
@@ -182,23 +183,17 @@
     Дочекатись Закінчення Загрузки Сторінки
 
 
-Дочекатися статусу повідомлення
-	[Arguments]  ${message status}
-	Reload Page
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    ${message status should}  Set Variable  ${message status}
-	${message status locator}  Set Variable  //h4[contains(@class,'action-block-item')]
-	${message status is}  Get Text  ${message status locator}
-	Should Be Equal  ${message status should}  ${message status is}
+Дочекатися опублікування посилання на лот
+	[Arguments]  ${time}
+	Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
+    ...  Reload Page  												AND
+    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Page Should Contain Element  ${auction locator}[1]
 
 
 Перейти до аукціону
-	Reload Page
-    Дочекатись закінчення загрузки сторінки(skeleton)
-	${auction locator}  Set Variable  //a[contains(text(),'Перейти до аукціону')]
-	Scroll Page To Element XPATH  ${auction locator}
-	Element Should Be Visible  ${auction locator}
-	Click Element  ${auction locator}
+	Scroll Page To Element XPATH  ${auction locator}[1]
+	Click Element  ${auction locator}[1]
 	Дочекатись Закінчення Загрузки Сторінки
 
 
@@ -207,3 +202,23 @@
 	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
     Set To Dictionary  ${data['message']}  UAID  ${UAID}
+
+
+Дочекатися статусу повідомлення
+	[Arguments]  ${message status}  ${time}
+    Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
+    ...  Reload Page  												AND
+    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Статус повідомлення повинен бути  ${message status}
+
+
+Статус повідомлення повинен бути
+	[Arguments]  ${message status should}
+	${message status is}  Отримати статус повідомлення
+	Should Be Equal  ${message status should}  ${message status is}
+
+
+Отримати статус повідомлення
+	${message status locator}  Set Variable  //h4[contains(@class,'action-block-item')]
+	${message status is}  Get Text  ${message status locator}
+	[Return]  ${message status is}

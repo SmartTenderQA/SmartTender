@@ -34,10 +34,9 @@
     small_privatization_object.Заповнити items.country
     small_privatization_object.Заповнити items.city
     small_privatization_object.Заповнити items.streetAddress
-    small_privatization_object.Прикріпити документ
 
 
-Зберегти зміни об'єкту
+Натиснути кнопку зберегти
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}

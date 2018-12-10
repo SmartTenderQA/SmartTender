@@ -20,7 +20,10 @@
 	[Arguments]  ${role}
 	Switch Browser  ${role}
 	Sleep  2
-	small_privatization.Перейти на сторінку малої приватизації
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	Input Text  //input[@placeholder='Введіть фразу для пошуку']  ${data['tender_id']}
 	Click Element  //div[@class='ivu-input-group-append']//button[@type='button']
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -28,10 +31,21 @@
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Дочекатися початку аукціону
-	Reload Page
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    ${auction status should}  Set Variable  Аукціон
+Дочекатися статусу лота
+	[Arguments]  ${auction status}  ${time}
+    Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
+    ...  Reload Page  												AND
+    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Статус лота повинен бути  ${auction status}
+
+
+Статус лота повинен бути
+	[Arguments]  ${auction status should}
+	${auction status is}  Отримати статус лота
+	Should Be Equal  ${auction status should}  ${auction status is}
+
+
+Отримати статус лота
 	${auction status locator}  Set Variable  //*[@data-qa='auctionStatus']
 	${auction status is}  Get Text  ${auction status locator}
-	Should Be Equal  ${auction status should}  ${auction status is}
+	[Return]  ${auction status is}

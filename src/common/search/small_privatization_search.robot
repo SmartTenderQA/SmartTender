@@ -14,6 +14,16 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
 	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
+Активувати вкладку
+	[Documentation]  ${tab name} == Аукціони|Реєстр об'єктів приватизації
+	[Arguments]  ${tab name}
+	${selector}  Set Variable  //*[contains(@class,'tab-pane') and contains(., "${tab name}")]
+	${class}  Get Element Attribute  ${selector}  class
+	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
+	Run Keyword If  ${tab status} == ${False}  Wait Until Keyword Succeeds  10  1  Click Element  ${selector}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
 Вибрати режим сторінки об'єктів приватизації
     [Arguments]  ${type}
     [Documentation]  Вибираємо режим сторінки. "Кабінет"  або "ПУблічний режим"
@@ -22,6 +32,15 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
     Дочекатись закінчення загрузки сторінки(skeleton)
     Element Should Be Visible
     ...  ${selector}/preceding-sibling::span[contains(@class,"radio-checked")]
+
+
+Активувати перемемик тестового режиму на
+	[Documentation]  ${switcher mode} == вкл|викл
+	[Arguments]  ${switcher mode}
+	${switcher locator}  Set Variable  //*[@data-qa='test-mode-switch']
+	${switcher status}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa='test-mode-span']  ${switcher mode}
+	Run Keyword If  ${switcher status} == ${False}  Click Element  ${switcher locator}
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перейти по результату пошуку за номером
@@ -37,3 +56,11 @@ ${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
 	Click Element  ${elastic search button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	Wait Until Page Contains Element  //*[@class="tag-holder"]
+
+
+Натиснути створити
+	[Documentation]  ${create button} == об'єкт|інформаційне повідомлення
+	[Arguments]  ${create button}
+	${create button locator}  Set Variable  //*[contains(@class,'action-block-item')]//button[contains(.,"${create button}")]
+	Click Element  ${create button locator}
+	Дочекатись закінчення загрузки сторінки(skeleton)
