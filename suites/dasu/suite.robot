@@ -6,7 +6,7 @@ Library  monitoring_owner.py
 Suite Setup  Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Setup  Stop The Whole Test Execution If Previous Test Failed
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Test Postcondition
 
 
 
@@ -485,6 +485,11 @@ Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 #                                                                                               #
 #################################################################################################
 *** Keywords ***
+Test Postcondition
+  Log Location
+  Run Keyword If Test Failed  Capture Page Screenshot
+
+
 Отримати UAID та tender_Id для створеного тендера
   ${uaid}  Get Text  (//*[contains(text(),'UA')])[1]
   Set Global Variable  ${UAID}  ${uaid}
