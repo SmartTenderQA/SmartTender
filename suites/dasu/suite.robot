@@ -12,8 +12,10 @@ Test Teardown  Test Postcondition
 
 *** Variables ***
 &{data}
-#${UAID}                         UA-2018-12-04-000012-a
-#${tender_ID}                    9840b127b4e34359a7372d9b0f9268e0
+${UAID}                         UA-2018-12-05-000048-b
+${tender_ID}                    4b60ec7e222c4b1d9dd42051d7ca6fe2
+
+
 
 
 *** Test Cases ***
@@ -67,6 +69,7 @@ Test Teardown  Test Postcondition
   \  Switch Browser  ${username}
   \  Go To  ${data['location']}
   \  Відкрити вкладку моніторингу
+
 
 
 Перевірити відображення інформації нового моніторингу
@@ -485,6 +488,15 @@ Test Teardown  Test Postcondition
 #                                                                                               #
 #################################################################################################
 *** Keywords ***
+Відкрити тендер від лиця
+  [Arguments]  ${username}
+  Run Keyword If  "${username}" == "provider"  Start  user1  provider
+  Run Keyword If  "${username}" == "viewer"  Start  test_viewer  viewer
+  Run Keyword If  "${username}" == "tender_owner"  Start  dasu  tender_owner
+  Go To  ${data['location']}
+  Відкрити вкладку моніторингу
+
+
 Test Postcondition
   Log Location
   Run Keyword If Test Failed  Capture Page Screenshot
