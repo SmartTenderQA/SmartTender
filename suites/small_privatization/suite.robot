@@ -5,6 +5,7 @@ Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***
@@ -13,36 +14,45 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 #robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/suite.robot
 *** Test Cases ***
 Створити об'єкт МП
-	small_privatization.Перейти на сторінку малої приватизації
-	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
-	small_privatization.Увімкнути тестовий режим (за необхідністю)
-    small_privatization.Перейти до створення об'єкта малої приватизації
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
+	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	small_privatization_search.Натиснути створити  об'єкт
 	small_privatization_object.Заповнити всі обов'язкові поля
-	small_privatization_object.Зберегти зміни об'єкту
+	small_privatization_object.Прикріпити документ
+	small_privatization_object.Натиснути кнопку зберегти
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
 	Log To Console  object-UAID=${data['object']['UAID']}
 
 
 Створити інформаційне повідомлення МП
-	small_privatization.Перейти на сторінку малої приватизації
-	small_privatization.Перейти на сторінку реєстр об'єктів приватизації
-	small_privatization.Перейти до створення інформаційного повідомлення
+	[Setup]  Go To  ${start page}
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
+	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	small_privatization_search.Натиснути створити  інформаційне повідомлення
 	small_privatization_informational_message.Заповнити всі обов'язкові поля 1 етап
+	small_privatization_informational_message.Прикріпити документ
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
 	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
 	small_privatization_informational_message.Перейти до коригування інформації
 	small_privatization_informational_message.Заповнити всі обов'язкові поля 2 етап
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
 	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
-	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
 	small_privatization_informational_message.Отримати UAID для Повідомлення
 	Log To Console  message-UAID=${data['message']['UAID']}
 
 
 Дочекатися початку прийому пропозицій
-	Wait Until Keyword Succeeds  15 min  30 sec  small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон
-	Wait Until Keyword Succeeds  5 min  15 sec  small_privatization_informational_message.Перейти до аукціону
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
+	small_privatization_informational_message.Дочекатися опублікування посилання на лот  5 min
+	small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
 	Log To Console  lot-href=${data['tender_href']}
@@ -71,7 +81,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Switch Browser  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
-	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
+	\  Перевірити кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
 	\  Go Back
@@ -79,7 +89,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	Switch Browser  provider1
-	Wait Until Keyword Succeeds  20 min  30 sec  small_privatization_auction.Дочекатися початку аукціону
+	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
@@ -164,3 +174,14 @@ Postcondition
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
+
+
+# todo
+Перевірити кнопку подачі пропозиції
+    ${button}  Set Variable  //*[contains(text(), 'Подача пропозиції')]
+    Page Should Contain Element  ${button}
+    Open button  ${button}
+    Location Should Contain  /edit/
+    Wait Until Keyword Succeeds  5m  3  Run Keywords
+    ...  Reload Page  AND
+    ...  Element Should Not Be Visible  //*[@class='modal-dialog ']//h4

@@ -5,43 +5,6 @@
 
 
 *** Keywords ***
-Перейти на сторінку малої приватизації
-	${current url}  Get Location
-	Run Keyword If  '${current url}' != '${start page}'
-	...  Run Keywords  Go To  ${start page}
-	...  AND  Дочекатись Закінчення Загрузки Сторінки
-    Click Element  (//div[@id='main']/div[@class='link-image']/*)[2]
-	Дочекатись Закінчення Загрузки Сторінки
-    Click Element  link=Аукціони на продаж активів держпідприємств
-    Дочекатись закінчення загрузки сторінки
-
-
-Перейти на сторінку реєстр об'єктів приватизації
-    Click Element  //*[@data-qa='registry']
-    Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Увімкнути тестовий режим (за необхідністю)
-	${switcher}  Set Variable  //*[@data-qa='test-mode-switch']
-	${switcher status}  Get Element Attribute  ${switcher}//input  value
-	Run Keyword If  '${switcher status}' == 'false'  Click Element  ${switcher}
-
-
-
-Перейти до створення об'єкта малої приватизації
-    Click Element  //span[contains(text(),'Кабінет')]
-    Дочекатись Закінчення Загрузки Сторінки
-	Click Element  //*[@data-qa='button-create-privatization-object']
-    Дочекатись закінчення загрузки сторінки(skeleton)
-
-
-Перейти до створення інформаційного повідомлення
-    Click Element  //span[contains(text(),'Кабінет')]
-    Дочекатись Закінчення Загрузки Сторінки
-	Click Element  //*[@data-qa='button-create-lot']
-    Дочекатись закінчення загрузки сторінки(skeleton)
-
-
 Заповнити та перевірити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Scroll Page To Element XPATH  ${selector}

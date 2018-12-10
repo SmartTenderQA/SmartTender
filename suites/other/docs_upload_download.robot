@@ -10,8 +10,9 @@ Test Teardown  			Run Keywords
 
 *** Test Cases ***
 Перейти до об'єктів малої приватизації
-    small_privatization.Перейти на сторінку малої приватизації
-    small_privatization.Перейти на сторінку реєстр об'єктів приватизації
+    start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 
 
 Виконати пошук потрібного обєкту
@@ -32,7 +33,7 @@ Test Teardown  			Run Keywords
     Видалити файли з об'єкту приватизації  # На випадок якщо, файли не видалились коли тест зафейлився
     small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
     Загрузити файли  ${1 full name}  ${2 full name}
-    small_privatization_object.Зберегти зміни об'єкту
+    small_privatization_object.Натиснути кнопку зберегти
 
 
 Перевірка загрузки файлів
@@ -118,6 +119,6 @@ Test Teardown  			Run Keywords
     \  Wait Until Element Is Visible  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Click Element  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
     \  Sleep  .5
-    small_privatization_object.Зберегти зміни об'єкту
+    small_privatization_object.Натиснути кнопку зберегти
     ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
     Should Be Equal As Integers  ${n}  0
