@@ -2,10 +2,10 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
+Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
-...  AND  debug
 
 
 *** Variables ***
@@ -18,7 +18,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  об'єкт
 	small_privatization_object.Заповнити всі обов'язкові поля
 	small_privatization_object.Прикріпити документ
@@ -34,7 +35,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  інформаційне повідомлення
 	small_privatization_informational_message.Заповнити всі обов'язкові поля 1 етап
 	small_privatization_informational_message.Прикріпити документ
@@ -50,8 +52,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку прийому пропозицій
+	[Tags]  -prod
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
-	small_privatization_informational_message.Дочекатися опублікування посилання на лот  5 min
+	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
@@ -60,39 +63,45 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Знайти аукціон учасниками
+	[Tags]  -prod
 	Підготувати учасників
-	small_privatization_auction.Знайти аукціон користувачем  provider1
+	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
 	Go To  ${data['tender_href']}
 
 
 Подати заявки на участь в тендері
+	[Tags]  -prod
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
+	[Tags]  -prod
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
+	[Tags]  -prod
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
-	\  Перевірити кнопку подачі пропозиції
+	\  Натиснути на кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
 	\  Go Back
 
 
 Дочекатися початку аукціону
+	[Tags]  -prod
 	Switch Browser  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
+	[Tags]  -prod
     :FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Натиснути кнопку "До аукціону"
@@ -105,6 +114,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
+	[Tags]  -prod
 	[Setup]  Підготувати глядачів
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
@@ -148,6 +158,23 @@ Postcondition
 	...  AND  Start  prod_tender_owner  tender_owner
 
 
+Знайти аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	new_search.Очистити фільтр пошуку
+	new_search.Очистити фільтр пошуку
+	new_search.Ввести фразу для пошуку  ${data['tender_id']}
+	new_search.Натиснути кнопку пошуку
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
@@ -176,8 +203,7 @@ Postcondition
 	...  AND  Отримати URL для участі в аукціоні
 
 
-# todo
-Перевірити кнопку подачі пропозиції
+Натиснути на кнопку подачі пропозиції
     ${button}  Set Variable  //*[contains(text(), 'Подача пропозиції')]
     Page Should Contain Element  ${button}
     Open button  ${button}

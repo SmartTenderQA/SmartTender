@@ -40,11 +40,13 @@
     \  Press Key  ${selector}  \\8
 
 
-Вибрати та повернути елемент з випадаючого списку
+Вибрати та повернути елемент з випадаючого списку за назвою
 	[Arguments]  ${selector}  ${value}
 	Scroll Page To Element XPATH  ${selector}
-  	${item}  Set Variable  ${selector}/div[@class='ivu-select-dropdown']//*[contains(text(),'${value}')]
+  	${item}  Set Variable  ${selector}//div[contains(@class,'ivu-select-dropdown')]//li[contains(text(),'${value}')]
     Click Element  ${selector}
+    Sleep  .5
+    Run Keyword And Ignore Error  Input Text  ${selector}//input[@type='text']  ${value}
 	Wait Until Element Is Visible  ${item}
     Click Element  ${item}
     ${element}  Get Text  ${selector}//*[@class='ivu-select-selected-value']
@@ -52,16 +54,17 @@
     [Return]  ${element}
 
 
-Ввести та повернути елемент з випадаючого списку
-    [Arguments]  ${selector}  ${value}
-   	Scroll Page To Element XPATH  ${selector}
-  	${item}  Set Variable  ${selector}//ul[@class='ivu-select-dropdown-list']//*[contains(text(),'${value}')]
+Вибрати та повернути випадковий елемент з випадаючого списку
+    [Arguments]  ${selector}
+  	${items}  Set Variable  ${selector}//ul[@class='ivu-select-dropdown-list']/li
   	${input}  Set Variable  ${selector}//input[@type='text']
+	Scroll Page To Element XPATH  ${input}
     Click Element  ${input}
     Sleep  .5
-    Input Text  ${input}  ${value}
-    Wait Until Element Is Visible  ${item}
-    Click Element  ${item}
+    Wait Until Element Is Visible  ${items}
+    ${items count}  Get Element Count  //*[@data-qa='select-item-unit']//ul[@class='ivu-select-dropdown-list']/li
+	${items number}  random_number  1  ${items count}
+    Click Element  (${items})[${items number}]
     ${text}  Get Element Attribute  ${input}  value
    	Should Not Be Empty  ${text}
 	Sleep  .5

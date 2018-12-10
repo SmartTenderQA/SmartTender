@@ -16,21 +16,6 @@
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
 
 
-Знайти аукціон користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Sleep  2
-	start_page.Натиснути На торговельний майданчик
-	old_search.Активувати вкладку ФГИ
-	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
-	Input Text  //input[@placeholder='Введіть фразу для пошуку']  ${data['tender_id']}
-	Click Element  //div[@class='ivu-input-group-append']//button[@type='button']
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	Click Element  (//*[@class='panel-body']//*[contains(@class,'xs-7')])[1]
-	Дочекатись закінчення загрузки сторінки(skeleton)
-
-
 Дочекатися статусу лота
 	[Arguments]  ${auction status}  ${time}
     Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
