@@ -52,6 +52,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку прийому пропозицій
+	[Tags]  -prod
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
 	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
@@ -62,6 +63,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Знайти аукціон учасниками
+	[Tags]  -prod
 	Підготувати учасників
 	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
@@ -69,16 +71,19 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Подати заявки на участь в тендері
+	[Tags]  -prod
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
+	[Tags]  -prod
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
+	[Tags]  -prod
 	:FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Reload Page
