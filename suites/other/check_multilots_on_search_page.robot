@@ -8,7 +8,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
+# robot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:test_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
 
 
 *** Variables ***
@@ -107,6 +107,7 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
 Перейти на сторінку
   [Arguments]  ${page}
   Set Test Variable  ${page}
+  Run Keyword If  ${page} != 6  Set Tags  non-critical
   Should Be True  ${page} != 6
   Run Keyword If  '${page}' != '1'  Click Element  //a[@class="pager-button" and text()=${page}]
   Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"
