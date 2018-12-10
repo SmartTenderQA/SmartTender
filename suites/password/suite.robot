@@ -69,7 +69,7 @@ Postcondition
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
     Sleep  0.5
-    Click Element  xpath=//*[.='Змінити свій пароль']
+    Click Element  //span[contains(text(),'Змінити свій пароль')]
     Дочекатись Закінчення Загрузки Сторінки
     Page Should Contain Element  xpath=//*[.='Зміна пароля']
 
