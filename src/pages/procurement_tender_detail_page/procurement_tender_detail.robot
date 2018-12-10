@@ -45,6 +45,7 @@ ${['prozorro-number']}                  //*[@data-qa='prozorro-number']//a/span
 Отритами дані зі сторінки
 	[Arguments]  ${field}
 	${selector}  Отримати локатор по назві поля	${field}
+	Wait Until Element Is Visible  ${selector}  10
 	${value}  Get Text  ${selector}
 	${field value}  Парсінг за необхідністью  ${field}  ${value}
 	[Return]  ${field value}

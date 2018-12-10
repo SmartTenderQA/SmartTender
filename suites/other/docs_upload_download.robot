@@ -52,6 +52,9 @@ Test Teardown  			Run Keywords
     ${now md5 second}  get_checksum_md5  ${OUTPUTDIR}/downloads/${2 full name}
     Should Be Equal    ${md5 second}     ${now md5 second}
 
+             #6081f682f99a45589a969af8f2a75375
+
+
 
 Видалити загружені файли
     Видалити файли з об'єкту приватизації
@@ -73,7 +76,8 @@ Test Teardown  			Run Keywords
 
 Створити великий PDF файл з довгою назвою
     [Arguments]  ${name}
-    ${long name}  Evaluate  '1' * 200 + ' ${name}'
+    ${date}  smart_get_time
+    ${long name}  Evaluate  '1' * 200 + ' ${name}' + ' ${date}'
     ${file path}  Set Variable  ${OUTPUTDIR}/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
