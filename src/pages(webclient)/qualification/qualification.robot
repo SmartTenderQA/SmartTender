@@ -19,7 +19,7 @@ ${participant}          //*[@title="Учасник"]/ancestor::div[@class="gridb
     Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${participant}
     Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Sleep  60
+    ...  Sleep  120
     ...  AND  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     [Return]  ${count}
 
