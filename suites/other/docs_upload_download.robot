@@ -32,7 +32,8 @@ Test Teardown  			Run Keywords
 Загрузити файли до об'єкту приватизації
     #Видалити файли з об'єкту приватизації  # На випадок якщо, файли не видалились коли тест зафейлився
     small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
-    Загрузити файли  ${1 full name}  ${2 full name}
+    Загрузити файл  ${1 full name}
+    Загрузити файл  ${2 full name}
     small_privatization_object.Натиснути кнопку зберегти
 
 
@@ -47,7 +48,7 @@ Test Teardown  			Run Keywords
 
 Отримати дані з cdb та зберегти їх у файл
     Створити словник  cdb
-    ${cdb}  Отримати дані об'єкту приватизації з cdb по id  6081f682f99a45589a969af8f2a75375
+    ${cdb}  Отримати дані об'єкту приватизації з cdb по id  41fef353ba5648158c0d38dd41305afa
     Set Global Variable  ${cdb}
 
 
@@ -64,10 +65,6 @@ Test Teardown  			Run Keywords
     Should Be Equal    ${cdb md5 second}  ${md5 second}  ${now md5 second}
 
 
-#Видалити загружені файли
-    #Видалити файли з об'єкту приватизації
-
-
 
 
 
@@ -76,10 +73,10 @@ Test Teardown  			Run Keywords
     Create Directory  ${OUTPUTDIR}/downloads/
 
 
-Загрузити файли
-    [Arguments]  @{file_names}
-    :FOR  ${file}  IN  @{file_names}
-    \  Choose File  ${button add file}  ${OUTPUTDIR}/${file}
+Загрузити файл
+    [Arguments]  ${file}
+    Choose File  ${button add file}  ${OUTPUTDIR}/${file}
+    Sleep  2
 
 
 Отримати md5 файлу із словника ЦБД
@@ -94,7 +91,7 @@ Test Teardown  			Run Keywords
 
 Створити великий PDF файл з довгою назвою
     [Arguments]  ${name}
-    ${n}  random_number  1  100
+    ${n}  random_number  1  1000
     ${long name}  Evaluate  '1' * 200 + ' ${name}' + ' ${n}'
     ${file path}  Set Variable  ${OUTPUTDIR}/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
@@ -105,43 +102,19 @@ Test Teardown  			Run Keywords
 
 Перевірити усрішність додавання файлів
     [Arguments]  @{file_names}
-    #${i}  Evaluate  1
+    Sleep  120
+    Reload Page
     :FOR  ${file}  IN  @{file_names}
-    \  debug
-    \  Page Should Contain Element
-    \  ${name}  Get Text  (//*[@data-qa="file-name"])[${i}]
-    \  ${name lenght}  Get Length  ${name}
-    \  Should Be True  ${name lenght} > 200
-    \  Should Be Equal  ${name}  ${file}
-    #\  ${size}  Get Text  (//*[@data-qa="file-size"])[${i}]
-    #\  ${size}  Evaluate  re.search(r'(?P<size>\\d+.\\d+)', u'${size}').group('size')  re
-    #\  ${size}  Evaluate  float(${size})
-    #\  Should Be True  ${size} > 2
-    \  ${i}  Evaluate  ${i} + 1
+    \  Page Should Contain Element  //*[@data-qa="file-name"][text()="${file}"]
 
 
 Скачати файли об'єкту приватизації
     [Arguments]  @{file names}
-    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
-    :FOR  ${i}  IN RANGE  1  ${n}+1
-    \  Mouse Over  (//*[@data-qa="file-name"])[${i}]/preceding-sibling::i
-    \  Wait Until Element Is Visible  (//*[@data-qa="file-download"])[${i}]
-    \  ${link}  Get Element Attribute  (//*[@data-qa="file-preview"])[${i}]  href
+   :FOR  ${file}  IN  @{file_names}
+    \  ${selector}  Set Variable  //*[@data-qa="file-name"][text()="${file}"]
+    \  Mouse Over  ${selector}/preceding-sibling::i
+    \  Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]
+    \  ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
-    \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file names[${i}-1]}
+    \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file}
     \  Sleep  3
-
-
-
-Видалити файли з об'єкту приватизації
-    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
-    #Scroll Page To Top
-    small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
-    :FOR  ${file}  IN RANGE  1  ${n}+1
-    \  Click Element  (//i[contains(@class,"icon-trash")])[1]
-    \  Wait Until Element Is Visible  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
-    \  Click Element  (//*[@class="ivu-poptip-footer"])[1]//span[text()="Так"]
-    \  Sleep  .5
-    small_privatization_object.Натиснути кнопку зберегти
-    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
-    Should Be Equal As Integers  ${n}  0
