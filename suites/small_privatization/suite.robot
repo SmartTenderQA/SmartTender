@@ -90,11 +90,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку аукціону
+	[Tags]  -prod
 	Switch Browser  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
+	[Tags]  -prod
     :FOR  ${i}  IN  1  2
 	\  Switch Browser  provider${i}
 	\  Натиснути кнопку "До аукціону"
@@ -107,6 +109,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
+	[Tags]  -prod
 	[Setup]  Підготувати глядачів
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
@@ -160,7 +163,7 @@ Postcondition
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	new_search.Очистити фільтр пошуку
 	new_search.Очистити фільтр пошуку
-	new_search.Ввести фразу для пошуку  qwddsqdwsd
+	new_search.Ввести фразу для пошуку  ${data['tender_id']}
 	new_search.Натиснути кнопку пошуку
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	new_search.Перейти по результату пошуку за номером  1
