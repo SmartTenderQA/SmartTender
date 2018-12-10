@@ -66,6 +66,7 @@ If skipped create tender
 
 
 Перейти до стадії аукціон
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Wait Until Keyword Succeeds  10m  10s  Перейти до стадії закупівлі (webclient)  Аукціон
 
 

@@ -69,6 +69,7 @@ If skipped create tender
 
 
 Підготувати учасників для отримання посилання на аукціон
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Close All Browsers
     Start  user1  provider1
     Go to  ${data['tender_href']}
