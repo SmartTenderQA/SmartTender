@@ -120,7 +120,7 @@ Precondition
 	Set To Dictionary  ${data}  object  ${object}
 	Set To Dictionary  ${data}  message  ${message}
 	Set Global Variable  ${data}
-    Start  ssp_tender_owner  tender_owner
+    Start  ${user}  tender_owner
 
 
 Postcondition
