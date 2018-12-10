@@ -2,6 +2,7 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Postcondition
+Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
@@ -52,7 +53,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку прийому пропозицій
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
-	small_privatization_informational_message.Дочекатися опублікування посилання на лот  5 min
+	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
@@ -62,7 +63,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	Підготувати учасників
-	small_privatization_auction.Знайти аукціон користувачем  provider1
+	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
 	Go To  ${data['tender_href']}
 
@@ -147,6 +148,23 @@ Postcondition
 	...       Start  prod_provider  provider3
 	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_tender_owner  tender_owner
+
+
+Знайти аукціон користувачем
+	[Arguments]  ${role}
+	Switch Browser  ${role}
+	Sleep  2
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	new_search.Очистити фільтр пошуку
+	new_search.Очистити фільтр пошуку
+	new_search.Ввести фразу для пошуку  qwddsqdwsd
+	new_search.Натиснути кнопку пошуку
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	new_search.Перейти по результату пошуку за номером  1
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перейти та перевірити сторінку участі в аукціоні

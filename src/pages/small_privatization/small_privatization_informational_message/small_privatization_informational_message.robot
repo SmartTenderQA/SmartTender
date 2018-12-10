@@ -92,13 +92,18 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити conditions.date
-	${delta}  Set Variable  13
-	${date + delta min}  smart_get_time  4  s
+	${delta days}  Set Variable  5
+	${delta minutes}  Set Variable  13
+	${date + delta prod}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(days=int(${delta days})))  modules=datetime
+	${date + delta test}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  modules=datetime
+	${date + delta}  Set Variable If
+	...  '${site}' == 'test'  ${date + delta test}
+	...  '${site}' == 'prod'  ${date + delta prod}
 	${selector}  Set Variable  //*[contains(text(),'Дата проведення аукціону')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta min}
+	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
-	${conditions}  Create Dictionary  date  ${date + delta min}
+	${conditions}  Create Dictionary  date  ${date + delta}
 	Set To Dictionary  ${data['message']}  conditions  ${conditions}
 
 
