@@ -8,7 +8,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
-# obot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:prod_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
+# robot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:prod_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
 
 
 *** Variables ***
