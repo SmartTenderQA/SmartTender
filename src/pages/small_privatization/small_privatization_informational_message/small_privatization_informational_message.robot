@@ -63,7 +63,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	${first}  random_number  1000  10000
 	${second}  random_number  100  1000
 	${number}  Set Variable  ${first}/${second}-${first}
-	${selector}  Set Variable  //div[@class='ivu-col ivu-col-span-sm-5']//div[@class='ivu-input-wrapper ivu-input-type']//input
+	${selector}  Set Variable  (//h4[contains(., 'Рішення органу приватизації про затверждення умов продажу')]//following-sibling::*//input)[2]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['message']['decision']}  number  ${number}
 
