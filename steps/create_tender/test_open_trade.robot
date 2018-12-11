@@ -19,7 +19,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  120  minutes
+    ${date}  get_time_now_with_deviation  30  minutes
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     Заповнити "Прийом пропозицій по"  ${date}
