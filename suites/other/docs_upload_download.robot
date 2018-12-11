@@ -38,7 +38,7 @@ Test Teardown  			Run Keywords
 
 
 Перевірка загрузки файлів
-    Wait Until Keyword Succeeds  10m  10s
+    Wait Until Keyword Succeeds  15m  5s
     ...  Перевірити усрішність додавання файлів  ${1 full name}  ${2 full name}
 
 
