@@ -38,7 +38,8 @@ Test Teardown  			Run Keywords
 
 
 Перевірка загрузки файлів
-    Перевірити усрішність додавання файлів  ${1 full name}  ${2 full name}
+    Wait Until Keyword Succeeds  10m  10s
+    ...  Перевірити усрішність додавання файлів  ${1 full name}  ${2 full name}
 
 
 Скачати загружені файли
@@ -102,7 +103,7 @@ Test Teardown  			Run Keywords
 
 Перевірити усрішність додавання файлів
     [Arguments]  @{file_names}
-    Sleep  120
+    Sleep  60
     Reload Page
     :FOR  ${file}  IN  @{file_names}
     \  Page Should Contain Element  //*[@data-qa="file-name"][text()="${file}"]

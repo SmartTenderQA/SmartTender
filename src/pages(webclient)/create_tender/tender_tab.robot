@@ -3,6 +3,18 @@ Resource        keywords.robot
 
 
 *** Keywords ***
+Заповнити "Кількість переможців"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="MAXWINNERCOUNT"]//input
+    Заповнити поле  ${selector}  ${value}
+
+
+Заповнити "Срок рамкової угоди" місяців
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="DURAGRMONTH"]//input
+    Заповнити поле  ${selector}  ${value}
+
+
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
@@ -27,9 +39,25 @@ Resource        keywords.robot
     Заповнити текстове поле  ${selector}  ${value}
 
 
+Заповнити "Очікувана вартість закупівлі" для лоту
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="LOT_INITAMOUNT"]//input
+    ${amount field}  Set Variable  //*[@data-name="LOT_MINSTEP"]//input
+    Заповнити текстове поле  ${selector}  ${value}
+    ${amount}  Get Element Attribute  ${amount field}  value
+    [Return]  ${amount}
+
+
 Заповнити "Мінімальний крок аукціону"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
+    Заповнити текстове поле  ${selector}  ${value}
+
+
+
+Заповнити "Мінімальний крок аукціону" для лоту
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
 
 

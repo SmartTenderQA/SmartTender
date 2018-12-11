@@ -2,7 +2,6 @@
 Resource  ../../src/src.robot
 Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
-#Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
 
 

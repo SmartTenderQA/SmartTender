@@ -100,11 +100,13 @@ Resource    ../steps/create_tender/test_dialog.robot
 Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
+Resource    ../steps/create_tender/test_ramky.robot
 
 
 Resource	keywords.robot
 Resource	search.robot
 Library		service.py
+Library     empty_dicts.py
 
 
 *** Variables ***

@@ -71,6 +71,12 @@
     Element Should Not Be Visible  ${selector}
 
 
+Натиснути додати (додавання предмету)
+    ${selector}  Set Variable  //*[@data-name="GRID_ITEMS_HIERARCHY"]//*[@title="Додати"]
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
 Натиснути OkButton
 	${button}  Set Variable  //*[@data-name="OkButton"]
 	Wait Until Page Contains Element  ${button}
