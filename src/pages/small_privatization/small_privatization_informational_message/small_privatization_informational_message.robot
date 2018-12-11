@@ -85,7 +85,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Перейти до Коригування інформації
 	${edit btn}  Set Variable  //*[@data-qa='button-to-edit-page']
    	Wait Until Element Is Visible  ${edit btn}
-   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+   	Wait Until Page Does Not Contain Element  //*[@class='ivu-message']  10
     Scroll Page To Element XPATH  ${edit btn}
 	Click Element  ${edit btn}
     Дочекатись Закінчення Загрузки Сторінки
