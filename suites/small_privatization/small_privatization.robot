@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	start_page.Натиснути На торговельний майданчик
