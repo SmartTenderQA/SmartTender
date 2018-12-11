@@ -574,7 +574,7 @@ Test Postcondition
 Скасувати моніторинг по тендеру
   ${description}  create_sentence  20
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
-  ${data_cdb}  cancellation_monitoring
+  ${data_cdb}  Wait Until Keyword Succeeds  60  5  cancellation_monitoring
   ...  ${description}
   ...  ${relatedParty}
   ...  ${data['id']}
@@ -586,7 +586,7 @@ Test Postcondition
 Сформувати рішення по моніторингу
   ${relatedParty}  Отримати дані моніторингу по API  parties.0.id
   ${description}  create_sentence  20
-  ${data_cdb}  decision
+  ${data_cdb}  Wait Until Keyword Succeeds  60  5  decision
   ...  ${relatedParty}
   ...  ${description}
   ...  ${data['id']}
@@ -596,7 +596,7 @@ Test Postcondition
 
 Перевести моніторинг в статус
   [Arguments]  ${status}
-  ${data_cdb}  change_monitoring_status
+  ${data_cdb}  Wait Until Keyword Succeeds  60  5  change_monitoring_status
   ...  ${status}
   ...  ${data['id']}
   Log  ${data_cdb}
