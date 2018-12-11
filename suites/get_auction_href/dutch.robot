@@ -53,7 +53,7 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері першим учасником
-	Switch Browser  provider1
+	#Switch Browser  provider1
 	Подати заявку для подачі пропозиції
 
 

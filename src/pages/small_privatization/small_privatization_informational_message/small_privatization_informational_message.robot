@@ -63,7 +63,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	${first}  random_number  1000  10000
 	${second}  random_number  100  1000
 	${number}  Set Variable  ${first}/${second}-${first}
-	${selector}  Set Variable  //div[@class='ivu-col ivu-col-span-sm-5']//div[@class='ivu-input-wrapper ivu-input-type']//input
+	${selector}  Set Variable  (//h4[contains(., 'Рішення органу приватизації про затверждення умов продажу')]//following-sibling::*//input)[2]
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['message']['decision']}  number  ${number}
 
@@ -85,14 +85,14 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Перейти до Коригування інформації
 	${edit btn}  Set Variable  //*[@data-qa='button-to-edit-page']
    	Wait Until Element Is Visible  ${edit btn}
-   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+   	Wait Until Page Does Not Contain Element  //*[@class='ivu-message']  10
     Scroll Page To Element XPATH  ${edit btn}
 	Click Element  ${edit btn}
     Дочекатись Закінчення Загрузки Сторінки
 
 
 Заповнити conditions.date
-	${delta days}  Set Variable  5
+	${delta days}  Set Variable  7
 	${delta minutes}  Set Variable  13
 	${date + delta prod}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(days=int(${delta days})))  modules=datetime
 	${date + delta test}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  modules=datetime
