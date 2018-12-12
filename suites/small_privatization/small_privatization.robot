@@ -46,7 +46,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_informational_message.Заповнити всі обов'язкові поля 2 етап
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
 	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
 	small_privatization_informational_message.Отримати UAID для Повідомлення
 	Log To Console  message-UAID=${data['message']['UAID']}
 
