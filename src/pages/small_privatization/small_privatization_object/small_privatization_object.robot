@@ -161,4 +161,13 @@
     Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
     Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
+	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Об'єкту  ${UAID}
+	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Об'єкту
     Set To Dictionary  ${data['object']}  UAID  ${UAID}
+
+
+Перевірити коректність UAID для Об'єкту
+	[Arguments]  ${UAID is}
+	${date now}  Evaluate  '{:%Y-%m-%d}'.format(datetime.datetime.now())  modules=datetime
+	${UAID should}  Set Variable  UA-AR-P-${date now}
+	Should Contain  ${UAID is}  ${UAID should}

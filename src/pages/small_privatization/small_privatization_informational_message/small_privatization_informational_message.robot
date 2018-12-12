@@ -206,7 +206,16 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
 	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
+	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Повідомлення  ${UAID}
+	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Повідомлення
     Set To Dictionary  ${data['message']}  UAID  ${UAID}
+
+
+Перевірити коректність UAID для Повідомлення
+	[Arguments]  ${UAID is}
+	${date now}  Evaluate  '{:%Y-%m-%d}'.format(datetime.datetime.now())  modules=datetime
+	${UAID should}  Set Variable  UA-LR-SSP-${date now}
+	Should Contain  ${UAID is}  ${UAID should}
 
 
 Дочекатися статусу повідомлення
