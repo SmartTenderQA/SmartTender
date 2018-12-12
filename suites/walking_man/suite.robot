@@ -588,7 +588,6 @@ Test Postcondition
 Перевірити комерційні закупівлі за назвою
 	[Arguments]  ${name}
 	Go To  ${start_page}/komertsiyni-torgy/
-	Натиснути На торговельний майданчик
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера

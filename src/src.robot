@@ -15,6 +15,7 @@ Resource    common/email/email.robot
 Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
+Resource    common/save_user_session/save_user_session.robot
 Resource    common/search/dgf-registry.robot
 Resource    common/search/new_search.robot
 Resource    common/search/old_search.robot
