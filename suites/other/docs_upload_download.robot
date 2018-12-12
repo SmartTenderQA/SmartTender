@@ -86,7 +86,7 @@ Test Teardown  			Run Keywords
     :FOR  ${i}  IN RANGE  ${n}+1
     \  ${title}  Get From Dictionary  ${cdb['documents'][${i}]}  title
     \  ${md5}  Run Keyword If  '${title}' == '${file name}'  Get From Dictionary  ${cdb['documents'][${i}]}  hash
-    \  Log  ${md5}
+    \  Exit For Loop If  '${md5}' != 'None'
     [Return]  ${md5[4:]}
 
 
