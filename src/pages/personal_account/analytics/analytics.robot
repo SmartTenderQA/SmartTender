@@ -20,14 +20,19 @@ ${company name input}       //*[@class='ivu-input-wrapper ivu-input-type']//inpu
 Ввести назву компанії
   [Arguments]  ${company name}
   Input Text  ${company name input}  ${company name}
+  Wait Until Page Contains Element  //tbody[@class='ivu-table-tbody']//tr  10
 
 
 Вибрати конкурента з списка за номером
   [Arguments]  ${i}
   ${item}  Set Variable  //tbody[@class='ivu-table-tbody']//tr[${i}]//a
   Wait Until Page Contains Element  ${item}
-  Wait Until Element Is Visible  ${item}
-  Open button  ${item}
+  Wait Until Keyword Succeeds  20  5  Натиснути на елемент зі списка  ${item}
+
+
+Натиснути на елемент зі списка
+  [Arguments]  ${locator}
+  Open button  ${locator}
   Дочекатись закінчення загрузки сторінки
 
 

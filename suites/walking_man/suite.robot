@@ -991,17 +991,16 @@ create_e-mail
 
 Перевірити поле вводу E-mail адреси для дублювання всіх розсилок
   ${mail}  create_e-mail
-  subscription.Ввести дані в поле E-mail  ${mail}
-  ${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
-  Click Element  ${close button}
-  Wait Until Page Does Not Contain Element  ${close button}
+  subscription.Ввести E-mail для дублювання розсилок  ${mail}
+  subscription.Видалити E-mail для дублювання розсилок за назвою  ${mail}
 
 
 Перевірити поле вводу E-mail адреси для дублювання всіх розсилок(negative)
   ${n}  random_number  4  20
   ${mail}  Generate Random String  ${n}  [LOWER]
-  subscription.Ввести дані в поле E-mail  ${mail}
+  subscription.Ввести E-mail для дублювання розсилок  ${mail}
   Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+  Run Keyword And Expect Error  *  subscription.Видалити E-mail для дублювання розсилок за назвою  ${mail}
 
 
 Перевірити вкладки підписки на закупівлю
