@@ -50,11 +50,11 @@ ${elastic search clean filter}      css=.tag-holder button
 	...  AND  Wait Until Element Is Not Visible  ${elastic search clean filter}
 
 
-
 Операція над чекбоксом
 	[Documentation]  ${action} == select|unselect
 	[Arguments]  ${field_text}  ${action}
 	${selector}  Set Variable  //label[contains(., "${field_text}")]//input[@type="checkbox"]
+	Scroll Page To Element XPATH  ${selector}
 	Run Keyword  ${action} Checkbox  ${selector}
 	${status}  Run Keyword And Return Status  Checkbox Should Be Selected  ${selector}
 	Run Keyword If  ${status} == ${False}  Операція над чекбоксом  ${field_text}  ${action}
