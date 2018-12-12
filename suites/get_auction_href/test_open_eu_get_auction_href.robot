@@ -79,7 +79,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Підготувати користувачів для отримання ссилки на аукціон
@@ -143,8 +143,9 @@ If skipped create tender
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
     Switch Browser  ${role}
+    Reload Page
     Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
+	${auction_participate_href}  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 

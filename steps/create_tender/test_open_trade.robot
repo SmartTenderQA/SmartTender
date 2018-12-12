@@ -1,9 +1,10 @@
 *** Keywords ***
 Створити тендер
+    [Arguments]  ${type}
     Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
-  	create_tender.Вибрати тип процедури  Відкриті торги
+  	create_tender.Вибрати тип процедури  ${type}
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
