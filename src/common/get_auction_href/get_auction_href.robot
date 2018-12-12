@@ -4,8 +4,7 @@ Resource  		keywords.robot
 
 *** Keywords ***
 Натиснути кнопку "До аукціону"
-    Reload Page
-	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]  30
+	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]  10
 	Click Element  //*[@data-qa="button-poptip-participate-view"]
 	Дочекатись отримання посилань на аукціон
 

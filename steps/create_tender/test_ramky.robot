@@ -24,51 +24,51 @@
 Заповнити кількість учасників для укладання РУ
     ${maxAwardsCount}  Set Variable  3
     Заповнити "Кількість переможців"  ${maxAwardsCount}
-    ${data['maxAwardsCount']}  Set Variable  ${maxAwardsCount}
+    Set To Dictionary  ${data}  maxAwardsCount  ${maxAwardsCount}
 
 
 Заповнити "Срок рамкової угоди"
     ${agreementDuration}  Set Variable  6
     Заповнити "Срок рамкової угоди" місяців  ${agreementDuration}
-    ${data['agreementDuration']}  Set Variable  ${agreementDuration}
+    Set To Dictionary  ${data}  agreementDuration  ${agreementDuration}
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  100  minutes
+    ${date}  get_time_now_with_deviation  40  minutes
     Заповнити "Прийом пропозицій по"  ${date}
-    ${data['tenderPeriod'][endDate]}  Set Variable  ${date}
+    Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
 Заповнити amount для lot
     ${amount}  random_number  100000  100000000
     Заповнити "Очікувана вартість закупівлі" для лоту  ${amount}
-    ${data['value']['amount']}  Set Variable  ${amount}
+    Set To Dictionary  ${data['value']}  amount  ${amount}
 
 
 Заповнити minimalStep для lot
     ${minimal_step_percent}  random_number  1  5
     ${amount}  Заповнити "Мінімальний крок аукціону" для лоту   ${minimal_step_percent}
-    ${data['minimalStep']['amount']}  Set Variable  ${amount}
+    Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
 
 
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
     Заповнити "Узагальнена назва закупівлі"   ${title}
-    ${data['title']}  Set Variable  ${title}
+    Set To Dictionary  ${data}  title  ${title}
 
 
 Заповнити description для tender
     ${description}  create_sentence  15
     Заповнити "Примітки до закупівлі"  ${description}
-    ${data['description']}  Set Variable  ${description}
+    Set To Dictionary  ${data}  description  ${description}
 
 
 Заповнити title_eng для tender
     ${text_en}  create_sentence  5
     ${title_en}  Set Variable  [ТЕСТУВАННЯ] ${text_en}
     Заповнити "Узагальнена назва закупівлі ENG"  ${title_en}
-    ${data['title_en']}  Set Variable  ${title_en}
+    Set To Dictionary  ${data}  title_en  ${title_en}
 
 
 Додати предмет в тендер
@@ -88,57 +88,57 @@
 Заповнити description для item
     ${description}  create_sentence  5
     Заповнити "Назва предмета закупівлі"  ${description}
-    ${data['items']['description']}  Set Variable  ${description}
+    Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити description_eng для item
     ${description_en}  create_sentence  5
     Заповнити "Назва предмета закупівлі ENG"  ${description_en}
-    ${data['items']['description_en']}  Set Variable  ${description_en}
+    Set To Dictionary  ${data['items'][0]}  description_en  ${description_en}
 
 
 Заповнити quantity для item
     ${quantity}  random_number  1  1000
     Заповнити "Об'єм постачання"  ${quantity}
-    ${data['items']['quantity ']}  Set Variable  ${quantity}
+    Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити id для item
     ${value}    Заповнити "Класифікація"
     ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${value}').group('id')  re
     ${description}  Evaluate  re.search(r'(?P<description>\\D.+) ', u'${value}').group('description')  re
-    ${data['items']['classification']['id']}  Set Variable  ${id}
-    ${data['items']['classification']['description']}  Set Variable  ${description}
+    Set To Dictionary  ${data['items'][0]['classification']}  id  ${id}
+    Set To Dictionary  ${data['items'][0]['classification']}  description  ${description}
 
 
 Заповнити unit.name для item
     ${unit name}  Заповнити "Одиниця виміру"
-    ${data['items']['unit']['name']}  Set Variable  ${unit name}
+    Set To Dictionary  ${data['items'][0]['unit']}  name  ${unit name}
 
 
 Заповнити postalCode для item
     ${postal code}  random_number  10000  99999
     Заповнити "Індекс"  ${postal code}
-    ${data['items']['deliveryAddress']['postalCode']}  Set Variable  ${postal code}
+    Set To Dictionary  ${data['items'][0]['deliveryAddress']}  postalCode  ${postal code}
 
 
 Заповнити streetAddress для item
     ${street}  get_some_uuid
     Заповнити "Вулиця"  ${street}
-    ${data['items']['deliveryAddress']['streetAddress']}  Set Variable  ${street}
+    Set To Dictionary  ${data['items'][0]['deliveryAddress']}  streetAddress  ${street}
 
 
 Заповнити locality для item
     ${city}  Заповнити "Місто"  Мюнхен
-    ${data['items']['deliveryAddress']['locality']}  Set Variable  ${city}
+    Set To Dictionary  ${data['items'][0]['deliveryAddress']}  locality  ${city}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
     Заповнити "Строк поставки з"  ${value}
-    ${data['items']['deliveryDate']['startDate']}  Set Variable  ${value}
+    Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${value}
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
     Заповнити "Строк поставки по"  ${value}
-    ${data['items']['deliveryDate']['endDate']}  Set Variable  ${value}
+    Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${value}
