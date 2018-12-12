@@ -28,7 +28,7 @@ Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR
 
 If skipped create tender
 	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact.json
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
@@ -63,11 +63,6 @@ If skipped create tender
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     Підтвердити прекваліфікацію учасників
-
-
-Перейти до стадії аукціон
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Wait Until Keyword Succeeds  10m  10s  Перейти до стадії закупівлі (webclient)  Аукціон
 
 
 Підготувати учасників для отримання посилання на аукціон

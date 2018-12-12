@@ -24,15 +24,6 @@
     Закрити валідаційне вікно (Так/Ні)  Опублікувати процедуру?  Так
 
 
-Перейти до стадії закупівлі (webclient)
-    [Arguments]  ${stage name}
-    #Вибрати перший тендер
-    Натиснути кнопку Перечитать (Shift+F4)
-    Натиснути кнопку "Надіслати вперед"
-    ${current name}  Get Text  ${first tender webclient}//td[count(//div[contains(text(), 'Стадія')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
-    Should Contain  ${stage name}  ${current name}
-
-
 Відкрити вікно створення тендеру     #TODO переписати кейворд
   Wait Until Keyword Succeeds  30  3  Run Keywords
   ...  Click Element  xpath=//a[@title="Додати (F7)"]
