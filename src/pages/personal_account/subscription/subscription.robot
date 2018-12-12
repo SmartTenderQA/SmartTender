@@ -40,11 +40,26 @@ Resource    	keywords.robot
   Element Should Contain  ${element}  E-mail адреси для дублювання всіх розсилок
 
 
-Ввести дані в поле E-mail
+Ввести E-mail для дублювання розсилок
   [Arguments]  ${mail}
-  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
-  Input Text  ${input field}//input  ${mail}
-  Click Element  ${input field}//button
+  ${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]//input
+  Input Text  ${input field}  ${mail}
+  Wait Until Keyword Succeeds  15  3  Натиснути на кнопку Додати E-mail для дублювання розсилок
+
+
+Натиснути на кнопку Додати E-mail для дублювання розсилок
+	${input field}  Set Variable  //*[@class="ivu-card-body" and contains(., "E-mail адреси для дублювання всіх розсилок")]
+	Click Element  ${input field}//button
+	Element Should Be Focused  ${input field}//button
+	Sleep  .5
+
+
+Видалити E-mail для дублювання розсилок за назвою
+	[Arguments]  ${mail}
+	${close button}  Set Variable  //*[contains(text(), "${mail}")]/following-sibling::*
+	Click Element  ${close button}
+	Wait Until Page Does Not Contain Element  ${close button}
+
 
 
 Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії
