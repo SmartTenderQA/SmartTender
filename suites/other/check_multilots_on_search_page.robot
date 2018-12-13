@@ -5,7 +5,7 @@ Suite Setup     Run Keywords
                 ...  Натиснути На торговельний майданчик  AND
                 ...  old_search.Активувати вкладку Державних закупівель
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
 # robot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:test_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
