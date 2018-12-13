@@ -119,7 +119,7 @@ If skipped create tender
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
-    Reload Page
+    Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
