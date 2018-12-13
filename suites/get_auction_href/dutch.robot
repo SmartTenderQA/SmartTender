@@ -64,6 +64,7 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні першим учасником
 	Switch Browser  provider1
+	Reload Page
 	Зберегти пряме посилання на тендер
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
