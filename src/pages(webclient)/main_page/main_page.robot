@@ -1,5 +1,5 @@
 *** Variables ***
-${first tender webclient}         (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]
+${first tender webclient}         (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]//td[2]
 
 
 *** Keywords ***

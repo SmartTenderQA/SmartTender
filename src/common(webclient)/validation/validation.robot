@@ -20,9 +20,11 @@
 	[Arguments]  ${title}  ${action}
 	${button}  Set Variable
 	...  //*[@id="MessageBoxContent"]//p[contains(text(),"${title}")]/ancestor::*[@id="MessageBoxContent"]//*[@class="messagebox-button-cell"]//span[text()="${action}"]
-	Wait Until Page Contains Element  ${button}
-	Click Element  ${button}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	${status}  Run Keyword And Return Status
+	...  Wait Until Page Contains Element  ${button}
+	Run Keyword If  '${status}' == 'True'  Run Keywords
+	...  Click Element  ${button}  AND
+	...  Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Підтвердити повідомлення про перевірку публікації документу за необхідністю

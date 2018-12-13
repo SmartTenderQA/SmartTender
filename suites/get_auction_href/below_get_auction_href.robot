@@ -2,15 +2,23 @@
 Resource  ../../src/src.robot
 Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
-#Test Setup      Stop The Whole Test Execution If Previous Test Failed
-Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
+Test Teardown  Run Keyword If Test Failed  Run Keywords
+...                                        Log Location  AND
+...                                        Capture Page Screenshot
 
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/below_get_auction_href.robot
 *** Test Cases ***
+Підготувати користувачів
+    Додати першого користувача  prod_owner      tender_owner
+    Додати користувача          prod_provider1  provider1
+    Додати користувача          prod_provider2  provider2
+    Додати користувача          prod_viewer     viewer
+
+
 Створити тендер
 	[Tags]  create_tender
-	Авторизуватися організатором
+	Завантажити сесію для  tender_owner
 	prod_below.Створити тендер
 
 
@@ -41,13 +49,6 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Підготувати учасників до участі в тендері
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start  prod_provider1  provider1
-    Start  prod_provider2  provider2
-
-
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
     Перевірка відображення даних тендера на сторінці  provider1
@@ -62,14 +63,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
-
-
-Підготувати користувачів для отримання ссилки на аукціон
-    Close All Browsers
-    Start  prod_viewer  viewer
-    Start  prod_owner  tender_owner
-    #Start  prod_provider  provider3
+    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider2
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -81,13 +75,9 @@ If skipped create tender
 
 
 *** Keywords ***
-Авторизуватися організатором
-    Start  prod_owner  tender_owner
-
-
 Перевірка відображення даних тендера на сторінці
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Перевірити коректність даних на сторінці  ['title']
     Перевірити коректність даних на сторінці  ['description']
@@ -110,7 +100,7 @@ If skipped create tender
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
@@ -128,7 +118,7 @@ If skipped create tender
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Reload Page
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
@@ -152,7 +142,7 @@ If skipped create tender
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"

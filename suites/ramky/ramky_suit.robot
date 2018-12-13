@@ -11,21 +11,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
+	debug
 	${data}  create_dict_ramky
 	Set Global Variable  ${data}
 	test_ramky.Створити тендер
-
-
-Отримати дані тендера та зберегти їх у файл
-    [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
-    ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
-    Set To Dictionary  ${data}  tender_href  ${tender_href}
-    Log  ${tender_href}  WARN
-    Зберегти словник у файл  ${data}  data
-    Close All Browsers
+	test_ramky.Отримати дані тендера та зберегти їх у файл
 
 
 If skipped create tender
@@ -52,12 +42,12 @@ If skipped create tender
 Відкрити браузер під роллю організатора та знайти тендер
     Close All Browsers
     Start  Bened  tender_owner
-	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
-    Підтвердити прекваліфікацію учасників
+    Провести прекваліфікацію учасників
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -69,14 +59,21 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
+	#Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Дочекатися закінчення аукціону та підготувати організатора до кваліфікації
-    debug
+    Дочекатися статусу тендера  Кваліфікація
+    Close All Browsers
+    Start  Bened  tender_owner
+	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
 
+
+Провести кваліфікацію та визначити переможців
+    Визнати всіх учасників переможцями
 
 
 

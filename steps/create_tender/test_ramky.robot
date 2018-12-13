@@ -1,6 +1,5 @@
 *** Keywords ***
 Створити тендер
-    Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Укладання рамкової угоди
@@ -142,3 +141,14 @@
     ${value}  get_time_now_with_deviation  2  days
     Заповнити "Строк поставки по"  ${value}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${value}
+
+
+Отримати дані тендера та зберегти їх у файл
+    [Tags]  create_tender
+	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tender_href}  Отримати tender_href вибраного тендера
+    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tender_href  ${tender_href}
+    Log  ${tender_href}  WARN
+    Зберегти словник у файл  ${data}  data

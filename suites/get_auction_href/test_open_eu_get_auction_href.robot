@@ -2,9 +2,9 @@
 Resource  ../../src/src.robot
 Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
-#Test Setup      Stop The Whole Test Execution If Previous Test Failed
-Test Teardown   Run Keyword If Test Failed  Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
-
+Test Teardown  Run Keyword If Test Failed  Run Keywords
+...                                        Log Location  AND
+...                                        Capture Page Screenshot
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
 *** Test Cases ***
@@ -65,7 +65,7 @@ If skipped create tender
 
 
 Підтвердити прекваліфікацію всіх учасників
-    Підтвердити прекваліфікацію учасників
+    Провести прекваліфікацію учасників
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -77,7 +77,7 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
+	#Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 

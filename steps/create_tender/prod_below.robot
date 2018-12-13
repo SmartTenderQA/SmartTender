@@ -1,6 +1,5 @@
 *** Keywords ***
 Створити тендер
-	Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
@@ -85,8 +84,8 @@
     prod_below.Заповнити postalCode для item
     prod_below.Заповнити streetAddress для item
     prod_below.Заповнити locality для item
-    prod_below.Заповнити endDate для item
     prod_below.Заповнити startDate для item
+    prod_below.Заповнити endDate для item
 
 
 Заповнити title для item
@@ -138,6 +137,6 @@
 
 
 Заповнити endDate для item
-    ${value}  get_time_now_with_deviation  2  days
+    ${value}  get_time_now_with_deviation  3  days
     Заповнити "Строк поставки по"  ${value}
 

@@ -164,6 +164,21 @@ Start in grid
 	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
 
 
+Додати першого користувача
+    [Arguments]  ${name}  ${alias}
+    Start in grid  ${name}  ${alias}
+    Зберегти сесію  ${alias}
+
+
+Додати користувача
+    [Arguments]  ${name}  ${alias}
+    Delete All Cookies
+	Go To  ${start_page}
+	${login}  ${password}  Отримати дані користувача  ${name}
+	Run Keyword If  '${alias}' != 'viewer'  Авторизуватися  ${login}  ${password}
+	Зберегти сесію  ${alias}
+
+
 Open button
 	[Documentation]   відкривае лінку з локатора у поточному вікні
 	[Arguments]  ${selector}

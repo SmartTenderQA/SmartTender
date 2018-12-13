@@ -66,6 +66,7 @@
 ###############################################
 Натиснути додати (додавання тендеру)
     ${selector}  Set Variable  //a[@title="Додати"]//span[text()="Додати"]
+    Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
     Element Should Not Be Visible  ${selector}
@@ -73,6 +74,7 @@
 
 Натиснути додати (додавання предмету)
     ${selector}  Set Variable  //*[@data-name="GRID_ITEMS_HIERARCHY"]//*[@title="Додати"]
+    Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
 
@@ -83,3 +85,10 @@
 	Click Element  ${button}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	#Wait Until Element Is Not Visible  ${button}
+
+
+Натиснути кнопку "Кваліфікація"
+    ${selector}  Set Variable  //a[@title="Кваліфікація"]|//a[@title="Квалификация"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
