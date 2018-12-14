@@ -69,7 +69,7 @@ If skipped create tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Start  user1  provider1
     Go to  ${data['tender_href']}
-    Wait Until Keyword Succeeds  10m  10  Дочекатись закінчення періоду прекваліфікації
+    Wait Until Keyword Succeeds  20m  10  Дочекатись закінчення періоду прекваліфікації
     Дочекатися статусу тендера  Очікування рішення організатора
 
 
