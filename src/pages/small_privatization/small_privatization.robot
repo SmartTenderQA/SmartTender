@@ -62,7 +62,7 @@
     Click Element  ${input}
     Sleep  .5
     Wait Until Element Is Visible  ${items}
-    ${items count}  Get Element Count  //*[@data-qa='select-item-unit']//ul[@class='ivu-select-dropdown-list']/li
+    ${items count}  Get Element Count  ${items}
 	${items number}  random_number  1  ${items count}
     Click Element  (${items})[${items number}]
     ${text}  Get Element Attribute  ${input}  value

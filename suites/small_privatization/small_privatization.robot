@@ -6,12 +6,13 @@ Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	start_page.Натиснути На торговельний майданчик
@@ -27,6 +28,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
 	Log To Console  object-UAID=${data['object']['UAID']}
+	debug
 
 
 Створити інформаційне повідомлення МП
@@ -68,11 +70,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
 	Go To  ${data['tender_href']}
+	Switch Browser  provider3
+	Go To  ${data['tender_href']}
 
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
 
@@ -84,7 +88,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати пропозицію учасниками
 	[Tags]  -prod
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -102,7 +106,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
-    :FOR  ${i}  IN  1  2
+    :FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Натиснути кнопку "До аукціону"
 	\  ${viewer_href}  Отримати URL на перегляд
@@ -119,7 +123,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner
-	provider3
+	provider4
 
 
 *** Keywords ***
@@ -142,18 +146,20 @@ Postcondition
 	Run Keyword If  '${site}' == 'test'  Run Keywords
 	...       Start  user1  provider1
 	...  AND  Start  user2  provider2
+	...  AND  Start  user3  provider3
 	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...       Start  prod_provider1  provider1
-	...  AND  Start  prod_provider2  provider2
+	...       Start  prod_provider  provider1
+	...  AND  Start  prod_provider1  provider2
+	...  AND  Start  prod_provider2  provider3
 
 
 Підготувати глядачів
 	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...       Start  user3  provider3
+	...       Start  user3  provider4
 	...  AND  Start  test_viewer  viewer
 	...  AND  Start  Bened  tender_owner
 	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...       Start  prod_provider  provider3
+	...       Start  prod_provider  provider4
 	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_tender_owner  tender_owner
 
