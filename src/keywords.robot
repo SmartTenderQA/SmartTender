@@ -1,7 +1,7 @@
 *** Variables ***
 ${IP}
 ${users_variables_path1}   /home/testadm/users_variables.py
-${users_variables_path2}   ../users_variables.py
+${users_variables_path2}   ${EXECDIR}/users_variables.py
 
 
 *** Keywords ***
