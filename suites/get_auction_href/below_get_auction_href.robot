@@ -63,7 +63,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  10m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні

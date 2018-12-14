@@ -11,7 +11,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
-	debug
 	${data}  create_dict_ramky
 	Set Global Variable  ${data}
 	test_ramky.Створити тендер
@@ -60,6 +59,7 @@ If skipped create tender
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	#Дочекатись закінчення прийому пропозицій
+	debug
 	Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
