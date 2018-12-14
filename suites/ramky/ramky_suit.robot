@@ -47,6 +47,7 @@ If skipped create tender
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     Провести прекваліфікацію учасників
+    Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Підготувати учасників для отримання посилання на аукціон
@@ -58,8 +59,6 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	#Дочекатись закінчення прийому пропозицій
-	debug
 	Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
@@ -88,7 +87,19 @@ If skipped create tender
     Start  Bened  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
-    Заповнити ціни за одиницю номенклатури для всії переможців
+    Заповнити ціни за одиницю номенклатури для всіх переможців
+
+
+Заключити рамкову угоду
+    Вибрати перший тендер
+    Натиснути кнопку "Коригувати рамкову угоду"
+    Заповнити поля Рамкової угоди
+    Натиснути OkButton
+    Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
+    Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Ні
+    Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так
+    Wait Until Page Contains  Рамкову угоду успішно активовано  10
+
 
 
 *** Keywords ***
@@ -113,3 +124,23 @@ If skipped create tender
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
+
+
+Перевірити отримання ссилки на участь в аукціоні
+    [Arguments]  ${role}
+    Завантажити сесію для  ${role}
+    Go To  ${data['tender_href']}
+    Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+
+
+Заповнити поля Рамкової угоди
+    ${id}  random number  100000  999999
+    Заповнити текстове поле  (//*[@data-type="TextBox"])[1]//input  ${id}
+    ${signDate}  get_time_now_with_deviation  0  days
+    Заповнити текстове поле  (//*[@data-type="DateEdit"])[1]//input  ${signDate}
+    ${startDate}  get_time_now_with_deviation  2  days
+    Заповнити текстове поле  (//*[@data-type="DateEdit"])[2]//input  ${startDate}
+    ${endDate}  get_time_now_with_deviation  60  days
+    Заповнити текстове поле  (//*[@data-type="DateEdit"])[3]//input  ${endDate}

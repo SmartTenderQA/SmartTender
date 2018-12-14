@@ -22,7 +22,8 @@ ${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"text
     Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${participant}
     Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Sleep  30  AND
+    ...  Capture Page Screenshot  AND
+    ...  Sleep  30                AND
     ...  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     [Return]  ${count}
 
@@ -34,7 +35,7 @@ ${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"text
     Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
 
 
-Заповнити ціни за одиницю номенклатури для всії переможців
+Заповнити ціни за одиницю номенклатури для всіх переможців
     ${count}  Get Element Count  ${winners}
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \   Вказати ціну за одиницю номенклатури для переможця  ${i}

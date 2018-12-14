@@ -33,13 +33,20 @@
     ${selector}  Set Variable  (${winners})[${i}]
     Click Element  ${selector}
     Натиснути кнопку "Заповнити ціни за одиницю товару"
+    Запонити поле з ціною відповідно до пропозиції
 
 
 Запонити поле з ціною відповідно до пропозиції
     ${price field}  Set Variable  xpath=//div[@id="pcModalMode_PW-1"]//tr[contains(@class,"Row")]//td[count(//*[@title="Ціна"]/ancestor::td[1]/preceding-sibling::td)+1]
     ${price}  Визначити ціну за одиницю номенклатури
     Click Element  ${price field}
+    Sleep  .5
+    Click Element  ${price field}
+    Sleep  .5
     Input Text  ${price field}//input  ${price}
+    Sleep  .5
+    Натиснути OkButton
+
 
 Визначити ціну за одиницю номенклатури
     ${quantity selector}  Set Variable  xpath=//div[@id="pcModalMode_PW-1"]//tr[contains(@class,"Row")]//td[count(//*[@title="Кількість"]/ancestor::td[1]/preceding-sibling::td)+1]
@@ -48,9 +55,8 @@
     ${price}  Get Text  ${proposal price selector}
     ${price}  Evaluate  re.search(r'\\D+:\\s(?P<price>\\d.+)', '${price}').group('price')  re
     ${price}  Evaluate  '${price}'.replace(" ", "")
-    ${price}  Evaluate  int(${price} / ${quantity}) * 0.9
+    ${price}  Evaluate  str(int(${price} / ${quantity}) * 0.9)
     [Return]  ${price}
-
 
 
 Натиснути "Визначити переможцем"

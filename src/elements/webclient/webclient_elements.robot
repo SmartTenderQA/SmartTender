@@ -99,3 +99,17 @@
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку "Коригувати рамкову угоду"
+    ${selector}  Set Variable  //a[@title="Коригувати рамкову угоду"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку "Заключить рамочное соглашение"
+    ${selector}  Set Variable  //a[@title="Заключить рамочное соглашение"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)

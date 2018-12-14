@@ -143,6 +143,7 @@ If skipped create tender
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
 	Delete All Cookies
+	Reload Page
 	Run Keyword If  '${role}' != 'viewer'  Завантажити сесію для  ${role}
 	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
