@@ -34,7 +34,6 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
 ###############################################
 Пошук об'єкта у webclient по полю
 	[Arguments]  ${field}  ${value}
-    Натиснути кнопку Перечитать (Shift+F4)
 	${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
 	Wait Until Keyword Succeeds  10  1  Click Element  ${find tender field}
 	Input Text  ${find tender field}  ${value}
