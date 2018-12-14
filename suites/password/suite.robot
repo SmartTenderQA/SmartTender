@@ -68,6 +68,7 @@ Postcondition
 Перевірити сторінку "Змінити пароль" для tender_owner
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
+    Wait Until Element Is Visible  //span[contains(text(),'Змінити свій пароль')]  10
     Sleep  0.5
     Click Element  //span[contains(text(),'Змінити свій пароль')]
     Дочекатись Закінчення Загрузки Сторінки
