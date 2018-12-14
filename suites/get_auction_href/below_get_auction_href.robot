@@ -138,13 +138,11 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
-
+    Go Back
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
-	Delete All Cookies
-	Reload Page
-	Run Keyword If  '${role}' != 'viewer'  Завантажити сесію для  ${role}
+	Завантажити сесію для  ${role}
 	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
