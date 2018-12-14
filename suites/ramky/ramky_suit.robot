@@ -135,6 +135,20 @@ If skipped create tender
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
+Перейти та перевірити сторінку участі в аукціоні
+	[Arguments]  ${auction_href}
+	Go To  ${auction_href}
+	Location Should Contain  bidder_id=
+	Підтвердити повідомлення про умови проведення аукціону
+	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
+	Sleep  2
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	Element Should Contain  //h4  Вхід на даний момент закритий.
+
+
 Заповнити поля Рамкової угоди
     ${id}  random number  100000  999999
     Заповнити текстове поле  (//*[@data-type="TextBox"])[1]//input  ${id}
