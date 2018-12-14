@@ -456,7 +456,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Продаж майна  select
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	new_search.Перейти по результату пошуку за номером  1
+	new_search.Перейти по результату пошуку за номером  2
 	${status}  Run Keyword And Return Status
 	...  Перевірити тип процедури для аукціонів  Продаж майна
 	Run Keyword If  ${status} == ${False}
