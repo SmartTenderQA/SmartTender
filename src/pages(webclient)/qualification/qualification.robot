@@ -3,8 +3,8 @@ Resource        keywords.robot
 
 
 *** Variables ***
-${participant}            //*[@data-placeid="CRITERIA"]//td[@style="padding-left: 19px"]
-${winners}                //*[@data-placeid="BIDS"]//td[contains(@style,"padding-left: 19px")]
+${participant}            xpath=//*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
+${winners}                xpath=//*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]
 
 
 *** Keywords ***
