@@ -6,7 +6,7 @@ Suite Teardown  Close All Browsers
 
 
 
-#  obot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:comm_tender_owner suites/commercial/create_tender.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:comm_tender_owner suites/commercial/create_tender.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tende
@@ -76,11 +76,11 @@ Test Postcondition
 
 ##########################################################
 Заповинити поле дата закінчення прийому пропозиції
-	${date}  smart_get_time  1  d
+	${date}  smart_get_time  3  d
 	Wait Until Keyword Succeeds
 	...  30
 	...  2
-	...  Заповнити та перевірити поле с датою  Дата закінч. прийому  ${date}
+	...  Заповнити "Дата закінч. прийому"  ${date}
 	Set To Dictionary  ${data}  end_date   ${date}
 
 
