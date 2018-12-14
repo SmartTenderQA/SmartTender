@@ -3,6 +3,7 @@
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
+  	debug
   	prod_below.Заповнити startDate періоду пропозицій
   	prod_below.Заповнити endDate періоду пропозицій
   	prod_below.Заповнити endDate періоду обговорення
@@ -133,10 +134,10 @@
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    Заповнити "Строк поставки з"  ${value}
+    Repeat Keyword  2 times  Заповнити "Строк поставки з"  ${value}
 
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  3  days
-    Заповнити "Строк поставки по"  ${value}
+    Repeat Keyword  2 times  Заповнити "Строк поставки по"  ${value}
 
