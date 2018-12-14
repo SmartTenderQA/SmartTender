@@ -7,7 +7,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/below_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  prod_owner      tender_owner
@@ -63,7 +63,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider2
+    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
