@@ -113,7 +113,7 @@ Test Teardown  			Run Keywords
    :FOR  ${file}  IN  @{file_names}
     \  ${selector}  Set Variable  //*[@data-qa="file-name"][text()="${file}"]
     \  Mouse Over  ${selector}/preceding-sibling::i
-    \  Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]
+    \  Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  15
     \  ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
     \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file}
