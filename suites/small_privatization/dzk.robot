@@ -1,8 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Precondition
+Suite Setup debug      #Precondition
 Suite Teardown  Close All Browsers
-#Test Setup  Stop The Whole Test Execution If Previous Test Failed
+Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${dzk_data}
@@ -23,7 +23,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	dzk_auction.Заповнити всі обов'язкові поля
 	dzk_auction.Натиснути кнопку зберегти
 	dzk_auction.Опублікувати аукціон у реєстрі
-	debug
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
 	Зберегти словник у файл  ${dzk_data}  dzk_data
@@ -43,11 +42,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
-#	debug
 	Підготувати учасників
-#	Знайти аукціон користувачем  provider1
-	Switch Browser  provider1
-	Go To  ${dzk_data['tender_href']}
+	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
 	Go To  ${dzk_data['tender_href']}
 	Switch Browser  provider3
