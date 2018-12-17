@@ -6,7 +6,6 @@ Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
-...  AND  debug
 
 
 *** Variables ***
@@ -65,7 +64,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
-	debug
 	Підготувати учасників
 	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
@@ -76,7 +74,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
-	debug
 	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -84,13 +81,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
-	debug
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
 	[Tags]  -prod
-	debug
 	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Reload Page
