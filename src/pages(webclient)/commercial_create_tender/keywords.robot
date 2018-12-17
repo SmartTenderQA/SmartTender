@@ -42,6 +42,7 @@
 	[Arguments]  ${selector}
 	Click Element At Coordinates  ${selector}  -30  0
 	Sleep  2
+	Click Element At Coordinates  ${selector}  -30  0
 	${unit_name}  Get Text  ${selector}//td[3]
 	Capture Page Screenshot
 	${status}  Run Keyword And Return Status  Page Should Contain Element   ${selector}[contains(@class, 'selected')]
