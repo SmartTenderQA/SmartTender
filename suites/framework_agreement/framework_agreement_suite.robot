@@ -34,7 +34,6 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері трьома учасниками
-	Close All Browsers
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Прийняти участь у тендері учасником  provider${i}
