@@ -78,10 +78,10 @@
     test_ramky.Заповнити id для item
     test_ramky.Заповнити unit.name для item
     test_ramky.Заповнити postalCode для item
-    test_ramky.Заповнити streetAddress для item
-    test_ramky.Заповнити locality для item
     test_ramky.Заповнити endDate для item
     test_ramky.Заповнити startDate для item
+    test_ramky.Заповнити streetAddress для item
+    test_ramky.Заповнити locality для item
 
 
 Заповнити description для item
