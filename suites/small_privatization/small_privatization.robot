@@ -28,7 +28,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
 	Log To Console  object-UAID=${data['object']['UAID']}
-	debug
 
 
 Створити інформаційне повідомлення МП
@@ -66,6 +65,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
+	debug
 	Підготувати учасників
 	Знайти аукціон користувачем  provider1
 	Switch Browser  provider2
@@ -76,6 +76,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
+	debug
 	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -83,11 +84,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
+	debug
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
 	[Tags]  -prod
+	debug
 	:FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
 	\  Reload Page
@@ -108,6 +111,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
     :FOR  ${i}  IN  1  3
 	\  Switch Browser  provider${i}
+	\  Reload Page
+	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути кнопку "До аукціону"
 	\  ${viewer_href}  Отримати URL на перегляд
     \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
