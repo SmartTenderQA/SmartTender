@@ -77,7 +77,7 @@ If skipped create tender
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
 	Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -168,9 +168,9 @@ If skipped create tender
 	Go To  ${auction_href}
 	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
-	${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
-	Run Keyword If  ${status} != ${true}  Sleep  30
-	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
+	#${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
+	#Run Keyword If  ${status} != ${true}  Sleep  30
+	#Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
 #	:FOR  ${i}  IN RANGE  50
 #	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
 #	\  Exit For Loop If  ${status} == ${false}
