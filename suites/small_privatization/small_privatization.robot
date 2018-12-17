@@ -60,13 +60,16 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
 	Log To Console  lot-href=${data['tender_href']}
+	Зберегти сесію  tender_owner
 
 
 Знайти аукціон учасниками
 	[Tags]  -prod
 	Знайти аукціон користувачем  provider1
+	Зберегти сесію  provider1
 	Завантажити сесію для  provider2
 	Go To  ${data['tender_href']}
+	Зберегти сесію  provider2
 
 
 Подати заявки на участь в тендері
@@ -90,7 +93,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Натиснути на кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
-	\  Go Back
 
 
 Дочекатися початку аукціону
