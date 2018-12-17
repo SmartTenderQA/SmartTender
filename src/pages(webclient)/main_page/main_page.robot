@@ -63,4 +63,4 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
     ${status}  Run Keyword And Return Status  Вибрати перший тендер
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Натиснути кнопку Перечитать (Shift+F4)  AND
-    ...  Знайти тендер організатором по title
+    ...  Знайти тендер організатором по title  ${title}
