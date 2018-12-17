@@ -155,11 +155,11 @@ Postcondition
 
 Підготувати глядачів
 	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...       Start  user3  provider4
+	...       Start  user4  provider4
 	...  AND  Start  test_viewer  viewer
 	...  AND  Start  Bened  tender_owner
 	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...       Start  prod_provider  provider4
+	...       Start  LLC  provider4
 	...  AND  Start  prod_viewer  viewer
 	...  AND  Start  prod_tender_owner  tender_owner
 
