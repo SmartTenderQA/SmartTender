@@ -15,9 +15,25 @@ ${where}							test
 
 
 *** Test Cases ***
+Підготувати користувачів
+    Підготувати користувачів
+    Run Keyword If  "${where}" == "prod"  Run Keywords
+    ...  Додати першого користувача  fgv_prod_owner  tender_owner  AND
+    ...  Додати користувача          prod_provider1  provider1     AND
+    ...  Додати користувача          prod_provider2  provider2     AND
+    ...  Додати користувача          user3           provider3     AND
+    ...  Додати користувача          test_viewer     viewer
+    Run Keyword If  "${where}" == "test"  Run Keywords
+    ...  Додати першого користувача  Bened           tender_owner  AND
+    ...  Додати користувача          user1           provider1     AND
+    ...  Додати користувача          user2           provider2     AND
+    ...  Додати користувача          user3           provider3     AND
+    ...  Додати користувача          test_viewer     viewer
+
+
 Створити тендер
 	[Tags]  create_tender
-	Підготувати організатора
+	Завантажити сесію для  tender_owner
 	Run Keyword If  '${where}' == 'prod'  Змінити групу  Організатор. Реализация державного майна
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
@@ -61,14 +77,13 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	Підготувати учасників
 	Знайти тендер користувачем	provider1
 	Знайти тендер користувачем	provider2
 
 
 Подати заявки на участь в тендері
 	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
+	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -78,8 +93,8 @@ If skipped create tender
 
 Подати пропозицію
 	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Reload Page
+	\  Завантажити сесію для  provider${i}
+	#\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  1
@@ -88,8 +103,7 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
-	Close Browser
-	Switch Browser  provider1
+	Завантажити сесію для  provider1
 	Дочекатись дати  ${data['auctionPeriods']['startDate']}
 	Дочекатися статусу тендера  Аукціон  10m
 
@@ -101,13 +115,12 @@ If skipped create tender
 	Set Global Variable  		${auction_href}
 	Зберегти пряме посилання на тендер
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
-	Close Browser
 
 
 Отримати поcилання на перегляд аукціону
 	[Setup]  Run Keywords  Підготувати організатора  Підготувати глядачів
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
-	\  Switch Browser  ${i}
+	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
@@ -116,30 +129,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Підготувати організатора
-	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...  Start  Bened  tender_owner
-	...  AND  Go Back
-	...  ELSE IF  '${where}' == 'prod'  Run Keywords
-	...  Start  fgv_prod_owner  tender_owner
-	...  AND  Go Back
-
-
-Підготувати учасників
-	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...       Start  user1  provider1
-	...  AND  Start  user2  provider2
-	...  ELSE IF  '${where}' == 'prod'  Run Keywords
-	...       Start  prod_provider1  provider1
-	...  AND  Start  prod_provider2  provider2
-
-
-Підготувати глядачів
-	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...       Start  user3  provider3
-	...  AND  Start  test_viewer  viewer
-
-
 Вибрати довільне місто
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//table[contains(@class, "cellHorizontalBorders")]//tr[@class]
 	${count}  Get Element Count  ${row}
@@ -166,7 +155,7 @@ If skipped create tender
 
 Знайти тендер користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}

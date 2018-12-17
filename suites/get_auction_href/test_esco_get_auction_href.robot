@@ -9,9 +9,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_esco_get_auction_href.robot
 *** Test Cases ***
+Підготувати користувачів
+    Додати першого користувача  Bened           tender_owner
+    Додати користувача          user1           provider1
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
+    Додати користувача          user4           provider4
+    Додати користувача          test_viewer     viewer
+
+
 Створити тендер
 	[Tags]  create_tender
-	Авторизуватися організатором
+	Завантажити сесію для  tender_owner
 	test_esco.Створити тендер
 
 
@@ -24,7 +33,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data
-    Close All Browsers
 
 
 If skipped create tender
@@ -37,27 +45,23 @@ If skipped create tender
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Start  user1  provider1
     Перевірка відображення даних тендера на сторінці  provider1
 
 
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
-	Close All Browsers
 	:FOR  ${i}  IN  1  2  3
-	\  Start  user${i}  provider${i}
+	\  Завантажити сесію для  provider${i}
 	\  Прийняти участь у тендері учасником  provider${i}
-	\  Close All Browsers
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
-    Start  user1  provider1
+    Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
-    Close All Browsers
-    Start  Bened  tender_owner
+    Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Знайти тендер організатором по title  ${data['title']}
 
@@ -66,25 +70,13 @@ If skipped create tender
     Провести прекваліфікацію учасників
 
 
-Підготувати учасників для отримання посилання на аукціон
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start  user1  provider1
-    Go to  ${data['tender_href']}
-
-
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
+	Завантажити сесію для  provider1
+    Go to  ${data['tender_href']}
+    Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
-
-
-Підготувати користувачів для отримання ссилки на аукціон
-    Close All Browsers
-    Start  test_viewer  viewer
-    Start  Bened  tender_owner
-    Start  user4  provider4
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -96,13 +88,9 @@ If skipped create tender
 
 
 *** Keywords ***
-Авторизуватися організатором
-    Start  Bened  tender_owner
-
-
 Перевірка відображення даних тендера на сторінці
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Перевірити коректність даних на сторінці  ['title']
     #Перевірити коректність даних на сторінці  ['description']
@@ -116,7 +104,7 @@ If skipped create tender
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
@@ -145,8 +133,7 @@ Fill ESCO
 
 
 Відкрити браузер під роллю організатора та знайти потрібний тендер
-    Close All Browsers
-    Start  Bened  tender_owner
+    Завантажити сесію для  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
@@ -154,8 +141,8 @@ Fill ESCO
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
-    Switch Browser  ${role}
-    Reload Page
+    Завантажити сесію для  ${role}
+    Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
@@ -176,15 +163,8 @@ Fill ESCO
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
-
-
-
-
-
-
-
