@@ -76,7 +76,7 @@ Test Teardown  			Run Keywords
 
 Загрузити файл
     [Arguments]  ${file}
-    Choose File  ${button add file}  ${OUTPUTDIR}/${file}
+    Choose File  ${button add file}  ${EXECDIR}/test_output/${file}
     Sleep  2
 
 
