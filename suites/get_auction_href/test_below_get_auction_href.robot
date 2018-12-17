@@ -9,9 +9,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
 *** Test Cases ***
+Підготувати користувачів
+    Додати першого користувача  Bened           tender_owner
+    Додати користувача          user1           provider1
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
+    Додати користувача          test_viewer     viewer
+
+
 Створити тендер
 	[Tags]  create_tender
-	Авторизуватися організатором
+	Завантажити сесію для  tender_owner
 	test_below.Створити тендер
 
 
@@ -24,7 +32,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data
-    Close All Browsers
 
 
 If skipped create tender
@@ -32,13 +39,6 @@ If skipped create tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
-
-
-Підготувати учасників до участі в тендері
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
 
 
 Перевірка відображення даних створеного тендера на сторінці
@@ -55,14 +55,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
-
-
-Підготувати користувачів для отримання ссилки на аукціон
-    Close All Browsers
-    Start  test_viewer  viewer
-    Start  Bened  tender_owner
-    Start  user3  provider3
+    Wait Until Keyword Succeeds  10m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -74,13 +67,9 @@ If skipped create tender
 
 
 *** Keywords ***
-Авторизуватися організатором
-    Start  Bened  tender_owner
-
-
 Перевірка відображення даних тендера на сторінці
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Перевірити коректність даних на сторінці  ['title']
     Перевірити коректність даних на сторінці  ['description']
@@ -102,7 +91,7 @@ If skipped create tender
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
-    Switch Browser  ${role}
+    Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
@@ -120,8 +109,8 @@ If skipped create tender
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
-    Switch Browser  ${role}
-    Reload Page
+    Завантажити сесію для  ${role}
+    Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
@@ -140,11 +129,11 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
-
+    Go Back
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
