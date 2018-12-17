@@ -58,6 +58,7 @@ If skipped create tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
 	Знайти тендер користувачем	provider1
+	Зберегти пряме посилання на тендер
 
 
 Подати заявку на участь в тендері першим учасником
@@ -71,7 +72,7 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні першим учасником
 	Завантажити сесію для  provider1
-	Зберегти пряме посилання на тендер
+	Go to  ${data['tender_href']}
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
 	Натиснути кнопку "До аукціону"
@@ -84,6 +85,8 @@ If skipped create tender
 	viewer
 	tender_owner
 	provider2
+
+
 
 
 *** Keywords ***

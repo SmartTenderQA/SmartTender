@@ -61,7 +61,7 @@ If skipped create tender
     Close All Browsers
     Start  Bened  tender_owner
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію всіх учасників

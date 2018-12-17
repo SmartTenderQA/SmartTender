@@ -55,3 +55,12 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
 	Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю ФГИ  ${value}  ${field}
 	Press Key  xpath=${find tender field}//input  \\13
 	Sleep  1
+
+
+Знайти тендер організатором по title
+    [Arguments]  ${title}
+    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${title}
+    ${status}  Run Keyword And Return Status  Вибрати перший тендер
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Натиснути кнопку Перечитать (Shift+F4)  AND
+    ...  Знайти тендер організатором по title
