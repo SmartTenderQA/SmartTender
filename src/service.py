@@ -252,3 +252,11 @@ def get_checksum_md5(file):
         buf = afile.read()
         hasher.update(buf)
         return hasher.hexdigest()
+
+
+def do_regex(type, regex, text, subtext=''):
+    if type == 'sub':
+        text = re.sub(r'regex', subtext, text)
+    if type == 'find':
+        text = (re.findall(regex, text))[0]
+    return text

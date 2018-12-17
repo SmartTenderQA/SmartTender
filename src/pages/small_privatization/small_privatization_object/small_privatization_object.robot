@@ -1,4 +1,5 @@
 *** Settings ***
+Variables  small_privatization_object_variables.py
 
 
 *** Variables ***
