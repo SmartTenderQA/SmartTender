@@ -22,7 +22,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
   ${dropdown navigation}  Set Variable  css=#MenuList div.dropdown li>a
   Go To  ${start_page}
   Mouse Over  ${button komertsiyni-torgy}
-  Click Element  ${dropdown navigation}[href='/test-tenders/']
+  Wait Until Keyword Succeeds  10  1  Click Element  ${dropdown navigation}[href='/test-tenders/']
   Location Should Contain  /test-tenders/
 
 
