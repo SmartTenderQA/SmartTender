@@ -46,42 +46,43 @@ Variables  dzk_variables.py
 
 
 Перевірити всі обов'язкові поля в цбд
-	Перевірити відповідність з ЦБД для  ['auctionID']
-	Перевірити відповідність з ЦБД для  ['lotIdentifier']
-	Перевірити відповідність з ЦБД для  ['title']
-	Перевірити відповідність з ЦБД для  ['description']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['identifier']['legalName']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['identifier']['id']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['address']['postalCode']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['address']['region']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['address']['locality']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['address']['streetAddress']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['contactPoint']['name']
-	Перевірити відповідність з ЦБД для  ['lotHolder']['contactPoint']['email']
-	#Перевірити відповідність з ЦБД для  ['auctionPeriod']['shouldStartAfter'] #todo need cast date
-	Перевірити відповідність з ЦБД для  ['tenderAttempts']
-	Перевірити відповідність з ЦБД для  ['minNumberOfQualifiedBids']
+	Перевірити дані в ЦБД для  ['auctionID']
+	Перевірити дані в ЦБД для  ['lotIdentifier']
+	Перевірити дані в ЦБД для  ['title']
+	Перевірити дані в ЦБД для  ['description']
+	Перевірити дані в ЦБД для  ['lotHolder']['identifier']['legalName']
+	Перевірити дані в ЦБД для  ['lotHolder']['identifier']['id']
+	Перевірити дані в ЦБД для  ['lotHolder']['address']['postalCode']
+	Перевірити дані в ЦБД для  ['lotHolder']['address']['region']
+	Перевірити дані в ЦБД для  ['lotHolder']['address']['locality']
+	Перевірити дані в ЦБД для  ['lotHolder']['address']['streetAddress']
+	Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['name']
+	Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['email']
+	#todo proverit` date
+	Перевірити дані в ЦБД для  ['auctionPeriod']['shouldStartAfter'] #todo need cast date
+	Перевірити дані в ЦБД для  ['tenderAttempts']
+	Перевірити дані в ЦБД для  ['minNumberOfQualifiedBids']
 	#todo proverit` leaseDuration
-	Перевірити відповідність з ЦБД для  ['contractTerms']['leaseTerms']['leaseDuration']
-	Перевірити відповідність з ЦБД для  ['value']['amount']
-	Перевірити відповідність з ЦБД для  ['minimalStep']['amount']
-	Перевірити відповідність з ЦБД для  ['guarantee']['amount']
-	Перевірити відповідність з ЦБД для  ['budgetSpent']['amount']
-	Перевірити відповідність з ЦБД для  ['registrationFee']['amount']
-	Перевірити відповідність з ЦБД для  ['bankAccount']['bankName']
+	Перевірити дані в ЦБД для  ['contractTerms']['leaseTerms']['leaseDuration']
+	Перевірити дані в ЦБД для  ['value']['amount']
+	Перевірити дані в ЦБД для  ['minimalStep']['amount']
+	Перевірити дані в ЦБД для  ['guarantee']['amount']
+	Перевірити дані в ЦБД для  ['budgetSpent']['amount']
+	Перевірити дані в ЦБД для  ['registrationFee']['amount']
+	Перевірити дані в ЦБД для  ['bankAccount']['bankName']
 	#todo proverit` kostil
-	Перевірити відповідність з ЦБД для  ['bankAccount']['accountIdentification'][0]['description']
+	Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][0]['description']
 	: FOR  ${i}  IN RANGE  0  9
-    \  Перевірити відповідність з ЦБД для  ['bankAccount']['accountIdentification'][${i}]['id']
-	Перевірити відповідність з ЦБД для  ['items'][0]['description']
-	Перевірити відповідність з ЦБД для  ['items'][0]['additionalClassifications'][1]['id']
-	Перевірити відповідність з ЦБД для  ['items'][0]['classification']['description']
-	Перевірити відповідність з ЦБД для  ['items'][0]['additionalClassifications'][0]['description']
-	Перевірити відповідність з ЦБД для  ['items'][0]['quantity']
-	Перевірити відповідність з ЦБД для  ['items'][0]['unit']['name']
-	Перевірити відповідність з ЦБД для  ['items'][0]['address']['postalCode']
-	Перевірити відповідність з ЦБД для  ['items'][0]['address']['locality']
-	Перевірити відповідність з ЦБД для  ['items'][0]['address']['streetAddress']
+    \  Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][${i}]['id']
+	Перевірити дані в ЦБД для  ['items'][0]['description']
+	Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][1]['id']
+	Перевірити дані в ЦБД для  ['items'][0]['classification']['description']
+	Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][0]['description']
+	Перевірити дані в ЦБД для  ['items'][0]['quantity']
+	Перевірити дані в ЦБД для  ['items'][0]['unit']['name']
+	Перевірити дані в ЦБД для  ['items'][0]['address']['postalCode']
+	Перевірити дані в ЦБД для  ['items'][0]['address']['locality']
+	Перевірити дані в ЦБД для  ['items'][0]['address']['streetAddress']
 ###########################################################################
 ################################# /STEPS ##################################
 ###########################################################################
@@ -139,8 +140,9 @@ Variables  dzk_variables.py
 Отримати ID у цбд
     ${cdb locator}  Set Variable  //*[text()='Перейти']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
-    ${cdb id}  do_regex  sub  r'.*(auctions/)'  ${cdb href}
-    #Evaluate  re.sub(r'.*(auctions/)', '', re.sub(r'[?].*', '', '${cdb href}'))  modules=re
+    ${cdb id}  do_regex  find  [a-z0-9]{32}  ${cdb href}
+	#todo delete
+    #Evaluate  re.sub(r'.*(auctions/)', '', re.sub(r'[?].*', '', '${cdb href}'))  modules=re #tod smell like shit)
     Set To Dictionary  ${dzk_data}  id  ${cdb id}
 ###########################################################################
 ################################# /COMMON #################################
@@ -268,14 +270,13 @@ Variables  dzk_variables.py
 Заповнити lotHolder.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	${region}  do_regex  find  [(].+[^)]  ${locality}
-	${region}  Evaluate  '${region}'.replace('(','')
+	${region}  do_regex  find  \((.*?)\)  ${locality}
 	Set To Dictionary  ${dzk_data['lotHolder']['address']}  region  ${region}
-	#Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re
-	${locality}  do_regex  find  r'.*[(]'  ${locality}
-	${locality}  Evaluate  ${locality}.replace(' (','')
+	#todo Delete
+	#Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re #todo need code reviewe
+	${locality}  go_regex  sub  .\(.*  ${locality}
 	Set To Dictionary  ${dzk_data['lotHolder']['address']}  locality  ${locality}
-	#Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re
+	#Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re #todo need code review
 
 
 Заповнити lotHolder.address.streetAddress
@@ -330,7 +331,8 @@ Variables  dzk_variables.py
 	${leaseDuration}  Set Variable If
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	${leaseDuration}  Evaluate  re.sub(r'P[0-9]*Y', 'P${years}Y', "${leaseDuration}")  modules=re
+	#todo ${leaseDuration}  Evaluate  re.sub(r'P[0-9]*Y', 'P${years}Y', "${leaseDuration}")  modules=re
+	${leaseDuration}  do_regex  sub  P[0-9]*Y  ${leaseDuration}  'P${years}Y'
 
 
 Заповнити contractTerms.leaseTerms.months
@@ -341,7 +343,8 @@ Variables  dzk_variables.py
 	${leaseDuration}  Set Variable If
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	${leaseDuration}  Evaluate  re.sub(r'Y[0-9]*M', 'Y${months}M', "${leaseDuration}")  modules=re
+	#todo ${leaseDuration}  Evaluate  re.sub(r'Y[0-9]*M', 'Y${months}M', "${leaseDuration}")  modules=re
+	${leaseDuration}  do_regex  sub  Y[0-9]*M  ${leaseDuration}  'Y${months}M'
 
 
 
@@ -420,18 +423,22 @@ Variables  dzk_variables.py
 Заповнити items.0.classification.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['classification']['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  modules=re
+	#todo ${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  modules=re
+	${id}  do_regex  find  [0-9]*[-][0-9]*  ${description}
 	Set To Dictionary  ${dzk_data['items'][0]['classification']}  id  ${id}
-	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}")  modules=re
+	#todo ${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}")  modules=re
+	${description}  do_regex  sub  [0-9]*[-][0-9]*.  ${description}
 	Set To Dictionary  ${dzk_data['items'][0]['classification']}  description  ${description}
 
 
 Заповнити items.0.additionalClassifications.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['additionalClassifications'][0]['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  modules=re
+	#todo ${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  modules=re
+	${id}  do_regex  find  [0-9]*[.][0-9]*  ${description}
 	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  id  ${id}
-	${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 0)  modules=re
+	#todo ${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 0)  modules=re
+	${description}  do_regex  sub  [0-9]*[.][0-9]*.  ${description}
 	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  description  ${description}
 
 
@@ -460,9 +467,11 @@ Variables  dzk_variables.py
 Заповнити items.0.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	${region}  Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re
+	#todo ${region}  Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re
+	${region}  do_regex  find  \((.*?)\)  ${locality}
 	Set To Dictionary  ${dzk_data['items'][0]['address']}  region  ${region}
-	${locality}  Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re
+	#${locality}  Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re
+	${locality}  go_regex  sub  .\(.*  ${locality}
 	Set To Dictionary  ${dzk_data['items'][0]['address']}  locality  ${locality}
 
 
@@ -488,38 +497,50 @@ Variables  dzk_variables.py
 
 
 
-Отритами дані зі сторінки
-	[Arguments]  ${field}
-	${selector}  dzk_auction.Отримати локатор по назві поля	${field}
-	Wait Until Element Is Visible  ${selector}  10
-	${value}  Get Text  ${selector}
-	${field value}  Парсінг за необхідністью  ${field}  ${value}
-	[Return]  ${field value}
-
-
-Переірити відображення для
-	[Arguments]  ${field}
-	${value should}  Set Variable  ${dzk_data${field}}
-	${value is}  Отритами дані зі сторінки  ${field}
-	Should Be Equal  ${value should}  ${value is}
-
-
-Перевірити відповідність з ЦБД для
+# Отритами дані зі сторінки
+# 	[Arguments]  ${field}
+# 	${selector}  dzk_auction.Отримати локатор по назві поля	${field}
+# 	Wait Until Element Is Visible  ${selector}  10
+# 	${value}  Get Text  ${selector}
+# 	${field value}  Парсінг за необхідністью  ${field}  ${value}
+# 	[Return]  ${field value}
+#
+#
+# Переірити відображення для
+# 	[Arguments]  ${field}
+# 	${value should}  Set Variable  ${dzk_data${field}}
+# 	${value is}  Отритами дані зі сторінки  ${field}
+# 	Should Be Equal  ${value should}  ${value is}
+#
+#
+Перевірити дані в ЦБД для
 	[Arguments]  ${field}
 	${value should}  Set Variable  ${cdb_data${field}}
 	${value is}  Set Variable  ${dzk_data${field}}
-	${str is equal}  Evaluate  "${value should}" == "${value is}"
-	${float is equal}  Evaluate  float(${value should}) == float(${value is})
-	Run Keyword If  (${str is equal} == ${False}) and (${float is equal} == ${False})
-	...  Fail  Oops, в ЦБД пішли не ті дані
+	${is equal}  Порівняти дані  ${value is}  ${value should}
+	Run Keyword If  ${is equal} == ${False}
+	...  Fail  Oops, в ЦБД пішли не ті дані!!!
+
+
+Порівняти дані
+	[Arguments]  ${is}  ${should}
+	${result}  Set Variable  ${False}
+	${result}  Evaluate  ${result} or ("${is}" == "${should}")
+	${result}  Evaluate  ${result} or (float(${is}) == float(${should}))
+	Run Keyword If  ${result} == ${False}
+	...  Run Keyword And Ignore Error  ${is}  Конвертувати дату в формат ЦБД  ${is}
+	...  ${result}  Evaluate  ${result} or (${is}  in  ${should})
+	[Return]  ${result}
+
 ###########################################################################
 ################################# /CHECK ##################################
 ###########################################################################
-Конвертувати Дату Для ЦБД
+Конвертувати дату в формат ЦБД
 	[Arguments]  ${date}
-	${years}  do_regex  (re.findall(r'[0-9]{4}', "${date}"))[0]  modules=re
-	${months}
-	${days}
-	${hours}
-	${minutes}
-	${secods}
+	${years}  do_regex  find  [0-9]{4}  ${date}
+	${months}  do_regex  find  \.([0-9]{2})\.  ${date}
+	${days}  do_regex  find  ^[0-9]{2}  ${date}
+	${hours}  do_regex  find  \ ([0-9]{2})\:  ${date}
+	${minutes}  do_regex  find  \:([0-9]{2})\:  ${date}
+	${seconds}  do_regex  find  [0-9]{2}$  ${date}
+	[Return]  ${years}-${months}-${days}T${hours}:${minutes}:${seconds}
