@@ -89,13 +89,12 @@ If skipped create tender
 
 Заповнити рамкову угоду та опублікувати її
     Вибрати перший тендер
-    Натиснути кнопку "Коригувати рамкову угоду"
     Заповнити поля Рамкової угоди
-    Натиснути OkButton
+    Натиснути кнопку "Заключить рамочное соглашение"
     Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
     Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Ні
     Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так
-    Wait Until Page Contains  Рамкову угоду успішно активовано  10
+    Підтвердити активацію рамкової угоди
 
 
 
@@ -141,13 +140,3 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
-
-Заповнити поля Рамкової угоди
-    ${id}  random number  100000  999999
-    Заповнити текстове поле  (//*[@data-type="TextBox"])[1]//input  ${id}
-    ${signDate}  get_time_now_with_deviation  0  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[1]//input  ${signDate}
-    ${startDate}  get_time_now_with_deviation  2  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[2]//input  ${startDate}
-    ${endDate}  get_time_now_with_deviation  60  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[3]//input  ${endDate}
