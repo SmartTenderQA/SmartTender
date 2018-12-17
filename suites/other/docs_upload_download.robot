@@ -94,7 +94,7 @@ Test Teardown  			Run Keywords
     [Arguments]  ${name}
     ${n}  random_number  1  1000
     ${long name}  Evaluate  '1' * 200 + ' ${name}' + ' ${n}'
-    ${file path}  Set Variable  ${OUTPUTDIR}/${long name}.pdf
+    ${file path}  Set Variable  ${EXECDIR}/test_output/${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
     ${full name}  Set Variable  ${long name}.pdf

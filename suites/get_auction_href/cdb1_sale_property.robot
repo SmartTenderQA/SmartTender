@@ -14,11 +14,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 *** Test Cases ***
+Підготувати користувачів
+    Додати першого користувача  Bened           tender_owner
+    Додати користувача          user1           provider1
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
+    Додати користувача          test_viewer     viewer
+
+
 Створити тендер
 	[Tags]  create_tender
-	Підготувати організатора
+	Завантажити сесію для  tender_owner
 	cdb1_sale_property.Створити тендер  ${type_dict['${type}']}
-	Close Browser
 
 
 If skipped create tender
@@ -29,16 +36,15 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	Підготувати учасників
 	Знайти тендер користувачем	provider1
 	Зберегти пряме посилання на тендер
-	Switch Browser  provider2
+	Завантажити сесію для  provider2
 	Go To  ${data['tender_href']}
 
 
 Подати заявки на участь в тендері
 	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
+	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -48,8 +54,8 @@ If skipped create tender
 
 Подати пропозицію
 	:FOR  ${i}  IN  1  2
-	\  Switch Browser  provider${i}
-	\  Reload Page
+	\  Завантажити сесію для  provider${i}
+	#\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  1
@@ -58,8 +64,7 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
-	Close Browser
-	Switch Browser  provider1
+	Завантажити сесію для  provider1
 	Дочекатись дати  ${data['auctionPeriods']['startDate']}
 	Дочекатися статусу тендера  Аукціон  10m
 
@@ -70,13 +75,12 @@ If skipped create tender
 	${auction_href}  			Отримати URL на перегляд
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
-	Close Browser
 
 
 Отримати поcилання на перегляд аукціону
 	[Setup]  Run Keywords  Підготувати організатора  Підготувати глядачів
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
-	\  Switch Browser  ${i}
+	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
@@ -84,24 +88,9 @@ If skipped create tender
 
 
 *** Keywords ***
-Підготувати організатора
-	Start  Bened  tender_owner
-	Go Back
-
-
-Підготувати учасників
-	Start  user1  provider1
-	Start  user2  provider2
-
-
-Підготувати глядачів
-	Start  user3  provider3
-	Start  test_viewer  viewer
-
-
 Знайти тендер користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}
