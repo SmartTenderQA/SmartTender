@@ -104,6 +104,7 @@ Test Teardown  			Run Keywords
 Перевірити усрішність додавання файлів
     [Arguments]  @{file_names}
     Reload Page
+    Sleep  2
     :FOR  ${file}  IN  @{file_names}
     \  Page Should Contain Element  //*[@data-qa="file-name"][text()="${file}"]
 

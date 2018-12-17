@@ -134,7 +134,7 @@ If skipped create tender
 Неможливість отримати поcилання на участь в аукціоні(keyword)
 	[Arguments]  ${user}
 	Завантажити сесію для  ${user}
-	Go To  ${auction_href}
+	Go to  ${data['tender_href']}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
