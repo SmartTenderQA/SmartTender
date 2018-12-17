@@ -166,7 +166,7 @@ Start in grid
 
 
 Додати першого користувача
-    [Arguments]  ${name}  ${alias}
+    [Arguments]  ${name}  ${alias}=None
     Start in grid  ${name}  ${alias}
     Зберегти сесію  ${alias}
 

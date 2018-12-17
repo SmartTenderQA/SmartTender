@@ -8,13 +8,22 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 *** Test Cases ***
+Підготувати користувачів
+    Run Keyword If  "${site}" == "prod"  Run Keywords  
+    ...  Додати першого користувача  fgv_prod_owner  tender_owner  AND
+    ...  Додати користувача          prod_provider1  provider1     AND
+    ...  Додати користувача          prod_provider2  provider2     AND
+    ...  Додати користувача          prod_viewer     viewer
+    Run Keyword If  "${site}" == "test"  Run Keywords
+    ...  Додати першого користувача  Bened           tender_owner  AND
+    ...  Додати користувача          user1           provider1     AND
+    ...  Додати користувача          user2           provider2     AND
+    ...  Додати користувача          test_viewer     viewer 
+
+
 Створити тендер
 	[Tags]  create_tender
-	Run Keyword If  "${site}" == "prod"  Start  fgv_prod_owner  tender_owner
-	...  ELSE  Start  Bened  tender_owner
-	Go Back
-	Switch Browser  tender_owner
-	Sleep  2
+	Завантажити сесію для  tender_owner
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 	Wait Until Keyword Succeeds  30  3  create_tender.Вибрати тип процедури  Голландський аукціон
@@ -47,24 +56,21 @@ If skipped create tender
 
 Знайти тендер учасником
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Run Keyword If  "${site}" == "prod"  Start  prod_provider1  provider1
-	...  ELSE  Start  user1  provider1
+	Завантажити сесію для  provider1
 	Знайти тендер користувачем	provider1
 
 
 Подати заявку на участь в тендері першим учасником
-	#Switch Browser  provider1
 	Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
-	Switch Browser  tender_owner
+	Завантажити сесію для  tender_owner
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Отримати поcилання на участь в аукціоні першим учасником
-	Switch Browser  provider1
-	Reload Page
+	Завантажити сесію для  provider1
 	Зберегти пряме посилання на тендер
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
@@ -74,12 +80,6 @@ If skipped create tender
 
 
 Неможливість отримати поcилання на участь в аукціоні
-	[Setup]  Run Keyword If  "${site}" == "test"  Run Keywords  Close Browser
-	...  AND  Start  test_viewer  viewer
-	...  AND  Start  user2  provider2
-	...  ELSE  Run Keywords  Close Browser
-	...  AND  Start  prod_viewer  viewer
-	...  AND  Start  prod_provider2  provider2
 	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
 	viewer
 	tender_owner
@@ -94,7 +94,7 @@ If skipped create tender
 
 Знайти тендер користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}
@@ -130,15 +130,16 @@ If skipped create tender
 
 Неможливість отримати поcилання на участь в аукціоні(keyword)
 	[Arguments]  ${user}
-	Switch Browser  ${user}
-	Reload Page
+	Завантажити сесію для  ${user}
+	Go To  ${auction_href}
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні
 
 
 Отримати посилання на участь в аукціоні
-	Reload Page
+    Go To  ${auction_href}
+	#Reload Page
 	Натиснути кнопку  До аукціону
 	Натиснути кнопку  Взяти участь в аукціоні
 	${auction_href}  Отримати посилання
@@ -178,6 +179,7 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
+    Go Back
 
 
 Заповнити auctionPeriod.startDate

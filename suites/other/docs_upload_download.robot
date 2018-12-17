@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Start  prod_ssp_owner
+Suite Setup  			Додати першого користувача  prod_ssp_owner
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
