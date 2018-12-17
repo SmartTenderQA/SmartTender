@@ -14,6 +14,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 #robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
+	Завантажити сесію для  tender_owner
 	start_page.Натиснути На торговельний майданчик
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
@@ -59,23 +60,19 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_auction.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
 	Log To Console  lot-href=${data['tender_href']}
-	Close Browser
 
 
 Знайти аукціон учасниками
 	[Tags]  -prod
-	Підготувати учасників
 	Знайти аукціон користувачем  provider1
-	Switch Browser  provider2
-	Go To  ${data['tender_href']}
-	Switch Browser  provider3
+	Завантажити сесію для  provider2
 	Go To  ${data['tender_href']}
 
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
-	:FOR  ${i}  IN  1  3
-	\  Switch Browser  provider${i}
+	:FOR  ${i}  IN  1  2
+	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -86,8 +83,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати пропозицію учасниками
 	[Tags]  -prod
-	:FOR  ${i}  IN  1  3
-	\  Switch Browser  provider${i}
+	:FOR  ${i}  IN  1  2
+	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
@@ -98,14 +95,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	[Tags]  -prod
-	Switch Browser  provider1
+	Завантажити сесію для  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
-    :FOR  ${i}  IN  1  3
-	\  Switch Browser  provider${i}
+    :FOR  ${i}  IN  1  2
+	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути кнопку "До аукціону"
@@ -114,16 +111,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
 	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
-	\  Close Browser
+	\  Go Back
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Tags]  -prod
-	[Setup]  Підготувати глядачів
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
-	tender_owner
-	provider4
+	tender_owner2
+	provider3
 
 
 *** Keywords ***
@@ -134,7 +130,8 @@ Precondition
 	Set To Dictionary  ${data}  object  ${object}
 	Set To Dictionary  ${data}  message  ${message}
 	Set Global Variable  ${data}
-    Start  ${user}  tender_owner
+	Додати першого користувача  ${user}  tender_owner
+    Підготувати користувачів
 
 
 Postcondition
@@ -142,31 +139,25 @@ Postcondition
     Close All Browsers
 
 
-Підготувати учасників
-	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...       Start  user1  provider1
-	...  AND  Start  user2  provider2
-	...  AND  Start  user3  provider3
-	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...       Start  prod_provider  provider1
-	...  AND  Start  prod_provider1  provider2
-	...  AND  Start  prod_provider2  provider3
-
-
-Підготувати глядачів
-	Run Keyword If  '${site}' == 'test'  Run Keywords
-	...       Start  user4  provider4
-	...  AND  Start  test_viewer  viewer
-	...  AND  Start  Bened  tender_owner
-	...  ELSE IF  '${site}' == 'prod'  Run Keywords
-	...       Start  LLC  provider4
-	...  AND  Start  prod_viewer  viewer
-	...  AND  Start  prod_tender_owner  tender_owner
+Підготувати користувачів
+    Run Keyword If  "${site}" == "prod"  Run Keywords
+    ...  Додати користувача			 prod_tender_owner  tender_owner2 	AND
+    ...  Додати користувача          prod_provider  	provider1     	AND
+    ...  Додати користувача          prod_provider1  	provider2     	AND
+    ...  Додати користувача          prod_provider2  	provider3     	AND
+    ...  Додати користувача          prod_provider2  	provider3     	AND
+    ...  Додати користувача          prod_viewer     	viewer
+    Run Keyword If  "${site}" == "test"  Run Keywords
+    ...  Додати користувача			 test_tender_owner	tender_owner2 	AND
+    ...  Додати користувача          user1           	provider1     	AND
+    ...  Додати користувача          user2           	provider2     	AND
+    ...  Додати користувача          user3           	provider3     	AND
+    ...  Додати користувача          test_viewer     	viewer
 
 
 Знайти аукціон користувачем
 	[Arguments]  ${role}
-	Switch Browser  ${role}
+	Завантажити сесію для  ${role}
 	Sleep  2
 	start_page.Натиснути На торговельний майданчик
 	old_search.Активувати вкладку ФГИ
@@ -201,7 +192,7 @@ Postcondition
 
 Неможливість отримати поcилання на участь в аукціоні глядачем
 	[Arguments]  ${user}
-	Switch Browser  ${user}
+	Завантажити сесію для  ${user}
 	Go to  ${data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
