@@ -132,7 +132,7 @@ Precondition
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	new_search.Очистити фільтр пошуку
 	new_search.Очистити фільтр пошуку
-	new_search.Ввести фразу для пошуку  ${dzk_data['tender_id']}
+	new_search.Ввести фразу для пошуку  ${dzk_data['id']}
 	new_search.Натиснути кнопку пошуку
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	new_search.Перейти по результату пошуку за номером  1
