@@ -41,6 +41,7 @@ If skipped create tender
 
 
 Подати заявки на участь в тендері
+    Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Go To  ${data['tender_href']}
