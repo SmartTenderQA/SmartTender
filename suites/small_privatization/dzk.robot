@@ -26,6 +26,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
 	Зберегти словник у файл  ${dzk_data}  dzk_data
+	Log To Console  url=${dzk_data['tender_href']}
 
 
 Отримати дані з цбд та перевірити їх відповідність
