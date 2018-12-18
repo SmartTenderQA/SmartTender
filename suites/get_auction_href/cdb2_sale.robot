@@ -308,3 +308,4 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit_name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
+	Go Back

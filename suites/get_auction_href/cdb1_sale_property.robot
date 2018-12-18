@@ -120,4 +120,5 @@ If skipped create tender
 	${status}  Run Keyword And Return Status
 	...  Element Should Contain  //h4  Ви зареєстровані як учасник. Очікуйте старту аукціону.
 	Run Keyword If  ${status} != ${True}  Element Should Contain  //h4  Вхід на даний момент закритий.
+	Go back
 
