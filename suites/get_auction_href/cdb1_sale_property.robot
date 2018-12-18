@@ -79,6 +79,7 @@ If skipped create tender
 Отримати поcилання на перегляд аукціону
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
+	\  Set Window Size  1440  900
 	\  Go To  ${data['tender_href']}
 	\  Wait Until Keyword Succeeds  60  2  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
