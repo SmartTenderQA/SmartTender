@@ -29,16 +29,23 @@ ${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"text
 
 
 Визнати всіх учасників переможцями
-    ${count}  Get Element Count  ${winners}
+    ${count}  Отримати кількість можливих переможців
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Визначити учасника переможцем  ${i}
     Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
 
 
 Заповнити ціни за одиницю номенклатури для всіх переможців
-    ${count}  Get Element Count  ${winners}
+    ${count}  Отримати кількість можливих переможців
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \   Вказати ціну за одиницю номенклатури для переможця  ${i}
 
 
-
+Отримати кількість можливих переможців
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${count}  Get Element Count  ${winners}
+    Run Keyword If  '${count}' == '0'  Run Keywords
+    ...  Capture Page Screenshot  AND
+    ...  Sleep  30                AND
+    ...  Отримати кількість можливих переможців
+    [Return]  ${count}
