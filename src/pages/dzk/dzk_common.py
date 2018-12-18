@@ -22,7 +22,7 @@ def get_page_values(field, value):
         ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
         return ret.replace(' ', '')
     elif 'minimalStep' in field:
-        ret = re.search(u'(?P<percents>.+)\D{5}(?P<amount>[\d\s.]+)', value)
+        list = re.search(u'(?P<percents>.+)\D{5}(?P<amount>[\d\s.]+)', value)
         if 'percents' in field:
             ret = list.group('percents')
             return ret.replace('%', '')
@@ -41,4 +41,4 @@ def get_page_values(field, value):
             return list.group('years')
         elif 'months' in field:
             return list.group('months')
-    return ret
+    return value

@@ -28,6 +28,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 	small_privatization_object.Отримати UAID для Об'єкту
 	Log To Console  object-UAID=${data['object']['UAID']}
+	${location}  Get Location
+	Log To Console  url=${location}
 
 
 Створити інформаційне повідомлення МП
@@ -50,6 +52,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
 	small_privatization_informational_message.Отримати UAID для Повідомлення
 	Log To Console  message-UAID=${data['message']['UAID']}
+	${location}  Get Location
+	Log To Console  url=${location}
 
 
 Дочекатися початку прийому пропозицій
