@@ -120,7 +120,7 @@ If skipped create tender
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
-	\  Wait Until Keyword Succeeds  60  2  Натиснути кнопку "Перегляд аукціону"
+	\  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
 	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
 
