@@ -92,10 +92,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити conditions.date
-	${delta days}  Set Variable  9
+	${delta days}  Set Variable  5
 	${delta minutes}  Set Variable  13
-	${date + delta prod}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(days=int(${delta days})))  modules=datetime
-	${date + delta test}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  modules=datetime
+	${date + delta prod}  get_time_no_weekend  ${delta days}  days
+	${date + delta test}  get_time_no_weekend  ${delta minutes}  minutes
 	${date + delta}  Set Variable If
 	...  '${site}' == 'test'  ${date + delta test}
 	...  '${site}' == 'prod'  ${date + delta prod}
