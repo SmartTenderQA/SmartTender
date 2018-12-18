@@ -158,9 +158,9 @@ Start in grid
 	${start_page}  Отримати стартову сторінку  ${site}
 	Змінити стартову сторінку для IP
 	Run Keyword If
-	...  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:WIN10	    ELSE IF
+	...  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:ANY        ELSE IF
 	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	ELSE IF
-	...  '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP  		ELSE IF
+	#...  '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP  		ELSE IF
 	...  '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}  						ELSE IF
 	...  '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
 	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
