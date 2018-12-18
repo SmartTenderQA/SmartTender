@@ -65,7 +65,6 @@ ${where}							test
 	Оголосити тендер
 	Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
-	Close Browser
 
 
 If skipped create tender
