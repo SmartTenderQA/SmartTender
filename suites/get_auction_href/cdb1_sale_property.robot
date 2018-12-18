@@ -70,7 +70,7 @@ If skipped create tender
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
 	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
+	${auction_participate_href}  Wait Until Keyword Succeeds  4m  3  Отримати URL для участі в аукціоні
 	${auction_href}  			Отримати URL на перегляд
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
@@ -80,7 +80,7 @@ If skipped create tender
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
-	\  Натиснути кнопку "Перегляд аукціону"
+	\  Wait Until Keyword Succeeds  60  2  Натиснути кнопку "Перегляд аукціону"
 	\  ${auction_href}  Отримати URL на перегляд
 	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
 
