@@ -73,10 +73,10 @@
     test_below.Заповнити id для item
     test_below.Заповнити unit.name для item
     test_below.Заповнити postalCode для item
+    test_below.Заповнити startDate для item
+    test_below.Заповнити endDate для item
     test_below.Заповнити streetAddress для item
     test_below.Заповнити locality для item
-    test_below.Заповнити endDate для item
-    test_below.Заповнити startDate для item
 
 
 Заповнити title для item

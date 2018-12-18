@@ -74,10 +74,10 @@
     test_open_eu.Заповнити id для item
     test_open_eu.Заповнити unit.name для item
     test_open_eu.Заповнити postalCode для item
+    test_open_eu.Заповнити startDate для item
+    test_open_eu.Заповнити endDate для item
     test_open_eu.Заповнити streetAddress для item
     test_open_eu.Заповнити locality для item
-    test_open_eu.Заповнити endDate для item
-    test_open_eu.Заповнити startDate для item
 
 
 Заповнити title для item

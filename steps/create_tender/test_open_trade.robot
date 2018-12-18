@@ -66,10 +66,10 @@
     test_open_trade.Заповнити id для item
     test_open_trade.Заповнити unit.name для item
     test_open_trade.Заповнити postalCode для item
+    test_open_trade.Заповнити startDate для item
+    test_open_trade.Заповнити endDate для item
     test_open_trade.Заповнити streetAddress для item
     test_open_trade.Заповнити locality для item
-    test_open_trade.Заповнити endDate для item
-    test_open_trade.Заповнити startDate для item
 
 
 Заповнити title для item

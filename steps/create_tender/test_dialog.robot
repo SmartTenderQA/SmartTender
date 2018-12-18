@@ -64,10 +64,10 @@
     test_dialog.Заповнити id для item
     test_dialog.Заповнити unit.name для item
     test_dialog.Заповнити postalCode для item
+    test_dialog.Заповнити startDate для item
+    test_dialog.Заповнити endDate для item
     test_dialog.Заповнити streetAddress для item
     test_dialog.Заповнити locality для item
-    test_dialog.Заповнити endDate для item
-    test_dialog.Заповнити startDate для item
 
 
 Заповнити title для item

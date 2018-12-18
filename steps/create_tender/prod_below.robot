@@ -82,10 +82,10 @@
     prod_below.Заповнити id для item
     prod_below.Заповнити unit.name для item
     prod_below.Заповнити postalCode для item
-    prod_below.Заповнити streetAddress для item
-    prod_below.Заповнити locality для item
     prod_below.Заповнити startDate для item
     prod_below.Заповнити endDate для item
+    prod_below.Заповнити streetAddress для item
+    prod_below.Заповнити locality для item
 
 
 Заповнити title для item

@@ -16,7 +16,6 @@ ${where}							test
 
 *** Test Cases ***
 Підготувати користувачів
-    Підготувати користувачів
     Run Keyword If  "${where}" == "prod"  Run Keywords
     ...  Додати першого користувача  fgv_prod_owner  tender_owner  AND
     ...  Додати користувача          prod_provider1  provider1     AND
@@ -78,12 +77,14 @@ If skipped create tender
 
 Знайти тендер учасниками
 	Знайти тендер користувачем	provider1
-	Знайти тендер користувачем	provider2
+	Зберегти пряме посилання на тендер
 
 
 Подати заявки на участь в тендері
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
+	\  Go To  ${data['tender_href']}
+	\  Зберегти сесію  provider${i}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -94,7 +95,6 @@ If skipped create tender
 Подати пропозицію
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
-	#\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  1
