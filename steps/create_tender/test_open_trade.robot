@@ -1,7 +1,6 @@
 *** Keywords ***
 Створити тендер
     [Arguments]  ${type}
-    Switch Browser  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
