@@ -254,9 +254,15 @@ def get_checksum_md5(file):
         return hasher.hexdigest()
 
 
-def do_regex(type, regex, text, subtext=''):
-    if type == 'sub':
-        text = re.sub(r'regex', subtext, text)
-    if type == 'find':
-        text = (re.findall(regex, text))[0]
-    return text
+def compare_values(value_is, value_should):
+    if re.match(r'[0-9]{2}[.][0-9]{2}[.][0-9]{4} [0-9]{2}[:][0-9]{2}', str(value_is)):
+        tmp = value_is.split(' ')
+        date = (tmp[0]).split('.')
+        date_is = date[2] + '-' + date[1] + '-' + date[0] + 'T' + tmp[1]
+        return date_is in value_should
+    if re.match("^[0-9]+$", str(value_is)):
+        return float(value_is) == float(value_should)
+    if re.match("^[0-9.]+$", str(value_is)):
+        return float(value_is) == float(value_should)
+    return  str(value_is) == str(value_should)
+
