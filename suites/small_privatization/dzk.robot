@@ -26,6 +26,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
 	Зберегти словник у файл  ${dzk_data}  dzk_data
+	Log To Console  url=${dzk_data['tender_href']}
 
 
 Отримати дані з цбд та перевірити їх відповідність
@@ -44,7 +45,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Знайти аукціон користувачем  provider1
 	Зберегти сесію  provider1
 	Завантажити сесію для  provider2
-	Go To  ${data['tender_href']}
+	Go To  ${dzk_data['tender_href']}
 	Зберегти сесію  provider2
 
 
@@ -85,9 +86,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути кнопку "До аукціону"
 	\  ${viewer_href}  Отримати URL на перегляд
-    \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
+    \  Set To Dictionary  ${dzk_data}  viewer_href  ${viewer_href}
 	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
-	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
+	\  Set To Dictionary  ${dzk_data}  provider${i}_participate_href  ${participate_href}
 	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
 	\  Go Back
 
@@ -131,7 +132,7 @@ Precondition
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	new_search.Очистити фільтр пошуку
 	new_search.Очистити фільтр пошуку
-	new_search.Ввести фразу для пошуку  ${data['tender_id']}
+	new_search.Ввести фразу для пошуку  ${dzk_data['id']}
 	new_search.Натиснути кнопку пошуку
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	new_search.Перейти по результату пошуку за номером  1
@@ -150,16 +151,16 @@ Precondition
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${dzk_data['auctionID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${dzk_data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['unit']['name']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
 Неможливість отримати поcилання на участь в аукціоні глядачем
 	[Arguments]  ${user}
 	Завантажити сесію для  ${user}
-	Go to  ${data['tender_href']}
+	Go to  ${dzk_data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"

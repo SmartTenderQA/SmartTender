@@ -29,8 +29,8 @@ def get_page_values(field, value):
         elif 'amount' in field:
             ret = list.group('amount')
             return ret.replace(' ', '')
-    elif 'lassification' in field and not 1 in field:
-        list = re.search(u'(?P<id>\d+?-?.\d+).{3}(?P<description>.*)', value)
+    elif 'lassification' in field and not '1' in field:
+        list = re.search(u'(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
         if 'id' in field:
             return list.group('id')
         elif 'description' in field:

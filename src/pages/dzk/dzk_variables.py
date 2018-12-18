@@ -200,6 +200,7 @@ dzk_view_locators = {
 			"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[1]",
 			"additionalClassifications": [
 				{
+					"id": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[3]",
 					"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[3]",
 				},
 				{
@@ -207,6 +208,7 @@ dzk_view_locators = {
 				}
 			],
 			"classification": {
+				"id": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[2]",
 				"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[2]",
 			},
 			"quantity": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[5]",
@@ -370,13 +372,13 @@ dzk_data = {
       "classification": {
         "scheme": "",
         "id": "",
-        "description": "",
+        "description": u"",
       },
       "additionalClassifications": [
         {
           "scheme": "kvtspz",
           "id": "",
-          "description": "",
+          "description": u"",
         },
         {
           "scheme": "cadastralNumber",

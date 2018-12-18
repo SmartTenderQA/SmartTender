@@ -165,6 +165,20 @@ def get_time_now_with_deviation(v, deviation):
     return ('{:%d.%m.%Y %H:%M}'.format(time))
 
 
+# def get_time_no_weekend(v, deviation):
+#     weekends = {
+#         datetime.date(2018, , 18)
+#     }
+#     time = datetime.now()
+#     for i in range(0, v):
+#         time = datetime.now() + timedelta(days=v)
+#         if time.weekday() > 4:
+#             v = v + 1
+#         elif
+#     return time
+
+
+
 def no_weekend(date):
     date = parse(date, parserinfo(True, False))
     if date.weekday() == 5 or date.weekday() == 6:
