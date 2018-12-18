@@ -77,7 +77,6 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
-	[Setup]  Run Keywords  Підготувати організатора  Підготувати глядачів
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
