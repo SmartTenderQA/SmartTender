@@ -4,14 +4,17 @@ Resource  		keywords.robot
 
 *** Keywords ***
 Натиснути кнопку "До аукціону"
-	Wait Until Element Is Visible  //*[@data-qa="button-poptip-participate-view"]  10
-	Click Element  //*[@data-qa="button-poptip-participate-view"]
+	${selector}  Set Variable  //*[@data-qa="button-poptip-participate-view"]
+	Wait Until Element Is Visible  ${selector}  10
+	Scroll Page To Element XPATH   ${selector}
+	Click Element  ${selector}
 	Дочекатись отримання посилань на аукціон
 
 
 Натиснути кнопку "Перегляд аукціону"
 	${selector}  Set Variable  //*[@data-qa="button-poptip-view"]
-	Wait Until Element Is Visible  ${selector}
+	Wait Until Element Is Visible  ${selector}  10
+	Scroll Page To Element XPATH   ${selector}
 	Click Element  ${selector}
 	Дочекатись отримання посилань на аукціон
 
