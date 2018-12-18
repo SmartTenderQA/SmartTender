@@ -1,9 +1,10 @@
 *** Settings ***
-Variables  dzk_variables.py
+Variables	dzk_variables.py
+Library		dzk_common.py
 
 
 *** Variables ***
-
+${notice message}			//*[@class='ivu-notice-desc']
 
 *** Keywords ***
 ###########################################################################
@@ -17,7 +18,6 @@ Variables  dzk_variables.py
 	dzk_auction.Заповнити lotHolder.identifier.id
 	dzk_auction.Заповнити lotHolder.address.postalCode
 	dzk_auction.Заповнити lotHolder.address.locality
-	debug
 	dzk_auction.Заповнити lotHolder.address.streetAddress
 	dzk_auction.Заповнити lotHolder.contactPoint.name
 	dzk_auction.Заповнити lotHolder.contactPoint.email
@@ -46,43 +46,95 @@ Variables  dzk_variables.py
 
 
 Перевірити всі обов'язкові поля в цбд
-	Перевірити дані в ЦБД для  ['auctionID']
-	Перевірити дані в ЦБД для  ['lotIdentifier']
-	Перевірити дані в ЦБД для  ['title']
-	Перевірити дані в ЦБД для  ['description']
-	Перевірити дані в ЦБД для  ['lotHolder']['identifier']['legalName']
-	Перевірити дані в ЦБД для  ['lotHolder']['identifier']['id']
-	Перевірити дані в ЦБД для  ['lotHolder']['address']['postalCode']
-	Перевірити дані в ЦБД для  ['lotHolder']['address']['region']
-	Перевірити дані в ЦБД для  ['lotHolder']['address']['locality']
-	Перевірити дані в ЦБД для  ['lotHolder']['address']['streetAddress']
-	Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['name']
-	Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['email']
-	#todo proverit` date
-	Перевірити дані в ЦБД для  ['auctionPeriod']['shouldStartAfter'] #todo need cast date
-	Перевірити дані в ЦБД для  ['tenderAttempts']
-	Перевірити дані в ЦБД для  ['minNumberOfQualifiedBids']
-	#todo proverit` leaseDuration
-	Перевірити дані в ЦБД для  ['contractTerms']['leaseTerms']['leaseDuration']
-	Перевірити дані в ЦБД для  ['value']['amount']
-	Перевірити дані в ЦБД для  ['minimalStep']['amount']
-	Перевірити дані в ЦБД для  ['guarantee']['amount']
-	Перевірити дані в ЦБД для  ['budgetSpent']['amount']
-	Перевірити дані в ЦБД для  ['registrationFee']['amount']
-	Перевірити дані в ЦБД для  ['bankAccount']['bankName']
-	#todo proverit` kostil
-	Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][0]['description']
+	dzk_auction.Перевірити дані в ЦБД для  ['auctionID']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotIdentifier']
+	#todo hz 4to tut delat`
+	#dzk_auction.Перевірити дані в ЦБД для  ['title']
+	dzk_auction.Перевірити дані в ЦБД для  ['description']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['identifier']['legalName']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['identifier']['id']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['address']['postalCode']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['address']['region']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['address']['locality']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['address']['streetAddress']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['name']
+	dzk_auction.Перевірити дані в ЦБД для  ['lotHolder']['contactPoint']['email']
+	#todo hz 4e tut delat`
+	#dzk_auction.Перевірити дані в ЦБД для  ['auctionPeriod']['shouldStartAfter']
+	#todo v cbd idet ne to zna4eniie
+	#dzk_auction.Перевірити дані в ЦБД для  ['tenderAttempts']
+	dzk_auction.Перевірити дані в ЦБД для  ['minNumberOfQualifiedBids']
+	dzk_auction.Перевірити дані в ЦБД для  ['contractTerms']['leaseTerms']['leaseDuration']
+	dzk_auction.Перевірити дані в ЦБД для  ['value']['amount']
+	dzk_auction.Перевірити дані в ЦБД для  ['minimalStep']['amount']
+	dzk_auction.Перевірити дані в ЦБД для  ['guarantee']['amount']
+	dzk_auction.Перевірити дані в ЦБД для  ['budgetSpent']['amount']
+	dzk_auction.Перевірити дані в ЦБД для  ['registrationFee']['amount']
+	dzk_auction.Перевірити дані в ЦБД для  ['bankAccount']['bankName']
+	#todo hz 4to tut delat`
+	#dzk_auction.Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][0]['description']
 	: FOR  ${i}  IN RANGE  0  9
-    \  Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][${i}]['id']
-	Перевірити дані в ЦБД для  ['items'][0]['description']
-	Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][1]['id']
-	Перевірити дані в ЦБД для  ['items'][0]['classification']['description']
-	Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][0]['description']
-	Перевірити дані в ЦБД для  ['items'][0]['quantity']
-	Перевірити дані в ЦБД для  ['items'][0]['unit']['name']
-	Перевірити дані в ЦБД для  ['items'][0]['address']['postalCode']
-	Перевірити дані в ЦБД для  ['items'][0]['address']['locality']
-	Перевірити дані в ЦБД для  ['items'][0]['address']['streetAddress']
+    \  dzk_auction.Перевірити дані в ЦБД для  ['bankAccount']['accountIdentification'][${i}]['id']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['description']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][1]['id']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['classification']['description']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['additionalClassifications'][0]['description']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['quantity']
+	#todo hz 4to tut delat`
+	#dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['unit']['name']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['address']['postalCode']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['address']['locality']
+	dzk_auction.Перевірити дані в ЦБД для  ['items'][0]['address']['streetAddress']
+
+
+Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	dzk_auction.Переірити відображення для  ['auctionID']
+	dzk_auction.Переірити відображення для  ['lotIdentifier']
+	dzk_auction.Переірити відображення для  ['title']
+	dzk_auction.Переірити відображення для  ['description']
+	dzk_auction.Переірити відображення для  ['lotHolder']['identifier']['legalName']
+	dzk_auction.Переірити відображення для  ['lotHolder']['identifier']['id']
+	dzk_auction.Переірити відображення для  ['lotHolder']['address']['postalCode']
+	dzk_auction.Переірити відображення для  ['lotHolder']['address']['region']
+	dzk_auction.Переірити відображення для  ['lotHolder']['address']['locality']
+	dzk_auction.Переірити відображення для  ['lotHolder']['address']['streetAddress']
+	dzk_auction.Переірити відображення для  ['lotHolder']['contactPoint']['name']
+	dzk_auction.Переірити відображення для  ['lotHolder']['contactPoint']['email']
+	dzk_auction.Переірити відображення для  ['auctionPeriod']['shouldStartAfter']
+	#todo hz 4to tut delat`
+	#dzk_auction.Переірити відображення для  ['tenderAttempts']
+	#
+	dzk_auction.Переірити відображення для  ['minNumberOfQualifiedBids']
+	dzk_auction.Переірити відображення для  ['contractTerms']['leaseTerms']['years']
+	dzk_auction.Переірити відображення для  ['contractTerms']['leaseTerms']['months']
+	dzk_auction.Переірити відображення для  ['value']['amount']
+	dzk_auction.Переірити відображення для  ['minimalStep']['amount']
+	dzk_auction.Переірити відображення для  ['guarantee']['amount']
+	dzk_auction.Переірити відображення для  ['budgetSpent']['amount']
+	dzk_auction.Переірити відображення для  ['registrationFee']['amount']
+	dzk_auction.Переірити відображення для  ['bankAccount']['bankName']
+	dzk_auction.Переірити відображення для  ['bankAccount']['accountIdentification'][0]['description']
+	: FOR  ${i}  IN RANGE  0  9
+    \  dzk_auction.Переірити відображення для  ['bankAccount']['accountIdentification'][${i}]['id']
+	dzk_auction.Переірити відображення для  ['items'][0]['description']
+	dzk_auction.Переірити відображення для  ['items'][0]['additionalClassifications'][1]['id']
+	dzk_auction.Переірити відображення для  ['items'][0]['classification']['id']
+	dzk_auction.Переірити відображення для  ['items'][0]['classification']['description']
+	dzk_auction.Переірити відображення для  ['items'][0]['additionalClassifications'][0]['id']
+	dzk_auction.Переірити відображення для  ['items'][0]['additionalClassifications'][0]['description']
+	dzk_auction.Переірити відображення для  ['items'][0]['quantity']
+	#todo hz 4to tut delat`
+	#dzk_auction.Переірити відображення для  ['items'][0]['unit']['name']
+	dzk_auction.Переірити відображення для  ['items'][0]['address']['postalCode']
+	dzk_auction.Переірити відображення для  ['items'][0]['address']['region']
+	dzk_auction.Переірити відображення для  ['items'][0]['address']['locality']
+	dzk_auction.Переірити відображення для  ['items'][0]['address']['streetAddress']
+
+
+
+
+
+
 ###########################################################################
 ################################# /STEPS ##################################
 ###########################################################################
@@ -94,6 +146,7 @@ Variables  dzk_variables.py
 ################################# COMMON ##################################
 ###########################################################################
 Натиснути створити аукціон
+	Wait Until Element Is Visible  //*[@data-qa='button-create-auction']  15
 	Click Element  //*[@data-qa='button-create-auction']
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
@@ -102,8 +155,10 @@ Variables  dzk_variables.py
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-    Sleep  3
-    Дочекатись закінчення загрузки сторінки(skeleton)
+    Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  Аукціон було успішно
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Опублікувати аукціон у реєстрі
@@ -112,9 +167,10 @@ Variables  dzk_variables.py
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-	Sleep  2
-	Capture Page Screenshot
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Element Is Visible  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Be Equal  ${notice text}  Аукціон було успішно опубліковано
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Отримати UAID та href для Аукціону
@@ -132,7 +188,7 @@ Variables  dzk_variables.py
 
 Перевірити коректність UAID для Аукціону
 	[Arguments]  ${UAID is}
-	${date now}  Evaluate  '{:%Y-%m-%d}'.format(datetime.datetime.now())  modules=datetime
+	${date now}  Evaluate  '{:%Y-%m-%d}'.format(datetime.datetime.now())  datetime
 	${UAID should}  Set Variable  UA-PS-${date now}
 	Should Contain  ${UAID is}  ${UAID should}
 
@@ -140,9 +196,7 @@ Variables  dzk_variables.py
 Отримати ID у цбд
     ${cdb locator}  Set Variable  //*[text()='Перейти']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
-    ${cdb id}  do_regex  find  [a-z0-9]{32}  ${cdb href}
-	#todo delete
-    #Evaluate  re.sub(r'.*(auctions/)', '', re.sub(r'[?].*', '', '${cdb href}'))  modules=re #tod smell like shit)
+    ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
     Set To Dictionary  ${dzk_data}  id  ${cdb id}
 ###########################################################################
 ################################# /COMMON #################################
@@ -236,7 +290,7 @@ Variables  dzk_variables.py
 	${title}  create_sentence  5
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['title']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
-	Set To Dictionary  ${dzk_data}  title  [ТЕСТУВАННЯ] ${title}
+	Set To Dictionary  ${dzk_data}  title  ${title}
 
 
 Заповнити description
@@ -270,13 +324,10 @@ Variables  dzk_variables.py
 Заповнити lotHolder.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	${region}  do_regex  find  \((.*?)\)  ${locality}
+	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
 	Set To Dictionary  ${dzk_data['lotHolder']['address']}  region  ${region}
-	#todo Delete
-	#Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re #todo need code reviewe
-	${locality}  go_regex  sub  .\(.*  ${locality}
+	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
 	Set To Dictionary  ${dzk_data['lotHolder']['address']}  locality  ${locality}
-	#Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re #todo need code review
 
 
 Заповнити lotHolder.address.streetAddress
@@ -303,18 +354,23 @@ Variables  dzk_variables.py
 
 Заповнити auctionPeriod.shouldStartAfter
 	${delta minutes}  Set Variable  33
-	${endDate}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  modules=datetime
+	${start}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  datetime
+	${start without s}  Evaluate  re.sub(r'.{3}$','','${start}')  re
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['auctionPeriod']['shouldStartAfter']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${endDate}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${start}
 	Click Element  ${selector}/ancestor::*[contains(@class,'item-content')]
 	Sleep  .5
-	Set To Dictionary  ${dzk_data['auctionPeriod']}  shouldStartAfter  ${endDate}
+	Set To Dictionary  ${dzk_data['auctionPeriod']}  shouldStartAfter  ${start without s}
 
 
 Заповнити tenderAttempts
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['tenderAttempts']
     ${tenderAttempts}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
+	#todo tut kostil` poka ne pofiksiat
 	Set To Dictionary  ${dzk_data}  tenderAttempts  ${tenderAttempts}
+	Run Keyword If  '${tenderAttempts}' == 'Невідомо'
+	...  dzk_auction.Заповнити tenderAttempts
+
 
 
 Заповнити minNumberOfQualifiedBids
@@ -331,21 +387,20 @@ Variables  dzk_variables.py
 	${leaseDuration}  Set Variable If
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	#todo ${leaseDuration}  Evaluate  re.sub(r'P[0-9]*Y', 'P${years}Y', "${leaseDuration}")  modules=re
-	${leaseDuration}  do_regex  sub  P[0-9]*Y  ${leaseDuration}  'P${years}Y'
+	${leaseDuration}  Evaluate  re.sub(r'P[0-9]*Y', 'P${years}Y', '${leaseDuration}')  re
+	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  leaseDuration  ${leaseDuration}
 
 
 Заповнити contractTerms.leaseTerms.months
-	${months}  random_number  1  100
+	${months}  random_number  1  12
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['contractTerms']['leaseTerms']['months']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${months}
 	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  months  ${months}
 	${leaseDuration}  Set Variable If
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	#todo ${leaseDuration}  Evaluate  re.sub(r'Y[0-9]*M', 'Y${months}M', "${leaseDuration}")  modules=re
-	${leaseDuration}  do_regex  sub  Y[0-9]*M  ${leaseDuration}  'Y${months}M'
-
+	${leaseDuration}  Evaluate  re.sub(r'Y[0-9]*M', 'Y${months}M', '${leaseDuration}')  re
+	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  leaseDuration  ${leaseDuration}
 
 
 Заповнити value.amount
@@ -394,7 +449,7 @@ Variables  dzk_variables.py
 	${description}  create_sentence  3
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['bankAccount']['accountIdentification'][0]['description']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][0]}  [Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] description  ${description}
+	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][0]}  description  ${description}
 
 
 Заповнити bankAccount.accountIdentification.(num).id
@@ -423,22 +478,18 @@ Variables  dzk_variables.py
 Заповнити items.0.classification.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['classification']['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	#todo ${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  modules=re
-	${id}  do_regex  find  [0-9]*[-][0-9]*  ${description}
+	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  re
 	Set To Dictionary  ${dzk_data['items'][0]['classification']}  id  ${id}
-	#todo ${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}")  modules=re
-	${description}  do_regex  sub  [0-9]*[-][0-9]*.  ${description}
+	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}", 1)  re
 	Set To Dictionary  ${dzk_data['items'][0]['classification']}  description  ${description}
 
 
 Заповнити items.0.additionalClassifications.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['additionalClassifications'][0]['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	#todo ${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  modules=re
-	${id}  do_regex  find  [0-9]*[.][0-9]*  ${description}
+	${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  re
 	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  id  ${id}
-	#todo ${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 0)  modules=re
-	${description}  do_regex  sub  [0-9]*[.][0-9]*.  ${description}
+	${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 1)  re
 	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  description  ${description}
 
 
@@ -467,11 +518,9 @@ Variables  dzk_variables.py
 Заповнити items.0.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	#todo ${region}  Evaluate  ((re.findall(r'[(].+[^)]', '${locality}'))[0]).replace('(','')  modules=re
-	${region}  do_regex  find  \((.*?)\)  ${locality}
+	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
 	Set To Dictionary  ${dzk_data['items'][0]['address']}  region  ${region}
-	#${locality}  Evaluate  ((re.findall(r'.*[(]', '${locality}'))[0]).replace(' (','')  modules=re
-	${locality}  go_regex  sub  .\(.*  ${locality}
+	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
 	Set To Dictionary  ${dzk_data['items'][0]['address']}  locality  ${locality}
 
 
@@ -496,51 +545,35 @@ Variables  dzk_variables.py
 	[Return]  ${selector}
 
 
+Отритами дані зі сторінки
+ 	[Arguments]  ${field}
+ 	${selector}  Set Variable  ${dzk_view_locators${field}}
+ 	Wait Until Element Is Visible  ${selector}  10
+ 	${value}  Get Text  ${selector}
+ 	${field value}  get_page_values  ${field}  ${value}
+ 	[Return]  ${field value}
 
-# Отритами дані зі сторінки
-# 	[Arguments]  ${field}
-# 	${selector}  dzk_auction.Отримати локатор по назві поля	${field}
-# 	Wait Until Element Is Visible  ${selector}  10
-# 	${value}  Get Text  ${selector}
-# 	${field value}  Парсінг за необхідністью  ${field}  ${value}
-# 	[Return]  ${field value}
-#
-#
-# Переірити відображення для
-# 	[Arguments]  ${field}
-# 	${value should}  Set Variable  ${dzk_data${field}}
-# 	${value is}  Отритами дані зі сторінки  ${field}
-# 	Should Be Equal  ${value should}  ${value is}
-#
-#
+
+Переірити відображення для
+ 	[Arguments]  ${field}
+ 	${value should}  Set Variable  ${dzk_data${field}}
+ 	${value is}  dzk_auction.Отритами дані зі сторінки  ${field}
+	Should Be Equal  ${value is}  ${value should}
+
+
 Перевірити дані в ЦБД для
 	[Arguments]  ${field}
 	${value should}  Set Variable  ${cdb_data${field}}
 	${value is}  Set Variable  ${dzk_data${field}}
-	${is equal}  Порівняти дані  ${value is}  ${value should}
-	Run Keyword If  ${is equal} == ${False}
-	...  Fail  Oops, в ЦБД пішли не ті дані!!!
+	Порівняти дані  ${value is}  ${value should}
 
 
 Порівняти дані
 	[Arguments]  ${is}  ${should}
-	${result}  Set Variable  ${False}
-	${result}  Evaluate  ${result} or ("${is}" == "${should}")
-	${result}  Evaluate  ${result} or (float(${is}) == float(${should}))
-	Run Keyword If  ${result} == ${False}
-	...  Run Keyword And Ignore Error  ${is}  Конвертувати дату в формат ЦБД  ${is}
-	...  ${result}  Evaluate  ${result} or (${is}  in  ${should})
-	[Return]  ${result}
+	${is equal}  compare_values  ${is}  ${should}
+	Run Keyword If  ${is equal} == ${False}
+	...  Fail  Oops, перепуталися дані!!!{${should} != ${is}}
 
 ###########################################################################
 ################################# /CHECK ##################################
 ###########################################################################
-Конвертувати дату в формат ЦБД
-	[Arguments]  ${date}
-	${years}  do_regex  find  [0-9]{4}  ${date}
-	${months}  do_regex  find  \.([0-9]{2})\.  ${date}
-	${days}  do_regex  find  ^[0-9]{2}  ${date}
-	${hours}  do_regex  find  \ ([0-9]{2})\:  ${date}
-	${minutes}  do_regex  find  \:([0-9]{2})\:  ${date}
-	${seconds}  do_regex  find  [0-9]{2}$  ${date}
-	[Return]  ${years}-${months}-${days}T${hours}:${minutes}:${seconds}
