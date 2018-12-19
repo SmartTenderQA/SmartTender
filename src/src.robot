@@ -219,6 +219,14 @@ Stop The Whole Test Execution If Previous Test Failed
 	Run Keyword If  '${PREV TEST STATUS}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
 
 
+Input Type Flex
+  [Arguments]    ${locator}    ${text}
+  [Documentation]    write text letter by letter
+  ${items}    Get Length    ${text}
+  : FOR    ${item}    IN RANGE    ${items}
+  \    Press Key    ${locator}    ${text[${item}]}
+
+
 Дочекатись дати
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
