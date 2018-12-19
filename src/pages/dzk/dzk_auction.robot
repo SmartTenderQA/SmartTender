@@ -404,14 +404,14 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 
 Заповнити value.amount
-	${value}  random_number  1000000  10000000
+	${value}  random_number  10000  500000
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['value']['amount']
 	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${value}
 	Set To Dictionary  ${dzk_data['value']}  amount  ${value}
 
 
 Заповнити minimalStep.amount
-	${minimalStep}  random_number  10000  1000000
+	${minimalStep}  random_number  100  10000
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['minimalStep']['amount']
 	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${minimalStep}
 	Set To Dictionary  ${dzk_data['minimalStep']}  amount  ${minimalStep}
@@ -494,8 +494,8 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 
 Заповнити items.0.quantity
-	${first}  random_number  1  100000
-	${second}  random_number  1  1000
+	${first}  random_number  1  1000
+	${second}  random_number  1  100
     ${quantity}  Evaluate  str(round(float(${first})/float(${second}), 3))
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['quantity']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${quantity}
