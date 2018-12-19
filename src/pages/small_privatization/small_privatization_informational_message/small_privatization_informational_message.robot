@@ -42,6 +42,8 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
+	Wait Until Element Is Visible  //*[@class='ivu-message']  15
+	Capture Page Screenshot
     Дочекатись Закінчення Загрузки Сторінки
 
 
