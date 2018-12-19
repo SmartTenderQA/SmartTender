@@ -48,13 +48,13 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Ввести унікальний код об'єкту
     ${id}  Get From Dictionary  ${data['object']}  UAID
 	${selector}  Set Variable  //*[contains(text(),'Унікальний код')]/following-sibling::*//input
-    small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${id}
+    Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${id}
 
 
 Заповнити decision.title
 	${title}  create_sentence  5
 	${selector}  Set Variable  //div[@class='ivu-form-item']//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
 	${decision}  Create Dictionary  title  ${title}
 	Set To Dictionary  ${data['message']}  decision  ${decision}
 
@@ -64,14 +64,14 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	${second}  random_number  100  1000
 	${number}  Set Variable  ${first}/${second}-${first}
 	${selector}  Set Variable  (//h4[contains(., 'Рішення органу приватизації про затверждення умов продажу')]//following-sibling::*//input)[2]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['message']['decision']}  number  ${number}
 
 
 Заповнити decision.date
 	${date}  smart_get_time  0  m
 	${selector}  Set Variable  //div[@class='ivu-input-wrapper ivu-input-type ivu-date-picker-editor']//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
 	Set To Dictionary  ${data['message']['decision']}  date  ${date}
 
 
@@ -92,15 +92,15 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити conditions.date
-	${delta days}  Set Variable  9
+	${delta days}  Set Variable  5
 	${delta minutes}  Set Variable  13
-	${date + delta prod}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(days=int(${delta days})))  modules=datetime
-	${date + delta test}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  modules=datetime
+	${date + delta prod}  get_time_no_weekend  ${delta days}  days
+	${date + delta test}  get_time_no_weekend  ${delta minutes}  minutes
 	${date + delta}  Set Variable If
 	...  '${site}' == 'test'  ${date + delta test}
 	...  '${site}' == 'prod'  ${date + delta prod}
 	${selector}  Set Variable  //*[contains(text(),'Дата проведення аукціону')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
 	${conditions}  Create Dictionary  date  ${date + delta}
@@ -110,56 +110,56 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Заповнити conditions.period
 	${period}  random_number  20  35
 	${selector}  Set Variable  //*[contains(text(),'Період між аукціонами')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${period}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${period}
 	Set To Dictionary  ${data['message']['conditions']}  period  ${period}
 
 
 Заповнити conditions.startPrice
 	${startPrice}  random_number  100000  1000000
 	${selector}  Set Variable  //*[contains(text(),'Стартова ціна об’єкта')]/following-sibling::*//input[@type='text']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${startPrice}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${startPrice}
 	Set To Dictionary  ${data['message']['conditions']}  startPrice  ${startPrice}
 
 
 Заповнити conditions.step
 	${step}  random_number  1000  10000
 	${selector}  Set Variable  //*[contains(text(),'Крок аукціону')]/following-sibling::*//input[@type='text']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${step}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${step}
 	Set To Dictionary  ${data['message']['conditions']}  step  ${step}
 
 
 Заповнити conditions.warrantyFee
 	${warrantyFee}  random_number  100  5000
 	${selector}  Set Variable  //*[contains(text(),'Розмір гарантійного внеску')]/following-sibling::*//input[@type='text']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${warrantyFee}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${warrantyFee}
 	Set To Dictionary  ${data['message']['conditions']}  warrantyFee  ${warrantyFee}
 
 
 Заповнити conditions.registrationFee
 	${registrationFee}  random_number  100  5000
 	${selector}  Set Variable  //*[contains(text(),'Реєстраційний внесок')]/following-sibling::*//input[@type='text']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${registrationFee}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${registrationFee}
 	Set To Dictionary  ${data['message']['conditions']}  registrationFee  ${registrationFee}
 
 
 Заповнити conditions.stepCount
 	${stepCount}  random_number  1  99
 	${selector}  Set Variable  //*[contains(text(),'Кількість кроків')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${stepCount}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${stepCount}
 	Set To Dictionary  ${data['message']['conditions']}  stepCount  ${stepCount}
 
 
 Заповнити bank.name
 	${bankName}  create_sentence  5
 	${selector}  Set Variable  //*[contains(text(),'Найменування банку')]/following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${bankName}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${bankName}
 	${bank}  Create Dictionary  bankName  ${bankName}
 	Set To Dictionary  ${data['message']}  bank  ${bank}
 
 
 Заповнити bank.Requisites.type
 	${selector}  Set Variable  //*[contains(text(),'Тип реквізиту')]/../following-sibling::*
-	${type}  Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  Номер рахунку
+	${type}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  Номер рахунку
 	${dict}  Create Dictionary  type  ${type}
 	${Requisites}  Create Dictionary  type  ${type}
 	Set To Dictionary  ${data['message']['bank']}  requisites  ${Requisites}
@@ -168,14 +168,14 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Заповнити bank.Requisites.value
 	${value}  random_number  1000000  9999999
 	${selector}  Set Variable  //*[contains(text(),'Значення')]/../following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${value}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${value}
 	Set To Dictionary  ${data['message']['bank']['requisites']}  value  ${value}
 
 
 Заповнити bank.Requisites.description
 	${description}  create_sentence  10
 	${selector}  Set Variable  //*[contains(text(),'Опис')]/../following-sibling::*//input
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
 	Set To Dictionary  ${data['message']['bank']['requisites']}  description  ${description}
 
 

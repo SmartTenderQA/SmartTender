@@ -57,21 +57,21 @@ Variables  small_privatization_object_variables.py
 	${text}  create_sentence  5
 	${title}  Set Variable  ${text}
 	${selector}  Set Variable  //*[@data-qa='input-title']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
 	Set To Dictionary  ${data['object']}  title  ${title}
 
 
 Заповнити description
 	${description}  create_sentence  20
 	${selector}  Set Variable  //*[@data-qa='input-description']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
 	Set To Dictionary  ${data['object']}  description  ${description}
 
 
 Заповнити decision.title
 	${title}  create_sentence  5
 	${selector}  Set Variable  //*[@data-qa='input-decision-title']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
 	${decision}  Create Dictionary  title  ${title}
 	Set To Dictionary  ${data['object']}  decision  ${decision}
 
@@ -81,28 +81,28 @@ Variables  small_privatization_object_variables.py
 	${second}  random_number  100  1000
 	${number}  Set Variable  ${first}/${second}-${first}
 	${selector}  Set Variable  //*[@data-qa='input-decision-number']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['object']['decision']}  number  ${number}
 
 
 Заповнити decision.date
 	${date}  smart_get_time  0  m
 	${selector}  Set Variable  //*[@data-qa='datepicker-decision-date']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
 	Set To Dictionary  ${data['object']['decision']}  date  ${date}
 
 
 Заповнити items.description
 	${description}  create_sentence  20
 	${selector}  Set Variable  //*[@data-qa='input-items-description']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
 	${items}  Create Dictionary  description  ${description}
 	Set To Dictionary  ${data['object']}  item  ${items}
 
 
 Заповнити items.kind
     ${selector}  Set Variable  //*[@data-qa='select-items-object-kind']
-	${kind}  small_privatization.Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  102
+	${kind}  Wait Until Keyword Succeeds  30  3  small_privatization.Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  102
    	Should Not Be Empty  ${kind}
 	Set To Dictionary  ${data['object']['item']}  kind  ${kind}
 
@@ -112,7 +112,7 @@ Variables  small_privatization_object_variables.py
 	${second}  random_number  1  1000
     ${count}  Evaluate  str(round(float(${first})/float(${second}), 3))
 	${selector}  Set Variable  //*[@data-qa='input-item-count']//*[@autocomplete="off"]
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${count}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${count}
 	Set To Dictionary  ${data['object']['item']}  count  ${count}
 
 
@@ -126,7 +126,7 @@ Variables  small_privatization_object_variables.py
 Заповнити items.postalcode
 	${postalcode}  random_number  10000  99999
 	${selector}  Set Variable  //div[contains(@class,'address-label') and not(contains(@class,'offset '))]//input[@type='text']
-	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${postalcode}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${postalcode}
 	Set To Dictionary  ${data['object']['item']}  postalcode  ${postalcode}
 
 
@@ -146,7 +146,7 @@ Variables  small_privatization_object_variables.py
 Заповнити items.streetAddress
     ${address}  get_some_uuid
    	${selector}  Set Variable  //*[@data-qa='component-item-address']/div[contains(@class,'ivu-form-item-required')]//input
-   	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${address}
+   	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${address}
     Set To Dictionary  ${data['object']['item']}  address  ${address}
 
 

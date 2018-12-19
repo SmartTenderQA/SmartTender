@@ -165,18 +165,31 @@ def get_time_now_with_deviation(v, deviation):
     return ('{:%d.%m.%Y %H:%M}'.format(time))
 
 
-# def get_time_no_weekend(v, deviation):
-#     weekends = {
-#         datetime.date(2018, , 18)
-#     }
-#     time = datetime.now()
-#     for i in range(0, v):
-#         time = datetime.now() + timedelta(days=v)
-#         if time.weekday() > 4:
-#             v = v + 1
-#         elif
-#     return time
-
+def get_time_no_weekend(v, deviation):
+    delta = int(v)
+    weekends = {
+        '2018-1-1',
+        '2018-1-7',
+        '2018-3-8',
+        '2018-4-8',
+        '2018-5-1',
+        '2018-5-9',
+        '2018-5-27',
+        '2018-6-28',
+        '2018-8-24',
+        '2018-10-14',
+        '2018-12-24',
+        '2018-12-25',
+    }
+    for i in range(0, delta + 1):
+        if deviation == 'days':
+            delta_days = timedelta(days=delta)
+        elif deviation == 'minutes':
+            delta_days = timedelta(minutes=delta)
+        time = datetime.now() + delta_days
+        if time.weekday() > 4 or '{:%Y-%m-%d}'.format(time) in weekends:
+            delta = delta + 2
+    return '{:%d.%m.%Y %H:%M:%S}'.format(time)
 
 
 def no_weekend(date):
