@@ -1,7 +1,7 @@
 *** Keywords ***
 Статус тендера повинен бути
     [Arguments]  ${status should}
-    ${status is}  Отритами дані зі сторінки  ['status']
+    ${status is}  procurement_tender_detail.Отритами дані зі сторінки  ['status']
     Should Be Equal  '${status should}'  '${status is}'
 
 
@@ -13,7 +13,7 @@
 
 Перевірити коректність даних на сторінці
     [Arguments]  ${field}
-    ${value}  Отритами дані зі сторінки  ${field}
+    ${value}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
     Should Be Equal  ${value}  ${data${field}}
 
 
@@ -25,7 +25,7 @@
 
 Дочекатись закінчення прийому пропозицій
     Reload Page
-    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    ${tender end date}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderPeriod']['endDate']
     Дочекатись дати  ${tender end date}
 
 
@@ -39,6 +39,6 @@
 
 
 Дочекатись початку періоду перкваліфікації
-    ${tender end date}  Отритами дані зі сторінки  ['tenderPeriod']['endDate']
+    ${tender end date}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderPeriod']['endDate']
     Дочекатись дати  ${tender end date}
     Дочекатися статусу тендера  Прекваліфікація

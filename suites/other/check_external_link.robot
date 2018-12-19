@@ -16,11 +16,11 @@ Test Teardown  			Run Keywords
 	old_search.Активувати вкладку Державних закупівель
 	Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	${id}  Отритами дані зі сторінки  ['prozorro-number']
-	${title}  Отритами дані зі сторінки  ['title']
+	${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-number']
+	${title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	${link}  Сформувати пряме посилання на тендер  ${id}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	${new_title}  Отритами дані зі сторінки  ['title']
+	${new_title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	Should Be Equal  ${title}  ${new_title}
 
 
