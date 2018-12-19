@@ -40,8 +40,10 @@ Variables  small_privatization_object_variables.py
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-    Sleep  3
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  успішно
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Опублікувати об'єкт у реєстрі
@@ -50,7 +52,10 @@ Variables  small_privatization_object_variables.py
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  успішно
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Заповнити title
