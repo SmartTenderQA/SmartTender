@@ -96,7 +96,7 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
 
 Перевірити назву на сторінці лота
   [Arguments]  ${lot_title}
-  ${text}  Отритами дані зі сторінки  ['title']
+  ${text}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
   Should Be Equal  ${text}  ${lot_title}
 
 

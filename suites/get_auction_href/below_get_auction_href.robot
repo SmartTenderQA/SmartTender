@@ -37,7 +37,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     [Tags]  create_tender
     Створити словник  cdb
     Go To  ${data['tender_href']}
-    ${id}  Отритами дані зі сторінки  ['prozorro-id']
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Зберегти словник у файл  ${cdb}  cdb
 
