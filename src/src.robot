@@ -166,6 +166,7 @@ Start in grid
 	#...  '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}  						ELSE IF
 	#...  '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
 	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
+	Set Window Size  1440  900
 
 
 Додати першого користувача
