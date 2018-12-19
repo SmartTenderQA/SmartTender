@@ -77,9 +77,7 @@ Variables  small_privatization_object_variables.py
 
 
 Заповнити decision.number
-	${first}  random_number  1000  10000
-	${second}  random_number  100  1000
-	${number}  Set Variable  ${first}/${second}-${first}
+	${number}  random_number  1000  1000000
 	${selector}  Set Variable  //*[@data-qa='input-decision-number']//*[@autocomplete="off"]
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['object']['decision']}  number  ${number}
