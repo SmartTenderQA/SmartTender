@@ -498,7 +498,10 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда землі  select
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	new_search.Перейти по результату пошуку за номером  1
+	${status}  Run Keyword And Return Status  new_search.Перейти по результату пошуку за номером  1
+	Run Keyword If  '${status}' == 'False'  Run Keywords
+	...  Go back  AND
+	...  new_search.Перейти по результату пошуку за номером  2
 	Перевірити тип процедури для аукціонів  Оренда землі
 
 
