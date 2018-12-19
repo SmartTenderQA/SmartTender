@@ -131,6 +131,7 @@ If skipped create tender
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 
+
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}
 	Завантажити сесію для  ${role}

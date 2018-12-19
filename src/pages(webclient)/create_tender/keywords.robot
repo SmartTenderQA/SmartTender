@@ -14,7 +14,7 @@
 	Clear Element Text  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
-	#Press Key  ${selector}  \\13
+	Press Key  ${selector}  \\13
 	Should Be Equal  ${got}  ${text}
 
 

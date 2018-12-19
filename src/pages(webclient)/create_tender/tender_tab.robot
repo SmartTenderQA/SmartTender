@@ -30,7 +30,11 @@ Resource        keywords.robot
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Заповнити поле  ${selector}  ${value}  #TODO пробний варіант
+    # очистити поле с датою
+	Click Element  xpath=//*[text()="до"]/following-sibling::table//input
+	Click Element  xpath=//*[text()="до"]/following-sibling::table//input/../following-sibling::*
+	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
+    Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
 
 
 Заповнити "Очікувана вартість закупівлі"

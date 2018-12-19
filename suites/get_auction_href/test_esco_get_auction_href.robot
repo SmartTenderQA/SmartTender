@@ -159,6 +159,7 @@ Fill ESCO
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
+	Go Back
 
 
 Перевірити можливість отримати посилання на аукціон користувачем
