@@ -69,12 +69,9 @@ If skipped create tender
 	Дочекатися статусу тендера  Аукціон  10m
 
 
-Отримати поcилання на участь та перегляд аукціону першим учасником
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Wait Until Keyword Succeeds  4m  3  Отримати URL для участі в аукціоні
-	${auction_href}  			Отримати URL на перегляд
-	Set Global Variable  		${auction_href}
-	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
+Отримати посилання на аукціон для першого учасника
+    Wait Until Keyword Succeeds  5m  3
+    ...  Отримати поcилання на участь та перегляд аукціону першим учасником
 
 
 Отримати поcилання на перегляд аукціону
@@ -104,6 +101,15 @@ If skipped create tender
 Зберегти пряме посилання на тендер
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
+
+
+Отримати поcилання на участь та перегляд аукціону першим учасником
+	Reload Page
+	Натиснути кнопку "До аукціону"
+	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_href}  			Отримати URL на перегляд
+	Set Global Variable  		${auction_href}
+	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перевірити сторінку участі в аукціоні
