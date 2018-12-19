@@ -17,7 +17,7 @@ Test Teardown  			Run Keywords
 	Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
 	${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-number']
-	${title}  Оprocurement_tender_detail.Отритами дані зі сторінки  ['title']
+	${title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	${link}  Сформувати пряме посилання на тендер  ${id}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${new_title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
