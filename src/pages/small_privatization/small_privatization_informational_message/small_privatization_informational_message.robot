@@ -33,7 +33,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	${save btn}  Set variable  //div[@class='ivu-col ivu-col-span-6']//button[@type='button']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  було
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Опублікувати інформаційне повідомлення у реєстрі
@@ -42,9 +45,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-	Wait Until Element Is Visible  //*[@class='ivu-message']  15
-	Capture Page Screenshot
-    Дочекатись Закінчення Загрузки Сторінки
+	Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  було опубліковано
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Ввести унікальний код об'єкту
@@ -92,10 +96,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити conditions.date
-	${delta days}  Set Variable  9
+	${delta days}  Set Variable  6
 	${delta minutes}  Set Variable  13
-	${date + delta prod}  get_time_no_weekend  ${delta days}  days
-	${date + delta test}  get_time_no_weekend  ${delta minutes}  minutes
+	${date + delta prod}  get_formated_time_with_delta  ${delta days}  days  s
+	${date + delta test}  get_formated_time_with_delta  ${delta minutes}  minutes  s
 	${date + delta}  Set Variable If
 	...  '${site}' == 'test'  ${date + delta test}
 	...  '${site}' == 'prod'  ${date + delta prod}
@@ -185,7 +189,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${send-to-verification btn}
 	Click Element  ${send-to-verification btn}
-    Дочекатись Закінчення Загрузки Сторінки
+    Wait Until Page Contains Element  ${notice message}  15
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  було передано на перевірку
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Дочекатися опублікування посилання на лот
