@@ -62,9 +62,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити decision.number
-	${first}  random_number  1000  10000
-	${second}  random_number  100  1000
-	${number}  Set Variable  ${first}/${second}-${first}
+	${number}  random_number  1000  1000000
 	${selector}  Set Variable  (//h4[contains(., 'Рішення органу приватизації про затверждення умов продажу')]//following-sibling::*//input)[2]
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
 	Set To Dictionary  ${data['message']['decision']}  number  ${number}
