@@ -92,7 +92,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 Заповнити conditions.date
-	${delta days}  Set Variable  5
+	${delta days}  Set Variable  7
 	${delta minutes}  Set Variable  13
 	${date + delta prod}  get_time_no_weekend  ${delta days}  days
 	${date + delta test}  get_time_no_weekend  ${delta minutes}  minutes
