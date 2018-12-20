@@ -56,3 +56,10 @@
 Додати документ до тендара власником (webclient)
     Перейти на вкладку документи (webclient)
     Додати документ власником
+
+
+Очистити поле с датою
+    [Arguments]  ${selector}
+	Click Element  ${selector}
+	Click Element  ${selector}/../following-sibling::*
+	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
