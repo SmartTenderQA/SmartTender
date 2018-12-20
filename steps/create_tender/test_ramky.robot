@@ -134,8 +134,7 @@
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    #Заповнити "Строк поставки з"  ${value}
-    Заповнити та перевірити поле с датою  Строк поставки з  ${value}
+    Заповнити "Строк поставки з"  ${value}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${value}
 
 Заповнити endDate для item
