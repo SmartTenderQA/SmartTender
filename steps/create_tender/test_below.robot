@@ -24,7 +24,8 @@
     ${value}  Create Dictionary  endDate=${date}
     Set To Dictionary  ${data}  enquiryPeriod  ${value}
     #Заповнити "Обговорення закупівлі до"  ${date}
-    Заповнити та перевірити поле с датою  Обговорення закупівлі до  ${date}
+    Wait Until Keyword Succeeds  30  2
+    ...  Заповнити та перевірити поле с датою  Обговорення закупівлі до  ${date}
 
 
 Заповнити startDate періоду пропозицій
@@ -32,13 +33,15 @@
     ${value}  Create Dictionary  startDate=${date}
     Set To Dictionary  ${data}  tenderPeriod  ${value}
     #Заповнити "Прийом пропозицій з"  ${date}
-    Заповнити та перевірити поле с датою  Прийом пропозицій з  ${date}
+    Wait Until Keyword Succeeds  30  2
+    ...  Заповнити та перевірити поле с датою  Прийом пропозицій з  ${date}
 
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
-    Заповнити "Прийом пропозицій по"  ${date}
+    Wait Until Keyword Succeeds  30  2
+    ...  Заповнити "Прийом пропозицій по"  ${date}
 
 
 Заповнити amount для tender

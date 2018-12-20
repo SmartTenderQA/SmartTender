@@ -99,21 +99,13 @@ If skipped create tender
     Зберегти словник у файл  ${data}  data
 
 
-Підготувати учасників до участі в тендері на 2-ий етап
-    Close All Browsers
-    Start  user1  provider1
-    Start  user2  provider2
-    Start  user3  provider3
-
-
 Подати заявку на участь в тендері трьома учасниками на 2-му етапі
 	:FOR  ${user}  IN  provider1  provider2  provider3
 	\  Прийняти участь у тендері учасником  ${user}
 
 
 Підготувати учасників для отримання посилання на аукціон
-    Close All Browsers
-    Start  user1  provider1
+    Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
 
 

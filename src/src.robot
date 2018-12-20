@@ -163,11 +163,13 @@ Start in grid
 	${platform}  Evaluate  random.choice(${a})  random
 	Run Keyword If
 	...  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:${platform}  ELSE IF
-	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	ELSE IF
+	#  ${capability} == linux только для теста   prod    download_upload_docs
+	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	#ELSE IF
 	#...  '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP  		ELSE IF
 	#...  '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}  						ELSE IF
 	#...  '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
 	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
+	Set Window Size  1280  1024
 
 
 Додати першого користувача
@@ -232,5 +234,12 @@ Input Type Flex
 Дочекатись дати
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
-    Sleep  ${sleep}
+    ${count}  Evaluate  int(${sleep}/300)+1
+    Repeat Keyword  ${count} times  Очікування з перезагрузкою сторінки
+
+
+Очікування з перезагрузкою сторінки
+    Sleep  5m
+    Reload Page
+
 
