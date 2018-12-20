@@ -10,41 +10,6 @@ ${notice message}			//*[@class='ivu-notice-desc']
 ###########################################################################
 ################################## STEPS ##################################
 ###########################################################################
-Заповнити всі обов'язкові поля
-	dzk_auction.Заповнити lotIdentifier
-	dzk_auction.Заповнити title
-	dzk_auction.Заповнити description
-	dzk_auction.Заповнити lotHolder.identifier.legalName
-	dzk_auction.Заповнити lotHolder.identifier.id
-	dzk_auction.Заповнити lotHolder.address.postalCode
-	dzk_auction.Заповнити lotHolder.address.locality
-	dzk_auction.Заповнити lotHolder.address.streetAddress
-	dzk_auction.Заповнити lotHolder.contactPoint.name
-	dzk_auction.Заповнити lotHolder.contactPoint.email
-	dzk_auction.Заповнити auctionPeriod.shouldStartAfter
-	dzk_auction.Заповнити tenderAttempts
-	dzk_auction.Заповнити minNumberOfQualifiedBids
-	dzk_auction.Заповнити contractTerms.leaseTerms.years
-	dzk_auction.Заповнити contractTerms.leaseTerms.months
-	dzk_auction.Заповнити value.amount
-	dzk_auction.Заповнити minimalStep.amount
-	dzk_auction.Заповнити guarantee.amount
-	dzk_auction.Заповнити budgetSpent.amount
-	dzk_auction.Заповнити registrationFee.amount
-	dzk_auction.Заповнити bankAccount.bankName
-	dzk_auction.Заповнити bankAccount.accountIdentification.0.description
-	dzk_auction.Заповнити bankAccount.accountIdentification.(num).id
-	dzk_auction.Заповнити items.0.description
-	dzk_auction.Заповнити items.0.additionalClassifications.1.id
-	dzk_auction.Заповнити items.0.classification.description
-	dzk_auction.Заповнити items.0.additionalClassifications.description
-	dzk_auction.Заповнити items.0.quantity
-	dzk_auction.Заповнити items.0.unit.name
-	dzk_auction.Заповнити items.0.address.postalCode
-	dzk_auction.Заповнити items.0.address.locality
-	dzk_auction.Заповнити items.0.address.streetAddress
-
-
 Перевірити всі обов'язкові поля в цбд
 	dzk_auction.Перевірити дані в ЦБД для  ['auctionID']
 	dzk_auction.Перевірити дані в ЦБД для  ['lotIdentifier']
@@ -280,255 +245,200 @@ ${notice message}			//*[@class='ivu-notice-desc']
 ############################## INPUT FIELD ################################
 ###########################################################################
 Заповнити lotIdentifier
-	${lotNumber}  random_number  10000  1000000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotIdentifier']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${lotNumber}
-	Set To Dictionary  ${dzk_data}  lotIdentifier  ${lotNumber}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити title
-	${title}  create_sentence  5
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['title']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
-	Set To Dictionary  ${dzk_data}  title  ${title}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити description
-	${description}  create_sentence  20
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['description']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${dzk_data}  description  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.identifier.legalName
-	${legalName}  create_sentence  2
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['identifier']['legalName']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${legalName}
-	Set To Dictionary  ${dzk_data['lotHolder']['identifier']}  legalName  ${legalName}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.identifier.id
-	${id}  random_number  10000  100000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['identifier']['id']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${id}
-	Set To Dictionary  ${dzk_data['lotHolder']['identifier']}  id  ${id}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.address.postalCode
-	${postalCode}  random_number  10000  99999
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['address']['postalCode']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${postalCode}
-	Set To Dictionary  ${dzk_data['lotHolder']['address']}  postalCode  ${postalCode}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
-	Set To Dictionary  ${dzk_data['lotHolder']['address']}  region  ${region}
-	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
-	Set To Dictionary  ${dzk_data['lotHolder']['address']}  locality  ${locality}
+	[Return]  ${locality}
 
 
 Заповнити lotHolder.address.streetAddress
-	${streetAddress}  get_some_uuid
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['address']['streetAddress']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${streetAddress}
-	Set To Dictionary  ${dzk_data['lotHolder']['address']}  streetAddress  ${streetAddress}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.contactPoint.name
-	${name}  create_sentence  3
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['contactPoint']['name']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${name}
-	Set To Dictionary  ${dzk_data['lotHolder']['contactPoint']}  name  ${name}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити lotHolder.contactPoint.email
-	${text}  Generate Random String  6  [LETTERS][NUMBERS]
-	${email}  Set Variable  ${text}@gmail.com
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['lotHolder']['contactPoint']['email']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${email}
-	Set To Dictionary  ${dzk_data['lotHolder']['contactPoint']}  email  ${email}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctionPeriod.shouldStartAfter
-	${delta minutes}  Set Variable  33
-	${start}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  datetime
-	${start without s}  Evaluate  re.sub(r'.{3}$','','${start}')  re
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['auctionPeriod']['shouldStartAfter']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${start}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	Click Element  ${selector}/ancestor::*[contains(@class,'item-content')]
 	Sleep  .5
-	Set To Dictionary  ${dzk_data['auctionPeriod']}  shouldStartAfter  ${start without s}
 
 
 Заповнити tenderAttempts
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['tenderAttempts']
     ${tenderAttempts}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	#todo tut kostil` poka ne pofiksiat
-	Set To Dictionary  ${dzk_data}  tenderAttempts  ${tenderAttempts}
-	Run Keyword If  '${tenderAttempts}' == 'Невідомо'
-	...  dzk_auction.Заповнити tenderAttempts
+	[Return]  ${tenderAttempts}
 
 
 
 Заповнити minNumberOfQualifiedBids
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['minNumberOfQualifiedBids']
     ${minNumberOfQualifiedBids}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	Set To Dictionary  ${dzk_data}  minNumberOfQualifiedBids  ${minNumberOfQualifiedBids}
+	[Return]  ${minNumberOfQualifiedBids}
 
 
 Заповнити contractTerms.leaseTerms.years
-	${years}  random_number  1  100
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['contractTerms']['leaseTerms']['years']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${years}
-	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  years  ${years}
-	${leaseDuration}  Set Variable If
-	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
-	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	${leaseDuration}  Evaluate  re.sub(r'P[0-9]*Y', 'P${years}Y', '${leaseDuration}')  re
-	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  leaseDuration  ${leaseDuration}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити contractTerms.leaseTerms.months
-	${months}  random_number  1  12
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['contractTerms']['leaseTerms']['months']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${months}
-	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  months  ${months}
-	${leaseDuration}  Set Variable If
-	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
-	...  '${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${dzk_data['contractTerms']['leaseTerms']['leaseDuration']}
-	${leaseDuration}  Evaluate  re.sub(r'Y[0-9]*M', 'Y${months}M', '${leaseDuration}')  re
-	Set To Dictionary  ${dzk_data['contractTerms']['leaseTerms']}  leaseDuration  ${leaseDuration}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити value.amount
-	${value}  random_number  10000  500000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['value']['amount']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${value}
-	Set To Dictionary  ${dzk_data['value']}  amount  ${value}
+	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити minimalStep.amount
-	${minimalStep}  random_number  100  10000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['minimalStep']['amount']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${minimalStep}
-	Set To Dictionary  ${dzk_data['minimalStep']}  amount  ${minimalStep}
+	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити guarantee.amount
-	${guarantee}  random_number  100  1000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['guarantee']['amount']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${guarantee}
-	Set To Dictionary  ${dzk_data['guarantee']}  amount  ${guarantee}
+	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити budgetSpent.amount
-	${budgetSpent}  random_number  100  1000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['budgetSpent']['amount']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${budgetSpent}
-	Set To Dictionary  ${dzk_data['budgetSpent']}  amount  ${budgetSpent}
+	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити registrationFee.amount
-	${registrationFee}  random_number  100  1000
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['registrationFee']['amount']
-	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${registrationFee}
-	Set To Dictionary  ${dzk_data['registrationFee']}  amount  ${registrationFee}
+	small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити bankAccount.bankName
-	${bankName}  create_sentence  5
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['bankAccount']['bankName']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${bankName}
-	Set To Dictionary  ${dzk_data['bankAccount']}  bankName  ${bankName}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити bankAccount.accountIdentification.0.description
-	${description}  create_sentence  3
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['bankAccount']['accountIdentification'][0]['description']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][0]}  description  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити bankAccount.accountIdentification.(num).id
-	: FOR  ${i}  IN RANGE  0  9
-    \  ${id}  Generate Random String  10  [LETTERS][NUMBERS]
-    \  ${selector}  dzk_auction.Отримати локатор по назві поля  ['bankAccount']['accountIdentification'][${i}]['id']
-    \  Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${id}
-    \  Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][${i}]}  id  ${id}
+	[Arguments]  ${text}  ${i}
+    ${selector}  dzk_auction.Отримати локатор по назві поля  ['bankAccount']['accountIdentification'][${i}]['id']
+    Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.description
-	${description}  create_sentence  20
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['description']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${dzk_data['items'][0]}  description  ${description}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.additionalClassifications.1.id
-	${cadastralNumber}  random_number  1000000000000000000  9999999999999999999
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['additionalClassifications'][1]['id']
-	Input Text  ${selector}  ${cadastralNumber}
+	Input Text  ${selector}  ${text}
 	${cadastralNumber}  Get Element Attribute  ${selector}  value
-	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][1]}  id  ${cadastralNumber}
+	[Return]  ${cadastralNumber}
 
 
 Заповнити items.0.classification.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['classification']['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  re
-	Set To Dictionary  ${dzk_data['items'][0]['classification']}  id  ${id}
-	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}", 1)  re
-	Set To Dictionary  ${dzk_data['items'][0]['classification']}  description  ${description}
+	[Return]  ${description}
 
 
 Заповнити items.0.additionalClassifications.description
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['additionalClassifications'][0]['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
-	${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  re
-	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  id  ${id}
-	${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 1)  re
-	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  description  ${description}
+	[Return]  ${description}
 
 
 Заповнити items.0.quantity
-	${first}  random_number  1  1000
-	${second}  random_number  1  100
-    ${quantity}  Evaluate  str(round(float(${first})/float(${second}), 3))
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['quantity']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${quantity}
-	Set To Dictionary  ${dzk_data['items'][0]}  quantity  ${quantity}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.unit.name
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['unit']['name']
     ${name}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	Set To Dictionary  ${dzk_data['items'][0]['unit']}  name  ${name}
+	[Return]  ${name}
 
 
 Заповнити items.0.address.postalCode
-	${postalCode}  random_number  10000  99999
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['address']['postalCode']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${postalCode}
-	Set To Dictionary  ${dzk_data['items'][0]['address']}  postalCode  ${postalCode}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.address.locality
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['address']['locality']
     ${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
-	Set To Dictionary  ${dzk_data['items'][0]['address']}  region  ${region}
-	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
-	Set To Dictionary  ${dzk_data['items'][0]['address']}  locality  ${locality}
+	[Return]  ${locality}
 
 
 Заповнити items.0.address.streetAddress
-	${streetAddress}  get_some_uuid
+	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['items'][0]['address']['streetAddress']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${streetAddress}
-	Set To Dictionary  ${dzk_data['items'][0]['address']}  streetAddress  ${streetAddress}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 ###########################################################################
 ############################# /INPUT FIELD ################################
 ###########################################################################
@@ -563,16 +473,12 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 Перевірити дані в ЦБД для
 	[Arguments]  ${field}
-	${value should}  Set Variable  ${cdb_data${field}}
-	${value is}  Set Variable  ${dzk_data${field}}
-	Порівняти дані  ${value is}  ${value should}
+	${value should}  Set Variable  ${dzk_data${field}}
+	${value cdb}  Set Variable  ${cdb_data${field}}
+ 	${is equal}  get_cdb_values  ${value cdb}  ${value should}
+	Should Be Equal  ${is equal}  ${True}
 
 
-Порівняти дані
-	[Arguments]  ${is}  ${should}
-	${is equal}  compare_values  ${is}  ${should}
-	Run Keyword If  ${is equal} == ${False}
-	...  Fail  Oops, перепуталися дані!!!{${should} != ${is}}
 
 ###########################################################################
 ################################# /CHECK ##################################

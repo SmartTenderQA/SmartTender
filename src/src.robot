@@ -104,6 +104,8 @@ Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 Resource    ../steps/create_tender/test_ramky.robot
+Resource    ../steps/create_auction/dzk.robot
+Resource    ../steps/create_auction/small_privatization.robot
 
 
 Resource	keywords.robot

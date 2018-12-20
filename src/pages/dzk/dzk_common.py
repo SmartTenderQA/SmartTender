@@ -1,6 +1,17 @@
 import re
 
 
+def get_cdb_values(value_cdb, value_should):
+    if re.match(u'^\d+[.]?\d*$', str(value_cdb)) and re.match(u'^\d+[.]?\d*$', str(value_should)):
+        return float(value_cdb) == float(value_should)
+    if re.match(r'[0-9]{2}[.][0-9]{2}[.][0-9]{4} [0-9]{2}[:][0-9]{2}', str(value_cdb)):
+        tmp = value_cdb.split(' ')
+        date = (tmp[0]).split('.')
+        date_is = date[2] + '-' + date[1] + '-' + date[0] + 'T' + tmp[1]
+        return date_is in value_should
+    return str(value_cdb) == str(value_should)
+
+
 def get_page_values(field, value):
     if 'address' in field:
         list = re.search(u'(?P<postal>.+), (?P<country>.+), (?P<region>.+), (?P<locality>.+), (?P<street>.+)', value)
