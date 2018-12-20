@@ -78,12 +78,3 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 
 
-
-
-Знайти тендер користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Sleep  2
-	Відкрити сторінку тестових торгів
-	Знайти тендер по ID  ${data['tender_uaid']}
-

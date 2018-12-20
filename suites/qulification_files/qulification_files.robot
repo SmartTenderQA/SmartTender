@@ -20,7 +20,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	debug
 	test_below.Створити тендер
 
 
@@ -42,15 +41,10 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Подати заявку на участь в тендері двома учасниками
+Подати заявку на участь в тендері учасниками
 	:FOR  ${i}  IN  1  2  3
 	\  Прийняти участь у тендері учасником  provider${i}
-
-
-Підготувати користувача та дочекатись початку періоду перкваліфікації
-    Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
-    Дочекатись початку періоду перкваліфікації
+	debug
 
 
 Відкрити браузер під роллю організатора та знайти тендер
