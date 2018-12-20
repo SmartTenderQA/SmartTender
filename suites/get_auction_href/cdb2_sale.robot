@@ -80,7 +80,7 @@ If skipped create tender
 
 
 Подати заявки на участь в тендері
-    Sleep  2
+    Sleep  2m
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Go To  ${data['tender_href']}
