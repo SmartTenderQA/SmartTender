@@ -234,7 +234,7 @@ Input Type Flex
 Дочекатись дати
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
-    ${count}  Evaluate  math.ceil(${sleep}/300)  math
+    ${count}  Evaluate  int(math.ceil(float(float(${sleep})/float(300))))  math
     Repeat Keyword  ${count} times  Очікування з перезагрузкою сторінки
 
 

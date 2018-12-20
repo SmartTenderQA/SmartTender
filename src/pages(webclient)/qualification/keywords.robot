@@ -28,6 +28,21 @@
     Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
 
 
+Не визнати учасника переможцем
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td)[${i}]
+    Click Element  ${selector}
+    Натиснути кнопку "Кваліфікація"
+    Натиснути "Відхилити пропозицію"
+    Заповнити текст рішення кваліфікації
+    ${file name}  Додати файл до рішення кваліфікації
+    Натиснути OkButton
+    Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
+
+
+
+
+
 Вказати ціну за одиницю номенклатури для переможця
     [Arguments]  ${i}
     ${selector}  Set Variable  (${winners})[${i}]
@@ -61,6 +76,12 @@
 
 Натиснути "Визначити переможцем"
     ${selector}  Set Variable  xpath=//span[text()="Визначити переможцем"]
+    Wait Until Keyword Succeeds  10  1  Click Element  ${selector}
+    Wait Until Page Contains Element  ${selector}/ancestor::div[contains(@style, "user-select")]
+
+
+Натиснути "Відхилити пропозицію"
+    ${selector}  Set Variable  xpath=//span[text()="Відхилити пропозицію"]
     Wait Until Keyword Succeeds  10  1  Click Element  ${selector}
     Wait Until Page Contains Element  ${selector}/ancestor::div[contains(@style, "user-select")]
 
@@ -99,6 +120,7 @@
     Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}
+    [Return]  ${name}
 
 
 Підтвердити організатором формування протоколу розгляду пропозицій
