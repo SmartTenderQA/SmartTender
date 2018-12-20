@@ -28,7 +28,7 @@ def get_page_values(field, value):
         if 'unit' in field:
             return list.group('unit')
         elif 'quantity' in field:
-            return list.group('quantity')
+            return float(list.group('quantity'))
     elif 'value' in field or 'guarantee' in field or 'budgetSpent' in field or 'registrationFee' in field:
         ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
         return ret.replace(' ', '')
