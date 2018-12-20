@@ -1,5 +1,6 @@
 *** Variables ***
-${privatization item}			//*[@class="data-card ivu-row"]
+${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
+#${privatization item}			//*[@class="data-card ivu-row"]
 
 
 *** Keywords ***
