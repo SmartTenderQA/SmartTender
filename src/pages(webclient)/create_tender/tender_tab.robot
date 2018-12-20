@@ -32,7 +32,7 @@ Resource        keywords.robot
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Очистити поле  ${selector}
+    Очистити поле з датою  ${selector}
     Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
 
 

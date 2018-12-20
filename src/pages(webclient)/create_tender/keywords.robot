@@ -58,7 +58,7 @@
     Додати документ власником
 
 
-Очистити поле с датою
+Очистити поле з датою
     [Arguments]  ${selector}
 	Click Element  ${selector}
 	Click Element  ${selector}/../following-sibling::*
