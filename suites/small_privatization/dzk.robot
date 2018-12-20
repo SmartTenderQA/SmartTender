@@ -15,14 +15,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Test Cases ***
 Створити аукціон
 	Завантажити сесію для  tender_owner
-	start_page.Натиснути На торговельний майданчик
-	old_search.Активувати вкладку ФГИ
-	Run Keyword If  '${site}' == 'test'
-	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
-	dzk_auction.Натиснути створити аукціон
-	dzk_auction.Заповнити всі обов'язкові поля
-	dzk_auction.Натиснути кнопку зберегти
-	Wait Until Keyword Succeeds  30  3  dzk_auction.Опублікувати аукціон у реєстрі
+	dzk.Створити тендер
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
 	Зберегти словник у файл  ${dzk_data}  dzk_data

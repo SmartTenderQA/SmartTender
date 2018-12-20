@@ -13,59 +13,13 @@
 	dzk.Заповнити "Інформацію про умови аукціону"
 	dzk.Заповнити "Банківські реквізити"
 	dzk.Заповнити "Реквізити для перерахування реєстраційних внесків"
-	dzk.
-	dzk.
-	dzk.
-
-
-
-
-	dzk_auction.Заповнити lotHolder.identifier.legalName
-	dzk_auction.Заповнити lotHolder.identifier.id
-	dzk_auction.Заповнити lotHolder.address.postalCode
-	dzk_auction.Заповнити lotHolder.address.locality
-	dzk_auction.Заповнити lotHolder.address.streetAddress
-	dzk_auction.Заповнити lotHolder.contactPoint.name
-	dzk_auction.Заповнити lotHolder.contactPoint.email
-	dzk_auction.Заповнити auctionPeriod.shouldStartAfter
-	dzk_auction.Заповнити tenderAttempts
-	dzk_auction.Заповнити minNumberOfQualifiedBids
-	dzk_auction.Заповнити contractTerms.leaseTerms.years
-	dzk_auction.Заповнити contractTerms.leaseTerms.months
-	dzk_auction.Заповнити value.amount
-	dzk_auction.Заповнити minimalStep.amount
-	dzk_auction.Заповнити guarantee.amount
-	dzk_auction.Заповнити budgetSpent.amount
-	dzk_auction.Заповнити registrationFee.amount
-	dzk_auction.Заповнити bankAccount.bankName
-	dzk_auction.Заповнити bankAccount.accountIdentification.0.description
-	dzk_auction.Заповнити bankAccount.accountIdentification.(num).id
-	dzk_auction.Заповнити items.0.description
-	dzk_auction.Заповнити items.0.additionalClassifications.1.id
-	dzk_auction.Заповнити items.0.classification.description
-	dzk_auction.Заповнити items.0.additionalClassifications.description
-	dzk_auction.Заповнити items.0.quantity
-	dzk_auction.Заповнити items.0.unit.name
-	dzk_auction.Заповнити items.0.address.postalCode
-	dzk_auction.Заповнити items.0.address.locality
-	dzk_auction.Заповнити items.0.address.streetAddress
+	dzk.Заповнити "Реквізити для перерахування гарантійних внесків"
+	dzk.Заповнити "Реквізити рахунку(рахунків) виконавця для сплати винагороди та/або витрат на підготовку"
+	dzk.Заповнити "Загальну інформацію про предмет"
+	dzk_auction.Натиснути кнопку зберегти
+	#todo nuzhno ubrat` posle fixa
+	Wait Until Keyword Succeeds  30  3  dzk_auction.Опублікувати аукціон у реєстрі
 	###
-
-	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-	Натиснути додати(F7)  Додавання. Тендери
-  	create_tender.Вибрати тип процедури  Укладання рамкової угоди
-    test_ramky.Заповнити кількість учасників для укладання РУ
-    test_ramky.Заповнити "Срок рамкової угоди"
-  	test_ramky.Заповнити endDate періоду пропозицій
-  	test_ramky.Заповнити amount для lot
-  	test_ramky.Заповнити minimalStep для lot
-  	test_ramky.Заповнити title для tender
-  	test_ramky.Заповнити description для tender
-  	test_ramky.Заповнити title_eng для tender
-  	test_ramky.Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
-    Зберегти чернетку
-    Оголосити закупівлю
 
 
 #########################################################
@@ -105,13 +59,13 @@
 
 Заповнити "Код ЄДРПОУ організатора"
 	${id}  random_number  10000  100000
-	dzk_auction.Заповнити lotHolder.identifier.id
+	dzk_auction.Заповнити lotHolder.identifier.id  ${id}
 	Set To Dictionary  ${dzk_data['lotHolder']['identifier']}  id  ${id}
 
 
 Заповнити "Поштовий індекс організатора"
 	${postalCode}  random_number  10000  99999
-	dzk_auction.Заповнити lotHolder.address.postalCode
+	dzk_auction.Заповнити lotHolder.address.postalCode  ${postalCode}
 	Set To Dictionary  ${dzk_data['lotHolder']['address']}  postalCode  ${postalCode}
 
 
@@ -262,17 +216,152 @@
 
 
 Заповнити "Реквізити для перерахування реєстраційних внесків"
-	Заповнити ""
-	Заповнити ""
-	Заповнити ""
-###
-Заповнити "Додати предмет в тендер"
-###
-Заповнити ""
-###
-Заповнити ""
-###
-Заповнити ""
-###
-Заповнити ""
-###
+	Заповнити "Код ЄДРПОУ для реєстраційних внесків"
+	Заповнити "МФО для реєстраційних внесків"
+	Заповнити "Номер рахунку для реєстраційних внесків"
+
+
+Заповнити "Код ЄДРПОУ для реєстраційних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  6
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][6]}  id  ${id}
+
+
+Заповнити "МФО для реєстраційних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  7
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][7]}  id  ${id}
+
+
+Заповнити "Номер рахунку для реєстраційних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  8
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][8]}  id  ${id}
+
+
+Заповнити "Реквізити для перерахування гарантійних внесків"
+	Заповнити "Код ЄДРПОУ для гарантійних внесків"
+	Заповнити "МФО для гарантійних внесків"
+	Заповнити "Номер рахунку для гарантійних внесків"
+
+
+Заповнити "Код ЄДРПОУ для гарантійних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  3
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][3]}  id  ${id}
+
+
+Заповнити "МФО для гарантійних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  4
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][4]}  id  ${id}
+
+
+Заповнити "Номер рахунку для гарантійних внесків"
+    ${id}  Generate Random String  10  [LETTERS][NUMBERS]
+    dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  5
+    Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][5]}  id  ${id}
+
+
+Заповнити "Реквізити рахунку(рахунків) виконавця для сплати винагороди та/або витрат на підготовку"
+	Заповнити "Найменування банку для сплати винагороди"
+	Заповнити "Код ЄДРПОУ для сплати винагороди"
+	Заповнити "МФО для сплати винагороди"
+	Заповнити "Номер рахунку для сплати винагороди"
+
+
+Заповнити "Найменування банку для сплати винагороди"
+	${description}  create_sentence  3
+	dzk_auction.Заповнити bankAccount.accountIdentification.0.description  ${description}
+	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][0]}  description  ${description}
+
+
+Заповнити "Код ЄДРПОУ для сплати винагороди"
+	${id}  create_sentence  3
+	dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  0
+	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][0]}  id  ${id}
+
+
+Заповнити "МФО для сплати винагороди"
+	${id}  create_sentence  3
+	dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  1
+	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][1]}  id  ${id}
+
+
+Заповнити "Номер рахунку для сплати винагороди"
+	${id}  create_sentence  3
+	dzk_auction.Заповнити bankAccount.accountIdentification.(num).id  ${id}  2
+	Set To Dictionary  ${dzk_data['bankAccount']['accountIdentification'][2]}  id  ${id}
+
+
+Заповнити "Загальну інформацію про предмет"
+	Заповнити "Опис предмету"
+	Заповнити "Кадастровий номер предмету"
+	Заповнити "Класифікація предмету"
+	Заповнити "Додаткова класифікація предмету"
+	Заповнити "Кількість предмету"
+	Заповнити "Одиниці виміру предмету"
+	Заповнити "Поштовий індекс предмету"
+	Заповнити "Місто предмету"
+	Заповнити "Вулиця предмету"
+
+
+Заповнити "Опис предмету"
+	${description}  create_sentence  20
+	dzk_auction.Заповнити items.0.description  ${description}
+	Set To Dictionary  ${dzk_data['items'][0]}  description  ${description}
+
+
+Заповнити "Кадастровий номер предмету"
+	${number}  random_number  1000000000000000000  9999999999999999999
+	${cadastralNumber}  dzk_auction.Заповнити items.0.additionalClassifications.1.id  ${number}
+	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][1]}  id  ${cadastralNumber}
+
+
+Заповнити "Класифікація предмету"
+	${description}  dzk_auction.Заповнити items.0.classification.description
+	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  re
+	Set To Dictionary  ${dzk_data['items'][0]['classification']}  id  ${id}
+	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}", 1)  re
+	Set To Dictionary  ${dzk_data['items'][0]['classification']}  description  ${description}
+
+
+Заповнити "Додаткова класифікація предмету"
+	${description}  dzk_auction.Заповнити items.0.additionalClassifications.description
+	${id}  Evaluate  ((re.findall(r'[0-9]*[.][0-9]*', "${description}"))[0])  re
+	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  id  ${id}
+	${description}  Evaluate  re.sub(r'[0-9]*[.][0-9]*.', '', "${description}", 1)  re
+	Set To Dictionary  ${dzk_data['items'][0]['additionalClassifications'][0]}  description  ${description}
+
+
+Заповнити "Кількість предмету"
+	${first}  random_number  1  1000
+	${second}  random_number  1  100
+    ${quantity}  Evaluate  str(round(float(${first})/float(${second}), 3))
+	dzk_auction.Заповнити items.0.quantity  ${quantity}
+	Set To Dictionary  ${dzk_data['items'][0]}  quantity  ${quantity}
+
+
+Заповнити "Одиниці виміру предмету"
+	${name}  dzk_auction.Заповнити items.0.unit.name
+	Set To Dictionary  ${dzk_data['items'][0]['unit']}  name  ${name}
+
+
+Заповнити "Поштовий індекс предмету"
+	${postalCode}  random_number  10000  99999
+	dzk_auction.Заповнити items.0.address.postalCode  ${postalCode}
+	Set To Dictionary  ${dzk_data['items'][0]['address']}  postalCode  ${postalCode}
+
+
+Заповнити "Місто предмету"
+	${locality}  dzk_auction.Заповнити items.0.address.locality
+	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
+	Set To Dictionary  ${dzk_data['items'][0]['address']}  region  ${region}
+	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
+	Set To Dictionary  ${dzk_data['items'][0]['address']}  locality  ${locality}
+
+
+Заповнити "Вулиця предмету"
+	${streetAddress}  get_some_uuid
+	dzk_auction.Заповнити items.0.address.streetAddress  ${streetAddress}
+	Set To Dictionary  ${dzk_data['items'][0]['address']}  streetAddress  ${streetAddress}
