@@ -7,10 +7,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/qulification_files/suite.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/qulification_files/qulification_files.robot
 *** Test Cases ***
 Підготувати користувачів
-    Додати першого користувача  Bened           tender_owner
+    Додати першого користувача  PPR_OR          tender_owner
     Додати користувача          user1           provider1
     Додати користувача          user2           provider2
     Додати користувача          user3           provider3
@@ -20,6 +20,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
+	debug
 	test_below.Створити тендер
 
 
@@ -42,9 +43,9 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері двома учасниками
-	Прийняти участь у тендері учасником  provider1
-	Прийняти участь у тендері учасником  provider2
-    debug
+	:FOR  ${i}  IN  1  2  3
+	\  Прийняти участь у тендері учасником  provider${i}
+
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Завантажити сесію для  provider1
@@ -56,11 +57,8 @@ If skipped create tender
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Знайти тендер організатором по title  ${data['title']}
+    Debug
 
-
-Підтвердити прекваліфікацію для доступу до аукціону організатором
-    debug
-    Провести прекваліфікацію учасників
 
 
 *** Keywords ***

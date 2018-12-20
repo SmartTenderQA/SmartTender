@@ -32,11 +32,12 @@
 
 Очистити поле
     [Arguments]    ${selector}
-    :FOR    ${i}    IN RANGE    999999
+    :FOR    ${i}    IN RANGE    10
     \  ${text}  Get Element Attribute  ${selector}  value
     \  ${length}  Get Length  ${text}
     \  Exit For Loop If    ${length} == 0
     \  Double Click Element  ${selector}
+    \  Sleep  1
     \  Press Key  ${selector}  \\8
 
 
