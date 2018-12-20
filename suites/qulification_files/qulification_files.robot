@@ -20,7 +20,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	debug
 	test_below.Створити тендер
 
 
@@ -53,6 +52,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Знайти тендер організатором по title  ${data['title']}
+    debug
     Не визнати учасника переможцем  1
 
 Завантажити другим учасником кваліфікаційний документ

@@ -1,5 +1,5 @@
 *** Variables ***
-${privatization item}			//*[@class='content-block']//div[@class="ivu-card-body"]
+${privatization item}			//*[@class="data-card ivu-row"]
 
 
 *** Keywords ***
