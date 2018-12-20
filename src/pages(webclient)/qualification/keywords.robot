@@ -30,7 +30,7 @@
 
 Не визнати учасника переможцем
     [Arguments]  ${i}
-    ${selector}  Set Variable  (//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td)[${i}]
+    ${selector}  Set Variable  (${winners})[${i}]
     Click Element  ${selector}
     Натиснути кнопку "Кваліфікація"
     Натиснути "Відхилити пропозицію"

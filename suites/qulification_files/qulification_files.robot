@@ -15,11 +15,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Додати користувача          user2           provider2
     Додати користувача          user3           provider3
     Додати користувача          test_viewer     viewer
-    debug
+
 
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
+	debug
 	test_below.Створити тендер
 
 
