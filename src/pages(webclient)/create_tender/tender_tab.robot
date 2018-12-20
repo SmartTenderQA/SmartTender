@@ -18,19 +18,21 @@ Resource        keywords.robot
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Очистити поле с датою  ${selector}
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
 
 
@@ -53,7 +55,6 @@ Resource        keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
-
 
 
 Заповнити "Мінімальний крок аукціону" для лоту
@@ -158,12 +159,14 @@ Resource        keywords.robot
 Заповнити "Строк поставки з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Строк поставки по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATETO"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
