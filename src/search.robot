@@ -44,7 +44,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 Відфільтрувати по даті кінця прийому пропозиції від
 	[Arguments]  ${date}
-	${input}  Set Variable  //label[contains(text(),'Завершення прийому')]/../following-sibling::*//input
+	${input}  Set Variable  //label[contains(text(),'Завершення прийому пропозицій')]/../following-sibling::*//input
 	Input Text  ${input}  ${date}
 	Press Key  ${input}  \\13
 

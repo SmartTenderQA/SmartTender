@@ -15,11 +15,13 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 
 Вибрати тип процедури
 	[Arguments]  ${type}
+	${selector}  Set Variable  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
 	Wait Until Keyword Succeeds  30s  5  Run Keywords
 	...  Click Element  ${dropdown menu for bid forms}  AND
 	...  Wait Until Page Contains Element  css=.token-input-dropdown-facebook li  AND
-	...  Wait Until Page Contains Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']  AND
-	...  Click Element  xpath=//li[contains(@class,'dropdown-item') and text()='${type}']
+	...  Wait Until Page Contains Element  ${selector}  AND
+	...  Click Element  ${selector}  AND
+	...  Wait Until Element Is Not Visible  ${selector}  10
 
 
 Перейти по результату пошуку за номером

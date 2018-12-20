@@ -14,7 +14,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
 	Wait Until Page Contains Element  ${type locator}
 	Click Element  ${type locator}
-	Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
+	Wait Until Element Is Visible  //li[contains(text(),'${type}') and contains(@class,'selected')]
 	Дочекатись закінчення загрузки сторінки(sales spin)
 
 
