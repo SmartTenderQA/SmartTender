@@ -49,8 +49,8 @@ Resource        keywords.robot
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Очистити поле з датою  ${selector}
-    Заповнити поле  ${selector}  ${value}  #TODO пробний варіант
+    Очистити поле  ${selector}
+    Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
 
 
 Заповнити "Очікувана вартість закупівлі"

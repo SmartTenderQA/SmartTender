@@ -36,6 +36,10 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
 	[Arguments]  ${field}  ${value}
 	${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
 	Wait Until Keyword Succeeds  10  1  Click Element  ${find tender field}
+	Clear Element Text  ${find tender field}
+	Sleep .5
+	Press Key  ${find tender field}  \\13
+	Sleep  1
 	Input Text  ${find tender field}  ${value}
 	${get}  Get Element Attribute  ${find tender field}  value
 	${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
