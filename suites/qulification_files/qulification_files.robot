@@ -72,6 +72,9 @@ If skipped create tender
 
 
 
+
+
+
 *** Keywords ***
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
