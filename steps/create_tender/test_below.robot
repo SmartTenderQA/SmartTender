@@ -6,8 +6,7 @@
   	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
-  	Run Keyword If  '${SUITE_NAME}' == 'Qulification Files'
-  	...  test_below.Заповнити contact для tender
+    Run Keyword And Ignore Error  test_below.Заповнити contact для tender
   	test_below.Заповнити amount для tender
   	test_below.Заповнити minimalStep для tender
   	test_below.Заповнити title для tender

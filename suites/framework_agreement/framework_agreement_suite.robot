@@ -6,7 +6,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/framework_agreement/framework_agreement_suite.robot
+#  robot --consolecolors on -L TRACE:INFO -v hub:None -d test_output -e get_tender suites/framework_agreement/framework_agreement_suite.robot
 
 *** Test Cases ***
 Підготувати користувачів
@@ -38,8 +38,8 @@ If skipped create tender
 	\  Завантажити сесію для  provider${i}
 	\  Прийняти участь у тендері учасником  provider${i}
     Дочекатись закінчення прийому пропозицій
+    debug
 	Дочекатися статусу тендера  Кваліфікація
-	Debug
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації

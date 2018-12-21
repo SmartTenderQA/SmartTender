@@ -6,6 +6,8 @@
     test_ramky.Заповнити кількість учасників для укладання РУ
     test_ramky.Заповнити "Срок рамкової угоди"
   	test_ramky.Заповнити endDate періоду пропозицій
+  	Run Keyword And Ignore Error  test_ramky.Заповнити contact для tender
+  	Run Keyword And Ignore Error  test_ramky.Заповнити ПІБ організації
   	test_ramky.Заповнити amount для lot
   	test_ramky.Заповнити minimalStep для lot
   	test_ramky.Заповнити title для tender
@@ -30,6 +32,17 @@
     ${agreementDuration}  Set Variable  6
     Заповнити "Срок рамкової угоди" місяців  ${agreementDuration}
     Set To Dictionary  ${data}  agreementDuration  ${agreementDuration}
+
+
+Заповнити contact для tender
+    ${selector}  set variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
+    Заповнити текстове поле  ${selector}  Дудник
+
+
+Заповнити ПІБ організації
+    Заповнити "Призвіще"     Petrov
+    Заповнити "Імя"          Petro
+    Заповнити "По батькові"  Petrovych
 
 
 Заповнити endDate періоду пропозицій
