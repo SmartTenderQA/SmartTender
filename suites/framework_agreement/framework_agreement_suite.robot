@@ -63,7 +63,6 @@ If skipped create tender
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Кваліфікація
-    debug
 
 
 Провести кваліфікацію та визначити переможців
