@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Start in grid  ${user}
+Suite Setup  Setup  ${user}
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -67,20 +67,11 @@ ${site}                        prod
 
 *** Keywords ***
 Setup
-  [Arguments]  ${user}  ${alies}=alies
-  clear_test_output
+  [Arguments]  ${user}
   ${status}  Run Keyword And Return Status  Should Contain  ${user}  prod
   Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_image=${true}
   ...  ELSE  Set Global Variable  ${site}  test
-  ${login}  ${password}  Отримати дані користувача  ${user}
-  ${start_page}  Отримати стартову сторінку  ${site}
-  Змінити стартову сторінку для IP
-  #Open Browser  ${start_page}  ${browser}  ${alies}  ${grid}
-  Run Keyword If  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:WIN10
-  ...  ELSE IF    '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP
-  ...  ELSE IF    '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}
-  ...  ELSE IF    '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
-  Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
+  Start In Grid  ${user}
 
 
 Перейти на сторінку
