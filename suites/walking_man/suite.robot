@@ -785,7 +785,7 @@ Test Postcondition
 
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
-  Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
+  Scroll Page To Element XPATH  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
 
 
