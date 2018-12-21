@@ -86,6 +86,7 @@ Setup
 Перейти на сторінку
     [Arguments]  ${page}
     Set Test Variable  ${page}
+    Run Keyword If  ${page} == 6  Set Tags  non-critical
     Should Be True  ${page} != 6
     ${selector}  Set Variable  //a[@class="pager-button" and text()=${page}]
     ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}

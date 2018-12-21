@@ -107,7 +107,7 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
 Перейти на сторінку
   [Arguments]  ${page}
   Set Test Variable  ${page}
-  Run Keyword If  ${page} != 6  Set Tags  non-critical
+  Run Keyword If  ${page} == 6  Set Tags  non-critical
   Should Be True  ${page} != 6
   Run Keyword If  '${page}' != '1'  Click Element  //a[@class="pager-button" and text()=${page}]
   Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"

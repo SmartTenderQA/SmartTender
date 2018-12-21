@@ -367,7 +367,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Державні закупівлі прозорро Плани
-	[Tags]  procurement -test
+	[Tags]  procurement  -test
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Плани
