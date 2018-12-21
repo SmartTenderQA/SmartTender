@@ -59,7 +59,7 @@
 	[Return]  ${message}
 
 
-Виконати дії відповідно повідомленню
+Виконати дії відповідно до тексту повідомлення
 	[Arguments]  ${message}
 	${ok button}  Set Variable  //*[@class="ivu-modal-confirm"]//span[text()="OK"]
 	Run Keyword If  "Кваліфікаційні документи відправлені" in """${message}"""  Click Element  ${ok button}
