@@ -163,6 +163,16 @@ ${notice message}			//*[@class='ivu-notice-desc']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
     Set To Dictionary  ${dzk_data}  id  ${cdb id}
+
+
+Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	${read more btn}  Set Variable  //a[contains(text(),'Детальніше')]
+	${is contain}  Run Keyword And Return Status  Page Should Contain Element  {read more btn}
+	Run Keyword If  ${is contain} == ${True}  Run Keywords
+	...  Click Element  {read more btn}
+	...  AND  Розгорнути детальну інформацію по всіх полях (за необхідністю)
+
+
 ###########################################################################
 ################################# /COMMON #################################
 ###########################################################################
