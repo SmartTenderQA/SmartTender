@@ -30,7 +30,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}

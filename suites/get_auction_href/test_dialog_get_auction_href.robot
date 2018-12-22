@@ -25,7 +25,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
@@ -62,7 +62,7 @@ If skipped create tender
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію всіх учасників
@@ -81,21 +81,21 @@ If skipped create tender
 Виконати дії для переведення тендера на 2-ий етап
     Завантажити сесію для  tender_owner
     Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
     Перейти до другої фази
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Завершено
     Завантажити сесію для  tender_owner
     Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
     Перейти до другого етапу
     Опублікувати процедуру
 
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}

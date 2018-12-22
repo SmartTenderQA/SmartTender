@@ -11,10 +11,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  PPR_OR          tender_owner
+    Додати користувача          Bened           tender_owner2
     Додати користувача          user1           provider1
     Додати користувача          user2           provider2
     Додати користувача          user3           provider3
-    Додати користувача          test_viewer     viewer
+    #Додати користувача          test_viewer     viewer
 
 
 Створити тендер
@@ -25,13 +26,22 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    Створити словник  cdb
+    Go To  ${data['tender_href']}
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 If skipped create tender
@@ -69,12 +79,8 @@ If skipped create tender
 
 Перевірити відображення кваліфікаційних файлів організатором
     Go to  ${data['tender_href']}
-
-
-
-
-
-
+    ${count}  Отримати уількисть учасників аукціону
+    Розгоррнути детальну
 
 
 
