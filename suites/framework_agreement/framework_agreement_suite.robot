@@ -26,6 +26,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	test_ramky.Отримати дані тендера та зберегти їх у файл
 
 
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    Створити словник  cdb
+    Go To  ${data['tender_href']}
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Зберегти словник у файл  ${cdb}  cdb
+
+
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
@@ -43,19 +52,11 @@ If skipped create tender
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
     Провести прекваліфікацію учасників
-
-
-Отримати поcилання на участь в аукціоні для учасників
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
-	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Дочекатися закінчення аукціону та підготувати організатора до кваліфікації
@@ -69,7 +70,7 @@ If skipped create tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
     Визнати всіх учасників переможцями
 
 
@@ -82,7 +83,7 @@ If skipped create tender
 Заповнити ціни за одиницю номенклатури по кожному переможцю
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
     Заповнити ціни за одиницю номенклатури для всіх переможців
 
 
