@@ -2,9 +2,9 @@
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Run Keyword If  '${site}' == 'test'
-	...  Wait Until Keyword Succeeds  10  2  keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	...  Wait Until Keyword Succeeds  20  2  keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	...  ELSE IF  '${site}' == 'prod'
-	...  Wait Until Keyword Succeeds  10  2  Заповнити Поле  ${selector}  ${text}
+	...  Wait Until Keyword Succeeds  20  2  Заповнити Поле  ${selector}  ${text}
 
 
 Заповнити та перевірити текстове поле
@@ -56,3 +56,10 @@
 Додати документ до тендара власником (webclient)
     Перейти на вкладку документи (webclient)
     Додати документ власником
+
+
+Очистити поле з датою
+    [Arguments]  ${selector}
+	Click Element  ${selector}
+	Click Element  ${selector}/../following-sibling::*
+	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]

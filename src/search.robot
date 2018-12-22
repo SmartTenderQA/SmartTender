@@ -44,7 +44,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 Відфільтрувати по даті кінця прийому пропозиції від
 	[Arguments]  ${date}
-	${input}  Set Variable  //label[contains(text(),'Завершення прийому')]/../following-sibling::*//input
+	${input}  Set Variable  //label[contains(text(),'Завершення прийому пропозицій')]/../following-sibling::*//input
 	Input Text  ${input}  ${date}
 	Press Key  ${input}  \\13
 
@@ -77,13 +77,4 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
     Wait Until Element Is Visible  //*[@data-qa="title"]|(//h3)[2]  15
 
 
-
-
-
-Знайти тендер користувачем
-	[Arguments]  ${role}
-	Switch Browser  ${role}
-	Sleep  2
-	Відкрити сторінку тестових торгів
-	Знайти тендер по ID  ${data['tender_uaid']}
 

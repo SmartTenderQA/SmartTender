@@ -6,6 +6,7 @@
   	test_below.Заповнити endDate періоду обговорення
   	test_below.Заповнити startDate періоду пропозицій
   	test_below.Заповнити endDate періоду пропозицій
+    Run Keyword And Ignore Error  test_below.Заповнити contact для tender
   	test_below.Заповнити amount для tender
   	test_below.Заповнити minimalStep для tender
   	test_below.Заповнити title для tender
@@ -37,6 +38,11 @@
     ${date}  get_time_now_with_deviation  25  minutes
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
     Заповнити "Прийом пропозицій по"  ${date}
+
+
+Заповнити contact для tender
+    ${selector}  set variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
+    Заповнити текстове поле  ${selector}  Дудник
 
 
 Заповнити amount для tender

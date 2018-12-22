@@ -15,22 +15,42 @@ Resource        keywords.robot
     Заповнити поле  ${selector}  ${value}
 
 
+Заповнити "Призвіще"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="FAMENG"]//input
+    Заповнити поле  ${selector}  ${value}
+
+
+Заповнити "Імя"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="NAMENG"]//input
+    Заповнити поле  ${selector}  ${value}
+
+
+Заповнити "По батькові"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name="OTCHENG"]//input
+    Заповнити поле  ${selector}  ${value}
+
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Заповнити текстове поле  ${selector}  ${value}
+    Очистити поле  ${selector}
+    Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
 
 
 Заповнити "Очікувана вартість закупівлі"
@@ -52,7 +72,6 @@ Resource        keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
-
 
 
 Заповнити "Мінімальний крок аукціону" для лоту
@@ -157,12 +176,14 @@ Resource        keywords.robot
 Заповнити "Строк поставки з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 
 Заповнити "Строк поставки по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATETO"]//input
+    Очистити поле  ${selector}
     Заповнити текстове поле  ${selector}  ${value}
 
 

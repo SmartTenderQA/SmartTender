@@ -35,7 +35,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити auctionPeriod.startDate
-	${startDate}  get_time_now_with_deviation  8  minutes
+	${startDate}  get_time_now_with_deviation  10  minutes
     Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
     ${auctionPeriods}  Create Dictionary  startDate=${startDate}
     Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}

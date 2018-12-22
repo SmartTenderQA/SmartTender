@@ -77,6 +77,7 @@ Test Postcondition
 ##########################################################
 Заповинити поле дата закінчення прийому пропозиції
 	${date}  smart_get_time  3  d
+	${date}  no_weekend  ${date}
 	Wait Until Keyword Succeeds
 	...  30
 	...  2

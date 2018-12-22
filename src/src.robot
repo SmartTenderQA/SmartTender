@@ -104,6 +104,8 @@ Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 Resource    ../steps/create_tender/test_ramky.robot
+Resource    ../steps/create_auction/dzk.robot
+Resource    ../steps/create_auction/small_privatization.robot
 
 
 Resource	keywords.robot
@@ -161,11 +163,13 @@ Start in grid
 	${platform}  Evaluate  random.choice(${a})  random
 	Run Keyword If
 	...  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:${platform}  ELSE IF
-	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	ELSE IF
+	#  ${capability} == linux только для теста   prod    download_upload_docs
+	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	#ELSE IF
 	#...  '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP  		ELSE IF
 	#...  '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}  						ELSE IF
 	#...  '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
 	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
+	Set Window Size  1280  1024
 
 
 Додати першого користувача
@@ -219,8 +223,23 @@ Stop The Whole Test Execution If Previous Test Failed
 	Run Keyword If  '${PREV TEST STATUS}' == 'FAIL'  Fatal Error  Ой, щось пішло не так! Вимушена зупинка тесту.
 
 
+Input Type Flex
+  [Arguments]    ${locator}    ${text}
+  [Documentation]    write text letter by letter
+  ${items}    Get Length    ${text}
+  : FOR    ${item}    IN RANGE    ${items}
+  \    Press Key    ${locator}    ${text[${item}]}
+
+
 Дочекатись дати
     [Arguments]  ${date}  ${day_first}=${True}
     ${sleep}=  wait_to_date  ${date}  ${day_first}
-    Sleep  ${sleep}
+    ${count}  Evaluate  int(math.ceil(float(float(${sleep})/float(300))))  math
+    Repeat Keyword  ${count} times  Очікування з перезагрузкою сторінки
+
+
+Очікування з перезагрузкою сторінки
+    Sleep  5m
+    Reload Page
+
 

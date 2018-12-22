@@ -7,6 +7,7 @@ ${item plan}                         //tr[@data-planid]//a
 	Select Frame  css=iframe
 	${count}  Get Element Count  ${item plan}
 	Unselect Frame
+	[Return]  ${count}
 
 
 Перейти по результату пошуку за номером

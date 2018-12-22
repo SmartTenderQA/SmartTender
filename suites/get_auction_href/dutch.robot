@@ -6,7 +6,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender -v site:prod suites/get_auction_href/dutch.robot
 *** Test Cases ***
 Підготувати користувачів
     Run Keyword If  "${site}" == "prod"  Run Keywords  

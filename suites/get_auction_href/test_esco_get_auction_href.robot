@@ -26,7 +26,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
@@ -136,7 +136,7 @@ Fill ESCO
     Завантажити сесію для  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
-    Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+    Знайти тендер організатором по title  ${data['title']}
 
 
 Перевірити отримання ссилки на участь в аукціоні
@@ -159,6 +159,7 @@ Fill ESCO
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
+	Go Back
 
 
 Перевірити можливість отримати посилання на аукціон користувачем

@@ -6,11 +6,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -v hub:None -d test_output -e get_tender suites/framework_agreement/framework_agreement_suite.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_frame_agreement.robot
 
 *** Test Cases ***
 Підготувати користувачів
-    Додати першого користувача  PPR_OR          tender_owner
+    Додати першого користувача  Bened           tender_owner
     Додати користувача          user1           provider1
     Додати користувача          user2           provider2
     Додати користувача          user3           provider3
@@ -26,15 +26,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	test_ramky.Отримати дані тендера та зберегти їх у файл
 
 
-Отримати дані з cdb та зберегти їх у файл
-    [Tags]  create_tender
-    Створити словник  cdb
-    Go To  ${data['tender_href']}
-    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
-    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
-    Зберегти словник у файл  ${cdb}  cdb
-
-
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
@@ -46,6 +37,10 @@ If skipped create tender
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Прийняти участь у тендері учасником  provider${i}
+
+
+Підготувати користувача та дочекатись початку періоду перкваліфікації
+    Go to  ${data['tender_href']}
     Дочекатись початку періоду перкваліфікації
 
 
@@ -59,48 +54,13 @@ If skipped create tender
     Провести прекваліфікацію учасників
 
 
-Дочекатися закінчення аукціону та підготувати організатора до кваліфікації
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+Отримати поcилання на участь в аукціоні для учасників
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Кваліфікація
+	Дочекатися статусу тендера  Аукціон
+    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні
 
-
-Провести кваліфікацію та визначити переможців
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-    Знайти тендер організатором по title  ${data['title']}
-    Визнати всіх учасників переможцями
-
-
-Дочекатися учасником статусу тендера "Пропозиції розглянуті"
-    Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Пропозиції розглянуті
-
-
-Заповнити ціни за одиницю номенклатури по кожному переможцю
-    Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
-    Знайти тендер організатором по title  ${data['title']}
-    Заповнити ціни за одиницю номенклатури для всіх переможців
-
-
-Заповнити рамкову угоду та опублікувати її
-    Вибрати перший тендер
-    Заповнити поля Рамкової угоди
-    Натиснути кнопку "Заключить рамочное соглашение"
-    Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
-    Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Ні
-    Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так
-    Підтвердити активацію рамкової угоди
-
-
-Переконатись що статус закупівлі "Завершено"
-    Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Завершено
 
 
 
@@ -126,11 +86,10 @@ If skipped create tender
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
-    Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  120  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

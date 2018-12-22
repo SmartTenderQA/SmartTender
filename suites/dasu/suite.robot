@@ -610,7 +610,7 @@ Test Postcondition
 
 Отримати дані моніторингу по API
   [Arguments]  ${field}=${None}  ${title}=${None}
-  ${data_cdb}  get_monitoring_data  ${data['id']}  ${field}  ${title}
+  ${data_cdb}  Wait Until Keyword Succeeds  60  1  get_monitoring_data  ${data['id']}  ${field}  ${title}
   Log  ${data_cdb}
   Перевірити та зберегти відповідь  ${data_cdb}
   [Return]  ${data_cdb}

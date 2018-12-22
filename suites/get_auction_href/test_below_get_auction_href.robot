@@ -7,7 +7,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  Bened           tender_owner
@@ -25,7 +25,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
-	Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${data['title']}
+	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
     Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
@@ -130,6 +130,7 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
+
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}

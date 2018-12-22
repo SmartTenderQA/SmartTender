@@ -15,14 +15,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Test Cases ***
 Створити аукціон
 	Завантажити сесію для  tender_owner
-	start_page.Натиснути На торговельний майданчик
-	old_search.Активувати вкладку ФГИ
-	Run Keyword If  '${site}' == 'test'
-	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
-	dzk_auction.Натиснути створити аукціон
-	dzk_auction.Заповнити всі обов'язкові поля
-	dzk_auction.Натиснути кнопку зберегти
-	Wait Until Keyword Succeeds  30  3  dzk_auction.Опублікувати аукціон у реєстрі
+	dzk.Створити тендер
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
 	Зберегти словник у файл  ${dzk_data}  dzk_data
@@ -37,6 +30,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації
+	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 
 
@@ -47,6 +41,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Завантажити сесію для  provider2
 	Go To  ${dzk_data['tender_href']}
 	Зберегти сесію  provider2
+	Sleep  90
 
 
 Подати заявки на участь в тендері
@@ -62,24 +57,24 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Подати пропозицію учасниками
-	[Tags]  -prod
+	[Tags]  -prod  -test
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
-	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
-	\  Заповнити поле з ціною  1  1
-	\  Подати пропозицію
+	\  Заповнити поле сума пропозиції  1  1
+	\  Додати документ, що підтверджує кваліфікацію
+	\  Натиснути Подати пропозицію
 
 
 Дочекатися початку аукціону
-	[Tags]  -prod
+	[Tags]  -prod  -test
 	Завантажити сесію для  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  35 min
 
 
 Отримати поcилання на участь учасниками
-	[Tags]  -prod
+	[Tags]  -prod  -test
     :FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -94,7 +89,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
-	[Tags]  -prod
+	[Tags]  -prod  -test
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
@@ -175,3 +170,34 @@ Precondition
     Wait Until Keyword Succeeds  5m  3  Run Keywords
     ...  Reload Page  AND
     ...  Element Should Not Be Visible  //*[@class='modal-dialog ']//h4
+
+
+Заповнити поле сума пропозиції
+  [Documentation]  takes lot number and coefficient
+  ...  fill bid field with max available price
+  [Arguments]  ${lot number}  ${coefficient}
+  ${block number}  Set Variable  ${lot number}+1
+  ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
+  ${a}=  get_number  ${a}
+  ${amount}=  Evaluate  int(${a}*${coefficient})
+  ${field number}=  Evaluate  ${lot number}-1
+  Input Text  xpath=//*[@id="lotAmount${field number}"]/input[1]  ${amount}
+
+
+Додати документ, що підтверджує кваліфікацію
+	${selector}  Set Variable  //*[@document-caption='Документ']
+	Створити та додати файл  ${selector}//input
+	Click Element  ${selector}//*[@class='dropdown']
+	Click Element  ${selector}//*[contains(text(),'Документи, що підтверджують кваліфікацію')]
+
+
+Натиснути Подати пропозицію
+	Click Element  ${send offer button}
+	${ok button}  Set Variable  //*[@class='ivu-poptip-inner' and contains(.,'Анулювати пропозицію буде неможливо, подати пропозицію?')]//button[contains(.,'Так')]
+	Wait Until Element Is Visible  ${ok button}
+	Click Element  ${ok button}
+
+
+#	${message}  Натиснути надіслати пропозицію та вичитати відповідь
+#	Виконати дії відповідно повідомленню  ${message}
+#	Wait Until Page Does Not Contain Element  ${ok button}
