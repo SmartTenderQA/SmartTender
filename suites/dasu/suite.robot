@@ -12,8 +12,8 @@ Test Teardown  Test Postcondition
 
 *** Variables ***
 &{data}
-${UAID}                         UA-2018-12-10-000016-b
-${tender_ID}                    14cad083001c4ac39384239d4607a70a
+${UAID}                         UA-2018-12-22-000038-a
+${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 
 *** Test Cases ***
