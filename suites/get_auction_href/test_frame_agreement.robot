@@ -59,7 +59,7 @@ If skipped create tender
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні
+    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 
@@ -86,6 +86,7 @@ If skipped create tender
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
+    Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
