@@ -29,27 +29,12 @@ def get_page_values(field, value):
             return list.group('unit')
         elif 'quantity' in field:
             return str(float(list.group('quantity')))
-    elif 'value' in field or 'guarantee' in field or 'budgetSpent' in field or 'registrationFee' in field:
-        ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
-        return ret.replace(' ', '')
-    elif 'minimalStep' in field:
-        list = re.search(u'(?P<percents>.+)\D{5}(?P<amount>[\d\s.]+)', value)
-        if 'percents' in field:
-            ret = list.group('percents')
-            return ret.replace('%', '')
-        elif 'amount' in field:
-            ret = list.group('amount')
-            return ret.replace(' ', '')
-    elif 'lassification' in field and not '1' in field:
+    elif 'classification' in field and not 'kind' in field:
         list = re.search(u'(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
         if 'id' in field:
             return list.group('id')
         elif 'description' in field:
             return list.group('description')
-    elif 'leaseTerms' in field:
-        list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
-        if 'years' in field:
-            return list.group('years')
-        elif 'months' in field:
-            return list.group('months')
+    elif 'decisions' in field:
+        return 0
     return value

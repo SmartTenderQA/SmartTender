@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 
-###########################################################################
-############################               ################################
-############################ EDIT LOCATORS ################################
-############################               ################################
-###########################################################################
-dzk_edit_locators = {
-	"auctionID": "//*[@data-qa='cdbNumber']",
+
+#<editor-fold desc="EDIT-LOCATORS">
+edit_locators = {
     "lotIdentifier": "//*[@data-qa='input-lotidentifier']//input",
 	"title": "//*[@data-qa='input-title']//input",
 	"description": "//*[@data-qa='input-description']//textarea",
@@ -26,7 +22,7 @@ dzk_edit_locators = {
 		},
 	},
 	"auctionPeriod": {
-		"shouldStartAfter": "//*[@class='ivu-date-picker']//input",
+		"startDate": "//*[@class='ivu-date-picker']//input",
 	},
 	"tenderAttempts": u"//*[contains(text(),'Лоти виставляються')]/following-sibling::*//*[contains(@class,'ivu-select ')]",
 	"minNumberOfQualifiedBids": u"//*[contains(text(),'Мінімальна кількість учасників аукціону')]/following-sibling::*//*[contains(@class,'ivu-select ')]",
@@ -110,12 +106,11 @@ dzk_edit_locators = {
 		},
 	],
 }
-##########################################################################
-###########################               ################################
-########################### VIEW LOCATORS ################################
-###########################               ################################
-##########################################################################
-dzk_view_locators = {
+#</editor-fold>
+
+
+#<editor-fold desc="VIEW-LOCATORS">
+view_locators = {
 	"auctionID": "//*[@data-qa='cdbNumber']",
 	"lotIdentifier": "//*[@class='ivu-col ivu-col-span-md-14']/h4",
 	"title": "//*[@class='ivu-col ivu-col-span-22']/h3",
@@ -123,6 +118,7 @@ dzk_view_locators = {
 	"lotHolder": {
 		"identifier": {
 			"legalName": u"(//*[@class='ivu-card-body' and contains(.,'Організатор')]//*[@data-qa])[1]",
+			"scheme": u"(//*[@class='ivu-card-body' and contains(.,'Організатор')]//*[@data-qa])[2]",
 			"id": u"(//*[@class='ivu-card-body' and contains(.,'Організатор')]//*[@data-qa])[3]",
 		},
 		"address": {
@@ -137,15 +133,25 @@ dzk_view_locators = {
 		},
 	},
 	"auctionPeriod": {
-		"shouldStartAfter": "//span[@class='info_dtauction']",
+		"startDate": "//span[@class='info_dtauction']",
 	},
 	"tenderAttempts": u"", #todo
 	"minNumberOfQualifiedBids": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Мінімальна кількість учасників аукціону')]//span[not(@class)]",
 	"contractTerms": {
 		"leaseTerms": {
-			"years": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Тривалість оренди')]//span[not(@class)]",
-			"months": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Тривалість оренди')]//span[not(@class)]",
+			"leaseDuration": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Тривалість оренди')]//span[not(@class)]"
 		}
+	},
+	"rectificationPeriod": {
+		"startDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови аукціону')]//div[contains(@class,'second')])[2]",
+		"endDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови аукціону')]//div[contains(@class,'second')])[2]"
+	},
+	"tenderPeriod": {
+		"startDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови аукціону')]//div[contains(@class,'second')])[3]",
+		"endDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови аукціону')]//div[contains(@class,'second')])[3]"
+	},
+	"auctionPeriod": {
+		"startDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови аукціону')]//div[contains(@class,'second')])[4]",
 	},
 	"value": {
 		"amount": u"//h4[@class='font-20 success-color bold']",
@@ -162,7 +168,24 @@ dzk_view_locators = {
 	"registrationFee": {
 		"amount": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Оплата за участь')]//span[not(@class)]",
 	},
-	"bankAccount": {
+	"procuringEntity": {
+		"contactPoint": {
+			"email": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[7]",
+			"name": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[5]",
+			"telephone": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[6]",
+		},
+		"identifier": {
+      		"id": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[2]",
+      		"legalName": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[1]",
+    	},
+		"address": {
+                "countryName": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[3]",
+                "streetAddress": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[3]",
+                "region": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[3]",
+                "locality": u"(//*[@class='ivu-card-body' and contains(.,'Виконавець')]//div[contains(@class,'second')])[3]",
+        }
+	},
+		"bankAccount": {
 		"bankName": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//span[@data-qa])[1]",
 		"accountIdentification": [
 			{
@@ -200,6 +223,7 @@ dzk_view_locators = {
 			"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[1]",
 			"additionalClassifications": [
 				{
+					"scheme": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[3]",
 					"id": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[3]",
 					"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[3]",
 				},
@@ -208,6 +232,7 @@ dzk_view_locators = {
 				}
 			],
 			"classification": {
+				"scheme": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[2]",
 				"id": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[2]",
 				"description": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[2]",
 			},
@@ -217,6 +242,7 @@ dzk_view_locators = {
 			},
 			"address": {
 				"postalCode": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[6]",
+				"countryName": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[6]",
 				"region": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[6]",
 				"locality": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[6]",
 				"streetAddress": "(//*[@class='margin-top-20 margin-bottom-20']//*[contains(@class,'ivu-col-span-sm-15')]//span)[6]",
@@ -224,12 +250,11 @@ dzk_view_locators = {
 		},
 	],
 }
-###########################################################################
-############################               ################################
-############################      DATA     ################################
-############################               ################################
-###########################################################################
-dzk_data = {
+#</editor-fold>
+
+
+#<editor-fold desc="DATA">
+data = {
   "bankAccount": {
     "accountIdentification": [
       {
@@ -323,23 +348,7 @@ dzk_data = {
   "date": "",
   "procurementMethodType": "",
   "procuringEntity": {
-    "contactPoint": {
-      "email": "",
-      "name": "",
-      "telephone": "",
-    },
-    "identifier": {
-      "scheme": "UA-EDR",
-      "id": "",
-      "legalName": "",
-    },
     "name": "",
-    "address": {
-      "countryName": "Україна",
-      "streetAddress": "",
-      "region": "",
-      "locality": "",
-    }
   },
   "owner": "",
   "id": "",
@@ -360,8 +369,6 @@ dzk_data = {
     "type": "",
     "leaseTerms": {
     	"leaseDuration": "",
-		"years": "",
-		"months": "",
     }
   },
   "title": "",
@@ -424,3 +431,4 @@ dzk_data = {
   "dateModified": "",
   "awardCriteria": "",
 }
+#</editor-fold>

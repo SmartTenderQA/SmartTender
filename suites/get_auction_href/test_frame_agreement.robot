@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+#Suite Setup     Авторизуватися організатором
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -18,7 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Створити тендер
 	[Tags]  create_tender
-	${data}  create_procurement_dict
+	${data}  create_dict_ramky
 	Set Global Variable  ${data}
 	Завантажити сесію для  tender_owner
 	test_ramky.Створити тендер
@@ -58,7 +59,7 @@ If skipped create tender
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні
 
 
 
@@ -85,11 +86,10 @@ If skipped create tender
 
 Перевірити отримання ссилки на участь в аукціоні
     [Arguments]  ${role}
-    Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
     Натиснути кнопку "До аукціону"
 	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	Wait Until Keyword Succeeds  120  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

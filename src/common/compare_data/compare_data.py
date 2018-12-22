@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+import re
+
+def compare_values(first_value, second_value):
+    if re.match(u'^\d+[.]?\d*$', str(first_value)) and re.match(u'^\d+[.]?\d*$', str(second_value)):
+        return float(first_value) == float(second_value)
+    return str(first_value) == str(second_value)
+
+
+def convert_cdb_values_to_edit_format(field, value):
+    if 'Period' in field:
+        list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+):(?P<seconds>\d+)', value)
+        return list.group('day')+'.'+list.group('month')+'.'+list.group('year')+' '+list.group('hours')+':'+list.group('minutes')+':'+list.group('seconds')
+    elif 'accountIdentification' in field and 'description' in field:
+        return value.replace('[Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] ', '')
+    elif re.match(u'^\d+[.]?\d*$', str(value)):
+        return str(float(value))
+    elif 'unit' in field and 'name' in field:
+        return  unit_name_dictionary[value]
+    elif 'lassification' in field and 'scheme' in field and not '1' in field:
+        return classification_scheme_dictionary[value]
+    return value
+
+
+def convert_viewed_values_to_edit_format(field, value):
+    if 'value' in field:
+        list = re.search(u'(?P<amount>^[\d\s.]+).{4}(?P<vat>\w+)', value)
+        if 'amount' in field:
+            return list.group('amount').replace(' ', '')
+        elif 'valueAddedTaxIncluded' in field:
+            vat = list.group('vat')
+            if vat == 'з':
+                return 'true'
+            elif vat == 'без':
+                return 'false'
+    elif 'Period' in field:
+        list = re.findall(u'[0-9.]+\s[0-9:]+', value)
+        if 'start' in field:
+            return list[0]
+        elif 'end' in field:
+            return list[1]
+    elif 'minimalStep' in field:
+        list = re.search(u'(?P<percents>.+)\D{5}(?P<amount>[\d\s.]+)', value)
+        if 'percents' in field:
+            ret = list.group('percents')
+            return ret.replace('%', '')
+        elif 'amount' in field:
+            ret = list.group('amount')
+            return ret.replace(' ', '')
+    elif 'guarantee' in field or 'budgetSpent' in field or 'registrationFee' in field:
+        ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
+        return ret.replace(' ', '')
+    elif 'leaseDuration' in field:
+        list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
+        return 'P'+list.group('years')+'Y'+list.group('months')+'M'
+    elif 'address' in field:
+        list = re.search(u'(?P<postal>.+), (?P<country>.+), (?P<region>.+), (?P<locality>.+), (?P<street>.+)', value)
+        if 'postal' in field:
+            return list.group('postal')
+        if 'country' in field:
+            return list.group('country')
+        elif 'region' in field:
+            return list.group('region')
+        elif 'locality' in field:
+            return list.group('locality')
+        elif 'street' in field:
+            return list.group('street')
+    elif 'lassification' in field and not '1' in field:
+        list = re.search(u'(?P<scheme>\D+[^:]).{2}(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
+        if 'scheme' in field:
+            return list.group('scheme')
+        elif 'id' in field:
+            return list.group('id')
+        elif 'description' in field:
+            return list.group('description')
+    elif 'unit' in field or 'quantity' in field:
+        list = re.search(u'(?P<quantity>\S+) (?P<unit>.+)', value)
+        if 'unit' in field:
+            return list.group('unit')
+        elif 'quantity' in field:
+            return str(float(list.group('quantity')))
+    return value
+
+
+unit_name_dictionary = {
+    u'га': u'га',
+    u'м.кв.': u'метри квадратні',
+}
+
+
+classification_scheme_dictionary = {
+    u'CAV-PS': u'CAV-PS',
+    u'КВЦПЗ': u'kvtspz',
+}
