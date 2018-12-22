@@ -48,7 +48,6 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 
 Знайти тендер по ідентифікатору
   [Tags]  find_tender
-  Switch Browser  tender_owner
   Натиснути Повторить попытку (за необхідністю)
   Перейти у webclient за необхідністю
   Змінити мову на укр.
@@ -64,19 +63,23 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   Log  ${monitoring_id}  WARN
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
   :FOR  ${username}  IN  viewer  provider
-  \  Switch Browser  ${username}
+  \  Завантажити сесію для  ${username}
   \  Go To  ${data['location']}
   \  Відкрити вкладку моніторингу
+  \  Зберегти сесію  ${username}
 
 
 Перевірити відображення інформації нового моніторингу
   [Tags]  open_monitoring_page123
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Звірити статус моніторингу
   \  Звірити дату створення
   \  Звірити адитора
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -86,11 +89,13 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  cancellation
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Звірити опис сказування
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -100,12 +105,14 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  activation
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Звірити опис рішення
   \  Звірити дату рішення
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -114,32 +121,41 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Неможливість подати пояснення з валсної ініціативи для ролей: viewer, provider
   [Tags]  make_a_dialogue_individually
   :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
+  \  Зберегти сесію  ${username}
 
 
 Подати пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
-  Switch Browser  tender_owner
+  ${loc}  Get Location
+  Завантажити сесію для  tender_owner
+  Go to  ${loc}
+  Відкрити вкладку моніторингу
   Відкрити бланк пояснення з власної ініціативи
   ${title}  Заповнити поле предмет пояснення з власної ініціативи
   ${description}  Заповнити поле опис пояснення з власної ініціативи
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
   Відправити пояснення з власної ініціативи
   Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+  Зберегти сесію  tender_owner
 
 
 Перевірити відображення пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити date пояснення з власної ініціативи
   \  Перевірити title пояснення з власної ініціативи
   \  Перевірити description пояснення з власної ініціативи
   \  Перевірити documents.title пояснення з власної ініціативи
   \  Перевірити documents.datePublished пояснення з власної ініціативи
+  \  Зберегти сесію  ${username}
 
 
 Надати відповіть на пояснення з власної ініціативи органом ДАСУ
@@ -151,8 +167,9 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Перевірити відображення відповіді на пояснення з власної ініціативи органом ДАСУ
   [Tags]  make_a_dialogue_individually
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title відповіді на пояснення з власної ініціативи
   \  Перевірити datePublished відповіді на пояснення з власної ініціативи
@@ -177,43 +194,50 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  make_a_dialogue
   Отримати дані про останній запит
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title запиту  ${data_cdb}
   \  Перевірити description запиту  ${data_cdb}
   \  Перевірити date запиту  ${data_cdb}
+  \  Зберегти сесію  ${username}
 
 
 Неможливість відповісти на запит для ролей: viewer, provider
   [Tags]  make_a_dialogue
   :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
+  \  Завантажити сесію для  ${username}
   \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
+  \  Зберегти сесію  ${username}
 
 
 Відповісти на запит
   [Tags]  make_a_dialogue
-  Switch Browser  tender_owner
+  Завантажити сесію для  tender_owner
+  Відкрити вкладку моніторингу
   Відкрити бланк відповіді на запит
   ${title}  Заповнити title відповіді на запит
   ${description}  Заповнити description відповіді на запит
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogueAnswer-files']//input
   Відправити відповідь на запит
   Перевірити відправлені дані відповіді на запит  ${title}  ${description}  ${name}
+  Зберегти сесію  tender_owner
 
 
 Перевірити відображення інформації про відповідь на запит
   [Tags]  make_a_dialogue
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити date відповіді на запит
   \  Перевірити title відповіді на запит
   \  Перевірити description відповіді на запит
   \  Перевірити documents.title відповіді на запит
   \  Перевірити documents.datePublished відповіді на запит
+  \  Зберегти сесію  ${username}
 
 
 #Підписати ЕЦП для відповіді на запит
@@ -234,14 +258,16 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  addressed
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити результат висновку
   \  Звірити дату висновку
   \  Звірити інформацію про результати висновку
   \  Звірити опис висновку
   \  Звірити обов'язки висновку
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -255,14 +281,16 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Перевірити дані інспекції
   [Tags]  inspection
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Відкрити вікно інспекції
   \  Перевірити наявність description інспекціїї
   \  Перевірити наявність inspection_id інспекціїї
   \  Перевірити наявність dateCreated інспекціїї
   \  Закрити вікно інспекцій
+  \  Зберегти сесію  ${username}
 
 ################################################################
 #                      CLARIFICATION                           #
@@ -270,32 +298,40 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Неможливість створити запит за роз'ясненнями щодо висновку для ролей: viewer, provider
   [Tags]  request_for_clarification
   :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
+  \  Відкрити вкладку моніторингу
   \  Run Keyword And Expect Error  *  Відкрити бланк запиту за роз'ясненнями
+  \  Зберегти сесію  ${username}
 
 
 Створити запит за роз'ясненнями щодо висновку
   [Tags]  request_for_clarification
-  Switch Browser  tender_owner
+  Завантажити сесію для  tender_owner
+  Відкрити вкладку моніторингу
   Відкрити бланк запиту за роз'ясненнями
   ${title}  Заповнити поле Предмет
   ${description}  Заповнити поле Опис
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
   Відправити пояснення
   Перевірити відправлені дані запиту за роз'ясненнями щодо висновку  ${title}  ${description}  ${name}
+  Зберегти сесію  tender_owner
 
 
 Перевірити відображення запиту за роз'ясненням
   [Tags]  request_for_clarification
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити title запиту
   \  Звірити description запиту
   \  Звірити datePublished запиту
   \  Звірити documents.title запиту
   \  Звірити documents.datePublished запиту
+  \  Зберегти сесію  ${username}
 
 
 Надати відповідь на запит за роз'ясненнями щодо висновку органом ДАСУ
@@ -307,12 +343,15 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Перевірити відображення відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   [Tags]  request_for_clarification
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   \  Перевірити datePublished відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   \  Перевірити description відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
+  \  Зберегти сесію  ${username}
+
 
 
 #Накласти ЕЦП на запит за роз'ясненням
@@ -329,31 +368,37 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Неможливість опублікувати інформацію про усунення порушення для ролей: viewer, provider
   [Tags]  violation_elimination_report
   :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Run Keyword And Expect Error  *  Відкрити бланк звіту про усунення порушення
+  \  Зберегти сесію  ${username}
 
 
 Опублікувати інформацію про усунення порушення
   [Tags]  violation_elimination_report
-  Switch Browser  tender_owner
+  Завантажити сесію для  tender_owner
+  Відкрити вкладку моніторингу
   Відкрити бланк звіту про усунення порушення
   ${description}  Заповнити поле Опис звіту про усунення порушення
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='eliminationReport-files']//input
   Відправити звіт про усунення порушення
   Перевірити відправлені дані звіту про усунення порушення  ${description}  ${name}
+  Зберегти сесію  tender_owner
 
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити дату інформації про усунення порушення
   \  Перевірити description інформації про усунення порушення
   \  Перевірити documents.title інформації про усунення порушення
   \  Перевірити documents.datePublished інформації про усунення порушення
-
+  \  Зберегти сесію  ${username}
 
 #Накласти ЕЦП на звіт про усунення порушень
 #  [Tags]  violation_elimination_report
@@ -369,30 +414,37 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Неможливість опублікувати позов для ролей: viewer, provider
   [Tags]  appeal
   :FOR  ${username}  IN  provider  viewer
-  \  Switch Browser  ${username}
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Run Keyword And Expect Error  *  Вікрити бланк позову
+  \  Зберегти сесію  ${username}
 
 
 Опублікувати позов
   [Tags]  appeal
-  Switch Browser  tender_owner
+  Завантажити сесію для  tender_owner
+  Відкрити вкладку моніторингу
   Вікрити бланк позову
   ${description}  Заповнити поле Опис позову
   ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='appeal-files']//input
   Відправити позов
   Перевірити відправлені дані позову  ${description}  ${name}
+  Зберегти сесію  tender_owner
 
 
 Перевірити відображення інформації про позов
   [Tags]  appeal
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити дату позову
   \  Перевірити description позову
   \  Перевірити documents.title позову
   \  Перевірити documents.datePublished позову
+  \  Зберегти сесію  ${username}
 
 
 #Накласти ЕЦП на позов
@@ -417,11 +469,13 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  completed
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Перевірити опис факту усунення порушення
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -436,13 +490,15 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
 Перевірити відображення інформації про зупинку моніторунгу після active
   [Tags]  stopped_after_active
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Отримати дані моніторингу по API
   \  Звірити статус моніторингу
   \  Перевірити опис зупинення моніторингу
   \  Перевірити дату зупинення моніторингу
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -458,10 +514,12 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   [Tags]  declined
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити дату висновку
+  \  Зберегти сесію  ${username}
 
 
 ################################################################
@@ -473,10 +531,12 @@ ${tender_ID}                    14cad083001c4ac39384239d4607a70a
   Перевести моніторинг в статус  closed
   Отримати дані моніторингу по API
   :FOR  ${username}  IN  tender_owner  provider  viewer
-  \  Switch Browser  ${username}
-  \  Reload Page
+  \  ${loc}  Get Location
+  \  Завантажити сесію для  ${username}
+  \  Go to  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
+  \  Зберегти сесію  ${username}
 
 
 #################################################################################################
@@ -506,19 +566,19 @@ Test Postcondition
 
 
 Натиснути Повторить попытку (за необхідністю)
-	${again locator}  Set Variable  //*[contains(text(),'Повторить попытку.')]
-	${again status}  Run Keyword And Return Status  Page Should Contain Element  ${again locator}
+	${again locator}  Set Variable  //a[contains(text(),'Повтор')]
+	${again status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${again locator}
 	Run Keyword If  ${again status} == ${True}
 	...  Click Element  ${again locator}
 	Дочекатись закінчення загрузки сторінки
 
 
 Підготувати користувачів
-  Start  dasu  tender_owner
+  Додати першого користувача  user1  provider
 
-  Start  test_viewer  viewer
+  Додати користувача  test_viewer  viewer
 
-  Start  user1  provider
+  Додати користувача  dasu  tender_owner
 
 
 Перейти за посиланням по dasu
@@ -527,7 +587,8 @@ Test Postcondition
   Click Element  ${link}
   Wait Until Page Contains  Натисніть для переходу
   Click element  xpath=//a[contains(text(), 'Натисніть для переходу') and @href]
-  ${web}  Select Window  New
+  Close Window
+  ${web}  Select Window  Main
   ${location}  Get Location
   ${list}  Evaluate  '${location}'.split('?ticket')
   ${location}  Set Variable  ${list[0]}
@@ -1215,6 +1276,9 @@ Test Postcondition
 Змінити мову на укр.
   Click Element  //*[@class="dxr-groupContent"]/div/a[2]
   ${selector}  Set Variable  //*[contains(text(), "Українська")]
+  ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${selector}
+  Натиснути Повторить попытку (за необхідністю)
+  Run Keyword If  ${status} != ${true}  Click Element  //*[@class="dxr-groupContent"]/div/a[2]
   Wait Until Page Contains Element  ${selector}  30
   Sleep  2
   Click Element  ${selector}
