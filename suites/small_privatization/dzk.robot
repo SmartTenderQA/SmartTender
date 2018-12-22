@@ -6,7 +6,6 @@ Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
-...  AND  debug
 
 
 *** Variables ***
@@ -36,7 +35,6 @@ ${dzk_variables}			${CURDIR}/../../src/pages/dzk/dzk_variables.py
 	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
-	debug
 
 
 Знайти аукціон учасниками
@@ -105,7 +103,7 @@ ${dzk_variables}			${CURDIR}/../../src/pages/dzk/dzk_variables.py
 Precondition
 	Import Variables  ${dzk_variables}
     Додати першого користувача  ${user}  tender_owner
-    #Підготувати користувачів
+    Підготувати користувачів
 
 
 Підготувати користувачів

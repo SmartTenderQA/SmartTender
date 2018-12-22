@@ -64,7 +64,9 @@ ${notice message}			//*[@class='ivu-notice-desc']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['rectificationPeriod']['endDate']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['startDate']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['auctionPeriod']['startDate']
+#	#todo пока скипаю, хз сколько времени цбд формирует значение
+#	compare_data.Порівняти відображені дані з даними в ЦБД  ['auctionPeriod']['startDate']
+#	#
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['guarantee']['amount']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['budgetSpent']['amount']

@@ -307,23 +307,10 @@ data = {
   },
   "auctionID": "",
   "minNumberOfQualifiedBids": "",
-  "tenderPeriod": {
-    "startDate": "",
-    "endDate": "",
-  },
-  "rectificationPeriod": {
-    "startDate": "",
-    "endDate": "",
-  },
-  "enquiryPeriod": {
-    "startDate": "",
-    "endDate": "",
-  },
   "registrationFee": {
     "currency": "UAH",
     "amount": "",
   },
-  "title_en": "[TESTING] ",
   "lotHolder": {
     "contactPoint": {
       "email": "",
@@ -344,16 +331,8 @@ data = {
       "locality": "",
     }
   },
-  "submissionMethod": "",
-  "date": "",
-  "procurementMethodType": "",
-  "procuringEntity": {
-    "name": "",
-  },
-  "owner": "",
   "id": "",
   "budgetSpent": {
-    "currency": "UAH",
     "amount": "",
     "valueAddedTaxIncluded": ""
   },
@@ -372,7 +351,6 @@ data = {
     }
   },
   "title": "",
-  "submissionMethodDetails": "",
   "items": [
     {
       "description": "",
@@ -402,7 +380,6 @@ data = {
       },
       "id": "",
       "unit": {
-        "code": "",
         "name": ""
       },
       "quantity": "",
@@ -410,25 +387,13 @@ data = {
   ],
   "tenderAttempts": "",
   "description": "",
-  "procurementMethod": "",
   "value": {
-    "currency": "UAH",
     "amount": "",
     "valueAddedTaxIncluded": "",
   },
   "minimalStep": {
-    "currency": "UAH",
     "amount": "",
     "valueAddedTaxIncluded": "",
   },
-  "status": "",
-  "mode": "test",
-  "title_ru": "[ТЕСТИРОВАНИЕ] ",
-  "procurementMethodDetails": "quick, accelerator=1440",
-  "auctionParameters": {
-    "type": "",
-  },
-  "dateModified": "",
-  "awardCriteria": "",
 }
 #</editor-fold>

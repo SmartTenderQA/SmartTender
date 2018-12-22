@@ -15,8 +15,6 @@ def convert_cdb_values_to_edit_format(field, value):
         return value.replace('[Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] ', '')
     elif re.match(u'^\d+[.]?\d*$', str(value)):
         return str(float(value))
-    elif 'unit' in field and 'name' in field:
-        return  unit_name_dictionary[value]
     elif 'lassification' in field and 'scheme' in field and not '1' in field:
         return classification_scheme_dictionary[value]
     return value
@@ -66,7 +64,7 @@ def convert_viewed_values_to_edit_format(field, value):
         elif 'street' in field:
             return list.group('street')
     elif 'lassification' in field and not '1' in field:
-        list = re.search(u'(?P<scheme>\D+[^:]).{2}(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
+        list = re.search(u'(?P<scheme>[^:]+).{2}(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
         if 'scheme' in field:
             return list.group('scheme')
         elif 'id' in field:
@@ -82,13 +80,7 @@ def convert_viewed_values_to_edit_format(field, value):
     return value
 
 
-unit_name_dictionary = {
-    u'га': u'га',
-    u'м.кв.': u'метри квадратні',
-}
-
-
 classification_scheme_dictionary = {
     u'CAV-PS': u'CAV-PS',
-    u'КВЦПЗ': u'kvtspz',
+    u'kvtspz': u'КВЦПЗ',
 }
