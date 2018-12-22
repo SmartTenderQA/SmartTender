@@ -82,14 +82,14 @@ If skipped create tender
     Завантажити сесію для  tender_owner
     Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Знайти тендер організатором по title  ${data['title']}
-    Перейти до другої фази
+    Wait Until Keyword Succeeds  3m  3  Перейти до другої фази
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Завершено
     Завантажити сесію для  tender_owner
     Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Знайти тендер організатором по title  ${data['title']}
-    Перейти до другого етапу
+    Wait Until Keyword Succeeds  3m  3  Перейти до другого етапу
     Опублікувати процедуру
 
 
