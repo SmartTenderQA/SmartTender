@@ -240,6 +240,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  AND  Перевірити наявність торгів
 	...  AND  old_search.Розгорнути Розширений Пошук
 	...  AND  Click Element  ${dropdown menu for bid forms}
+	...  AND  Sleep  3
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Відкриті торги. Аукціон
 	Тендер на закупівлю. Аукціон
@@ -282,6 +283,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  AND  old_search.Активувати вкладку Комерційні торги за типом  Продажі
 	...  AND  old_search.Розгорнути Розширений Пошук
 	...  AND  Click Element  ${dropdown menu for bid forms}
+	...  AND  Sleep  3
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Тендер на продаж. Відкриті торги
 	Аукціон на продаж. Відкриті торги
@@ -314,6 +316,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  AND  Перевірити наявність торгів
 	...  AND  old_search.Розгорнути Розширений Пошук
   	...  AND  Click Element  ${dropdown menu for bid forms}
+  	...  AND  Sleep  3
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Допорогові закупівлі
 	Відкриті торги
@@ -351,6 +354,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  AND  Перевірити наявність торгів
 	...  AND  old_search.Розгорнути Розширений Пошук
   	...  AND  Click Element  ${dropdown menu for bid forms}
+  	...  AND  Sleep  3
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Звіт про укладений договір
 	Переговорна процедура
@@ -400,7 +404,8 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  Перевірити заголовок вкладки ФГВ  Аукціони			AND
 	...  Перевірити заголовок вкладки ФГВ  Реєстр активів	AND
 	...  old_search.Розгорнути Розширений Пошук  			AND
-  	...  Click Element  ${dropdown menu for bid forms}
+  	...  Click Element  ${dropdown menu for bid forms}		AND
+  	...  Sleep  3
 	[Template]  Перевірити наявність тексту в випадаючому списку
 	Продаж права вимоги за кредитними договорами
 	Продаж майна банків, що ліквідуються
@@ -785,7 +790,7 @@ Test Postcondition
 
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
-  Set Focus To Element  xpath=//li[contains(text(), '${bid form}')]
+  Scroll Page To Element XPATH  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
 
 

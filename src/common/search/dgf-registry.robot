@@ -13,6 +13,8 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	${type locator}  Set Variable  //li[contains(text(),'${type}')]
 	Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
 	Wait Until Page Contains Element  ${type locator}
+	Wait Until Element Is Visible  ${type locator}
+	Sleep  1
 	Click Element  ${type locator}
 	Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
 	Дочекатись закінчення загрузки сторінки(sales spin)
