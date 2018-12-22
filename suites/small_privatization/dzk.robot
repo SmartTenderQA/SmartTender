@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+Library  ../../src/pages/dzk/dzk_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Setup  Stop The Whole Test Execution If Previous Test Failed
@@ -9,7 +10,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 *** Variables ***
-${dzk_variables}			${CURDIR}/../../src/pages/dzk/dzk_variables.py
 
 
 #Запуск
@@ -101,7 +101,12 @@ ${dzk_variables}			${CURDIR}/../../src/pages/dzk/dzk_variables.py
 
 *** Keywords ***
 Precondition
-	Import Variables  ${dzk_variables}
+	${edit_locators}  dzk_variables.get_edit_locators
+	${view_locators}  dzk_variables.get_view_locators
+	${data}  dzk_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
     Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
 
