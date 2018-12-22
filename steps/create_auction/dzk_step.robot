@@ -149,7 +149,6 @@
 Заповнити "Тривалість оренди Років"
 	${years}  random_number  1  100
 	dzk_auction.Заповнити contractTerms.leaseTerms.years  ${years}
-	Set To Dictionary  ${data['contractTerms']['leaseTerms']}  years  ${years}
 	${leaseDuration}  Set Variable If
 	...  '${data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${data['contractTerms']['leaseTerms']['leaseDuration']}
@@ -160,7 +159,6 @@
 Заповнити "Тривалість оренди Місяців"
 	${months}  random_number  1  12
 	dzk_auction.Заповнити contractTerms.leaseTerms.months  ${months}
-	Set To Dictionary  ${data['contractTerms']['leaseTerms']}  months  ${months}
 	${leaseDuration}  Set Variable If
 	...  '${data['contractTerms']['leaseTerms']['leaseDuration']}' == ''  P0Y0M
 	...  '${data['contractTerms']['leaseTerms']['leaseDuration']}' != ''  ${data['contractTerms']['leaseTerms']['leaseDuration']}
@@ -342,6 +340,7 @@
 
 Заповнити "Одиниці виміру предмету"
 	${name}  dzk_auction.Заповнити items.0.unit.name
+	${name}  Set Variable If  '${name}' == 'м.кв.'  метри квадратні
 	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 
