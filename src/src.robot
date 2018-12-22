@@ -22,6 +22,7 @@ Resource    common/search/old_search.robot
 Resource    common/search/small_privatization_search.robot
 Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
+Resource    common/compare_data/compare_data.robot
 Resource    common(webclient)/validation/validation.robot
 
 
@@ -72,8 +73,8 @@ Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/pro_kompaniyu/pro_kompaniyu.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
-Resource	  pages/start_page/start_page.robot
-Resource	  pages/taryfy/taryfy.robot
+Resource	pages/start_page/start_page.robot
+Resource	pages/taryfy/taryfy.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot
 Resource    pages/vakansii/vakansii.robot
 Resource    pages/vidhuky/vidhuky.robot
@@ -83,6 +84,7 @@ Resource    pages/small_privatization/small_privatization_informational_message/
 Resource    pages/small_privatization/small_privatization_object/small_privatization_object.robot
 Resource    pages/small_privatization/small_privatization_auction/small_privatization_auction.robot
 Resource    pages/dzk/dzk_auction.robot
+
 
 Resource    pages(webclient)/desktop/desktop.robot
 Resource    pages(webclient)/main_page/actions.robot
@@ -104,8 +106,8 @@ Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 Resource    ../steps/create_tender/test_ramky.robot
-Resource    ../steps/create_auction/dzk.robot
-Resource    ../steps/create_auction/small_privatization.robot
+Resource    ../steps/create_auction/dzk_step.robot
+Resource    ../steps/create_auction/small_privatization_step.robot
 
 
 Resource	keywords.robot

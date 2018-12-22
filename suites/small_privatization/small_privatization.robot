@@ -6,6 +6,7 @@ Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***
@@ -15,21 +16,25 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
-	start_page.Натиснути На торговельний майданчик
-	old_search.Активувати вкладку ФГИ
-	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
-	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	Run Keyword If  '${site}' == 'test'
-	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
-	small_privatization_search.Натиснути створити  об'єкт
-	small_privatization_object.Заповнити всі обов'язкові поля
-	small_privatization_object.Прикріпити документ
-	small_privatization_object.Натиснути кнопку зберегти
-	small_privatization_object.Опублікувати об'єкт у реєстрі
+	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
+	small_privatization_object.Отримати ID у цбд
 	Log To Console  object-UAID=${data['object']['UAID']}
 	${location}  Get Location
 	Log To Console  url=${location}
+
+
+Перевірити дані про об'єкт в ЦБД
+	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${spo_data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data
+	small_privatization_object.Перевірити всі обов'язкові поля в цбд
+
+
+Перевірити відображення детальної інформації про об'єкт
+	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	debug
 
 
 Створити інформаційне повідомлення МП
@@ -137,7 +142,7 @@ Precondition
 	Set To Dictionary  ${data}  message  ${message}
 	Set Global Variable  ${data}
 	Додати першого користувача  ${user}  tender_owner
-    Підготувати користувачів
+    #Підготувати користувачів
 
 
 Postcondition

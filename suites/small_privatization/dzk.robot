@@ -5,33 +5,38 @@ Suite Teardown  Close All Browsers
 Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
-...  AND  Log  ${dzk_data}
+...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***
+${dzk_variables}			${CURDIR}/../../src/pages/dzk/dzk_variables.py
+
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/small_privatization/dzk.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v user:USER_DZK -v hub:None -e -test suites/small_privatization/dzk.robot
 *** Test Cases ***
 Створити аукціон
 	Завантажити сесію для  tender_owner
-	dzk.Створити тендер
+	dzk_step.Створити аукціон
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
-	Зберегти словник у файл  ${dzk_data}  dzk_data
-	Log To Console  url=${dzk_data['tender_href']}
+	Зберегти словник у файл  ${data}  data
+	Log To Console  url=${data['tender_href']}
 
 
 Отримати дані з цбд та перевірити їх відповідність
-	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${dzk_data['id']}
+	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
 	dzk_auction.Перевірити всі обов'язкові поля в цбд
 
 
 Перевірити відображення детальної інформації
+	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	debug
 
 
 Знайти аукціон учасниками
@@ -39,7 +44,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Знайти аукціон користувачем  provider1
 	Зберегти сесію  provider1
 	Завантажити сесію для  provider2
-	Go To  ${dzk_data['tender_href']}
+	Go To  ${data['tender_href']}
 	Зберегти сесію  provider2
 	Sleep  90
 
@@ -53,7 +58,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
-	Підтвердити заявки на участь у тендері  ${dzk_data['auctionID']}
+	Підтвердити заявки на участь у тендері  ${data['auctionID']}
 
 
 Подати пропозицію учасниками
@@ -81,9 +86,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути кнопку "До аукціону"
 	\  ${viewer_href}  Отримати URL на перегляд
-    \  Set To Dictionary  ${dzk_data}  viewer_href  ${viewer_href}
+    \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
 	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
-	\  Set To Dictionary  ${dzk_data}  provider${i}_participate_href  ${participate_href}
+	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
 	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
 	\  Go Back
 
@@ -98,8 +103,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 *** Keywords ***
 Precondition
+	Import Variables  ${dzk_variables}
     Додати першого користувача  ${user}  tender_owner
-    Підготувати користувачів
+    #Підготувати користувачів
 
 
 Підготувати користувачів
@@ -117,6 +123,17 @@ Precondition
     ...  Додати користувача          test_viewer     	viewer
 
 
+Дочекатися довантаження даних з ЦБД
+	Sleep  10
+	Reload Page
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${title locator}  Set Variable  ${view_locators['title']}
+	${title}  Get Text  ${title locator}
+	${status}  Run Keyword And Return Status  Should Contain  ${title}  [ТЕСТУВАННЯ]
+	Run Keyword If  ${status} == ${False}
+	...  Дочекатися довантаження даних з ЦБД
+
+
 Знайти аукціон користувачем
 	[Arguments]  ${role}
 	Завантажити сесію для  ${role}
@@ -127,7 +144,7 @@ Precondition
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	new_search.Очистити фільтр пошуку
 	new_search.Очистити фільтр пошуку
-	new_search.Ввести фразу для пошуку  ${dzk_data['id']}
+	new_search.Ввести фразу для пошуку  ${data['id']}
 	new_search.Натиснути кнопку пошуку
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	new_search.Перейти по результату пошуку за номером  1
@@ -144,18 +161,18 @@ Precondition
 	Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${dzk_data['auctionID']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${dzk_data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${dzk_data['items']['0']['unit']['name']}
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['auctionID']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['0']['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
 Неможливість отримати поcилання на участь в аукціоні глядачем
 	[Arguments]  ${user}
 	Завантажити сесію для  ${user}
-	Go to  ${dzk_data['tender_href']}
+	Go to  ${data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
@@ -196,8 +213,3 @@ Precondition
 	${ok button}  Set Variable  //*[@class='ivu-poptip-inner' and contains(.,'Анулювати пропозицію буде неможливо, подати пропозицію?')]//button[contains(.,'Так')]
 	Wait Until Element Is Visible  ${ok button}
 	Click Element  ${ok button}
-
-
-#	${message}  Натиснути надіслати пропозицію та вичитати відповідь
-#	Виконати дії відповідно повідомленню  ${message}
-#	Wait Until Page Does Not Contain Element  ${ok button}

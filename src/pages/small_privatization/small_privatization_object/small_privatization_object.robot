@@ -1,11 +1,60 @@
 *** Settings ***
-Variables  small_privatization_object_variables.py
+Library		small_privatization_object_common.py
 
 
 *** Variables ***
 
 
 *** Keywords ***
+###########################################################################
+################################## STEPS ##################################
+###########################################################################
+Перевірити всі обов'язкові поля в цбд
+	#todo hz 4to tut delat`
+	#small_privatization_object.Перевірити дані в ЦБД для  ['title']
+	small_privatization_object.Перевірити дані в ЦБД для  ['description']
+	small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['title']
+	small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['decisionID']
+	#small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['decisionDate']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['description']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['classification']['id']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['classification']['description']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['quantity']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['unit']['name']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['postalCode']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['countryName']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['region']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['locality']
+	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['streetAddress']
+
+
+Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	small_privatization_object.Переірити відображення для  ['auctionID']
+	small_privatization_object.Переірити відображення для  ['title']
+	small_privatization_object.Переірити відображення для  ['description']
+	small_privatization_object.Переірити відображення для  ['decisions'][0]['title']
+	small_privatization_object.Переірити відображення для  ['decisions'][0]['decisionID']
+	small_privatization_object.Переірити відображення для  ['decisions'][0]['decisionDate']
+	small_privatization_object.Переірити відображення для  ['items'][0]['description']
+	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['kind']
+	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['id']
+	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['description']
+	small_privatization_object.Переірити відображення для  ['items'][0]['quantity']
+	small_privatization_object.Переірити відображення для  ['items'][0]['unit']['name']
+	small_privatization_object.Переірити відображення для  ['items'][0]['address']['postalCode']
+	small_privatization_object.Переірити відображення для  ['items'][0]['address']['countryName']
+	small_privatization_object.Переірити відображення для  ['items'][0]['address']['region']
+	small_privatization_object.Переірити відображення для  ['items'][0]['address']['locality']
+	small_privatization_object.Переірити відображення для  ['items'][0]['address']['streetAddress']
+###########################################################################
+################################# /STEPS ##################################
+###########################################################################
+
+
+
+###########################################################################
+################################# COMMON ##################################
+###########################################################################
 Натиснути кнопку "Коригувати об'єкт приватизації"
      ${selector}  Set Variable  //*[@data-qa="button-to-edit-page"]
      Scroll Page To Element XPATH  ${selector}
@@ -20,27 +69,11 @@ Variables  small_privatization_object_variables.py
     [Return]  ${count}
 
 
-Заповнити всі обов'язкові поля
-	small_privatization_object.Заповнити title
-    small_privatization_object.Заповнити description
-    small_privatization_object.Заповнити decision.title
-    small_privatization_object.Заповнити decision.number
-    small_privatization_object.Заповнити decision.date
-    small_privatization_object.Заповнити items.description
-    small_privatization_object.Заповнити items.kind
-    small_privatization_object.Заповнити items.count
-    small_privatization_object.Заповнити items.unit
-    small_privatization_object.Заповнити items.postalcode
-    small_privatization_object.Заповнити items.country
-    small_privatization_object.Заповнити items.city
-    small_privatization_object.Заповнити items.streetAddress
-
-
 Натиснути кнопку зберегти
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-    Wait Until Page Contains Element  ${notice message}  15
+    Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  успішно
 	Wait Until Page Does Not Contain Element  ${notice message}
@@ -52,112 +85,10 @@ Variables  small_privatization_object_variables.py
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-    Wait Until Page Contains Element  ${notice message}  15
+    Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  успішно
 	Wait Until Page Does Not Contain Element  ${notice message}
-
-
-Заповнити title
-	${text}  create_sentence  5
-	${title}  Set Variable  ${text}
-	${selector}  Set Variable  //*[@data-qa='input-title']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
-	Set To Dictionary  ${data['object']}  title  ${title}
-
-
-Заповнити description
-	${description}  create_sentence  20
-	${selector}  Set Variable  //*[@data-qa='input-description']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${data['object']}  description  ${description}
-
-
-Заповнити decision.title
-	${title}  create_sentence  5
-	${selector}  Set Variable  //*[@data-qa='input-decision-title']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
-	${decision}  Create Dictionary  title  ${title}
-	Set To Dictionary  ${data['object']}  decision  ${decision}
-
-
-Заповнити decision.number
-	${number}  random_number  1000  1000000
-	${selector}  Set Variable  //*[@data-qa='input-decision-number']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
-	Set To Dictionary  ${data['object']['decision']}  number  ${number}
-
-
-Заповнити decision.date
-	${date}  smart_get_time  0  m
-	${selector}  Set Variable  //*[@data-qa='datepicker-decision-date']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
-	Set To Dictionary  ${data['object']['decision']}  date  ${date}
-
-
-Заповнити items.description
-	${description}  create_sentence  20
-	${selector}  Set Variable  //*[@data-qa='input-items-description']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
-	${items}  Create Dictionary  description  ${description}
-	Set To Dictionary  ${data['object']}  item  ${items}
-
-
-Заповнити items.kind
-    ${selector}  Set Variable  //*[@data-qa='select-items-object-kind']
-	${kind}  Wait Until Keyword Succeeds  30  3  small_privatization.Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  102
-   	Should Not Be Empty  ${kind}
-	Set To Dictionary  ${data['object']['item']}  kind  ${kind}
-
-
-Заповнити items.count
-	${first}  random_number  1  100000
-	${second}  random_number  1  1000
-    ${count}  Evaluate  str(round(float(${first})/float(${second}), 3))
-	${selector}  Set Variable  //*[@data-qa='input-item-count']//*[@autocomplete="off"]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${count}
-	Set To Dictionary  ${data['object']['item']}  count  ${count}
-
-
-Заповнити items.unit
-    ${selector}  Set Variable  //*[@data-qa='select-item-unit']
-    Scroll Page To Element XPATH  ${selector}
-	${unit}  Wait Until Keyword Succeeds  30  3  small_privatization.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-	Set To Dictionary  ${data['object']['item']}  unit  ${unit}
-
-
-Заповнити items.postalcode
-	${postalcode}  random_number  10000  99999
-	${selector}  Set Variable  //div[contains(@class,'address-label') and not(contains(@class,'offset '))]//input[@type='text']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${postalcode}
-	Set To Dictionary  ${data['object']['item']}  postalcode  ${postalcode}
-
-
-Заповнити items.country
-   	${selector}  Set Variable  //div[@class='ivu-col ivu-col-span-sm-9']
-	Scroll Page To Element XPATH  ${selector}
-    ${country}  Wait Until Keyword Succeeds  30  3  small_privatization.Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  Україна
-    Set To Dictionary  ${data['object']['item']}  country  ${country}
-
-
-Заповнити items.city
-   	${selector}  Set Variable  //div[@class='ivu-col ivu-col-span-sm-10']
-    ${city}  Wait Until Keyword Succeeds  30  3  small_privatization.Вибрати та повернути випадковий елемент з випадаючого списку  ${selector}
-    Set To Dictionary  ${data['object']['item']}  city  ${city}
-
-
-Заповнити items.streetAddress
-    ${address}  get_some_uuid
-   	${selector}  Set Variable  //*[@data-qa='component-item-address']/div[contains(@class,'ivu-form-item-required')]//input
-   	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${address}
-    Set To Dictionary  ${data['object']['item']}  address  ${address}
-
-
-Прикріпити документ
-	${selector}  Set Variable  //*[@data-qa='component-documents']
-	${doc}  Створити та додати файл  ${selector}//input
-	Element Should Contain  ${selector}  ${doc[1]}
-	Set To Dictionary  ${data['object']}  document-name  ${doc[1]}
 
 
 Отримати UAID для Об'єкту
@@ -175,3 +106,154 @@ Variables  small_privatization_object_variables.py
 	${date now}  Evaluate  '{:%Y-%m-%d}'.format(datetime.datetime.now())  modules=datetime
 	${UAID should}  Set Variable  UA-AR-P-${date now}
 	Should Contain  ${UAID is}  ${UAID should}
+
+
+Отримати ID у цбд
+    ${cdb locator}  Set Variable  //*[@data-qa='cdbNumber']
+    ${cdb href}  Get Element Attribute  ${cdb locator}  href
+    ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
+    Set To Dictionary  ${spo_data}  id  ${cdb id}
+
+
+
+########################
+#region#Робота з полями#
+########################
+Заповнити title
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['title']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Заповнити description
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['description']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Заповнити decisions.0.title
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['title']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+
+Заповнити decisions.0.decisionID
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+
+Заповнити decisions.0.decisionDate
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Заповнити items.0.description
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['description']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+
+Заповнити items.0.classification.kind
+	[Arguments]  ${text}=''
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['classification']['kind']
+	${kind}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
+	[Return]  ${kind}
+
+
+Заповнити items.0.classification.description
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['classification']['description']
+	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
+	[Return]  ${description}
+
+
+Заповнити items.0.quantity
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['quantity']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Заповнити items.0.unit.name
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['unit']['name']
+	${name}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}
+	[Return]  ${name}
+
+
+Заповнити items.0.address.postalCode
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['postalCode']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+
+Заповнити items.0.address.countryName
+   	[Arguments]  ${text}=''
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['countryName']
+	${countryName}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
+	[Return]  ${countryName}
+
+
+Заповнити items.0.address.locality
+   	[Arguments]  ${text}=''
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['locality']
+	${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
+	[Return]  ${locality}
+
+
+Заповнити items.0.address.streetAddress
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['streetAddress']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Прикріпити документ
+	${selector}  Set Variable  //*[@data-qa='component-documents']
+	${doc}  Створити та додати файл  ${selector}//input
+	Element Should Contain  ${selector}  ${doc[1]}
+	Set To Dictionary  ${data['object']}  document-name  ${doc[1]}
+
+
+###########################################################################
+############################## INPUT FIELD ################################
+###########################################################################
+
+
+
+###########################################################################
+################################## CHECK ##################################
+###########################################################################
+Отримати локатор по назві поля
+	[Arguments]  ${field}
+	${selector}  Set Variable  ${spo_edit_locators${field}}
+	[Return]  ${selector}
+
+
+Отритами дані зі сторінки
+ 	[Arguments]  ${field}
+ 	${selector}  Set Variable  ${spo_view_locators${field}}
+ 	Wait Until Element Is Visible  ${selector}  10
+ 	${value}  Get Text  ${selector}
+ 	${field value}  small_privatization_object_common.get_page_values  ${field}  ${value}
+ 	[Return]  ${field value}
+
+
+Переірити відображення для
+ 	[Arguments]  ${field}
+ 	${value should}  Set Variable  ${spo_data${field}}
+ 	${value is}  small_privatization_object.Отритами дані зі сторінки  ${field}
+	Should Be Equal  ${value is}  ${value should}  Oops! Відображаються не ті дані для ${field}
+
+
+Перевірити дані в ЦБД для
+	[Arguments]  ${field}
+	${value should}  Set Variable  ${spo_data${field}}
+	${value cdb}  Set Variable  ${cdb_data${field}}
+ 	${is equal}  small_privatization_object_common.get_cdb_values  ${value cdb}  ${value should}
+	Should Be Equal  ${is equal}  ${True}  Oops! В ЦБД не ті дані для ${field}
+###########################################################################
+################################# /CHECK ##################################
+###########################################################################
