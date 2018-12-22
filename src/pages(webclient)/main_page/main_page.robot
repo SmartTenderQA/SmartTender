@@ -68,3 +68,15 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Натиснути кнопку Перечитать (Shift+F4)  AND
     ...  Знайти тендер організатором по title  ${title}
+
+
+Дочекатись стадії закупівлі
+    [Arguments]  ${stage}
+    ${selector}  Set Variable
+    ...  xpath=//*[@data-placeid="TENDER"]//tr[contains(@class,"Row")]/td[count(//div[contains(text(), 'Стадия')])+1]
+    Натиснути кнопку Перечитать (Shift+F4)
+    ${now}  Get Text  ${selector}
+    ${status}  Run Keyword And Return Status  Should Contain  ${now}  ${stage}
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Sleep  30  AND  Дочекатись стадії закупівлі  ${stage}
+    ...

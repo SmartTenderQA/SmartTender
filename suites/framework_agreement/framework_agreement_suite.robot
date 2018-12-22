@@ -1,5 +1,6 @@
 *** Settings ***
-Resource  ../../src/src.robot
+Resource   ../../src/src.robot
+Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
 #Suite Setup     Авторизуватися організатором
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
@@ -19,8 +20,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Створити тендер
 	[Tags]  create_tender
-	${data}  create_procurement_dict
-	Set Global Variable  ${data}
 	Завантажити сесію для  tender_owner
 	test_ramky.Створити тендер
 	test_ramky.Отримати дані тендера та зберегти їх у файл
@@ -62,6 +61,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     Знайти тендер організатором по title  ${data['title']}
+    Дочекатись стадії закупівлі  Квалификация
     Визнати всіх учасників переможцями
 
 

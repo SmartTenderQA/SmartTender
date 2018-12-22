@@ -100,7 +100,7 @@
 
 
 Заповнити unit.name для item
-    ${unit name}  Заповнити "Одиниця виміру"
+    ${unit name}  tender_tab.Заповнити "Одиниця виміру"
     Set To Dictionary  ${data['items'][0]['unit']}  name  ${unit name}
 
 
