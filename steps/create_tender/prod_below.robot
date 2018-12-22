@@ -44,7 +44,7 @@
 
 
 Заповнити contact для tender
-    ${person}  Заповнити "Контактна особа"
+    ${person}  Вибрати "Контактна особа"
     ${value}  Create Dictionary  name=${person}
     Set To Dictionary  ${data}  contactPerson  ${value}
 

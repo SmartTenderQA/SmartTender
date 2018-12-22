@@ -111,7 +111,7 @@ Resource    ../steps/create_auction/small_privatization.robot
 Resource	keywords.robot
 Resource	search.robot
 Library		service.py
-Library     empty_dicts.py
+
 
 
 *** Variables ***

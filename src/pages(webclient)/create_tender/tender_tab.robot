@@ -72,12 +72,16 @@ Resource        keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
+    ${amount}  Get Element Attribute  //*[@data-name="MINSTEP"]//input  value
+    [Return]  ${amount}
 
 
 Заповнити "Мінімальний крок аукціону" для лоту
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
+    ${amount}  Get Element Attribute  //*[@data-name="LOT_MINSTEP"]//input  value
+    [Return]  ${amount}
 
 
 Заповнити "Узагальнена назва закупівлі"
@@ -98,7 +102,7 @@ Resource        keywords.robot
     Заповнити текстове поле  ${selector}  ${value}
 
 
-Заповнити "Контактна особа"
+Вибрати "Контактна особа"
     ${input field}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
 	Дочекатись закінчення загрузки сторінки(webclient)
@@ -107,6 +111,12 @@ Resource        keywords.robot
 	Вибрати довільну персону з довідника персоналу
     ${person}  Get Element Attribute  ${input field}  value
     [Return]  ${person}
+
+
+Заповнити "Контактна особа"
+    [Arguments]  ${name}
+    ${selector}  set variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
+    Заповнити текстове поле  ${selector}  ${name}
 
 
 Заповнити "Назва предмета закупівлі"

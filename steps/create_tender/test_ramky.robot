@@ -150,6 +150,7 @@
     Заповнити "Строк поставки з"  ${value}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${value}
 
+
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
     Заповнити "Строк поставки по"  ${value}

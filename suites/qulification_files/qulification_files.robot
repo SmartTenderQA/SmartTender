@@ -1,6 +1,6 @@
 *** Settings ***
-Resource  ../../src/src.robot
-Suite Setup     Створити словник  data
+Resource   ../../src/src.robot
+Variables  src/pages/procurement_tender_detail_page/procurement_variables.py
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -11,42 +11,30 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  PPR_OR          tender_owner
-    Додати користувача          Bened           tender_owner2
+    #Додати користувача          Bened           tender_owner2
     Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
-    #Додати користувача          test_viewer     viewer
+    #Додати користувача          user2           provider2
+    #Додати користувача          user3           provider3
+
 
 
 Створити тендер
 	[Tags]  create_tender
+	${data}  create_dict_below
 	Завантажити сесію для  tender_owner
+	debug
 	test_below.Створити тендер
+	test_below.Отримати дані тендера та зберегти їх у файл
 
 
-Отримати дані тендера та зберегти їх у файл
+Перевірити коректність даних
     [Tags]  create_tender
-	Знайти тендер організатором по title  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
-    ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
-    Set To Dictionary  ${data}  tender_href  ${tender_href}
-    Log  ${tender_href}  WARN
-    Зберегти словник у файл  ${data}  data
-
-
-Отримати дані з cdb та зберегти їх у файл
-    [Tags]  create_tender
-    Створити словник  cdb
-    Go To  ${data['tender_href']}
-    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
-    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
-    Зберегти словник у файл  ${cdb}  cdb
+    Перевірка відображення даних тендера на сторінці
 
 
 If skipped create tender
 	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact.json
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
@@ -79,8 +67,7 @@ If skipped create tender
 
 Перевірити відображення кваліфікаційних файлів організатором
     Go to  ${data['tender_href']}
-    ${count}  Отримати уількисть учасників аукціону
-    Розгоррнути детальну
+    debug
 
 
 
@@ -106,3 +93,25 @@ If skipped create tender
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
+
+
+Перевірка відображення даних тендера на сторінці
+    [Arguments]  ${role}
+    Завантажити сесію для  ${role}
+    Go to  ${data['tender_href']}
+    Перевірити коректність даних на сторінці  ['title']
+    Перевірити коректність даних на сторінці  ['description']
+    Перевірити коректність даних на сторінці  ['tender_uaid']
+    Перевірити коректність даних на сторінці  ['item']['title']
+    Перевірити коректність даних на сторінці  ['item']['city']
+    Перевірити коректність даних на сторінці  ['item']['streetAddress']
+    Перевірити коректність даних на сторінці  ['item']['postal code']
+    Перевірити коректність даних на сторінці  ['item']['id']
+    Перевірити коректність даних на сторінці  ['item']['id title']
+    #Перевірити коректність даних на сторінці  ['item']['unit']
+    Перевірити коректність даних на сторінці  ['item']['quantity']
+    Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
+    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
+    Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
+    Перевірити коректність даних на сторінці  ['value']['amount']
+    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']

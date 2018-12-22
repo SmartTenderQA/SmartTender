@@ -17,7 +17,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити contact для tender
-    ${person}  Заповнити "Контактна особа"
+    ${person}  Вибрати "Контактна особа"
     ${value}  Create Dictionary  name=${person}
     ${contactPoint}  Create Dictionary  contactPerson=${value}
     Set To Dictionary  ${data}  procuringEntity  ${contactPoint}

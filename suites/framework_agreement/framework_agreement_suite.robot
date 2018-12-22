@@ -19,20 +19,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Створити тендер
 	[Tags]  create_tender
-	${data}  create_dict_ramky
+	${data}  create_procurement_dict
 	Set Global Variable  ${data}
 	Завантажити сесію для  tender_owner
 	test_ramky.Створити тендер
 	test_ramky.Отримати дані тендера та зберегти їх у файл
-
-
-Отримати дані з cdb та зберегти їх у файл
-    [Tags]  create_tender
-    Створити словник  cdb
-    Go To  ${data['tender_href']}
-    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['prozorro-id']
-    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
-    Зберегти словник у файл  ${cdb}  cdb
 
 
 If skipped create tender
