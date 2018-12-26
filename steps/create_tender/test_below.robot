@@ -79,6 +79,7 @@
     test_below.Заповнити streetAddress для item
     test_below.Заповнити locality для item
 
+
 Заповнити description для item
     ${description}  create_sentence  5
     Заповнити "Назва предмета закупівлі"  ${description}

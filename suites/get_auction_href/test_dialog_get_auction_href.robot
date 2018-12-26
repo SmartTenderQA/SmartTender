@@ -96,6 +96,7 @@ If skipped create tender
 
 Отримати дані тендера та зберегти їх у файл
     [Tags]  create_tender
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера

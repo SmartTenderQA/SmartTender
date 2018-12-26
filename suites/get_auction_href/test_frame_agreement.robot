@@ -1,6 +1,6 @@
 *** Settings ***
 Resource   ../../src/src.robot
-#Suite Setup     Авторизуватися організатором
+
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND

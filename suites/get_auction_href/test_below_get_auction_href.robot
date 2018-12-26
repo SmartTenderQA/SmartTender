@@ -21,17 +21,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
 	test_below.Створити тендер
-
-
-Отримати дані тендера та зберегти їх у файл
-    [Tags]  create_tender
-	Знайти тендер організатором по title  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
-    ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
-    Set To Dictionary  ${data}  tender_href  ${tender_href}
-    Log  ${tender_href}  WARN
-    Зберегти словник у файл  ${data}  data
+    test_below.Отримати дані тендера та зберегти їх у файл
 
 
 If skipped create tender
