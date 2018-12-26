@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
+#Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
 Suite Setup     Створити словник  data
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords

@@ -1,11 +1,8 @@
 *** Settings ***
 Library  		convert_page_values.py
+Library         convert_cdb_values.py
 Resource  		keywords.robot
-
-
-*** Variables ***
-${['procedure-type']}                   //*[@data-qa="procedure-type"]//div[2]
-${['prozorro-number']}                  //*[@data-qa='prozorro-number']//a/span
+Variables       procurement_variables.py
 
 
 
@@ -23,12 +20,36 @@ ${['prozorro-number']}                  //*[@data-qa='prozorro-number']//a/span
     ...  Element Should Not Be Visible  //*[@class='modal-dialog ']//h4
 
 
+Перевірити коректність даних на сторінці
+    [Arguments]  ${field}
+    ${value}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
+    Should Be Equal  ${value}  ${data${field}}
+
+
+
+Порівняти введені дані з даними в ЦБД
+	[Arguments]  ${field}
+	${value entered}  Set Variable  ${data${field}}
+    ${cdb value}  Отритами дані з ЦБД  ${field}
+
+
+
+
+
+
+Отритами дані з ЦБД
+    [Arguments]  ${field}
+    ${value}  Set Variable  ${cdb${field}}
+    ${cdb value}  convert_cdb_values  ${field}  ${value}
+    [Return]  ${cdb value}
+
+
 Отритами дані зі сторінки
 	[Arguments]  ${field}
 	${selector}  Set Variable  	${locators${field}}
 	Wait Until Element Is Visible  ${selector}  10
 	${value}  Get Text  ${selector}
-	${field value}  Парсінг за необхідністью  ${field}  ${value}
+	${field value}  convert_page_values  ${field}  ${value}
 	[Return]  ${field value}
 
 

@@ -11,10 +11,7 @@
     [Return]  ${result}
 
 
-Перевірити коректність даних на сторінці
-    [Arguments]  ${field}
-    ${value}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
-    Should Be Equal  ${value}  ${data${field}}
+
 
 
 Отримати локатор по назві поля

@@ -1,13 +1,14 @@
 *** Settings ***
-Resource  ../../src/src.robot
-Suite Setup     Створити словник  data
+Resource   ../../src/src.robot
+#Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
+
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -n view -e get_tender suites/get_auction_href/test_below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  Bened           tender_owner
@@ -36,7 +37,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 If skipped create tender
 	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact.json
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
@@ -71,22 +72,32 @@ If skipped create tender
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
+    Отримати дані з cdb та зберегти їх у файл
     Перевірити коректність даних на сторінці  ['title']
     Перевірити коректність даних на сторінці  ['description']
     Перевірити коректність даних на сторінці  ['tender_uaid']
-    Перевірити коректність даних на сторінці  ['item']['title']
-    Перевірити коректність даних на сторінці  ['item']['city']
-    Перевірити коректність даних на сторінці  ['item']['streetAddress']
-    Перевірити коректність даних на сторінці  ['item']['postal code']
-    Перевірити коректність даних на сторінці  ['item']['id']
-    Перевірити коректність даних на сторінці  ['item']['id title']
-    #Перевірити коректність даних на сторінці  ['item']['unit']
-    Перевірити коректність даних на сторінці  ['item']['quantity']
+    Перевірити коректність даних на сторінці  ['items'][0]['description']
+    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['locality']
+    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['streetAddress']
+    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['postalCode']
+    Перевірити коректність даних на сторінці  ['items'][0]['classification']['id']
+    Перевірити коректність даних на сторінці  ['items'][0]['classification']['description']
+    #Перевірити коректність даних на сторінці  ['items'][0]['unit']
+    Перевірити коректність даних на сторінці  ['items'][0]['quantity']
     Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
     Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
     Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
     Перевірити коректність даних на сторінці  ['value']['amount']
-    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
+    Перевірити коректність даних на сторінці  ['minimalStep']['amount']
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    Створити словник  cdb
+    Go To  ${data['tender_href']}
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
@@ -125,9 +136,9 @@ If skipped create tender
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 

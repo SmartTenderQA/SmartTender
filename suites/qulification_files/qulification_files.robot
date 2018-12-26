@@ -11,10 +11,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  PPR_OR          tender_owner
-    Додати користувача          Bened           tender_owner2
+    #Додати користувача          Bened           tender_owner2
     Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
+    #Додати користувача          user2           provider2
+    #Додати користувача          user3           provider3
 
 
 
@@ -26,8 +26,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Перевірити коректність даних
-    [Tags]  create_tender
-    Перевірка відображення даних тендера на сторінці
+    [Tags]  view
+    Перевірка відображення даних тендера на сторінці  provider1
 
 
 If skipped create tender
@@ -97,6 +97,7 @@ If skipped create tender
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
+    debug
     Перевірити коректність даних на сторінці  ['title']
     Перевірити коректність даних на сторінці  ['description']
     Перевірити коректність даних на сторінці  ['tender_uaid']

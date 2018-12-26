@@ -152,6 +152,7 @@ data = {
 
 locators = {
     "procurementMethod": "",
+    "procedure-type": """//*[@data-qa="procedure-type"]//div[2]""",
     "complaintPeriod": {
         "startDate": "",
         "endDate": ""

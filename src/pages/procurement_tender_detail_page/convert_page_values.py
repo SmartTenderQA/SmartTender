@@ -3,15 +3,15 @@ import re
 
 def convert_page_values(field, value):
     global ret
-    if 'city' in field or 'postal code' in field or 'streetAddress' in field:
+    if 'locality' in field or 'postalCode' in field or 'streetAddress' in field:
         list = re.search(u'(?P<code>\d+), (?P<city>\D+,\s\D+), (?P<street>.+)', value)
-        if 'city' in field:
+        if 'locality' in field:
             ret = list.group('city')
             a = ret.split()
             a.reverse()
             ret = "  ".join(a)
             ret = ret.replace(',', '')
-        elif 'postal code' in field:
+        elif 'postalCode' in field:
             ret = list.group('code')
         elif 'streetAddress' in field:
             ret = list.group('street')
