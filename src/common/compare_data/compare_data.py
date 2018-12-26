@@ -7,10 +7,14 @@ def compare_values(first_value, second_value):
     return str(first_value) == str(second_value)
 
 
-def convert_cdb_values_to_edit_format(field, value):
+def convert_cdb_values_to_edit_format(field, value, time_format='s'):
     if 'Period' in field:
-        list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+):(?P<seconds>\d+)', value)
-        return list.group('day')+'.'+list.group('month')+'.'+list.group('year')+' '+list.group('hours')+':'+list.group('minutes')+':'+list.group('seconds')
+        if time_format == 's':
+            list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+):(?P<seconds>\d+)', value)
+            return list.group('day')+'.'+list.group('month')+'.'+list.group('year')+' '+list.group('hours')+':'+list.group('minutes')+':'+list.group('seconds')
+        elif time_format == 'm':
+            list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+)', value)
+            return list.group('day') + '.' + list.group('month') + '.' + list.group('year') + ' ' + list.group('hours') + ':' + list.group('minutes')
     elif 'accountIdentification' in field and 'description' in field:
         return value.replace('[Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] ', '')
     elif re.match(u'^\d+[.]?\d*$', str(value)):
@@ -77,6 +81,14 @@ def convert_viewed_values_to_edit_format(field, value):
             return list.group('unit')
         elif 'quantity' in field:
             return str(float(list.group('quantity')))
+    elif 'decisions' in field:
+        list = re.search(u'(?P<title>[^0-9]+) (?P<decisionID>\d+).{5}(?P<decisionDate>[0-9.]+\s[0-9:]+)', value)
+        if 'title' in field:
+            return list.group('title')
+        elif 'decisionID' in field:
+            return list.group('decisionID')
+        elif 'decisionDate' in field:
+            return list.group('decisionDate')
     return value
 
 

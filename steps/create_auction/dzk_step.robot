@@ -340,7 +340,8 @@
 
 Заповнити "Одиниці виміру предмету"
 	${name}  dzk_auction.Заповнити items.0.unit.name
-	${name}  Set Variable If  '${name}' == 'м.кв.'  метри квадратні
+	${name}  Set Variable If  '${name}' == 'м.кв.'
+	...  метри квадратні  ${name}
 	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 

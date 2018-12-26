@@ -1,5 +1,4 @@
 *** Settings ***
-Library		small_privatization_object_common.py
 
 
 *** Variables ***
@@ -11,41 +10,42 @@ Library		small_privatization_object_common.py
 ###########################################################################
 Перевірити всі обов'язкові поля в цбд
 	#todo hz 4to tut delat`
-	#small_privatization_object.Перевірити дані в ЦБД для  ['title']
-	small_privatization_object.Перевірити дані в ЦБД для  ['description']
-	small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['title']
-	small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['decisionID']
-	#small_privatization_object.Перевірити дані в ЦБД для  ['decisions'][0]['decisionDate']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['description']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['classification']['id']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['classification']['description']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['quantity']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['unit']['name']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['postalCode']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['countryName']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['region']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['locality']
-	small_privatization_object.Перевірити дані в ЦБД для  ['items'][0]['address']['streetAddress']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['title']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['description']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['title']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionID']
+	#compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
+	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['kind']
+	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']['name']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['countryName']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['region']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['locality']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
 
 
 Перевірити відображення всіх обов'язкових полів на сторінці аукціону
-	small_privatization_object.Переірити відображення для  ['auctionID']
-	small_privatization_object.Переірити відображення для  ['title']
-	small_privatization_object.Переірити відображення для  ['description']
-	small_privatization_object.Переірити відображення для  ['decisions'][0]['title']
-	small_privatization_object.Переірити відображення для  ['decisions'][0]['decisionID']
-	small_privatization_object.Переірити відображення для  ['decisions'][0]['decisionDate']
-	small_privatization_object.Переірити відображення для  ['items'][0]['description']
-	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['kind']
-	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['id']
-	small_privatization_object.Переірити відображення для  ['items'][0]['classification']['description']
-	small_privatization_object.Переірити відображення для  ['items'][0]['quantity']
-	small_privatization_object.Переірити відображення для  ['items'][0]['unit']['name']
-	small_privatization_object.Переірити відображення для  ['items'][0]['address']['postalCode']
-	small_privatization_object.Переірити відображення для  ['items'][0]['address']['countryName']
-	small_privatization_object.Переірити відображення для  ['items'][0]['address']['region']
-	small_privatization_object.Переірити відображення для  ['items'][0]['address']['locality']
-	small_privatization_object.Переірити відображення для  ['items'][0]['address']['streetAddress']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetID']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['title']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['description']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['title']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionID']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['kind']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['countryName']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['region']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['locality']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
 ###########################################################################
 ################################# /STEPS ##################################
 ###########################################################################
@@ -98,7 +98,7 @@ Library		small_privatization_object_common.py
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
 	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Об'єкту  ${UAID}
 	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Об'єкту
-    Set To Dictionary  ${data['object']}  UAID  ${UAID}
+    Set To Dictionary  ${data}  assetID  ${UAID}
 
 
 Перевірити коректність UAID для Об'єкту
@@ -112,7 +112,7 @@ Library		small_privatization_object_common.py
     ${cdb locator}  Set Variable  //*[@data-qa='cdbNumber']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
-    Set To Dictionary  ${spo_data}  id  ${cdb id}
+    Set To Dictionary  ${data}  id  ${cdb id}
 
 
 
@@ -214,7 +214,7 @@ Library		small_privatization_object_common.py
 	${selector}  Set Variable  //*[@data-qa='component-documents']
 	${doc}  Створити та додати файл  ${selector}//input
 	Element Should Contain  ${selector}  ${doc[1]}
-	Set To Dictionary  ${data['object']}  document-name  ${doc[1]}
+	Set To Dictionary  ${data}  document-name  ${doc[1]}
 
 
 ###########################################################################
@@ -228,13 +228,13 @@ Library		small_privatization_object_common.py
 ###########################################################################
 Отримати локатор по назві поля
 	[Arguments]  ${field}
-	${selector}  Set Variable  ${spo_edit_locators${field}}
+	${selector}  Set Variable  ${edit_locators${field}}
 	[Return]  ${selector}
 
 
 Отритами дані зі сторінки
  	[Arguments]  ${field}
- 	${selector}  Set Variable  ${spo_view_locators${field}}
+ 	${selector}  Set Variable  ${view_locators${field}}
  	Wait Until Element Is Visible  ${selector}  10
  	${value}  Get Text  ${selector}
  	${field value}  small_privatization_object_common.get_page_values  ${field}  ${value}
@@ -243,14 +243,14 @@ Library		small_privatization_object_common.py
 
 Переірити відображення для
  	[Arguments]  ${field}
- 	${value should}  Set Variable  ${spo_data${field}}
+ 	${value should}  Set Variable  ${data${field}}
  	${value is}  small_privatization_object.Отритами дані зі сторінки  ${field}
 	Should Be Equal  ${value is}  ${value should}  Oops! Відображаються не ті дані для ${field}
 
 
 Перевірити дані в ЦБД для
 	[Arguments]  ${field}
-	${value should}  Set Variable  ${spo_data${field}}
+	${value should}  Set Variable  ${data${field}}
 	${value cdb}  Set Variable  ${cdb_data${field}}
  	${is equal}  small_privatization_object_common.get_cdb_values  ${value cdb}  ${value should}
 	Should Be Equal  ${is equal}  ${True}  Oops! В ЦБД не ті дані для ${field}

@@ -1,5 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
+Library  ../../src/pages/small_privatization/small_privatization_object/small_privatization_object_variables.py
+#Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+#Library  ../../src/pages/small_privatization/small_privatization_auction/small_privatization_auction_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Setup  Stop The Whole Test Execution If Previous Test Failed
@@ -16,22 +19,25 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
+	Завантажити variables.py для об'єкта
 	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
 	small_privatization_object.Отримати ID у цбд
-	Log To Console  object-UAID=${data['object']['UAID']}
+	Log To Console  object-UAID=${data['assetID']}
 	${location}  Get Location
 	Log To Console  url=${location}
+	Зберегти словник у файл  ${data}  asset
 
 
 Перевірити дані про об'єкт в ЦБД
-	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${spo_data['id']}
+	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
 	small_privatization_object.Перевірити всі обов'язкові поля в цбд
 
 
 Перевірити відображення детальної інформації про об'єкт
+	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 	debug
@@ -135,14 +141,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 *** Keywords ***
 Precondition
-	${data}  Create Dictionary
-	${object}  Create Dictionary
-	${message}  Create Dictionary
-	Set To Dictionary  ${data}  object  ${object}
-	Set To Dictionary  ${data}  message  ${message}
-	Set Global Variable  ${data}
 	Додати першого користувача  ${user}  tender_owner
     #Підготувати користувачів
+
+
+Завантажити variables.py для об'єкта
+	${edit_locators}  small_privatization_object_variables.get_edit_locators
+	${view_locators}  small_privatization_object_variables.get_view_locators
+	${data}  small_privatization_object_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 Postcondition
