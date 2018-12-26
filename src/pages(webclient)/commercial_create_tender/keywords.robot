@@ -1,6 +1,7 @@
 *** Keywords ***
 Вибрати довільну ЗЕЛЕНУ класифікацію
 	${row}  Set Variable  //*[@id="pcModalMode_PW-1"]//tbody//tr[@class]/td[@style="background-color: #D1FFA4"][last()]
+	Wait Until Element Is Visible  ${row}  10
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
 	Click Element  (${row})[${n}]
