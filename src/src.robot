@@ -44,6 +44,7 @@ Resource    pages/auction_detail_page/auction_detail_page.robot
 Resource    pages/blog/blog.robot
 Resource    pages/contacts/contacts.robot
 Resource    pages/contract/contract.robot
+Resource    pages/dozorro/dozorro.robot
 Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot

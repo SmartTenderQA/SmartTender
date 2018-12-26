@@ -4,6 +4,7 @@ ${dropdown menu for bid forms}			//label[contains(text(),'Форми ')]/../../u
 ${first found element}      	        //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
 ${find tender field}                	xpath=//input[@placeholder="Введіть запит для пошуку або номер тендеру"]
 ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
+${take_part}                            xpath=//div[@class="dhxform_base"]//*[contains(text(), 'Беру участь')]
 
 
 *** Keywords ***
@@ -41,6 +42,10 @@ ${first element find tender}        	//*[@id="tenders"]//tr[1]/td[2]/a
 	Run Keyword If  '${id}' != 'None'  Location Should Contain  f=${id}
 	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${tender found}
 	Run Keyword If  '${status}' == 'False'  Fail  Не знайдено жодного тендера
+
+
+Фільтр беру участь
+  Wait Until Keyword Succeeds  30s  5  Click Element  ${take_part}
 
 
 Порахувати кількість торгів

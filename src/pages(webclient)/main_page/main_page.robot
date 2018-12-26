@@ -31,7 +31,7 @@
 ###############################################
 Пошук об'єкта у webclient по полю
 	[Arguments]  ${field}  ${value}
-	${find tender field}  Set Variable  xpath=(//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input
+	${find tender field}  Set Variable  xpath=((//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), '${field}')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input)[1]
 	Wait Until Keyword Succeeds  10  1  Click Element  ${find tender field}
 	Clear Element Text  ${find tender field}
 	Sleep  .5

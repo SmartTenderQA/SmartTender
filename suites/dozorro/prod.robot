@@ -7,17 +7,11 @@ Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -i $variable suites/dozorro/prod.robot
+#  robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -v hub:None -i $variable suites/dozorro/prod.robot
 *** Variables ***
 
 ${first tender in search}            //*[@id='tenders']//tbody/*[@class='head']//a[@class='linkSubjTrading']
-${dozorro btn}                       xpath=//*[@data-qa="tabs"]//*[contains(text(),'Dozorro')]
-${review add}                        xpath=//*[@type='button']/*[contains(text(), 'Залишити відгук')]
-${review submit}                     xpath=//button[@type="submit"]
 ${sort date}                         xpath=//*[@id="tenders"]//tr/*[contains(text(), 'Дата')]
-${review_list}                       xpath=(//div[@class="ivu-select-selection"]/span)[4]
-${review_list_close}                 xpath=//*[@class='ivu-modal' and not(contains(@style,'display: none'))]//*[@class="ivu-modal-close"]
-${take_part}                         xpath=//div[@class="dhxform_base"]//*[contains(text(), 'Беру участь')]
 ${org_field}                         xpath=(//label[contains(text(), 'Організатори')]/following::input[@type='text'])[1]
 ${multylot}
 ${location}
@@ -42,32 +36,36 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти випадковий тендер з потрібним статусом (Період уточнень)
     [Tags]  clarification
-    Switch Browser  provider
+    Завантажити сесію для  provider
     Відкрити сторінку тестових торгів
     Знайти випадковий тендер з потрібним статусом  Період уточнень
 
+
 Перевірити відповідність видів відгуків з дозволеними (Період уточнень)
-  [Tags]  clarification
-  Відкрити сторінку відгуки Dozorro
-  Перевірити відповідність видів відгуків  ${type_1-8_10}
+    [Tags]  clarification
+    dozorro.Відкрити сторінку відгуки Dozorro
+    Перевірити відповідність видів відгуків  ${type_1-8_10}
+
 
 Залишити відгуки по кожному виду (Період уточнень)
-  [Tags]  clarification
-  Switch Browser  provider
-  Надати відгук  1
-  #Надати відгук  2
-  #Надати відгук  3
-  #Надати відгук  4
-  Надати відгук  5
-  #Надати відгук  6
-  #Надати відгук  7
-  #Надати відгук  8
-  Надати відгук  10
+    [Tags]  clarification
+    debug
+    Надати відгук  1
+    #Надати відгук  2
+    #Надати відгук  3
+    #Надати відгук  4
+    Надати відгук  5
+    #Надати відгук  6
+    #Надати відгук  7
+    #Надати відгук  8
+    Надати відгук  10
+
 
 Перевірити відображення відгуку всіма ролями (Період уточнень)
   [Tags]  clarification
   :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
   \  Перевірка відображення відгуку   ${username}
+
 
 Неможливість залишити відгук ролями viewer tender_owner (Період уточнень)
   [Tags]  clarification
@@ -75,15 +73,18 @@ ${type_13_multylot}                  ${forms_13_multylot}
   :FOR  ${username}  IN  viewer  tender_owner
   \  Можливість залишити відгук  ${username}
 
+
 Залишити коментар дозволеними ролями (Період уточнень)
   [Tags]  clarification
-  Switch Browser  provider
+  Завантажити сесію для  provider
   Залишити коментар на випадковий відгук
+
 
 Перевірити відображення коментарів всіма ролями (Період уточнень)
   [Tags]  clarification
   :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
   \  Перевірка відображення коментаря  ${username}
+
 
 Неможливість залишити коментар ролями viewer tender_owner (Період уточнень)
   [Tags]  clarification
@@ -91,6 +92,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   :FOR  ${username}  IN  viewer  tender_owner
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
+
 
 Перевірити роботу фільтрів всіма ролями (Період уточнень)
   [Tags]  clarification
@@ -491,23 +493,16 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 *** Keywords ***
 Підготувати користувачів
-    Start in grid  prod_owner  tender_owner
-    Set Window Size  1280  1024
-    Start in grid  prod_viewer  viewer
-    Set Window Size  1280  1024
-    Start in grid  prod_provider1  provider
-    Set Window Size  1280  1024
-    Start in grid  prod_provider2  provider2
-    Set Window Size  1280  1024
-    ${data}  Create Dictionary
-    Set Global Variable  ${data}
+    Додати першого користувача  prod_owner      tender_owner
+    Додати користувача          prod_provider1  provider
+    Додати користувача          prod_provider2  provider2
+    Додати користувача          prod_provider3  provider3
+    Додати користувача          prod_viewer     viewer
+    Створити словник            data
+
 
 Postcondition
     Close All Browsers
-
-Відкрити сторінку відгуки Dozorro
-    Wait Until Keyword Succeeds  30  3  Click Element At Coordinates  ${dozorro btn}  -30  0
-    Дочекатись закінчення загрузки сторінки
 
 
 Перевірити чи тендер мультилот
@@ -515,6 +510,7 @@ Postcondition
     ${multylot}  Set Variable  ${status}
     Set Global Variable  ${multylot}
     Log  ${multylot}
+
 
 Змінити значення мультилоту
     ${multylot}  Set Variable  ${False}
@@ -527,7 +523,7 @@ Postcondition
   old_search.Розгорнути розширений пошук
   Set Window Size  1280  1024
   Відфільтрувати по статусу торгів  ${status}
-  Фільтр беру участь
+  old_search.Фільтр беру участь
   Виконати пошук тендера
   #Відфільтрувати по спаданню дати
   Перевірити чи тендер мультилот
@@ -541,7 +537,6 @@ Postcondition
 Знайти випадковий тендер з потрібним статусом
   [Arguments]  ${status}
   old_search.Розгорнути розширений пошук
-  Set Window Size  1280  1024
   Відфільтрувати по статусу торгів  ${status}
   Виконати пошук тендера
   #Відфільтрувати по спаданню дати
@@ -551,10 +546,6 @@ Postcondition
   Додаткова перевірка на тестові торги для продуктива
   Log  ${location}  WARN
   Set To Dictionary  ${data}  tender_url=${location}
-
-
-Фільтр беру участь
-  Wait Until Keyword Succeeds  30s  5  Click Element  ${take_part}
 
 
 Фільтр Організатор  #TODO необхідність цього кейворда?
@@ -574,16 +565,16 @@ Postcondition
   [Arguments]  ${idscheme}
   Log  ${multylot}
   Надати відгук для мультилоту
-  Натиснути кнопку залишити відгук
+  dozorro.Натиснути кнопку залишити відгук
   Run Keyword If  '${multylot}' != 'True' and ${forms_type} == ${type_9}  No Operation
   ...  ELSE  Вибрати вид відгуку зі списку  ${idscheme}
   Наповнити відгук інформацією  ${idscheme}
-  Відправити відгук
+  dozorro.Відправити відгук
 
 
 Вибрати вид відгуку зі списку
   [Arguments]  ${idscheme}
-  Розкрити список відгуків
+  dozorro.Розкрити список відгуків
   ${selector}=  get_review_selector  ${idscheme}
   Wait Until Keyword Succeeds  30s  5  Click Element  ${selector}
 
@@ -599,15 +590,6 @@ Postcondition
   ...  AND  Вставити довільний текст відгуку
   Run Keyword If  '${idscheme}' == '11'  Надати відгук виду 11
   Run Keyword If  '${idscheme}' == '12'  Надати відгук виду 12
-
-
-Відправити відгук
-  Click Element  ${review submit}
-  Дочекатись закінчення загрузки сторінки
-  ${status}  Run Keyword And Return Status
-  ...  Wait Until Element Is Not Visible  ${review submit}  10s
-  Run Keyword If  '${status}' == 'False'  Відправити відгук
-  Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  10s
 
 
 Надати відгук виду 2, 10
@@ -659,11 +641,11 @@ Postcondition
   [Arguments]  ${forms_type}
   Визначити набір видів відгуків  ${forms_type}
   Log  ${forms_type}
-  Натиснути кнопку залишити відгук
+  dozorro.Натиснути кнопку залишити відгук
   Run Keyword If  '${multylot}' != 'True' and ${forms_type} == ${type_9}  No Operation
-  ...  ELSE  Розкрити список відгуків
+  ...  ELSE  dozorro.Розкрити список відгуків
   Порівняти список відгуків на сторінці з еталонним списком
-  Закрити список відгуків
+  dozorro.Закрити список відгуків
 
 
 Порівняти список відгуків на сторінці з еталонним списком
@@ -681,24 +663,16 @@ Postcondition
 
 Перевірка відображення відгуку
   [Arguments]  ${username}
-  Switch Browser  ${username}
+  Завантажити сесію для  ${username}
   Go to  ${data.tender_url}
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   ${text}  Get Text  xpath=((//*[@data-qa="dozorro"]//div[@class="ivu-card-body"])[2]//div[contains(@style,"padding-left")])[last()]
   Should Be Equal  ${text}  ${data.review_text}
 
 
-Розкрити список відгуків
-  Click Element  ${review_list}
-
-
-Закрити список відгуків
-  Wait Until Keyword Succeeds  30s  5  Click Element  ${review_list_close}
-
-
 Перевірити фільтр відгуків
   [Arguments]  ${username}
-  Switch Browser  ${username}
+  Завантажити сесію для  ${username}
   ${title}  Get Text  xpath=(//*[@class="ivu-card-body"]//h5)[1]
   Scroll Page To Element XPATH  xpath=//div[@data-qa="dozorro"]//div[@class="ivu-select-selection"]
   Click Element  xpath=//div[@data-qa="dozorro"]//div[@class="ivu-select-selection"]
@@ -710,9 +684,9 @@ Postcondition
 
 Можливість залишити відгук
   [Arguments]  ${username}
-  Switch Browser  ${username}
+  Завантажити сесію для  ${username}
   Go to  ${data.tender_url}
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Run Keyword And Expect Error  *  Element Should Be Visible  ${review add}
 
 
@@ -721,10 +695,6 @@ Postcondition
   ...  Змінити значення мультилоту
   ...  AND  Надати Відгук  7
 
-
-Натиснути кнопку залишити відгук
-  Wait Until Keyword Succeeds  30s  5  Click Element  ${review add}
-  Sleep  2s
 
 
 ########################### КОМЕНТАР ###############################
@@ -737,28 +707,21 @@ Postcondition
   Дочекатись закінчення загрузки сторінки(circle)
   Input Text  xpath=//*[@class="controls"]/textarea  ${text}
   Set To Dictionary  ${data}  comment_text=${text}
-  Wait Until Keyword Succeeds  120  10  Подати коментар
-
-
-Подати коментар
-  Click Element  xpath=//*[@type="submit"]
-  Wait Until Element Is Not Visible  xpath=//*[@type="submit"]  20s
-  Дочекатись закінчення загрузки сторінки
-  Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  20s
+  Wait Until Keyword Succeeds  120  10  dozorro.Подати коментар
 
 
 Перевірка відображення коментаря
   [Arguments]  ${username}
-  Switch Browser  ${username}
+  Завантажити сесію для  ${username}
   Go to  ${data.tender_url}
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   ${text}  Get Text  xpath=((//*[@class="ivu-card-body"]//h5/ancestor::*[@class="ivu-card-body"])[${comment_num}]//div)[last()-1]
   Should Be Equal  ${text}  ${data.comment_text}
 
 
 Можливість залишити коментар
   [Arguments]  ${username}
-  Switch Browser  ${username}
+  Завантажити сесію для  ${username}
   Run Keyword And Expect Error  *  Element Should Be Visible  xpath=//div[@data-qa="dozorro"]//*[@type="button"]//*[contains(text(), 'Додати')]
 
 
