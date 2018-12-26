@@ -2,10 +2,11 @@
 
 
 import re
-from iso8601 import parse_date
-from datetime import datetime, timedelta
-from dateutil.parser import parse
-from dateutil.parser import parserinfo
+import sys
+
+sys.path.append('../../src/')
+
+from service import convert_datetime_to_smart_format
 
 
 def convert_cdb_values(field, value):
@@ -13,15 +14,11 @@ def convert_cdb_values(field, value):
         ret = convert_datetime_to_smart_format(value, 'm')
     else:
         ret = value
+    ret = convert_result(ret)
     return ret
 
 
-def convert_datetime_to_smart_format(isodate, accuracy='s'):
-    iso_dt = parse_date(isodate)
-    if accuracy == 's':
-        date_string = iso_dt.strftime("%d.%m.%Y %H:%M:%S")
-    elif accuracy == 'm':
-        date_string = iso_dt.strftime("%d.%m.%Y %H:%M")
-    elif accuracy == 'd':
-        date_string = iso_dt.strftime("%d.%m.%Y")
-    return date_string
+def convert_result(value):
+    if re.match(u'^\d+[.]?\d*$', str(value)):
+        return float(value)
+    return str(value)

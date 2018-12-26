@@ -1,7 +1,3 @@
-*** Variables ***
-${first tender webclient}         (//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[1]//td[2]
-
-
 *** Keywords ***
 Отримати tender_uaid вибраного тендера
     ${uaid}   Get Text  ${first tender}/a
@@ -24,8 +20,9 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
 	[Return]  ${href}
 
 
-Вибрати перший тендер
-    Click Element  ${first tender webclient}
+Вибрати тендер за номером (webclient)
+    [Arguments]  ${i}
+    Click Element  xpath=(//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[${i}]//td[2]
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
@@ -64,7 +61,7 @@ ${first tender webclient}         (//div[contains(@class,'selectable')]/table//t
 Знайти тендер організатором по title
     [Arguments]  ${title}
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${title}
-    ${status}  Run Keyword And Return Status  Вибрати перший тендер
+    ${status}  Run Keyword And Return Status  Вибрати тендер за номером (webclient)  1
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Натиснути кнопку Перечитать (Shift+F4)  AND
     ...  Знайти тендер організатором по title  ${title}

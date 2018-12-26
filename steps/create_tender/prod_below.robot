@@ -142,7 +142,7 @@
 	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tenderID  ${tender_uaid}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data

@@ -90,6 +90,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
     Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     Знайти тендер організатором по title  ${data['title']}
+    Вибрати тендер за номером (webclient)  2
     Wait Until Keyword Succeeds  3m  3  Перейти до другого етапу
     Опублікувати процедуру
 
@@ -98,9 +99,9 @@ If skipped create tender
     [Tags]  create_tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер організатором по title  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
+    ${tenderID}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tenderID  ${tenderID}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data
@@ -203,7 +204,7 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 
