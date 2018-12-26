@@ -70,7 +70,7 @@
 Дочекатись стадії закупівлі
     [Arguments]  ${stage}
     ${selector}  Set Variable
-    ...  xpath=//*[@data-placeid="TENDER"]//tr[contains(@class,"Row")]/td[count(//div[contains(text(), 'Стадия')])+1]
+    ...  xpath=//*[@data-placeid="TENDER"]//tr[contains(@class,"Row")]/td[count(//div[contains(text(), 'Стадія')])+1]
     Натиснути кнопку Перечитать (Shift+F4)
     ${now}  Get Text  ${selector}
     ${status}  Run Keyword And Return Status  Should Contain  ${now}  ${stage}
