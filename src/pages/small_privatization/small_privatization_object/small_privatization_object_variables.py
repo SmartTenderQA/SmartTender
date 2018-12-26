@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
-###########################################################################
-############################               ################################
-############################ EDIT LOCATORS ################################
-############################               ################################
-###########################################################################
-spo_edit_locators = {
+def get_edit_locators():
+	return edit_locators
+
+def get_view_locators():
+	return view_locators
+
+def get_data():
+	return data
+
+
+#<editor-fold desc="EDIT-LOCATORS">
+edit_locators = {
         "title": "//*[@data-qa='input-title']//*[@autocomplete='off']",
         "description": u"//*[@data-qa='input-description']//*[@autocomplete='off']",
         "items": [
@@ -35,13 +41,12 @@ spo_edit_locators = {
             }
         ],
 }
+#</editor-fold>
 
-##########################################################################
-###########################               ################################
-########################### VIEW LOCATORS ################################
-###########################               ################################
-##########################################################################
-spo_view_locators = {
+
+#<editor-fold desc="VIEW-LOCATORS">
+view_locators = {
+        "assetID": "//*[@data-qa='cdbNumber']",
         "title": "//h3[not(@class='title')]",
         "description": "//*[@class='text-justify']/span",
         "items": [
@@ -50,7 +55,8 @@ spo_view_locators = {
                 "classification": {
                     "kind": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[2]",
                     "description": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]",
-                    "id": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]"
+                    "id": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]",
+                    "scheme": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]"
                 },
                 "address": {
                     "postalCode": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]",
@@ -73,13 +79,11 @@ spo_view_locators = {
             }
         ],
 }
+#</editor-fold>
 
-###########################################################################
-############################               ################################
-############################      DATA     ################################
-############################               ################################
-###########################################################################
-spo_data = {
+
+#<editor-fold desc="DATA">
+data = {
         "title": "",
         "description": "",
         "items": [
@@ -111,3 +115,4 @@ spo_data = {
             }
         ],
 }
+#</editor-fold>

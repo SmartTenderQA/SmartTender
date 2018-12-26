@@ -21,13 +21,13 @@
 Заповнити "Назву об'єкту приватизації"
 	${title}  create_sentence  5
 	small_privatization_object.Заповнити title  ${title}
-	Set To Dictionary  ${spo_data}  title  ${title}
+	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
 Заповнити "Опис об'єкту приватизації"
 	${description}  create_sentence  20
 	small_privatization_object.Заповнити description  ${description}
-	Set To Dictionary  ${spo_data}  description  ${description}
+	Set To Dictionary  ${data}  description  ${description}
 
 
 Заповнити "Рішення про затвердження переліку об'єктів"
@@ -39,19 +39,19 @@
 Заповнити "Назву рішення"
 	${title}  create_sentence  5
 	small_privatization_object.Заповнити decisions.0.title  ${title}
-	Set To Dictionary  ${spo_data['decisions'][0]}  title  ${title}
+	Set To Dictionary  ${data['decisions'][0]}  title  ${title}
 
 
 Заповнити "Номер рішення"
 	${decisionID}  random_number  10000  100000
 	small_privatization_object.Заповнити decisions.0.decisionID  ${decisionID}
-	Set To Dictionary  ${spo_data['decisions'][0]}  decisionID  ${decisionID}
+	Set To Dictionary  ${data['decisions'][0]}  decisionID  ${decisionID}
 
 
 Заповнити "Дату рішення"
 	${decisionDate}  smart_get_time  0  m
 	small_privatization_object.Заповнити decisions.0.decisionDate  ${decisionDate}
-	Set To Dictionary  ${spo_data['decisions'][0]}  decisionDate  ${decisionDate}
+	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
 
 
 Заповнити "Загальну інформацію про об'єкт"
@@ -65,30 +65,30 @@
 Заповнити "Опис об'єкту"
 	${description}  create_sentence  20
 	small_privatization_object.Заповнити items.0.description  ${description}
-	Set To Dictionary  ${spo_data['items'][0]}  description  ${description}
+	Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити "Вид об'єкту"
 	${kind}  small_privatization_object.Заповнити items.0.classification.kind
-	Set To Dictionary  ${spo_data['items'][0]['classification']}  kind  ${kind}
+	Set To Dictionary  ${data['items'][0]['classification']}  kind  ${kind}
 	Run Keyword If  "102" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${spo_data['items'][0]['classification']}  id  '42990000-2'
-	...  AND  Set To Dictionary  ${spo_data['items'][0]['classification']}  description  'Машини спеціального призначення різні'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '42990000-2'
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Машини спеціального призначення різні'
 	...  ELSE IF  "301" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${spo_data['items'][0]['classification']}  id  '08110000-0'
-	...  AND  Set To Dictionary  ${spo_data['items'][0]['classification']}  description  'Корпоративні права Акціонерного товариства'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '08110000-0'
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Корпоративні права Акціонерного товариства'
 	...  ELSE IF  "302" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${spo_data['items'][0]['classification']}  id  '08160000-5'
-	...  AND  Set To Dictionary  ${spo_data['items'][0]['classification']}  description  'Корпоративні права інші'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '08160000-5'
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Корпоративні права інші'
 	...  ELSE  small_privatization_step.Заповнити "Класифікація об'єкту"
 
 
 Заповнити "Класифікація об'єкту"
 	${description}  small_privatization_object.Заповнити items.0.classification.description
 	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  re
-	Set To Dictionary  ${spo_data['items'][0]['classification']}  id  ${id}
+	Set To Dictionary  ${data['items'][0]['classification']}  id  ${id}
 	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}", 1)  re
-	Set To Dictionary  ${spo_data['items'][0]['classification']}  description  ${description}
+	Set To Dictionary  ${data['items'][0]['classification']}  description  ${description}
 
 
 Заповнити "Кількість"
@@ -96,12 +96,12 @@
 	${second}  random_number  1  100
     ${quantity}  Evaluate  str(round(float(${first})/float(${second}), 3))
 	small_privatization_object.Заповнити items.0.quantity  ${quantity}
-	Set To Dictionary  ${spo_data['items'][0]}  quantity  ${quantity}
+	Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити "Одиниця виміру"
 	${name}  small_privatization_object.Заповнити items.0.unit.name
-	Set To Dictionary  ${spo_data['items'][0]['unit']}  name  ${name}
+	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 
 Заповнити "Адресу"
@@ -114,24 +114,24 @@
 Заповнити "Поштовий індекс предмету"
 	${postalCode}  random_number  10000  99999
 	small_privatization_object.Заповнити items.0.address.postalCode  ${postalCode}
-	Set To Dictionary  ${spo_data['items'][0]['address']}  postalCode  ${postalCode}
+	Set To Dictionary  ${data['items'][0]['address']}  postalCode  ${postalCode}
 
 
 Заповнити "Країна предмету"
 	${name}  Set Variable  Україна
 	${countryName}  small_privatization_object.Заповнити items.0.address.countryName  ${name}
-	Set To Dictionary  ${spo_data['items'][0]['address']}  countryName  ${countryName}
+	Set To Dictionary  ${data['items'][0]['address']}  countryName  ${countryName}
 
 
 Заповнити "Місто предмету"
 	${locality}  small_privatization_object.Заповнити items.0.address.locality
 	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
-	Set To Dictionary  ${spo_data['items'][0]['address']}  region  ${region}
+	Set To Dictionary  ${data['items'][0]['address']}  region  ${region}
 	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
-	Set To Dictionary  ${spo_data['items'][0]['address']}  locality  ${locality}
+	Set To Dictionary  ${data['items'][0]['address']}  locality  ${locality}
 
 
 Заповнити "Вулиця предмету"
 	${streetAddress}  get_some_uuid
 	small_privatization_object.Заповнити items.0.address.streetAddress  ${streetAddress}
-	Set To Dictionary  ${spo_data['items'][0]['address']}  streetAddress  ${streetAddress}
+	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}

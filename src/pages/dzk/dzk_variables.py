@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 
 
+def get_edit_locators():
+	return edit_locators
+
+def get_view_locators():
+	return view_locators
+
+def get_data():
+	return data
+
+
 #<editor-fold desc="EDIT-LOCATORS">
 edit_locators = {
     "lotIdentifier": "//*[@data-qa='input-lotidentifier']//input",
