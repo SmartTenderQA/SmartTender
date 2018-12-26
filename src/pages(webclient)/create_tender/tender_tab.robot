@@ -35,22 +35,22 @@ Resource        keywords.robot
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
-    Очистити поле  ${selector}
-    Заповнити текстове поле  ${selector}  ${value}
+    #Очистити поле з датою  ${selector}
+    Заповнити поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
-    Очистити поле  ${selector}
-    Заповнити текстове поле  ${selector}  ${value}
+    #Очистити поле з датою  ${selector}
+    Заповнити поле  ${selector}  ${value}
 
 
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    Очистити поле  ${selector}
-    Заповнити текстове поле  ${selector}  ${value}  #TODO пробний варіант
+    #Очистити поле з датою  ${selector}
+    Заповнити поле  ${selector}  ${value}  #TODO пробний варіант
 
 
 Заповнити "Очікувана вартість закупівлі"

@@ -1,6 +1,5 @@
 *** Settings ***
 Resource   ../../src/src.robot
-#Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
 
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
@@ -73,22 +72,22 @@ If skipped create tender
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
-    Перевірити коректність даних на сторінці  ['title']
-    Перевірити коректність даних на сторінці  ['description']
-    Перевірити коректність даних на сторінці  ['tender_uaid']
-    Перевірити коректність даних на сторінці  ['items'][0]['description']
-    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['locality']
-    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['streetAddress']
-    Перевірити коректність даних на сторінці  ['items'][0]['deliveryAddress']['postalCode']
-    Перевірити коректність даних на сторінці  ['items'][0]['classification']['id']
-    Перевірити коректність даних на сторінці  ['items'][0]['classification']['description']
-    #Перевірити коректність даних на сторінці  ['items'][0]['unit']
-    Перевірити коректність даних на сторінці  ['items'][0]['quantity']
-    Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
-    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
-    Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
-    Перевірити коректність даних на сторінці  ['value']['amount']
-    Перевірити коректність даних на сторінці  ['minimalStep']['amount']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tender_uaid']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
+    #procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['startDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['value']['amount']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['minimalStep']['amount']
 
 
 Отримати дані з cdb та зберегти їх у файл

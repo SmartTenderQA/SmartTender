@@ -1,6 +1,5 @@
 *** Settings ***
 Resource   ../../src/src.robot
-Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
 #Suite Setup     Авторизуватися організатором
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
@@ -58,7 +57,7 @@ If skipped create tender
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні
+    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 

@@ -30,7 +30,8 @@ Variables       procurement_variables.py
 Порівняти введені дані з даними в ЦБД
 	[Arguments]  ${field}
 	${value entered}  Set Variable  ${data${field}}
-    ${cdb value}  Отритами дані з ЦБД  ${field}
+    ${cdb value}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
+    Should Be Equal  ${value entered}  ${cdb value}
 
 
 

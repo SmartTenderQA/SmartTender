@@ -1,7 +1,6 @@
 *** Settings ***
 Resource   ../../src/src.robot
-Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
-#Suite Setup     Авторизуватися організатором
+
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -112,28 +111,4 @@ If skipped create tender
     Додати файл  1
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
-    Go Back
-
-
-Перевірити отримання ссилки на участь в аукціоні
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
-    Go To  ${data['tender_href']}
-    Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
-
-
-Перейти та перевірити сторінку участі в аукціоні
-	[Arguments]  ${auction_href}
-	Go To  ${auction_href}
-	Location Should Contain  bidder_id=
-	Підтвердити повідомлення про умови проведення аукціону
-	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
-	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back

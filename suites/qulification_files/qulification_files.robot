@@ -1,6 +1,5 @@
 *** Settings ***
 Resource   ../../src/src.robot
-Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -11,10 +10,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  PPR_OR          tender_owner
-    #Додати користувача          Bened           tender_owner2
+    Додати користувача          Bened           tender_owner2
     Додати користувача          user1           provider1
-    #Додати користувача          user2           provider2
-    #Додати користувача          user3           provider3
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
 
 
 

@@ -63,3 +63,6 @@
 	Click Element  ${selector}
 	Click Element  ${selector}/../following-sibling::*
 	Click Element  xpath=(//*[contains(text(), 'Очистити')])[last()]
+	${value}  Get Element Attribute  ${selector}  value
+	${status}  Run Keyword And Return Status  Should Be Empty  ${value}
+	Run Keyword If  '${status}' == 'False'  Очистити поле з датою  ${selector}
