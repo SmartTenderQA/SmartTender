@@ -26,16 +26,20 @@ Variables       procurement_variables.py
     Should Be Equal  ${value}  ${data${field}}
 
 
-
 Порівняти введені дані з даними в ЦБД
 	[Arguments]  ${field}
 	${value entered}  Set Variable  ${data${field}}
-    ${cdb value}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
-    Should Be Equal  ${value entered}  ${cdb value}
+    ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
+    ${is equal}  compare_data.compare_values  ${value entered}  ${value cdb}
+ 	Should Be True  ${is equal}  Oops! Помилка з даними для ${field}
 
 
-
-
+Порівняти відображені дані з даними в ЦБД
+    [Arguments]  ${field}
+    ${value on page}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
+    ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
+    ${is equal}  compare_data.compare_values  ${value on page}  ${value cdb}
+ 	Should Be True  ${is equal}  Oops! Помилка з даними для ${field}
 
 
 Отритами дані з ЦБД

@@ -41,7 +41,6 @@ data = {
         }
     ],
     "title": "",
-    "tender_uaid": "",
     "lots": [
         {
             "status": "",
@@ -188,7 +187,6 @@ locators = {
         }
     ],
     "title": """//*[@data-qa="main-block"]//*[@data-qa="title"]""",
-    "tender_uaid": """//*[@data-qa="prozorro-number"]//a/span""",
     "lots": [
         {
             "status": "",
@@ -215,7 +213,7 @@ locators = {
         }
     ],
     "maxAwardsCount": "",
-    "tenderID": "",
+    "tenderID": """//*[@data-qa="prozorro-number"]//a/span""",
     "dateModified": "",
     "status": """//*[@data-qa="status"]|//*[@data-qa="auctionStatus"]""",
     "description": """//*[@data-qa="main-block"]//*[@data-qa="description"]/span""",
