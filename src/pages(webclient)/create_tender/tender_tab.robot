@@ -53,7 +53,7 @@ Resource        keywords.robot
     Заповнити поле  ${selector}  ${value}  #TODO пробний варіант
     ${date}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value}  ${date}
-    Run Keyword If  '${sattus}' == 'False'  Run Keywords
+    Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Очистити поле з датою  ${selector}  AND
     ...  Заповнити "Прийом пропозицій по"  ${value}
 

@@ -496,7 +496,6 @@ ${type_13_multylot}                  ${forms_13_multylot}
     Додати першого користувача  prod_owner      tender_owner
     Додати користувача          prod_provider1  provider
     Додати користувача          prod_provider2  provider2
-    Додати користувача          prod_provider3  provider3
     Додати користувача          prod_viewer     viewer
     Створити словник            data
 
