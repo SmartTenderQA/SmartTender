@@ -1,5 +1,5 @@
 import re
 
 
-def convert_page_values(field, value):
+def convert_cdb_values(field, value):
     return value
