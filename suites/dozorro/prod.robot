@@ -178,7 +178,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відповідність видів відгуків з дозволеними (Пропозиції розглянуті)
   [Tags]  considered
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_11-12}
 
 Залишити відгуки по кожному виду (Пропозиції розглянуті)
@@ -211,6 +211,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  considered
   ...  non-critical
   :FOR  ${username}  IN  viewer  provider2
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Пропозиції розглянуті)
@@ -230,7 +231,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відповідність видів відгуків з дозволеними (Кваліфікація)
   [Tags]  qualification
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_11-12}
 
 Залишити відгуки по кожному виду (Кваліфікація)
@@ -263,6 +264,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  qualification
   ...  non-critical
   :FOR  ${username}  IN  viewer  provider2
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Кваліфікація)
@@ -282,7 +284,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відповідність видів відгуків з дозволеними (Завершено)
   [Tags]  completed
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_11-12}
 
 Залишити відгуки по кожному виду (Завершено)
@@ -315,6 +317,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  completed
   ...  non-critical
   :FOR  ${username}  IN  viewer  provider2
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Завершено)
@@ -334,7 +337,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відповідність видів відгуків з дозволеними (Закупівля не відбулась)
   [Tags]  not_take_place
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_11-12}
 
 Залишити відгуки по кожному виду (Закупівля не відбулась)
@@ -367,6 +370,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  not_take_place
   ...  non-critical
   :FOR  ${username}  IN  viewer  provider2
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Закупівля не відбулась)
@@ -387,7 +391,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відповідність видів відгуків з дозволеними (Закупівля відмінена)
   [Tags]  canceled
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_9}
 
 Залишити відгуки по кожному виду (Закупівля відмінена)
@@ -419,6 +423,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  canceled
   ...  non-critical
   :FOR  ${username}  IN  viewer  tender_owner
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Закупівля відмінена)
@@ -440,7 +445,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Перевірити відповідність видів відгуків з дозволеними (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  Відкрити сторінку відгуки Dozorro
+  dozorro.Відкрити сторінку відгуки Dozorro
   Перевірити відповідність видів відгуків  ${type_11-12}
 
 Залишити відгуки по кожному виду (Опубліковано намір укласти договір)
@@ -479,6 +484,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   ...  non-critical
   ...  smart
   :FOR  ${username}  IN  viewer  provider2
+  \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Опубліковано намір укласти договір)
