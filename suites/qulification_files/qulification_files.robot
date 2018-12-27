@@ -26,7 +26,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Перевірити коректність даних
     [Tags]  view
-    Перевірка відображення даних тендера на сторінці  provider1
+    Валідація введених даних з ЦБД та на сайті  provider1
 
 
 If skipped create tender
@@ -92,7 +92,7 @@ If skipped create tender
     Go Back
 
 
-Перевірка відображення даних тендера на сторінці
+Валідація введених даних з ЦБД та на сайті
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}

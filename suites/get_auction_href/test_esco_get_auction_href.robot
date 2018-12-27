@@ -45,7 +45,7 @@ If skipped create tender
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Перевірка відображення даних тендера на сторінці  provider1
+    Валідація введених даних з ЦБД та на сайті  provider1
 
 
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
@@ -88,7 +88,7 @@ If skipped create tender
 
 
 *** Keywords ***
-Перевірка відображення даних тендера на сторінці
+Валідація введених даних з ЦБД та на сайті
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
