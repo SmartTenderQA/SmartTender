@@ -46,36 +46,48 @@ edit_locators = {
 
 #<editor-fold desc="VIEW-LOCATORS">
 view_locators = {
-        "assetID": "//*[@data-qa='cdbNumber']",
-        "title": "//h3[not(@class='title')]",
-        "description": "//*[@class='text-justify']/span",
-        "items": [
+    "assetID": "//*[@data-qa='cdbNumber']",
+    "title": "//h3[not(@class='title')]",
+    "description": "//*[@class='text-justify']/span",
+    "decisions": [
+        {
+            "decisionDate": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
+            "decisionID": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
+            "title": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]"
+        }
+    ],
+    "assetCustodian": {
+        "identifier": {
+            "legalName": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[1]",
+            "id": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[2]",
+            "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[3]",
+        },
+        "contactPoint": {
+            "name": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[5]",
+            "telephone": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[6]",
+            "email": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[7]",
+        }
+    },
+    "items": [
             {
-                "description": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[1]",
+                "description": "(//*[@data-qa='item']//*[@data-qa='value'])[1]",
                 "classification": {
-                    "kind": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[2]",
-                    "description": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]",
-                    "id": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]",
-                    "scheme": u"//*[@class='ivu-card-body' and contains(.,'що продаються')]//span[not(@data-qa) and not(@class)]"
+                    "kind": "",
+                    "description": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
+                    "id": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
+                    "scheme": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]"
                 },
                 "address": {
-                    "postalCode": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]",
-                    "countryName": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]",
-                    "streetAddress": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]",
-                    "region": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]",
-                    "locality": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[4]"
+                    "postalCode": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "countryName": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "streetAddress": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "region": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "locality": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']"
                 },
                 "unit": {
-                    "name": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[3]"
+                    "name": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
                 },
-                "quantity": u"(//*[@class='ivu-card-body' and contains(.,'що продаються)]//*[@data-qa='value'])[3]"
-            }
-        ],
-        "decisions": [
-            {
-                "decisionDate": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
-                "decisionID": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
-                "title": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]"
+                "quantity": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
             }
         ],
 }

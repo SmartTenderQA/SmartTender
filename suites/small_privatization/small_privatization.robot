@@ -1,21 +1,19 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Library  ../../src/pages/small_privatization/small_privatization_object/small_privatization_object_variables.py
-#Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
 #Library  ../../src/pages/small_privatization/small_privatization_auction/small_privatization_auction_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
-...  AND  debug
 
 
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
@@ -23,48 +21,50 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
 	small_privatization_object.Отримати ID у цбд
-	Log To Console  object-UAID=${data['assetID']}
 	${location}  Get Location
 	Log To Console  url=${location}
 	Зберегти словник у файл  ${data}  asset
 
 
 Перевірити дані про об'єкт в ЦБД
+	[Tags]  compare
 	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
-	Зберегти словник у файл  ${cdb_data}  cdb_data
+	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
 	small_privatization_object.Перевірити всі обов'язкові поля в цбд
 
 
 Перевірити відображення детальної інформації про об'єкт
+	[Tags]  compare
 	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
-	debug
+	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
 
 
 Створити інформаційне повідомлення МП
 	[Setup]  Go To  ${start page}
-	start_page.Натиснути На торговельний майданчик
-	old_search.Активувати вкладку ФГИ
-	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
-	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-	Run Keyword If  '${site}' == 'test'
-	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
-	small_privatization_search.Натиснути створити  інформаційне повідомлення
-	small_privatization_informational_message.Заповнити всі обов'язкові поля 1 етап
-	small_privatization_informational_message.Прикріпити документ
-	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
-	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
-	small_privatization_informational_message.Перейти до коригування інформації
-	small_privatization_informational_message.Заповнити всі обов'язкові поля 2 етап
-	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
-	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
+	Завантажити variables.py для інформаційного повідомлення
+	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
-	small_privatization_informational_message.Отримати UAID для Повідомлення
-	Log To Console  message-UAID=${data['message']['UAID']}
+	small_privatization_object.Отримати ID у цбд
 	${location}  Get Location
 	Log To Console  url=${location}
+	Зберегти словник у файл  ${data}  message
+
+
+Перевірити дані про інформаційне повідомлення в ЦБД
+	[Tags]  compare
+	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  message_cdb_data
+	small_privatization_informational_message.Перевірити всі обов'язкові поля в цбд
+
+
+Перевірити відображення детальної інформації про інформаційне повідомлення
+	[Tags]  compare
+	Дочекатися довантаження даних з ЦБД
+	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 
 
 Дочекатися початку прийому пропозицій
@@ -154,6 +154,15 @@ Precondition
 	Set Global Variable  ${data}
 
 
+Завантажити variables.py для інформаційного повідомлення
+	${edit_locators}  small_privatization_informational_message_variables.get_edit_locators
+	${view_locators}  small_privatization_informational_message_variables.get_view_locators
+	${data}  small_privatization_informational_message_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
+
+
 Postcondition
     Log  ${data}
     Close All Browsers
@@ -173,6 +182,17 @@ Postcondition
     ...  Додати користувача          user2           	provider2     	AND
     ...  Додати користувача          user3           	provider3     	AND
     ...  Додати користувача          test_viewer     	viewer
+
+
+Дочекатися довантаження даних з ЦБД
+	Sleep  10
+	Reload Page
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${title locator}  Set Variable  ${view_locators['title']}
+	${title}  Get Text  ${title locator}
+	${status}  Run Keyword And Return Status  Should Contain  ${title}  [ТЕСТУВАННЯ]
+	Run Keyword If  ${status} == ${False}
+	...  Дочекатися довантаження даних з ЦБД
 
 
 Знайти аукціон користувачем

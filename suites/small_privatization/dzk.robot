@@ -44,12 +44,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Завантажити сесію для  provider2
 	Go To  ${data['tender_href']}
 	Зберегти сесію  provider2
+	Завантажити сесію для  provider3
+	Go To  ${data['tender_href']}
+	Зберегти сесію  provider3
 	Sleep  90
 
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
@@ -61,13 +64,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати пропозицію учасниками
 	[Tags]  -prod  -test
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
+	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
-	\  Заповнити поле сума пропозиції  1  1
-	\  Додати документ, що підтверджує кваліфікацію
-	\  Натиснути Подати пропозицію
+	\  Заповнити поле з ціною  1  1
+	\  Подати пропозицію
 
 
 Дочекатися початку аукціону

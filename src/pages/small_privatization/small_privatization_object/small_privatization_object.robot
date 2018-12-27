@@ -9,16 +9,17 @@
 ################################## STEPS ##################################
 ###########################################################################
 Перевірити всі обов'язкові поля в цбд
-	#todo hz 4to tut delat`
 	compare_data.Порівняти введені дані з даними в ЦБД  ['title']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['description']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['title']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionID']
-	#compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionDate']  s
 	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
+	#todo hz 4to eto i za4em ono
 	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['kind']
-	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
-	#compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
+	#
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']['name']
 	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
@@ -28,24 +29,33 @@
 	compare_data.Порівняти введені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
 
 
-Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetID']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['title']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['description']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['title']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionID']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['legalName']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['id']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['name']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['telephone']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['email']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['kind']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	#todo hz 4to eto i za4em ono
+	#compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['kind']
+	#
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['scheme']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['countryName']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['region']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['locality']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
 ###########################################################################
 ################################# /STEPS ##################################
 ###########################################################################

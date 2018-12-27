@@ -15,9 +15,31 @@
 	small_privatization_object.Опублікувати об'єкт у реєстрі
 
 
+Створити інформаційне повідомлення МП
+	[Arguments]  ${id}
+	start_page.Натиснути На торговельний майданчик
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	small_privatization_search.Натиснути створити  інформаційне повідомлення
+	small_privatization_step.Заповнити "Унікальний код об'єкту"  ${id}
+	small_privatization_step.Заповнити "Рішення про затверждення умов продажу"
+	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
+	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
+	small_privatization_informational_message.Перейти до коригування інформації
+	small_privatization_step.Заповнити "Умови аукціону"
+	small_privatization_step.Заповнити "Банківські реквізити"
+	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
+	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
+
+
+
 #########################################################
 #	                  Keywords							#
 #########################################################
+#####################  Об'єкт ###########################
 Заповнити "Назву об'єкту приватизації"
 	${title}  create_sentence  5
 	small_privatization_object.Заповнити title  ${title}
@@ -51,7 +73,7 @@
 Заповнити "Дату рішення"
 	${decisionDate}  smart_get_time  0  m
 	small_privatization_object.Заповнити decisions.0.decisionDate  ${decisionDate}
-	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
+	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}:00
 
 
 Заповнити "Загальну інформацію про об'єкт"
@@ -72,14 +94,14 @@
 	${kind}  small_privatization_object.Заповнити items.0.classification.kind
 	Set To Dictionary  ${data['items'][0]['classification']}  kind  ${kind}
 	Run Keyword If  "102" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '42990000-2'
-	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Машини спеціального призначення різні'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  42990000-2
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  Машини спеціального призначення різні
 	...  ELSE IF  "301" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '08110000-0'
-	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Корпоративні права Акціонерного товариства'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  08110000-0
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  Корпоративні права Акціонерного товариства
 	...  ELSE IF  "302" in "${kind}"  Run Keywords
-	...  Set To Dictionary  ${data['items'][0]['classification']}  id  '08160000-5'
-	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  'Корпоративні права інші'
+	...  Set To Dictionary  ${data['items'][0]['classification']}  id  08160000-5
+	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  Корпоративні права інші
 	...  ELSE  small_privatization_step.Заповнити "Класифікація об'єкту"
 
 
@@ -135,3 +157,122 @@
 	${streetAddress}  get_some_uuid
 	small_privatization_object.Заповнити items.0.address.streetAddress  ${streetAddress}
 	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}
+
+
+
+#####################  ИС ###########################
+Заповнити "Унікальний код об'єкту"
+	[Arguments]  ${id}
+	small_privatization_informational_message.Ввести унікальний код об'єкту  ${id}
+
+
+Заповнити "Рішення про затверждення умов продажу"
+	small_privatization_step.Заповнити "Номер рішення для ІП"
+	small_privatization_step.Заповнити "Дату рішення для ІП"
+
+
+Заповнити "Номер рішення для ІП"
+	${decisionID}  random_number  1000  1000000
+	small_privatization_informational_message.Заповнити decisions.0.decisionID  ${decisionID}
+	Set To Dictionary  ${data['decisions'][0]}  decisionID  ${decisionID}
+
+
+Заповнити "Дату рішення для ІП"
+	${decisionDate}  smart_get_time  0  m
+	small_privatization_informational_message.Заповнити decisions.0.decisionDate  ${decisionDate}
+	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
+
+
+Заповнити "Умови аукціону"
+	small_privatization_step.Заповнити "Дата проведення аукціону"
+	small_privatization_step.Заповнити "Період між аукціонами"
+	small_privatization_step.Заповнити "Стартова ціна об’єкта"
+	small_privatization_step.Заповнити "Крок аукціону"
+	small_privatization_step.Заповнити "Розмір гарантійного внеску"
+	small_privatization_step.Заповнити "Реєстраційний внесок"
+	small_privatization_step.Заповнити "Кількість кроків аукціону"
+
+
+Заповнити "Дата проведення аукціону"
+	${delta days}  Set Variable  6
+	${delta minutes}  Set Variable  13
+	${date + delta prod}  get_formated_time_with_delta  ${delta days}  days  s
+	${date + delta test}  get_formated_time_with_delta  ${delta minutes}  minutes  s
+	${date + delta}  Set Variable If
+	...  '${site}' == 'test'  ${date + delta test}
+	...  '${site}' == 'prod'  ${date + delta prod}
+	small_privatization_informational_message.Заповнити auctions.0.auctionPeriod.startDate  ${date + delta}
+	Set To Dictionary  ${data['auctions'][0]['auctionPeriod']}  startDate  ${date + delta}
+
+
+Заповнити "Період між аукціонами"
+	${period}  random_number  20  35
+	small_privatization_informational_message.Заповнити auctions.1.tenderingDuration  ${period}
+	:FOR  ${i}  IN RANGE  1  3
+    \    Set To Dictionary  ${data['auctions'][${i}]}  tenderingDuration  P${period}D
+
+
+Заповнити "Стартова ціна об’єкта"
+	${value}  random_number  100000  1000000
+	small_privatization_informational_message.Заповнити auctions.0.value.amount  ${value}
+	Set To Dictionary  ${data['auctions'][0]['value']}  amount  ${value}
+
+
+Заповнити "Крок аукціону"
+	${step}  random_number  1000  10000
+	small_privatization_informational_message.Заповнити auctions.0.minimalStep.amount  ${step}
+	Set To Dictionary  ${data['auctions'][0]['minimalStep']}  amount  ${step}
+
+
+Заповнити "Розмір гарантійного внеску"
+	${warrantyFee}  random_number  100  5000
+	small_privatization_informational_message.Заповнити auctions.0.guarantee.amount  ${warrantyFee}
+	Set To Dictionary  ${data['auctions'][0]['guarantee']}  amount  ${warrantyFee}
+
+
+Заповнити "Реєстраційний внесок"
+	${registrationFee}  random_number  100  5000
+	small_privatization_informational_message.Заповнити auctions.0.registrationFee.amount  ${registrationFee}
+	:FOR  ${i}  IN RANGE  0  3
+    \    Set To Dictionary  ${data['auctions'][${i}]['registrationFee']}  amount  ${registrationFee}
+
+
+Заповнити "Кількість кроків аукціону"
+	${stepCount}  random_number  1  99
+	small_privatization_informational_message.Заповнити auctions.1.auctionParameters.dutchSteps  ${stepCount}
+	Set To Dictionary  ${data['auctions'][2]['auctionParameters']}  dutchSteps  ${stepCount}
+
+
+Заповнити "Банківські реквізити"
+	small_privatization_step.Заповнити "Найменування банку"
+	small_privatization_step.Заповнити "Тип реквізиту"
+	small_privatization_step.Заповнити "Значення реквізиту"
+	small_privatization_step.Заповнити "Опис реквізиту"
+
+
+Заповнити "Найменування банку"
+	${bankName}  create_sentence  5
+	small_privatization_informational_message.Заповнити auctions.0.bankAccount.bankName  ${bankName}
+	:FOR  ${i}  IN RANGE  0  3
+    \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']}  bankName  ${bankName}
+
+
+Заповнити "Тип реквізиту"
+	${type}  small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
+	:FOR  ${i}  IN RANGE  0  3
+    \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  scheme  ${type}
+
+
+Заповнити "Значення реквізиту"
+	${id}  random_number  1000000  9999999
+	small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.id  ${id}
+	:FOR  ${i}  IN RANGE  0  3
+    \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  id  ${id}
+
+
+
+Заповнити "Опис реквізиту"
+	${description}  create_sentence  10
+	small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.description  ${description}
+	:FOR  ${i}  IN RANGE  0  3
+    \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  description  ${description}
