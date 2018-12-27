@@ -121,6 +121,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   :FOR  ${username}  IN  provider  provider2
   \  Завантажити сесію для  ${username}
   \  Go to  ${data.tender_url}
+  \  dozorro.Відкрити сторінку відгуки Dozorro
   #\  Надати відгук  1
   #\  Надати відгук  2
   \  Надати відгук  3
