@@ -7,36 +7,59 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 *** Keywords ***
-Заповнити всі обов'язкові поля 1 етап
-	small_privatization_informational_message.Ввести унікальний код об'єкту
-	small_privatization_informational_message.Заповнити decision.title
-	small_privatization_informational_message.Заповнити decision.number
-	small_privatization_informational_message.Заповнити decision.date
+Перевірити всі обов'язкові поля в цбд
+	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionID']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionDate']  s
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['auctionPeriod']['startDate']  m
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['value']['amount']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['minimalStep']['amount']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['guarantee']['amount']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['registrationFee']['amount']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['bankName']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][1]['tenderingDuration']
+	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][1]['auctionParameters']['dutchSteps']
 
 
-Заповнити всі обов'язкові поля 2 етап
-	small_privatization_informational_message.Заповнити conditions.date
-	small_privatization_informational_message.Заповнити conditions.period
-	small_privatization_informational_message.Заповнити conditions.startPrice
-	small_privatization_informational_message.Заповнити conditions.step
-	small_privatization_informational_message.Заповнити conditions.warrantyFee
-	small_privatization_informational_message.Заповнити conditions.registrationFee
-	small_privatization_informational_message.Заповнити conditions.stepCount
-	small_privatization_informational_message.Заповнити bank.name
-	small_privatization_informational_message.Заповнити bank.Requisites.type
-	small_privatization_informational_message.Заповнити bank.Requisites.value
-	small_privatization_informational_message.Заповнити bank.Requisites.description
-
+Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetID']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['title']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['description']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['title']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionID']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['legalName']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['id']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['name']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['telephone']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['email']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
+	#todo hz 4to eto i za4em ono
+	#compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['kind']
+	#
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['scheme']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['countryName']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['region']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['locality']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
+	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
 
 
 Зберегти чернетку інформаційного повідомлення
 	${save btn}  Set variable  //div[@class='ivu-col ivu-col-span-6']//button[@type='button']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-    Wait Until Page Contains Element  ${notice message}  15
+    Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Element Is Not Visible  ${notice message}
 
 
 Опублікувати інформаційне повідомлення у реєстрі
@@ -45,38 +68,28 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-	Wait Until Page Contains Element  ${notice message}  15
+	Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було опубліковано
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Element Is Not Visible  ${notice message}
 
 
 Ввести унікальний код об'єкту
-    ${id}  Get From Dictionary  ${data['object']}  UAID
-	${selector}  Set Variable  //*[contains(text(),'Унікальний код')]/following-sibling::*//input
-    Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${id}
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['assetID']
+    Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити decision.title
-	${title}  create_sentence  5
-	${selector}  Set Variable  //div[@class='ivu-form-item']//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${title}
-	${decision}  Create Dictionary  title  ${title}
-	Set To Dictionary  ${data['message']}  decision  ${decision}
+Заповнити decisions.0.decisionID
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити decision.number
-	${number}  random_number  1000  1000000
-	${selector}  Set Variable  (//h4[contains(., 'Рішення органу приватизації про затверждення умов продажу')]//following-sibling::*//input)[2]
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${number}
-	Set To Dictionary  ${data['message']['decision']}  number  ${number}
-
-
-Заповнити decision.date
-	${date}  smart_get_time  0  m
-	${selector}  Set Variable  //div[@class='ivu-input-wrapper ivu-input-type ivu-date-picker-editor']//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date}
-	Set To Dictionary  ${data['message']['decision']}  date  ${date}
+Заповнити decisions.0.decisionDate
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Прикріпити документ
@@ -95,91 +108,72 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
     Дочекатись Закінчення Загрузки Сторінки
 
 
-Заповнити conditions.date
-	${delta days}  Set Variable  6
-	${delta minutes}  Set Variable  13
-	${date + delta prod}  get_formated_time_with_delta  ${delta days}  days  s
-	${date + delta test}  get_formated_time_with_delta  ${delta minutes}  minutes  s
-	${date + delta}  Set Variable If
-	...  '${site}' == 'test'  ${date + delta test}
-	...  '${site}' == 'prod'  ${date + delta prod}
-	${selector}  Set Variable  //*[contains(text(),'Дата проведення аукціону')]/following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${date + delta}
+Заповнити auctions.0.auctionPeriod.startDate
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['auctionPeriod']['startDate']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
-	${conditions}  Create Dictionary  date  ${date + delta}
-	Set To Dictionary  ${data['message']}  conditions  ${conditions}
 
 
-Заповнити conditions.period
-	${period}  random_number  20  35
-	${selector}  Set Variable  //*[contains(text(),'Період між аукціонами')]/following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${period}
-	Set To Dictionary  ${data['message']['conditions']}  period  ${period}
+Заповнити auctions.1.tenderingDuration
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][1]['tenderingDuration']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити conditions.startPrice
-	${startPrice}  random_number  100000  1000000
-	${selector}  Set Variable  //*[contains(text(),'Стартова ціна об’єкта')]/following-sibling::*//input[@type='text']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${startPrice}
-	Set To Dictionary  ${data['message']['conditions']}  startPrice  ${startPrice}
+Заповнити auctions.0.value.amount
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['value']['amount']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити conditions.step
-	${step}  random_number  1000  10000
-	${selector}  Set Variable  //*[contains(text(),'Крок аукціону')]/following-sibling::*//input[@type='text']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${step}
-	Set To Dictionary  ${data['message']['conditions']}  step  ${step}
+Заповнити auctions.0.minimalStep.amount
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['minimalStep']['amount']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити conditions.warrantyFee
-	${warrantyFee}  random_number  100  5000
-	${selector}  Set Variable  //*[contains(text(),'Розмір гарантійного внеску')]/following-sibling::*//input[@type='text']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${warrantyFee}
-	Set To Dictionary  ${data['message']['conditions']}  warrantyFee  ${warrantyFee}
+Заповнити auctions.0.guarantee.amount
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['guarantee']['amount']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити conditions.registrationFee
-	${registrationFee}  random_number  100  5000
-	${selector}  Set Variable  //*[contains(text(),'Реєстраційний внесок')]/following-sibling::*//input[@type='text']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${registrationFee}
-	Set To Dictionary  ${data['message']['conditions']}  registrationFee  ${registrationFee}
+Заповнити auctions.0.registrationFee.amount
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['registrationFee']['amount']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити conditions.stepCount
-	${stepCount}  random_number  1  99
-	${selector}  Set Variable  //*[contains(text(),'Кількість кроків')]/following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${stepCount}
-	Set To Dictionary  ${data['message']['conditions']}  stepCount  ${stepCount}
+Заповнити auctions.1.auctionParameters.dutchSteps
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][1]['auctionParameters']['dutchSteps']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити bank.name
-	${bankName}  create_sentence  5
-	${selector}  Set Variable  //*[contains(text(),'Найменування банку')]/following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${bankName}
-	${bank}  Create Dictionary  bankName  ${bankName}
-	Set To Dictionary  ${data['message']}  bank  ${bank}
+Заповнити auctions.0.bankAccount.bankName
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['bankName']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити bank.Requisites.type
-	${selector}  Set Variable  //*[contains(text(),'Тип реквізиту')]/../following-sibling::*
-	${type}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент з випадаючого списку за назвою  ${selector}  Номер рахунку
-	${dict}  Create Dictionary  type  ${type}
-	${Requisites}  Create Dictionary  type  ${type}
-	Set To Dictionary  ${data['message']['bank']}  requisites  ${Requisites}
+Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	${type}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}
+	[Return]  ${type}
 
 
-Заповнити bank.Requisites.value
-	${value}  random_number  1000000  9999999
-	${selector}  Set Variable  //*[contains(text(),'Значення')]/../following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${value}
-	Set To Dictionary  ${data['message']['bank']['requisites']}  value  ${value}
+Заповнити auctions.0.bankAccount.accountIdentification.0.id
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити bank.Requisites.description
-	${description}  create_sentence  10
-	${selector}  Set Variable  //*[contains(text(),'Опис')]/../following-sibling::*//input
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${description}
+Заповнити auctions.0.bankAccount.accountIdentification.0.description
+	[Arguments]  ${text}
+	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	Set To Dictionary  ${data['message']['bank']['requisites']}  description  ${description}
 
 

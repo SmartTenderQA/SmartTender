@@ -197,10 +197,11 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 
 Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	${read more btn}  Set Variable  //*[contains(@class,'second')]//a[not(@href)]
+	${read more btn}  Set Variable  //*[contains(@class,'second')]//a[not(@href) and contains(text(),'Детальніше')]
 	${is contain}  Run Keyword And Return Status  Page Should Contain Element  {read more btn}
 	Run Keyword If  ${is contain} == ${True}  Run Keywords
 	...  Click Element  {read more btn}
+	...  AND  Sleep  .5
 	...  AND  Розгорнути детальну інформацію по всіх полях (за необхідністю)
 
 

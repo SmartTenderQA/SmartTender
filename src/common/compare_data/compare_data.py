@@ -8,13 +8,16 @@ def compare_values(first_value, second_value):
 
 
 def convert_cdb_values_to_edit_format(field, value, time_format='s'):
-    if 'Period' in field:
+    if 'Period' in field or 'Date' in field:
         if time_format == 's':
             list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+):(?P<seconds>\d+)', value)
             return list.group('day')+'.'+list.group('month')+'.'+list.group('year')+' '+list.group('hours')+':'+list.group('minutes')+':'+list.group('seconds')
         elif time_format == 'm':
             list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+)', value)
             return list.group('day') + '.' + list.group('month') + '.' + list.group('year') + ' ' + list.group('hours') + ':' + list.group('minutes')
+        elif time_format == 'd':
+            list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)', value)
+            return list.group('day') + '.' + list.group('month') + '.' + list.group('year')
     elif 'accountIdentification' in field and 'description' in field:
         return value.replace('[Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] ', '')
     elif re.match(u'^\d+[.]?\d*$', str(value)):
@@ -68,7 +71,7 @@ def convert_viewed_values_to_edit_format(field, value):
         elif 'street' in field:
             return list.group('street')
     elif 'lassification' in field and not '1' in field:
-        list = re.search(u'(?P<scheme>[^:]+).{2}(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
+        list = re.search(u'(?P<scheme>[^:]+)[:]\s+(?P<id>\d+[.-]\d+).{3}(?P<description>.*)', value)
         if 'scheme' in field:
             return list.group('scheme')
         elif 'id' in field:
@@ -93,6 +96,7 @@ def convert_viewed_values_to_edit_format(field, value):
 
 
 classification_scheme_dictionary = {
+    u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',
     u'kvtspz': u'КВЦПЗ',
 }

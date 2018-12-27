@@ -33,3 +33,15 @@
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
+
+
+Отримати дані інформаційного повідомлення приватизації з cdb по id
+    [Arguments]  ${id}
+	Run Keyword If  "${site}" == "test"
+	...  Create Session  api  https://public.api-sandbox.ea2.openprocurement.net/api/2.3/lots/${id}
+	Run Keyword If  "${site}" == "prod"
+	...  Create Session  api  https://public.api.ea2.openprocurement.net/api/0/lots/${id}
+	${data}  Get Request  api  \
+	${data}  Set Variable  ${data.json()}
+	${cdb_data}  Set Variable  ${data['data']}
+	[Return]  ${cdb_data}
