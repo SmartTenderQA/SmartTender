@@ -72,3 +72,9 @@
    	Should Not Be Empty  ${text}
 	Sleep  .5
     [Return]  ${text}
+
+
+Отримати локатор по назві поля
+	[Arguments]  ${field}
+	${selector}  Set Variable  ${edit_locators${field}}
+	[Return]  ${selector}
