@@ -28,6 +28,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити дані про об'єкт в ЦБД
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
@@ -36,6 +37,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
@@ -54,6 +56,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити дані про інформаційне повідомлення в ЦБД
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
@@ -62,6 +65,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону

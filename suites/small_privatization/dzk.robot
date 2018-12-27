@@ -3,7 +3,6 @@ Resource  ../../src/src.robot
 Library  ../../src/pages/dzk/dzk_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
-Test Setup  Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
@@ -25,6 +24,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Отримати дані з цбд та перевірити їх відповідність
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
@@ -32,6 +32,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
@@ -52,6 +53,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -59,11 +61,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['auctionID']}
 
 
 Подати пропозицію учасниками
 	[Tags]  -prod  -test
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -75,12 +79,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	[Tags]  -prod  -test
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  35 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod  -test
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     :FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -96,6 +102,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Tags]  -prod  -test
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
