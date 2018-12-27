@@ -174,7 +174,6 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	[Arguments]  ${text}
 	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
-	Set To Dictionary  ${data['message']['bank']['requisites']}  description  ${description}
 
 
 Передати на перевірку інформаційне повідомлення
@@ -183,10 +182,10 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${send-to-verification btn}
 	Click Element  ${send-to-verification btn}
-    Wait Until Page Contains Element  ${notice message}  15
+    Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було передано на перевірку
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Element Is Not Visible  ${notice message}
 
 
 Дочекатися опублікування посилання на лот

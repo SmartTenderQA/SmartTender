@@ -14,6 +14,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -e broken -v user:prod_ssp_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
@@ -28,7 +29,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити дані про об'єкт в ЦБД
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
@@ -37,8 +37,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
 
@@ -55,8 +53,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити дані про інформаційне повідомлення в ЦБД
-	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	[Tags]  compare  broken
 	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
@@ -64,9 +61,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
-	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатися довантаження даних з ЦБД
+	[Tags]  compare  broken
+	Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 
@@ -146,7 +142,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Keywords ***
 Precondition
 	Додати першого користувача  ${user}  tender_owner
-    #Підготувати користувачів
+    Підготувати користувачів
+
+
+Дочекатися довантаження даних з ЦБД
+	Reload Page
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${title locator}  Set Variable  ${view_locators['title']}
+	${title}  Get Text  ${title locator}
+	Should Contain  ${title}  [ТЕСТУВАННЯ]
 
 
 Завантажити variables.py для об'єкта
@@ -186,17 +190,6 @@ Postcondition
     ...  Додати користувача          user2           	provider2     	AND
     ...  Додати користувача          user3           	provider3     	AND
     ...  Додати користувача          test_viewer     	viewer
-
-
-Дочекатися довантаження даних з ЦБД
-	Sleep  10
-	Reload Page
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	${title locator}  Set Variable  ${view_locators['title']}
-	${title}  Get Text  ${title locator}
-	${status}  Run Keyword And Return Status  Should Contain  ${title}  [ТЕСТУВАННЯ]
-	Run Keyword If  ${status} == ${False}
-	...  Дочекатися довантаження даних з ЦБД
 
 
 Знайти аукціон користувачем

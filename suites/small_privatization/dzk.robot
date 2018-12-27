@@ -33,7 +33,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити відображення детальної інформації
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатися довантаження даних з ЦБД
+	Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 
@@ -137,14 +137,11 @@ Precondition
 
 
 Дочекатися довантаження даних з ЦБД
-	Sleep  10
 	Reload Page
 	Дочекатись закінчення загрузки сторінки(skeleton)
 	${title locator}  Set Variable  ${view_locators['title']}
 	${title}  Get Text  ${title locator}
-	${status}  Run Keyword And Return Status  Should Contain  ${title}  [ТЕСТУВАННЯ]
-	Run Keyword If  ${status} == ${False}
-	...  Дочекатися довантаження даних з ЦБД
+	Should Contain  ${title}  [ТЕСТУВАННЯ]
 
 
 Знайти аукціон користувачем
