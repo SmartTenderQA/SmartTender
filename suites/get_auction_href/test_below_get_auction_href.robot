@@ -33,6 +33,7 @@ If skipped create tender
 
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Валідація введених даних з ЦБД та на сайті  provider1
 
 

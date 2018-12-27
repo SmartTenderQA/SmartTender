@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 #Variables  ../../src/pages/procurement_tender_detail_page/procurement_variables.py
-Suite Setup     Створити словник  data
+
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -22,18 +22,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
 	test_dialog.Створити тендер
-
-
-Отримати дані тендера та зберегти їх у файл
-    [Tags]  create_tender
-    Execute Javascript    window.location.reload(true)
-	Знайти тендер організатором по title  ${data['title']}
-    ${tender_uaid}  Отримати tender_uaid вибраного тендера
-    ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tenderID  ${tender_uaid}
-    Set To Dictionary  ${data}  tender_href  ${tender_href}
-    Log  ${tender_href}  WARN
-    Зберегти словник у файл  ${data}  data
+    test_dialog.Отримати дані тендера та зберегти їх у файл
 
 
 If skipped create tender
@@ -135,20 +124,49 @@ If skipped create tender
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Перевірити коректність даних на сторінці  ['title']
-    Перевірити коректність даних на сторінці  ['description']
-    Перевірити коректність даних на сторінці  ['tenderID']
-    Перевірити коректність даних на сторінці  ['item']['title']
-    Перевірити коректність даних на сторінці  ['item']['city']
-    Перевірити коректність даних на сторінці  ['item']['streetAddress']
-    Перевірити коректність даних на сторінці  ['item']['postal code']
-    Перевірити коректність даних на сторінці  ['item']['id']
-    Перевірити коректність даних на сторінці  ['item']['id title']
-    Перевірити коректність даних на сторінці  ['item']['unit']
-    Перевірити коректність даних на сторінці  ['item']['quantity']
-    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
-    Перевірити коректність даних на сторінці  ['value']['amount']
-    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
+    Отримати дані з cdb та зберегти їх у файл
+
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderID']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
+    #procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['startDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['value']['amount']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['minimalStep']['amount']
+
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['title']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['description']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderID']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
+    #procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['startDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['value']['amount']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Set Global Variable  ${cdb}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
@@ -203,11 +221,12 @@ If skipped create tender
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tenderID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['unit']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
+
 
 Перевірити можливість отримати посилання на аукціон користувачем
 	[Arguments]  ${role}

@@ -44,6 +44,11 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
     #Очистити поле з датою  ${selector}
     Заповнити поле  ${selector}  ${value}
+    ${date}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${value}  ${date}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')  Run Keywords
+    ...  Очистити поле  ${selector}  AND
+    ...  Заповнити "Прийом пропозицій з"  ${value}
 
 
 Заповнити "Прийом пропозицій по"
@@ -54,7 +59,7 @@ Resource        keywords.robot
     ${date}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value}  ${date}
     Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')  Run Keywords
-    ...  Очистити поле з датою  ${selector}  AND
+    ...  Очистити поле  ${selector}  AND
     ...  Заповнити "Прийом пропозицій по"  ${value}
 
 
@@ -159,7 +164,7 @@ Resource        keywords.robot
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
 	Sleep  1
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
+	Wait Until Keyword Succeeds  10  2  Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${unit}  Вибрати довільну одиницю виміру
 	Підтвердити вибір(F10)
