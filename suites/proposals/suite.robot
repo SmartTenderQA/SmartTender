@@ -178,7 +178,18 @@ Fill ESCO
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
     input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+    Змінити значення фіксованого відсотку за необхідністю
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
+
+
+Змінити значення фіксованого відсотку за необхідністю
+    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
+    Sleep  1
+    ${status}  Run Keyword And Return Status  Element Should Be Visible   ${error selector}
+    ${value}  Run Keyword If  ${status}  Get Text   ${error selector}
+    ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
+    ${percent}  random_number  ${value[0]}  ${value[1]}
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
 
 
 ###    Useful indicators    ###
