@@ -38,7 +38,8 @@
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['legalName']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['id']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	Run Keyword If  '${site}' == 'test'
+	...  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['name']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['telephone']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['email']
@@ -119,7 +120,7 @@
 
 
 Отримати ID у цбд
-    ${cdb locator}  Set Variable  //*[@data-qa='cdbNumber']
+    ${cdb locator}  Set Variable If  '${site}' == 'test'  //*[@data-qa='cdbNumber']  //*[text()='Перейти']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
     Set To Dictionary  ${data}  id  ${cdb id}
