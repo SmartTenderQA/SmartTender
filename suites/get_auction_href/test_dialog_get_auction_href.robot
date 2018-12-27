@@ -30,7 +30,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	Знайти тендер організатором по title  ${data['title']}
     ${tender_uaid}  Отримати tender_uaid вибраного тендера
     ${tender_href}  Отримати tender_href вибраного тендера
-    Set To Dictionary  ${data}  tender_uaid  ${tender_uaid}
+    Set To Dictionary  ${data}  tenderID  ${tender_uaid}
     Set To Dictionary  ${data}  tender_href  ${tender_href}
     Log  ${tender_href}  WARN
     Зберегти словник у файл  ${data}  data
@@ -137,7 +137,7 @@ If skipped create tender
     Go to  ${data['tender_href']}
     Перевірити коректність даних на сторінці  ['title']
     Перевірити коректність даних на сторінці  ['description']
-    Перевірити коректність даних на сторінці  ['tender_uaid']
+    Перевірити коректність даних на сторінці  ['tenderID']
     Перевірити коректність даних на сторінці  ['item']['title']
     Перевірити коректність даних на сторінці  ['item']['city']
     Перевірити коректність даних на сторінці  ['item']['streetAddress']
@@ -201,7 +201,7 @@ If skipped create tender
 	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
 	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tenderID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['item']['quantity']}
