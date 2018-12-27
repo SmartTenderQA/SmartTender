@@ -24,11 +24,16 @@ def convert_cdb_values_to_edit_format(field, value, time_format='s'):
         return str(float(value))
     elif 'lassification' in field and 'scheme' in field and not '1' in field:
         return classification_scheme_dictionary[value]
+    elif 'accountIdentification' in field and 'scheme' in field:
+        return accountIdentification_scheme_dictionary[value]
     return value
 
 
 def convert_viewed_values_to_edit_format(field, value):
-    if 'value' in field:
+    if "['title']" == field:
+        if not '[ТЕСТУВАННЯ]' in value:
+            return '[ТЕСТУВАННЯ] ' + value
+    elif 'value' in field:
         list = re.search(u'(?P<amount>^[\d\s.]+).{4}(?P<vat>\w+)', value)
         if 'amount' in field:
             return list.group('amount').replace(' ', '')
@@ -99,4 +104,11 @@ classification_scheme_dictionary = {
     u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',
     u'kvtspz': u'КВЦПЗ',
+}
+
+
+accountIdentification_scheme_dictionary = {
+    u'UA-EDR': u'Код ЄДРПОУ',
+    u'UA-MFO': u'МФО банку',
+    u'accountNumber': u'Номер рахунку',
 }

@@ -2,7 +2,6 @@
 Resource  ../../src/src.robot
 Library  ../../src/pages/small_privatization/small_privatization_object/small_privatization_object_variables.py
 Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
-#Library  ../../src/pages/small_privatization/small_privatization_auction/small_privatization_auction_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -14,7 +13,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -e broken -v user:prod_ssp_owner -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v user:prod_ssp_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
@@ -53,7 +52,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити дані про інформаційне повідомлення в ЦБД
-	[Tags]  compare  broken
+	[Tags]  compare
 	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
@@ -61,8 +60,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
-	[Tags]  compare  broken
-	Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
+	[Tags]  compare
 	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
 
@@ -143,14 +141,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Precondition
 	Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
-
-
-Дочекатися довантаження даних з ЦБД
-	Reload Page
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	${title locator}  Set Variable  ${view_locators['title']}
-	${title}  Get Text  ${title locator}
-	Should Contain  ${title}  [ТЕСТУВАННЯ]
 
 
 Завантажити variables.py для об'єкта
