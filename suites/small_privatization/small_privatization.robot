@@ -44,7 +44,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Setup]  Go To  ${start page}
 	Завантажити variables.py для інформаційного повідомлення
 	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
 	small_privatization_object.Отримати ID у цбд
 	${location}  Get Location
 	Log To Console  url=${location}
