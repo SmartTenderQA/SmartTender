@@ -132,92 +132,92 @@
 ########################
 Заповнити title
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['title']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['title']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити description
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['description']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['description']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити decisions.0.title
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['title']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['title']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 
 Заповнити decisions.0.decisionID
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 
 Заповнити decisions.0.decisionDate
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.description
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['description']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['description']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 
 Заповнити items.0.classification.kind
 	[Arguments]  ${text}=''
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['classification']['kind']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['classification']['kind']
 	${kind}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
 	[Return]  ${kind}
 
 
 Заповнити items.0.classification.description
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['classification']['description']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['classification']['description']
 	${description}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути випадковий елемент з класифікації  ${selector}
 	[Return]  ${description}
 
 
 Заповнити items.0.quantity
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['quantity']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['quantity']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити items.0.unit.name
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['unit']['name']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['unit']['name']
 	${name}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}
 	[Return]  ${name}
 
 
 Заповнити items.0.address.postalCode
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['postalCode']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['postalCode']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 
 Заповнити items.0.address.countryName
    	[Arguments]  ${text}=''
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['countryName']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['countryName']
 	${countryName}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
 	[Return]  ${countryName}
 
 
 Заповнити items.0.address.locality
    	[Arguments]  ${text}=''
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['locality']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['locality']
 	${locality}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
 	[Return]  ${locality}
 
 
 Заповнити items.0.address.streetAddress
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['items'][0]['address']['streetAddress']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['streetAddress']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
@@ -230,41 +230,4 @@
 
 ###########################################################################
 ############################## INPUT FIELD ################################
-###########################################################################
-
-
-
-###########################################################################
-################################## CHECK ##################################
-###########################################################################
-Отримати локатор по назві поля
-	[Arguments]  ${field}
-	${selector}  Set Variable  ${edit_locators${field}}
-	[Return]  ${selector}
-
-
-Отритами дані зі сторінки
- 	[Arguments]  ${field}
- 	${selector}  Set Variable  ${view_locators${field}}
- 	Wait Until Element Is Visible  ${selector}  10
- 	${value}  Get Text  ${selector}
- 	${field value}  small_privatization_object_common.get_page_values  ${field}  ${value}
- 	[Return]  ${field value}
-
-
-Переірити відображення для
- 	[Arguments]  ${field}
- 	${value should}  Set Variable  ${data${field}}
- 	${value is}  small_privatization_object.Отритами дані зі сторінки  ${field}
-	Should Be Equal  ${value is}  ${value should}  Oops! Відображаються не ті дані для ${field}
-
-
-Перевірити дані в ЦБД для
-	[Arguments]  ${field}
-	${value should}  Set Variable  ${data${field}}
-	${value cdb}  Set Variable  ${cdb_data${field}}
- 	${is equal}  small_privatization_object_common.get_cdb_values  ${value cdb}  ${value should}
-	Should Be Equal  ${is equal}  ${True}  Oops! В ЦБД не ті дані для ${field}
-###########################################################################
-################################# /CHECK ##################################
 ###########################################################################
