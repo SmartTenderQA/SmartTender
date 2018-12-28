@@ -20,7 +20,8 @@
 #########################################################
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  40  minutes
-    Заповнити "Прийом пропозицій по"  ${date}
+    ${selector}  set variable  //*[@data-name="D_SROK"]//input
+    Заповнити текстове поле  ${selector}  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
