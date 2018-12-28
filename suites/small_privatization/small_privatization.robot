@@ -26,18 +26,62 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Зберегти словник у файл  ${data}  asset
 
 
-Перевірити дані про об'єкт в ЦБД
+Отримати дані про об'єкт з ЦБД
 	[Tags]  compare
 	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
-	small_privatization_object.Перевірити всі обов'язкові поля в цбд
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['title']
+	\['description']
+	\['decisions'][0]['title']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['items'][0]['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['description']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
+
 
 
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare
-	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
+	[Setup]  Run Keywords
+	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['assetID']
+	\['title']
+	\['description']
+	\['decisions'][0]['title']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['assetCustodian']['identifier']['legalName']
+	\['assetCustodian']['identifier']['id']
+	\['assetCustodian']['contactPoint']['name']
+	\['assetCustodian']['contactPoint']['telephone']
+	\['assetCustodian']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
 
 
 Створити інформаційне повідомлення МП
@@ -51,18 +95,97 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Зберегти словник у файл  ${data}  message
 
 
-Перевірити дані про інформаційне повідомлення в ЦБД
+Отримати дані про інформаційне повідомлення з ЦБД
 	[Tags]  compare
 	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
-	small_privatization_informational_message.Перевірити всі обов'язкові поля в цбд
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']  m
+	\['auctions'][0]['auctionPeriod']['startDate']
+	\['auctions'][1]['tenderingDuration']
+	\['auctions'][2]['tenderingDuration']
+	\['auctions'][0]['value']['amount']
+	\['auctions'][0]['minimalStep']['amount']
+	\['auctions'][0]['guarantee']['amount']
+	\['auctions'][0]['registrationFee']['amount']
+	\['auctions'][2]['auctionParameters']['dutchSteps']
+	\['auctions'][0]['bankAccount']['bankName']
+	\['auctions'][1]['bankAccount']['bankName']
+	\['auctions'][2]['bankAccount']['bankName']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['description']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['description']
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
 	[Tags]  compare
-	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	[Setup]  Run Keywords
+	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['lotID']
+	\['title']
+	\['description']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['decisions'][1]['title']
+	\['decisions'][1]['decisionID']
+	\['decisions'][1]['decisionDate']
+	\['auctions'][0]['auctionPeriod']['startDate']
+	\['auctions'][0]['value']['amount']
+	\['auctions'][1]['value']['amount']
+	\['auctions'][2]['value']['amount']
+	\['auctions'][0]['value']['valueAddedTaxIncluded']
+	\['auctions'][1]['value']['valueAddedTaxIncluded']
+	\['auctions'][2]['value']['valueAddedTaxIncluded']
+	\['auctions'][0]['guarantee']['amount']
+	\['auctions'][1]['guarantee']['amount']
+	\['auctions'][2]['guarantee']['amount']
+	\['auctions'][0]['registrationFee']['amount']
+	\['auctions'][1]['registrationFee']['amount']
+	\['auctions'][2]['registrationFee']['amount']
+	\['auctions'][0]['minimalStep']['amount']
+	\['auctions'][1]['minimalStep']['amount']
+	\['auctions'][0]['minimalStep']['valueAddedTaxIncluded']
+	\['auctions'][1]['minimalStep']['valueAddedTaxIncluded']
+	\['auctions'][2]['auctionParameters']['dutchSteps']
+	\['auctions'][0]['bankAccount']['bankName']
+	\['auctions'][1]['bankAccount']['bankName']
+	\['auctions'][2]['bankAccount']['bankName']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['scheme']
+	\['lotCustodian']['identifier']['legalName']
+	\['lotCustodian']['identifier']['id']
+	\['lotCustodian']['contactPoint']['name']
+	\['lotCustodian']['contactPoint']['telephone']
+	\['lotCustodian']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
 
 
 Дочекатися початку прийому пропозицій
