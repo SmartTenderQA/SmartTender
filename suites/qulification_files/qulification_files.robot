@@ -41,13 +41,14 @@ If skipped create tender
 	\  Прийняти участь у тендері учасником  provider${i}
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Кваліфікація
-
+    debug
 
 Відхилити організатором пропозицію першого учасника
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Знайти тендер організатором по title  ${data['title']}
     Не визнати учасника переможцем  1
+
 
 Завантажити другим учасником кваліфікаційний документ
     Завантажити сесію для  provider2
@@ -131,3 +132,11 @@ If skipped create tender
     procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
     procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['value']['amount']
     procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Set Global Variable  ${cdb}
+    Зберегти словник у файл  ${cdb}  cdb

@@ -82,7 +82,7 @@
 
 Заповнити description_eng для item
     ${description_en}  create_sentence  5
-    Set To Dictionary  ${data['item']}  description_en  ${description_en}
+    Set To Dictionary  ${data['items'][0]}  description_en  ${description_en}
     Заповнити "Назва предмета закупівлі ENG"  ${description_en}
 
 
