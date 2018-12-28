@@ -32,7 +32,7 @@ If skipped create tender
 
 Перевірка відображення даних створеного тендера на сторінці
     [Tags]  view
-    Перевірка відображення даних тендера на сторінці  provider1
+    Валідація введених даних з ЦБД та на сайті  provider1
 
 
 Подати заявку на участь в тендері двома учасниками
@@ -56,7 +56,7 @@ If skipped create tender
 
 
 *** Keywords ***
-Перевірка відображення даних тендера на сторінці
+Валідація введених даних з ЦБД та на сайті
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
@@ -139,7 +139,7 @@ If skipped create tender
 	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
 	Sleep  2
-	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_uaid']}
+	Element Should Contain  //*[@class="page-header"]//h2  ${data['tenderID']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}

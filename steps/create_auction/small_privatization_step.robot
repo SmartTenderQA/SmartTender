@@ -201,6 +201,7 @@
 	${date + delta}  Set Variable If
 	...  '${site}' == 'test'  ${date + delta test}
 	...  '${site}' == 'prod'  ${date + delta prod}
+	${date + delta}  Evaluate  '${date + delta}'[:-2]+'00'
 	small_privatization_informational_message.Заповнити auctions.0.auctionPeriod.startDate  ${date + delta}
 	Set To Dictionary  ${data['auctions'][0]['auctionPeriod']}  startDate  ${date + delta}
 
@@ -239,7 +240,7 @@
 
 Заповнити "Кількість кроків аукціону"
 	${stepCount}  random_number  1  99
-	small_privatization_informational_message.Заповнити auctions.1.auctionParameters.dutchSteps  ${stepCount}
+	small_privatization_informational_message.Заповнити auctions.2.auctionParameters.dutchSteps  ${stepCount}
 	Set To Dictionary  ${data['auctions'][2]['auctionParameters']}  dutchSteps  ${stepCount}
 
 

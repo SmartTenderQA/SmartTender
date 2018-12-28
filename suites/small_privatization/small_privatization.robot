@@ -2,7 +2,6 @@
 Resource  ../../src/src.robot
 Library  ../../src/pages/small_privatization/small_privatization_object/small_privatization_object_variables.py
 Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
-#Library  ../../src/pages/small_privatization/small_privatization_auction/small_privatization_auction_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -14,6 +13,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v user:prod_ssp_owner -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
@@ -26,49 +26,166 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Зберегти словник у файл  ${data}  asset
 
 
-Перевірити дані про об'єкт в ЦБД
+Отримати дані про об'єкт з ЦБД
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
-	small_privatization_object.Перевірити всі обов'язкові поля в цбд
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['title']
+	\['description']
+	\['decisions'][0]['title']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['items'][0]['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['description']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
+
 
 
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатися довантаження даних з ЦБД
-	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	small_privatization_object.Перевірити відображення всіх обов'язкових полів на сторінці об'єкту
+	[Setup]  Run Keywords
+	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['assetID']
+	\['title']
+	\['description']
+	\['decisions'][0]['title']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['assetCustodian']['identifier']['legalName']
+	\['assetCustodian']['identifier']['id']
+	\['assetCustodian']['contactPoint']['name']
+	\['assetCustodian']['contactPoint']['telephone']
+	\['assetCustodian']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
 
 
 Створити інформаційне повідомлення МП
 	[Setup]  Go To  ${start page}
 	Завантажити variables.py для інформаційного повідомлення
 	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  5 min
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
 	small_privatization_object.Отримати ID у цбд
 	${location}  Get Location
 	Log To Console  url=${location}
 	Зберегти словник у файл  ${data}  message
 
 
-Перевірити дані про інформаційне повідомлення в ЦБД
+Отримати дані про інформаційне повідомлення з ЦБД
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
-	small_privatization_informational_message.Перевірити всі обов'язкові поля в цбд
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']  m
+	\['auctions'][0]['auctionPeriod']['startDate']
+	\['auctions'][1]['tenderingDuration']
+	\['auctions'][2]['tenderingDuration']
+	\['auctions'][0]['value']['amount']
+	\['auctions'][0]['minimalStep']['amount']
+	\['auctions'][0]['guarantee']['amount']
+	\['auctions'][0]['registrationFee']['amount']
+	\['auctions'][2]['auctionParameters']['dutchSteps']
+	\['auctions'][0]['bankAccount']['bankName']
+	\['auctions'][1]['bankAccount']['bankName']
+	\['auctions'][2]['bankAccount']['bankName']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['description']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['description']
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
 	[Tags]  compare
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатися довантаження даних з ЦБД
-	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	small_privatization_informational_message.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	[Setup]  Run Keywords
+	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['lotID']
+	\['title']
+	\['description']
+	\['decisions'][0]['decisionID']
+	\['decisions'][0]['decisionDate']
+	\['decisions'][1]['title']
+	\['decisions'][1]['decisionID']
+	\['decisions'][1]['decisionDate']
+	\['auctions'][0]['auctionPeriod']['startDate']
+	\['auctions'][0]['value']['amount']
+	\['auctions'][1]['value']['amount']
+	\['auctions'][2]['value']['amount']
+	\['auctions'][0]['value']['valueAddedTaxIncluded']
+	\['auctions'][1]['value']['valueAddedTaxIncluded']
+	\['auctions'][2]['value']['valueAddedTaxIncluded']
+	\['auctions'][0]['guarantee']['amount']
+	\['auctions'][1]['guarantee']['amount']
+	\['auctions'][2]['guarantee']['amount']
+	\['auctions'][0]['registrationFee']['amount']
+	\['auctions'][1]['registrationFee']['amount']
+	\['auctions'][2]['registrationFee']['amount']
+	\['auctions'][0]['minimalStep']['amount']
+	\['auctions'][1]['minimalStep']['amount']
+	\['auctions'][0]['minimalStep']['valueAddedTaxIncluded']
+	\['auctions'][1]['minimalStep']['valueAddedTaxIncluded']
+	\['auctions'][2]['auctionParameters']['dutchSteps']
+	\['auctions'][0]['bankAccount']['bankName']
+	\['auctions'][1]['bankAccount']['bankName']
+	\['auctions'][2]['bankAccount']['bankName']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['id']
+	\['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][1]['bankAccount']['accountIdentification'][0]['scheme']
+	\['auctions'][2]['bankAccount']['accountIdentification'][0]['scheme']
+	\['lotCustodian']['identifier']['legalName']
+	\['lotCustodian']['identifier']['id']
+	\['lotCustodian']['contactPoint']['name']
+	\['lotCustodian']['contactPoint']['telephone']
+	\['lotCustodian']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
 
 
 Дочекатися початку прийому пропозицій
@@ -84,6 +201,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти аукціон користувачем  provider1
 	Зберегти сесію  provider1
 	Завантажити сесію для  provider2
@@ -93,6 +211,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -100,11 +219,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -116,12 +237,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     :FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -137,6 +260,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
@@ -146,7 +270,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Keywords ***
 Precondition
 	Додати першого користувача  ${user}  tender_owner
-    #Підготувати користувачів
+    Підготувати користувачів
 
 
 Завантажити variables.py для об'єкта
@@ -186,17 +310,6 @@ Postcondition
     ...  Додати користувача          user2           	provider2     	AND
     ...  Додати користувача          user3           	provider3     	AND
     ...  Додати користувача          test_viewer     	viewer
-
-
-Дочекатися довантаження даних з ЦБД
-	Sleep  10
-	Reload Page
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	${title locator}  Set Variable  ${view_locators['title']}
-	${title}  Get Text  ${title locator}
-	${status}  Run Keyword And Return Status  Should Contain  ${title}  [ТЕСТУВАННЯ]
-	Run Keyword If  ${status} == ${False}
-	...  Дочекатися довантаження даних з ЦБД
 
 
 Знайти аукціон користувачем

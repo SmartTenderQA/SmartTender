@@ -55,6 +55,11 @@ edit_locators = {
                 "dutchSteps": u"//*[contains(text(),'Кількість кроків')]/following-sibling::*//input"
             },
         },
+        {
+            "auctionParameters": {
+                "dutchSteps": u"//*[contains(text(),'Кількість кроків')]/following-sibling::*//input"
+            }
+        }
     ]
 }
 #</editor-fold>
@@ -62,37 +67,125 @@ edit_locators = {
 
 #<editor-fold desc="VIEW-LOCATORS">
 view_locators = {
-    "assetID": "//*[@data-qa='cdbNumber']",
+    "lotID": "//*[@data-qa='cdbNumber']",
     "title": "//h3[not(@class='title')]",
     "description": "//*[@class='text-justify']/span",
     "decisions": [
         {
-            "decisionDate": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
-            "decisionID": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]",
-            "title": "(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[2]"
+            "decisionDate": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[4]",
+            "decisionID": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[4]",
+        },
+        {
+            "decisionDate": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]",
+            "decisionID": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]",
+            "title": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]"
         }
     ],
-    "assetCustodian": {
+    "auctions": [
+        {
+            "auctionPeriod": {
+                "startDate": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[3]"
+            },
+            "value": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[4]",
+                "valueAddedTaxIncluded": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[4]",
+            },
+            "minimalStep": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[5]",
+                "valueAddedTaxIncluded": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[5]",
+            },
+            "guarantee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[6]"
+            },
+            "registrationFee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[7]",
+            },
+            "bankAccount": {
+                "bankName": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[1]",
+                "accountIdentification": [
+                {
+                    "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'first')]//span)[2]",
+                    "id": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[2]",
+                }
+                ]
+            }
+        },
+        {
+            "tenderingDuration": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[10]",
+            "value": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[11]",
+                "valueAddedTaxIncluded": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[11]",
+            },
+            "minimalStep": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[12]",
+                "valueAddedTaxIncluded": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[12]",
+            },
+            "guarantee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[13]"
+            },
+            "registrationFee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[14]",
+            },
+            "bankAccount": {
+                "bankName": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[1]",
+                "accountIdentification": [
+                {
+                    "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'first')]//span)[2]",
+                    "id": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[2]",
+                }
+                ]
+            }
+        },
+        {
+            "tenderingDuration": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[17]",
+            "value": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[18]",
+                "valueAddedTaxIncluded": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[18]",
+            },
+            "guarantee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[19]"
+            },
+            "registrationFee": {
+                "amount": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[20]",
+            },
+            "auctionParameters": {
+                "dutchSteps": u"(//*[@class='ivu-card-body' and contains(.,'Умови')]//*[contains(@class,'second')])[21]"
+            },
+            "bankAccount": {
+                "bankName": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[1]",
+                "accountIdentification": [
+                {
+                    "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'first')]//span)[2]",
+                    "id": u"(//*[@class='ivu-card-body' and contains(.,'Банківські реквізити')]//*[contains(@class,'second')]//span[@data-qa='value'])[2]",
+                }
+                ]
+            }
+        }
+    ],
+    "lotCustodian": {
         "identifier": {
-            "legalName": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[1]",
-            "id": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[2]",
-            "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[3]",
+            "legalName": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Назва')]//*[@data-qa='value']",
+            "id": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код ЄДРПОУ')]//*[@data-qa='value']",
+            "scheme": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код агентства реєстрації')]//*[@data-qa='value']",
         },
         "contactPoint": {
-            "name": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[5]",
-            "telephone": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[6]",
-            "email": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[7]",
+            "name": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'ПІБ')]//*[@data-qa='value']",
+            "telephone": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Телефон')]//*[@data-qa='value']",
+            "email": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Email')]//*[@data-qa='value']",
         }
     },
     "items": [
             {
-                "description": "(//*[@data-qa='item']//*[@data-qa='value'])[1]",
+                "description": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Опис')]//*[@data-qa='value']",
                 "classification": {
-                    "kind": "",
-                    "description": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
-                    "id": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
-                    "scheme": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]"
+                    "description": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]",
+                    "id": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]",
+                    "scheme": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]"
                 },
+                "unit": {
+                    "name": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
+                },
+                "quantity": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']",
                 "address": {
                     "postalCode": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
                     "countryName": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
@@ -100,10 +193,6 @@ view_locators = {
                     "region": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
                     "locality": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']"
                 },
-                "unit": {
-                    "name": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
-                },
-                "quantity": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
             }
         ],
 }
@@ -150,9 +239,6 @@ data = {
         },
         {
             "tenderingDuration": "",
-            "auctionParameters": {
-                "dutchSteps": ""
-            },
             "registrationFee": {
                 "amount": "",
             },
@@ -171,6 +257,9 @@ data = {
             "tenderingDuration": "",
             "registrationFee": {
                 "amount": "",
+            },
+            "auctionParameters": {
+                "dutchSteps": ""
             },
             "bankAccount": {
                 "bankName": "",

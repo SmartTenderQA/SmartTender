@@ -16,7 +16,7 @@ Test Teardown  			Run Keywords
 	old_search.Активувати вкладку Державних закупівель
 	Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	${id}  procurement_tender_detail.Отритами дані зі сторінки  ['tender_uaid']
+	${id}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderID']
 	${title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	${link}  Сформувати пряме посилання на тендер  ${id}
 	Дочекатись закінчення загрузки сторінки(skeleton)

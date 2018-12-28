@@ -26,7 +26,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Перевірити коректність даних
     [Tags]  view
-    Перевірка відображення даних тендера на сторінці  provider1
+    Валідація введених даних з ЦБД та на сайті  provider1
 
 
 If skipped create tender
@@ -41,13 +41,14 @@ If skipped create tender
 	\  Прийняти участь у тендері учасником  provider${i}
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Кваліфікація
-
+    debug
 
 Відхилити організатором пропозицію першого учасника
     Завантажити сесію для  tender_owner
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Знайти тендер організатором по title  ${data['title']}
     Не визнати учасника переможцем  1
+
 
 Завантажити другим учасником кваліфікаційний документ
     Завантажити сесію для  provider2
@@ -92,24 +93,50 @@ If skipped create tender
     Go Back
 
 
-Перевірка відображення даних тендера на сторінці
+Валідація введених даних з ЦБД та на сайті
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    debug
-    Перевірити коректність даних на сторінці  ['title']
-    Перевірити коректність даних на сторінці  ['description']
-    Перевірити коректність даних на сторінці  ['tender_uaid']
-    Перевірити коректність даних на сторінці  ['item']['title']
-    Перевірити коректність даних на сторінці  ['item']['city']
-    Перевірити коректність даних на сторінці  ['item']['streetAddress']
-    Перевірити коректність даних на сторінці  ['item']['postal code']
-    Перевірити коректність даних на сторінці  ['item']['id']
-    Перевірити коректність даних на сторінці  ['item']['id title']
-    #Перевірити коректність даних на сторінці  ['item']['unit']
-    Перевірити коректність даних на сторінці  ['item']['quantity']
-    Перевірити коректність даних на сторінці  ['tenderPeriod']['startDate']
-    Перевірити коректність даних на сторінці  ['tenderPeriod']['endDate']
-    Перевірити коректність даних на сторінці  ['enquiryPeriod']['endDate']
-    Перевірити коректність даних на сторінці  ['value']['amount']
-    Перевірити коректність даних на сторінці  ['value']['minimalStep']['percent']
+    Отримати дані з cdb та зберегти їх у файл
+
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderID']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
+    #procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['startDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['value']['amount']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['minimalStep']['amount']
+
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['title']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['description']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderID']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
+    #procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['startDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['value']['amount']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Set Global Variable  ${cdb}
+    Зберегти словник у файл  ${cdb}  cdb

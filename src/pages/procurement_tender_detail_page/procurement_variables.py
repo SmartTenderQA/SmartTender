@@ -212,14 +212,14 @@ locators = {
             "id": ""
         }
     ],
-    "maxAwardsCount": "",
+    "maxAwardsCount": """//*[@data-qa="max-winner-count"]//*[@data-qa="value"]""",
     "tenderID": """//*[@data-qa="prozorro-number"]//a/span""",
     "dateModified": "",
     "status": """//*[@data-qa="status"]|//*[@data-qa="auctionStatus"]""",
     "description": """//*[@data-qa="main-block"]//*[@data-qa="description"]/span""",
     "procurementMethodDetails": "",
     "procurementMethodType": "",
-    "agreementDuration": "",
+    "agreementDuration": """(//*[@data-qa="agreement-duration"]//span)[2]""",
     "description_en": "",
     "date": "",
     "minimalStep": {

@@ -7,51 +7,6 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 
 *** Keywords ***
-Перевірити всі обов'язкові поля в цбд
-	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionID']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions'][0]['decisionDate']  s
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['auctionPeriod']['startDate']  m
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['value']['amount']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['minimalStep']['amount']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['guarantee']['amount']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['registrationFee']['amount']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['bankName']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][1]['tenderingDuration']
-	compare_data.Порівняти введені дані з даними в ЦБД  ['auctions'][1]['auctionParameters']['dutchSteps']
-
-
-Перевірити відображення всіх обов'язкових полів на сторінці аукціону
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetID']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['title']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['description']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['title']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionID']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions'][0]['decisionDate']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['legalName']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['id']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['name']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['telephone']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['contactPoint']['email']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
-	#todo hz 4to eto i za4em ono
-	#compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['kind']
-	#
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['scheme']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['postalCode']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['countryName']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['region']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['locality']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['address']['streetAddress']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
-
-
 Зберегти чернетку інформаційного повідомлення
 	${save btn}  Set variable  //div[@class='ivu-col ivu-col-span-6']//button[@type='button']
     Scroll Page To Element XPATH  ${save btn}
@@ -59,7 +14,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
     Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було
-	Wait Until Element Is Not Visible  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Опублікувати інформаційне повідомлення у реєстрі
@@ -71,24 +26,24 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було опубліковано
-	Wait Until Element Is Not Visible  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Ввести унікальний код об'єкту
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['assetID']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['assetID']
     Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити decisions.0.decisionID
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити decisions.0.decisionDate
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
@@ -110,7 +65,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Заповнити auctions.0.auctionPeriod.startDate
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['auctionPeriod']['startDate']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['auctionPeriod']['startDate']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
@@ -118,63 +73,62 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Заповнити auctions.1.tenderingDuration
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][1]['tenderingDuration']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][1]['tenderingDuration']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.value.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['value']['amount']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['value']['amount']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.minimalStep.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['minimalStep']['amount']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['minimalStep']['amount']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.guarantee.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['guarantee']['amount']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['guarantee']['amount']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.registrationFee.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['registrationFee']['amount']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['registrationFee']['amount']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити auctions.1.auctionParameters.dutchSteps
+Заповнити auctions.2.auctionParameters.dutchSteps
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][1]['auctionParameters']['dutchSteps']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][2]['auctionParameters']['dutchSteps']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.bankName
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['bankName']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['bankName']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
 	${type}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}
 	[Return]  ${type}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.id
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.description
 	[Arguments]  ${text}
-	${selector}  small_privatization_object.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
-	Set To Dictionary  ${data['message']['bank']['requisites']}  description  ${description}
 
 
 Передати на перевірку інформаційне повідомлення
@@ -183,7 +137,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
    	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	Scroll Page To Element XPATH  ${send-to-verification btn}
 	Click Element  ${send-to-verification btn}
-    Wait Until Page Contains Element  ${notice message}  15
+    Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було передано на перевірку
 	Wait Until Page Does Not Contain Element  ${notice message}
