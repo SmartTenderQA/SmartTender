@@ -55,6 +55,11 @@ edit_locators = {
                 "dutchSteps": u"//*[contains(text(),'Кількість кроків')]/following-sibling::*//input"
             },
         },
+        {
+            "auctionParameters": {
+                "dutchSteps": u"//*[contains(text(),'Кількість кроків')]/following-sibling::*//input"
+            }
+        }
     ]
 }
 #</editor-fold>
