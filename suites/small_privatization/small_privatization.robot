@@ -7,6 +7,7 @@ Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***

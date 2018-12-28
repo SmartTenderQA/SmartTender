@@ -58,14 +58,14 @@ view_locators = {
     ],
     "assetCustodian": {
         "identifier": {
-            "legalName": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[1]",
-            "id": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[2]",
-            "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[3]",
+            "legalName": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Назва')]//*[@data-qa='value']",
+            "id": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код ЄДРПОУ')]//*[@data-qa='value']",
+            "scheme": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код агентства реєстрації')]//*[@data-qa='value']",
         },
         "contactPoint": {
-            "name": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[5]",
-            "telephone": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[6]",
-            "email": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[@data-qa='value'])[7]",
+            "name": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'ПІБ')]//*[@data-qa='value']",
+            "telephone": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Телефон')]//*[@data-qa='value']",
+            "email": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Email')]//*[@data-qa='value']",
         }
     },
     "items": [

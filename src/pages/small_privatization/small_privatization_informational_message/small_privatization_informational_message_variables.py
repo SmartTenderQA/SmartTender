@@ -164,34 +164,34 @@ view_locators = {
     ],
     "lotCustodian": {
         "identifier": {
-            "legalName": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[1]",
-            "id": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[2]",
-            "scheme": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[3]",
+            "legalName": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Назва')]//*[@data-qa='value']",
+            "id": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код ЄДРПОУ')]//*[@data-qa='value']",
+            "scheme": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Код агентства реєстрації')]//*[@data-qa='value']",
         },
         "contactPoint": {
-            "name": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[5]",
-            "telephone": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[6]",
-            "email": u"(//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'second')]//span[@data-qa='value'])[7]",
+            "name": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'ПІБ')]//*[@data-qa='value']",
+            "telephone": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Телефон')]//*[@data-qa='value']",
+            "email": u"//*[@class='ivu-card-body' and contains(.,'Орган приватизації')]//*[contains(@class,'ivu-row') and contains(.,'Email')]//*[@data-qa='value']",
         }
     },
     "items": [
             {
-                "description": "(//*[@data-qa='item']//*[@data-qa='value'])[1]",
+                "description": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Опис')]//*[@data-qa='value']",
                 "classification": {
-                    "description": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
-                    "id": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]",
-                    "scheme": "//*[@data-qa='item']//span[not(@data-qa) and not(@class)]"
+                    "description": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]",
+                    "id": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]",
+                    "scheme": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Класифікація')]//span[not(@class)]"
                 },
                 "unit": {
-                    "name": u"(//*[@data-qa='item']//*[@data-qa='value'])[2]"
+                    "name": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']"
                 },
-                "quantity": u"(//*[@data-qa='item']//*[@data-qa='value'])[2]",
+                "quantity": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Обсяг')]//*[@data-qa='value']",
                 "address": {
-                    "postalCode": u"(//*[@data-qa='item']//*[@data-qa='value'])[3]",
-                    "countryName": u"(//*[@data-qa='item']//*[@data-qa='value'])[3]",
-                    "streetAddress": u"(//*[@data-qa='item']//*[@data-qa='value'])[3]",
-                    "region": u"(//*[@data-qa='item']//*[@data-qa='value'])[3]",
-                    "locality": u"(//*[@data-qa='item']//*[@data-qa='value'])[3]"
+                    "postalCode": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "countryName": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "streetAddress": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "region": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']",
+                    "locality": u"//*[@data-qa='item']//*[contains(@class,'ivu-row') and contains(.,'Адреса')]//*[@data-qa='value']"
                 },
             }
         ],

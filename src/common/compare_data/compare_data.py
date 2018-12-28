@@ -33,16 +33,11 @@ def convert_viewed_values_to_edit_format(field, value):
     if "['title']" == field:
         if not '[ТЕСТУВАННЯ]' in value:
             return '[ТЕСТУВАННЯ] ' + value
-    elif 'value' in field:
-        list = re.search(u'(?P<amount>^[\d\s.]+).{4}(?P<vat>\w+)', value)
-        if 'amount' in field:
-            return list.group('amount').replace(' ', '')
-        elif 'valueAddedTaxIncluded' in field:
-            vat = list.group('vat')
-            if vat == 'з':
-                return 'true'
-            elif vat == 'без':
-                return 'false'
+    elif 'valueAddedTaxIncluded' in field:
+        if u'без ПДВ' in value:
+            return False
+        else:
+            return True
     elif 'Period' in field:
         list = re.findall(u'[0-9.]+\s[0-9:]+', value)
         if 'start' in field:
@@ -50,16 +45,16 @@ def convert_viewed_values_to_edit_format(field, value):
         elif 'end' in field:
             return list[1]
     elif 'minimalStep' in field:
-        list = re.search(u'(?P<percents>.+)\D{5}(?P<amount>[\d\s.]+)', value)
+        list = re.search(u'((?P<percents>[^%]+)\D{5})?(?P<amount>[\d\s]+,\d+).*', value)
         if 'percents' in field:
             ret = list.group('percents')
-            return ret.replace('%', '')
+            return ret
         elif 'amount' in field:
             ret = list.group('amount')
-            return ret.replace(' ', '')
-    elif 'guarantee' in field or 'budgetSpent' in field or 'registrationFee' in field:
-        ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
-        return ret.replace(' ', '')
+            return ret.replace(' ', '').replace(',', '.')
+    elif ('value' in field or 'guarantee' in field or 'budgetSpent' in field or 'registrationFee' in field) and 'amount' in field:
+        ret = re.search(u'(?P<amount>[\d\s]+,\d+).*', value).group('amount')
+        return ret.replace(' ', '').replace(',', '.')
     elif 'leaseDuration' in field:
         list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
         return 'P'+list.group('years')+'Y'+list.group('months')+'M'
@@ -90,7 +85,7 @@ def convert_viewed_values_to_edit_format(field, value):
         elif 'quantity' in field:
             return str(float(list.group('quantity')))
     elif 'decisions' in field:
-        list = re.search(u'(?P<title>[^0-9]+) (?P<decisionID>\d+).{5}(?P<decisionDate>[0-9.]+\s[0-9:]+)', value)
+        list = re.search(u'((?P<title>[^0-9]+) )?(?P<decisionID>\d+).{5}(?P<decisionDate>[0-9.]+\s[0-9:]+)', value)
         if 'title' in field:
             return list.group('title')
         elif 'decisionID' in field:

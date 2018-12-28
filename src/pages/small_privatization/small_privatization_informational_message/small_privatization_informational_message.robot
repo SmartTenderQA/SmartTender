@@ -50,7 +50,8 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	\  compare_data.Порівняти відображені дані з даними в ЦБД  ['auctions'][${i}]['bankAccount']['accountIdentification'][0]['scheme']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['legalName']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['id']
-	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
+	Run Keyword If  '${site}' == 'test'
+	...  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['contactPoint']['name']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['contactPoint']['telephone']
 	compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['contactPoint']['email']
@@ -200,7 +201,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
     Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було передано на перевірку
-	Wait Until Element Is Not Visible  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Дочекатися опублікування посилання на лот
