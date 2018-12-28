@@ -207,12 +207,16 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Завантажити сесію для  provider2
 	Go To  ${data['tender_href']}
 	Зберегти сесію  provider2
+	Завантажити сесію для  provider3
+	Go To  ${data['tender_href']}
+	Зберегти сесію  provider3
+	Sleep  90
 
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
@@ -226,7 +230,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати пропозицію учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  2
+	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -239,13 +243,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
-	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
+	small_privatization_auction.Дочекатися статусу лота  Аукціон  30 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-    :FOR  ${i}  IN  1  2
+    :FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)

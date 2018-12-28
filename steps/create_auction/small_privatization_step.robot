@@ -195,7 +195,7 @@
 
 Заповнити "Дата проведення аукціону"
 	${delta days}  Set Variable  6
-	${delta minutes}  Set Variable  13
+	${delta minutes}  Set Variable  15
 	${date + delta prod}  get_formated_time_with_delta  ${delta days}  days  s
 	${date + delta test}  get_formated_time_with_delta  ${delta minutes}  minutes  s
 	${date + delta}  Set Variable If
