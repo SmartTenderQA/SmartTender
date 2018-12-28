@@ -240,8 +240,8 @@
 
 Заповнити "Кількість кроків аукціону"
 	${stepCount}  random_number  1  99
-	small_privatization_informational_message.Заповнити auctions.1.auctionParameters.dutchSteps  ${stepCount}
-	Set To Dictionary  ${data['auctions'][1]['auctionParameters']}  dutchSteps  ${stepCount}
+	small_privatization_informational_message.Заповнити auctions.2.auctionParameters.dutchSteps  ${stepCount}
+	Set To Dictionary  ${data['auctions'][2]['auctionParameters']}  dutchSteps  ${stepCount}
 
 
 Заповнити "Банківські реквізити"

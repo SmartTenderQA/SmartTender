@@ -161,9 +161,9 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
-Заповнити auctions.1.auctionParameters.dutchSteps
+Заповнити auctions.2.auctionParameters.dutchSteps
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][1]['auctionParameters']['dutchSteps']
+	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][2]['auctionParameters']['dutchSteps']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
