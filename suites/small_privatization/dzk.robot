@@ -23,19 +23,123 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Log To Console  url=${data['tender_href']}
 
 
-Отримати дані з цбд та перевірити їх відповідність
+Отримати дані про аукціон з ЦБД
 	[Tags]  compare
 	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
-	dzk_auction.Перевірити всі обов'язкові поля в цбд
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['lotIdentifier']
+	\['title']
+	\['description']
+	\['lotHolder']['identifier']['legalName']
+	\['lotHolder']['identifier']['id']
+	\['lotHolder']['address']['postalCode']
+	\['lotHolder']['address']['region']
+	\['lotHolder']['address']['locality']
+	\['lotHolder']['address']['streetAddress']
+	\['lotHolder']['contactPoint']['name']
+	\['lotHolder']['contactPoint']['email']
+	\['tenderAttempts']
+	\['minNumberOfQualifiedBids']
+	\['contractTerms']['leaseTerms']['leaseDuration']
+	\['value']['amount']
+	\['minimalStep']['amount']
+	\['guarantee']['amount']
+	\['budgetSpent']['amount']
+	\['registrationFee']['amount']
+	\['bankAccount']['bankName']
+	\['bankAccount']['accountIdentification'][0]['description']
+    \['bankAccount']['accountIdentification'][1]['id']
+    \['bankAccount']['accountIdentification'][2]['id']
+    \['bankAccount']['accountIdentification'][3]['id']
+    \['bankAccount']['accountIdentification'][4]['id']
+    \['bankAccount']['accountIdentification'][5]['id']
+    \['bankAccount']['accountIdentification'][6]['id']
+    \['bankAccount']['accountIdentification'][7]['id']
+    \['bankAccount']['accountIdentification'][8]['id']
+	\['items'][0]['description']
+	\['items'][0]['additionalClassifications'][1]['id']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['description']
+	\['items'][0]['additionalClassifications'][0]['id']
+	\['items'][0]['additionalClassifications'][0]['description']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
 
 
 Перевірити відображення детальної інформації
 	[Tags]  compare
-	Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
-	dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	dzk_auction.Перевірити відображення всіх обов'язкових полів на сторінці аукціону
+	[Setup]  Run Keywords
+	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['title']
+	\['lotIdentifier']
+	\['auctionID']
+	\['description']
+	\['rectificationPeriod']['startDate']
+	\['rectificationPeriod']['endDate']
+	\['tenderPeriod']['startDate']
+	\['tenderPeriod']['endDate']
+	\['minimalStep']['amount']
+	\['guarantee']['amount']
+	\['budgetSpent']['amount']
+	\['registrationFee']['amount']
+	\['minNumberOfQualifiedBids']
+	\['contractTerms']['leaseTerms']['leaseDuration']
+	\['procuringEntity']['identifier']['legalName']
+	\['procuringEntity']['identifier']['id']
+	\['procuringEntity']['contactPoint']['email']
+	\['procuringEntity']['contactPoint']['name']
+	\['procuringEntity']['contactPoint']['telephone']
+	\['procuringEntity']['address']['countryName']
+	\['procuringEntity']['address']['streetAddress']
+	\['procuringEntity']['address']['region']
+	\['procuringEntity']['address']['locality']
+	\['bankAccount']['bankName']
+	\['bankAccount']['accountIdentification'][0]['description']
+    \['bankAccount']['accountIdentification'][0]['id']
+    \['bankAccount']['accountIdentification'][1]['id']
+    \['bankAccount']['accountIdentification'][2]['id']
+    \['bankAccount']['accountIdentification'][3]['id']
+    \['bankAccount']['accountIdentification'][4]['id']
+    \['bankAccount']['accountIdentification'][5]['id']
+    \['bankAccount']['accountIdentification'][6]['id']
+    \['bankAccount']['accountIdentification'][7]['id']
+    \['bankAccount']['accountIdentification'][8]['id']
+	\['lotHolder']['identifier']['legalName']
+	\['lotHolder']['identifier']['id']
+	\['lotHolder']['identifier']['scheme']
+	\['lotHolder']['address']['postalCode']
+	\['lotHolder']['address']['region']
+	\['lotHolder']['address']['locality']
+	\['lotHolder']['address']['streetAddress']
+	\['lotHolder']['contactPoint']['name']
+	\['lotHolder']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['description']
+	\['items'][0]['additionalClassifications'][0]['scheme']
+	\['items'][0]['additionalClassifications'][0]['id']
+	\['items'][0]['additionalClassifications'][0]['description']
+	\['items'][0]['additionalClassifications'][1]['id']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+	\['items'][0]['address']['streetAddress']
 
 
 Знайти аукціон учасниками
