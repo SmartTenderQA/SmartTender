@@ -107,3 +107,4 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	${doc}=  create_fake_doc
 	${path}  Set Variable  ${doc[0]}
 	Choose File  xpath=(//input[@type="file"][1])[${block}]  ${path}
+	[Return]  ${doc[1]}

@@ -6,6 +6,12 @@
 
 data = {
     "procurementMethod": "",
+    "procedure-type": "",
+    "numberOfBids": "",
+    "awardPeriod": {
+        "startDate": "",
+        "endDate": ""
+    },
     "complaintPeriod": {
         "startDate": "",
         "endDate": ""
@@ -41,6 +47,10 @@ data = {
         }
     ],
     "title": "",
+    "auctionPeriod": {
+        "startDate": "",
+        "endDate": ""
+    },
     "lots": [
         {
             "status": "",
@@ -81,6 +91,42 @@ data = {
         "amount": "",
         "valueAddedTaxIncluded": ""
     },
+    "awards": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ],
+    "bids": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ],
     "items": [
         {
             "relatedLot": "",
@@ -152,6 +198,11 @@ data = {
 locators = {
     "procurementMethod": "",
     "procedure-type": """//*[@data-qa="procedure-type"]//div[2]""",
+    "numberOfBids": "",
+    "awardPeriod": {
+        "startDate": "",
+        "endDate": ""
+    },
     "complaintPeriod": {
         "startDate": "",
         "endDate": ""
@@ -187,6 +238,10 @@ locators = {
         }
     ],
     "title": """//*[@data-qa="main-block"]//*[@data-qa="title"]""",
+    "auctionPeriod": {
+        "startDate": "",
+        "endDate": ""
+    },
     "lots": [
         {
             "status": "",
@@ -227,6 +282,42 @@ locators = {
         "amount": """//*[@data-qa="budget-min-step"]//span[4]""",
         "valueAddedTaxIncluded": ""
     },
+    "awards": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ],
+    "bids": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ],
     "items": [
         {
             "relatedLot": "",

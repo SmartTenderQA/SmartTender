@@ -5,7 +5,7 @@ Resource        keywords.robot
 *** Variables ***
 ${participant}            //*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
 ${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]
-${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[1]
+${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
 
 
 *** Keywords ***
