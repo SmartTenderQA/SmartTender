@@ -133,7 +133,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  compare
 	[Setup]  Run Keywords
 	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
-	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
+	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['lotID']
 	\['title']
@@ -201,6 +201,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти аукціон користувачем  provider1
 	Зберегти сесію  provider1
 	Завантажити сесію для  provider2
@@ -210,6 +211,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Подати заявки на участь в тендері
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
@@ -217,11 +219,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Підтвердити заявки на участь
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -233,12 +237,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  20 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     :FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
@@ -254,6 +260,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Tags]  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
