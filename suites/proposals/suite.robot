@@ -180,8 +180,8 @@ Fill ESCO
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
     ${text}  Get Text  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]
     ${percent}  Run Keyword If  'до ' in '${text}'
-    ...  Set Variable  Evaluate  random.randint(80, 100)  random  ELSE
-    ...  Set Variable  Evaluate  random.randint(0, ${text[-2:]})  random
+    ...  Evaluate  random.randint(80, 100)  random  ELSE
+    ...  Evaluate  random.randint(0, ${text[-2:]})  random
     Input Text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
