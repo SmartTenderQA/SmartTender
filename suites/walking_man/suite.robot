@@ -794,7 +794,9 @@ Test Postcondition
   Wait Until Keyword Succeeds  20  1
   ...  Wait Until Page Contains Element
   ...  xpath=//li[contains(text(), '${bid form}')]
-  Wait Until Element Is Visible  xpath=//li[contains(text(), '${bid form}')]
+  Wait Until Keyword Succeeds  20  1
+  ...  Wait Until Element Is Visible
+  ...  xpath=//li[contains(text(), '${bid form}')]
   Scroll Page To Element XPATH  xpath=//li[contains(text(), '${bid form}')]
 
 
