@@ -25,6 +25,7 @@ ${switch}                           //*[@class="ivu-switch" or @class="ivu-switc
 ${switch field}                     //input[@placeholder]
 ${wait}                             60
 ${no tender}                        False
+${error selector}					xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
 
 
 *** Test Cases ***
@@ -173,19 +174,21 @@ Postcondition
 
 ###    ESCO    ###
 Fill ESCO
-    [Arguments]  ${number_of_lot}
-    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
+    [Arguments]  ${number_of_lot}  ${percent}=95
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
-    ${status}  Run Keyword And Return Status  Page Should Contain Element  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]
-    ${text}  Run Keyword If  ${status}  Get Text  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]  ELSE
-    ...  Set Variable  ${EMPTY}
-    ${percent}  Run Keyword If  'до ' in '${text}'
-    ...  Evaluate  random.randint(80, 100)  random  ELSE
-    ...  Evaluate  random.randint(0, ${text[-2:]})  random
-    Input Text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${error selector}  3
+    Run Keyword If  ${status}  Змінити значення фіксованого відсотку
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
+
+
+Змінити значення фіксованого відсотку
+    ${value}  Get Text   ${error selector}
+    ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
+    ${percent}  random_number  ${value[0]}  ${value[1]}
+    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
 
 
 ###    Useful indicators    ###
