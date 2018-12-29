@@ -3,6 +3,7 @@
     [Arguments]  ${name}
     Click Element  xpath=(//*[@title="${name}"])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
+    Очистити фільтр "Умова відбору"
     Run Keyword And Ignore Error  Закрити валідаційне вікно  Умова відбору тендерів  OK
 
 
