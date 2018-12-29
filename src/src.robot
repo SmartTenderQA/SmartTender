@@ -218,6 +218,14 @@ Scroll Page To Element XPATH
 	...  Execute JavaScript  document.evaluate('${xpath}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
 
 
+Clear input By JS
+    [Arguments]    ${xpath}
+	${xpath}  Set Variable  ${xpath.replace("'", '"')}
+	${xpath}  Set Variable  ${xpath.replace('xpath=', '')}
+    Execute JavaScript
+    ...  document.evaluate('${xpath}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.value=""
+
+
 Scroll Page To Top
 	Execute JavaScript  window.scrollTo(0,0);
 
@@ -246,3 +254,5 @@ Input Type Flex
     Reload Page
 
 
+Очистити Кеш
+  Execute Javascript    window.location.reload(true)

@@ -7,7 +7,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Capture Page Screenshot
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_esco_get_auction_href.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/test_esco_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  Bened           tender_owner

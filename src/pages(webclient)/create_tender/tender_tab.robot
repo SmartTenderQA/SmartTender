@@ -32,34 +32,43 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="OTCHENG"]//input
     Заповнити поле  ${selector}  ${value}
 
+
 Заповнити "Обговорення закупівлі до"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDM"]//input
-    #Очистити поле з датою  ${selector}
-    Заповнити поле  ${selector}  ${value}
+	Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    ...  Заповнити "Обговорення закупівлі до"  ${value}
 
 
 Заповнити "Прийом пропозицій з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
-    #Очистити поле з датою  ${selector}
-    Заповнити поле  ${selector}  ${value}
-    ${date}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${value}  ${date}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')  Run Keywords
-    ...  Очистити поле  ${selector}  AND
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
     ...  Заповнити "Прийом пропозицій з"  ${value}
 
 
 Заповнити "Прийом пропозицій по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
-    #Очистити поле з датою  ${selector}
-    Заповнити поле  ${selector}  ${value}  #TODO пробний варіант
-    ${date}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${value}  ${date}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')  Run Keywords
-    ...  Очистити поле  ${selector}  AND
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
     ...  Заповнити "Прийом пропозицій по"  ${value}
 
 

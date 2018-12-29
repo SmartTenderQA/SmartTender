@@ -4,11 +4,11 @@
     ${id}  random number  100000  999999
     Заповнити текстове поле  (//*[@data-type="TextBox"])[1]//input  ${id}
     ${signDate}  get_time_now_with_deviation  0  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[1]//input  ${signDate}
+    Заповнити дати РУ  (//*[@data-type="DateEdit"])[1]//input  ${signDate}
     ${startDate}  get_time_now_with_deviation  2  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[2]//input  ${startDate}
+    Заповнити дати РУ  (//*[@data-type="DateEdit"])[2]//input  ${startDate}
     ${endDate}  get_time_now_with_deviation  60  days
-    Заповнити текстове поле  (//*[@data-type="DateEdit"])[3]//input  ${endDate}
+    Заповнити дати РУ  (//*[@data-type="DateEdit"])[3]//input  ${endDate}
     Натиснути OkButton
 
 
@@ -18,4 +18,15 @@
     Run Keyword If  ${status}  Click Element  //*[@id="IMMessageBoxBtnOK"]//span[text()="ОК"]
     Дочекатись закінчення загрузки сторінки(webclient)
 
+
+Заповнити дати РУ
+    [Arguments]  ${selector}  ${value}
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    ...  Заповнити дати РУ  ${selector}  ${value}
 
