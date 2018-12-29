@@ -179,7 +179,7 @@ Fill ESCO
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
     ${status}  Run Keyword And Return Status  Page Should Contain Element  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]
-    ${text}  Run Keyword If  ${status}  Get Text  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]
+    ${text}  Run Keyword If  ${status}  Get Text  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]  ELSE
     ...  Set Variable  ${EMPTY}
     ${percent}  Run Keyword If  'до ' in '${text}'
     ...  Evaluate  random.randint(80, 100)  random  ELSE
