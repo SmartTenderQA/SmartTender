@@ -584,6 +584,7 @@ Test Precondition
 
 Test Postcondition
   Log Location
+  Get Source
   Run Keyword If Test Failed  Capture Page Screenshot
   Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
@@ -790,8 +791,11 @@ Test Postcondition
 
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
+  Wait Until Keyword Succeeds  20  1
+  ...  Wait Until Page Contains Element
+  ...  xpath=//li[contains(text(), '${bid form}')]
+  Wait Until Element Is Visible  xpath=//li[contains(text(), '${bid form}')]
   Scroll Page To Element XPATH  xpath=//li[contains(text(), '${bid form}')]
-  Wait Until Page Contains Element  xpath=//li[contains(text(), '${bid form}')]
 
 
 Перевірити сторінку окремого лота в мультилоті
