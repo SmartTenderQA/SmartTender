@@ -10,17 +10,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
-    Додати першого користувача  prod_owner      tender_owner
-    Додати користувача          prod_provider1  provider1
-    Додати користувача          prod_provider2  provider2
-    Додати користувача          prod_viewer     viewer
-
+    Run Keyword  Підготувати користувачів для ${site}
 
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	prod_below.Створити тендер
-    prod_below.Отримати дані тендера та зберегти їх у файл
+	below.Створити тендер
+    below.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати дані з cdb
@@ -49,7 +45,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -70,7 +66,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -86,32 +82,49 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  10m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
+	provider3
 
 
 
 *** Keywords ***
+Підготувати користувачів для prod
+    Додати першого користувача  prod_owner      tender_owner
+    Додати користувача          prod_provider1  provider1
+    Додати користувача          prod_provider2  provider2
+    Додати користувача          prod_provider   provider3
+    Додати користувача          prod_viewer     viewer
+
+
+Підготувати Користувачів Для Test
+    Додати першого користувача  Bened           tender_owner
+    Додати користувача          user1           provider1
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
+    Додати користувача          test_viewer     viewer
+
+
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
@@ -145,7 +158,7 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 

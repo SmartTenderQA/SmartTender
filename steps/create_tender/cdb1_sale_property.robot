@@ -25,8 +25,8 @@
 
 	cdb1_sale_property.Заповнити auctionPeriod.startDate
 
-	Зберегти чернетку
-	Оголосити тендер
+	create_tender.Зберегти чернетку
+	actions.Оголосити тендер
 	Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
 

@@ -101,8 +101,7 @@ Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 
 
 Resource    ../steps/create_tender/cdb1_sale_property.robot
-Resource    ../steps/create_tender/prod_below.robot
-Resource    ../steps/create_tender/test_below.robot
+Resource    ../steps/create_tender/below.robot
 Resource    ../steps/create_tender/test_dialog.robot
 Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot

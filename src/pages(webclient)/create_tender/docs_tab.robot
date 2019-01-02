@@ -1,4 +1,9 @@
 *** Keywords ***
+Додати документ до тендара власником (webclient)
+    Перейти на вкладку документи (webclient)
+    Додати документ власником
+
+
 Перейти на вкладку документи (webclient)
     Wait Until Keyword Succeeds  30  2  Click Element  xpath=//*[contains(@id,'TabControl_T4T')]//*[contains(text(),'Документи')]
     Wait Until Page Contains Element  xpath=//*[@data-name="ADDATTACHMENT_L"]  15

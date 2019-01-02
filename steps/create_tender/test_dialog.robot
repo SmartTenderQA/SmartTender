@@ -1,7 +1,7 @@
 *** Keywords ***
 Створити тендер
-	Перейти у розділ (webclient)  Конкурентний діалог(тестові)
-	Натиснути додати(F7)  Додавання. Тендери
+	desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
+	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Конкурентний діалог 1-ий етап
   	test_dialog.Заповнити endDate періоду пропозицій
   	test_dialog.Заповнити amount для tender
@@ -9,7 +9,7 @@
   	test_dialog.Заповнити title для tender
   	test_dialog.Заповнити description для tender
   	test_dialog.Додати предмет в тендер
-    Зберегти чернетку
+    create_tender.Зберегти чернетку
     Оголосити закупівлю
 
 

@@ -49,7 +49,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['endDate']
     \['value']['amount']
@@ -68,7 +68,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['endDate']
     \['value']['amount']
@@ -84,26 +84,26 @@ If skipped create tender
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Дочекатись початку періоду перкваліфікації
+    prucurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Знайти тендер організатором по title  ${data['title']}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
-    Провести прекваліфікацію учасників
+    qualification.Провести прекваліфікацію учасників
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+    prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -120,14 +120,14 @@ If skipped create tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
@@ -161,7 +161,7 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 

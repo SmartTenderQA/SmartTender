@@ -128,6 +128,24 @@ data = {
             ],
         },
     ],
+    "contracts": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ],
     "items": [
         {
             "relatedLot": "",
@@ -283,42 +301,6 @@ locators = {
         "amount": """//*[@data-qa="budget-min-step"]//span[4]""",
         "valueAddedTaxIncluded": ""
     },
-    "awards": [
-        {
-            "status": "",
-            "documents": [
-                {
-                    "hash": "",
-                    "author": "",
-                    "url": "",
-                    "dateModified": "",
-                    "format": "",
-                    "title": """//*[@data-qa="qualification-list"][1]//*[contains(text(),"Протокол")]/ancestor::div[3]//*[@data-qa="file-name"]""",
-                    "id": "",
-                    "documentOf": "",
-                    "datePublished": ""
-                },
-            ],
-        },
-    ],
-    "bids": [
-        {
-            "status": "",
-            "documents": [
-                {
-                    "hash": "",
-                    "author": "",
-                    "url": "",
-                    "dateModified": "",
-                    "format": "",
-                    "title": "",
-                    "id": "",
-                    "documentOf": "",
-                    "datePublished": ""
-                },
-            ],
-        },
-    ],
     "items": [
         {
             "relatedLot": "",

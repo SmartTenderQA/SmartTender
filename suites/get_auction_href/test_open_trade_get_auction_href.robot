@@ -55,7 +55,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['endDate']
     \['value']['amount']
@@ -74,7 +74,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['endDate']
     \['value']['amount']
@@ -88,9 +88,9 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  5m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -107,14 +107,14 @@ If skipped create tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
@@ -148,7 +148,7 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Run Keyword And Ignore Error  Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 

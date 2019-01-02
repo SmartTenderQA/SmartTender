@@ -142,7 +142,7 @@ Test Postcondition
 
 
 Підтвердити адреси електронної пошти
-	Натиснути OkButton
+	webclient_elements.Натиснути OkButton
 
 
 Натиснути "Додати" та змінити дату за необхідністю
