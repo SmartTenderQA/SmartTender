@@ -2,6 +2,7 @@
 Library  		convert_page_values.py
 Library         convert_cdb_values.py
 Resource  		keywords.robot
+Library         procurement_variables.py
 Variables       procurement_variables.py
 
 
@@ -51,7 +52,9 @@ Variables       procurement_variables.py
 
 Отритами дані зі сторінки
 	[Arguments]  ${field}
-	${selector}  Set Variable  	${locators${field}}
+	${selector}  Run Keyword If  ('documents' in """${field}""")
+	...  procurement_variables.get_document_locator  ${field}  ELSE
+	...  Set Variable  ${locators${field}}
 	Wait Until Element Is Visible  ${selector}  10
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}
@@ -72,7 +75,7 @@ Variables       procurement_variables.py
 Додати кваліфікаційний документ
     Натиснути "Завантажити кваліфікаційні документи"
     Дочекатись закінчення загрузки сторінки по елементу  ${circle loading}
-    ${file name}  Додати файл  1
+    ${file name}  Wait Until Keyword Succeeds  20  2  Додати файл  1
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
     keywords.Виконати дії відповідно до тексту повідомлення  ${message}
     Go Back

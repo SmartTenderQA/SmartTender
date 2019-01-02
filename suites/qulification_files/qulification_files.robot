@@ -30,6 +30,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Валідфція введених даних з даними в ЦБД
+    [Tags]  view
     [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
     \['title']
     \['description']
@@ -50,6 +51,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Валідфція даних на сторінці з даними в ЦБД
+    [Tags]  view
     [Template]  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД
     \['title']
     \['description']
@@ -95,7 +97,11 @@ If skipped create tender
     Завантажити сесію для  provider2
     Go to  ${data['tender_href']}
     ${provider file name}  Додати кваліфікаційний документ
-    Set To Dictionary  ${data['bids'][0]['documents'][0]}  title  ${provider file name}
+    ${new dict}  Evaluate  ${data['bids'][0]}.copy()
+    Append to list   ${data['bids']}  ${new dict}
+    ${new dict}  Evaluate  ${data['awards'][0]['documents'][0]}.copy()
+    Append to list   ${data['awards'][0]['documents']}  ${new dict}
+    Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
 Визнати переможцем другого учасника учасника
@@ -103,20 +109,24 @@ If skipped create tender
 	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     Знайти тендер організатором по title  ${data['title']}
     ${positive result file name}  Визначити учасника переможцем else  2
-    ${new list}  Get From List  ${data['awards']}  0
-    Append to list   ${data['awards']}  ${new list}
+    ${new dict}  Evaluate  ${data['awards'][0]}.copy()
+    Append to list   ${data['awards']}  ${new dict}
     Set To Dictionary  ${data['awards'][1]['documents'][0]}  title  ${positive result file name}
 
 
 Перевірити відображення кваліфікаційних файлів організатором
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
+    Зберегти словник у файл  ${data}  data
     Розгорнути всі експандери
-    debug
 
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
 
-
-
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
+    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
 
 
 

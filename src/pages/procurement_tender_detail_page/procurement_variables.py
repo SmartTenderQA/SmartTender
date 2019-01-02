@@ -2,6 +2,7 @@
 #
 # data     - для наполнения в него введенных даных
 # locators - для получения локатора для конкретного значения словаря
+import re
 
 
 data = {
@@ -292,7 +293,7 @@ locators = {
                     "url": "",
                     "dateModified": "",
                     "format": "",
-                    "title": "",
+                    "title": """//*[@data-qa="qualification-list"][1]//*[contains(text(),"Протокол")]/ancestor::div[3]//*[@data-qa="file-name"]""",
                     "id": "",
                     "documentOf": "",
                     "datePublished": ""
@@ -380,3 +381,23 @@ locators = {
         "name_en": ""
     }
 }
+
+
+def get_document_locator(field):
+    if "awards" in field:
+        list = re.search('\[(?P<id>\d)\](?P<map>.+)', field)
+        award_id = int(list.group('id')) + 1
+        result = list.group('map')
+        map = {
+            "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"Протокол")]/ancestor::div[3]//*[@data-qa="file-name"]"""
+        }
+        return map[result].format(award_id)
+    elif "bids" in field:
+        list = re.search('\[(?P<id>\d)\](?P<map>.+)', field)
+        bids_id = int(list.group('id')) + 1
+        result = list.group('map')
+        map = {
+            "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]""",
+            "['documents'][1]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]"""
+        }
+        return map[result].format(bids_id)
