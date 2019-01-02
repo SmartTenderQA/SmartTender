@@ -85,6 +85,7 @@ Postcondition
   ${status}  Run Keyword And Return Status  Should Not Be Empty  ${value}
   ${max}  Run Keyword If  ${status} == ${True}  Get Text  ${max price selector}
   ...  ELSE  Set Variable  10000000
+  ${max}  Evaluate  ${max}-1
   ${amount}  Evaluate  '${max}'.replace(" ", "")
   ${bin}  Evaluate  str(int(float(${amount})))
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${bin}
