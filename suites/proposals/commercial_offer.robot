@@ -38,7 +38,6 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	Wait Until Keyword Succeeds  60  3  Натиснути кнопку подачі пропозиції  ${make proposal link}
 	${location}  Get Location
 	Set To Dictionary  ${data}  tender_url=${location}
-	debug
 	Заповтини поле з ціною
 	Змінити кількість одиниць
 	Заповнити поле Інф. учасника
