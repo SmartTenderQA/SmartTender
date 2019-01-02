@@ -11,7 +11,7 @@
 	[Arguments]  ${selector}  ${text}
 	Click Element  ${selector}
 	Sleep  .5
-	Clear Element Text  ${selector}
+	Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13

@@ -132,7 +132,7 @@ If skipped create tender
 
 
 Перевірити відображення кваліфікаційних файлів організаторами
-    :FOR  ${users}  in  tender_owner  tender_owner2
+    :FOR  ${user}  in  tender_owner  tender_owner2
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
