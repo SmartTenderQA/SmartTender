@@ -14,7 +14,7 @@ ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text
 ${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubmit']
 
 ${delivery_term_field}              xpath=(//label[contains(text(), 'Термін поставки')]/ancestor::tr//input)[1]
-${guaranty_field}                   //label[contains(text(), 'Гарантія(років)')]/ancestor::tr//input
+${guaranty_field}                   xpath=//label[contains(text(), 'Гарантія(років)')]/ancestor::td/following-sibling::td//input
 ${terms_of_payment_field}           xpath=//label[contains(text(), 'Умови оплати')]/../following-sibling::*//textarea
 ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови доставки')]/../following-sibling::*//textarea
 
@@ -38,6 +38,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	Wait Until Keyword Succeeds  60  3  Натиснути кнопку подачі пропозиції  ${make proposal link}
 	${location}  Get Location
 	Set To Dictionary  ${data}  tender_url=${location}
+	debug
 	Заповтини поле з ціною
 	Змінити кількість одиниць
 	Заповнити поле Інф. учасника
@@ -205,7 +206,6 @@ Postcondition
 
 Заповнити поле термін поставки
   ${days}  random_number  1  28
-  Clear Element Text  ${delivery_term_field}
   Input Text  ${delivery_term_field}  ${days}
   Set To Dictionary  ${data}  delivery_term=${days}
 
