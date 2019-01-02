@@ -17,6 +17,7 @@ Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/save_user_session/save_user_session.robot
 Resource    common/search/dgf-registry.robot
+Resource    common/search/dgf_search.robot
 Resource    common/search/new_search.robot
 Resource    common/search/old_search.robot
 Resource    common/search/small_privatization_search.robot
