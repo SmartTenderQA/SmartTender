@@ -36,6 +36,7 @@
 	#${n}  random_number  1  ${count}
 	${n}  random_number  1  15
 	${unit_name}  Вибрати довільну одиницю виміру Click  (${row})[${n}]
+	Дочекатись закінчення загрузки сторінки(webclient)
 	[Return]  ${unit_name}
 
 
