@@ -41,9 +41,10 @@ Fill password
 #####################################################################
 Перевірити успішність авторизації
   Run Keyword If
-  ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора
-  ...  ELSE IF  "provider" in "${role}" or 'ssp_tender_owner' == '${role}'  Перевірити успішність авторизації учасника
-  ...  ELSE IF  "viewer" == "${role}"  No Operation
+  ...  "viewer" == "${role}"  No Operation  ELSE IF
+  ...  ${fast_login} == ${True}  No Operation  ELSE IF
+  ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора  ELSE IF
+  ...  "provider" in "${role}" or 'ssp_tender_owner' == '${role}'  Перевірити успішність авторизації учасника
 
 
 Перевірити успішність авторизації учасника
