@@ -41,7 +41,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    #\['items'][0]['unit']
+    \['items'][0]['unit']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -62,7 +62,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    #\['items'][0]['unit']
+    \['items'][0]['unit']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -119,7 +119,7 @@ If skipped create tender
     Отримати дані з cdb та зберегти їх у файл
     Зберегти словник у файл  ${data}  data
     Розгорнути всі експандери
-
+    debug
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
