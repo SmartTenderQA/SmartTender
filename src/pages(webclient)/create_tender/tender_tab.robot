@@ -205,14 +205,26 @@ Resource        keywords.robot
 Заповнити "Строк поставки з"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
-    Очистити поле  ${selector}
-    Заповнити текстове поле  ${selector}  ${value}
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    ...  Заповнити "Строк поставки з"  ${value}
 
 
 Заповнити "Строк поставки по"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="DDATETO"]//input
-    Очистити поле  ${selector}
-    Заповнити текстове поле  ${selector}  ${value}
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    ...  Заповнити "Строк поставки по"  ${value}
 
 
