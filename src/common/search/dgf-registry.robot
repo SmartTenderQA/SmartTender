@@ -12,7 +12,9 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	[Arguments]  ${type}
 	${type locator}  Set Variable  //li[contains(text(),'${type}')]
 	Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
-	Wait Until Page Contains Element  ${type locator}
+	${status}  Run Keyword And Return Status
+	...  Wait Until Page Contains Element  ${type locator}
+	Run Keyword If  ${status}  Вибрати тип активу  ${type}
 	Wait Until Element Is Visible  ${type locator}
 	Sleep  1
 	Click Element  ${type locator}

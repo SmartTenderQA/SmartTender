@@ -179,16 +179,13 @@ Fill ESCO
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
     input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
-    ${status}  ${text}  Run Keyword And Ignore Error  Get Text  xpath=(${block}[${number_of_lot}])//*[contains(@class, 'field-validation-error')]
-    ${percent}  Run Keyword If  '${status}' == 'PASS'  Evaluate  random.randint(0, ${text[-2:]})  random
-    Run Keyword If  '${status}' == 'PASS'
-    ...  input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
-    ${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${error selector}  3
-    Run Keyword If  ${status}  Змінити значення фіксованого відсотку
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${error selector}  3
+    Run Keyword If  ${status}  Змінити значення фіксованого відсотку  ${number_of_lot}
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
 Змінити значення фіксованого відсотку
+    [Arguments]  ${number_of_lot}
     ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
     ${value}  Get Text   ${error selector}
     ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
