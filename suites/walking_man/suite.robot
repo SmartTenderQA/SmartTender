@@ -395,7 +395,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
-	[Tags]  sales
+	[Tags]  sales  -test
 	[Setup]  Run Keywords
 	...  Test Precondition  								AND
 	...  Натиснути На торговельний майданчик  				AND
@@ -412,8 +412,26 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Голландський аукціон
 
 
+Перевірити список доступних торгів для Аукціони на продаж активів банків
+	[Tags]  sales  -prod
+	[Setup]  Run Keywords
+	...  Test Precondition  									AND
+	...  Натиснути На торговельний майданчик  					AND
+	...  old_search.Активувати вкладку ФГВ  					AND
+	...  Перевірити назву вкладки new ФГВ  						AND
+	...  Перевірити заголовок вкладки new ФГВ  Аукціони ФГВФО	AND
+	...  Перевірити заголовок вкладки new ФГВ  Активи ФГВФО		AND
+	...  new_search.Розгорнути фільтр  Вид торгів				AND
+  	...  Sleep  3
+	[Template]  Перевірити наявність торгів ФГВ
+	Продаж права вимоги за кредитними договорами
+	Продаж майна банків, що ліквідуються
+	Голландський аукціон
+	Голландский аукцион. Продажа имущества ликвидируемых банков
+
+
 Перевірити аукціони
-	[Tags]  sales
+	[Tags]  sales  -test
 	[Setup]  No Operation
 	[Template]  Перевірити аукціони за назвою
 	Продаж права вимоги за кредитними договорами
@@ -421,11 +439,24 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Голландський аукціон
 
 
+Перевірити аукціони
+	[Tags]  sales  -prod
+	[Setup]  No Operation
+	[Template]  Перевірити аукціони за назвою new
+	Продаж права вимоги за кредитними договорами
+	Продаж майна банків, що ліквідуються
+	Голландський аукціон
+	Голландский аукцион. Продажа имущества ликвидируемых банков
+
+
 Перевірити реєстр активів Майно
 	[Tags]  sales
 	Натиснути На торговельний майданчик
-	Активувати вкладку ФГВ
-	Активувати вкладку ФГВ за типом  Реєстр активів
+	old_search.Активувати вкладку ФГВ
+	Run Keyword If  '${site}' == 'prod'
+	...  old_search.Активувати вкладку ФГВ за типом  Реєстр активів
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати вкладку  Активи ФГВФО
 	Перевірити наявність активів
 	dgf-registry.Розгорнути детальний пошук
 	dgf-registry.Вибрати тип активу  Майно
@@ -636,6 +667,15 @@ Test Postcondition
 	Перевірити тип процедури для аукціонів  ${name}
 
 
+Перевірити аукціони за назвою new
+	[Arguments]  ${name}
+	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	dgf_search.Розгорнути фільтр  Вид торгів
+	dgf_search.Вибрати вид торгів  ${name}
+	dgf_search.Перейти по результату пошуку за номером  last()
+	Перевірити тип процедури для аукціонів  ${name}
+
+
 Перевірити наявність новин
 	${count}  novyny.Порахувати кількість новин
 	Run Keyword if  '${count}' == '0'  Fail  Де новини?
@@ -800,6 +840,11 @@ Test Postcondition
   Scroll Page To Element XPATH  xpath=//li[contains(text(), '${bid form}')]
 
 
+Перевірити наявність торгів ФГВ
+	[Arguments]  ${bid form}
+	Page Should Contain Element  //*[@class='ivu-checkbox-group' and contains(.,'Конкурентні')]//label[contains(text(),'${bid form}')]
+
+
 Перевірити сторінку окремого лота в мультилоті
   Go Back
   ${status}  Run Keyword And Ignore Error  Перейти по результату пошуку  ${last found multiple element}
@@ -935,6 +980,15 @@ create_e-mail
 	Should Be Equal  ${is}  ${text}
 
 
+Перевірити заголовок вкладки new ФГВ
+	[Arguments]  ${text}
+	${i}  Run Keyword If
+	...  'Аукціони ФГВФО' == '${text}'  Set Variable  1  ELSE IF
+	...  'Активи ФГВФО' == '${text}'  Set Variable  2
+	${is}  Get Text  (//h3)[${i}]
+	Should Be Equal  ${is}  ${text}
+
+
 Перевірити назву вкладки Комерційні торги
 	${should}  Set variable  Комерційні торги (тендери SmartTender)
 	${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(1) p
@@ -950,6 +1004,12 @@ create_e-mail
 Перевірити назву вкладки ФГВ
 	${should}  Set variable  Аукціони на продаж активів банків
 	${is}  Get Text  ${torgy top/bottom tab}(1) ${torgy count tab}(3)
+	Should Be Equal  ${is}  ${should}
+
+
+Перевірити назву вкладки new ФГВ
+	${should}  Set variable  Аукціони на продаж активів банків
+	${is}  Get Text  //*[@itemprop='name']
 	Should Be Equal  ${is}  ${should}
 
 
