@@ -24,6 +24,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     test_below.Отримати дані тендера та зберегти їх у файл
 
 
+Отримати дані з cdb
+    [Tags]  create_tender
+    Завантажити сесію для  provider1
+    Go to  ${data['tender_href']}
+    Отримати дані з cdb та зберегти їх у файл
+
+
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
@@ -31,10 +38,46 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Перевірка відображення даних створеного тендера на сторінці
+Валідфція введених даних з даними в ЦБД
     [Tags]  view
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Валідація введених даних з ЦБД та на сайті  provider1
+    [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
+    \['title']
+    \['description']
+    \['tenderID']
+    \['items'][0]['description']
+    \['items'][0]['deliveryAddress']['locality']
+    \['items'][0]['deliveryAddress']['streetAddress']
+    \['items'][0]['deliveryAddress']['postalCode']
+    \['items'][0]['classification']['id']
+    \['items'][0]['classification']['description']
+    \['items'][0]['unit']
+    \['items'][0]['quantity']
+    \['tenderPeriod']['startDate']
+    \['tenderPeriod']['endDate']
+    \['enquiryPeriod']['endDate']
+    \['value']['amount']
+    \['minimalStep']['amount']
+
+
+Валідфція даних на сторінці з даними в ЦБД
+    [Tags]  view
+    [Template]  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД
+    \['title']
+    \['description']
+    \['tenderID']
+    \['items'][0]['description']
+    \['items'][0]['deliveryAddress']['locality']
+    \['items'][0]['deliveryAddress']['streetAddress']
+    \['items'][0]['deliveryAddress']['postalCode']
+    \['items'][0]['classification']['id']
+    \['items'][0]['classification']['description']
+    \['items'][0]['unit']
+    \['items'][0]['quantity']
+    \['tenderPeriod']['startDate']
+    \['tenderPeriod']['endDate']
+    \['enquiryPeriod']['endDate']
+    \['value']['amount']
+    \['minimalStep']['amount']
 
 
 Подати заявку на участь в тендері двома учасниками
@@ -58,47 +101,6 @@ If skipped create tender
 
 
 *** Keywords ***
-Валідація введених даних з ЦБД та на сайті
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
-    Go to  ${data['tender_href']}
-    Отримати дані з cdb та зберегти їх у файл
-
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
-    #procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['startDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['value']['amount']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['minimalStep']['amount']
-
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
-    #procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['startDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['value']['amount']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
-
-
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']

@@ -30,6 +30,7 @@ Variables       procurement_variables.py
 Порівняти введені дані з даними в ЦБД
 	[Arguments]  ${field}
 	${value entered}  Set Variable  ${data${field}}
+	${value entered}  convert_cdb_values.convert_result  ${value entered}
     ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value entered}  ${value cdb}
  	Should Be True  ${status}  Oops! Помилка з даними для ${field}
@@ -38,6 +39,7 @@ Variables       procurement_variables.py
 Порівняти відображені дані з даними в ЦБД
     [Arguments]  ${field}
     ${value on page}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
+    ${value on page}  convert_cdb_values.convert_result  ${value on page}
     ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value on page}  ${value cdb}
  	Should Be True  ${status}  Oops! Помилка з даними для ${field}

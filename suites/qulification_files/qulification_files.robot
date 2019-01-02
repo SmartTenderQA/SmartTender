@@ -29,6 +29,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Отримати дані з cdb та зберегти їх у файл
 
 
+If skipped create tender
+	[Tags]  get_tender
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
+	${data}  conver json to dict  ${json}
+	Set Global Variable  ${data}
+
+
 Валідфція введених даних з даними в ЦБД
     [Tags]  view
     [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
@@ -71,13 +78,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['minimalStep']['amount']
 
 
-If skipped create tender
-	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
-	${data}  conver json to dict  ${json}
-	Set Global Variable  ${data}
-
-
 Подати заявку на участь в тендері учасниками
 	:FOR  ${i}  IN  1  2  3
 	\  Прийняти участь у тендері учасником  provider${i}
@@ -100,7 +100,7 @@ If skipped create tender
     ${new dict}  Evaluate  ${data['bids'][0]}.copy()
     Append to list   ${data['bids']}  ${new dict}
     ${new dict}  Evaluate  ${data['bids'][0]['documents'][0]}.copy()
-    Append to list   ${data['bids'][0]['documents']}  ${new dict}
+    Append to list   ${data['bids'][1]['documents']}  ${new dict}
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
