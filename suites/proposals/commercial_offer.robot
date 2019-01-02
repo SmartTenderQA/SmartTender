@@ -205,6 +205,7 @@ Postcondition
 
 Заповнити поле термін поставки
   ${days}  random_number  1  28
+  Clear Element Text  ${delivery_term_field}
   Input Text  ${delivery_term_field}  ${days}
   Set To Dictionary  ${data}  delivery_term=${days}
 

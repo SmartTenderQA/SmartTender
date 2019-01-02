@@ -109,7 +109,9 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
   Set Test Variable  ${page}
   Run Keyword If  ${page} == 6  Set Tags  non-critical
   Should Be True  ${page} != 6
-  Run Keyword If  '${page}' != '1'  Click Element  //a[@class="pager-button" and text()=${page}]
+  Run Keyword If  '${page}' != '1'  Run Keywords
+  ...  Scroll Page To Element XPATH  //a[@class="pager-button" and text()=${page}]  AND
+  ...  Click Element  //a[@class="pager-button" and text()=${page}]
   Run Keyword And Ignore Error  Видалити кнопку "Замовити звонок"
 
 
