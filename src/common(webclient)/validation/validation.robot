@@ -31,7 +31,7 @@
 	${status}  Run Keyword And Return Status
 	...  Wait Until Page Contains Element  //*[contains(@class, "headerText") and contains(text(), "Умова відбору")]
 	Run Keyword If  '${status}' == 'True'  Run Keywords
-	...  Click Element  //*[@data-name="clearFilter"]  AND
+	...  Click Element  //*[@data-name="clearFilter"]|//*[@data-name="CLEARFILTERKEY"]  AND
 	...  Дочекатись закінчення загрузки сторінки(webclient)
 
 
