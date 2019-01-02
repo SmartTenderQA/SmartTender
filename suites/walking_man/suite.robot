@@ -458,7 +458,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  small_privatization_search.Активувати вкладку  Активи ФГВФО
 	Перевірити наявність активів
 	dgf-registry.Розгорнути детальний пошук
-	dgf-registry.Вибрати тип активу  Майно
+	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Майно
 	dgf-registry.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для активу  Майно
 
@@ -467,7 +467,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	[Setup]  Go To  ${start_page}/dgf-registry/
 	dgf-registry.Розгорнути детальний пошук
-	dgf-registry.Вибрати тип активу  Права вимоги
+	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Права вимоги
 	dgf-registry.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для активу  Права вимоги
 
