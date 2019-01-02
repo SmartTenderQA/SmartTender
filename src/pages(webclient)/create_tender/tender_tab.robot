@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
+Resource        create_tender_keywords.robot
 
 
 *** Keywords ***

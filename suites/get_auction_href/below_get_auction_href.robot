@@ -10,18 +10,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
-    Додати першого користувача  prod_owner      tender_owner
-    Додати користувача          prod_provider1  provider1
-    Додати користувача          prod_provider2  provider2
-    Додати користувача          prod_provider   provider3
-    Додати користувача          prod_viewer     viewer
-
+    Run Keyword  Підготувати користувачів для ${site}
 
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	prod_below.Створити тендер
-    prod_below.Отримати дані тендера та зберегти їх у файл
+	below.Створити тендер
+    below.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати дані з cdb
@@ -101,6 +96,22 @@ If skipped create tender
 
 
 *** Keywords ***
+Підготувати користувачів для prod
+    Додати першого користувача  prod_owner      tender_owner
+    Додати користувача          prod_provider1  provider1
+    Додати користувача          prod_provider2  provider2
+    Додати користувача          prod_provider   provider3
+    Додати користувача          prod_viewer     viewer
+
+
+Підготувати Користувачів Для Test
+    Додати першого користувача  Bened           tender_owner
+    Додати користувача          user1           provider1
+    Додати користувача          user2           provider2
+    Додати користувача          user3           provider3
+    Додати користувача          test_viewer     viewer
+
+
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
