@@ -50,7 +50,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -71,7 +71,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -89,7 +89,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Дочекатись закінчення прийому пропозицій
 	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  10m  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -147,7 +147,7 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']}
+	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
 

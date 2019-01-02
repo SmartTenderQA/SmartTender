@@ -197,9 +197,7 @@ Resource        keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
     Заповнити текстове поле  ${selector}  ${value}
-    Sleep  2
-    ${city}  Get Element Attribute  ${selector}  value
-    [Return]  ${city}
+    [Return]  ${value}
 
 
 Заповнити "Строк поставки з"

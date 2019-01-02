@@ -27,6 +27,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
+    Дочекатися статусу тендера  Прийом пропозицій
 
 
 If skipped create tender
@@ -48,7 +49,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -69,7 +70,7 @@ If skipped create tender
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -168,7 +169,7 @@ If skipped create tender
 
 Отримати дані з cdb та зберегти їх у файл
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
-    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    ${cdb}  Wait Until Keyword Succeeds  2m  5  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
     Зберегти словник у файл  ${cdb}  cdb
 
