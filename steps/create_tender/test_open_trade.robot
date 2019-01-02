@@ -1,8 +1,8 @@
 *** Keywords ***
 Створити тендер
     [Arguments]  ${type}
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-	Натиснути додати(F7)  Додавання. Тендери
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
@@ -10,8 +10,8 @@
   	test_open_trade.Заповнити title для tender
   	test_open_trade.Заповнити description для tender
   	test_open_trade.Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
-    Зберегти чернетку
+    docs_tab.Додати документ до тендара власником (webclient)
+    create_tender.Зберегти чернетку
     Оголосити закупівлю
 
 

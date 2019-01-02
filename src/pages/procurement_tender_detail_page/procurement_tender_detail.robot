@@ -1,7 +1,7 @@
 *** Settings ***
 Library  		convert_page_values.py
 Library         convert_cdb_values.py
-Resource  		keywords.robot
+Resource  		prucurement_page_keywords.robot
 Library         procurement_variables.py
 Variables       procurement_variables.py
 

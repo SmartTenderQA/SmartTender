@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
+Resource        qualification_keywords.robot
 
 
 *** Variables ***
@@ -51,3 +51,10 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     ...  Sleep  30                AND
     ...  Отримати кількість можливих переможців
     [Return]  ${count}
+
+
+Підтвердити організатором формування протоколу розгляду пропозицій
+    Вибрати тендер за номером (webclient)  1
+    Натиснути кнопку Перечитать (Shift+F4)
+    Натиснути надіслати вперед(Alt+Right)
+    Закрити валідаційне вікно (Так/Ні)  протокол  Так

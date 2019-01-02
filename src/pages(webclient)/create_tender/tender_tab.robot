@@ -92,6 +92,7 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="MINSTEP"]//input  value
+    ${amount}  Set Variable  ${amount.replace(" ", "")}
     [Return]  ${amount}
 
 
@@ -100,6 +101,7 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="LOT_MINSTEP"]//input  value
+    ${amount}  Set Variable  ${amount.replace(" ", "")}
     [Return]  ${amount}
 
 

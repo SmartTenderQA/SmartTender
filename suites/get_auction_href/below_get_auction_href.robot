@@ -13,6 +13,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Додати першого користувача  prod_owner      tender_owner
     Додати користувача          prod_provider1  provider1
     Додати користувача          prod_provider2  provider2
+    Додати користувача          prod_provider   provider3
     Додати користувача          prod_viewer     viewer
 
 
@@ -86,8 +87,8 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Аукціон
+	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
@@ -95,6 +96,7 @@ If skipped create tender
 	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
 	viewer
 	tender_owner
+	provider3
 
 
 
@@ -104,14 +106,14 @@ If skipped create tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію учасником
 
