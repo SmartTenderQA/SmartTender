@@ -26,7 +26,7 @@
     Press Key  ${selector}  \\13
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
+    ${status}  Run Keyword And Return Status  Should Contain Any  ${value}  ${get}
     Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
     ...  Заповнити дати РУ  ${selector}  ${value}
 
