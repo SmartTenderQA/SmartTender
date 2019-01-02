@@ -99,8 +99,8 @@ If skipped create tender
     ${provider file name}  Додати кваліфікаційний документ
     ${new dict}  Evaluate  ${data['bids'][0]}.copy()
     Append to list   ${data['bids']}  ${new dict}
-    ${new dict}  Evaluate  ${data['awards'][0]['documents'][0]}.copy()
-    Append to list   ${data['awards'][0]['documents']}  ${new dict}
+    ${new dict}  Evaluate  ${data['bids'][0]['documents'][0]}.copy()
+    Append to list   ${data['bids'][0]['documents']}  ${new dict}
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
@@ -114,19 +114,36 @@ If skipped create tender
     Set To Dictionary  ${data['awards'][1]['documents'][0]}  title  ${positive result file name}
 
 
-Перевірити відображення кваліфікаційних файлів організатором
+Организатор Прикріпити договір
+    Вибрати переможця на номером else  2
+    Натиснути кнопку "Прикріпити договір"
+    Заповнити номер договору
+    ${dogovir name}  Вкласти договірній документ
+    Натиснути OkButton
+    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Set To Dictionary  ${data['contracts'][0]['documents'][0]}  title  ${dogovir name}
+
+
+Підготуватися до перевірки відображення документів на сторінці
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     Зберегти словник у файл  ${data}  data
-    Розгорнути всі експандери
-    debug
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
 
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
+
+Перевірити відображення кваліфікаційних файлів організаторами
+    :FOR  ${users}  in  tender_owner  tender_owner2
+    \  Завантажити сесію для  ${user}
+    \  Go to  ${data['tender_href']}
+    \  procurement_tender_detail.Розгорнути всі експандери
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']}
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']}
+
 
 
 
@@ -149,16 +166,32 @@ If skipped create tender
     Go Back
 
 
-Розгорнути всі експандери
-    ${selector down}  Set Variable  //*[contains(@class,"expander")]/i[contains(@class,"down")]
-    ${count}  Get Element Count  ${selector down}
-    Run Keyword If  ${count} != 0  Run Keywords
-    ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
-    ...  Розгорнути всі експандери
-
-
 Отримати дані з cdb та зберегти їх у файл
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
     Зберегти словник у файл  ${cdb}  cdb
+
+
+Вибрати переможця на номером else
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (${winners2})[${i}]
+    Click Element  ${selector}
+
+
+Заповнити номер договору
+    ${selector}  Set Variable  //*[text()="Номер договору"]/following-sibling::table[1]//input
+    ${n}  random_number  1000  10000
+    Input Text  ${selector}  ${n}
+
+
+Вкласти договірній документ
+    ${add button}  Set Variable  //span[contains(text(), "Обзор")]
+    Click Element  ${add button}
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Wait Until Page Contains Element  xpath=//*[@type='file'][1]
+    ${name}  Додати файл  1
+    Click Element  xpath=(//span[.='ОК'])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  ${name}
+    [Return]  ${name}

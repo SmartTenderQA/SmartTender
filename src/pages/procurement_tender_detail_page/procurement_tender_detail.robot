@@ -80,3 +80,11 @@ Variables       procurement_variables.py
     keywords.Виконати дії відповідно до тексту повідомлення  ${message}
     Go Back
     [Return]  ${file name}
+
+
+Розгорнути всі експандери
+    ${selector down}  Set Variable  //*[contains(@class,"expander")]/i[contains(@class,"down")]
+    ${count}  Get Element Count  ${selector down}
+    Run Keyword If  ${count} != 0  Run Keywords
+    ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
+    ...  Розгорнути всі експандери

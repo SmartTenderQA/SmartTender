@@ -385,19 +385,27 @@ locators = {
 
 def get_document_locator(field):
     if "awards" in field:
-        list = re.search('\[(?P<id>\d)\](?P<map>.+)', field)
+        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
         award_id = int(list.group('id')) + 1
-        result = list.group('map')
+        result = list.group('path')
         map = {
             "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"Протокол")]/ancestor::div[3]//*[@data-qa="file-name"]"""
         }
         return map[result].format(award_id)
     elif "bids" in field:
-        list = re.search('\[(?P<id>\d)\](?P<map>.+)', field)
+        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
         bids_id = int(list.group('id')) + 1
-        result = list.group('map')
+        result = list.group('path')
         map = {
             "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]""",
             "['documents'][1]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]"""
         }
         return map[result].format(bids_id)
+    elif "contracts" in field:
+        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
+        contracts_id = int(list.group('id')) + 1
+        result = list.group('path')
+        map = {
+            "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"]//*[contains(text(),"Договір")]/ancestor::div[3]//*[@data-qa="file-name"]"""
+        }
+        return map[result].format(contracts_id)
