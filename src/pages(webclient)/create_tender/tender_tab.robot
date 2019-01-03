@@ -198,8 +198,13 @@ Resource        create_tender_keywords.robot
 Заповнити "Місто"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    Заповнити текстове поле  ${selector}  ${value}
-    [Return]  ${value}
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Contain Any  ${get}  ${value}
+    Run Keyword If  '${status}' == 'False'  Заповнити "Місто"  ${value}
 
 
 Заповнити "Строк поставки з"
