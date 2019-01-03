@@ -830,7 +830,7 @@ Test Postcondition
 
 Перевірити наявність тексту в випадаючому списку
   [Arguments]  ${bid form}
-  Wait Until Keyword Succeeds  20  1
+  Wait Until Keyword Succeeds  120  1
   ...  Wait Until Page Contains Element
   ...  xpath=//li[contains(text(), '${bid form}')]
   Wait Until Keyword Succeeds  20  1
