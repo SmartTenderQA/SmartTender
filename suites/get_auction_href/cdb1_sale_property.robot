@@ -6,7 +6,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender -v hub:None -v type:property suites/get_auction_href/cdb1_sale_property.robot
 *** Variables ***
 &{type_dict}
 ...  								property=Продаж майна банків, що ліквідуються
@@ -78,9 +78,8 @@ If skipped create tender
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
-    \  Натиснути кнопку "Перегляд аукціону"
-	\  ${auction_href}  Отримати URL на перегляд
-	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
 *** Keywords ***
@@ -105,9 +104,8 @@ If skipped create tender
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
 	Reload Page
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
-	${auction_href}  			Отримати URL на перегляд
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
 

@@ -365,7 +365,7 @@ locators = {
 }
 
 
-def get_document_locator(field):
+def get_locator(field):
     if "awards" in field:
         list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
         award_id = int(list.group('id')) + 1

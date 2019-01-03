@@ -1,43 +1,31 @@
 *** Settings ***
-Resource  		keywords.robot
+Resource                                   get_auction_href_keywords.robot
+
+
+*** Variables ***
+${go to auction btn}                       //*[@data-qa="button-poptip-participate-view"]
+${view auction btn}                        //*[@data-qa="button-poptip-view"]
+${participate in auction link}             //*[@data-qa="link-participate"]
+${view auction link}                       //*[@data-qa="link-view"]
 
 
 *** Keywords ***
-Натиснути кнопку "До аукціону"
-	${selector}  Set Variable  //*[@data-qa="button-poptip-participate-view"]
-	Wait Until Element Is Visible  ${selector}  10
-	Scroll Page To Element XPATH   ${selector}
-	Click Element  ${selector}
-	Дочекатись отримання посилань на аукціон
+Отримати посилання на участь та прегляд аукціону для учасника
+	Element Should Not Be Visible  ${view auction btn}   Ой! Що тут робить кнопка "Перегляд аукціону"
+	Wait Until Element Is Visible  ${go to auction btn}  10
+	Scroll Page To Element XPATH   ${go to auction btn}
+	Click Element                  ${go to auction btn}
+	get_auction_href_keywords.Дочекатись формування посилань на аукціон
+	${auction_participate_href}    get_auction_href_keywords.Отримати URL для участі в аукціоні
+	${auction_href}                get_auction_href_keywords.Отримати URL на перегляд
+	[Return]                       ${auction_participate_href}  ${auction_href}
 
 
-Натиснути кнопку "Перегляд аукціону"
-	${selector}  Set Variable  //*[@data-qa="button-poptip-view"]
-	Wait Until Element Is Visible  ${selector}  10
-	Scroll Page To Element XPATH   ${selector}
-	Click Element  ${selector}
-	Дочекатись отримання посилань на аукціон
-
-
-Отримати URL для участі в аукціоні
-	${selector}  Set Variable  //*[@data-qa="link-participate"]
-	${auction_href}  Get Element Attribute  ${selector}  href
-	${status}  Run Keyword And Return Status  Page Should Contain Element  //*[@data-qa="link-participate" and @disabled="disabled"]
-    Run Keyword If  ${status}  Fail  Кнопка взяти участь в аукціоні не активна
-	Run Keyword If  '${auction_href}' == 'None'  Отримати URL для участі в аукціоні
-	[Return]  ${auction_href}
-
-
-Отримати URL на перегляд
-	${selector}  Set Variable  //*[@data-qa="link-view"]
-	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
-	Wait Until Page Does Not Contain Element  ${auction loading}  30
-	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
-	Run Keyword If  '${auction_href}' == 'None'  Отримати URL на перегляд
-	[Return]  ${auction_href}
-
-
-Дочекатись отримання посилань на аукціон
-	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
-	Wait Until Page Does Not Contain Element  ${auction loading}  30
-	Sleep  1
+Отримати посилання на прегляд аукціону не учасником
+    Element Should Not Be Visible  ${go to auction btn}  Ой! Що тут робить кнопка "До аукціону"
+	Wait Until Element Is Visible  ${view auction btn}   10
+	Scroll Page To Element XPATH   ${view auction btn}
+	Click Element                  ${view auction btn}
+	get_auction_href_keywords.Дочекатись формування посилань на аукціон
+    ${auction_href}                get_auction_href_keywords.Отримати URL на перегляд
+    [Return]                       ${auction_href}
