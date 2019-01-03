@@ -23,6 +23,7 @@
 Заповнити endDate періоду обговорення
     ${date}  get_time_now_with_deviation  5  minutes
     ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Обговорення закупівлі до"  ${date}
     Set To Dictionary  ${data['enquiryPeriod']}  endDate  ${date}
 
@@ -30,6 +31,7 @@
 Заповнити startDate періоду пропозицій
     ${date}  get_time_now_with_deviation  6  minutes
     ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Прийом пропозицій з"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  startDate  ${date}
 
@@ -37,6 +39,7 @@
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
     ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
