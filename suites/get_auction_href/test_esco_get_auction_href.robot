@@ -25,6 +25,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     test_esco.Отримати дані тендера та зберегти їх у файл
 
 
+Отримати дані з cdb
+    [Tags]  create_tender
+    Завантажити сесію для  provider1
+    Go to  ${data['tender_href']}
+    Отримати дані з cdb та зберегти їх у файл
+
+
 If skipped create tender
 	[Tags]  get_tender
 	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
@@ -32,10 +39,31 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Перевірка відображення даних створеного тендера на сторінці
+Валідфція введених даних з даними в ЦБД
     [Tags]  view
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Валідація введених даних з ЦБД та на сайті  provider1
+    [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
+    \['title']
+    \['description']
+    \['tenderID']
+    \['items'][0]['description']
+    \['items'][0]['deliveryAddress']['locality']
+    \['items'][0]['deliveryAddress']['streetAddress']
+    \['items'][0]['deliveryAddress']['postalCode']
+    \['tenderPeriod']['endDate']
+
+
+Валідфція даних на сторінці з даними в ЦБД
+    [Tags]  view
+    [Template]  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД
+    \['title']
+    \['description']
+    \['tenderID']
+    \['items'][0]['description']
+    \['items'][0]['deliveryAddress']['locality']
+    \['items'][0]['deliveryAddress']['streetAddress']
+    \['items'][0]['deliveryAddress']['postalCode']
+    \['tenderPeriod']['endDate']
+
 
 
 Подати заявку на участь в тендері трьома учасниками на 1-му етапі
@@ -47,27 +75,27 @@ If skipped create tender
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Дочекатись початку періоду перкваліфікації
+    prucurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
-    Знайти тендер організатором по title  ${data['title']}
+	desktop.Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
+    main_page.Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
-    Провести прекваліфікацію учасників
-    Підтвердити організатором формування протоколу розгляду пропозицій
+    qualification.Провести прекваліфікацію учасників
+    qualification.Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  180  3  Перевірити отримання ссилки на участь в аукціоні  provider1
+    prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
 
 
 Неможливість отримати поcилання на участь в аукціоні
@@ -79,44 +107,19 @@ If skipped create tender
 
 
 *** Keywords ***
-Валідація введених даних з ЦБД та на сайті
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
-    Go to  ${data['tender_href']}
-    Отримати дані з cdb та зберегти їх у файл
-
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-
-
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
-    Дочекатися статусу тендера  Прийом пропозицій
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${role}' == 'provider1'  Sleep  3m
     Подати пропозицію esco учасником
 
@@ -145,8 +148,8 @@ Fill ESCO
 Відкрити браузер під роллю організатора та знайти потрібний тендер
     Завантажити сесію для  tender_owner
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
-    Знайти тендер організатором по title  ${data['title']}
+	desktop.Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
+    main_page.Знайти тендер організатором по title  ${data['title']}
 
 
 Перевірити отримання ссилки на участь в аукціоні

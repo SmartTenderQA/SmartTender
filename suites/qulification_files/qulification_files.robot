@@ -27,6 +27,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
+    prucurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
+
+
+If skipped create tender
+	[Tags]  get_tender
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
+	${data}  conver json to dict  ${json}
+	Set Global Variable  ${data}
 
 
 Валідфція введених даних з даними в ЦБД
@@ -41,7 +49,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -62,7 +70,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['items'][0]['deliveryAddress']['postalCode']
     \['items'][0]['classification']['id']
     \['items'][0]['classification']['description']
-    \['items'][0]['unit']
+    \['items'][0]['unit']['name']
     \['items'][0]['quantity']
     \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
@@ -71,24 +79,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \['minimalStep']['amount']
 
 
-If skipped create tender
-	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
-	${data}  conver json to dict  ${json}
-	Set Global Variable  ${data}
-
-
 Подати заявку на участь в тендері учасниками
 	:FOR  ${i}  IN  1  2  3
 	\  Прийняти участь у тендері учасником  provider${i}
-	Дочекатись закінчення прийому пропозицій
-	Дочекатися статусу тендера  Кваліфікація
+	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	prucurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
 Відхилити організатором пропозицію першого учасника
     Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Знайти тендер організатором по title  ${data['title']}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
     ${negative result file name}  Не визнати учасника переможцем  1
     Set To Dictionary  ${data['awards'][0]['documents'][0]}  title  ${negative result file name}
 
@@ -100,14 +101,14 @@ If skipped create tender
     ${new dict}  Evaluate  ${data['bids'][0]}.copy()
     Append to list   ${data['bids']}  ${new dict}
     ${new dict}  Evaluate  ${data['bids'][0]['documents'][0]}.copy()
-    Append to list   ${data['bids'][0]['documents']}  ${new dict}
+    Append to list   ${data['bids'][1]['documents']}  ${new dict}
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
 Визнати переможцем другого учасника учасника
     Завантажити сесію для  tender_owner
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    Знайти тендер організатором по title  ${data['title']}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
     ${positive result file name}  Визначити учасника переможцем else  2
     ${new dict}  Evaluate  ${data['awards'][0]}.copy()
     Append to list   ${data['awards']}  ${new dict}
@@ -116,11 +117,11 @@ If skipped create tender
 
 Организатор Прикріпити договір
     Вибрати переможця на номером else  2
-    Натиснути кнопку "Прикріпити договір"
+    webclient_elements.Натиснути кнопку "Прикріпити договір"
     Заповнити номер договору
     ${dogovir name}  Вкласти договірній документ
-    Натиснути OkButton
-    Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    webclient_elements.Натиснути OkButton
+    validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
     Set To Dictionary  ${data['contracts'][0]['documents'][0]}  title  ${dogovir name}
 
 
@@ -131,18 +132,18 @@ If skipped create tender
 
 
 Перевірити відображення кваліфікаційних файлів організаторами
-    :FOR  ${users}  in  tender_owner  tender_owner2
+    :FOR  ${user}  in  tender_owner  tender_owner2
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
-    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']}
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
-    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']}
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
 
 
 
@@ -168,7 +169,7 @@ If skipped create tender
 
 Отримати дані з cdb та зберегти їх у файл
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
-    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    ${cdb}  Wait Until Keyword Succeeds  2m  5  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
     Зберегти словник у файл  ${cdb}  cdb
 

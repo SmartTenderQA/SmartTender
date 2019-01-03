@@ -41,9 +41,10 @@ Fill password
 #####################################################################
 Перевірити успішність авторизації
   Run Keyword If
-  ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора
-  ...  ELSE IF  "provider" in "${role}" or 'ssp_tender_owner' == '${role}'  Перевірити успішність авторизації учасника
-  ...  ELSE IF  "viewer" == "${role}"  No Operation
+  ...  "viewer" == "${role}"  No Operation  ELSE IF
+  ...  ${fast_login} == ${True}  No Operation  ELSE IF
+  ...  "tender_owner" == "${role}"  Перевірити успішність авторизації організатора  ELSE IF
+  ...  "provider" in "${role}" or 'ssp_tender_owner' == '${role}'  Перевірити успішність авторизації учасника
 
 
 Перевірити успішність авторизації учасника
@@ -62,3 +63,23 @@ Fill password
 	Click Element  //a[@title="Вибір(Enter)"]
 	Дочекатись закінчення загрузки сторінки(webclient)
 
+
+POST authorization
+	[Arguments]  ${login}  ${password}
+	Execute JavaScript
+	...  jQuery.ajax({
+	...  	async:false,
+	...  	type:"POST",
+	...  	url: "${start_page}/CommonLogin.asmx/Login",
+	...  	data:'{"log":"${login}","pass":"${password}","rememberMe":true}',
+	...  	dataType: "json",
+	...  	contentType:"application/json"
+	...  });
+	Reload Page
+	Run Keyword If  '${role}' == 'tender_owner'  start_page.Відкрити особистий кабінет  tender_owner
+
+
+Manual authorization
+	[Arguments]  ${login}  ${password}
+	Відкрити вікно авторизації
+	Login  ${login}  ${password}

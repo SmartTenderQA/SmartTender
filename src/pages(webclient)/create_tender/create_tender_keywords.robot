@@ -2,7 +2,7 @@
 Заповнити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Run Keyword If  '${site}' == 'test'
-	...  Wait Until Keyword Succeeds  20  2  keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	...  Wait Until Keyword Succeeds  20  2  create_tender_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	...  ELSE IF  '${site}' == 'prod'
 	...  Wait Until Keyword Succeeds  20  2  Заповнити Поле  ${selector}  ${text}
 
@@ -11,7 +11,7 @@
 	[Arguments]  ${selector}  ${text}
 	Click Element  ${selector}
 	Sleep  .5
-	Clear Element Text  ${selector}
+	Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13

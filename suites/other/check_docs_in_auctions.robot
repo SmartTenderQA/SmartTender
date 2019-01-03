@@ -13,7 +13,7 @@ Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capt
 ${type}
 ${site}                        prod
 &{checks}                      checked_doc=${false}  checked_docx=${false}  checked_image=${false}  checked_pdf=${false}  checked_signature=${false}
-@{image_format}                png  jpg  jpeg  gif  gif  tif  tiff  bmp
+@{image_format}                png  jpg  jpeg  gif  tif  tiff  bmp
 
 
 *** Test Cases ***
@@ -53,16 +53,12 @@ ${site}                        prod
   [Tags]  bank_aucs
   Set Global Variable  ${type}  proz
   Зайти на торговий майданчик
-  Зайти на сторінку банківських аукціонів
+  Run Keyword  Зайти на сторінку банківських аукціонів ${site}
 
 
 Перевірка тендерів на сторінці пошука
   [Tags]  bank_aucs
-  :FOR  ${page}  IN RANGE  1  7
-  \  Перейти на сторінку  ${page}
-  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Відкрити сторінку аукціона та перевірити документи  ${tenders_on_page}
-  \  Завершити перевірку аукціонів
+  Run Keyword  Перевірка тендерів на сторінці пошука ${site}
 
 
 *** Keywords ***
@@ -80,6 +76,20 @@ Setup
     Run Keyword If  ${page} == 6  Set Tags  non-critical
     Should Be True  ${page} != 6
     ${selector}  Set Variable  //a[@class="pager-button" and text()=${page}]
+    ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}
+    # Вийти з цикла якщо не існує наступної сторінки
+    Run Keyword If  ${status} == ${false}  Exit For Loop
+    Run Keyword If  '${page}' != '1'  Click Element  ${selector}
+    Run Keyword And Ignore Error  Run Keywords  Видалити кнопку "Замовити звонок"  Видалити кнопку "Поставити запитання"
+
+
+Перейти на сторінку[new]
+    [Arguments]  ${page}
+    Set Test Variable  ${page}
+    Run Keyword If  ${page} == 6  Set Tags  non-critical
+    Should Be True  ${page} != 6
+    Дочекатись закінчення загрузки сторінки(skeleton)
+    ${selector}  Set Variable  //li[@class="ivu-page-item" and @title=${page}]
     ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}
     # Вийти з цикла якщо не існує наступної сторінки
     Run Keyword If  ${status} == ${false}  Exit For Loop
@@ -107,7 +117,12 @@ Setup
   Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
 
 
-Зайти на сторінку банківських аукціонів
+Зайти на сторінку банківських аукціонів test
+  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[3]/a
+  Click Element  //div[@id="MainMenuTenders"]//li[3]/a
+
+
+Зайти на сторінку банківських аукціонів prod
   Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[3]/a
   Click Element  //div[@id="MainMenuTenders"]//li[3]/a
   Wait Until Element Is Visible  //*[contains(@class, "btn-search")]//*
@@ -122,6 +137,13 @@ Setup
 
 Підрахувати кількість тендерів на сторінці
   ${selector}  Set Variable  //tr[@class="head"]
+  Wait Until Element Is Visible  ${selector}
+  ${tenders_on_page}  Get Element Count  ${selector}
+  [Return]  ${tenders_on_page}
+
+
+Підрахувати кількість тендерів на сторінці[new]
+  ${selector}  Set Variable  //div[@class="panel panel-default panel-highlight"]
   Wait Until Element Is Visible  ${selector}
   ${tenders_on_page}  Get Element Count  ${selector}
   [Return]  ${tenders_on_page}
@@ -211,11 +233,28 @@ Setup
   Close Window
   Select Window  MAIN
 
+
 Відкрити сторінку аукціона та перевірити документи
   [Arguments]  ${aucs_on_page}
   :FOR  ${items}  IN RANGE  1  ${aucs_on_page}+1
   \  ${doc_type}  Відкрити сторінку аукціона  ${items}
   \  Завершити перевірку аукціонів
+
+
+Відкрити сторінку аукціона та перевірити документи[new]
+  [Arguments]  ${aucs_on_page}
+  :FOR  ${items}  IN RANGE  1  ${aucs_on_page}+1
+  \  ${doc_type}  Відкрити сторінку аукціона[new]  ${items}
+  \  Перевірити документи
+  \  Завершити перевірку аукціонів
+
+
+Відкрити сторінку аукціона[new]
+  [Arguments]  ${auc_number}
+  ${status}  Run Keyword And Return Status  Click Element  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]//a
+  Run Keyword If  ${status} == ${False}  Run Keywords  Scroll Page To Element XPATH  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]
+  ...  AND  Sleep  5
+  ...  AND  Click Element  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]//a
 
 
 Відкрити сторінку аукціона
@@ -243,6 +282,27 @@ Setup
   \  Завершити перевірку аукціонів
   Close Window
   Select Window  MAIN
+
+
+Перевірити документи
+  Дочекатись закінчення загрузки сторінки(skeleton)
+  ${selector}  Set Variable  (//div[contains(@class, "filename")])
+  ${docs_on_page}  Get Element Count  ${selector}
+  :FOR  ${doc}  IN RANGE  1  ${docs_on_page}+1
+    \  Scroll Page To Element XPATH  ${selector}[${doc}]
+  \  ${doc_title}  Get Text  ${selector}[${doc}]//span
+  \  ${doc_type}  Fetch From Right  ${doc_title}  .
+  \  ${doc_type}  Convert To Lowercase  ${doc_type}
+  \  Set Global Variable  ${doc_type}
+  \  ${move_next}  Визначити необхідність перевірки файлу  ${doc_type}
+  \  Continue For Loop If  ${move_next} == ${true}
+  \  Mouse Over  ${selector}[${doc}]//span
+  \  Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
+  \  Sleep  .5
+  \  Run Keyword If  "${doc_type}" != "p7s"  Виконати перевірку файлів торгів prozorro  ${doc}
+  \  Завершити перевірку аукціонів
+  Go Back
+
 
 
 Визначити необхідність перевірки файлу
@@ -317,3 +377,21 @@ Check document for error
 
 Дочекатись закінчення загрузки сторінки(skeleton)
   Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
+
+
+Перевірка тендерів на сторінці пошука prod
+  [Tags]  bank_aucs
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку  ${page}
+  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
+  \  Відкрити сторінку аукціона та перевірити документи  ${tenders_on_page}
+  \  Завершити перевірку аукціонів
+
+
+Перевірка тендерів на сторінці пошука test
+  [Tags]  bank_aucs
+  :FOR  ${page}  IN RANGE  1  7
+  \  Перейти на сторінку[new]  ${page}
+  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці[new]
+  \  Відкрити сторінку аукціона та перевірити документи[new]  ${tenders_on_page}
+  \  Завершити перевірку аукціонів

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource        tender_tab.robot
-Resource        keywords.robot
+Resource        create_tender_keywords.robot
 
 
 *** Keywords ***
@@ -11,12 +11,6 @@ Resource        keywords.robot
 	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table//td[2]//input  value
 	${status}  Run Keyword And Return Status  Should Be Equal  ${taken}  ${type}
 	Run Keyword If  '${status}' == 'False'  Вибрати тип процедури  ${type}
-
-
-Зберегти чернетку
-    Натиснути додати (додавання тендеру)
-	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
-	Run Keyword And Ignore Error  Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
 
 
 Вибір об'екту
@@ -36,6 +30,12 @@ Resource        keywords.robot
 Вибрати потрібний вид тендера
 	[Arguments]  ${text}
 	Click Element  //td[contains(text(), "${text}")]
+
+
+Зберегти чернетку
+    Натиснути додати (додавання тендеру)
+	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
+	Run Keyword And Ignore Error  Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
 
 
 ###############################################
@@ -160,3 +160,5 @@ Resource        keywords.robot
   	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Мінімальна кількість')]/following-sibling::table//td[2]//input  value
   	Should Be Equal  ${taken}  ${quantity}
   	Set To Dictionary  ${data}  minimum_number_of_participants  ${quantity}
+
+

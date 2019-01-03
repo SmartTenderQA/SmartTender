@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        keywords.robot
+Resource        create_tender_keywords.robot
 
 
 *** Keywords ***
@@ -92,6 +92,7 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="MINSTEP"]//input  value
+    ${amount}  Set Variable  ${amount.replace(" ", "")}
     [Return]  ${amount}
 
 
@@ -100,6 +101,7 @@ Resource        keywords.robot
     ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="LOT_MINSTEP"]//input  value
+    ${amount}  Set Variable  ${amount.replace(" ", "")}
     [Return]  ${amount}
 
 
@@ -197,9 +199,7 @@ Resource        keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
     Заповнити текстове поле  ${selector}  ${value}
-    Sleep  2
-    ${city}  Get Element Attribute  ${selector}  value
-    [Return]  ${city}
+    [Return]  ${value}
 
 
 Заповнити "Строк поставки з"

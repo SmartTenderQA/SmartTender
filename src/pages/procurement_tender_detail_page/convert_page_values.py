@@ -25,8 +25,9 @@ def convert_page_values(field, value):
         elif 'quantity' in field:
             ret = list.group('quantity')
     elif 'amount' in field:
-        ret = re.search(u'(?P<amount>[\d\s.]+).*', value).group('amount')
+        ret = re.search(u'(?P<amount>[\d\s.?,]+).*', value).group('amount')
         ret = ret.replace(' ', '')
+        ret = ret.replace(',', '.')
     else:
         ret = value
     return ret

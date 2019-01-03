@@ -45,7 +45,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\['items'][0]['classification']['id']
 	\['items'][0]['classification']['description']
 	\['items'][0]['quantity']
-	\['items'][0]['unit']['name']
+	\['items'][0]['unit']['name']['name']
 	\['items'][0]['address']['postalCode']
 	\['items'][0]['address']['countryName']
 	\['items'][0]['address']['region']
@@ -81,7 +81,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\['items'][0]['address']['locality']
 	\['items'][0]['address']['streetAddress']
 	\['items'][0]['quantity']
-	\['items'][0]['unit']['name']
+	\['items'][0]['unit']['name']['name']
 
 
 Створити інформаційне повідомлення МП
@@ -180,7 +180,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\['items'][0]['classification']['id']
 	\['items'][0]['classification']['scheme']
 	\['items'][0]['quantity']
-	\['items'][0]['unit']['name']
+	\['items'][0]['unit']['name']['name']
 	\['items'][0]['address']['postalCode']
 	\['items'][0]['address']['countryName']
 	\['items'][0]['address']['region']

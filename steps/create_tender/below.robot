@@ -1,48 +1,52 @@
 *** Keywords ***
 Створити тендер
-	Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-	Натиснути додати(F7)  Додавання. Тендери
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
-  	prod_below.Заповнити startDate періоду пропозицій
-  	prod_below.Заповнити endDate періоду пропозицій
-  	prod_below.Заповнити endDate періоду обговорення
-  	prod_below.Заповнити amount для tender
-  	prod_below.Заповнити minimalStep для tender
-  	prod_below.Заповнити contact для tender
-  	prod_below.Заповнити title для tender
-  	prod_below.Заповнити description для tender
-  	prod_below.Додати предмет в тендер
-    Додати документ до тендара власником (webclient)
-    Зберегти чернетку
-    Оголосити тендер
+  	below.Заповнити endDate періоду обговорення
+  	below.Заповнити startDate періоду пропозицій
+  	below.Заповнити endDate періоду пропозицій
+    below.Заповнити amount для tender
+  	below.Заповнити minimalStep для tender
+  	Run Keyword And Ignore Error  below.Заповнити contact для tender
+  	below.Заповнити title для tender
+  	below.Заповнити description для tender
+  	below.Додати предмет в тендер
+    docs_tab.Додати документ до тендара власником (webclient)
+    create_tender.Зберегти чернетку
+    actions.Оголосити тендер
 
 
 #########################################################
 #	                  Keywords							#`
 #########################################################
 Заповнити endDate періоду обговорення
-    ${value}  get_time_now_with_deviation  5  minutes
-    ${date}  get_only_numbers  ${value}
+    ${date}  get_time_now_with_deviation  5  minutes
+    ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Обговорення закупівлі до"  ${date}
     Set To Dictionary  ${data['enquiryPeriod']}  endDate  ${date}
 
 
 Заповнити startDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  6  minutes
-    ${date}  get_only_numbers  ${value}
+    ${date}  get_time_now_with_deviation  6  minutes
+    ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Прийом пропозицій з"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  startDate  ${date}
 
 
 Заповнити endDate періоду пропозицій
-    ${value}  get_time_now_with_deviation  22  minutes
-    ${date}  get_only_numbers  ${value}
+    ${date}  get_time_now_with_deviation  25  minutes
+    ${date}  Run Keyword If  '${site}' == 'prod'  get_only_numbers  ${date}
+    ...  ESLE  Set Variable  ${date}
     Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
 Заповнити contact для tender
-    ${name}  Вибрати "Контактна особа"
+    ${name}  Set Variable  Дудник Лилия
+    Заповнити "Контактна особа"  ${name}
     Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
@@ -72,15 +76,15 @@
 
 
 Додати предмет в тендер
-    prod_below.Заповнити description для item
-    prod_below.Заповнити quantity для item
-    prod_below.Заповнити id для item
-    prod_below.Заповнити unit.name для item
-    prod_below.Заповнити postalCode для item
-    prod_below.Заповнити startDate для item
-    prod_below.Заповнити endDate для item
-    prod_below.Заповнити streetAddress для item
-    prod_below.Заповнити locality для item
+    below.Заповнити description для item
+    below.Заповнити quantity для item
+    below.Заповнити id для item
+    below.Заповнити unit.name для item
+    below.Заповнити postalCode для item
+    below.Заповнити startDate для item
+    below.Заповнити endDate для item
+    below.Заповнити streetAddress для item
+    below.Заповнити locality для item
 
 
 Заповнити description для item
