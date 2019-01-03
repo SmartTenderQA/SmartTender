@@ -18,16 +18,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	test_below.Створити тендер
-	test_below.Отримати дані тендера та зберегти їх у файл
+	below.Створити тендер
+	below.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати дані з cdb
     [Tags]  create_tender
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    Отримати дані з cdb та зберегти їх у файл
-    prucurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
+    Wait Until Keyword Succeeds  1m  5  Отримати дані з cdb та зберегти їх у файл
 
 
 If skipped create tender
@@ -82,11 +81,12 @@ If skipped create tender
 Подати заявку на участь в тендері учасниками
 	:FOR  ${i}  IN  1  2  3
 	\  Прийняти участь у тендері учасником  provider${i}
-	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
-	prucurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
+	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
 Відхилити організатором пропозицію першого учасника
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -95,6 +95,7 @@ If skipped create tender
 
 
 Завантажити другим учасником кваліфікаційний документ
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  provider2
     Go to  ${data['tender_href']}
     ${provider file name}  Додати кваліфікаційний документ
@@ -128,10 +129,11 @@ If skipped create tender
 Підготуватися до перевірки відображення документів на сторінці
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
-    Зберегти словник у файл  ${data}  data
+    actions.Зберегти словник у файл  ${data}  data
 
 
 Перевірити відображення кваліфікаційних файлів організаторами
+    debug
     :FOR  ${user}  in  tender_owner  tender_owner2
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
@@ -171,7 +173,7 @@ If skipped create tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Wait Until Keyword Succeeds  2m  5  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
-    Зберегти словник у файл  ${cdb}  cdb
+    actions.Зберегти словник у файл  ${cdb}  cdb
 
 
 Вибрати переможця на номером else

@@ -218,6 +218,7 @@ Resource        create_tender_keywords.robot
     ${status}  Run Keyword And Return Status  Should Contain Any  ${value}  ${get}
     Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
     ...  Заповнити "Строк поставки з"  ${value}
+    [Return]  ${value}
 
 
 Заповнити "Строк поставки по"

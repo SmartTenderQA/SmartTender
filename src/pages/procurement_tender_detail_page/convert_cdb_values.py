@@ -20,5 +20,5 @@ def convert_cdb_values(field, value):
 
 def convert_result(value):
     if re.match(u'^\d+\s?\d+\s?\d+[.]?\d*$', str(value)):
-        return float(value)
+        return float(str(value).replace(" ", ""))
     return str(value).decode("utf-8")

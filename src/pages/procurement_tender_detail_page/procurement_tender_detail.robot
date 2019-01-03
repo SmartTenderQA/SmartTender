@@ -1,7 +1,7 @@
 *** Settings ***
 Library  		convert_page_values.py
 Library         convert_cdb_values.py
-Resource  		prucurement_page_keywords.robot
+Resource  		procurement_page_keywords.robot
 Library         procurement_variables.py
 Variables       procurement_variables.py
 
@@ -57,7 +57,7 @@ Variables       procurement_variables.py
 	${selector}  Run Keyword If  ('documents' in """${field}""")
 	...  procurement_variables.get_document_locator  ${field}  ELSE
 	...  Set Variable  ${locators${field}}
-	Wait Until Element Is Visible  ${selector}  10
+	Wait Until Element Is Visible  ${selector}  3
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}
 	[Return]  ${field value}
