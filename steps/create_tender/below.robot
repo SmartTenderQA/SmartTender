@@ -22,7 +22,7 @@
 #########################################################
 Заповнити endDate періоду обговорення
     ${date}  get_time_now_with_deviation  5  minutes
-    ${prod date}  get_only_numbers  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
     ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
     Заповнити "Обговорення закупівлі до"  ${date}
     Set To Dictionary  ${data['enquiryPeriod']}  endDate  ${date}
@@ -30,7 +30,7 @@
 
 Заповнити startDate періоду пропозицій
     ${date}  get_time_now_with_deviation  6  minutes
-    ${prod date}  get_only_numbers  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
     ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
     Заповнити "Прийом пропозицій з"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  startDate  ${date}
@@ -38,7 +38,7 @@
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
-    ${prod date}  get_only_numbers  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
     ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
     Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
