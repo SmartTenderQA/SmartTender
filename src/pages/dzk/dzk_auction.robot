@@ -1,5 +1,4 @@
 *** Settings ***
-Library		dzk_common.py
 
 
 *** Variables ***

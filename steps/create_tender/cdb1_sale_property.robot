@@ -13,7 +13,7 @@
 	cdb1_sale_property.Заповнити dgfID
 	cdb1_sale_property.Заповнити description
 
-	cdb1_sale_property.Заповнити items.title
+	cdb1_sale_property.Заповнити items.description
 	cdb1_sale_property.Заповнити items.quantity
 	cdb1_sale_property.Заповнити items.unit.name
 	cdb1_sale_property.Заповнити items.classification.description
@@ -38,7 +38,7 @@
 	${startDate}  get_time_now_with_deviation  10  minutes
     Wait Until Keyword Succeeds  30  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
     ${auctionPeriods}  Create Dictionary  startDate=${startDate}
-    Set To Dictionary  ${data}  auctionPeriods  ${auctionPeriods}
+    Set To Dictionary  ${data}  auctionPeriod  ${auctionPeriods}
 
 
 Заповнити value.amount
@@ -52,7 +52,9 @@
 Заповнити minimalStep.percent
 	${minimal_step_percent}  random_number  1  5
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити мінімальний крок аукціону  ${minimal_step_percent}
-	Set To Dictionary  ${data.value}  minimalStep_ percent  ${minimal_step_percent}
+	${minimal_step}  Evaluate  float(${data['value']['amount']})*${minimal_step_percent}/100
+	${step}  Create Dictionary  amount=${minimal_step}
+	Set To Dictionary  ${data}  minimalStep  ${step}
 
 
 Заповнити dgfDecisionID
@@ -94,40 +96,44 @@
 	Set To Dictionary  ${data}  description=${description}
 
 
-Заповнити items.title
-	${title}  create_sentence  3
+Заповнити items.description
+	${description}  create_sentence  3
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Опис активу')]/following-sibling::*//input
-	Заповнити текстове поле  ${selector}  ${title}
-	${dict}  Create Dictionary  title=${title}
-	Set To Dictionary  ${data}  items  ${dict}
+	Заповнити текстове поле  ${selector}  ${description}
+	${dict}  Create Dictionary  description=${description}
+	@{list}  Create List  ${dict}
+	Set To Dictionary  ${data}  items  ${list}
 
 
 Заповнити items.quantity
 	${quantity}  random_number  1  1000
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input
 	Заповнити текстове поле  ${selector}  ${quantity}
-	Set To Dictionary  ${data['items']}  quantity  ${quantity}
+	Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити items.unit.name
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Од. вим.')]/following-sibling::*//input
 	${selector}  Set Variable  //*[contains(text(), 'ОВ. Найменування')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	Set To Dictionary  ${data['items']}  unit_name  ${name}
+	${dict}  Create Dictionary  name=${name}
+	Set To Dictionary  ${data['items'][0]}  unit  ${dict}
 
 
 Заповнити items.classification.description
 	${input}  Set Variable  (//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
 	${selector}  Set Variable  //*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${description}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	Set To Dictionary  ${data['items']}  classification_description  ${description}
+	${dict}  Create Dictionary  id=${description}
+	Set To Dictionary  ${data['items'][0]}  classification  ${dict}
 
 
 Заповнити items.postalcode
 	${postalcode}  random_number  10000  99999
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Індекс')]/following-sibling::table//input
 	Заповнити текстове поле  ${selector}  ${postalcode}
-	Set To Dictionary  ${data['items']}  postalcode  ${postalcode}
+	${dict}  Create Dictionary  postalCode=${postalcode}
+	Set To Dictionary  ${data['items'][0]}  address  ${dict}
 
 
 Заповнити items.strretaddress
@@ -135,20 +141,21 @@
 	${strretaddress}  Set Variable  ${text[:-1]}
 	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Вулиця')]/following-sibling::table//input
 	Заповнити текстове поле  ${selector}  ${strretaddress}
-	Set To Dictionary  ${data['items']}  strretaddress  ${strretaddress}
+	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${strretaddress}
 
 
 Заповнити items.locality
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
 	${selector}  Set Variable  //*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
 	${locality}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	Set To Dictionary  ${data['items']}  locality  ${locality}
+	Set To Dictionary  ${data['items'][0]['address']}  locality  ${locality}
 
 
 Заповнити guarantee.amount
 	${guarantee_amount_percent}  random_number  1  5
-	${value}  Create Dictionary  percent=${guarantee_amount_percent}
-	Set To Dictionary  ${data.value}  guarantee=${value}
+	${guarantee}  Evaluate  float(${data['value']['amount']})*${guarantee_amount_percent}/100
+	${amount}  Create Dictionary  amount=${guarantee}
+	Set To Dictionary  ${data}  guarantee  ${amount}
 	Відкрити вкладку Гарантійний внесок
 	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити гарантійний внесок  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон

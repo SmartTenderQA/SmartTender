@@ -1,10 +1,12 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Створити словник  data
+Library  ../../src/pages/dgfOtherAssets/dgfOtherAssets_variables.py
+Suite Setup  Precondition
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Run Keywords
-...                                        Log Location  AND
-...                                        Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+...  AND  Log Location
+...  AND  Log  ${data}
+...  AND  debug
 
 
 *** Variables ***
@@ -13,19 +15,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...  								requirements=Продаж права вимоги за кредитними договорами
 
 
+#Запуск
+#robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfOtherAssets_get_auction_href.robot
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  Bened           tender_owner
-    Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
-    Додати користувача          test_viewer     viewer
-
-
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
 	cdb1_sale_property.Створити тендер  ${type_dict['${type}']}
+	debug
 
 
 If skipped create tender
@@ -33,6 +30,18 @@ If skipped create tender
 	${json}  Get File  ${OUTPUTDIR}/artifact.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
+
+
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare
+	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data
+
+
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 
 
 Знайти тендер учасниками
@@ -58,7 +67,7 @@ If skipped create tender
 	\  Завантажити сесію для  provider${i}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
-	\  Заповнити поле з ціною  1  1
+	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
 	\  Go Back
 
@@ -83,7 +92,31 @@ If skipped create tender
 	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
 
 
+new case
+	debug
+
+
 *** Keywords ***
+Precondition
+	${edit_locators}  dgfOtherAssets_variables.get_edit_locators
+	${view_locators}  dgfOtherAssets_variables.get_view_locators
+	${data}  dgfOtherAssets_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
+    Додати першого користувача  Bened  tender_owner
+    Підготувати користувачів
+
+
+Підготувати користувачів
+	Run Keyword If  "${site}" == "test"  Run Keywords
+    ...  Додати користувача			 test_tender_owner	tender_owner2 	AND
+    ...  Додати користувача          user1           	provider1     	AND
+    ...  Додати користувача          user2           	provider2     	AND
+    ...  Додати користувача          user3           	provider3     	AND
+    ...  Додати користувача          test_viewer     	viewer
+
+
 Знайти тендер користувачем
 	[Arguments]  ${role}
 	Завантажити сесію для  ${role}
