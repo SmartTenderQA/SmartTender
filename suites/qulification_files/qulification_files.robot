@@ -101,7 +101,7 @@ If skipped create tender
     ${provider file name}  Додати кваліфікаційний документ
     ${new dict}  Evaluate  ${data['bids'][0]}.copy()
     Append to list   ${data['bids']}  ${new dict}
-    ${new dict}  Evaluate  ${data['bids'][0]['documents'][0]}.copy()
+    ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
@@ -130,10 +130,10 @@ If skipped create tender
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     actions.Зберегти словник у файл  ${data}  data
+    Log  ${data}
 
 
 Перевірити відображення кваліфікаційних файлів організаторами
-    debug
     :FOR  ${user}  in  tender_owner  tender_owner2
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
@@ -146,6 +146,24 @@ If skipped create tender
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
+
+
+Завершити закупівлю організатором
+    Завантажити сесію для  tender_owner
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
+    Вибрати переможця на номером else  2
+    webclient_elements.Натиснути кнопку "Підписати договір"
+    validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
+    validation.Підтвердити підписання договору
+
+
+Переконатись що статус закупівлі "Завершено"
+    Завантажити сесію для  provider1
+    Go to  ${data['tender_href']}
+    procurement_tender_detail.Дочекатися статусу тендера  Завершено
+
+
 
 
 
@@ -198,3 +216,6 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}
     [Return]  ${name}
+
+
+

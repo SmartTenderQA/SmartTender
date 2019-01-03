@@ -79,7 +79,7 @@ Variables       procurement_variables.py
     Дочекатись закінчення загрузки сторінки по елементу  ${circle loading}
     ${file name}  Wait Until Keyword Succeeds  20  2  Додати файл  1
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
-    keywords.Виконати дії відповідно до тексту повідомлення  ${message}
+    Виконати дії відповідно до тексту повідомлення  ${message}
     Go Back
     [Return]  ${file name}
 

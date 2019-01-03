@@ -62,3 +62,10 @@ Ignore WebClient Error
 	[Arguments]  ${stage}
 	${get}  Get Text  //tr[contains(@class, "rowselected")]//td[4]
 	Should Contain  ${get}  ${stage}
+
+
+Підтвердити підписання договору
+    ${status}  Run Keyword And Return Status
+    ...  Wait Until Page Contains  Договір підписаний  10
+    Run Keyword If  ${status}  Click Element  //*[@id="IMMessageBoxBtnOK"]//span[text()="ОК"]
+    Дочекатись закінчення загрузки сторінки(webclient)

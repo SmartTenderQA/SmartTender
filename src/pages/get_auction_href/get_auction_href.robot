@@ -35,3 +35,9 @@ Resource  		keywords.robot
 	${auction_href}  Wait Until Keyword Succeeds  20  3  Get Element Attribute  ${selector}  href
 	Run Keyword If  '${auction_href}' == 'None'  Отримати URL на перегляд
 	[Return]  ${auction_href}
+
+
+Дочекатись отримання посилань на аукціон
+	${auction loading}  Set Variable  (//*[@class="ivu-load-loop ivu-icon ivu-icon-load-c"])[1]
+	Wait Until Page Does Not Contain Element  ${auction loading}  30
+	Sleep  1

@@ -101,6 +101,13 @@
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
+Натиснути кнопку "Підписати договір"
+    ${selector}  Set Variable  //a[@title="Підписати договір"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
 Натиснути кнопку "Заповнити ціни за одиницю товару"
     ${selector}  Set Variable  //a[@title="Заповнити ціни за одиницю товару"]
     Wait Until Element Is Visible  ${selector}  15
