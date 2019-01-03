@@ -31,9 +31,7 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	...  Не усі поля заповнені правильно. Перевірте будь ласка та внесіть відповідні зміни
 	Wait Until Element Is Visible  ${send offer button}
 	Click Element  ${send offer button}
-	${validation message}  Set Variable  css=.ivu-notice-desc
-	Wait Until Page Contains Element  ${validation message}
-	${text}  Get Text  ${validation message}
+	${text}  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
 	Should Contain Any  ${list}  ${text}
 
 

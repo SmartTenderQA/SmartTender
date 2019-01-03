@@ -74,3 +74,11 @@ Ignore error
   Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${multiple status}  multiple
   ...  ELSE  Set Global Variable  ${multiple status}  withoutlot
   [Return]  ${multiple status}
+
+
+Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
+	${validation message}  Set Variable  css=.ivu-notice-desc
+	Wait Until Page Contains Element  ${validation message}
+	${text}  Get Text  ${validation message}
+	Run Keyword If  "${text}" == "${EMPTY}"  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
+	[Return]  ${text}
