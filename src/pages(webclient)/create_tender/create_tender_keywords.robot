@@ -13,6 +13,7 @@
 	Sleep  .5
 	Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
+	Sleep  1
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13
 	Should Be Equal  ${got}  ${text}
