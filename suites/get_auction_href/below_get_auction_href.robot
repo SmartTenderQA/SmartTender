@@ -6,14 +6,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-*** Variables ***
-${site}
-
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/below_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
     Run Keyword  Підготувати користувачів для ${site}
+
 
 Створити тендер
 	[Tags]  create_tender
@@ -107,7 +105,7 @@ If skipped create tender
     Додати користувача          prod_viewer     viewer
 
 
-Підготувати Користувачів Для Test
+Підготувати користувачів для test
     Додати першого користувача  Bened           tender_owner
     Додати користувача          user1           provider1
     Додати користувача          user2           provider2
