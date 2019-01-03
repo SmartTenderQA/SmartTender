@@ -75,16 +75,19 @@ If skipped create tender
 	Go to  ${data['tender_href']}
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
-Неможливість отримати поcилання на участь в аукціоні
-	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
-	viewer
-	tender_owner
-	provider2
+Отримати поcилання на перегляд аукціону
+	:FOR  ${i}  IN  tender_owner  provider2  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+
+
 
 
 
@@ -129,15 +132,6 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
     Open Button  //a[contains(text(), "Перейти")]
-
-
-Неможливість отримати поcилання на участь в аукціоні(keyword)
-	[Arguments]  ${user}
-	Завантажити сесію для  ${user}
-	Go to  ${data['tender_href']}
-	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
-	...  Натиснути кнопку "До аукціону"
-	...  AND  Отримати URL для участі в аукціоні
 
 
 Отримати посилання на участь в аукціоні

@@ -103,11 +103,17 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
+	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
 
+
+Отримати поcилання на перегляд аукціону
+	:FOR  ${i}  IN  tender_owner  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
 
@@ -183,12 +189,13 @@ If skipped create tender
     Go Back
 
 
-Перевірити отримання ссилки на участь в аукціоні
+Перевірити отримання посилань на аукціон учасником
     [Arguments]  ${role}
+    Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
-    Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Wait Until Keyword Succeeds  120  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні
