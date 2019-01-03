@@ -90,7 +90,7 @@ If skipped create tender
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
-    prucurement_page_keywords.Дочекатись початку періоду перкваліфікації
+    procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
@@ -147,7 +147,7 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
 
