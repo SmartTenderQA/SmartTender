@@ -80,16 +80,6 @@ If skipped create tender
 	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
-Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  provider2  viewer
-	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
-	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
-	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
-
-
-
-
 
 
 *** Keywords ***
@@ -132,29 +122,6 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
     Open Button  //a[contains(text(), "Перейти")]
-
-
-Отримати посилання на участь в аукціоні
-    Go To  ${auction_href}
-	#Reload Page
-	Натиснути кнопку  До аукціону
-	Натиснути кнопку  Взяти участь в аукціоні
-	${auction_href}  Отримати посилання
-	[Return]  ${auction_href}
-
-
-Натиснути кнопку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-
-
-Отримати посилання
-	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
-	Wait Until Page Contains Element  ${selector}  120
-	${auction_href}  Get Element Attribute  ${selector}  href
-	[Return]  ${auction_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні
