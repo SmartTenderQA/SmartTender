@@ -29,6 +29,7 @@
 	${count}  Get Element Count  ${selector}
 	${number}  random_number  1  ${count}
 	Click Element  (${selector})[${number}]
+	Sleep  .5
 	${text}  Get Element Attribute  ${input}  value
 	Should Not Be Empty  ${text}
 	[Return]  ${text}

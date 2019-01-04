@@ -86,6 +86,7 @@ Resource    pages/small_privatization/small_privatization_informational_message/
 Resource    pages/small_privatization/small_privatization_object/small_privatization_object.robot
 Resource    pages/small_privatization/small_privatization_auction/small_privatization_auction.robot
 Resource    pages/dzk/dzk_auction.robot
+Resource    pages/dgfAssets/dgfAssets.robot
 
 
 Resource    pages(webclient)/desktop/desktop.robot
@@ -100,7 +101,7 @@ Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.r
 Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 
 
-Resource    ../steps/create_tender/cdb1_sale_property.robot
+Resource    ../steps/create_tender/sale_dgfAssets.robot
 Resource    ../steps/create_tender/below.robot
 Resource    ../steps/create_tender/test_dialog.robot
 Resource    ../steps/create_tender/test_esco.robot
