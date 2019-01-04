@@ -76,6 +76,8 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
   ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
   ${a}=  get_number  ${a}
   ${amount}=  Evaluate  int(${a}*${coefficient})
+  ${amount}  Run Keyword If  ${amount} == 0  Set Variable  0  ELSE
+  ...  Set Variable  ${amount}
   ${field number}=  Evaluate  ${lot number}-1
   Input Text  xpath=//*[@id="lotAmount${field number}"]/input[1]  ${amount}
 
