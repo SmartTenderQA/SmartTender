@@ -13,9 +13,10 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Надати рішення про допуск до аукціону учасника  ${i}
-    Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено? Перевести закупівлю на наступну стадію?  Так
-    ${status}  Run Keyword And Return Status  Закрити валідаційне вікно (Так/Ні)  протокол  Так
-    Run Keyword If  '${status}' == 'False'
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
+    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  протокол
+    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  протокол  Так  ELSE
     ...  Підтвердити організатором формування протоколу розгляду пропозицій
 
 
