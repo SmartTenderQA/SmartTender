@@ -15,7 +15,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e broken -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e broken -e get_tender -v type:requirements -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -150,6 +151,7 @@ If skipped create tender
 
 
 Забрати гарантійний внесок учасниками
+	[Tags]  broken
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
 	Забрати гарантійний внесок учасником  provider1
 	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  provider2
