@@ -65,12 +65,14 @@ If skipped create tender
 
 
 Дочекатися учасником статусу тендера "Пропозиції розглянуті"
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
 
 
 Заповнити ціни за одиницю номенклатури по кожному переможцю
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -78,6 +80,7 @@ If skipped create tender
 
 
 Заповнити рамкову угоду та опублікувати її
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     main_page.Вибрати тендер за номером (webclient)  1
     framework_agreement.Заповнити поля Рамкової угоди
     webclient_elements.Натиснути кнопку "Заключить рамочное соглашение"
@@ -88,6 +91,7 @@ If skipped create tender
 
 
 Переконатись що статус закупівлі "Завершено"
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
