@@ -25,7 +25,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
-    debug
 
 
 If skipped create tender
