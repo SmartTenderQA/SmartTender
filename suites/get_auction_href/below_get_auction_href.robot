@@ -83,16 +83,17 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	prucurement_page_keywords.Дочекатись закінчення прийому пропозицій
+	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
 
 
-Неможливість отримати поcилання на участь в аукціоні
-	[Template]  Перевірити можливість отримати посилання на аукціон користувачем
-	viewer
-	tender_owner
-	provider3
+Отримати поcилання на перегляд аукціону
+	:FOR  ${i}  IN  tender_owner  provider3  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
 
@@ -101,7 +102,7 @@ If skipped create tender
     Додати першого користувача  prod_owner      tender_owner
     Додати користувача          prod_provider1  provider1
     Додати користувача          prod_provider2  provider2
-    Додати користувача          prod_provider   provider3
+    Додати користувача          LLC             provider3
     Додати користувача          prod_viewer     viewer
 
 
@@ -139,12 +140,12 @@ If skipped create tender
     Go Back
 
 
-Перевірити отримання ссилки на участь в аукціоні
+Перевірити отримання посилань на аукціон учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
-    Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
@@ -162,12 +163,3 @@ If skipped create tender
 	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
     Go Back
-
-
-Перевірити можливість отримати посилання на аукціон користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
-	Go to  ${data['tender_href']}
-	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
-	...  Натиснути кнопку "До аукціону"
-	...  AND  Отримати URL для участі в аукціоні

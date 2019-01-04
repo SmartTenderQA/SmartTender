@@ -12,7 +12,6 @@ Library     DateTime
 Resource    common/breadcrumbs/breadcrumbs.robot
 Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
-Resource    common/get_auction_href/get_auction_href.robot
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/save_user_session/save_user_session.robot
@@ -39,6 +38,7 @@ Resource    elements/webclient/webclient_elements.robot
 Resource    Faker/faker.robot
 
 
+Resource    pages/get_auction_href/get_auction_href.robot
 Resource    pages/asset_detail_page/asset_detail_page.robot
 Resource    pages/auction/auction.robot
 Resource    pages/auction_detail_page/auction_detail_page.robot

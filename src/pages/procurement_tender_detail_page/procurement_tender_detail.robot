@@ -1,7 +1,7 @@
 *** Settings ***
 Library  		convert_page_values.py
 Library         convert_cdb_values.py
-Resource  		prucurement_page_keywords.robot
+Resource  		procurement_page_keywords.robot
 Library         procurement_variables.py
 Variables       procurement_variables.py
 
@@ -30,7 +30,7 @@ Variables       procurement_variables.py
 Порівняти введені дані з даними в ЦБД
 	[Arguments]  ${field}
 	${value entered}  Set Variable  ${data${field}}
-	${value entered}  convert_cdb_values.convert_result  ${value entered}
+	${value entered}  service.convert_input_value  ${value entered}
     ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value entered}  ${value cdb}
  	Should Be True  ${status}  Oops! Помилка з даними для ${field}
@@ -39,7 +39,6 @@ Variables       procurement_variables.py
 Порівняти відображені дані з даними в ЦБД
     [Arguments]  ${field}
     ${value on page}  procurement_tender_detail.Отритами дані зі сторінки  ${field}
-    ${value on page}  convert_cdb_values.convert_result  ${value on page}
     ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
     ${status}  Run Keyword And Return Status  Should Be Equal  ${value on page}  ${value cdb}
  	Should Be True  ${status}  Oops! Помилка з даними для ${field}
@@ -55,9 +54,9 @@ Variables       procurement_variables.py
 Отритами дані зі сторінки
 	[Arguments]  ${field}
 	${selector}  Run Keyword If  ('documents' in """${field}""")
-	...  procurement_variables.get_document_locator  ${field}  ELSE
+	...  procurement_variables.get_locator  ${field}  ELSE
 	...  Set Variable  ${locators${field}}
-	Wait Until Element Is Visible  ${selector}  10
+	Wait Until Element Is Visible  ${selector}  3
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}
 	[Return]  ${field value}
@@ -79,7 +78,7 @@ Variables       procurement_variables.py
     Дочекатись закінчення загрузки сторінки по елементу  ${circle loading}
     ${file name}  Wait Until Keyword Succeeds  20  2  Додати файл  1
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
-    keywords.Виконати дії відповідно до тексту повідомлення  ${message}
+    Виконати дії відповідно до тексту повідомлення  ${message}
     Go Back
     [Return]  ${file name}
 

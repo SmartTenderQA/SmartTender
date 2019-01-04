@@ -8,7 +8,7 @@
   	below.Заповнити endDate періоду пропозицій
     below.Заповнити amount для tender
   	below.Заповнити minimalStep для tender
-  	Run Keyword And Ignore Error  below.Заповнити contact для tender
+  	Run Keyword And Ignore Error  below.Заповнити contact для tender ${site}
   	below.Заповнити title для tender
   	below.Заповнити description для tender
   	below.Додати предмет в тендер
@@ -22,44 +22,46 @@
 #########################################################
 Заповнити endDate періоду обговорення
     ${date}  get_time_now_with_deviation  5  minutes
-    ${prod date}  get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Обговорення закупівлі до"  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
+    Заповнити "Обговорення закупівлі до"  ${date}  ${prod date}
     Set To Dictionary  ${data['enquiryPeriod']}  endDate  ${date}
 
 
 Заповнити startDate періоду пропозицій
     ${date}  get_time_now_with_deviation  6  minutes
-    ${prod date}  get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Прийом пропозицій з"  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
+    Заповнити "Прийом пропозицій з"  ${date}  ${prod date}
     Set To Dictionary  ${data['tenderPeriod']}  startDate  ${date}
 
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
-    ${prod date}  get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Прийом пропозицій по"  ${date}
+    ${prod date}  service.get_only_numbers  ${date}
+    Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
-Заповнити contact для tender
+Заповнити contact для tender test
     ${name}  Set Variable  Дудник Лилия
     Заповнити "Контактна особа"  ${name}
+    Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
+
+
+Заповнити contact для tender prod
+    ${name}  Вибрати "Контактна особа"
     Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
 Заповнити amount для tender
     ${amount}  random_number  100000  100000000
     Заповнити "Очікувана вартість закупівлі"  ${amount}
-    Set To Dictionary  ${data['value']}  amount  ${amount}
+    Set To Dictionary  ${data['value']}  amount  '${amount}'
 
 
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  5
     ${amount}  Заповнити "Мінімальний крок аукціону"   ${minimal_step_percent}
-    Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
+    Set To Dictionary  ${data['minimalStep']}  amount  '${amount}'
 
 
 Заповнити title для tender
@@ -130,15 +132,17 @@
 
 
 Заповнити startDate для item
-    ${value}  get_time_now_with_deviation  1  days
-    Заповнити "Строк поставки з"  ${value}
-    Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${value}
+    ${date}  get_time_now_with_deviation  1  days
+    ${prod date}  service.get_only_numbers  ${date}
+    Заповнити "Строк поставки з"  ${date}  ${prod date}
+    Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${date}
 
 
 Заповнити endDate для item
-    ${value}  get_time_now_with_deviation  2  days
-    Заповнити "Строк поставки по"  ${value}
-    Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${value}
+    ${date}  get_time_now_with_deviation  2  days
+    ${prod date}  service.get_only_numbers  ${date}
+    Заповнити "Строк поставки з"  ${date}  ${prod date}
+    Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${date}
 
 
 Отримати дані тендера та зберегти їх у файл

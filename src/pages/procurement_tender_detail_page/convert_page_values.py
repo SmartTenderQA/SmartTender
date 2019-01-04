@@ -2,6 +2,11 @@
 
 
 import re
+import sys
+
+sys.path.append('../../src/')
+
+from service import get_only_numbers
 
 
 def convert_page_values(field, value):
@@ -28,6 +33,8 @@ def convert_page_values(field, value):
         ret = re.search(u'(?P<amount>[\d\s.?,]+).*', value).group('amount')
         ret = ret.replace(' ', '')
         ret = ret.replace(',', '.')
+    elif 'agreementDuration' in field:
+        ret = get_only_numbers(value)
     else:
         ret = value
     return ret

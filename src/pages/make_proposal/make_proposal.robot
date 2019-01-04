@@ -31,9 +31,7 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	...  Не усі поля заповнені правильно. Перевірте будь ласка та внесіть відповідні зміни
 	Wait Until Element Is Visible  ${send offer button}
 	Click Element  ${send offer button}
-	${validation message}  Set Variable  css=.ivu-notice-desc
-	Wait Until Page Contains Element  ${validation message}
-	${text}  Get Text  ${validation message}
+	${text}  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
 	Should Contain Any  ${list}  ${text}
 
 
@@ -78,6 +76,8 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
   ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
   ${a}=  get_number  ${a}
   ${amount}=  Evaluate  int(${a}*${coefficient})
+  ${amount}  Run Keyword If  ${amount} == 0  Set Variable  0  ELSE
+  ...  Set Variable  ${amount}
   ${field number}=  Evaluate  ${lot number}-1
   Input Text  xpath=//*[@id="lotAmount${field number}"]/input[1]  ${amount}
 

@@ -54,9 +54,7 @@ If skipped create tender
     \['items'][0]['classification']['description']
     \['items'][0]['unit']['name']
     \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
     \['value']['amount']
     \['minimalStep']['amount']
 
@@ -77,9 +75,7 @@ If skipped create tender
     \['items'][0]['classification']['description']
     \['items'][0]['unit']['name']
     \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
     \['value']['amount']
     \['minimalStep']['amount']
 
@@ -92,7 +88,7 @@ If skipped create tender
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Go to  ${data['tender_href']}
-    prucurement_page_keywords.Дочекатись початку періоду перкваліфікації
+    procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
@@ -108,58 +104,22 @@ If skipped create tender
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  provider1
-    Go to  ${data['tender_href']}
+    Go To  ${data['tender_href']}
+	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  20m  10  Перевірити отримання ссилки на участь в аукціоні  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
 
+
+Отримати поcилання на перегляд аукціону
+	:FOR  ${i}  IN  tender_owner  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
 
 *** Keywords ***
-Валідація введених даних з ЦБД та на сайті
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
-    Go to  ${data['tender_href']}
-    Отримати дані з cdb та зберегти їх у файл
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['maxAwardsCount']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['agreementDuration']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['id']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['classification']['description']
-    #procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['unit']['name']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['items'][0]['quantity']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['startDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['value']['amount']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['minimalStep']['amount']
-
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['maxAwardsCount']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['agreementDuration']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['title']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderID']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['description']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['locality']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['streetAddress']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['deliveryAddress']['postalCode']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['id']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['classification']['description']
-    #procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['unit']['name']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['items'][0]['quantity']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['startDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['tenderPeriod']['endDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['enquiryPeriod']['endDate']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['value']['amount']
-    procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['minimalStep']['amount']
-
-
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
@@ -187,12 +147,13 @@ If skipped create tender
     Go Back
 
 
-Перевірити отримання ссилки на участь в аукціоні
+Перевірити отримання посилань на аукціон учасником
     [Arguments]  ${role}
+    Завантажити сесію для  ${role}
     Go To  ${data['tender_href']}
-    Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
-	Wait Until Keyword Succeeds  120  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

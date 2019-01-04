@@ -40,7 +40,7 @@
 	#${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
 	#Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  Номер тендер  ${value}
 	Press Key  ${find tender field}  \\13
-	Sleep  1
+	Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Пошук об'єкта у webclient по полю ФГИ

@@ -34,42 +34,73 @@ Resource        create_tender_keywords.robot
 
 
 Заповнити "Обговорення закупівлі до"
-    [Arguments]  ${value}
+    [Arguments]  ${date}  ${prod date}=None
     ${selector}  set variable  //*[@data-name="DDM"]//input
 	Clear input By JS  ${selector}
-    Input Text  ${selector}  ${value}
+    Run Keyword If  '${site}' == 'prod'  Input Text  ${selector}  ${prod date}
+    Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
     Press Key  ${selector}  \\13
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
-    ...  Заповнити "Обговорення закупівлі до"  ${value}
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
+    Run Keyword If  '${status}' == 'False'
+    ...  Заповнити "Обговорення закупівлі до"  ${date}  ${prod date}
 
 
 Заповнити "Прийом пропозицій з"
-    [Arguments]  ${value}
+    [Arguments]  ${date}  ${prod date}=None
     ${selector}  set variable  //*[@data-name="D_SCH"]//input
     Clear input By JS  ${selector}
-    Input Text  ${selector}  ${value}
+    Run Keyword If  '${site}' == 'prod'  Input Text  ${selector}  ${prod date}
+    Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
     Press Key  ${selector}  \\13
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
-    ...  Заповнити "Прийом пропозицій з"  ${value}
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
+    Run Keyword If  '${status}' == 'False'
+    ...  Заповнити "Прийом пропозицій з"  ${date}  ${prod date}
 
 
 Заповнити "Прийом пропозицій по"
-    [Arguments]  ${value}
+    [Arguments]  ${date}  ${prod date}=None
     ${selector}  set variable  //*[@data-name="D_SROK"]//input
     Clear input By JS  ${selector}
-    Input Text  ${selector}  ${value}
+    Run Keyword If  '${site}' == 'prod'  Input Text  ${selector}  ${prod date}
+    Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
     Press Key  ${selector}  \\13
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
-    ...  Заповнити "Прийом пропозицій по"  ${value}
+    ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
+    Run Keyword If  '${status}' == 'False'
+    ...  Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
+
+
+Заповнити "Строк поставки з"
+    [Arguments]  ${date}  ${prod date}=None
+    ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
+    Clear input By JS  ${selector}
+    Run Keyword If  '${site}' == 'prod'  Input Text  ${selector}  ${prod date}
+    Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Contain Any  ${date}  ${get}
+    Run Keyword If  '${status}' == 'False'
+    ...  Заповнити "Строк поставки з"  ${date}  ${prod date}
+
+
+Заповнити "Строк поставки по"
+    [Arguments]  ${date}  ${prod date}=None
+    ${selector}  set variable  //*[@data-name="DDATETO"]//input
+    Clear input By JS  ${selector}
+    Run Keyword If  '${site}' == 'prod'  Input Text  ${selector}  ${prod date}
+    Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Contain Any  ${date}  ${get}
+    Run Keyword If  '${status}' == 'False'
+    ...  Заповнити "Строк поставки по"  ${date}  ${prod date}
 
 
 Заповнити "Очікувана вартість закупівлі"
@@ -198,33 +229,13 @@ Resource        create_tender_keywords.robot
 Заповнити "Місто"
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='CITY_KOD']//input[not(contains(@type,'hidden'))]
-    Заповнити текстове поле  ${selector}  ${value}
+    Clear input By JS  ${selector}
+    Input Text  ${selector}  ${value}
+    Press Key  ${selector}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${selector}  value
+    ${status}  Run Keyword And Return Status  Should Contain Any  ${get}  ${value}
+    Run Keyword If  '${status}' == 'False'  Заповнити "Місто"  ${value}
     [Return]  ${value}
-
-
-Заповнити "Строк поставки з"
-    [Arguments]  ${value}
-    ${selector}  set variable  //*[@data-name="DDATEFROM"]//input
-    Clear input By JS  ${selector}
-    Input Text  ${selector}  ${value}
-    Press Key  ${selector}  \\13
-    Sleep  1
-    ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Contain Any  ${value}  ${get}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
-    ...  Заповнити "Строк поставки з"  ${value}
-
-
-Заповнити "Строк поставки по"
-    [Arguments]  ${value}
-    ${selector}  set variable  //*[@data-name="DDATETO"]//input
-    Clear input By JS  ${selector}
-    Input Text  ${selector}  ${value}
-    Press Key  ${selector}  \\13
-    Sleep  1
-    ${get}  Get Element Attribute  ${selector}  value
-    ${status}  Run Keyword And Return Status  Should Contain Any  ${value}  ${get}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
-    ...  Заповнити "Строк поставки по"  ${value}
 
 

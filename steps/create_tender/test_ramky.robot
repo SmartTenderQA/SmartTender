@@ -54,13 +54,13 @@
 Заповнити amount для lot
     ${amount}  random_number  100000  100000000
     Заповнити "Очікувана вартість закупівлі" для лоту  ${amount}
-    Set To Dictionary  ${data['value']}  amount  ${amount}
+    Set To Dictionary  ${data['value']}  amount  '${amount}'
 
 
 Заповнити minimalStep для lot
     ${minimal_step_percent}  random_number  1  5
     ${amount}  Заповнити "Мінімальний крок аукціону" для лоту   ${minimal_step_percent}
-    Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
+    Set To Dictionary  ${data['minimalStep']}  amount  '${amount}'
 
 
 Заповнити title для tender

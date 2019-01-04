@@ -75,16 +75,9 @@ If skipped create tender
 	Go to  ${data['tender_href']}
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
+	${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  10m  5
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
-
-
-Неможливість отримати поcилання на участь в аукціоні
-	[Template]  Неможливість отримати поcилання на участь в аукціоні(keyword)
-	viewer
-	tender_owner
-	provider2
 
 
 
@@ -129,38 +122,6 @@ If skipped create tender
     Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //a[contains(text(), "Перейти")]
     Open Button  //a[contains(text(), "Перейти")]
-
-
-Неможливість отримати поcилання на участь в аукціоні(keyword)
-	[Arguments]  ${user}
-	Завантажити сесію для  ${user}
-	Go to  ${data['tender_href']}
-	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
-	...  Натиснути кнопку "До аукціону"
-	...  AND  Отримати URL для участі в аукціоні
-
-
-Отримати посилання на участь в аукціоні
-    Go To  ${auction_href}
-	#Reload Page
-	Натиснути кнопку  До аукціону
-	Натиснути кнопку  Взяти участь в аукціоні
-	${auction_href}  Отримати посилання
-	[Return]  ${auction_href}
-
-
-Натиснути кнопку
-	[Arguments]  ${text}
-	${selector}  Set Variable  //button[@type="button" and contains(., "${text}")]
-	Wait Until Page Contains Element  ${selector}
-	Click Element  ${selector}
-
-
-Отримати посилання
-	${selector}  Set Variable  //a[@href and contains(., "До аукціону")]
-	Wait Until Page Contains Element  ${selector}  120
-	${auction_href}  Get Element Attribute  ${selector}  href
-	[Return]  ${auction_href}
 
 
 Перейти та перевірити сторінку участі в аукціоні

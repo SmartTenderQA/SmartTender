@@ -5,21 +5,6 @@
     Should Be Equal  '${status should}'  '${status is}'
 
 
-Парсінг за необхідністью
-    [Arguments]  ${field}  ${value}
-    ${result}  convert_page_values  ${field}  ${value}
-    [Return]  ${result}
-
-
-
-
-
-Отримати локатор по назві поля
-	[Arguments]  ${field}
-	${selector}  Set Variable  ${${field}}
-	[Return]  ${selector}
-
-
 Дочекатись закінчення прийому пропозицій
     Reload Page
     ${tender end date}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderPeriod']['endDate']
