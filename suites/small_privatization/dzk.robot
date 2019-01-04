@@ -80,7 +80,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  compare
 	[Setup]  Run Keywords
 	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
-	...  Wait Until Keyword Succeeds  5m  15s  dzk_auction.Дочекатися довантаження даних з ЦБД
+	...  Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
 	\['lotIdentifier']
@@ -232,6 +232,14 @@ Precondition
     ...  Додати користувача          user2           	provider2     	AND
     ...  Додати користувача          user3           	provider3     	AND
     ...  Додати користувача          test_viewer     	viewer
+
+
+Дочекатися довантаження даних з ЦБД
+	Reload Page
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${title locator}  Set Variable  ${view_locators['title']}
+	${title}  Get Text  ${title locator}
+	Should Contain  ${title}  [ТЕСТУВАННЯ]
 
 
 Знайти аукціон користувачем

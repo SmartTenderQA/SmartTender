@@ -57,7 +57,6 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 
 Отримати ID у цбд
-	Дочекатись закінчення загрузки сторінки(skeleton)
     ${cdb locator}  Set Variable  //*[text()='Перейти']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
@@ -73,15 +72,10 @@ ${notice message}			//*[@class='ivu-notice-desc']
 	...  AND  Розгорнути детальну інформацію по всіх полях (за необхідністю)
 
 
-Дочекатися довантаження даних з ЦБД
-	Reload Page
-	Дочекатись закінчення загрузки сторінки(skeleton)
-	${title locator}  Set Variable  ${view_locators['title']}
-	${title}  Get Text  ${title locator}
-	Should Contain  ${title}  [ТЕСТУВАННЯ]
 ###########################################################################
 ################################# /COMMON #################################
 ###########################################################################
+
 
 
 
