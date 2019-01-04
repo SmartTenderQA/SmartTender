@@ -16,8 +16,8 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
     Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  протокол
-    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  протокол  Так  ELSE
-    ...  Підтвердити організатором формування протоколу розгляду пропозицій
+    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  протокол  Так
+    Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
