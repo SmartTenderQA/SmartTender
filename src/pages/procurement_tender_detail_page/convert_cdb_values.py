@@ -20,7 +20,7 @@ def convert_cdb_values(field, value):
     return ret
 
 
-def convert__value(value):
+def convert_value(value):
     if re.match('^\d+\s?\d+\s?\d+[.]?\d*$', str(value)):
         return float(str(value).replace(" ", ""))
     else:

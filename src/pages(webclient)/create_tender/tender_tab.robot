@@ -42,7 +42,7 @@ Resource        create_tender_keywords.robot
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    Run Keyword If  '${status}' == 'False'
     ...  Заповнити "Обговорення закупівлі до"  ${value}
 
 
@@ -55,7 +55,7 @@ Resource        create_tender_keywords.robot
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    Run Keyword If  '${status}' == 'False'
     ...  Заповнити "Прийом пропозицій з"  ${value}
 
 
@@ -68,7 +68,7 @@ Resource        create_tender_keywords.robot
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
-    Run Keyword If  ('${status}' == 'False') and ('${site}' == 'test')
+    Run Keyword If  '${status}' == 'False'
     ...  Заповнити "Прийом пропозицій по"  ${value}
 
 
