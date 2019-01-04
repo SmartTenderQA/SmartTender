@@ -83,7 +83,6 @@ Resource        create_tender_keywords.robot
     Run Keyword If  '${site}' == 'test'  Input Text  ${selector}  ${date}
     Press Key  ${selector}  \\13
     Sleep  1
-    debug
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Contain Any  ${date}  ${get}
     Run Keyword If  '${status}' == 'False'
