@@ -91,6 +91,8 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Завантажити сесію для  provider1
+    Go To  ${data['tender_href']}
 	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
     Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1

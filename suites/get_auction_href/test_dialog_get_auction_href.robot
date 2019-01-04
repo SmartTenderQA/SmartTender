@@ -123,7 +123,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
     desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
-    main_page.Вибрати тендер за номером (webclient)  2
+    main_page.Вибрати тендер за номером (webclient)  1
     Wait Until Keyword Succeeds  3m  3  Перейти до другого етапу
     actions.Опублікувати процедуру
 

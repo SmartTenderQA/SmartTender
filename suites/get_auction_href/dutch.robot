@@ -75,7 +75,7 @@ If skipped create tender
 	Go to  ${data['tender_href']}
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
-	${auction_participate_href}  ${auction_href}
+	${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  10m  5
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
 
