@@ -3,6 +3,7 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
+  	debug
   	below.Заповнити endDate періоду обговорення
   	below.Заповнити startDate періоду пропозицій
   	below.Заповнити endDate періоду пропозицій
@@ -23,24 +24,21 @@
 Заповнити endDate періоду обговорення
     ${date}  get_time_now_with_deviation  5  minutes
     ${prod date}  service.get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Обговорення закупівлі до"  ${date}
+    Заповнити "Обговорення закупівлі до"  ${date}  ${prod date}
     Set To Dictionary  ${data['enquiryPeriod']}  endDate  ${date}
 
 
 Заповнити startDate періоду пропозицій
     ${date}  get_time_now_with_deviation  6  minutes
     ${prod date}  service.get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Прийом пропозицій з"  ${date}
+    Заповнити "Прийом пропозицій з"  ${date}  ${prod date}
     Set To Dictionary  ${data['tenderPeriod']}  startDate  ${date}
 
 
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  25  minutes
     ${prod date}  service.get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Прийом пропозицій по"  ${date}
+    Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
@@ -137,16 +135,14 @@
 Заповнити startDate для item
     ${date}  get_time_now_with_deviation  1  days
     ${prod date}  service.get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Строк поставки з"  ${date}
+    Заповнити "Строк поставки з"  ${date}  ${prod date}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${date}
 
 
 Заповнити endDate для item
     ${date}  get_time_now_with_deviation  2  days
     ${prod date}  service.get_only_numbers  ${date}
-    ${date}  Set Variable If  '${site}' == 'prod'  ${prod date}  ${date}
-    Заповнити "Строк поставки з"  ${date}
+    Заповнити "Строк поставки з"  ${date}  ${prod date}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${date}
 
 
