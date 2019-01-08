@@ -267,7 +267,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
-	provider3
+
+#todo ubrat` posle reliza
+#provider3
 
 
 *** Keywords ***
