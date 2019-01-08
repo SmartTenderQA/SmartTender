@@ -22,7 +22,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
 	cdb1_sale_property.Створити тендер  ${type_dict['${type}']}
-	debug
 
 
 If skipped create tender
@@ -87,13 +86,11 @@ If skipped create tender
 	:FOR  ${i}  IN  tender_owner  provider3  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
-    \  Натиснути кнопку "Перегляд аукціону"
-	\  ${auction_href}  Отримати URL на перегляд
-	\  ${auction_participate_href}  Run Keyword And Expect Error  *  Отримати URL для участі в аукціоні
+	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
-new case
-	debug
+
 
 
 *** Keywords ***
@@ -138,9 +135,8 @@ Precondition
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
 	Reload Page
-	Натиснути кнопку "До аукціону"
-	${auction_participate_href}  Отримати URL для участі в аукціоні
-	${auction_href}  			Отримати URL на перегляд
+	${auction_participate_href}  ${auction_href}
+	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
 	Перевірити сторінку участі в аукціоні  ${auction_participate_href}
 

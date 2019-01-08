@@ -28,11 +28,12 @@ def convert_page_values(field, value):
         if 'unit' in field:
             ret = list.group('unit')
         elif 'quantity' in field:
-            ret = list.group('quantity')
+            ret = int(list.group('quantity'))
     elif 'amount' in field:
         ret = re.search(u'(?P<amount>[\d\s.?,]+).*', value).group('amount')
         ret = ret.replace(' ', '')
         ret = ret.replace(',', '.')
+        ret = float(ret)
     elif 'agreementDuration' in field:
         ret = get_only_numbers(value)
     else:

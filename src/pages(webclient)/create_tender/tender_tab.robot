@@ -107,6 +107,8 @@ Resource        create_tender_keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="INITAMOUNT"]//input
     Заповнити текстове поле  ${selector}  ${value}
+    ${amount}  Evaluate  float(${value})
+    [Return]  ${amount}
 
 
 Заповнити "Очікувана вартість закупівлі" для лоту
@@ -115,6 +117,7 @@ Resource        create_tender_keywords.robot
     ${amount field}  Set Variable  //*[@data-name="LOT_MINSTEP"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  ${amount field}  value
+    ${amount}  Evaluate  float(${value})
     [Return]  ${amount}
 
 
@@ -123,7 +126,7 @@ Resource        create_tender_keywords.robot
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="MINSTEP"]//input  value
-    ${amount}  Set Variable  ${amount.replace(" ", "")}
+    ${amount}  Evaluate  float(str(${amount}).replace(" ", ""))
     [Return]  ${amount}
 
 
@@ -132,7 +135,7 @@ Resource        create_tender_keywords.robot
     ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
     ${amount}  Get Element Attribute  //*[@data-name="LOT_MINSTEP"]//input  value
-    ${amount}  Set Variable  ${amount.replace(" ", "")}
+    ${amount}  Evaluate  float(str(${amount}).replace(" ", ""))
     [Return]  ${amount}
 
 

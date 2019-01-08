@@ -287,10 +287,3 @@ def get_checksum_md5(file):
         buf = afile.read()
         hasher.update(buf)
         return hasher.hexdigest()
-
-
-def convert_input_value(value):
-    if re.match('^\d+\s?\d+\s?\d+[.]?\d*$', str(value)):
-        return float(str(value).replace(" ", ""))
-    else:
-        return str(value)

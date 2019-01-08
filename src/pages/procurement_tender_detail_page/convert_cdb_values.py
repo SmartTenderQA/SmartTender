@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-import re
+#import re
 import sys
 
 sys.path.append('../../src/')
@@ -16,12 +16,6 @@ def convert_cdb_values(field, value):
     elif 'agreementDuration' in field:
         ret = get_only_numbers(value)
     else:
-        ret = convert_value(value)
+        ret = value
     return ret
 
-
-def convert_value(value):
-    if re.match('^\d+\s?\d+\s?\d+[.]?\d*$', str(value)):
-        return float(str(value).replace(" ", ""))
-    else:
-        return str(value)
