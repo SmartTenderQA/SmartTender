@@ -142,7 +142,7 @@
 Заповнити endDate для item
     ${date}  get_time_now_with_deviation  2  days
     ${prod date}  service.get_only_numbers  ${date}
-    tender_tab.Заповнити "Строк поставки з"  ${date}  ${prod date}
+    tender_tab.Заповнити "Строк поставки по"  ${date}  ${prod date}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${date}
 
 
