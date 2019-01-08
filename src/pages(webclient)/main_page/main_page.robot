@@ -28,7 +28,7 @@
 
 Порахувати кількість торгів (webclient)
     ${n}  Get Element Count  xpath=(//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])//td[2]
-    Should Not Be Empty  ${n}  Не знайдено жодного тендера!
+    Run Keyword If  '${n}' == '0'  Не знайдено жодного тендера!
     [Return]  ${n}
 
 
