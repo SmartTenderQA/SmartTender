@@ -191,7 +191,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку прийому пропозицій
 	[Tags]  -prod
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  25 min
 	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
