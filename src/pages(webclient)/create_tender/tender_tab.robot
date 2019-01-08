@@ -44,7 +44,7 @@ Resource        create_tender_keywords.robot
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
     Run Keyword If  '${status}' == 'False'
-    ...  Заповнити "Обговорення закупівлі до"  ${date}  ${prod date}
+    ...  tender_tab.Заповнити "Обговорення закупівлі до"  ${date}  ${prod date}
 
 
 Заповнити "Прийом пропозицій з"
@@ -58,7 +58,7 @@ Resource        create_tender_keywords.robot
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
     Run Keyword If  '${status}' == 'False'
-    ...  Заповнити "Прийом пропозицій з"  ${date}  ${prod date}
+    ...  tender_tab.Заповнити "Прийом пропозицій з"  ${date}  ${prod date}
 
 
 Заповнити "Прийом пропозицій по"
@@ -72,7 +72,7 @@ Resource        create_tender_keywords.robot
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${date}
     Run Keyword If  '${status}' == 'False'
-    ...  Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
+    ...  tender_tab.Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
 
 
 Заповнити "Строк поставки з"
@@ -86,7 +86,7 @@ Resource        create_tender_keywords.robot
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Contain Any  ${date}  ${get}
     Run Keyword If  '${status}' == 'False'
-    ...  Заповнити "Строк поставки з"  ${date}  ${prod date}
+    ...  tender_tab.Заповнити "Строк поставки з"  ${date}  ${prod date}
 
 
 Заповнити "Строк поставки по"
@@ -100,7 +100,7 @@ Resource        create_tender_keywords.robot
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Contain Any  ${date}  ${get}
     Run Keyword If  '${status}' == 'False'
-    ...  Заповнити "Строк поставки по"  ${date}  ${prod date}
+    ...  tender_tab.Заповнити "Строк поставки по"  ${date}  ${prod date}
 
 
 Заповнити "Очікувана вартість закупівлі"
@@ -238,7 +238,7 @@ Resource        create_tender_keywords.robot
     Sleep  1
     ${get}  Get Element Attribute  ${selector}  value
     ${status}  Run Keyword And Return Status  Should Contain Any  ${get}  ${value}
-    Run Keyword If  '${status}' == 'False'  Заповнити "Місто"  ${value}
+    Run Keyword If  '${status}' == 'False'  tender_tab.Заповнити "Місто"  ${value}
     [Return]  ${value}
 
 
