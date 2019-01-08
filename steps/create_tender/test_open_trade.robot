@@ -20,18 +20,18 @@
 #########################################################
 Заповнити endDate періоду пропозицій
     ${date}  get_time_now_with_deviation  37  minutes
-    Заповнити "Прийом пропозицій по"  ${date}
+    tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
 
 Заповнити contact для tender
-    ${person}  Вибрати "Контактна особа"
+    ${person}  tender_tab.Вибрати "Контактна особа"
     Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${person}
 
 
 Заповнити amount для tender
     ${amount}  random_number  100000  100000000
-    ${amount}  Заповнити "Очікувана вартість закупівлі"  ${amount}
+    ${amount}  tender_tab.Заповнити "Очікувана вартість закупівлі"  ${amount}
     Set To Dictionary  ${data['value']}  amount  ${amount}
 
 
@@ -44,13 +44,13 @@
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
-    Заповнити "Узагальнена назва закупівлі"   ${title}
+    tender_tab.Заповнити "Узагальнена назва закупівлі"   ${title}
     Set To Dictionary  ${data}  title  ${title}
 
 
 Заповнити description для tender
     ${description}  create_sentence  15
-    Заповнити "Примітки до закупівлі"  ${description}
+    tender_tab.Заповнити "Примітки до закупівлі"  ${description}
     Set To Dictionary  ${data}  description  ${description}
 
 Додати предмет в тендер
@@ -67,18 +67,18 @@
 
 Заповнити description для item
     ${description}  create_sentence  5
-    Заповнити "Назва предмета закупівлі"  ${description}
+    tender_tab.Заповнити "Назва предмета закупівлі"  ${description}
     Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити quantity для item
     ${quantity}  random_number  1  1000
-    Заповнити "Об'єм постачання"  ${quantity}
+    tender_tab.Заповнити "Об'єм постачання"  ${quantity}
     Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити id для item
-    ${value}    Заповнити "Класифікація"
+    ${value}    tender_tab.Заповнити "Класифікація"
     ${id}       Evaluate  re.search(r'(?P<id>\\d.+)', u'${value}').group('id')  re
     ${description}  Evaluate  re.search(r'(?P<description>\\D.+) ', u'${value}').group('description')  re
     Set To Dictionary  ${data['items'][0]['classification']}  id  ${id}
@@ -92,30 +92,30 @@
 
 Заповнити postalCode для item
     ${postal code}  random_number  10000  99999
-    Заповнити "Індекс"  ${postal code}
+    tender_tab.Заповнити "Індекс"  ${postal code}
     Set To Dictionary  ${data['items'][0]['deliveryAddress']}  postalCode  ${postal code}
 
 
 Заповнити streetAddress для item
     ${street}  get_some_uuid
-    Заповнити "Вулиця"  ${street}
+    tender_tab.Заповнити "Вулиця"  ${street}
     Set To Dictionary  ${data['items'][0]['deliveryAddress']}  streetAddress  ${street}
 
 
 Заповнити locality для item
-    ${city}  Заповнити "Місто"  Мюнхен
+    ${city}  tender_tab.Заповнити "Місто"  Мюнхен
     Set To Dictionary  ${data['items'][0]['deliveryAddress']}  locality  ${city}
 
 
 Заповнити startDate для item
     ${value}  get_time_now_with_deviation  1  days
-    Заповнити "Строк поставки з"  ${value}
+    tender_tab.Заповнити "Строк поставки з"  ${value}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  startDate  ${value}
 
 
 Заповнити endDate для item
     ${value}  get_time_now_with_deviation  2  days
-    Заповнити "Строк поставки по"  ${value}
+    tender_tab.Заповнити "Строк поставки по"  ${value}
     Set To Dictionary  ${data['items'][0]['deliveryDate']}  endDate  ${value}
 
 

@@ -24,7 +24,7 @@
 #########################################################
 Заповнити кількість учасників для укладання РУ
     ${maxAwardsCount}  Set Variable  3
-    Заповнити "Кількість переможців"  ${maxAwardsCount}
+    tender_tab.ЗаповнитиКількість переможців"  ${maxAwardsCount}
     Set To Dictionary  ${data}  maxAwardsCount  ${maxAwardsCount}
 
 
