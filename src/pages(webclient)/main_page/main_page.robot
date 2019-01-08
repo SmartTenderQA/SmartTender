@@ -74,5 +74,4 @@
     ${now}  Get Text  ${selector}
     ${status}  Run Keyword And Return Status  Should Contain  ${now}  ${stage}
     Run Keyword If  '${status}' == 'False'  Run Keywords
-    ...  Sleep  30  AND  Дочекатись стадії закупівлі  ${stage}
-    ...
+    ...  Sleep  5  AND  Дочекатись стадії закупівлі  ${stage}
