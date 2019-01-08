@@ -10,7 +10,7 @@
 	Scroll Page To Element XPATH  ${selector}
 	Click Element  ${selector}
 	Sleep  .5
-	Очистити поле  ${selector}
+	Run Keyword And Ignore Error  Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13
@@ -22,25 +22,12 @@
 	Scroll Page To Element XPATH  ${selector}
 	Click Element  ${selector}
 	Sleep  .5
-	Очистити поле  ${selector}
+	Run Keyword And Ignore Error  Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	${got}  Evaluate  '${got}'.replace(' ','')
 	Press Key  ${selector}  \\13
 	Should Be Equal  ${got}  ${text}
-
-
-Очистити поле
-    [Arguments]    ${selector}
-    :FOR    ${i}    IN RANGE    10
-    \  ${text}  Get Element Attribute  ${selector}  value
-    \  ${length}  Get Length  ${text}
-    \  Exit For Loop If    ${length} == 0
-    \  Click Element  ${selector}
-    \  Sleep  .5
-    \  Click Element  ${selector}
-    \  Sleep  .5
-    \  Press Key  ${selector}  \\8
 
 
 Вибрати та повернути елемент з випадаючого списку за назвою

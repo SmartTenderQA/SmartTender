@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/dgfOtherAssets/dgfOtherAssets_variables.py
+Library  ../../src/pages/dgfAssets/dgfAssets_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -16,12 +16,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfOtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	cdb1_sale_property.Створити тендер  ${type_dict['${type}']}
+	sale_dgfAssets.Створити тендер  ${type_dict['${type}']}
 
 
 If skipped create tender
@@ -33,7 +33,10 @@ If skipped create tender
 
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare
-	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
+	Знайти тендер користувачем  tender_owner
+	synchronization.Дочекатись синхронізації  auctions
+	dzk_auction.Отримати ID у цбд
+	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
 
@@ -41,6 +44,62 @@ If skipped create tender
 Порівняти введені дані з даними в ЦБД
 	[Tags]  compare
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['date']  m
+	\['dgfDecisionID']
+	\['dgfDecisionDate']  d
+	\['value']['amount']
+	\['minimalStep']['amount']
+	\['title']
+	\['dgfID']
+	\['description']
+	\['items'][0]['description']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+
+
+Перевірити відображення детальної інформації
+	[Tags]  compare
+	[Setup]  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['title']
+	\['dgfID']
+	\['auctionID']
+	\['description']
+	\['value']['amount']
+	\['value']['valueAddedTaxIncluded']
+	\['enquiryPeriod']['startDate']
+	\['enquiryPeriod']['endDate']
+	\['tenderPeriod']['startDate']
+	\['tenderPeriod']['endDate']
+	\['auctionPeriod']['startDate']
+	\['dgfDecisionID']
+	\['dgfDecisionDate']  d
+	\['minimalStep']['amount']
+	\['guarantee']['amount']
+	\['procuringEntity']['identifier']['legalName']
+	\['procuringEntity']['identifier']['id']
+	\['procuringEntity']['contactPoint']['name']
+	\['procuringEntity']['contactPoint']['telephone']
+	\['procuringEntity']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
 
 
 Знайти тендер учасниками
@@ -73,7 +132,7 @@ If skipped create tender
 
 Дочекатися початку аукціону першим учасником
 	Завантажити сесію для  provider1
-	Дочекатись дати  ${data['auctionPeriods']['startDate']}
+	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  10m
 
 
@@ -90,14 +149,17 @@ If skipped create tender
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
-
+Забрати гарантійний внесок учасниками
+	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
+	Забрати гарантійний внесок учасником  provider1
+	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  provider2
 
 
 *** Keywords ***
 Precondition
-	${edit_locators}  dgfOtherAssets_variables.get_edit_locators
-	${view_locators}  dgfOtherAssets_variables.get_view_locators
-	${data}  dgfOtherAssets_variables.get_data
+	${edit_locators}  dgfAssets_variables.get_edit_locators
+	${view_locators}  dgfAssets_variables.get_view_locators
+	${data}  dgfAssets_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}
@@ -157,3 +219,27 @@ Precondition
 	Run Keyword If  ${status} != ${True}  Element Should Contain  //h4  Вхід на даний момент закритий.
 	Go back
 
+
+Забрати гарантійний внесок учасником
+	[Arguments]  ${user}
+	Завантажити сесію для  ${user}
+	Натиснути "Забрати гарантійний внесок"
+	Натиснути "Відмовитися від участі"
+	#todo Тут нужно доделать после того как поймем, что и как
+
+
+Натиснути "Забрати гарантійний внесок"
+	${get guarantee locator}  Set Variable  //*[@class='action-block-item text-center']//button[contains(.,'Забрати гарантійний внесок')]
+	${frame locator}  Set Variable  //*[@class='ivu-modal-content']//iframe
+	Click Element  ${get guarantee locator}
+	Wait Until Page Contains Element  ${frame locator}
+	Select Frame  ${frame locator}
+	Wait Until Element Is Visible  //*[text()='Відмовитись від участі?']
+
+
+Натиснути "Відмовитися від участі"
+	Click Element  //*[@id='firstYes']
+	Wait Until Element Is Not Visible  //*[@id='firstYes']
+	Wait Until Element Is Visible  //*[text()='Ви впевнені? Дана дія має незворотній характер!']
+	Click Element  //*[@id='secondYes']
+	Wait Until Element Is Not Visible  //*[@id='secondYes']

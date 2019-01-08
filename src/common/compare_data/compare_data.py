@@ -8,7 +8,7 @@ def compare_values(first_value, second_value):
 
 
 def convert_cdb_values_to_edit_format(field, value, time_format='s'):
-    if 'Period' in field or 'Date' in field:
+    if 'Period' in field or 'Date' in field or 'date' in field:
         if time_format == 's':
             list = re.search(u'(?P<year>^\d+)-(?P<month>\d+)-(?P<day>\d+)T(?P<hours>\d+):(?P<minutes>\d+):(?P<seconds>\d+)', value)
             return list.group('day')+'.'+list.group('month')+'.'+list.group('year')+' '+list.group('hours')+':'+list.group('minutes')+':'+list.group('seconds')
@@ -21,7 +21,7 @@ def convert_cdb_values_to_edit_format(field, value, time_format='s'):
     elif 'accountIdentification' in field and 'description' in field:
         return value.replace('[Реквізити рахунку (рахунків) виконавця для сплати винагороди та/або витрат на підготовку] ', '')
     elif re.match(u'^\d+[.]?\d*$', str(value)):
-        return str(float(value))
+        return repr(float(value))
     elif 'lassification' in field and 'scheme' in field and not '1' in field:
         return classification_scheme_dictionary[value]
     elif 'accountIdentification' in field and 'scheme' in field:
@@ -92,6 +92,12 @@ def convert_viewed_values_to_edit_format(field, value):
             return list.group('decisionID')
         elif 'decisionDate' in field:
             return list.group('decisionDate')
+    elif 'dgfDecision' in field:
+        list = re.search(u'(?P<ID>^\S+).{5}(?P<Date>[0-9.]+)', value)
+        if 'ID' in field:
+            return list.group('ID')
+        elif 'Date' in field:
+            return list.group('Date')
     return value
 
 
@@ -99,6 +105,7 @@ classification_scheme_dictionary = {
     u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',
     u'kvtspz': u'КВЦПЗ',
+    u"CAV": u"CAV"
 }
 
 
