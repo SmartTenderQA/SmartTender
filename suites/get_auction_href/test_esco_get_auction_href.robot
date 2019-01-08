@@ -43,7 +43,6 @@ If skipped create tender
     [Tags]  view
     [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
     \['title']
-    \['description']
     \['tenderID']
     \['items'][0]['description']
     \['items'][0]['deliveryAddress']['locality']
@@ -56,7 +55,6 @@ If skipped create tender
     [Tags]  view
     [Template]  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД
     \['title']
-    \['description']
     \['tenderID']
     \['items'][0]['description']
     \['items'][0]['deliveryAddress']['locality']

@@ -53,9 +53,7 @@ If skipped create tender
     \['items'][0]['classification']['description']
     \['items'][0]['unit']['name']
     \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
     \['value']['amount']
     \['minimalStep']['amount']
 
@@ -74,9 +72,7 @@ If skipped create tender
     \['items'][0]['classification']['description']
     \['items'][0]['unit']['name']
     \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
     \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
     \['value']['amount']
     \['minimalStep']['amount']
 

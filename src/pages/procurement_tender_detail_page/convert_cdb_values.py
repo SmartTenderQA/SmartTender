@@ -15,6 +15,10 @@ def convert_cdb_values(field, value):
         ret = convert_datetime_to_smart_format(value, 'm')
     elif 'agreementDuration' in field:
         ret = get_only_numbers(value)
+    elif 'locality' in field:
+        ret = str(value).decode("utf-8")
+    elif 'quantity' in field:
+        ret = str(value)
     else:
         ret = value
     return ret

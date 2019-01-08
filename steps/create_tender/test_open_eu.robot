@@ -37,6 +37,7 @@
 Заповнити minimalStep для tender
     ${minimal_step_percent}  random_number  1  5
     ${amount}  tender_tab.Заповнити "Мінімальний крок аукціону"   ${minimal_step_percent}
+    ${amount}  Evaluate  (${data['value']['amount']} * ${minimal_step_percent})/100
     Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
 
 

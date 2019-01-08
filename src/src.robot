@@ -227,6 +227,14 @@ Clear input By JS
     ...  document.evaluate('${xpath}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.value=""
 
 
+Визначити колір елемента
+  [Arguments]  ${selector}
+  ${elem}  Get Webelement  ${selector}
+  ${elem color}  Call Method  ${elem}  value_of_css_property  background-color
+  [Return]  ${elem color}
+
+
+
 Scroll Page To Top
 	Execute JavaScript  window.scrollTo(0,0);
 

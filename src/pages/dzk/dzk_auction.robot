@@ -58,6 +58,7 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 Отримати ID у цбд
     ${cdb locator}  Set Variable  //*[text()='Перейти']
+    Wait Until Element Is Visible  ${cdb locator}  120
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
     Set To Dictionary  ${data}  id  ${cdb id}
