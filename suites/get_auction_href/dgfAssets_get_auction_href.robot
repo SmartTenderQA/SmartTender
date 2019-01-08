@@ -196,7 +196,7 @@ Precondition
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
-	Reload Page
+	Go To  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
