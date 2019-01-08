@@ -253,10 +253,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
-	\  Натиснути кнопку "До аукціону"
-	\  ${viewer_href}  Отримати URL на перегляд
+	\  ${participate_href}  ${viewer_href}  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
     \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
-	\  ${participate_href}  Wait Until Keyword Succeeds  60  3  Отримати URL для участі в аукціоні
 	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
 	\  Перейти та перевірити сторінку участі в аукціоні  ${participate_href}
 	\  Go Back
@@ -356,9 +354,8 @@ Postcondition
 	Завантажити сесію для  ${user}
 	Go to  ${data['tender_href']}
 	Дочекатись закінчення загрузки сторінки(skeleton)
-	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
-	...  Натиснути кнопку "До аукціону"
-	...  AND  Отримати URL для участі в аукціоні
+	${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
+	Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
 
 Натиснути на кнопку подачі пропозиції
