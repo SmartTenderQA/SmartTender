@@ -150,6 +150,7 @@ If skipped create tender
 
 
 Забрати гарантійний внесок учасниками
+	[Tags]  broken
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
 	Забрати гарантійний внесок учасником  provider1
 	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  provider2
