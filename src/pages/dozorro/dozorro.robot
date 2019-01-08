@@ -36,6 +36,5 @@ ${review_list_close}                 xpath=//*[@class='ivu-modal' and not(contai
 
 Подати коментар
     Click Element  xpath=//*[@type="submit"]
-    Wait Until Element Is Not Visible  xpath=//*[@type="submit"]  20s
     Дочекатись закінчення загрузки сторінки
-    Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  20s
+    Wait Until Element Is Not Visible  xpath=//*[@type="submit"]  120s
