@@ -152,7 +152,7 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  provider4  viewer
+	:FOR  ${i}  IN  tender_owner  viewer  #provider4
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
