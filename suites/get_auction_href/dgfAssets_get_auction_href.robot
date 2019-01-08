@@ -211,9 +211,9 @@ Precondition
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit_name']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	${status}  Run Keyword And Return Status
 	...  Element Should Contain  //h4  Ви зареєстровані як учасник. Очікуйте старту аукціону.
 	Run Keyword If  ${status} != ${True}  Element Should Contain  //h4  Вхід на даний момент закритий.
