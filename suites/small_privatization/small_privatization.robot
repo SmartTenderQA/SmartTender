@@ -342,10 +342,10 @@ Postcondition
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${data['object']['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['count']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['object']['item']['unit']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
