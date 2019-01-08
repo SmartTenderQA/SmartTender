@@ -115,15 +115,17 @@ If skipped create tender
     Завантажити сесію для  tender_owner
     desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
-    Wait Until Keyword Succeeds  3m  3  Перейти до другої фази
+    Wait Until Keyword Succeeds  3m  3  second_stage.Перейти до другої фази
     Завантажити сесію для  provider1
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
     Завантажити сесію для  tender_owner
     desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
-    main_page.Вибрати тендер за номером (webclient)  2
-    Wait Until Keyword Succeeds  3m  3  Перейти до другого етапу
+    ${n}  main_page.Порахувати кількість торгів (webclient)
+    Run Keyword If  '${n}' == '1'  main_page.Вибрати тендер за номером (webclient)  1
+    ...  ELSE  main_page.Вибрати тендер за номером (webclient)  2
+    Wait Until Keyword Succeeds  3m  3  second_stage.Перейти до другого етапу
     actions.Опублікувати процедуру
 
 

@@ -15,11 +15,9 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     \  Надати рішення про допуск до аукціону учасника  ${i}
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
     Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains  протокол
-    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  протокол  Так
-    ${stage status}  main_page.Дочекатись стадії закупівлі  Пре-квалификация(Stand-Still)
-    Run Keyword If  '${stage status}' == 'False'
-    ...  Підтвердити організатором формування протоколу розгляду пропозицій
+    ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій
+    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так
+    Run Keyword And Ignore Error  Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
@@ -60,4 +58,4 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     Вибрати тендер за номером (webclient)  1
     Натиснути кнопку Перечитать (Shift+F4)
     Натиснути надіслати вперед(Alt+Right)
-    Закрити валідаційне вікно (Так/Ні)  протокол  Так
+    Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так

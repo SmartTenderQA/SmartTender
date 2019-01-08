@@ -26,6 +26,12 @@
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
+Порахувати кількість торгів (webclient)
+    ${n}  Get Element Count  xpath=(//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])//td[2]
+    Should Not Be Empty  ${n}  Не знайдено жодного тендера!
+    [Return]  ${n}
+
+
 ###############################################
 #				  Search					  #
 ###############################################
