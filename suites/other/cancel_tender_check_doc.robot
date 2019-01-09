@@ -35,6 +35,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Закупівля відмінена
     procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
+    ${reason block}  Get Text  //*[@data-qa="reason"]
+    Should Contain  ${reason block}  ${data['title']}
+
 
 
 
