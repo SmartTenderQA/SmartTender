@@ -140,9 +140,7 @@
 
 
 Заповнити "Країна предмету"
-	${name}  Set Variable  Україна
-	${countryName}  small_privatization_object.Заповнити items.0.address.countryName  ${name}
-	Set To Dictionary  ${data['items'][0]['address']}  countryName  ${countryName}
+	Set To Dictionary  ${data['items'][0]['address']}  countryName  Україна
 
 
 Заповнити "Місто предмету"
