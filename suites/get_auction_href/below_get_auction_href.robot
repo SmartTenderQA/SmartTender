@@ -102,7 +102,6 @@ If skipped create tender
     Додати першого користувача  prod_owner      tender_owner
     Додати користувача          prod_provider1  provider1
     Додати користувача          prod_provider2  provider2
-    Додати користувача          LLC             provider3
     Додати користувача          prod_viewer     viewer
 
 
