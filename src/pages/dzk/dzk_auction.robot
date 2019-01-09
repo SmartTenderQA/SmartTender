@@ -97,6 +97,7 @@ ${notice message}			//*[@class='ivu-notice-desc']
 	${items number}  random_number  1  ${items count}
 	${item name}  Get Text  (${items})[${items number}]
     Click Element  (${items})[${items number}]
+    Sleep  .5
    	Should Not Be Empty  ${item name}
     [Return]  ${item name}
 
