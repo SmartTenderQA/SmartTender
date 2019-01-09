@@ -31,6 +31,7 @@
   ...  AND  Wait Until Element Is Not Visible  ${webClient loading}  120
   ...  AND  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
 
+
 ###############################################
 #				Alt+Right					  #
 ###############################################

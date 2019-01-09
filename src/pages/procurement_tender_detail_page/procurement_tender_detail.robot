@@ -88,3 +88,11 @@ Variables       procurement_variables.py
     Run Keyword If  ${count} != 0  Run Keywords
     ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
     ...  Розгорнути всі експандери
+
+
+Відкрити вікно "Причина відміни" детальніше
+    ${selector}  Set Variable  //*[@data-qa="show-reason-button"]
+    Element Should Be Visible  ${selector}
+    Click Element  ${selector}
+    Element Text Should Be  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]
+    ...  Причина відміни

@@ -127,3 +127,10 @@
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку "Скасування тендеру"
+    ${selector}  Set Variable  //a[@title="Скасування тендеру"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
