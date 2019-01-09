@@ -22,11 +22,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Скасувати тендер
-    debug
     webclient_elements.Натиснути кнопку "Скасування тендеру"
     ${reason}  Вказати причину скасування тендера
+    Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
     Вибрати "Тип скасування"
     ${name}  Вкласти документ "Протокол скасування"
+    Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
     webclient_elements.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити тендер  Так
 
@@ -34,9 +35,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Перевірити скасування тендеру та наявність протоколу скасування
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Закупівля відмінена
-    procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
-    ${reason block}  Get Text  //*[@data-qa="reason"]
-    Should Contain  ${reason block}  ${data['title']}
+    :FOR  ${i}  IN  tender_owner  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+    \  procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
+    \  ${reason block}  Get Text  //*[@data-qa="reason"]
+    \  Should Contain  ${reason block}  ${data['title']}
+    \  Should Contain  ${reason block}  ${data['cancellations'][0]['reason']}
+    \  Should Contain  ${reason block}  ${data['cancellations'][0]['documents'][0]['title']}
 
 
 

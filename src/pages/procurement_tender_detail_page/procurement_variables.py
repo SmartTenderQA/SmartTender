@@ -144,6 +144,11 @@ data = {
                     "datePublished": ""
                 },
             ],
+            "reason": "",
+            "reasonType": "",
+            "date": "",
+            "cancellationOf": "",
+            "id": ""
         },
     ],
     "items": [
@@ -206,7 +211,25 @@ data = {
             "legalName": ""
         },
         "name_en": ""
-    }
+    },
+    "cancellations": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+        },
+    ]
 }
 
 
@@ -361,7 +384,30 @@ locators = {
             "legalName": ""
         },
         "name_en": ""
-    }
+    },
+    "cancellations": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "url": "",
+                    "dateModified": "",
+                    "format": "",
+                    "title": "",
+                    "id": "",
+                    "documentOf": "",
+                    "datePublished": ""
+                },
+            ],
+            "reason": "",
+            "reasonType": "",
+            "date": "",
+            "cancellationOf": "",
+            "id": ""
+        },
+    ]
 }
 
 
