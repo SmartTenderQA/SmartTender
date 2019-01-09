@@ -42,6 +42,8 @@ ${field_password}       //input[@type="password"]
 
 Перевірити наявність листа за темою
 	[Arguments]  ${title}
+	Reload Page
+	Wait Until Element Is Not Visible  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  10
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
 	${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
 	${time is}  Get Text  ${time selector}

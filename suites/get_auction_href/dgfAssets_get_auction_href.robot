@@ -142,7 +142,7 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  provider3  viewer
+	:FOR  ${i}  IN  tender_owner  viewer   #provider3
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
@@ -150,6 +150,7 @@ If skipped create tender
 
 
 Забрати гарантійний внесок учасниками
+	[Tags]  broken
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
 	Забрати гарантійний внесок учасником  provider1
 	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  provider2

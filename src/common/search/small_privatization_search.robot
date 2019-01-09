@@ -8,6 +8,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	[Documentation]  ${field_text} == Об'єкти приватизації|Реєстр інформаційних повідомлень
 	[Arguments]  ${field_text}
 	${selector}  Set Variable  //input[@type="radio"]/ancestor::label[contains(., "${field_text}")]
+	Wait Until Element Is Visible  ${selector}
 	${class}  Get Element Attribute  ${selector}  class
 	${status}  Run Keyword And Return Status  Should Contain  ${class}  checked
 	Run Keyword If  ${status} == ${False}  Run Keywords

@@ -86,6 +86,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Створити інформаційне повідомлення МП
 	[Setup]  Go To  ${start page}
+	Set Global Variable  ${asset_data}  ${data}
 	Завантажити variables.py для інформаційного повідомлення
 	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
@@ -190,7 +191,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку прийому пропозицій
 	[Tags]  -prod
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  15 min
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  25 min
 	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
 	small_privatization_auction.Отримати UAID та href для Аукціону
@@ -266,7 +267,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	viewer
 	tender_owner2
-	provider3
+
+#todo ubrat` posle reliza
+#provider3
 
 
 *** Keywords ***
@@ -342,10 +345,10 @@ Postcondition
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
-	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
+	Element Should Contain  //*[@class="lead ng-binding"]  ${asset_data['title']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['unit']['name']}
 	Element Should Contain  //h4  Вхід на даний момент закритий.
 
 
