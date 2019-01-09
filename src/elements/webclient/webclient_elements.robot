@@ -134,3 +134,10 @@
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку "Отмена лота"
+    ${selector}  Set Variable  //a[@title="Отмена лота"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)

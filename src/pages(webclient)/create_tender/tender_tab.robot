@@ -242,3 +242,21 @@ Resource        create_tender_keywords.robot
     [Return]  ${value}
 
 
+Встановити чекбокс "Мультилоти"
+    ${selector}  Set Variable  //*[@data-name="ISMULTYLOT"]
+    Click Element  ${selector}
+    Sleep  .5
+    ${status}  Run Keyword And Return Status
+    ...  Element Should Be Visible  ${selector}//span[contains(@class,"Checked")]
+    Run Keyword If  '${status}' == 'False'  Встановити чекбокс "Мультилоти"
+
+
+Змінити тип елементу на
+    [Arguments]  ${elem type}
+    ${selector}       Set Variable  (//*[@data-name="GRID_ITEMS_HIERARCHY"]//td[text()="Номенклатура"])[last()]
+    ${type selector}  Set Variable  //*[@class="dhxcombo_option_text"][text()="${elem type}"]
+    Click Element  ${selector}
+    Sleep  .5
+    Click Element  ${selector}
+    Wait Until Element Is Visible  ${type selector}
+    Click Element  ${type selector}

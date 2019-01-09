@@ -2,12 +2,17 @@
 Resource  ../../src/src.robot
 
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Run Keywords
-...                                        Log Location  AND
-...                                        Capture Page Screenshot
+Test Setup      Stop The Whole Test Execution If Previous Test Failed
+Test Teardown   Run Keyword If Test Failed  Run Keywords
+...                                         Log Location  AND
+...                                         Capture Page Screenshot
+
+*** Variables ***
+${multilot}                                False
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/other/cancel_tender_check_doc.robot
+
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e cancel_lot suites/cancellation/cancellation.robot
 *** Test Cases ***
 Підготувати користувачів
     Додати першого користувача  Bened           tender_owner
@@ -15,17 +20,33 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Створити тендер
-	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	test_open_trade.Створити тендер  Відкриті торги
+	Run Keyword If  '${multilot}' == 'True'
+	...  test_open_trade.Створити тендер (Мультилот)  Відкриті торги  ELSE
+	...  test_open_trade.Створити тендер  Відкриті торги
     test_open_trade.Отримати дані тендера та зберегти їх у файл
 
 
+Скасувати лот
+    [Tags]  cancel_lot
+    main_page.Вибрати лот за номером (webclient)  2
+    webclient_elements.Натиснути кнопку "Отмена лота"
+    ${reason}  Вказати причину скасування лота
+    Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
+    Вибрати "Тип скасування"  Торги відмінені
+    ${name}  Вкласти документ "Протокол скасування"
+    Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
+    webclient_elements.Натиснути OkButton
+    validation.Закрити валідаційне вікно (Так/Ні)  Вы действительно хотите отменить лот  Да
+
+
+
 Скасувати тендер
+    [Tags]  cancel_tender
     webclient_elements.Натиснути кнопку "Скасування тендеру"
     ${reason}  Вказати причину скасування тендера
     Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
-    Вибрати "Тип скасування"
+    Вибрати "Тип скасування"  Торги відмінені
     ${name}  Вкласти документ "Протокол скасування"
     Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
     webclient_elements.Натиснути OkButton
@@ -47,9 +68,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 
-
-
-
 *** Keywords ***
 Вказати причину скасування тендера
     ${input}  Set Variable  //*[@data-name="reason"]//textarea
@@ -61,8 +79,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     [Return]  ${text}
 
 
+Вказати причину скасування лота
+    ${input}  Set Variable  //*[@data-name="reason"]//textarea
+    ${text}  create_sentence  5
+    Element Text Should Be
+    ...  //span[contains(@class, "headerText") and contains(@id, "ModalMode")]
+    ...  Отмена лотa
+    Input Text  ${input}  ${text}
+    [Return]  ${text}
+
+
 Вкласти документ "Протокол скасування"
-    Click Element  //div[@title="Додати"]
+    Click Element  //div[@title="Додати"]|//div[@title="Добавить"]
     Дочекатись закінчення загрузки сторінки(webclient)
     Wait Until Page Contains Element  xpath=//*[@type='file'][1]
     ${doc}=  create_fake_doc
@@ -76,6 +104,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Вибрати "Тип скасування"
+    [Arguments]  ${type}
     Click Element  //*[text()="Тип скасування"]/following-sibling::table
-    Wait Until Element Is Visible  //*[text()="Торги відмінені"]
-    Click Element  //*[text()="Торги відмінені"]
+    Wait Until Element Is Visible  //*[text()="${type}"]
+    Click Element  //*[text()="${type}"]

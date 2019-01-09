@@ -4,13 +4,50 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
+
   	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
   	test_open_trade.Заповнити title для tender
   	test_open_trade.Заповнити description для tender
   	test_open_trade.Додати предмет в тендер
+
     docs_tab.Додати документ до тендара власником (webclient)
+    create_tender.Зберегти чернетку
+    Оголосити закупівлю
+
+
+Створити тендер (Мультилот)
+    [Arguments]  ${type}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
+  	create_tender.Вибрати тип процедури  ${type}
+    tender_tab.Встановити чекбокс "Мультилоти"
+  	test_open_trade.Заповнити endDate періоду пропозицій
+  	test_open_trade.Заповнити amount для lot
+  	test_open_trade.Заповнити minimalStep для lot
+  	test_open_trade.Заповнити title для tender
+  	test_open_trade.Заповнити description для tender
+  	webclient_elements.Натиснути додати (додавання предмету)
+  	test_open_trade.Додати предмет в тендер
+  	# Додаєм ще один лот
+  	webclient_elements.Натиснути додати (додавання предмету)
+  	tender_tab.Змінити тип елементу на  Лот
+  	test_open_trade.Заповнити amount для lot
+  	test_open_trade.Заповнити minimalStep для lot
+  	webclient_elements.Натиснути додати (додавання предмету)
+
+  	test_open_trade.Заповнити description для item
+    test_open_trade.Заповнити quantity для item
+    test_open_trade.Заповнити id для item (другий лот)
+    test_open_trade.Заповнити unit.name для item (другий лот)
+    test_open_trade.Заповнити postalCode для item
+    test_open_trade.Заповнити startDate для item
+    test_open_trade.Заповнити endDate для item
+    test_open_trade.Заповнити streetAddress для item
+    test_open_trade.Заповнити locality для item
+
+  	docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
 
@@ -42,6 +79,19 @@
     Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
 
 
+Заповнити amount для lot
+    ${amount}  random_number  100000  100000000
+    ${amount}  tender_tab.Заповнити "Очікувана вартість закупівлі" для лоту  ${amount}
+    Set To Dictionary  ${data['value']}  amount  ${amount}
+
+
+Заповнити minimalStep для lot
+    ${minimal_step_percent}  random_number  1  5
+    ${amount}  tender_tab.Заповнити "Мінімальний крок аукціону" для лоту   ${minimal_step_percent}
+    ${amount}  Evaluate  (${data['value']['amount']} * ${minimal_step_percent})/100
+    Set To Dictionary  ${data['minimalStep']}  amount  ${amount}
+
+
 Заповнити title для tender
     ${text}  create_sentence  5
     ${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
@@ -53,6 +103,7 @@
     ${description}  create_sentence  15
     tender_tab.Заповнити "Примітки до закупівлі"  ${description}
     Set To Dictionary  ${data}  description  ${description}
+
 
 Додати предмет в тендер
     test_open_trade.Заповнити description для item
@@ -89,6 +140,18 @@
 Заповнити unit.name для item
     ${unit name}  tender_tab.Заповнити "Одиниця виміру"
     Set To Dictionary  ${data['items'][0]['unit']}  name  ${unit name}
+
+
+Заповнити id для item (другий лот)
+    ${input field}  Set Variable  //*[@data-name="MAINCLASSIFICATION"]//input[not(contains(@type,'hidden'))]
+    Input Text  ${input field}  ${data['items'][0]['classification']['id']}
+    Press Key  ${input field}  \\13
+
+
+Заповнити unit.name для item (другий лот)
+    ${input field}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
+    Input Text  ${input field}  ${data['items'][0]['unit']['name']}
+    Press Key  ${input field}  \\13
 
 
 Заповнити postalCode для item

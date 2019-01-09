@@ -26,6 +26,12 @@
     Дочекатись закінчення загрузки сторінки(webclient)
 
 
+Вибрати лот за номером (webclient)
+    [Arguments]  ${i}
+    Click Element  xpath=(//*[@data-placeid="LOTS"]//td[text()="Лот"])[${i}]
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
 Порахувати кількість торгів (webclient)
     ${n}  Get Element Count  xpath=(//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])//td[2]
     Run Keyword If  '${n}' == '0'  Не знайдено жодного тендера!
