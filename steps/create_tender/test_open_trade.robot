@@ -146,12 +146,17 @@
     ${input field}  Set Variable  //*[@data-name="MAINCLASSIFICATION"]//input[not(contains(@type,'hidden'))]
     Input Text  ${input field}  ${data['items'][0]['classification']['id']}
     Press Key  ${input field}  \\13
+    Sleep  1
 
 
 Заповнити unit.name для item (другий лот)
     ${input field}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
     Input Text  ${input field}  ${data['items'][0]['unit']['name']}
     Press Key  ${input field}  \\13
+    Sleep  1
+    ${get}  Get Element Attribute  ${input field}  value
+    ${status}  Run Keyword And Return Status  Should Be Equal As Strings  ${get}  ${data['items'][0]['unit']['name']}
+    Run Keyword If  '${status}' == 'False'  Заповнити unit.name для item (другий лот)
 
 
 Заповнити postalCode для item
