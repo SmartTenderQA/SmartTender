@@ -395,14 +395,32 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Перевірити список доступних торгів для Аукціони на продаж активів банків
-	[Tags]  sales
+	[Tags]  sales  -test
+	[Setup]  Run Keywords
+	...  Test Precondition  								AND
+	...  Натиснути На торговельний майданчик  				AND
+	...  old_search.Активувати вкладку ФГВ  				AND
+	...  Перевірити назву вкладки ФГВ  						AND
+	...  Перевірити заголовок вкладки ФГВ  Аукціони			AND
+	...  Перевірити заголовок вкладки ФГВ  Реєстр активів	AND
+	...  old_search.Розгорнути Розширений Пошук  			AND
+  	...  Click Element  ${dropdown menu for bid forms}		AND
+  	...  Sleep  3
+	[Template]  Перевірити наявність тексту в випадаючому списку
+	Продаж права вимоги за кредитними договорами
+	Продаж майна банків, що ліквідуються
+	Голландський аукціон
+
+
+Перевірити список доступних торгів для Аукціони на продаж активів банків
+	[Tags]  sales  -prod
 	[Setup]  Run Keywords
 	...  Test Precondition  									AND
 	...  Натиснути На торговельний майданчик  					AND
 	...  old_search.Активувати вкладку ФГВ  					AND
 	...  Перевірити назву вкладки new ФГВ  						AND
-	...  Перевірити заголовок вкладки ФГВ  Аукціони ФГВФО		AND
-	...  Перевірити заголовок вкладки ФГВ  Активи ФГВФО			AND
+	...  Перевірити заголовок вкладки new ФГВ  Аукціони ФГВФО	AND
+	...  Перевірити заголовок вкладки new ФГВ  Активи ФГВФО		AND
 	...  new_search.Розгорнути фільтр  Вид торгів				AND
   	...  Sleep  3
 	[Template]  Перевірити наявність торгів ФГВ
@@ -413,7 +431,16 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Перевірити аукціони
-	[Tags]  sales
+	[Tags]  sales  -test
+	[Setup]  No Operation
+	[Template]  Перевірити аукціони за назвою
+	Продаж права вимоги за кредитними договорами
+	Продаж майна банків, що ліквідуються
+	Голландський аукціон
+
+
+Перевірити аукціони
+	[Tags]  sales  -prod
 	[Setup]  No Operation
 	[Template]  Перевірити аукціони за назвою new
 	Продаж права вимоги за кредитними договорами
@@ -425,7 +452,10 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	Натиснути На торговельний майданчик
 	old_search.Активувати вкладку ФГВ
-	small_privatization_search.Активувати вкладку  Активи ФГВФО
+	Run Keyword If  '${site}' == 'prod'
+	...  old_search.Активувати вкладку ФГВ за типом  Реєстр активів
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати вкладку  Активи ФГВФО
 	Перевірити наявність активів
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Майно
@@ -941,6 +971,15 @@ create_e-mail
 
 
 Перевірити заголовок вкладки ФГВ
+	[Arguments]  ${text}
+	${i}  Run Keyword If
+	...  'Аукціони' == '${text}'  Set Variable  1  ELSE IF
+	...  'Реєстр активів' == '${text}'  Set Variable  2
+	${is}  Get Text  ${torgy top/bottom tab}(2) ${torgy count tab}(${i})
+	Should Be Equal  ${is}  ${text}
+
+
+Перевірити заголовок вкладки new ФГВ
 	[Arguments]  ${text}
 	${i}  Run Keyword If
 	...  'Аукціони ФГВФО' == '${text}'  Set Variable  1  ELSE IF
