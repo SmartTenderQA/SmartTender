@@ -125,8 +125,8 @@ Resource        create_tender_keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
+    Sleep  1.5
     ${amount}  Get Element Attribute  //*[@data-name="MINSTEP"]//input  value
-    ${amount}  Evaluate  str('${amount}').replace(" ", "")
     [Return]  ${amount}
 
 
@@ -134,8 +134,8 @@ Resource        create_tender_keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name="LOT_MINSTEP_PERCENT"]//input
     Заповнити текстове поле  ${selector}  ${value}
+    Sleep  1.5
     ${amount}  Get Element Attribute  //*[@data-name="LOT_MINSTEP"]//input  value
-    ${amount}  Evaluate  str('${amount}').replace(" ", "")
     [Return]  ${amount}
 
 
