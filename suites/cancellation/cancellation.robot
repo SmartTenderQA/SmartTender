@@ -84,7 +84,7 @@ ${multilot}                                False
     ${text}  create_sentence  5
     Element Text Should Be
     ...  //span[contains(@class, "headerText") and contains(@id, "ModalMode")]
-    ...  Отмена лотa
+    ...  Скасування лоту
     Input Text  ${input}  ${text}
     [Return]  ${text}
 
