@@ -152,14 +152,6 @@
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-
-Заповнити items.0.address.countryName
-   	[Arguments]  ${text}=''
-	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['countryName']
-	${countryName}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}  ${text}
-	[Return]  ${countryName}
-
-
 Заповнити items.0.address.locality
    	[Arguments]  ${text}=''
 	${selector}  small_privatization.Отримати локатор по назві поля  ['items'][0]['address']['locality']
