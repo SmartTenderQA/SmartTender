@@ -36,7 +36,7 @@ If skipped create tender
 	Знайти тендер користувачем  tender_owner
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
-	Wait Until Keyword Succeeds  60  15  ${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
+	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
 
