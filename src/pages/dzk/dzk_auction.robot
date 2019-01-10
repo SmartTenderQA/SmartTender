@@ -109,14 +109,19 @@ ${notice message}			//*[@class='ivu-notice-desc']
 	\  ${closed li num}  Get Element Count  xpath=${closed li}
 	\  Exit For Loop If    ${closed li num} == 0
     \  ${a}  Set Variable  ${closed li}/a
-    \  Click Element  xpath=${a}
+    \  Run Keyword And Ignore Error  Click Element  xpath=${a}
     \  Sleep  .5
 
 
 Вибрати та повернути випадковий елемент з класифікації
     [Arguments]  ${selector}
+	${modal locator}  Set Variable  //div${selector}
+	${modal close locator}  Set Variable  ${modal locator}//*[@class='ivu-modal-close']
+	${is opened}  Run Keyword And Return Status  Element Should Be Visible  ${modal close locator}
+	Run Keyword If  ${is opened}  Run Keywords
+	...  Click Element  ${modal close locator}  AND
+	...  Sleep  .5
     Click Element  //a${selector}
-    ${modal locator}  Set Variable  //div${selector}
 	Wait Until Element Is Visible  ${modal locator}
 	Sleep  1.5
 	Розгорнути всі списки  ${modal locator}
