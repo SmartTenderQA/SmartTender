@@ -18,6 +18,7 @@
 	Run Keyword If  "${site}" == "prod"
 	...  Create Session  api  https://public.api.ea2.openprocurement.net/api/0/assets/${id}
 	${data}  Get Request  api  \
+	Should Be Equal As Strings  ${data}  <Response [200]>
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
@@ -30,6 +31,7 @@
 	Run Keyword If  "${site}" == "prod"
 	...  Create Session  api  https://public.api.ea2.openprocurement.net/api/0/auctions/${id}
 	${data}  Get Request  api  \
+	Should Be Equal As Strings  ${data}  <Response [200]>
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
@@ -42,6 +44,7 @@
 	Run Keyword If  "${site}" == "prod"
 	...  Create Session  api  https://public.api.ea2.openprocurement.net/api/0/lots/${id}
 	${data}  Get Request  api  \
+	Should Be Equal As Strings  ${data}  <Response [200]>
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
@@ -54,6 +57,7 @@
 	Run Keyword If  "${site}" == "prod"
 	...  Create Session  api  https://public.api.ea2.openprocurement.net/api/0/auctions/${id}
 	${data}  Get Request  api  \
+	Should Be Equal As Strings  ${data}  <Response [200]>
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
