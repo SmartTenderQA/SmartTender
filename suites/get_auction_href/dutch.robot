@@ -108,6 +108,7 @@ If skipped create tender
 
 Натиснути кнопку "Додати документи"
     Reload Page
+    Дочекатись закінчення загрузки сторінки(skeleton)
     ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
     Wait Until Element Is Visible  ${selector}
     Click Element  ${selector}

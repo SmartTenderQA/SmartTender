@@ -21,6 +21,6 @@ Library  save_user_session.py
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}
 	\  Add Cookie  ${cookie}  ${value}
 	Reload Page
-	${status}  Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords
+	Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords
     ...  Дочекатись закінчення загрузки сторінки  AND
     ...  Location Should Contain  /webclient/

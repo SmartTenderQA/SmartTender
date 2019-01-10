@@ -106,7 +106,7 @@ If skipped create tender
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
-Визнати переможцем другого учасника учасника
+Визнати переможцем другого учасника
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
