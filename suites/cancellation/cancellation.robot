@@ -67,8 +67,8 @@ ${multilot}                                False
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['reason']}
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['documents'][0]['title']}
     \  Run Keyword If  '${multilot}' == 'True'  Run Keywords
-    \  ... Should Contain  ${reason block}  ${data['cancellations'][1]['reason']}  AND
-    \  ... Should Contain  ${reason block}  ${data['cancellations'][1]['documents'][0]['title']}
+    \  ...  Should Contain  ${reason block}  ${data['cancellations'][1]['reason']}  AND
+    \  ...  Should Contain  ${reason block}  ${data['cancellations'][1]['documents'][0]['title']}
 
 
 
