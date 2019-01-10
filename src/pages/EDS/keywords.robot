@@ -40,5 +40,5 @@ ${close button(old)}  	//div[@style]//button[@type='button' and @class='close']
 Перевірити успішність підписання
 	${now}  smart_get_time
 	${get}  Get Text  //button[contains(., 'ЕЦП')]/following-sibling::*//*[@class="smt-tooltip"]
-	${parse}  Evaluate  "${get}".replace("sign.p7s - ", "")
+	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
 	compare_dates_smarttender  ${now}  >=  ${parse}
