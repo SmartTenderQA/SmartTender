@@ -63,7 +63,7 @@ ${multilot}                                False
 	\  Go To  ${data['tender_href']}
     \  procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
     \  ${reason block}  Get Text  //*[@data-qa="reason"]
-    \  Should Contain  ${reason block}  ${data['title']}
+    \  Run Keyword If  '${multilot}' !=  'True'  Should Contain  ${reason block}  ${data['title']}
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['reason']}
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['documents'][0]['title']}
     \  Run Keyword If  '${multilot}' ==  'True'  Run Keywords
