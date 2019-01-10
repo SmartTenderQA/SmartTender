@@ -98,7 +98,7 @@ ${hub}  http://autotest.it.ua:4444/wd/hub
 
 
 Відфільтрувати по типу Запит пропозицій
-  [Tags]  ukroboronprom  non-critical
+  [Tags]  ukroboronprom  non_critical
   Використати фільтр  ${select type bidding button}  Запит пропозицій
 
 
