@@ -27,17 +27,20 @@ ${multilot}                                False
     test_open_trade.Отримати дані тендера та зберегти їх у файл
 
 
-Скасувати лот
+Скасувати лоти
     [Tags]  cancel_lot
-    main_page.Вибрати лот за номером (webclient)  2
-    webclient_elements.Натиснути кнопку "Отмена лота"
-    ${reason}  Вказати причину скасування лота
-    Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
-    Вибрати "Тип скасування"  Торги відмінені
-    ${name}  Вкласти документ "Протокол скасування"
-    Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
-    webclient_elements.Натиснути OkButton
-    validation.Закрити валідаційне вікно (Так/Ні)  Вы действительно хотите отменить лот  Да
+    ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
+    Append to list         ${data['cancellations']}  ${new dict}
+    :FOR  ${i}  IN  1  2
+    \  main_page.Вибрати лот за номером (webclient)  ${i}
+    \  webclient_elements.Натиснути кнопку "Отмена лота"
+    \  ${reason}  Вказати причину скасування лота
+    \  Set To Dictionary  ${data['cancellations'][${i}-1]}  reason  ${reason}
+    \  Вибрати "Тип скасування"  Торги відмінені
+    \  ${name}  Вкласти документ "Протокол скасування"
+    \  Set To Dictionary  ${data['cancellations'][${i}-1]['documents'][0]}  title  ${name}
+    \  webclient_elements.Натиснути OkButton
+    \  validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити лот  Так
 
 
 Скасувати тендер
@@ -63,6 +66,9 @@ ${multilot}                                False
     \  Should Contain  ${reason block}  ${data['title']}
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['reason']}
     \  Should Contain  ${reason block}  ${data['cancellations'][0]['documents'][0]['title']}
+    \  Run Keyword If  '${multilot}' ==  'True'  Run Keywords
+    \  ... Should Contain  ${reason block}  ${data['cancellations'][1]['reason']}  AND
+    \  ... Should Contain  ${reason block}  ${data['cancellations'][1]['documents'][0]['title']}
 
 
 

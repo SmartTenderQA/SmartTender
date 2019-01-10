@@ -150,5 +150,5 @@ If skipped create tender
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
 	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
-	Run Keyword And Ignore Error  Element Should Contain  //h4  Вхід на даний момент закритий.
+	Element Should Contain  //h4  Ви зареєстровані як учасник. Очікуйте старту аукціону.
     Go Back
