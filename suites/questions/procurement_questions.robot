@@ -31,4 +31,19 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 Поставити довільне запитання
     procurement_questions.Активувати вкладку "Запитання"
     procurement_questions.Натиснути кнопку "Поставити запитання"
-    debug
+    ${theme}  create_sentence  3
+    procurement_questions.Заповнити тему запитання  ${theme}
+    ${text}   create_sentence  8
+    procurement_questions.Заповнити текст запитання  ${text}
+    procurement_questions.Натиснути кнопку "Подати" запитання
+    Set Global Variable  ${theme}
+    Set Global Variable  ${text}
+
+
+Проста перевірка публікації запитання
+    :FOR  ${i}  IN  provider1  viewer
+	\  Завантажити сесію для  ${i}
+	\  Go To  ${data['tender_href']}
+	\  procurement_questions.Активувати вкладку "Запитання"
+	\  Page Should Contain  ${theme}
+	\  Page Should Contain  ${text}
