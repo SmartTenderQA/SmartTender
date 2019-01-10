@@ -11,6 +11,9 @@ ${new password}             qwerty12345
 ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'btn-success')]
 
 
+#zapusk
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:prod_tender_owner suites/password/suite.robot
+#
 *** Test Cases ***
 Перевірити можливість змінити пароль через особистий кабінет
     [Tags]  change_password
