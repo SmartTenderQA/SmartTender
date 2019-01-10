@@ -25,7 +25,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare
-	${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
+	Wait Until Keyword Succeeds  60  15  ${cdb_data}  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
 

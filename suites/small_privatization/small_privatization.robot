@@ -28,7 +28,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати дані про об'єкт з ЦБД
 	[Tags]  compare
-	${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
+	Wait Until Keyword Succeeds  60  15  ${cdb_data}  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
 
@@ -98,7 +98,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати дані про інформаційне повідомлення з ЦБД
 	[Tags]  compare
-	${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
+	Wait Until Keyword Succeeds  60  15  ${cdb_data}  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
 
