@@ -18,6 +18,8 @@ def convert_cdb_values(field, value):
     elif 'locality' in field:
         ret = str(value).decode("utf-8")
     elif 'quantity' in field:
+        ret = int(value)
+    elif 'maxAwardsCount' in field:
         ret = str(value)
     else:
         ret = value
