@@ -140,7 +140,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
     Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було передано на перевірку
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice message}  10
 
 
 Дочекатися опублікування посилання на лот

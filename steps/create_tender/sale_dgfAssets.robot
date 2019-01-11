@@ -22,7 +22,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити "День старту електроного аукціону"
-	${startDate}  get_time_now_with_deviation  10  minutes
+	${startDate}  get_time_now_with_deviation  15  minutes
 	dgfAssets.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 
