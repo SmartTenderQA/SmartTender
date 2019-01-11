@@ -31,20 +31,20 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Ввести унікальний код об'єкту
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['assetID']
-    Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['assetID']
+    Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити decisions.0.decisionID
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['decisions'][0]['decisionID']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити decisions.0.decisionDate
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['decisions'][0]['decisionDate']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Прикріпити документ
@@ -65,70 +65,70 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 
 Заповнити auctions.0.auctionPeriod.startDate
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['auctionPeriod']['startDate']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['auctionPeriod']['startDate']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 	Click Element  //*[contains(text(),'Дата проведення аукціону')]
 	Sleep  .5
 
 
 Заповнити auctions.1.tenderingDuration
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][1]['tenderingDuration']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][1]['tenderingDuration']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.value.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['value']['amount']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['value']['amount']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.minimalStep.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['minimalStep']['amount']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['minimalStep']['amount']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.guarantee.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['guarantee']['amount']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['guarantee']['amount']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.0.registrationFee.amount
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['registrationFee']['amount']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['registrationFee']['amount']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з вартістю  ${selector}  ${text}
 
 
 Заповнити auctions.2.auctionParameters.dutchSteps
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][2]['auctionParameters']['dutchSteps']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][2]['auctionParameters']['dutchSteps']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.bankName
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['bankName']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['bankName']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
-	${type}  Wait Until Keyword Succeeds  30  3  dzk_auction.Вибрати та повернути елемент з випадаючого списку  ${selector}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['scheme']
+	${type}  Wait Until Keyword Succeeds  30  3  sale_keywords.Вибрати та повернути елемент з випадаючого списку  ${selector}
 	[Return]  ${type}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.id
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['id']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Заповнити auctions.0.bankAccount.accountIdentification.0.description
 	[Arguments]  ${text}
-	${selector}  small_privatization.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctions'][0]['bankAccount']['accountIdentification'][0]['description']
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 Передати на перевірку інформаційне повідомлення

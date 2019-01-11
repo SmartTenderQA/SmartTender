@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/dgfAssets/dgfAssets_variables.py
+Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -67,7 +67,7 @@ If skipped create tender
 
 Перевірити відображення детальної інформації
 	[Tags]  compare
-	[Setup]  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
 	\['dgfID']

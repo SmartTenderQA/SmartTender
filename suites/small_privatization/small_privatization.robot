@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/small_privatization/small_privatization_object/small_privatization_object_variables.py
-Library  ../../src/pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object_variables.py
+Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -57,7 +57,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare
 	[Setup]  Run Keywords
-	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['assetID']
@@ -133,7 +133,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Перевірити відображення детальної інформації про інформаційне повідомлення
 	[Tags]  compare
 	[Setup]  Run Keywords
-	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['lotID']

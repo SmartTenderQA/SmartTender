@@ -82,13 +82,13 @@ Resource    pages/torgy_rialto/torgy_rialto.robot
 Resource    pages/vakansii/vakansii.robot
 Resource    pages/vidhuky/vidhuky.robot
 Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
-Resource    pages/small_privatization/small_privatization.robot
-Resource    pages/small_privatization/small_privatization_informational_message/small_privatization_informational_message.robot
-Resource    pages/small_privatization/small_privatization_object/small_privatization_object.robot
-Resource    pages/small_privatization/small_privatization_auction/small_privatization_auction.robot
-Resource    pages/dzk/dzk_auction.robot
-Resource    pages/dgfAssets/dgfAssets.robot
-Resource    pages/dutch/dutch.robot
+Resource    pages/sale/sale_keywords.robot
+Resource    pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message.robot
+Resource    pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object.robot
+Resource    pages/sale/SPF/small_privatization/small_privatization_auction/small_privatization_auction.robot
+Resource    pages/sale/SPF/dzk/dzk_auction.robot
+Resource    pages/sale/DGF/dgfAssets/dgfAssets.robot
+Resource    pages/sale/DGF/dutch/dutch.robot
 
 
 Resource    pages(webclient)/desktop/desktop.robot

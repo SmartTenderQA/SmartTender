@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/dzk/dzk_variables.py
+Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -79,7 +79,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Перевірити відображення детальної інформації
 	[Tags]  compare
 	[Setup]  Run Keywords
-	...  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
+	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Wait Until Keyword Succeeds  5m  15s  Дочекатися довантаження даних з ЦБД
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
