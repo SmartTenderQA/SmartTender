@@ -43,7 +43,7 @@
 
 Розгорнути всі списки
 	[Arguments]  ${modal locator}
-	${closed li}  Set Variable  (${modal locator}//*[@class='ivu-tabs-tabpane'])[1]//li[contains(@class,'jstree-closed')]
+	${closed li}  Set Variable  (${modal locator}//*[contains(@data-qa,'modal-tree')])[1]//li[contains(@class,'jstree-closed')]
 	: FOR  ${i}  IN RANGE  99999
 	\  ${closed li num}  Get Element Count  xpath=${closed li}
 	\  Exit For Loop If    ${closed li num} == 0
