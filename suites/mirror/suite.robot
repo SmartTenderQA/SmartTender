@@ -1,6 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown   Run Keyword If Test Failed  Run Keywords
+...                                         Log Location  AND
+...                                         Capture Page Screenshot
 Suite Teardown  Postcondition
 
 
@@ -20,6 +22,7 @@ ${utg_start_page}  http://utg.ua/utg/purchases/prozorro.html
 ${ukroboronprom_start_page}  https://smarttender.biz/TenderMirror/?mirrorId=5804
 ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
 
+${hub}  http://autotest.it.ua:4444/wd/hub
 
 
 *** Test Cases ***
@@ -29,7 +32,7 @@ ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronna
   ...  ELSE IF  '${site}' == 'utg'  Set Variable  http://utg.ua/utg/purchases/prozorro.html
   ...  ELSE IF  '${site}' == 'ukroboronprom'  Set Variable  https://smarttender.biz/TenderMirror/?mirrorId=5804
   ...  ELSE IF  '${site}' == 'uspa'  Set Variable  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
-  Open Browser  ${start_page}  ${browser}  alies
+  Open Browser  ${start_page}  ${browser}  alies  ${hub}
   Виділити портрібний iFrame
   Дочекатись закінчення загрузки сторінки(skeleton)
   Sleep  1
@@ -95,7 +98,7 @@ ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronna
 
 
 Відфільтрувати по типу Запит пропозицій
-  [Tags]  ukroboronprom
+  [Tags]  ukroboronprom  non_critical
   Використати фільтр  ${select type bidding button}  Запит пропозицій
 
 
@@ -113,7 +116,7 @@ Postcondition
   Sleep  2
   Click Element  //li[contains(text(), '${value}')]
   Дочекатись закінчення загрузки сторінки(skeleton)
-  Page Should Contain Element  //*[@class="panel-body"]//div[@style and contains(text(), "${value}")]|//*[@class="panel-footer"]//*[contains(text(), "${value}")]
+  Page Should Contain Element  //*[@class="panel-body"]//*[@style and contains(text(), "${value}")]|//*[@class="panel-footer"]//*[contains(text(), "${value}")]
 
 
 Виділити портрібний iFrame

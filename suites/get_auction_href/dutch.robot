@@ -7,7 +7,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot  AND
 ...                                        Log  ${data}
-...  AND  debug
 
 
 #zapusk

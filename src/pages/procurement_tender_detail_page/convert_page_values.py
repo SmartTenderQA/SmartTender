@@ -15,10 +15,9 @@ def convert_page_values(field, value):
         list = re.search(u'(?P<code>\d+), (?P<city>\D+,\s\D+), (?P<street>.+)', value)
         if 'locality' in field:
             ret = list.group('city')
-            a = ret.split()
-            a.reverse()
-            ret = "  ".join(a)
-            ret = ret.replace(',', '')
+            a = re.search(u'(?P<country>\D+), (?P<city>\D+)', ret)
+            city = a.group('city')
+            ret = city
         elif 'postalCode' in field:
             ret = list.group('code')
         elif 'streetAddress' in field:
@@ -26,7 +25,8 @@ def convert_page_values(field, value):
     elif 'unit' in field or 'quantity' in field:
         list = re.search(u'(?P<quantity>\d+) (?P<unit>.+)', value)
         if 'unit' in field:
-            ret = list.group('unit')
+            unit = list.group('unit')
+            ret = convert_unit(unit)
         elif 'quantity' in field:
             ret = int(list.group('quantity'))
     elif 'amount' in field:
@@ -39,3 +39,17 @@ def convert_page_values(field, value):
     else:
         ret = value
     return ret
+
+
+def convert_unit(value):
+    units_map = {
+        u'Гектар': u'га',
+        u'час': u'квар - час',
+        u'Кубический дециметр': u'дм3',
+    }
+    if value in units_map:
+        result = units_map[value]
+    else:
+        result = value
+    return result
+

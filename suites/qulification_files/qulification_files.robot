@@ -106,7 +106,7 @@ If skipped create tender
     Set To Dictionary  ${data['bids'][1]['documents'][1]}  title  ${provider file name}
 
 
-Визнати переможцем другого учасника учасника
+Визнати переможцем другого учасника
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -153,6 +153,8 @@ If skipped create tender
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     main_page.Дочекатись стадії закупівлі  Кваліфікація переможця
+    actions.Натиснути надіслати вперед(Alt+Right)
+    main_page.Дочекатись стадії закупівлі  Пропозиції розглянуті
     Вибрати переможця на номером else  2
     webclient_elements.Натиснути кнопку "Підписати договір"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так

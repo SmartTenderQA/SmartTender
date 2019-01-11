@@ -31,7 +31,7 @@ Variables       procurement_variables.py
 	[Arguments]  ${field}
 	${value entered}  Set Variable  ${data${field}}
     ${value cdb}  procurement_tender_detail.Отритами дані з ЦБД  ${field}
-    ${status}  Run Keyword And Return Status  Should Be Equal  ${value entered}  ${value cdb}
+    ${status}  Run Keyword And Return Status  Should Be Equal As Strings  ${value entered}  ${value cdb}
  	Should Be True  ${status}  Oops! Помилка з даними для ${field}
 
 
