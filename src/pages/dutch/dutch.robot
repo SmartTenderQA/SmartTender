@@ -5,13 +5,16 @@
 
 
 *** Keywords ***
+Отримати та зберегти tender_id
+	${tender_id}  Get Element Attribute  xpath=//a[@href and contains(text(),'UA-EA')]  text
+	Set To Dictionary  ${data}  tender_id=${tender_id}
 #########################################################region#########################################################
 #                                                    Заповнити поля                                                    #
 ########################################################################################################################
 Заповнити auctionPeriod.startDate
 	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['auctionPeriod']['startDate']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з датою  ${selector}  ${text}
 
 
 Заповнити dgfDecisionID
@@ -23,7 +26,7 @@
 Заповнити dgfDecisionDate
 	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['dgfDecisionDate']
-	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити поле з датою  ${selector}  ${text}
 
 
 Заповнити value.amount
@@ -37,6 +40,10 @@
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['minimalStep']['amount']
 	Wait Until Keyword Succeeds  30  3  small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
+
+Заповнити procuringEntity.contactPoint.name
+	${name}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову контактну особу
+	[Return]  ${name}
 
 Заповнити title
 	[Arguments]  ${text}
@@ -101,64 +108,3 @@
 	[Arguments]  ${text}
 	${selector}  dzk_auction.Отримати локатор по назві поля  ['guarantee']['amount']
 	small_privatization.Заповнити та перевірити текстове поле  ${selector}  ${text}
-
-
-
-###########################################################################
-############################ WORK WITH FIELD ##############################
-###########################################################################
-Вибрати та повернути випадкове місто
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
-	${selector}  Set Variable  //*[contains(text(), 'Місто')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	Click Element  ${input}
-	Sleep  .5
-	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
-	Sleep  .5
-	Wait Until Page Contains Element  ${selector}  15
-	${count}  Get Element Count  ${selector}
-	${number}  random_number  1  ${count}
-	${locality}  Get Text  xpath=(((${selector})[${number}])//*[@class="dhxcombo_cell_text"])[1]
-	${region}  Get Text  xpath=((${selector})[${number}]//*[@class="dhxcombo_cell_text"])[2]
-	${countryName}  Get Text  xpath=((${selector})[${number}]//*[@class="dhxcombo_cell_text"])[3]
-	Click Element  (${selector})[${number}]
-	Sleep  .5
-	${text}  Get Element Attribute  ${input}  value
-	Should Not Be Empty  ${text}
-	[Return]  ${locality}  ${region}  ${countryName}
-
-
-Вибрати та повернути випадкову контактну особу
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
-	${selector}  Set Variable  //*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	Click Element  ${input}
-	Sleep  .5
-	Click Element  ${input}/../following-sibling::*
-	Sleep  .5
-	Wait Until Page Contains Element  ${selector}  15
-	${count}  Get Element Count  ${selector}
-	${number}  random_number  1  ${count}
-	${name}  Get Text  xpath=(((${selector})[${number}])//*[@class="dhxcombo_cell_text"])[1]
-	Click Element  (${selector})[${number}]
-	Sleep  .5
-	${text}  Get Element Attribute  ${input}  value
-	Should Not Be Empty  ${text}
-	[Return]  ${text}
-
-
-Вибрати та повернути випадкову класифікацію
-	${input}  Set Variable  (//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
-	${selector}  Set Variable  //*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	Click Element  ${input}
-	Sleep  .5
-	Run Keyword And Ignore Error  Click Element  ${input}/../following-sibling::*
-	Sleep  .5
-	Wait Until Page Contains Element  ${selector}  15
-	${count}  Get Element Count  ${selector}
-	${number}  random_number  1  ${count}
-	${id}  Get Text  xpath=(((${selector})[${number}])//*[@class="dhxcombo_cell_text"])[1]
-	${description}  Get Text  xpath=((${selector})[${number}]//*[@class="dhxcombo_cell_text"])[2]
-	Click Element  (${selector})[${number}]
-	Sleep  .5
-	${text}  Get Element Attribute  ${input}  value
-	Should Not Be Empty  ${text}
-	[Return]  ${id}  ${description}

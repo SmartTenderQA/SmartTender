@@ -1,50 +1,23 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Створити словник  data
+Library  ../../src/pages/dutch/dutch_variables.py
+Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
+...                                        Capture Page Screenshot  AND
+...                                        Log  ${data}
+...  AND  debug
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender -v site:prod suites/get_auction_href/dutch.robot
+
+#zapusk
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -e -prod -v hub:None -v user:fgv_prod_owner suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v user:Bened suites/get_auction_href/dutch.robot
 *** Test Cases ***
-Підготувати користувачів
-    Run Keyword If  "${site}" == "prod"  Run Keywords  
-    ...  Додати першого користувача  fgv_prod_owner  tender_owner  AND
-    ...  Додати користувача          prod_provider1  provider1     AND
-    ...  Додати користувача          prod_provider2  provider2     AND
-    ...  Додати користувача          prod_viewer     viewer
-    Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати першого користувача  Bened           tender_owner  AND
-    ...  Додати користувача          user1           provider1     AND
-    ...  Додати користувача          user2           provider2     AND
-    ...  Додати користувача          test_viewer     viewer 
-
-
-Створити тендер
+Створити аукціон
 	[Tags]  create_tender
 	Завантажити сесію для  tender_owner
-	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
-	Відкрити вікно створення тендеру
-	Wait Until Keyword Succeeds  30  3  create_tender.Вибрати тип процедури  Голландський аукціон
-	Заповнити auctionPeriod.startDate
-	Заповнити value.amount
-	Заповнити minimalStep.percent
-	Заповнити dgfDecisionID
-	Заповнити dgfDecisionDate
-	Заповнити title
-	Заповнити dgfID
-	Заповнити description
-	Заповнити guarantee.amount
-	Заповнити items.description
-	Заповнити items.quantity
-	Заповнити items.unit.name
-	Заповнити items.classification.description
-	Run Keyword  Заповнити procuringEntity.contactPoint.name.${site}
-	Зберегти чернетку
-	Оголосити тендер
-	Run Keyword  Отримати та зберегти tender_id.${site}
-	actions.Зберегти словник у файл  ${data}  data
+	dutch_step.Створити аукціон
 
 
 If skipped create tender
@@ -54,35 +27,159 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Знайти тендер учасником
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
-	Знайти тендер користувачем	provider1
-	Зберегти пряме посилання на тендер
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  -prod
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Знайти тендер користувачем  tender_owner
+	synchronization.Дочекатись синхронізації  auctions
+	dzk_auction.Отримати ID у цбд
+	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data
 
 
-Подати заявку на участь в тендері першим учасником
-	Подати заявку для подачі пропозиції
+Порівняти введені дані з даними в ЦБД
+	[Tags]  compare  -prod
+	[Setup]  Run Keyword If  '${site}' == 'prod'
+	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
+	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
+	\['date']  m
+	\['dgfDecisionID']
+	\['dgfDecisionDate']  d
+	\['value']['amount']
+	\['title']
+	\['dgfID']
+	\['description']
+	\['items'][0]['description']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+
+
+Перевірити відображення детальної інформації
+	[Tags]  compare  -prod
+	[Setup]  dzk_auction.Розгорнути детальну інформацію по всіх полях (за необхідністю)
+	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
+	\['title']
+	\['dgfID']
+	\['auctionID']
+	\['description']
+	\['value']['amount']
+	\['value']['valueAddedTaxIncluded']
+	\['enquiryPeriod']['startDate']
+	\['enquiryPeriod']['endDate']
+	\['tenderPeriod']['startDate']
+	\['tenderPeriod']['endDate']
+	\['auctionPeriod']['startDate']
+	\['dgfDecisionID']
+	\['dgfDecisionDate']  d
+	\['auctionParameters']['dutchSteps']
+	\['guarantee']['amount']
+	\['procuringEntity']['identifier']['legalName']
+	\['procuringEntity']['identifier']['id']
+	\['procuringEntity']['contactPoint']['name']
+	\['procuringEntity']['contactPoint']['telephone']
+	\['procuringEntity']['contactPoint']['email']
+	\['items'][0]['description']
+	\['items'][0]['classification']['description']
+	\['items'][0]['classification']['id']
+	\['items'][0]['classification']['scheme']
+	\['items'][0]['quantity']
+	\['items'][0]['unit']['name']
+	\['items'][0]['address']['postalCode']
+	\['items'][0]['address']['countryName']
+	\['items'][0]['address']['streetAddress']
+	\['items'][0]['address']['region']
+	\['items'][0]['address']['locality']
+
+#todo нужно понять что єто и зачем мі его вводим
+#\['minimalStep']['amount']
+
+
+Знайти тендер учасниками
+	:FOR  ${i}  IN  provider1  tender_owner  viewer
+	\  Знайти тендер користувачем  ${i}
+	\  Зберегти пряме посилання на тендер
+	\  Зберегти сесію  ${i}
+	:FOR  ${i}  IN  2  3
+	\  Завантажити сесію для  provider${i}
+	\  Go to  ${data['tender_href']}
+	\  Зберегти сесію  provider${i}
+
+
+Подати заявку на участь в тендері учасниками
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
+	:FOR  ${i}  IN  1  2
+	\  Завантажити сесію для  provider${i}
+	\  Зберегти сесію  provider${i}
+	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  tender_owner
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
-Отримати поcилання на участь в аукціоні першим учасником
-	Завантажити сесію для  provider1
-	Go to  ${data['tender_href']}
-	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
-	Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
-	${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  10m  5
-	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
-	Wait Until Keyword Succeeds  10m  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
+Підтвердити пропозицію
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	:FOR  ${i}  IN  provider1  provider2
+	\  Завантажити сесію для  ${i}
+	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
+	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
 
 
+Отримати посилання на аукціон для учасників
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Sleep  1m  #    Ссылка на участие формируется быстрее чем страница формируется(простой способ не поймать 404)
+	:FOR  ${i}  IN  provider1  provider2
+	\  Завантажити сесію для  ${i}
+    \  ${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  5m  3
+    \  ...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+    \  Wait Until Keyword Succeeds  1m  20s
+    \  ...  Перевірити сторінку участі в аукціоні  ${auction_participate_href}
+
+
+Перевірити неможливість отримати посилання на перегляд
+	[Documentation]  В голандском аукционе есть только ссылка на участие(особенность типа торгов)
+	:FOR  ${i}  IN  provider1  provider3  tender_owner  viewer
+	\  Завантажити сесію для  ${i}
+	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 
 
 *** Keywords ***
+Precondition
+	${edit_locators}  dutch_variables.get_edit_locators
+	${view_locators}  dutch_variables.get_view_locators
+	${data}  dutch_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
+    Додати першого користувача  ${user}  tender_owner
+    Підготувати користувачів
+
+
+Підготувати користувачів
+    Run Keyword If  "${site}" == "prod"  Run Keywords
+    ...  Додати користувача          prod_provider		provider1     AND
+    ...  Додати користувача          prod_provider2		provider2     AND
+    ...  Додати користувача          prod_provider1		provider3     AND
+    ...  Додати користувача          prod_viewer		viewer
+    Run Keyword If  "${site}" == "test"  Run Keywords
+    ...  Додати користувача          user1           	provider1     AND
+    ...  Додати користувача          user2           	provider2     AND
+    ...  Додати користувача          user3           	provider3     AND
+    ...  Додати користувача          test_viewer     	viewer
+
+
 Зберегти пряме посилання на тендер
 	${tender_href}  Get Location
 	Set To Dictionary  ${data}  tender_href  ${tender_href}
@@ -96,20 +193,10 @@ If skipped create tender
 	Знайти тендер по ID  ${data['tender_id']}
 
 
-Отримати та зберегти tender_id.prod
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[2]  text
-	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
-Отримати та зберегти tender_id.test
-	${tender_id}  Get Element Attribute  xpath=(//a[@href])[1]  text
-	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
 Натиснути кнопку "Додати документи"
     Reload Page
+    Дочекатись закінчення загрузки сторінки(skeleton)
     ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
-    Wait Until Element Is Visible  ${selector}
     Click Element  ${selector}
 
 
@@ -124,156 +211,18 @@ If skipped create tender
     Open Button  //a[contains(text(), "Перейти")]
 
 
-Перейти та перевірити сторінку участі в аукціоні
+Перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
 	Go To  ${auction_href}
-	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
-	#${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
-	#Run Keyword If  ${status} != ${true}  Sleep  30
-	#Run Keyword If  ${status} != ${true}  Перейти та перевірити сторінку участі в аукціоні  ${auction_href}
-#	:FOR  ${i}  IN RANGE  50
-#	\  ${status}  Run Keyword And Return Status  Page Should Not Contain  Not Found
-#	\  Exit For Loop If  ${status} == ${false}
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  20
 	Sleep  2
 	Element Should Contain  //*[@class="page-header"]//h2  ${data['tender_id']}
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['description']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['quantity']}
-	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items']['unit']['name']}
-	Element Should Contain  //h4  Вхід на даний момент закритий.
-    Go Back
-
-
-Заповнити auctionPeriod.startDate
-	${startDate}  smart_get_time  5
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити поле с датою  День старту  ${startDate}
-	${auctionPeriods}  Create Dictionary  startDate  ${startDate}
-	Set To Dictionary  ${data}  auctionPeriods=${auctionPeriods}
-
-
-Заповнити value.amount
-	${amount}  random_number  100000  100000000
-	${value}  Create Dictionary  amount=${amount}
-	Set To Dictionary  ${data}  value=${value}
-	${selector}  Set Variable  xpath=//*[contains(text(), 'Ціна')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${amount}
-
-
-Заповнити minimalStep.percent
-	${minimal_step_percent}  random_number  1  5
-	${value}  Create Dictionary  percent=${minimal_step_percent}
-	Set To Dictionary  ${data['value']}  minimalStep=${value}users_variables
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити мінімальний крок аукціону  ${minimal_step_percent}
-
-
-Заповнити dgfDecisionID
-	${id_f}  random_number  1000  9999
-	${id_l}  random_number  0  9
-	${id}  Set Variable  ${id_f}/${id_l}
-	${selector}  Set Variable  xpath=//*[contains(text(), 'Номер')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${id}
-	Set To Dictionary  ${data}  dgfDecisionID=${id}
-
-
-Заповнити dgfDecisionDate
-	${time}  smart_get_time  0  d
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити дату Рішення Дирекції  ${time}
-	Set To Dictionary  ${data}  dgfDecisionDate=${time}
-
-
-Заповнити title
-	${text}  create_sentence  5
-	${title}  Set Variable  [ТЕСТУВАННЯ] ${text}
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Загальна назва')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${title}
-	Set To Dictionary  ${data}  title=${title}
-
-
-Заповнити dgfID
-	${first}  random_number  10000000  99999999
-	${second}  random_number  10000  99999
-	${dgfID}  Set Variable  F${first}-${second}
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Номер лоту')]/following-sibling::table//input
-	Заповнити текстове поле  ${selector}  ${dgfID}
-	Set To Dictionary  ${data}  dgfID=${dgfID}
-
-
-Заповнити description
-	${description}  create_sentence  20
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Детальний опис')]/following-sibling::table//textarea
-	Заповнити текстове поле  ${selector}  ${description}
-	Set To Dictionary  ${data}  description=${description}
-
-
-Заповнити guarantee.amount
-	${guarantee_amount_percent}  random_number  1  5
-	Відкрити вкладку Гарантійний внесок
-	Wait Until Keyword Succeeds  120  3  Заповнити та перевірити гарантійний внесок  ${guarantee_amount_percent}
-	Відкрити вкладку Тестовий аукціон
-	Set To Dictionary  ${data['value']}  guarantee_percent=${guarantee_amount_percent}
-
-
-Заповнити items.description
-	[Arguments]  ${field_name}=Опис активу
-	${description}  create_sentence  10
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), '${field_name}')]/following-sibling::*//input
-	Заповнити текстове поле  ${selector}  ${description}
-	${dict}  Create Dictionary  description=${description}
-	Set To Dictionary  ${data}  items=${dict}
-
-
-Заповнити items.quantity
-	${quantity}  random_number  1  1000
-	${selector}  Set Variable  xpath=//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input
-	Заповнити текстове поле  ${selector}  ${quantity}
-	Set To Dictionary  ${data['items']}  quantity=${quantity}
-
-
-Заповнити items.unit.name
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Од. вим.')]/following-sibling::*//input
-	${selector}  Set Variable  //*[contains(text(), 'ОВ. Найменування')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	${name}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	${value}  Create Dictionary  name=${name}
-	Set To Dictionary  ${data['items']}  unit  ${value}
-
-
-Заповнити items.classification.description
-	${input}  Set Variable  (//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Класифікація')]/following-sibling::div)[2]//input
-	${selector}  Set Variable  //*[contains(text(), 'Код класифікації')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	${description}  Wait Until Keyword Succeeds  30  3  Вибрати та повернути елемент у випадаючому списку  ${input}  ${selector}
-	${value}  Create Dictionary  description=${description}
-	Set To Dictionary  ${data['items']}  classification  ${value}
-
-
-Заповнити procuringEntity.contactPoint.name.prod
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
-	${selector}  Set Variable  //*[contains(text(), 'Прізвище')]/ancestor::*[contains(@class, 'dhxcombo_hdrtext')]/../following-sibling::*/*[@class='dhxcombo_option']
-	# get from Вибрати та повернути елемент у випадаючому списку
-	Click Element  ${input}
-	Sleep  .5
-	:FOR  ${i}  IN RANGE  10
-	\  Wait Until Keyword Succeeds  20  2  Click Element  ${input}
-	\  Sleep  .5
-	\  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${input}/../following-sibling::*
-	\  Exit For Loop If  ${status} == ${true}
-	Click Element  ${input}/../following-sibling::*
-	Sleep  .5
-	Wait Until Page Contains Element  ${selector}  15
-	Click Element  (${selector})[1]
-	${name}  Get Element Attribute  ${input}  value
-	#####################
-	${dictionary}  Create Dictionary  name=${name}
-	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
-	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
-
-
-Заповнити procuringEntity.contactPoint.name.test
-	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Контактна особа')]/ancestor::*[@class='dxpnlControl_DevEx']/following-sibling::div//*[@class='dhxcombo_input_container ']/input
-	${name}  Get Element Attribute  ${input}  value
-	Should Not Be Empty  ${name}
-	#####################
-	${dictionary}  Create Dictionary  name=${name}
-	${contactPoint}  Create Dictionary  contactPoint  ${dictionary}
-	Set To Dictionary  ${data}  procuringEntity  ${contactPoint}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
+	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
+	${status}  Run Keyword And Return Status
+	...  Element Should Contain  //h4  Ви зареєстровані як учасник. Очікуйте старту аукціону.
+	Run Keyword If  ${status} != ${True}  Element Should Contain  //h4  Вхід на даний момент закритий.
+	Go back

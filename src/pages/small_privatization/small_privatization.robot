@@ -5,6 +5,18 @@
 
 
 *** Keywords ***
+Заповнити та перевірити поле з датою
+	[Arguments]  ${selector}  ${text}
+	Scroll Page To Element XPATH  ${selector}
+	Click Element  ${selector}
+	Sleep  .5
+	Run Keyword And Ignore Error  Clear input By JS  ${selector}
+	Input Text  ${selector}  ${text}
+	${got}  Get Element Attribute  ${selector}  value
+	Press Key  ${selector}  \\13
+	Should Not Be Empty  ${selector}
+
+
 Заповнити та перевірити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Scroll Page To Element XPATH  ${selector}
@@ -14,7 +26,7 @@
 	Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13
-	Should Be Equal  ${got}  ${text}
+	Should Be Equal As Strings  ${got}  ${text}
 
 
 Заповнити та перевірити поле з вартістю

@@ -62,7 +62,7 @@ def convert_viewed_values_to_edit_format(field, value):
         list = re.search(u'(?P<postal>.+), (?P<country>.+), (?P<region>.+), (?P<locality>.+), (?P<street>.+)', value)
         if 'postal' in field:
             return list.group('postal')
-        if 'country' in field:
+        elif 'country' in field:
             return list.group('country')
         elif 'region' in field:
             return list.group('region')
