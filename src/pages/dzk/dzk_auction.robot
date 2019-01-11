@@ -104,12 +104,11 @@ ${notice message}			//*[@class='ivu-notice-desc']
 
 Розгорнути всі списки
 	[Arguments]  ${modal locator}
-	${closed li}  Set Variable  ${modal locator}//li[contains(@class,'jstree-closed')]
-	${closed li num}  Get Element Count  xpath=${closed li}
-	: FOR  ${i}  IN RANGE  1  ${closed li num}+1
+	${closed li}  Set Variable  (${modal locator}//*[@class='ivu-tabs-tabpane'])[1]//li[contains(@class,'jstree-closed')]
+	: FOR  ${i}  IN RANGE  99999
 	\  ${closed li num}  Get Element Count  xpath=${closed li}
 	\  Exit For Loop If    ${closed li num} == 0
-    \  ${a}  Set Variable  (${closed li}/a)[${i}]
+    \  ${a}  Set Variable  ${closed li}/a
     \  Run Keyword And Ignore Error  Click Element  xpath=${a}
     \  Sleep  .5
 
