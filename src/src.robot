@@ -87,6 +87,7 @@ Resource    pages/sale/SPF/small_privatization/small_privatization_informational
 Resource    pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object.robot
 Resource    pages/sale/SPF/small_privatization/small_privatization_auction/small_privatization_auction.robot
 Resource    pages/sale/SPF/dzk/dzk_auction.robot
+Resource    pages/sale/SPF/otherAssets/otherAssets.robot
 Resource    pages/sale/DGF/dgfAssets/dgfAssets.robot
 Resource    pages/sale/DGF/dutch/dutch.robot
 
@@ -111,6 +112,7 @@ Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 Resource    ../steps/create_tender/test_ramky.robot
 Resource    ../steps/create_tender/dutch_step.robot
+Resource    ../steps/create_tender/cdb2_OtherAssets.robot
 Resource    ../steps/create_auction/dzk_step.robot
 Resource    ../steps/create_auction/small_privatization_step.robot
 

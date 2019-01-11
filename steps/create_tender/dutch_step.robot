@@ -16,7 +16,7 @@
 
 	create_tender.Зберегти чернетку
 	actions.Оголосити тендер
-	dutch.Отримати та зберегти tender_id
+	sale_keywords.Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
 
 
