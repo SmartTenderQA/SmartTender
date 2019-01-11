@@ -45,6 +45,7 @@ def convert_unit(value):
     units_map = {
         u'Гектар': u'га',
         u'час': u'квар - час',
+        u'Кубический дециметр': u'дм3',
     }
     if value in units_map:
         result = units_map[value]
