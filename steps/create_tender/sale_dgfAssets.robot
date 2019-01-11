@@ -120,10 +120,8 @@
 	${classification}  dgfAssets.Заповнити items.0.classification
 	${scheme}  Set Variable  CAV
 	Set To Dictionary  ${data['items'][0]['classification']}  scheme  ${scheme}
-	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${classification}"))[0]  re
-	Set To Dictionary  ${data['items'][0]['classification']}  id  ${id}
-	${description}  Evaluate  re.sub(r' [0-9]*[-][0-9]*', '', "${classification}", 1)  re
-	Set To Dictionary  ${data['items'][0]['classification']}  description  ${description}
+	Set To Dictionary  ${data['items'][0]['classification']}  id  ${classification[0]}
+	Set To Dictionary  ${data['items'][0]['classification']}  description  ${classification[1]}
 
 
 
