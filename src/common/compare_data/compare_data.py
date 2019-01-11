@@ -59,13 +59,16 @@ def convert_viewed_values_to_edit_format(field, value):
         list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
         return 'P'+list.group('years')+'Y'+list.group('months')+'M'
     elif 'address' in field:
-        list = re.search(u'(?P<postal>.+), (?P<country>.+), (?P<region>.+), (?P<locality>.+), (?P<street>.+)', value)
+        list = re.search(u'(?P<postal>\d+), (?P<country>[^,]+), ((?P<region>[^,]+), )?(?P<locality>[^,]+), (?P<street>[^,]+)', value)
         if 'postal' in field:
             return list.group('postal')
         elif 'country' in field:
             return list.group('country')
         elif 'region' in field:
-            return list.group('region')
+            if list.group('region') is None:
+                return ''
+            else:
+                return list.group('region')
         elif 'locality' in field:
             return list.group('locality')
         elif 'street' in field:

@@ -44,7 +44,6 @@ If skipped create tender
 Порівняти введені дані з даними в ЦБД
 	[Tags]  compare
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
-	\['date']  m
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['value']['amount']
@@ -79,7 +78,6 @@ If skipped create tender
 	\['enquiryPeriod']['endDate']
 	\['tenderPeriod']['startDate']
 	\['tenderPeriod']['endDate']
-	\['auctionPeriod']['startDate']
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['minimalStep']['amount']
@@ -101,6 +99,8 @@ If skipped create tender
 	\['items'][0]['address']['region']
 	\['items'][0]['address']['locality']
 
+#todo пока отлижили єту проверку
+#\['auctionPeriod']['startDate']
 
 Знайти тендер учасниками
 	Знайти тендер користувачем	provider1

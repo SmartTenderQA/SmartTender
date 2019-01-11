@@ -42,7 +42,6 @@ If skipped create tender
 	[Setup]  Run Keyword If  '${site}' == 'prod'
 	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
-	\['date']  m
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['value']['amount']
@@ -76,7 +75,6 @@ If skipped create tender
 	\['enquiryPeriod']['endDate']
 	\['tenderPeriod']['startDate']
 	\['tenderPeriod']['endDate']
-	\['auctionPeriod']['startDate']
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['auctionParameters']['dutchSteps']

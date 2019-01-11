@@ -18,6 +18,9 @@ Library		compare_data.py
  	${value cdb}  compare_data.Отритами дані з ЦБД  ${field}  ${time format}
  	${value viewed}  compare_data.Отритами дані зі сторінки  ${field}
  	${is equal}  compare_data.compare_values  ${value viewed}  ${value cdb}
+ 	Run Keyword If  ${is equal} == ${False}  Run Keywords
+ 	...  Scroll Page To Element XPATH  ${view_locators${field}}  AND
+ 	...  Capture Page Screenshot
  	Should Be True  ${is equal}  Oops! Помилка з даними для ${field}
 
 
