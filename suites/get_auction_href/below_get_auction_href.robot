@@ -159,7 +159,8 @@ If skipped create tender
 	Element Should Contain  //*[@class="lead ng-binding"]  ${data['title']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['quantity']}
-	#Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
+	${unit name status}  Run Keyword And Return Status
+	...  Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${data['items'][0]['unit']['name']}
 	${status}  Run Keyword And Return Status
 	...  Element Should Contain  //h4  Ви зареєстровані як учасник. Очікуйте старту аукціону.
 	Run Keyword If  ${status} != ${True}  Element Should Contain  //h4  Вхід на даний момент закритий.
