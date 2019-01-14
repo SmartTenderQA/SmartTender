@@ -1,3 +1,7 @@
+*** Settings ***
+Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
+
+
 *** Keywords ***
 Створити аукціон
 	Відкрити сторінку Продаж/Оренда майна(тестові)
@@ -15,6 +19,15 @@
 	actions.Оголосити тендер
 	sale_keywords.Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
+
+
+Завантажити локатори
+	${edit_locators}  otherAssets_variables.get_edit_locators
+	${view_locators}  otherAssets_variables.get_view_locators
+	${data}  otherAssets_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 #########################################################

@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -209,12 +208,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 *** Keywords ***
 Precondition
-	${edit_locators}  dzk_variables.get_edit_locators
-	${view_locators}  dzk_variables.get_view_locators
-	${data}  dzk_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
+	dzk_step.Завантажити локатори
     Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
 

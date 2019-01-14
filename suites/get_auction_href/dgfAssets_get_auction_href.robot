@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -158,12 +157,7 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
-	${edit_locators}  dgfAssets_variables.get_edit_locators
-	${view_locators}  dgfAssets_variables.get_view_locators
-	${data}  dgfAssets_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
+	sale_dgfAssets.Завантажити локатори
     Додати першого користувача  Bened  tender_owner
     Підготувати користувачів
 
