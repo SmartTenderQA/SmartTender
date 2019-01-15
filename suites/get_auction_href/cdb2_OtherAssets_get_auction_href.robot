@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
@@ -155,12 +154,7 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
-	${edit_locators}  otherAssets_variables.get_edit_locators
-	${view_locators}  otherAssets_variables.get_view_locators
-	${data}  otherAssets_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
+	cdb2_OtherAssets.Завантажити локатори
     Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
 

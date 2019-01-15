@@ -1,3 +1,7 @@
+*** Settings ***
+Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
+
+
 *** Keywords ***
 Створити аукціон
 	Відкрити сторінку Продаж/Оренда майна(тестові)
@@ -17,11 +21,20 @@
 	Зберегти словник у файл  ${data}  data
 
 
+Завантажити локатори
+	${edit_locators}  otherAssets_variables.get_edit_locators
+	${view_locators}  otherAssets_variables.get_view_locators
+	${data}  otherAssets_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
+
+
 #########################################################
 #	                  Keywords							#
 #########################################################
 Заповнити "День старту електроного аукціону"
-	${startDate}  get_time_now_with_deviation  15  minutes
+	${startDate}  get_time_now_with_deviation  18  minutes
 	otherAssets.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 

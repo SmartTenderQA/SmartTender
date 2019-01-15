@@ -1,3 +1,7 @@
+*** Settings ***
+Library  ../../src/pages/sale/DGF/dutch/dutch_variables.py
+
+
 *** Keywords ***
 Створити аукціон
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
@@ -19,6 +23,14 @@
 	sale_keywords.Отримати та зберегти tender_id
 	Зберегти словник у файл  ${data}  data
 
+
+Завантажити локатори
+	${edit_locators}  dutch_variables.get_edit_locators
+	${view_locators}  dutch_variables.get_view_locators
+	${data}  dutch_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 #########################################################
