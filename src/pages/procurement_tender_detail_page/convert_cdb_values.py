@@ -21,6 +21,8 @@ def convert_cdb_values(field, value):
         ret = int(value)
     elif 'maxAwardsCount' in field:
         ret = str(value)
+    elif 'hash' in field:
+        ret = str(value[4:])
     else:
         ret = value
     return ret

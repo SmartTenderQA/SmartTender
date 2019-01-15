@@ -9,7 +9,8 @@
 
 
 Натиснути кнопку "Поставити запитання"
-    ${question button}  Set Variable  //*[@data-qa="questions"]//button[contains(@class,"question-button")]
+    ${question button}    Set Variable  //*[@data-qa="questions"]//button[contains(@class,"question-button")]
+    ${question send btn}  Set Variable  //*[@data-qa="questions"]//button[contains(@class,"btn-success")]
     Scroll Page To Element XPATH   ${question button}
     Click Element                  ${question button}
     Wait Until Element Is Visible  ${question send btn}
