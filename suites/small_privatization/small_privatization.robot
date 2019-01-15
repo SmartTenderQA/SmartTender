@@ -217,7 +217,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати заявки на участь в тендері
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  3
+	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
@@ -231,12 +231,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати пропозицію учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  3
+	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
-	\  Заповнити поле з ціною  1  1
+	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
 
 
@@ -250,7 +250,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-    :FOR  ${i}  IN  1  3
+    :FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
