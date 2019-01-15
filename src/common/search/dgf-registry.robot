@@ -20,7 +20,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 #	Sleep  .3
 	Click Element  ${type locator}
 	Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
-	Дочекатись закінчення загрузки сторінки(sales spin)
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Перейти по результату пошуку за номером
