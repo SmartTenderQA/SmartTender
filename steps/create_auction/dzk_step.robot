@@ -1,3 +1,7 @@
+*** Settings ***
+Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
+
+
 *** Keywords ***
 Створити аукціон
 	start_page.Натиснути На торговельний майданчик
@@ -20,6 +24,15 @@
 	#todo nuzhno ubrat` posle fixa
 	Wait Until Keyword Succeeds  3x  35  dzk_auction.Опублікувати аукціон у реєстрі
 	###
+
+
+Завантажити локатори
+	${edit_locators}  dzk_variables.get_edit_locators
+	${view_locators}  dzk_variables.get_view_locators
+	${data}  dzk_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 #########################################################

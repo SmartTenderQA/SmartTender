@@ -103,7 +103,7 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 
 
 Додати файл
-	[Arguments]  ${block}
+	[Arguments]  ${block}=1
 	${doc}=  create_fake_doc
 	${path}  Set Variable  ${doc[0]}
 	Choose File  xpath=(//input[@type="file"][1])[${block}]  ${path}

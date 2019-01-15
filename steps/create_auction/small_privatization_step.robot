@@ -1,3 +1,8 @@
+*** Settings ***
+Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object_variables.py
+Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+
+
 *** Keywords ***
 Створити об'єкт МП
 	start_page.Натиснути На торговельний майданчик
@@ -13,6 +18,15 @@
 	small_privatization_step.Заповнити "Загальну інформацію про об'єкт"
 	small_privatization_object.Натиснути кнопку зберегти
 	small_privatization_object.Опублікувати об'єкт у реєстрі
+
+
+Завантажити локатори для об'єкта
+	${edit_locators}  small_privatization_object_variables.get_edit_locators
+	${view_locators}  small_privatization_object_variables.get_view_locators
+	${data}  small_privatization_object_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 Створити інформаційне повідомлення МП
@@ -34,6 +48,14 @@
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
 	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
 
+
+Завантажити локатори для ІП
+	${edit_locators}  small_privatization_informational_message_variables.get_edit_locators
+	${view_locators}  small_privatization_informational_message_variables.get_view_locators
+	${data}  small_privatization_informational_message_variables.get_data
+	Set Global Variable  ${edit_locators}
+	Set Global Variable  ${view_locators}
+	Set Global Variable  ${data}
 
 
 #########################################################

@@ -17,7 +17,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  tender_owner
-	Завантажити variables.py для об'єкта
+	small_privatization_step.Завантажити локатори для об'єкта
 	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
 	small_privatization_object.Отримати ID у цбд
@@ -87,7 +87,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Створити інформаційне повідомлення МП
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
-	Завантажити variables.py для інформаційного повідомлення
+	small_privatization_step.Завантажити локатори для ІП
 	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
 	small_privatization_object.Отримати ID у цбд
@@ -217,7 +217,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати заявки на участь в тендері
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  3
+	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Подати заявку для подачі пропозиції
 
@@ -231,12 +231,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати пропозицію учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  1  3
+	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
-	\  Заповнити поле з ціною  1  1
+	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
 
 
@@ -250,7 +250,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Отримати поcилання на участь учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-    :FOR  ${i}  IN  1  3
+    :FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  provider${i}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -276,24 +276,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Precondition
 	Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
-
-
-Завантажити variables.py для об'єкта
-	${edit_locators}  small_privatization_object_variables.get_edit_locators
-	${view_locators}  small_privatization_object_variables.get_view_locators
-	${data}  small_privatization_object_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
-
-
-Завантажити variables.py для інформаційного повідомлення
-	${edit_locators}  small_privatization_informational_message_variables.get_edit_locators
-	${view_locators}  small_privatization_informational_message_variables.get_view_locators
-	${data}  small_privatization_informational_message_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
 
 
 Postcondition

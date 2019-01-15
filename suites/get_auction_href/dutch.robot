@@ -1,6 +1,5 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/sale/DGF/dutch/dutch_variables.py
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
@@ -42,7 +41,6 @@ If skipped create tender
 	[Setup]  Run Keyword If  '${site}' == 'prod'
 	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
-	\['date']  m
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['value']['amount']
@@ -76,7 +74,6 @@ If skipped create tender
 	\['enquiryPeriod']['endDate']
 	\['tenderPeriod']['startDate']
 	\['tenderPeriod']['endDate']
-	\['auctionPeriod']['startDate']
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
 	\['auctionParameters']['dutchSteps']
@@ -156,12 +153,7 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
-	${edit_locators}  dutch_variables.get_edit_locators
-	${view_locators}  dutch_variables.get_view_locators
-	${data}  dutch_variables.get_data
-	Set Global Variable  ${edit_locators}
-	Set Global Variable  ${view_locators}
-	Set Global Variable  ${data}
+	dutch_step.Завантажити локатори
     Додати першого користувача  ${user}  tender_owner
     Підготувати користувачів
 
