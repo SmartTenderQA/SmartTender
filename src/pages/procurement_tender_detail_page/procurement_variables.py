@@ -4,7 +4,6 @@
 # locators - для получения локатора для конкретного значения словаря
 import re
 
-
 data = {
     "procurementMethod": "",
     "procedure-type": "",
@@ -44,6 +43,40 @@ data = {
             "documentOf": "",
             "datePublished": "",
             "dateModified": "",
+            "id": ""
+        }
+    ],
+    "questions": [
+        {
+            "date": "",
+            "description": "",
+            "id": "",
+            "questionOf": "",
+            "title": ""
+        }
+    ],
+    "complaints": [
+        {
+            "status": "",
+            "documents": [
+                {
+                    "hash": "",
+                    "author": "",
+                    "format": "",
+                    "url": "",
+                    "title": "",
+                    "documentOf": "",
+                    "datePublished": "",
+                    "dateModified": "",
+                    "id": ""
+                }
+            ],
+            "description": "",
+            "title": "",
+            "dateSubmitted": "",
+            "complaintID": "",
+            "date": "",
+            "type": "",
             "id": ""
         }
     ],
@@ -232,8 +265,6 @@ data = {
     ]
 }
 
-
-
 ############################################ LOCATORS ###########################################
 
 
@@ -413,7 +444,7 @@ locators = {
 
 def get_locator(field):
     if "awards" in field:
-        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
         award_id = int(list.group('id')) + 1
         result = list.group('path')
         map = {
@@ -421,7 +452,7 @@ def get_locator(field):
         }
         return map[result].format(award_id)
     elif "bids" in field:
-        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
         bids_id = int(list.group('id')) + 1
         result = list.group('path')
         map = {
@@ -430,10 +461,29 @@ def get_locator(field):
         }
         return map[result].format(bids_id)
     elif "contracts" in field:
-        list = re.search('\[(?P<id>\d)\](?P<path>.+)', field)
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
         contracts_id = int(list.group('id')) + 1
         result = list.group('path')
         map = {
             "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"]//*[contains(text(),"Договір")]/ancestor::div[3]//*[@data-qa="file-name"]"""
         }
         return map[result].format(contracts_id)
+    elif "questions" in field:
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
+        id = int(list.group('id')) + 1
+        result = list.group('path')
+        map = {
+            "['title']": u"""(//*[@data-qa="questions"]//*[@class="bold break-word"])[last()-({0}-1)]""",
+            "['description']": u"""(//*[@data-qa="questions"]//*[@class="break-word"])[last()-({0}-1)]"""
+        }
+        return map[result].format(id)
+    elif "complaints" in field:
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
+        id = int(list.group('id')) + 1
+        result = list.group('path')
+        map = {
+            "['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="title"]//*[@class="break-word"])[last()-({0}-1)]""",
+            "['description']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"]//span/following-sibling::div)[last()-({0}-1)]""",
+            "['documents'][0]['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"])[last()-({0}-1)]//a[text()]"""
+        }
+        return map[result].format(id)

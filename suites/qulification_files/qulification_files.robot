@@ -36,48 +36,6 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Валідфція введених даних з даними в ЦБД
-    [Tags]  view
-    [Template]  procurement_tender_detail.Порівняти введені дані з даними в ЦБД
-    \['title']
-    \['description']
-    \['tenderID']
-    \['items'][0]['description']
-    \['items'][0]['deliveryAddress']['locality']
-    \['items'][0]['deliveryAddress']['streetAddress']
-    \['items'][0]['deliveryAddress']['postalCode']
-    \['items'][0]['classification']['id']
-    \['items'][0]['classification']['description']
-    \['items'][0]['unit']['name']
-    \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
-    \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
-    \['value']['amount']
-    \['minimalStep']['amount']
-
-
-Валідфція даних на сторінці з даними в ЦБД
-    [Tags]  view
-    [Template]  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД
-    \['title']
-    \['description']
-    \['tenderID']
-    \['items'][0]['description']
-    \['items'][0]['deliveryAddress']['locality']
-    \['items'][0]['deliveryAddress']['streetAddress']
-    \['items'][0]['deliveryAddress']['postalCode']
-    \['items'][0]['classification']['id']
-    \['items'][0]['classification']['description']
-    \['items'][0]['unit']['name']
-    \['items'][0]['quantity']
-    \['tenderPeriod']['startDate']
-    \['tenderPeriod']['endDate']
-    \['enquiryPeriod']['endDate']
-    \['value']['amount']
-    \['minimalStep']['amount']
-
-
 Подати заявку на участь в тендері учасниками
 	:FOR  ${i}  IN  1  2  3
 	\  Прийняти участь у тендері учасником  provider${i}
@@ -184,7 +142,7 @@ If skipped create tender
 Подати пропозицію учасником
 	Перевірити кнопку подачі пропозиції
 	Заповнити поле з ціною  1  1
-    Додати файл  1
+    actions.Додати doc файл
 	Run Keyword And Ignore Error  Підтвердити відповідність
 	Подати пропозицію
     Go Back
@@ -214,7 +172,7 @@ If skipped create tender
     Click Element  ${add button}
     Дочекатись закінчення загрузки сторінки(webclient)
     Wait Until Page Contains Element  xpath=//*[@type='file'][1]
-    ${name}  Додати файл  1
+    ${name}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}

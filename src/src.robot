@@ -75,7 +75,7 @@ Resource    pages/povidomlenya/povidomlenya.robot
 Resource    pages/pro_kompaniyu/pro_kompaniyu.robot
 Resource    pages/procurement_tender_detail_page/procurement_tender_detail.robot
 Resource    pages/procurement_questions/procurement_questions.robot
-Resource    pages/publichni-zakupivli/publichni-zakupivli.robot
+Resource    pages/procurement_complaints/procurement_complaints.robot
 Resource	pages/start_page/start_page.robot
 Resource	pages/taryfy/taryfy.robot
 Resource    pages/torgy_rialto/torgy_rialto.robot

@@ -8,6 +8,14 @@ Variables       procurement_variables.py
 
 
 *** Keywords ***
+Активувати вкладку "Тендер"
+    ${tender tab}  Set Variable  //*[@data-qa="tabs"]//*[text()=" Тендер "]
+    Click Element  ${tender tab}
+    ${status}  Run Keyword And Return Status
+    ...  Element Should Be Visible  ${tender tab}/ancestor::div[contains(@class,"tab-active")]
+    Run Keyword If  '${status}' == 'False'  Click Element  ${tender tab}
+
+
 Перевірити кнопку подачі пропозиції
     [Arguments]  ${selector}=None
     ${button}  Run Keyword If  "${selector}" == "None"
@@ -52,9 +60,8 @@ Variables       procurement_variables.py
 
 Отритами дані зі сторінки
 	[Arguments]  ${field}
-	${selector}  Run Keyword If  ('documents' in """${field}""")
-	...  procurement_variables.get_locator  ${field}  ELSE
-	...  Set Variable  ${locators${field}}
+	${selector}  procurement_variables.get_locator  ${field}
+	${selector}  Set Variable If  '${selector}' == 'None'  ${locators${field}}  ${selector}
 	Wait Until Element Is Visible  ${selector}  3
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}

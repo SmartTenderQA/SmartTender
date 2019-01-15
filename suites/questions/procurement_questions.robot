@@ -27,23 +27,56 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     Log  ${tender_href}  WARN
     Set To Dictionary  ${data}  tender_href  ${tender_href}
 
-
-Поставити довільне запитання
+Перейти на сторінку запитань та порахувати їх кількість
     procurement_questions.Активувати вкладку "Запитання"
-    procurement_questions.Натиснути кнопку "Поставити запитання"
+    ${n}  procurement_questions.Порахувати кількісь запитань на сторінці
+    Set Global Variable  ${n}
+    Run Keyword If  ${n} > 0  Підготувати словник data для збереження запитання  ${n}
+
+
+Створити довільне запитання та зберегти його у словник
     ${theme}  create_sentence  3
-    procurement_questions.Заповнити тему запитання  ${theme}
     ${text}   create_sentence  8
-    procurement_questions.Заповнити текст запитання  ${text}
+    Set To Dictionary  ${data['questions'][${n}]}  title        ${theme}
+    Set To Dictionary  ${data['questions'][${n}]}  description  ${text}
+
+
+Заповнити необхідні поля та поставити запитання
+    procurement_questions.Натиснути кнопку "Поставити запитання"
+    procurement_questions.Заповнити тему запитання   ${data['questions'][${n}]['title']}
+    procurement_questions.Заповнити текст запитання  ${data['questions'][${n}]['description']}
     procurement_questions.Натиснути кнопку "Подати" запитання
-    Set Global Variable  ${theme}
-    Set Global Variable  ${text}
 
 
-Проста перевірка публікації запитання
+Перевірити публікацію запитання в ЦБД
+    Отримати дані з cdb та зберегти їх у файл
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['questions'][${n}]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['questions'][${n}]['description']
+
+
+Перевірити публікацію запитання на сторінці користувачами
     :FOR  ${i}  IN  provider1  viewer
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  procurement_questions.Активувати вкладку "Запитання"
-	\  Page Should Contain  ${theme}
-	\  Page Should Contain  ${text}
+	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['title']
+	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['description']
+
+
+
+
+*** Keywords ***
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    procurement_tender_detail.Активувати вкладку "Тендер"
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Set Global Variable  ${cdb}
+    actions.Зберегти словник у файл  ${cdb}  cdb
+
+
+Підготувати словник data для збереження запитання
+    [Arguments]  ${n}
+    :FOR  ${i}  IN RANGE  ${n}
+    \  ${new dict}  Evaluate  ${data['questions'][0]}.copy()
+    \  Append to list  ${data['questions']}  ${new dict}
