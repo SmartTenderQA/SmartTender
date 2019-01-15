@@ -111,3 +111,4 @@ Postcondition
     Дочекатись Закінчення Загрузки Сторінки
     Input Password  xpath=//input[@placeholder='']  ${new password}
     Click Element  ${submit btn locator}
+    Wait Until Page Contains  Пароль успішно змінений

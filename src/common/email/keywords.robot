@@ -47,5 +47,7 @@ ${field_password}       //input[@type="password"]
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
 	${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
 	${time is}  Get Text  ${time selector}
+	${is today}  Evaluate  not '.' in '${time is}'
+	Run Keyword If  ${is today} == ${False}  Fail
 	${time}  compare_dates_smarttender  ${time now -1 min}  <=  ${time is}
 	Should Be Equal  ${time}  ${True}
