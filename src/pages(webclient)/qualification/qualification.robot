@@ -4,24 +4,24 @@ Resource        qualification_keywords.robot
 
 *** Variables ***
 ${participant}            //*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
-${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]
+${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]|//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
 ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
 
 
 *** Keywords ***
 Провести прекваліфікацію учасників
-    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    ${count}  qualification_keywords.Дочекатись появи учасників прекваліфікації та отримати їх кількість
     :FOR  ${i}  IN RANGE  1  ${count}+1
-    \  Надати рішення про допуск до аукціону учасника  ${i}
+    \  qualification_keywords.Надати рішення про допуск до аукціону учасника  ${i}
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
-    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
+    Run Keyword If  ${status}  validation.Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Сформувати протокол розгляду пропозицій
-    Run Keyword If  ${status}  Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так
+    Run Keyword If  ${status}  validation.Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так
     Run Keyword And Ignore Error  Підтвердити організатором формування протоколу розгляду пропозицій
 
 
 Дочекатись появи учасників прекваліфікації та отримати їх кількість
-    Натиснути кнопку Перечитать (Shift+F4)
+    actions.Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${participant}
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Capture Page Screenshot  AND
@@ -31,21 +31,21 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
 
 
 Визнати всіх учасників переможцями
-    Натиснути кнопку Перечитать (Shift+F4)
+    actions.Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Отримати кількість можливих переможців
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  Визначити учасника переможцем  ${i}
-    Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
+    validation.Закрити валідаційне вікно (Так/Ні)  Розгляд учасників закінчено?  Так
 
 
 Заповнити ціни за одиницю номенклатури для всіх переможців
     ${count}  Отримати кількість можливих переможців
     :FOR  ${i}  IN RANGE  1  ${count}+1
-    \   Вказати ціну за одиницю номенклатури для переможця  ${i}
+    \   qualification_keywords.Вказати ціну за одиницю номенклатури для переможця  ${i}
 
 
 Отримати кількість можливих переможців
-    Натиснути кнопку Перечитать (Shift+F4)
+    actions.Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${winners}
     Run Keyword If  '${count}' == '0'  Run Keywords
     ...  Capture Page Screenshot  AND
@@ -55,7 +55,58 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
 
 
 Підтвердити організатором формування протоколу розгляду пропозицій
-    Вибрати тендер за номером (webclient)  1
-    Натиснути кнопку Перечитать (Shift+F4)
-    Натиснути надіслати вперед(Alt+Right)
-    Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так
+    main_page.Вибрати тендер за номером (webclient)  1
+    actions.Натиснути кнопку Перечитать (Shift+F4)
+    actions.Натиснути надіслати вперед(Alt+Right)
+    validation.Закрити валідаційне вікно (Так/Ні)  Сформувати протокол розгляду пропозицій  Так
+
+
+Визначити учасника переможцем
+    [Arguments]  ${i}  ${EDS}=None
+    ${selector}  Set Variable  (${winners})[${i}]
+    Click Element  ${selector}
+    actions.Натиснути кнопку "Кваліфікація"
+    validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
+    qualification_keywords.Натиснути "Визначити переможцем"
+    qualification_keywords.Відмітити чек-бокс у рішенні
+    qualification_keywords.Заповнити текст рішення кваліфікації
+    ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
+    actions.Натиснути OkButton
+    validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
+    Run Keyword If  '${EDS}' == 'True'  Run Keywords
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
+    ...  EDS_weclient.Накласти ЕЦП (webclient)
+    ...  ELSE  Run Keywords
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
+    [Return]  ${file name}
+
+
+Відхилити пропозицію учасника
+    [Arguments]  ${i}  ${EDS}=None
+    ${selector}  Set Variable  (${winners})[${i}]
+    Click Element  ${selector}
+    actions.Натиснути кнопку "Кваліфікація"
+    validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
+    qualification_keywords.Натиснути "Відхилити пропозицію"
+    qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
+    qualification_keywords.Заповнити текст рішення кваліфікації
+    ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
+    actions.Натиснути OkButton
+    validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
+    Run Keyword If  '${EDS}' == 'True'  Run Keywords
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
+    ...  EDS_weclient.Накласти ЕЦП (webclient)
+    ...  ELSE  Run Keywords
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
+    ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
+    [Return]  ${file name}
+
+
+Додати договір до переможця
+    actions.Натиснути кнопку "Прикріпити договір"
+    qualification_keywords.Заповнити номер договору
+    ${dogovir name}  qualification_keywords.Вкласти договірній документ
+    actions.actions.Натиснути OkButton
+    validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    [Return]  ${dogovir name}

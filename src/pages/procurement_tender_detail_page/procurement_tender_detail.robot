@@ -80,12 +80,14 @@ Variables       procurement_variables.py
 
 
 Додати кваліфікаційний документ
+    [Arguments]  ${EDS}=None
     Натиснути "Завантажити кваліфікаційні документи"
-    Дочекатись закінчення загрузки сторінки по елементу  ${circle loading}
-    ${file name}  Wait Until Keyword Succeeds  20  2  Додати файл  1
+    loading.Дочекатись закінчення загрузки сторінки
+    ${file name}  Wait Until Keyword Succeeds  20  2  actions.Додати doc файл
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
     Виконати дії відповідно до тексту повідомлення  ${message}
     Go Back
+    Run Keyword If  '${EDS}' == 'True'  EDS.Підписати ЕЦП
     [Return]  ${file name}
 
 

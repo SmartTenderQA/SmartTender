@@ -48,7 +48,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
-    ${negative result file name}  Не визнати учасника переможцем  1
+    ${negative result file name}  Відхилити пропозицію учасника  1
     Set To Dictionary  ${data['awards'][0]['documents'][0]}  title  ${negative result file name}
 
 
@@ -68,7 +68,7 @@ If skipped create tender
     Завантажити сесію для  tender_owner
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
-    ${positive result file name}  Визначити учасника переможцем else  2
+    ${positive result file name}  Визначити учасника переможцем  2
     ${new dict}  Evaluate  ${data['awards'][0]}.copy()
     Append to list   ${data['awards']}  ${new dict}
     Set To Dictionary  ${data['awards'][1]['documents'][0]}  title  ${positive result file name}
@@ -76,10 +76,10 @@ If skipped create tender
 
 Организатор Прикріпити договір
     Вибрати переможця на номером else  2
-    webclient_elements.Натиснути кнопку "Прикріпити договір"
+    actions.Натиснути кнопку "Прикріпити договір"
     Заповнити номер договору
     ${dogovir name}  Вкласти договірній документ
-    webclient_elements.Натиснути OkButton
+    actions.Натиснути OkButton
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
     Set To Dictionary  ${data['contracts'][0]['documents'][0]}  title  ${dogovir name}
 
@@ -114,7 +114,7 @@ If skipped create tender
     actions.Натиснути надіслати вперед(Alt+Right)
     main_page.Дочекатись стадії закупівлі  Пропозиції розглянуті
     Вибрати переможця на номером else  2
-    webclient_elements.Натиснути кнопку "Підписати договір"
+    actions.Натиснути кнопку "Підписати договір"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
     validation.Підтвердити підписання договору
 

@@ -83,7 +83,7 @@ If skipped create tender
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     main_page.Вибрати тендер за номером (webclient)  1
     framework_agreement.Заповнити поля Рамкової угоди
-    webclient_elements.Натиснути кнопку "Заключить рамочное соглашение"
+    actions.Натиснути кнопку "Заключить рамочное соглашение"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
     validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Ні
     validation.Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так

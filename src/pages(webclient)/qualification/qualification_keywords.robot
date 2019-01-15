@@ -7,51 +7,9 @@
     Page Should Contain  Відіслати рішення
     Натиснути елемент у якого title  Допустити учасника до аукціону
     Відмітити чек-бокс у рішенні
-    Натиснути OkButton
-    Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на кваліфікацію?  Ні
-
-
-Визначити учасника переможцем
-    [Arguments]  ${i}
-    ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
-    Натиснути кнопку "Кваліфікація"
-    Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
-    Натиснути "Визначити переможцем"
-    Відмітити чек-бокс у рішенні
-    Заповнити текст рішення кваліфікації
-    Додати файл до рішення кваліфікації
-    Натиснути OkButton
-    Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні
-    Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
-
-
-Не визнати учасника переможцем
-    [Arguments]  ${i}
-    ${selector}  Set Variable  (${winners2})[${i}]
-    Click Element  ${selector}
-    Натиснути кнопку "Кваліфікація"
-    Натиснути "Відхилити пропозицію"
-    Заповнити текст рішення кваліфікації
-    ${file name}  Додати файл до рішення кваліфікації
-    Натиснути OkButton
-    Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    [Return]  ${file name}
-
-
-Визначити учасника переможцем else
-    [Arguments]  ${i}
-    ${selector}  Set Variable  (${winners2})[${i}]
-    Click Element  ${selector}
-    Натиснути кнопку "Кваліфікація"
-    Натиснути "Визначити переможцем"
-    Заповнити текст рішення кваліфікації
-    ${file name}  Додати файл до рішення кваліфікації
-    Натиснути OkButton
-    Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    [Return]  ${file name}
+    actions.Натиснути OkButton
+    validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на кваліфікацію?  Ні
 
 
 Вказати ціну за одиницю номенклатури для переможця
@@ -71,7 +29,7 @@
     Sleep  .5
     Input Text  ${price field}//input  ${price}
     Sleep  .5
-    Натиснути OkButton
+    actions.Натиснути OkButton
 
 
 Визначити ціну за одиницю номенклатури
@@ -105,12 +63,13 @@
 
 Відмітити чек-бокс у рішенні
     ${checkbox}  Set Variable  //*[@data-type="CheckBox"]//td/span
-    Wait Until Element Is Visible  (${checkbox})[1]  10
-    Sleep  .5
-    Click Element  (${checkbox})[1]
-    Sleep  .5
-    Click Element  (${checkbox})[2]
-    Sleep  .5
+    ${status}  Run Keyword And Return Status  Wait Until Element Is Visible  (${checkbox})[1]  10
+    Run Keyword If  ${status}  Run Keywords
+    ...  Sleep  .5                        AND
+    ...  Click Element  (${checkbox})[1]  AND
+    ...  Sleep  .5                        AND
+    ...  Click Element  (${checkbox})[2]  AND
+    ...  Sleep  .5
 
 
 Заповнити текст рішення кваліфікації
@@ -120,18 +79,41 @@
 
 
 Додати файл до рішення кваліфікації
-    ${doc}=  create_fake_doc
-    ${path}  Set Variable  ${doc[0]}
-    ${name}  Set Variable  ${doc[1]}
     ${add button}  Set Variable  //span[contains(text(), "Перегляд")]
     Click Element  ${add button}
     Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Page Contains Element  xpath=//*[@type='file'][1]
-    Choose File  xpath=//*[@type='file'][1]  ${path}
+    ${name}  Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}
     [Return]  ${name}
 
 
+Відмітити підставу відхилення
+    [Arguments]  ${text}
+    ${check}  Set Variable  //td[text()="${text}"]/preceding-sibling::td/img
+    Click Element  ${check}
+    Wait Until Page Contains Element  ${check}[contains(@src,"BoxChecked")]
 
+
+Вибрати переможця за номером
+    [Arguments]  ${i}
+    ${selector}  Set Variable  (${winners})[${i}]
+    Click Element  ${selector}
+
+
+Заповнити номер договору
+    ${selector}  Set Variable  //*[text()="Номер договору"]/following-sibling::table[1]//input
+    ${n}  random_number  1000  10000
+    Input Text  ${selector}  ${n}
+
+
+Вкласти договірній документ
+    ${add button}  Set Variable  //span[contains(text(), "Обзор")]
+    Click Element  ${add button}
+    Дочекатись закінчення загрузки сторінки(webclient)
+    ${name}  actions.Додати doc файл
+    Click Element  xpath=(//span[.='ОК'])[1]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    Page Should Contain  ${name}
+    [Return]  ${name}

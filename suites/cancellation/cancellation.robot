@@ -33,25 +33,25 @@ ${multilot}                                False
     Append to list         ${data['cancellations']}  ${new dict}
     :FOR  ${i}  IN  1  2
     \  main_page.Вибрати лот за номером (webclient)  ${i}
-    \  webclient_elements.Натиснути кнопку "Отмена лота"
+    \  actions.Натиснути кнопку "Отмена лота"
     \  ${reason}  Вказати причину скасування лота
     \  Set To Dictionary  ${data['cancellations'][${i}-1]}  reason  ${reason}
     \  Вибрати "Тип скасування"  Торги відмінені
     \  ${name}  Вкласти документ "Протокол скасування"
     \  Set To Dictionary  ${data['cancellations'][${i}-1]['documents'][0]}  title  ${name}
-    \  webclient_elements.Натиснути OkButton
+    \  actions.Натиснути OkButton
     \  validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити лот  Так
 
 
 Скасувати тендер
     [Tags]  cancel_tender
-    webclient_elements.Натиснути кнопку "Скасування тендеру"
+    actions.Натиснути кнопку "Скасування тендеру"
     ${reason}  Вказати причину скасування тендера
     Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
     Вибрати "Тип скасування"  Торги відмінені
     ${name}  Вкласти документ "Протокол скасування"
     Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
-    webclient_elements.Натиснути OkButton
+    actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити тендер  Так
 
 

@@ -10,6 +10,12 @@
     [Return]  ${href}
 
 
+Отримати tender_title вибраного тендера
+    ${tite}  Get Text
+    ...  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Узагальнена назва закупівлі')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
+    [Return]  ${title}
+
+
 Отримати посилання на вибраний тендер по значку "Планета"
 	Click Element  //tr[contains(@class, "rowselected")]//td[3]
 	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
@@ -87,3 +93,19 @@
     ${status}  Run Keyword And Return Status  Should Contain  ${now}  ${stage}
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Sleep  60  AND  Дочекатись стадії закупівлі  ${stage}
+
+
+Відфільтрувати за типом процедури
+    [Arguments]  ${type}
+    ${type input}  Set Variable
+    ...  xpath=((//tr[@class=' has-system-column'])[1]/td[count(//div[contains(text(), 'Тип')]/ancestor::td[@draggable]/preceding-sibling::*)+1]//input)[1]
+    ${clear checkbox}  Set Variable  xpath=//*[@class="dhxcombo_option_text"][text()="${type}"]/ancestor::div[2]/div[@id="_selecatAllItem"]
+    ${type checkbox}   Set Variable  xpath=//*[@class="dhxcombo_option_text"][text()="${type}"]/ancestor::div[1]
+    Click element  ${type input}
+    Wait Until Element Is Visible  ${clear checkbox}
+    Click Element  ${clear checkbox}
+    Wait Until Element Is Visible  ${clear checkbox}[@checkedcombo='false']
+    Click Element  ${type checkbox}
+    Wait Until Element Is Visible  ${type checkbox}[@checkedcombo='true']
+    Press Key  ${type input}  \\13
+    Дочекатись закінчення загрузки сторінки(webclient)

@@ -2,7 +2,7 @@
 Створити тендер
     [Arguments]  ${type}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
+	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
 
   	test_open_trade.Заповнити endDate періоду пропозицій
@@ -20,7 +20,7 @@
 Створити тендер (Мультилот)
     [Arguments]  ${type}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-	webclient_elements.Натиснути додати(F7)  Додавання. Тендери
+	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
     tender_tab.Встановити чекбокс "Мультилоти"
   	test_open_trade.Заповнити endDate періоду пропозицій
@@ -28,14 +28,14 @@
   	test_open_trade.Заповнити minimalStep для lot
   	test_open_trade.Заповнити title для tender
   	test_open_trade.Заповнити description для tender
-  	webclient_elements.Натиснути додати (додавання предмету)
+  	actions.Натиснути додати (додавання предмету)
   	test_open_trade.Додати предмет в тендер
   	# Додаєм ще один лот
-  	webclient_elements.Натиснути додати (додавання предмету)
+  	actions.Натиснути додати (додавання предмету)
   	tender_tab.Змінити тип елементу на  Лот
   	test_open_trade.Заповнити amount для lot
   	test_open_trade.Заповнити minimalStep для lot
-  	webclient_elements.Натиснути додати (додавання предмету)
+  	actions.Натиснути додати (додавання предмету)
 
   	test_open_trade.Заповнити description для item
     test_open_trade.Заповнити quantity для item

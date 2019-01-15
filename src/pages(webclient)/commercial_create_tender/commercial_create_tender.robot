@@ -50,10 +50,10 @@ Resource        keywords.robot
 	Натиснути додати(F7)  Додавання. Класифікатор ресурсів  //*[@id="pcModalMode_PW-1"]
 	${lot_name}  Заповнити поле найменування для класифікатора
 	${unit_name}  Вибрати одиниці виміру для классифікатора ресурсів
-	Натиснути OkButton
+	actions.Натиснути OkButton
 	Підтвердити вибір(F10)
 	${amount}  Вказати кількість одиниць виміру для классифікатора ресурсів
-	Run Keyword And Ignore Error  Натиснути OkButton
+	Run Keyword And Ignore Error  actions.Натиснути OkButton
 	[Return]  ${lot_name}  ${unit_name}  ${amount}
 
 

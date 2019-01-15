@@ -26,13 +26,8 @@ Resource    common/compare_data/compare_data.robot
 Resource    common(webclient)/validation/validation.robot
 
 
-Resource  	elements/webclient/webclient_elements.robot
 Resource  	elements/actions.robot
 Resource  	elements/other.robot
-
-
-Resource    elements/actions.robot
-Resource    elements/webclient/webclient_elements.robot
 
 
 Resource    Faker/faker.robot
@@ -48,6 +43,7 @@ Resource    pages/contract/contract.robot
 Resource    pages/dozorro/dozorro.robot
 Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
+Resource    pages(webclient)/EDS/EDS_weclient.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/instruktcii/instruktcii.robot
 Resource    pages/karta_saytu/karta_saytu.robot

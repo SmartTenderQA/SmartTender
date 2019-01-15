@@ -49,7 +49,7 @@ Ignore WebClient Error
 	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "${text}")]
 	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${window}
 	Run Keyword If  ${status} == ${True}  Run Keywords
-	...  Натиснути OkButton
+	...  actions.Натиснути OkButton
 	...  AND  Ignore WebClient Error  ${text}
 
 

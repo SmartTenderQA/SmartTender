@@ -9,7 +9,7 @@
     Заповнити дати РУ  (//*[@data-type="DateEdit"])[2]//input  ${startDate}
     ${endDate}  get_time_now_with_deviation  60  days
     Заповнити дати РУ  (//*[@data-type="DateEdit"])[3]//input  ${endDate}
-    Натиснути OkButton
+    actions.Натиснути OkButton
 
 
 Підтвердити активацію рамкової угоди
