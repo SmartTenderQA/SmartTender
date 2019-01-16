@@ -159,9 +159,9 @@ Resource        create_tender_keywords.robot
 
 Вибрати "Контактна особа"
     ${input field}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
-    Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
+    Wait Until Keyword Succeeds  10  2  Click Element  ${input field}
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
+	Wait Until Keyword Succeeds  10  2  Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Вибрати довільну персону з довідника персоналу
     ${person}  Get Element Attribute  ${input field}  value
