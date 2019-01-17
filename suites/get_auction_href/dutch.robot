@@ -14,7 +14,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Test Cases ***
 Створити аукціон
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${user}
 	dutch_step.Створити аукціон
 
 
@@ -28,7 +28,7 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  tender_owner
+	Знайти тендер користувачем  ${user}
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
@@ -100,34 +100,34 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	:FOR  ${i}  IN  provider1  tender_owner  viewer
+	:FOR  ${i}  IN  user1  ${user}  ${site}_viewer
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
 	\  Зберегти сесію  ${i}
 	:FOR  ${i}  IN  2  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  user${i}
 	\  Go to  ${data['tender_href']}
-	\  Зберегти сесію  provider${i}
+	\  Зберегти сесію  user${i}
 
 
 Подати заявку на участь в тендері учасниками
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
-	\  Зберегти сесію  provider${i}
+	\  Завантажити сесію для  user${i}
+	\  Зберегти сесію  user${i}
 	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${user}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Підтвердити пропозицію
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  provider1  provider2
+	:FOR  ${i}  IN  user1  user2
 	\  Завантажити сесію для  ${i}
 	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
@@ -136,7 +136,7 @@ If skipped create tender
 Отримати посилання на аукціон для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ссылка на участие формируется быстрее чем страница формируется(простой способ не поймать 404)
-	:FOR  ${i}  IN  provider1  provider2
+	:FOR  ${i}  IN  user1  user2
 	\  Завантажити сесію для  ${i}
     \  ${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  5m  3
     \  ...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
@@ -146,7 +146,7 @@ If skipped create tender
 
 Перевірити неможливість отримати посилання на перегляд
 	[Documentation]  В голандском аукционе есть только ссылка на участие(особенность типа торгов)
-	:FOR  ${i}  IN  provider1  provider3  tender_owner  viewer
+	:FOR  ${i}  IN  user1  user2  ${user}  ${site}_viewer
 	\  Завантажити сесію для  ${i}
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 
@@ -154,21 +154,21 @@ If skipped create tender
 *** Keywords ***
 Precondition
 	dutch_step.Завантажити локатори
-    Додати першого користувача  ${user}  tender_owner
+    Додати першого користувача  ${user}
     Підготувати користувачів
 
 
 Підготувати користувачів
     Run Keyword If  "${site}" == "prod"  Run Keywords
-    ...  Додати користувача          prod_provider		provider1     AND
-    ...  Додати користувача          prod_provider2		provider2     AND
-    ...  Додати користувача          prod_provider1		provider3     AND
-    ...  Додати користувача          prod_viewer		viewer
+    ...  Додати користувача          prod_provider     AND
+    ...  Додати користувача          prod_provider2     AND
+    ...  Додати користувача          prod_provider1     AND
+    ...  Додати користувача          prod_viewer
     Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача          user1           	provider1     AND
-    ...  Додати користувача          user2           	provider2     AND
-    ...  Додати користувача          user3           	provider3     AND
-    ...  Додати користувача          test_viewer     	viewer
+    ...  Додати користувача          user1       AND
+    ...  Додати користувача          user2     AND
+    ...  Додати користувача          user3     AND
+    ...  Додати користувача          test_viewer
 
 
 Зберегти пряме посилання на тендер

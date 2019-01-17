@@ -163,18 +163,18 @@ Open Browser In Grid
 
 
 Додати першого користувача
-    [Arguments]  ${name}
-    Open Browser In Grid  ${name}
-    Зберегти сесію  ${alias}
+    [Arguments]  ${user}
+    Open Browser In Grid  ${user}
+    Authentication.Авторизуватися  ${user}
+    Зберегти сесію  ${user}
 
 
 Додати користувача
-    [Arguments]  ${name}
+    [Arguments]  ${user}
     Delete All Cookies
 	Go To  ${start_page}
-	${login}  ${password}  Отримати дані користувача  ${name}
-	Run Keyword If  '${alias}' != 'viewer'  Авторизуватися  ${login}  ${password}
-	Зберегти сесію  ${alias}
+	Authentication.Авторизуватися  ${user}
+	Зберегти сесію  ${user}
 
 
 Open button
