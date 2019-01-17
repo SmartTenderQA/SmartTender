@@ -129,7 +129,7 @@
 
 
 Натиснути OkButton
-	${button}  Set Variable  //*[@data-name="OkButton"]
+	${button}  Set Variable  //*[@data-name="OkButton"]|//a[@title="Зберегти"]|//a[@title="OK"]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Дочекатись закінчення загрузки сторінки(webclient)

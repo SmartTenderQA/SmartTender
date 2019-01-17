@@ -11,7 +11,7 @@
 
 
 Отримати tender_title вибраного тендера
-    ${tite}  Get Text
+    ${title}  Get Text
     ...  xpath=(//tr[@class='evenRow rowselected'])[1]/td[count(//div[contains(text(), 'Узагальнена назва закупівлі')]/ancestor::td[@draggable]/preceding-sibling::*)+1]
     [Return]  ${title}
 

@@ -27,17 +27,16 @@ ${multilot}                                False
     test_open_trade.Отримати дані тендера та зберегти їх у файл
 
 
-Скасувати лоти
+Скасувати обидва лоти в тндері
     [Tags]  cancel_lot
-    ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
-    Append to list         ${data['cancellations']}  ${new dict}
+    Адаптувати словник data
     :FOR  ${i}  IN  1  2
     \  main_page.Вибрати лот за номером (webclient)  ${i}
     \  actions.Натиснути кнопку "Отмена лота"
-    \  ${reason}  Вказати причину скасування лота
+    \  ${reason}  cancellation.Вказати причину скасування лота
     \  Set To Dictionary  ${data['cancellations'][${i}-1]}  reason  ${reason}
-    \  Вибрати "Тип скасування"  Торги відмінені
-    \  ${name}  Вкласти документ "Протокол скасування"
+    \  cancellation.Вибрати "Тип скасування"  Торги відмінені
+    \  ${name}  cancellation.Вкласти документ "Протокол скасування"
     \  Set To Dictionary  ${data['cancellations'][${i}-1]['documents'][0]}  title  ${name}
     \  actions.Натиснути OkButton
     \  validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити лот  Так
@@ -46,10 +45,10 @@ ${multilot}                                False
 Скасувати тендер
     [Tags]  cancel_tender
     actions.Натиснути кнопку "Скасування тендеру"
-    ${reason}  Вказати причину скасування тендера
+    ${reason}  cancellation.Вказати причину скасування тендера
     Set To Dictionary  ${data['cancellations'][0]}  reason  ${reason}
-    Вибрати "Тип скасування"  Торги відмінені
-    ${name}  Вкласти документ "Протокол скасування"
+    cancellation.Вибрати "Тип скасування"  Торги відмінені
+    ${name}  cancellation.Вкласти документ "Протокол скасування"
     Set To Dictionary  ${data['cancellations'][0]['documents'][0]}  title  ${name}
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити тендер  Так
@@ -72,44 +71,7 @@ ${multilot}                                False
 
 
 
-
 *** Keywords ***
-Вказати причину скасування тендера
-    ${input}  Set Variable  //*[@data-name="reason"]//textarea
-    ${text}  create_sentence  5
-    Element Text Should Be
-    ...  //span[contains(@class, "headerText") and contains(@id, "ModalMode")]
-    ...  Скасування тендеру
-    Input Text  ${input}  ${text}
-    [Return]  ${text}
-
-
-Вказати причину скасування лота
-    ${input}  Set Variable  //*[@data-name="reason"]//textarea
-    ${text}  create_sentence  5
-    Element Text Should Be
-    ...  //span[contains(@class, "headerText") and contains(@id, "ModalMode")]
-    ...  Скасування лоту
-    Input Text  ${input}  ${text}
-    [Return]  ${text}
-
-
-Вкласти документ "Протокол скасування"
-    Click Element  //div[@title="Додати"]|//div[@title="Добавить"]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Wait Until Page Contains Element  xpath=//*[@type='file'][1]
-    ${doc}=  create_fake_doc
-    ${path}  Set Variable  ${doc[0]}
-    ${name}  Set Variable  ${doc[1]}
-    Choose File  xpath=//*[@type='file'][1]  ${path}
-    Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
-    Page Should Contain  ${name}
-    [Return]  ${name}
-
-
-Вибрати "Тип скасування"
-    [Arguments]  ${type}
-    Click Element  //*[text()="Тип скасування"]/following-sibling::table
-    Wait Until Element Is Visible  //*[text()="${type}"]
-    Click Element  //*[text()="${type}"]
+Адаптувати словник data
+    ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
+    Append to list         ${data['cancellations']}  ${new dict}
