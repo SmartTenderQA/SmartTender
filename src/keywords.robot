@@ -6,9 +6,9 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 
 *** Keywords ***
 Змінити стартову сторінку для IP
-	${start_page}  Run Keyword If  '${IP}' != ''  Set Variable  ${IP}
-	...  ELSE  Set Variable  ${start_page}
-	Set Global Variable  ${start_page}
+	Run Keyword If  '${IP}' != ''  Run Keywords
+	...  Set Global Variable  ${start_page}  ${IP}  AND
+	...  Go To  ${start_page}
 
 
 Отримати стартову сторінку
@@ -19,17 +19,13 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	[Return]  ${start_page}
 
 
-Отримати дані користувача
-	[Arguments]  ${user}
+Отримати дані користувача по полю
+	[Arguments]  ${user}  ${key}
 	${status}  Run Keyword And Return Status  Import Variables  ${users_variables_path1}
 	Run Keyword If  ${status} == ${False}  Import Variables  ${users_variables_path2}
 	${a}  Create Dictionary  a  ${users_variables}
 	${users_variables}  Set Variable  ${a.a}
-	Set Global Variable  ${users_variables}
-	Set Global Variable  ${name}  ${users_variables.${user}.name}
-	Set Global Variable  ${role}  ${users_variables.${user}.role}
-	Set Global Variable  ${site}  ${users_variables.${user}.site}
-	[Return]  ${users_variables.${user}.login}  ${users_variables.${user}.password}
+	[Return]  ${users_variables.${user}.${key}}
 
 
 Поправити лінку для IP

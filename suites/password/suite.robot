@@ -47,8 +47,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 *** Keywords ***
 Precondition
-	Set Global Variable  ${fast_login}  ${False}
-   	Start in grid  ${user}
+   	Open Browser In Grid  ${user}
    	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
 	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
 
@@ -66,7 +65,8 @@ Postcondition
 
 
 Перевірити сторінку "Змінити пароль" для provider
-    start_page.Відкрити особистий кабінет
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Особистий кабінет
     personal_account.Відкрити сторінку за назвою  change_password
 
 

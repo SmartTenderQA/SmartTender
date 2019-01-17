@@ -1,8 +1,8 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Suite Setup     Run Keywords
-                ...  Start in grid  ${user}  AND
-                ...  Натиснути На торговельний майданчик  AND
+                ...  Open Browser In Grid  ${user}  AND
+                ...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender  AND
                 ...  old_search.Активувати вкладку Державних закупівель
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot

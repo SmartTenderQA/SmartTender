@@ -67,7 +67,7 @@ Setup
   ${status}  Run Keyword And Return Status  Should Contain  ${user}  prod
   Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_image=${true}
   ...  ELSE  Set Global Variable  ${site}  test
-  Start In Grid  ${user}
+  Open Browser In Grid  ${user}
 
 
 Перейти на сторінку
@@ -113,7 +113,7 @@ Setup
 
 
 Зайти на торговий майданчик
-  Натиснути На торговельний майданчик
+  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
 
 

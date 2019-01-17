@@ -49,7 +49,6 @@ Resource    pages/instruktcii/instruktcii.robot
 Resource    pages/karta_saytu/karta_saytu.robot
 Resource    pages/komertsiyni_torgy_tender_detail_page/komertsiyni_torgy_tender_detail_page.robot
 Resource    pages/kursy_valyut/kursy_valyut.robot
-Resource    pages/login/login.robot
 Resource    pages/make_proposal/make_proposal.robot
 Resource    pages/nashi_klienty/nashi_klienty.robot
 Resource    pages/novyny/novyny.robot
@@ -100,6 +99,7 @@ Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.r
 Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 
 
+Resource    ../steps/Authentication/Authentication.robot
 Resource    ../steps/create_tender/sale_dgfAssets.robot
 Resource    ../steps/create_tender/below.robot
 Resource    ../steps/create_tender/test_dialog.robot
@@ -118,20 +118,17 @@ Resource	search.robot
 Library		service.py
 
 
-
 *** Variables ***
 ${tab_keybutton}					\\13
-${browser}							chrome
-${file path}						src/
-${role}                             None
 ${IP}
-${test}                             https://test.smarttender.biz
-${prod}                             https://smarttender.biz
+${user}								test_viewer
 
-${alies}                              alies
-${hub}                                http://autotest.it.ua:4444/wd/hub
-${platform}                           ANY
-${capability}                         chrome
+${test}                             https://test.smarttender.biz/
+${prod}                             https://smarttender.biz/
+${hub}                              http://autotest.it.ua:4444/wd/hub
+
+${swt test}							10  # час очікування прогрузки сторінок в секундах для теста
+${swt prod}							5	# час очікування прогрузки сторінок в секундах для проду
 
 ${block}                            //*[@class='ivu-card ivu-card-bordered']
 ${error}                            id=loginErrorMsg
@@ -148,43 +145,30 @@ ${torgy count tab}                   li:nth-child
 
 
 *** Keywords ***
-Start
-	[Arguments]  ${user}  ${alies}=alies
+Open Browser In Grid
+	[Arguments]  ${user}=${user}  ${browser}=chrome  ${alies}=${user}  ${platform}=ANY
 	clear_test_output
-	${login}  ${password}  Отримати дані користувача  ${user}
-	${start_page}  Отримати стартову сторінку  ${site}
+	${site}  Отримати дані користувача по полю  ${user}  site
+	Set Global Variable  ${start_page}  ${${site}}
+	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Змінити стартову сторінку для IP
-	Open Browser  ${start_page}  ${browser}  ${alies}
-	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
+	${platform}  Evaluate  random.choice(["WIN10", "LINUX"])  random
+	Open Browser  ${start_page}  ${browser}  ${alies}  ${hub}  platformName:${platform}
 
 
-Start in grid
-	[Arguments]  ${user}  ${alies}=alies
-	clear_test_output
-	${login}  ${password}  Отримати дані користувача  ${user}
-	${start_page}  Отримати стартову сторінку  ${site}
-	Змінити стартову сторінку для IP
-	${a}  Evaluate  ["WIN10", "LINUX"]
-	${platform}  Evaluate  random.choice(${a})  random
-	Run Keyword If
-	...  '${capability}' == 'chrome'    Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:${platform}  ELSE IF
-	#  ${capability} == linux только для теста   prod    download_upload_docs
-	...  '${capability}' == 'linux'     Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:LINUX  	#ELSE IF
-	#...  '${capability}' == 'chromeXP'  Open Browser  ${start_page}  chrome   ${alies}  ${hub}  platformName:XP  		ELSE IF
-	#...  '${capability}' == 'firefox'   Open Browser  ${start_page}  firefox  ${alies}  ${hub}  						ELSE IF
-	#...  '${capability}' == 'edge'      Open Browser  ${start_page}  edge     ${alies}  ${hub}
-	Run Keyword If  "${role}" != "viewer"  Авторизуватися  ${login}  ${password}
-	Set Window Size  1280  1024
+Встановити фіксований час очікування прогрузки сторінок
+	[Arguments]  ${site}
+	Set Global Variable  ${swt}  ${swt ${site}}
 
 
 Додати першого користувача
-    [Arguments]  ${name}  ${alias}=alies
-    Start in grid  ${name}  ${alias}
+    [Arguments]  ${name}
+    Open Browser In Grid  ${name}
     Зберегти сесію  ${alias}
 
 
 Додати користувача
-    [Arguments]  ${name}  ${alias}
+    [Arguments]  ${name}
     Delete All Cookies
 	Go To  ${start_page}
 	${login}  ${password}  Отримати дані користувача  ${name}
@@ -235,7 +219,6 @@ Clear input By JS
   [Return]  ${elem color}
 
 
-
 Scroll Page To Top
 	Execute JavaScript  window.scrollTo(0,0);
 
@@ -265,4 +248,4 @@ Input Type Flex
 
 
 Очистити Кеш
-  Execute Javascript    window.location.reload(true)
+	Execute Javascript    window.location.reload(true)

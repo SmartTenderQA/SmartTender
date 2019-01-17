@@ -240,7 +240,7 @@ Precondition
 	[Arguments]  ${role}
 	Завантажити сесію для  ${role}
 	Sleep  2
-	start_page.Натиснути На торговельний майданчик
+	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	Run Keyword If  '${site}' == 'test'
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл

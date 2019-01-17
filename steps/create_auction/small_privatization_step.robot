@@ -5,7 +5,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 *** Keywords ***
 Створити об'єкт МП
-	start_page.Натиснути На торговельний майданчик
+	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
@@ -31,7 +31,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Створити інформаційне повідомлення МП
 	[Arguments]  ${id}
-	start_page.Натиснути На торговельний майданчик
+	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет

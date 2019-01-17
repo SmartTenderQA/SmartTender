@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Start in grid  ${user}
+Suite Setup  			Open Browser In Grid  ${user}
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -10,7 +10,8 @@ Test Teardown  			Run Keywords
 
 *** Test Cases ***
 Сформувати рахунок-фактуру
-    start_page.Відкрити особистий кабінет
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Особистий кабінет
     personal_account.Відкрити сторінку за назвою  invoice
     invoice.Перевірити сторінку
 	${amount}  Сгенерувати суму до оплати

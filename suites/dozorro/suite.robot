@@ -491,10 +491,10 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Підготувати користувачів
   ${data}  Create Dictionary
   Set Global Variable  ${data}
-  Start in grid  test_viewer   viewer
-  Start in grid  Bened         tender_owner
-  Start in grid  user2         provider2
-  Start in grid  user1         provider
+  Open Browser In Grid  test_viewer   viewer
+  Open Browser In Grid  Bened         tender_owner
+  Open Browser In Grid  user2         provider2
+  Open Browser In Grid  user1         provider
 
 Postcondition
   Close All Browsers

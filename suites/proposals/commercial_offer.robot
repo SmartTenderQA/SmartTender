@@ -21,7 +21,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 
 *** Test Cases ***
 Відкрити сторінку з пошуком
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 
 
 Знайти потрібній тендер
@@ -68,7 +68,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 
 *** Keywords ***
 Precondition
-	Start in grid  user1
+	Open Browser In Grid  user1
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 

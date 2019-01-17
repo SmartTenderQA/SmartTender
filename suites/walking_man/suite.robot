@@ -29,17 +29,18 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 *** Test Cases ***
 Аналітика участі
-  [Tags]  your_account  -test
-  start_page.Відкрити особистий кабінет
-  personal_account.Відкрити сторінку за назвою  analytics
-  Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
-  analytics.Змінити період аукціону  Минулий місяць
-  ${status}  analytics.Перевірити відображення діаграм
-  Should Be Equal  ${status}  ${True}
-  ${status}  analytics.Перевірити відображення таблиці
-  Should Be Equal  ${status}  ${True}
-  analytics.Перевірити роботу кругової діаграми
-  Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
+	[Tags]  your_account  -test
+	Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Особистий кабінет
+	personal_account.Відкрити сторінку за назвою  analytics
+	Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
+	analytics.Змінити період аукціону  Минулий місяць
+	${status}  analytics.Перевірити відображення діаграм
+	Should Be Equal  ${status}  ${True}
+	${status}  analytics.Перевірити відображення таблиці
+	Should Be Equal  ${status}  ${True}
+	analytics.Перевірити роботу кругової діаграми
+	Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
 
 
 Налаштування підписки
@@ -233,7 +234,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  commercial
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  Перевірити назву вкладки Комерційні торги
 	...  AND  Перевірити заголовок вкладки комерційні торги  Закупівлі
 	...  AND  Перевірити заголовок вкладки комерційні торги  Продажі
@@ -279,7 +280,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  commercial
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Комерційні торги за типом  Продажі
 	...  AND  old_search.Розгорнути Розширений Пошук
 	...  AND  Click Element  ${dropdown menu for bid forms}
@@ -307,7 +308,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Державних закупівель
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Конкурентні процедури
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Неконкурентні процедури
@@ -348,7 +349,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Державних закупівель
 	...  AND  Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
 	...  AND  Перевірити наявність торгів
@@ -372,7 +373,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Державні закупівлі прозорро Плани
 	[Tags]  procurement  -test
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Плани
 	old_search.Активувати вкладку Державних закупівель за типом  Плани
@@ -384,7 +385,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Державні закупівлі прозорро Договори
 	[Tags]  procurement
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Договори
 	old_search.Активувати вкладку Державних закупівель за типом  Договори
@@ -398,7 +399,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	[Setup]  Run Keywords
 	...  Test Precondition  									AND
-	...  Натиснути На торговельний майданчик  					AND
+	...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender  					AND
 	...  old_search.Активувати вкладку ФГВ  					AND
 	...  Перевірити назву вкладки new ФГВ  						AND
 	...  Перевірити заголовок вкладки ФГВ  Аукціони ФГВФО		AND
@@ -424,7 +425,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Перевірити реєстр активів Майно
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГВ
 	small_privatization_search.Активувати вкладку  Активи ФГВФО
 	Перевірити наявність активів
@@ -445,7 +446,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Оренда майна
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
@@ -514,7 +515,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Об'єкти приватизації
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Об'єкти приватизації
@@ -524,7 +525,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Реєстр інформаційних повідомлень
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Реєстр інформаційних повідомлень
@@ -534,7 +535,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Запит цінових пропозицій
 	[Tags]  rialto
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку RIALTO
 	Перевірити назву вкладки RIALTO
 	Перевірити наявність торгів
@@ -574,8 +575,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
-  Start In Grid  ${user}
-  Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
+	Open Browser In Grid  ${user}
+	Авторизуватися  ${user}
+	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
 
 
 Test Precondition
@@ -584,10 +586,10 @@ Test Precondition
 
 
 Test Postcondition
-  Log Location
-  Get Source
-  Run Keyword If Test Failed  Capture Page Screenshot
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
+	Log Location
+	Get Source
+	Run Keyword If Test Failed  Capture Page Screenshot
+	Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
 
 Перевірити користувача

@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
-Suite Setup  Start in grid  LLC
+Suite Setup  Open Browser In Grid  LLC
 Suite Teardown  Close All Browsers
 
 

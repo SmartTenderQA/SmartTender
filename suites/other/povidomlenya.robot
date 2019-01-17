@@ -4,7 +4,7 @@ Resource  				../../src/pages/start_page/start_page.robot
 Resource  				../../src/pages/contacts/contacts.robot
 Resource  				../../src/pages/povidomlenya/povidomlenya.robot
 
-Suite Setup  			Start in grid  ${user}
+Suite Setup  			Open Browser In Grid  ${user}
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND

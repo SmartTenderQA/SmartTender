@@ -3,7 +3,7 @@ Resource  				../../src/src.robot
 
 Suite Setup  			Run Keywords
 	...  debug  AND
-						...  Start in grid  ${user}  								AND
+						...  Open Browser In Grid  ${user}  								AND
 						...  Go To  ${start_page}/Participation/tenders/  			AND
 						...  Дочекатись закінчення загрузки сторінки(skeleton)
 Suite Teardown  		Close All Browsers
