@@ -74,9 +74,8 @@ ${ca list}              //select[@name="ca"]
 	${now}  smart_get_time
 	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${stamp}  10
 	Run Keyword If  '${status}' == 'False'  Run Keywords
-	...  Reload Page
-	...  AND
+	...  Reload Page  AND
 	...  Wait Until Element Is Visible  ${stamp}  10
-	${get}  Get Text ${stamp}
+	${get}  Get Text  ${stamp}
 	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
 	compare_dates_smarttender  ${now}  >=  ${parse}
