@@ -64,6 +64,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
   [Tags]  your_account  -ip
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  legal_help
+  [Teardown]  Run Keywords
+  ...  Unselect Frame  AND
+  ...  Test Postcondition
 
 
 Особисті дані користувача
@@ -73,6 +76,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
   ...  personal_account.Відкрити сторінку за назвою  company_profile
   Run Keyword If  '${site}' == 'test'
   ...  personal_account.Відкрити сторінку за назвою  user_profile
+  [Teardown]  Run Keywords
+  ...  Unselect Frame  AND
+  ...  Test Postcondition
 
 
 Змінити пароль
@@ -102,8 +108,8 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Відгуки
 	[Tags]  site  -test
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Відгуки
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Відгуки
+#	Натиснути на елемент з випадаючого списка  Відгуки
 	Перевірити заголовок сторінки відгуків
 	Перевірити наявність відгуків
 	vidhuky.Відкрити відгук

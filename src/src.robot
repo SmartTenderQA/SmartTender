@@ -149,6 +149,7 @@ Open Browser In Grid
 	[Arguments]  ${user}=${user}  ${browser}=chrome  ${alies}=${user}  ${platform}=ANY
 	clear_test_output
 	${site}  Отримати дані користувача по полю  ${user}  site
+	Set Global Variable  ${site}
 	Set Global Variable  ${start_page}  ${${site}}
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Змінити стартову сторінку для IP

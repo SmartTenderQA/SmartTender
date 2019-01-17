@@ -30,6 +30,57 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	Mouse Over  ${selector}
 
 
+Навести мишку на випадаючий список з заголовку
+	[Arguments]  ${name}
+
+	${selector}  Set Variable
+	...  //*[@data-qa="${dict[u'${name}']}"]
+	Mouse Over  ${selector}
+
+
+Вибрати елемент з випадаючого списку заголовку
+	[Arguments]  ${list}  ${item}
+	${list dict}  Create Dictionary
+	...  Торговий майданчик=menu-electronicProcurementSystem
+	...  Про SmartTender=menu-aboutSmartTender
+	...  Регламент=menu-regulation
+	...  Інформаційний центр=menu-informationCenter
+
+	${item dict}  Create Dictionary
+#	Торговий майданчик
+	...  Публічні закупівлі Prozorro=menu-publicProcurementsProzorro
+	...  Комерційні закупівлі= enu-commercialTrades
+	...  Комерційні продажі=menu-commercialTradesSales
+	...  Неконкурентні процедури Prozorro=menu-publicProcurementsProzorroNoncompetitive
+	...  Плани державних закупівель=menu-publicProcurementsProzorroPlans
+	...  Аукціони на продаж майна банків=menu-auctionsOfBankSssets
+	...  Аукціони на продаж державного майна=menu-auctionsOfGovernmentSssets
+	...  Торги RIALTO=menu-rialtoTrades
+#	Про SmartTender
+	...  Про майданчик=menu-aboutCompany
+	...  Наші клієнти=menu-ourClients
+	...  Новини=menu-news
+	...  Блог=menu-blog
+	...  Вакансії=menu-vacancies
+	...  Контакти=menu-contacts
+	...  Відгуки=menu-reviews
+#	Регламент
+	...  Регламент SmartTender=menu-etpRegulation
+    ...  Регламент Prozorro.Продажі=menu-spf
+    ...  Регламент аукціонів ФГВФО=menu-fgvfl
+#	Інформаційний центр
+	...  Договір с майданчиком=menu-ontract
+    ...  Тарифи=menu-tariffs
+    ...  Запитання та відповіді=menu-faq
+    ...  Тестові тендери=menu-testbids
+    ...  Контракти публічних закупівель=menu-prozorroProcurementContracts
+	${list selector}  Set Variable  //*[@data-qa="${list dict[u'${list}']}"]
+	Mouse Over  ${list selector}
+
+    ${item selector}  Set Variable  //*[@data-qa="${item dict[u'${item}']}"]
+	Click Element  ${list selector}/..${item selector}
+
+
 Натиснути на іконку з баннеру
 	[Arguments]  ${icon name}
 	&{dict}  Create Dictionary
