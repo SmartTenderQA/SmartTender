@@ -295,7 +295,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон на продаж. Відкриті торги
 	[Tags]  commercial  -test
-	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
+	[Setup]  Go To  ${start_page}komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -437,7 +437,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Перевірити реєстр активів Права вимоги
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/dgf-registry/
+	[Setup]  Go To  ${start_page}dgf-registry/
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Права вимоги
 	dgf-registry.Перейти по результату пошуку за номером  1
@@ -458,7 +458,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Продаж майна
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Продаж майна  select
@@ -472,7 +472,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон. Мала приватизація
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -487,7 +487,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
 	[Tags]  sales  -test
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -500,7 +500,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Оренда землі
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда землі  select
@@ -548,7 +548,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Простий тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}/torgy-rialto/
+	[Setup]  Go To  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -558,7 +558,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Двохетапний тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}/torgy-rialto/
+	[Setup]  Go To  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -599,7 +599,7 @@ Test Postcondition
 
 Перевірити комерційні закупівлі за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/komertsiyni-torgy/
+	Go To  ${start_page}komertsiyni-torgy/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -609,7 +609,7 @@ Test Postcondition
 
 Перевірити Конкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/publichni-zakupivli-prozorro/
+	Go To  ${start_page}publichni-zakupivli-prozorro/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -620,7 +620,7 @@ Test Postcondition
 
 Перевірити Неконкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/publichni-zakupivli-prozorro-nekonkurentni/
+	Go To  ${start_page}publichni-zakupivli-prozorro-nekonkurentni/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -631,7 +631,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -641,7 +641,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою new
 	[Arguments]  ${name}
-	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	dgf_search.Розгорнути фільтр  Вид торгів
 	dgf_search.Вибрати вид торгів  ${name}
 	dgf_search.Перейти по результату пошуку за номером  last()
