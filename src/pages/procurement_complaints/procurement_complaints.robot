@@ -11,9 +11,12 @@
 Обрати у фільтрі предмет вимоги
     [Arguments]  ${text}
     ${filter}  Set Variable  //*[@data-qa="complaints"]//*[@data-qa="filter"]
-    Click Element  ${filter}
-    Wait Until Element Is Visible  //*[@data-qa="filter"]//li[@class][contains(text(),"${text}")]
-    Click Element                  //*[@data-qa="filter"]//li[@class][contains(text(),"${text}")]
+    ${status}  Run Keyword And Return Status  Element Should Be Visible  ${filter}//input[@disabled="disabled"]
+    Run Keyword If  ${status}  No Operation
+    ...  ELSE
+    ...  Click Element  ${filter}  AND
+    ...  Wait Until Element Is Visible  ${filter}//li[@class][contains(text(),"${text}")]  AND
+    ...  Click Element                  ${filter}//li[@class][contains(text(),"${text}")]
 
 
 Порахувати кількісь вимог на сторінці

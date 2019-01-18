@@ -120,7 +120,7 @@ If skipped create tender
     Додати першого користувача  ${tender_owner}
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
-    Додати користувача          ${provider3}
+    #Додати користувача          ${provider3}
     Додати користувача          ${viewer}
 
 
