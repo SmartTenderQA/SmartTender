@@ -19,5 +19,5 @@ Resource  ../../src/pages/start_page/login/login.robot
 	Run Keyword If  "tender_owner" == "${role}"
 	...  Дочекатись закінчення загрузки сторінки(webclient)  ELSE
 	...  Дочекатись закінчення загрузки сторінки
-	Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"
+	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
 	...  Wait Until Page Contains  ${name}  10
