@@ -245,7 +245,7 @@ Resource        create_tender_keywords.robot
 Встановити чекбокс "Мультилоти"
     ${selector}  Set Variable  //*[@data-name="ISMULTYLOT"]
     Click Element  ${selector}
-    Sleep  .5
+    Sleep  1
     ${status}  Run Keyword And Return Status
     ...  Element Should Be Visible  ${selector}//span[contains(@class,"Checked")]
     Run Keyword If  '${status}' == 'False'  Встановити чекбокс "Мультилоти"
