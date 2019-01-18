@@ -11,10 +11,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:USER_DZK -v hub:None -e -test suites/small_privatization/dzk.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e -test suites/small_privatization/dzk.robot
 *** Test Cases ***
 Створити аукціон
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	dzk_step.Створити аукціон
 	dzk_auction.Отримати UAID та href для Аукціону
 	dzk_auction.Отримати ID у цбд
@@ -143,21 +143,21 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Знайти аукціон учасниками
 	[Tags]  -prod
-	Знайти аукціон користувачем  provider1
-	Зберегти сесію  provider1
-	Завантажити сесію для  provider2
+	Знайти аукціон користувачем  ${provider1}
+	Зберегти сесію  ${provider1}
+	Завантажити сесію для  ${provider2}
 	Go To  ${data['tender_href']}
-	Зберегти сесію  provider2
-	Завантажити сесію для  provider3
+	Зберегти сесію  ${provider2}
+	Завантажити сесію для  ${provider3}
 	Go To  ${data['tender_href']}
-	Зберегти сесію  provider3
+	Зберегти сесію  ${provider3}
 	Sleep  90
 
 
 Подати заявки на участь в тендері
 	[Tags]  -prod  broken
 	:FOR  ${i}  IN  1  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -169,7 +169,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Подати пропозицію учасниками
 	[Tags]  -prod  -test
 	:FOR  ${i}  IN  1  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
@@ -179,14 +179,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку аукціону
 	[Tags]  -prod  -test
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  35 min
 
 
 Отримати поcилання на участь учасниками
 	[Tags]  -prod  -test
     :FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути кнопку "До аукціону"
@@ -201,31 +201,30 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Перевірити неможливість отримати поcилання на участь в аукціоні
 	[Tags]  -prod  -test
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
-	viewer
-	tender_owner2
-	provider3
+	${viewer}
+	${tender_owner2}
+	${provider3}
 
 
 *** Keywords ***
 Precondition
+	Set Global Variable  ${tender_owner}  USER_DZK
+	Set Global Variable  ${tender_owner2}  test_tender_owner
+	Set Global Variable  ${provider1}  user1
+	Set Global Variable  ${provider2}  user2
+	Set Global Variable  ${provider3}  user3
+	Set Global Variable  ${viewer}  test_viewer
 	dzk_step.Завантажити локатори
-    Додати першого користувача  ${user}  tender_owner
+    Додати першого користувача  ${user}  USER_DZK
     Підготувати користувачів
 
 
 Підготувати користувачів
-    Run Keyword If  "${site}" == "prod"  Run Keywords
-    ...  Додати користувача			 prod_tender_owner  tender_owner2 	AND
-    ...  Додати користувача          prod_provider  	provider1     	AND
-    ...  Додати користувача          prod_provider1  	provider2     	AND
-    ...  Додати користувача          prod_provider2  	provider3     	AND
-    ...  Додати користувача          prod_viewer     	viewer
-    Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача			 test_tender_owner	tender_owner2 	AND
-    ...  Додати користувача          user1           	provider1     	AND
-    ...  Додати користувача          user2           	provider2     	AND
-    ...  Додати користувача          user3           	provider3     	AND
-    ...  Додати користувача          test_viewer     	viewer
+    Додати користувача	${tender_owner2}
+    Додати користувача  ${provider1}
+    Додати користувача  ${provider2}
+    Додати користувача  ${provider3}
+    Додати користувача  ${viewer}
 
 
 Дочекатися довантаження даних з ЦБД
