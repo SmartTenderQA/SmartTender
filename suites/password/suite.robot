@@ -48,6 +48,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 *** Keywords ***
 Precondition
    	Open Browser In Grid  ${user}
+   	Авторизуватися  ${user}
    	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
 	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
 

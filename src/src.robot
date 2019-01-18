@@ -123,6 +123,7 @@ ${tab_keybutton}					\\13
 ${IP}
 ${user}								test_viewer
 
+${browser}							chrome
 ${test}                             https://test.smarttender.biz/
 ${prod}                             https://smarttender.biz/
 ${hub}                              http://autotest.it.ua:4444/wd/hub

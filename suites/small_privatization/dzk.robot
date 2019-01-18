@@ -215,7 +215,7 @@ Precondition
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
 	dzk_step.Завантажити локатори
-    Додати першого користувача  ${user}
+    Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
