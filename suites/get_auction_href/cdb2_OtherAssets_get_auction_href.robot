@@ -8,14 +8,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v user:Bened suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
 *** Variables ***
 
 
 *** Test Cases ***
 Створити аукціон
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	cdb2_OtherAssets.Створити аукціон
 
 
@@ -29,7 +29,7 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  tender_owner
+	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
@@ -97,33 +97,33 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	:FOR  ${i}  IN  provider1  tender_owner  viewer
+	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
 	\  Зберегти сесію  ${i}
 	:FOR  ${i}  IN  2  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Go to  ${data['tender_href']}
-	\  Зберегти сесію  provider${i}
+	\  Зберегти сесію  ${provider${i}}
 
 
 Подати заявки на участь в тендері
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
-	\  Зберегти сесію  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
+	\  Зберегти сесію  ${provider${i}}
 	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
 	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  ${i}
@@ -131,7 +131,7 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  15m
 
@@ -145,7 +145,7 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  provider3  viewer
+	:FOR  ${i}  IN  ${tender_owner}  ${provider3}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
@@ -154,22 +154,21 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
+	Set Global Variable  ${tender_owner}  Bened
+	Set Global Variable  ${provider1}  user1
+	Set Global Variable  ${provider2}  user2
+	Set Global Variable  ${provider3}  user3
+	Set Global Variable  ${viewer}  test_viewer
 	cdb2_OtherAssets.Завантажити локатори
-    Додати першого користувача  ${user}  tender_owner
+    Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
 Підготувати користувачів
-    Run Keyword If  "${site}" == "prod"  Run Keywords
-    ...  Додати користувача          prod_provider		provider1     AND
-    ...  Додати користувача          prod_provider2		provider2     AND
-    ...  Додати користувача          prod_provider1		provider3     AND
-    ...  Додати користувача          prod_viewer		viewer
-    Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача          user1           	provider1     AND
-    ...  Додати користувача          user2           	provider2     AND
-    ...  Додати користувача          user3           	provider3     AND
-    ...  Додати користувача          test_viewer     	viewer
+    Додати користувача  ${provider1}
+    Додати користувача  ${provider2}
+    Додати користувача  ${provider3}
+    Додати користувача  ${viewer}
 
 
 Зберегти пряме посилання на тендер
