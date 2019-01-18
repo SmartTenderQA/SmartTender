@@ -68,8 +68,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 
 *** Keywords ***
 Precondition
-	Open Browser In Grid  user1
-	Авторизуватися  user1
+	Додати першого користувача  user1
 	${data}  Create Dictionary
 	Set Global Variable  ${data}
 

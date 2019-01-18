@@ -1,6 +1,7 @@
 *** Settings ***
 Resource   ../../src/src.robot
 
+Suite Setup     Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -9,17 +10,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -v hub:None -d test_output -e get_tender suites/framework_agreement/framework_agreement_suite.robot
 
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  PPR_OR          tender_owner
-    Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
-    Додати користувача          test_viewer     viewer
-
-
 Створити тендер
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	test_ramky.Створити тендер
 	test_ramky.Отримати дані тендера та зберегти їх у файл
 
@@ -33,13 +26,13 @@ If skipped create tender
 
 Подати заявку на участь в тендері трьома учасниками
 	:FOR  ${i}  IN  1  2  3
-	\  Завантажити сесію для  provider${i}
-	\  Прийняти участь у тендері учасником  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
+	\  Прийняти участь у тендері учасником  ${provider${i}}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     main_page.Знайти тендер організатором по title  ${data['title']}
 
@@ -50,14 +43,14 @@ If skipped create tender
 
 Дочекатися учасником статусу тендера кваліфікація
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
 Провести кваліфікацію та визначити переможців
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     main_page.Знайти тендер організатором по title  ${data['title']}
     main_page.Дочекатись стадії закупівлі  Квалификация
@@ -66,14 +59,14 @@ If skipped create tender
 
 Дочекатися учасником статусу тендера "Пропозиції розглянуті"
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
 
 
 Заповнити ціни за одиницю номенклатури по кожному переможцю
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
     main_page.Знайти тендер організатором по title  ${data['title']}
     qualification.Заповнити ціни за одиницю номенклатури для всіх переможців
@@ -92,19 +85,33 @@ If skipped create tender
 
 Переконатись що статус закупівлі "Завершено"
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
 
 
 
 *** Keywords ***
+Підготувати користувачів
+    Set Global Variable  ${tender_owner}  PPR_OR 
+    Set Global Variable  ${provider1}     user1   
+    Set Global Variable  ${provider2}     user2
+    Set Global Variable  ${provider3}     user3
+    Set Global Variable  ${viewer}        test_viewer
+      
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${provider1}
+    Додати користувача          ${provider2}
+    Додати користувача          ${provider3}
+    Додати користувача          ${viewer}
+    
+    
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
+    Run Keyword If  '${role}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
 
 
