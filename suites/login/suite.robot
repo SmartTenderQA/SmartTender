@@ -23,16 +23,19 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
     empty  empty
     user1  empty
     empty  user1
+
+
+Спроба залогінитися з невірними даними та вичитати відповідь
+    [Template]  Login with wrong data and check message
     user1  user2
     deleted  deleted
     wrong user  wrong user
 
 
-Перевірити лінки
-    ${a}=  Get Element Attribute  ${forgot password locator}  href
-    Should Be Equal  ${a}  ${forgot password link ${env}}
-    ${a}=  Get Element Attribute  ${registration locator}  href
-    Should Be Equal  ${a}  ${registration link ${env}}
+Перевірити лінку Я забув пароль
+	Відкрити вікно авторизації
+    Click I forgot password
+    Go Back
 
 
 Залогінитися та перевірити користувача
@@ -42,9 +45,6 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 *** Keywords ***
 Precondition
 	Run Keyword  Open Browser In Grid  ${env}_viewer
-	Click Element  ${events}
-    Click Element  ${login link}
-    Wait Until Page Contains Element  ${login field}  5
 
 
 Postcondition
@@ -53,11 +53,21 @@ Postcondition
 
 Login with wrong data
     [Arguments]  ${name1}  ${name2}
-    sleep  .2
+    Відкрити вікно авторизації
     Fill login  ${users_variables["${name1}"]["login"]}
     Fill password  ${users_variables["${name2}"]["password"]}
-    Click Element  ${login button}
-    Wait Until Page Contains Element  ${error}  5
+    Run Keyword And Expect Error  *  Click Log In
+#	login.Close window
+	Go To  ${start_page}
+
+Login with wrong data and check message
+    [Arguments]  ${name1}  ${name2}
+    Відкрити вікно авторизації
+    Fill login  ${users_variables["${name1}"]["login"]}
+    Fill password  ${users_variables["${name2}"]["password"]}
+    Click Log In
+    Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
+	login.Close window
 
 
 Залогінитися та перевірити користувача test
@@ -75,10 +85,10 @@ Login with wrong data
 Login with correct data
 	[Arguments]  ${user}
 	Go To  ${start page}
-    ${login}  ${password}  Отримати дані користувача  ${user}
-    Авторизуватися  ${login}  ${password}
+    Авторизуватися  ${user}
     Reload and check
-	Завершити сеанс користувача
+	start_page.Навести мишку на іконку з заголовку  Меню_користувача
+	menu-user.Натиснути  Вийти
 
 
 Reload and check

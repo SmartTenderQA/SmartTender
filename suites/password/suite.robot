@@ -24,7 +24,8 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     [Tags]  change_password
     Перейти до зміни пароля (вікно навігації)
     Змінити пароль  ${password}  ${new password}
-	Завершити сеанс користувача
+	start_page.Навести мишку на іконку з заголовку  Меню_користувача
+	menu-user.Натиснути  Вийти
     Переконатися що пароль змінено
     Авторизуватися  ${login}  ${new password}
     Перейти до зміни пароля (вікно навігації)
@@ -96,7 +97,8 @@ Postcondition
 
 
 Перейти на сторінку відновлення пароля
-    Завершити Сеанс Користувача
+    start_page.Навести мишку на іконку з заголовку  Меню_користувача
+	menu-user.Натиснути  Вийти
     Click Element  id=LoginAnchor
     Click Element  xpath=//div[@id='sm_content']//div[@class='forgot']/a
     Wait Until Page Contains Element  xpath=//div[@id='warningMessage']
