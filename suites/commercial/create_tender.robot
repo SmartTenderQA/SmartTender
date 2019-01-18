@@ -104,15 +104,14 @@ Test Postcondition
 
 ############################################################
 Створити довільний классифікатор ресурсів
-	debug
-#	${lot_name}  ${unit_name}  ${amount}  Створити классифікатор ресурсів
-#	${list}  Create List
-#	Set To Dictionary  ${data}  lots  ${list}
-#	${lot}  Create Dictionary
-#	Append To List  ${data.lots}  ${lot}
-#	Set To Dictionary  ${data.lots[0]}  lot_name  ${lot_name}
-#	Set To Dictionary  ${data.lots[0]}  unit_name  ${unit_name}
-#	Set To Dictionary  ${data.lots[0]}  unit_amount  ${amount}
+	${lot_name}  ${unit_name}  ${amount}  Створити классифікатор ресурсів
+	${list}  Create List
+	Set To Dictionary  ${data}  lots  ${list}
+	${lot}  Create Dictionary
+	Append To List  ${data.lots}  ${lot}
+	Set To Dictionary  ${data.lots[0]}  lot_name  ${lot_name}
+	Set To Dictionary  ${data.lots[0]}  unit_name  ${unit_name}
+	Set To Dictionary  ${data.lots[0]}  unit_amount  ${amount}
 
 
 Перевірити створений лот
