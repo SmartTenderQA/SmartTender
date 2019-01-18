@@ -1,6 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 
+Suite Setup     Precondition
 Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
@@ -12,15 +13,10 @@ ${multilot}                                False
 
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e cancel_lot suites/cancellation/cancellation.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_tender -v multilot:True suites/cancellation/cancellation.robot
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  Bened           tender_owner
-    Додати користувача          test_viewer     viewer
-
-
 Створити тендер
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	Run Keyword If  '${multilot}' == 'True'
 	...  test_open_trade.Створити тендер (Мультилот)  Відкриті торги  ELSE
 	...  test_open_trade.Створити тендер  Відкриті торги
@@ -58,7 +54,7 @@ ${multilot}                                False
 Перевірити скасування тендеру та наявність протоколу скасування
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Закупівля відмінена
-    :FOR  ${i}  IN  tender_owner  viewer
+    :FOR  ${i}  IN  ${tender_owner}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
     \  procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
@@ -74,6 +70,13 @@ ${multilot}                                False
 
 
 *** Keywords ***
+Precondition
+	Set Global Variable         ${tender_owner}  Bened
+    Set Global Variable         ${viewer}        test_viewer
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${viewer}
+
+
 Вказати причину скасування тендера
     ${input}  Set Variable  //*[@data-name="reason"]//textarea
     ${text}  create_sentence  5
