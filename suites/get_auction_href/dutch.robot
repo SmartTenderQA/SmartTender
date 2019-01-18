@@ -9,10 +9,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -e -prod -v hub:None -v user:fgv_prod_owner suites/get_auction_href/dutch.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v user:Bened suites/get_auction_href/dutch.robot
-
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v tender_owner:Bened -v provider1:user1 -v provider2:user2 -v provider3:user3 -v viewer:test_viewer suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v where:test suites/get_auction_href/dutch.robot
+
+
 *** Test Cases ***
 Створити аукціон
 	[Tags]  create_tender
@@ -155,6 +155,18 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer  AND
+	...  ELSE
+	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
+	...  Set Global Variable  ${provider1}  prod_provider  AND
+	...  Set Global Variable  ${provider2}  prod_provider2  AND
+	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	...  Set Global Variable  ${viewer}  prod_viewer  AND
 	dutch_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
