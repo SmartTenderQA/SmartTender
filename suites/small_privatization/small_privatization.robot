@@ -13,10 +13,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v user:prod_ssp_owner -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:test -v hub:None suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	small_privatization_step.Завантажити локатори для об'єкта
 	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
@@ -203,14 +203,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Знайти аукціон учасниками
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти аукціон користувачем  provider1
-	Зберегти сесію  provider1
-	Завантажити сесію для  provider2
+	Знайти аукціон користувачем  ${provider1}
+	Зберегти сесію  ${provider1}
+	Завантажити сесію для  ${provider2}
 	Go To  ${data['tender_href']}
-	Зберегти сесію  provider2
-	Завантажити сесію для  provider3
+	Зберегти сесію  ${provider2}
+	Завантажити сесію для  ${provider3}
 	Go To  ${data['tender_href']}
-	Зберегти сесію  provider3
+	Зберегти сесію  ${provider3}
 	Sleep  90
 
 
@@ -218,7 +218,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -232,7 +232,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Натиснути на кнопку подачі пропозиції
@@ -243,7 +243,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Дочекатися початку аукціону
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  30 min
 
 
@@ -251,7 +251,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     :FOR  ${i}  IN  1  2  3
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  ${participate_href}  ${viewer_href}  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
@@ -274,7 +274,21 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 *** Keywords ***
 Precondition
-	Додати першого користувача  ${user}  tender_owner
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  ssp_tender_owner  AND
+	...  Set Global Variable  ${tender_owner2}  test_tender_owner  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+	...  ELSE
+	...  Set Global Variable  ${tender_owner}  prod_ssp_owner  AND
+	...  Set Global Variable  ${tender_owner2}  prod_tender_owner  AND
+	...  Set Global Variable  ${provider1}  prod_provider  AND
+	...  Set Global Variable  ${provider2}  prod_provider2  AND
+	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
+	Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
@@ -284,19 +298,11 @@ Postcondition
 
 
 Підготувати користувачів
-    Run Keyword If  "${site}" == "prod"  Run Keywords
-    ...  Додати користувача			 prod_tender_owner  tender_owner2 	AND
-    ...  Додати користувача          prod_provider  	provider1     	AND
-    ...  Додати користувача          prod_provider1  	provider2     	AND
-    ...  Додати користувача          prod_provider2  	provider3     	AND
-    ...  Додати користувача          prod_provider2  	provider3     	AND
-    ...  Додати користувача          prod_viewer     	viewer
-    Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача			 test_tender_owner	tender_owner2 	AND
-    ...  Додати користувача          user1           	provider1     	AND
-    ...  Додати користувача          user2           	provider2     	AND
-    ...  Додати користувача          user3           	provider3     	AND
-    ...  Додати користувача          test_viewer     	viewer
+    Додати користувача  ${tender_owner2}
+    Додати користувача  ${provider1}
+    Додати користувача  ${provider2}
+    Додати користувача  ${provider3}
+    Додати користувача  ${viewer}
 
 
 Знайти аукціон користувачем
