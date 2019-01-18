@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Open Browser In Grid  ${user}
+Suite Setup  Додати першого користувача  ${user}
 Suite Teardown  Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
