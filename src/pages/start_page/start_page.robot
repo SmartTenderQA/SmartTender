@@ -30,14 +30,6 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	Mouse Over  ${selector}
 
 
-Навести мишку на випадаючий список з заголовку
-	[Arguments]  ${name}
-
-	${selector}  Set Variable
-	...  //*[@data-qa="${dict[u'${name}']}"]
-	Mouse Over  ${selector}
-
-
 Вибрати елемент з випадаючого списку заголовку
 	[Arguments]  ${list}  ${item}
 	${list dict}  Create Dictionary
@@ -97,15 +89,3 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	${selector}  Set Variable  //*[@data-qa="${data-qa}"]
 	Click Element  ${selector}
 	Location Should Contain  ${part of location}
-
-
-
-
-################legacy
-Зайти на сторінку contacts
-	Click Element  ${button kontakty}
-	Location Should Contain  /pro-kompaniyu/kontakty/
-	${header text}  Set Variable  css=div[itemscope=itemscope] h1
-	${should header}  Set Variable  Контакти SmartTender
-	${is header}  Get Text  ${header text}
-	Should Be Equal  ${is header}  ${should header}

@@ -159,7 +159,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Контакти
 	[Tags]  site
-	Зайти на сторінку contacts
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Контакти
 	Перевірити наявність контактів
 
 
