@@ -99,6 +99,8 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	Location Should Contain  ${part of location}
 
 
+
+
 ################legacy
 Зайти на сторінку contacts
 	Click Element  ${button kontakty}

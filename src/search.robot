@@ -10,29 +10,27 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 *** Keywords ***
 Знайти тендер по ID
-  [Arguments]  ${tenderID}
-  Виконати пошук тендера  ${tenderID}
-  ${tender_href}=  Get Element Attribute  ${tender found}  href
-  Go To  ${tender_href}
-  Log  ${tender_href}  WARN
-  Додаткова перевірка на тестові торги для продуктива
+	[Arguments]  ${tenderID}
+	Виконати пошук тендера  ${tenderID}
+	${tender_href}=  Get Element Attribute  ${tender found}  href
+	Go To  ${tender_href}
+	Log  ${tender_href}  WARN
+	Додаткова перевірка на тестові торги для продуктива
 
 
 Відкрити сторінку тестових торгів
-  ${dropdown navigation}  Set Variable  css=#MenuList div.dropdown li>a
-  Go To  ${start_page}
-  Mouse Over  ${button komertsiyni-torgy}
-  Wait Until Keyword Succeeds  10  1  Click Element  ${dropdown navigation}[href='/test-tenders/']
-  Location Should Contain  /test-tenders/
+	${location}  Get Location
+	Run Keyword If  '${location}' != '${start_page}'  Go To  ${start_page}
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Тестові тендери
+	Location Should Contain  /test-tenders/
 
 
 Перейти по результату пошуку
-  [Arguments]  ${selector}
-  ${href}  Get Element Attribute  ${selector}  href
-  ${href}  Поправити лінку для IP  ${href}
-  Go To  ${href}
-  Дочекатись закінчення загрузки сторінки(skeleton)
-
+	[Arguments]  ${selector}
+	${href}  Get Element Attribute  ${selector}  href
+	${href}  Поправити лінку для IP  ${href}
+	Go To  ${href}
+	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
 Відфільтрувати по статусу торгів
