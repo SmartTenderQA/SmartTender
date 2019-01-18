@@ -1,5 +1,7 @@
 *** Settings ***
 Resource   ../../src/src.robot
+
+Suite Setup     Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
@@ -7,24 +9,16 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/qulification_files/qulification_files.robot
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  PPR_OR          tender_owner
-    Додати користувача          Bened           tender_owner2
-    Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
-
-
 Створити тендер
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	below.Створити тендер
 	below.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати дані з cdb
     [Tags]  create_tender
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     Wait Until Keyword Succeeds  1m  5  Отримати дані з cdb та зберегти їх у файл
 
@@ -37,15 +31,15 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері учасниками
-	:FOR  ${i}  IN  1  2  3
-	\  Прийняти участь у тендері учасником  provider${i}
+	:FOR  ${i}  IN  ${provider1}  ${provider2}  ${provider3}
+	\  Прийняти участь у тендері учасником  ${i}
 	procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
 Відхилити організатором пропозицію першого учасника
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${negative result file name}  Відхилити пропозицію учасника  1
@@ -54,7 +48,7 @@ If skipped create tender
 
 Завантажити другим учасником кваліфікаційний документ
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  provider2
+    Завантажити сесію для  ${provider2}
     Go to  ${data['tender_href']}
     ${provider file name}  Додати кваліфікаційний документ
     ${new dict}  Evaluate  ${data['bids'][0]}.copy()
@@ -65,7 +59,7 @@ If skipped create tender
 
 
 Визнати переможцем другого учасника
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${positive result file name}  Визначити учасника переможцем  2
@@ -92,7 +86,7 @@ If skipped create tender
 
 
 Перевірити відображення кваліфікаційних файлів організаторами
-    :FOR  ${user}  in  tender_owner  tender_owner2
+    :FOR  ${user}  in  ${tender_owner}  ${tender_owner2}
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
@@ -107,7 +101,7 @@ If skipped create tender
 
 
 Завершити закупівлю організатором
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     main_page.Дочекатись стадії закупівлі  Кваліфікація переможця
@@ -120,7 +114,7 @@ If skipped create tender
 
 
 Переконатись що статус закупівлі "Завершено"
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
 
@@ -130,6 +124,20 @@ If skipped create tender
 
 
 *** Keywords ***
+Підготувати користувачів
+    Set Global Variable         ${tender_owner}   PPR_OR
+    Set Global Variable         ${tender_owner2}  Bened
+    Set Global Variable         ${provider1}      user1
+    Set Global Variable         ${provider2}      user2
+    Set Global Variable         ${provider3}      user3
+
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${tender_owner2}
+    Додати користувача          ${provider1}
+    Додати користувача          ${provider2}
+    Додати користувача          ${provider3}
+
+
 Прийняти участь у тендері учасником
     [Arguments]  ${role}
     Завантажити сесію для  ${role}

@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-
+Suite Setup     Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
@@ -9,13 +9,8 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/questions/procurement_questions.robot
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  user1           provider1
-    Додати користувача          test_viewer     viewer
-
-
 Знайти випадковий тендер з потрібним статусом (Період уточнень)
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider}
     search.Відкрити сторінку тестових торгів
     old_search.Розгорнути розширений пошук
     search.Відфільтрувати по статусу торгів  Період уточнень
@@ -55,7 +50,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 
 Перевірити публікацію запитання на сторінці користувачами
-    :FOR  ${i}  IN  provider1  viewer
+    :FOR  ${i}  IN  ${provider}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  procurement_questions.Активувати вкладку "Запитання"
@@ -66,6 +61,13 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 
 *** Keywords ***
+Підготувати користувачів
+    Set Global Variable         ${provider}  user1
+    Set Global Variable         ${viewer}    test_viewer
+    Додати першого користувача  ${provider}
+    Додати користувача          ${viewer}
+    
+    
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
     procurement_tender_detail.Активувати вкладку "Тендер"
