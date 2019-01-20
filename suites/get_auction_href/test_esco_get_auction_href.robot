@@ -103,12 +103,15 @@ If skipped create tender
     Set Global Variable         ${provider1}      user1
     Set Global Variable         ${provider2}      user2
     Set Global Variable         ${provider3}      user3
+    Set Global Variable         ${viewer}         test_viewer
     #Set Global Variable         ${provider4}      user4
 
     Додати першого користувача  ${tender_owner}
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
     Додати користувача          ${provider3}
+    Додати користувача          ${viewer}
+
     #Додати користувача          ${provider4}
 
 
