@@ -87,6 +87,7 @@ If skipped create tender
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
