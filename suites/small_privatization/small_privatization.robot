@@ -265,8 +265,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
-	viewer
-	tender_owner2
+	${viewer}
+	${tender_owner2}
 
 #todo ubrat` posle reliza
 #provider3
