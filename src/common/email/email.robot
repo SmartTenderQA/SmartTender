@@ -5,7 +5,7 @@ Resource  				keywords.robot
 *** Keywords ***
 Розпочати роботу з Gmail
 	[Arguments]  ${user}
-	Open Browser  https://www.google.com/gmail/about/#  chrome  email  ${hub}  platformName:${platform}
+	Open Browser  https://www.google.com/gmail/about/#  chrome  email  ${hub}  platformName:ANY
 	Авторизуватися в Gmail  ${user}
 	Закрити валідаційне вікно (за необходністю)
 
