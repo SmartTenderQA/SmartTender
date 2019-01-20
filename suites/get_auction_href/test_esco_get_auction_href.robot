@@ -125,7 +125,7 @@ If skipped create tender
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
+    Run Keyword If  '${role}' == '${provider1}'  Sleep  3m
     Подати пропозицію esco учасником
 
 
