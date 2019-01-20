@@ -10,7 +10,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
 
 *** Keywords ***
 Провести прекваліфікацію учасників
-    ${count}  qualification_keywords.Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  qualification_keywords.Надати рішення про допуск до аукціону учасника  ${i}
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
