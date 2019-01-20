@@ -108,8 +108,14 @@
     Input Text  ${selector}  ${n}
 
 
+Заповнити "Дата підписання" договору
+    ${selector}  Set Variable  //*[text()="Дата підписання"]/following-sibling::table[1]//input
+    ${date}  get_time_now_with_deviation  40  minutes
+    Input Text  ${selector}  ${date}
+
+
 Вкласти договірній документ
-    ${add button}  Set Variable  //span[contains(text(), "Обзор")]
+    ${add button}  Set Variable  //span[contains(text(), "Обзор")]|//span[contains(text(), "Перегляд")]
     Click Element  ${add button}
     Дочекатись закінчення загрузки сторінки(webclient)
     ${name}  actions.Додати doc файл
