@@ -62,7 +62,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
   ${monitoring_id}  Отримати дані моніторингу по API  monitoring_id
   Log  ${monitoring_id}  WARN
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
-  :FOR  ${username}  IN  ${viewer}  provider
+  :FOR  ${username}  IN  ${viewer}  ${provider1}
   \  Завантажити сесію для  ${username}
   \  Go To  ${data['location']}
   \  Відкрити вкладку моніторингу
@@ -72,7 +72,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації нового моніторингу
   [Tags]  open_monitoring_page123
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -88,7 +88,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації скасованого моніторингу
   [Tags]  cancellation
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -104,7 +104,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації моніторингу після активації
   [Tags]  activation
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -120,7 +120,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 ################################################################
 Неможливість подати пояснення з валсної ініціативи для ролей: viewer, provider
   [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -145,7 +145,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -166,7 +166,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення відповіді на пояснення з власної ініціативи органом ДАСУ
   [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -193,7 +193,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформаціїї запиту
   [Tags]  make_a_dialogue
   Отримати дані про останній запит
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -206,7 +206,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Неможливість відповісти на запит для ролей: viewer, provider
   [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  Завантажити сесію для  ${username}
   \  Run Keyword And Expect Error  *  Відкрити бланк відповіді на запит
   \  Зберегти сесію  ${username}
@@ -227,7 +227,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення інформації про відповідь на запит
   [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -257,7 +257,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації про висновок
   [Tags]  addressed
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -280,7 +280,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити дані інспекції
   [Tags]  inspection
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -297,7 +297,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 ################################################################
 Неможливість створити запит за роз'ясненнями щодо висновку для ролей: viewer, provider
   [Tags]  request_for_clarification
-  :FOR  ${username}  IN  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -321,7 +321,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення запиту за роз'ясненням
   [Tags]  request_for_clarification
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -342,7 +342,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   [Tags]  request_for_clarification
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -367,7 +367,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 ################################################################
 Неможливість опублікувати інформацію про усунення порушення для ролей: viewer, provider
   [Tags]  violation_elimination_report
-  :FOR  ${username}  IN  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -389,7 +389,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -413,7 +413,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 ################################################################
 Неможливість опублікувати позов для ролей: viewer, provider
   [Tags]  appeal
-  :FOR  ${username}  IN  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -435,7 +435,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення інформації про позов
   [Tags]  appeal
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -468,7 +468,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації моніторингу в статусі в вирішено
   [Tags]  completed
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -489,7 +489,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення інформації про зупинку моніторунгу після active
   [Tags]  stopped_after_active
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -513,7 +513,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 Перевірити відображення інформації про висновок
   [Tags]  declined
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -530,7 +530,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
   Дочекатись закінчення elimination period
   Перевести моніторинг в статус  closed
   Отримати дані моніторингу по API
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${viewer}
+  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -574,13 +574,13 @@ Test Postcondition
 
 
 Підготувати користувачів
-  Set Global Variable  ${provider}      user1
-  Set Global Variable  ${viewer}        test_viewer
-  Set Global Variable  ${tender_owner}  dasu
+	Set Global Variable  ${provider1}     user1
+	Set Global Variable  ${viewer}        test_viewer
+	Set Global Variable  ${tender_owner}  dasu
 
-  Додати першого користувача  ${provider}
-  Додати користувача          ${viewer}
-  Додати користувача          ${tender_owner}
+	Додати першого користувача  ${provider1}
+	Додати користувача          ${viewer}
+	Додати користувача          ${tender_owner}
 
 
 Перейти за посиланням по dasu
