@@ -10,7 +10,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
 
 *** Keywords ***
 Провести прекваліфікацію учасників
-    ${count}  qualification_keywords.Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  qualification_keywords.Надати рішення про допуск до аукціону учасника  ${i}
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
@@ -62,42 +62,46 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
 
 
 Визначити учасника переможцем
-    [Arguments]  ${i}  ${EDS}=None
+    [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
     Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
-    validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
+    Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
-    qualification_keywords.Відмітити чек-бокс у рішенні
+    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
     qualification_keywords.Заповнити текст рішення кваліфікації
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  '${EDS}' == 'True'  Run Keywords
+    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)
-    ...  ELSE  Run Keywords
+    ...  ELSE
+    ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
     ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
     [Return]  ${file name}
 
 
 Відхилити пропозицію учасника
-    [Arguments]  ${i}  ${EDS}=None
+    [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
     Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
-    validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
+    Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Відхилити пропозицію"
-    qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
+    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
     qualification_keywords.Заповнити текст рішення кваліфікації
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  '${EDS}' == 'True'  Run Keywords
+    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)
-    ...  ELSE  Run Keywords
+    ...  ELSE
+    ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
     ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
     [Return]  ${file name}
@@ -107,6 +111,6 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     actions.Натиснути кнопку "Прикріпити договір"
     qualification_keywords.Заповнити номер договору
     ${dogovir name}  qualification_keywords.Вкласти договірній документ
-    actions.actions.Натиснути OkButton
+    actions.Натиснути OkButton
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
     [Return]  ${dogovir name}

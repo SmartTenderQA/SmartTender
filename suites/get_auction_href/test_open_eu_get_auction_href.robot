@@ -87,6 +87,7 @@ If skipped create tender
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
@@ -134,7 +135,7 @@ If skipped create tender
     Завантажити сесію для  ${role}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
+    Run Keyword If  '${role}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
 
 
