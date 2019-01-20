@@ -11,6 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 *** Test Cases ***
 Створити тендер
+    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_ramky.Створити тендер
@@ -118,7 +119,7 @@ If skipped create tender
     Set Global Variable         ${provider1}      user1
     Set Global Variable         ${provider2}      user2
     Set Global Variable         ${provider3}      user3
-    Set Global Variable         ${viewer}         viewer_test
+    Set Global Variable         ${viewer}         test_viewer
     Додати першого користувача  ${tender_owner}
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
