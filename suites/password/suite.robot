@@ -15,20 +15,25 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 #robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:prod_tender_owner suites/password/suite.robot
 #
 *** Test Cases ***
-Перевірити можливість змінити пароль через особистий кабінет
+Перевірити можливість змінити пароль через особистий кабінет для організатора
     [Tags]  change_password
-    Run Keyword  Перевірити сторінку "Змінити пароль" для ${role}
+    Run Keyword If  '${role}' == 'tender_owner'  Run Keywords
+    ...  Перевірити сторінку "Змінити пароль" для tender_owner  AND
+    ...  Go To  ${start_page}
 
 
 Змінити пароль користувача
     [Tags]  change_password
-    Перейти до зміни пароля (вікно навігації)
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Змінити пароль
     Змінити пароль  ${password}  ${new password}
+    Go To  ${start_page}
 	start_page.Навести мишку на іконку з заголовку  Меню_користувача
 	menu-user.Натиснути  Вийти
     Переконатися що пароль змінено
-    Авторизуватися  ${login}  ${new password}
-    Перейти до зміни пароля (вікно навігації)
+    Авторизуватися з новим паролем  ${new password}
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Змінити пароль
     Змінити пароль  ${new password}  ${password}
 
 
@@ -40,9 +45,11 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Відкрити лист в email за темою  SmartTender: Відновлення паролю
     Перейти за посиланням в листі  Відновити пароль→
     Ввести новий пароль
+    Go To  ${start_page}
     Переконатися що пароль змінено
-    Авторизуватися  ${login}  ${new password}
-    Перейти до зміни пароля (вікно навігації)
+    Авторизуватися з новим паролем  ${new password}
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Змінити пароль
     Змінити пароль  ${new password}  ${password}
 
 
@@ -56,20 +63,6 @@ Precondition
 
 Postcondition
     Close All Browsers
-
-
-Перейти до зміни пароля (вікно навігації)
-  	Go To  ${start page}
-    Click Element  xpath=//a[contains(text(),'Заходи SmartTender')]
-    Click Element  xpath=//*[contains(@class,'fa-user')]
-    Click Element  xpath=//*[contains(@class,'fa-key')]
-    Page Should Contain  Зміна пароля
-
-
-Перевірити сторінку "Змінити пароль" для provider
-    Навести мишку на іконку з заголовку  Меню_користувача
-	Натиснути  Особистий кабінет
-    personal_account.Відкрити сторінку за назвою  change_password
 
 
 Перевірити сторінку "Змінити пароль" для tender_owner
@@ -91,17 +84,34 @@ Postcondition
 
 
 Переконатися що пароль змінено
-    ${status}  Run Keyword And Return Status  Авторизуватися  ${login}  ${password}
-    Should Be Equal  ${status}  ${False}
-    Go To  ${start page}
+    Відкрити вікно авторизації
+    Fill login  ${users_variables["${user}"]["login"]}
+    Fill password  ${users_variables["${user}"]["password"]}
+    Click Log In
+    Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
+    login.Close window
+
+
+Авторизуватися з новим паролем
+	[Arguments]  ${new password}
+	Відкрити вікно авторизації
+    Fill login  ${users_variables["${user}"]["login"]}
+    Fill password  ${new password}
+    Click Log In
+    Run Keyword If  "tender_owner" == "${role}"
+	...  Дочекатись закінчення загрузки сторінки(webclient)  ELSE
+	...  Дочекатись закінчення загрузки сторінки
+	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
+	...  Wait Until Page Contains  ${name}  10
+	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
 
 
 Перейти на сторінку відновлення пароля
+	Go To  ${start_page}
     start_page.Навести мишку на іконку з заголовку  Меню_користувача
 	menu-user.Натиснути  Вийти
-    Click Element  id=LoginAnchor
-    Click Element  xpath=//div[@id='sm_content']//div[@class='forgot']/a
-    Wait Until Page Contains Element  xpath=//div[@id='warningMessage']
+	Відкрити вікно авторизації
+	Click I forgot password
 
 
 Відправити лист "Відновлення паролю" на пошту

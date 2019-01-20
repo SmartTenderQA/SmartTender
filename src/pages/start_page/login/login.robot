@@ -42,6 +42,6 @@ Close window
 
 
 Дочекатись валідаційного повідомлення з текстом
-	[Arguments]  ${text}
+	[Arguments]  ${text}=Невірний e-mail та/або пароль
 	${selector}  Set Variable  css=.ivu-message-notice-content
 	Element Should Contain  ${selector}  ${text}
