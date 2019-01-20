@@ -35,7 +35,7 @@ Click I forgot password
 	Location Should Contain  /Authentication/ForgotPassword/
 
 
-Close window
+Close login window
 	Click Element  //*[@id='ModalLogin']//*[contains(@class, 'close')]
 	Wait Until Keyword Succeeds  10  1
 	...  Element Should Not Be Visible  //*[@data-qa="form-login-login"]

@@ -57,7 +57,7 @@ Login with wrong data
     Fill login  ${users_variables["${name1}"]["login"]}
     Fill password  ${users_variables["${name2}"]["password"]}
     Run Keyword And Expect Error  *  Click Log In
-#	login.Close window
+#	Close login window
 	Go To  ${start_page}
 
 Login with wrong data and check message
@@ -67,7 +67,7 @@ Login with wrong data and check message
     Fill password  ${users_variables["${name2}"]["password"]}
     Click Log In
     Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
-	login.Close window
+	Close login window
 
 
 Залогінитися та перевірити користувача test

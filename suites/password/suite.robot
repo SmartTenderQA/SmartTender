@@ -89,7 +89,7 @@ Postcondition
     Fill password  ${users_variables["${user}"]["password"]}
     Click Log In
     Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
-    login.Close window
+    Close login window
 
 
 Авторизуватися з новим паролем
