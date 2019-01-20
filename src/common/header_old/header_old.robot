@@ -5,7 +5,6 @@ Resource  			keywords.robot
 ${events}                           xpath=//*[@id="LoginDiv"]//a[2]
 ${logout}                           id=LogoutBtn
 ${dropdown navigation}              //*[@id='MenuList']//div[@class='dropdown']//li/a[contains(text(), '')]
-${button dogovir}                   css=#ContractButton
 ${button taryfy}                    css=#MenuList a[href='/taryfy/']
 ${RegisterAnchor}                   css=#RegisterAnchor
 ${site map}                         css=a[href='/karta-saytu/']
@@ -21,11 +20,6 @@ ${site map}                         css=a[href='/karta-saytu/']
 Відкрити сторінку Тарифів
 	Click Element  ${button taryfy}
 	Location Should Contain  /taryfy/
-
-
-Відкрити сторінку Про компанію
-	Click Element  ${button pro-kompaniyu}
-	Location Should Contain  pro-kompaniyu
 
 
 Відкрити сторінку Реєстрація
@@ -48,11 +42,6 @@ ${site map}                         css=a[href='/karta-saytu/']
 	Click Element  ${site map}
 	Location Should Contain  /karta-saytu/
 	Element Should Contain  //h1  Карта сайту
-
-
-Відкрити вікно договору
-	Click Element  ${button dogovir}
-	Sleep  3
 
 
 Натиснути Вийти

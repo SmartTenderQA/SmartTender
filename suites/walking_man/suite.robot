@@ -15,8 +15,6 @@ ${instruktsii link}                 css=#LoginDiv a[href='/instruktсii/']
 ${feedback link}                    css=.footer-feedback a
 ${exchange link1}                   xpath=//div[@class='bank-view'][1]//a
 ${exchange link2}                   xpath=//div[@class='bank-view'][2]//a
-${contract link1}                   css=li:nth-child(1)>a
-${contract link2}                   css=li:nth-child(2)>a
 ${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
 ${info form for sales}              xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${first lot}                        //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
@@ -107,9 +105,8 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Відгуки
-	[Tags]  site  -test
+	[Tags]  site
 	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Відгуки
-#	Натиснути на елемент з випадаючого списка  Відгуки
 	Перевірити заголовок сторінки відгуків
 	Перевірити наявність відгуків
 	vidhuky.Відкрити відгук
@@ -130,7 +127,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Договір
 	[Tags]  site  -test
-	header_old.Відкрити вікно договору
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Договір с майданчиком
 	contract.Перевірити заголовок договору
 	contract.Перевірити перший абзац договору
 	contract.Перевірити лінки в тексті договору
@@ -138,15 +135,14 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Про компанію
 	[Tags]  site
-	header_old.Відкрити Сторінку Про Компанію
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Про майданчик
 	pro_kompaniyu.Перевірити заголовок сторінки
 	pro_kompaniyu.Звірити початок тексту на сторінці
 
 
 Новини
 	[Tags]  site
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Новини
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Новини
 	Перевірити заголовок сторінки з новинами
 	Перевірити наявність новин
 	Перевірити пошук новин через  click
@@ -154,7 +150,6 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	${title}  Отримати заголовк новини за номером  1
 	novyny.Відкрити новину за номером  1
 	Перевірити заголовок відкритої новини  ${title}
-	#Перевірити лінк хлібних для новин
 
 
 Контакти
@@ -164,12 +159,12 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 З ким ми працюємо
-	[Tags]  site  -test
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  З ким ми працюємо
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Наші клієнти
 	nashi_klienty.Перевірити заголовок
 	Перевірити наявність клієнтів
 	${count1}  nashi_klienty.Порахувати кількість клієнтів
+	Run Keyword If  ${count1} == ${0}  Fail  клієнти потікали
 	# Зі сторінки прибрали кнопку "Показати ще"
 	#nashi_klienty.Натиснути "Показати ще"
 	#${count2}  nashi_klienty.Порахувати кількість клієнтів
@@ -178,14 +173,13 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Вакансії
 	[Tags]  site
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Вакансії
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Вакансії
 	vakansii.Перевірити заголовок сторінки вакансій
 
 
 Тарифи
 	[Tags]  site
-	Відкрити сторінку Тарифів
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Тарифи
 	taryfy.Перевірити кількість закладок
 	taryfy.Активувати вкладку  Публічні закупівлі ProZorro та торги RIALTO
 	taryfy.Активувати вкладку  Комерційні торги
@@ -196,11 +190,11 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 Реєстрація
 	[Tags]  site
 	Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
-	header_old.Відкрити сторінку Реєстрація
+	start_page.Натиснути кнопку Реєстрація
 
 
 Інструкції
-	[Tags]  site
+	[Tags]  site  -test  -prod
 	header_old.Відкрити сторінку інструкцій
 	Перевірити наявність інструкцій
 	instruktcii.Вибрати з видаючого списку  Показати всі
@@ -214,21 +208,21 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Карта сайту
-	[Tags]  site
+	[Tags]  site  -test  -prod
 	Відкрити сторінку Карта сайту
 	Порахувати кількість єлементів сторінки карта сайту
 
 
 Запитання та відповіді
 	[Tags]  site  -test
-	Навести мишку на  Торговий майданчик
-	Натиснути на елемент з випадаючого списка  Запитання та відповіді
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Запитання та відповіді
 	zapytannya_i_vidpovidi.Перевірити заголовок сторінки
 	Перевірити наявність запитань
 
 
 Курси валют
 	[Tags]  site  -test
+	Go To  ${start_page}/test-tenders/
 	Навести мишку на  Торговий майданчик
 	Натиснути на елемент з випадаючого списка  Курси валют
 	kursy_valyut.Перевірити заголовок сторінки

@@ -18,6 +18,15 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	Wait Until Page Contains Element  //*[@id="ModalLogin"]  ${swt}
 
 
+Натиснути кнопку Реєстрація
+	Wait Until Page Contains Element  ${sign up button}
+	Click Element  ${sign up button}
+	Дочекатись закінчення загрузки сторінки
+	Location Should Contain  /reestratsiya/
+	Element Should Contain  //h1  Реєстрація
+	Element Should Contain  css=.main-content h3  Персональна інформація
+
+
 Навести мишку на іконку з заголовку
 	[Arguments]  ${icon name}
 	${dict}  Create Dictionary
@@ -61,7 +70,7 @@ ${sign up button}					//*[@data-qa="btn-registration"]
     ...  Регламент Prozorro.Продажі=menu-spf
     ...  Регламент аукціонів ФГВФО=menu-fgvfl
 #	Інформаційний центр
-	...  Договір с майданчиком=menu-ontract
+	...  Договір с майданчиком=menu-сontract
     ...  Тарифи=menu-tariffs
     ...  Запитання та відповіді=menu-faq
     ...  Тестові тендери=menu-testbids
