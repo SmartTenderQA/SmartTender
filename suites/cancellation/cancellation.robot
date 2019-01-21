@@ -13,7 +13,7 @@ ${multilot}                                False
 
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_tender -v multilot:True suites/cancellation/cancellation.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_lot -v multilot:False suites/cancellation/cancellation.robot
 *** Test Cases ***
 Створити тендер
     [Setup]  Set Window Size  1440  900
@@ -58,12 +58,11 @@ ${multilot}                                False
 
 Перевірити збереження даних в ЦБД
     Отримати дані з cdb та зберегти їх у файл
-    debug
     procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']
     Run Keyword If  '${multilot}' == 'True'  Run Keywords
-    ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']
+    ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']  AND
     ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['documents'][0]['title']
 
 
@@ -75,7 +74,7 @@ ${multilot}                                False
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']
     \  Run Keyword If  '${multilot}' == 'True'  Run Keywords
-    \  ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']
+    \  ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']  AND
     \  ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['documents'][0]['title']
 
 
