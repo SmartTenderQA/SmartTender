@@ -20,6 +20,7 @@ Library  save_user_session.py
 	Delete All Cookies
 	:FOR  ${cookie}  IN  @{${user}_cookies.keys()}
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}
+	\  ${cookie}  Evaluate  '${cookie}'.replace(' ', '')
 	\  Add Cookie  ${cookie}  ${value}
 	Reload Page
 	Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords
