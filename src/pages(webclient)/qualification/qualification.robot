@@ -68,7 +68,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
-    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
+    Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
     qualification_keywords.Заповнити текст рішення кваліфікації
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
@@ -91,7 +91,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Відхилити пропозицію"
-    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
+    Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
     qualification_keywords.Заповнити текст рішення кваліфікації
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
