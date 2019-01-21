@@ -22,6 +22,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Створити тендер
+    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
@@ -109,7 +110,7 @@ If skipped create tender
     Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  ${provider1}
 
 
 Отримати поcилання на перегляд аукціону

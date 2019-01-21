@@ -19,6 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
+    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	sale_dgfAssets.Створити тендер  ${type_dict['${type}']}

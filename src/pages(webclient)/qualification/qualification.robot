@@ -4,7 +4,7 @@ Resource        qualification_keywords.robot
 
 *** Variables ***
 ${participant}            //*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
-${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]|//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
+${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]|//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[1]//img[not(contains(@src,"open"))]
 ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
 
 

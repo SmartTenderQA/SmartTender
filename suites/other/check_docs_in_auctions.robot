@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
 # robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i procurement -v hub:None suites/other/check_docs_in_auctions.robot
