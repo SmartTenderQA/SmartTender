@@ -21,7 +21,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 Відкрити сторінку тестових торгів
 	${location}  Get Location
 	Run Keyword If  '${location}' != '${start_page}'  Go To  ${start_page}
-	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Тестові тендери
+	Вибрати елемент з випадаючого списку заголовку  Торговий майданчик  Тестові тендери
 	Location Should Contain  /test-tenders/
 
 
