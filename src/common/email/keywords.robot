@@ -45,9 +45,9 @@ ${field_password}       //input[@type="password"]
 	Reload Page
 	Wait Until Element Is Not Visible  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  10
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
-	${time now -1 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-1))  modules=datetime
+	${time now -3 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-3))  modules=datetime
 	${time is}  Get Text  ${time selector}
 	${is today}  Evaluate  not '.' in '${time is}'
 	Run Keyword If  ${is today} == ${False}  Fail
-	${time}  compare_dates_smarttender  ${time now -1 min}  <=  ${time is}
+	${time}  compare_dates_smarttender  ${time now -3 min}  <=  ${time is}
 	Should Be Equal  ${time}  ${True}
