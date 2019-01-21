@@ -25,6 +25,7 @@ ${report}                           //*[@class="ivu-card-body"]//*[@class="favor
 ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 #robot --consolecolors on -L TRACE:INFO -A suites/walking_man/arguments.txt -v user:user1 -i site -e -test -v hub:none suites/walking_man/suite.robot
+#just comment
 
 *** Test Cases ***
 Аналітика участі
