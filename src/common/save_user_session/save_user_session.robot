@@ -16,7 +16,8 @@ Library  save_user_session.py
 	[Arguments]  ${user}
 	${location}  Get Location
 	Run Keyword If  "${location}" != "${${user}_location}"  Go To  ${${user}_location}
-	Дочекатись закінчення загрузки сторінки(weclient start)
+	Run Keyword If  '/webclient/' in """${${user}_location}"""
+	...  Дочекатись закінчення загрузки сторінки(weclient start)
 	Delete All Cookies
 	:FOR  ${cookie}  IN  @{${user}_cookies.keys()}
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}

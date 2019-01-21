@@ -24,10 +24,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Виконати пошук тендера на стадії Кваліфікація
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
     desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Відфільтрувати за типом процедури          ${type['${site}']}
     main_page.Пошук об'єкта у webclient по полю  Стадія  ${stage['${site}']}
+    Run Keyword If  '${site}' == 'prod'
+    ...  main_page.Пошук об'єкта у webclient по полю  Кількість  2
     Зберегти дані тендера
 
 
@@ -39,7 +41,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Відхилити організатором пропозицію першого учасника
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${negative result file name}  qualification.Відхилити пропозицію учасника  1  ${EDS}  ${cdb['procurementMethodType']}
@@ -47,7 +49,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Завантажити другим учасником кваліфікаційний документ
-    Завантажити сесію для  provider2
+    Завантажити сесію для  ${provider2}
     Go to  ${data['tender_href']}
     ${provider file name}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
     Адаптувати словник data для bids
@@ -63,7 +65,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Визнати переможцем другого учасника
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${positive result file name}  qualification.Визначити учасника переможцем  2  ${EDS}  ${cdb['procurementMethodType']}
@@ -83,6 +85,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Отримати дані з cdb та зберегти їх у файл
     actions.Зберегти словник у файл  ${data}  data
     Log  ${data}
+    debug
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД
@@ -97,19 +100,24 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 *** Keywords ***
 Підготувати користувачів для prod
-    Додати першого користувача  prod_owner      tender_owner
-    Додати користувача          prod_ssp_owner  tender_owner2
-    #Додати користувача          prod_provider1  provider1
-    Додати користувача          prod_provider2  provider2
-    #Додати користувача          prod_provider   provider3
+    Set Global Variable         ${tender_owner}   prod_owner
+    Set Global Variable         ${tender_owner2}  prod_ssp_owner
+    Set Global Variable         ${provider2}      prod_provider2
+
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${tender_owner2}
+    Додати користувача          ${provider2}
+
 
 
 Підготувати користувачів для test
-    Додати першого користувача  PPR_OR          tender_owner
-    Додати користувача          Bened           tender_owner2
-    #Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    #Додати користувача          user3           provider3
+    Set Global Variable         ${tender_owner}   PPR_OR
+    Set Global Variable         ${tender_owner2}  Bened
+    Set Global Variable         ${provider2}      user2
+
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${tender_owner2}
+    Додати користувача          ${provider2}
 
 
 Зберегти дані тендера
@@ -160,7 +168,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами test
-    :FOR  ${user}  in  tender_owner  tender_owner2
+    :FOR  ${user}  in  ${tender_owner}  ${tender_owner2}
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
@@ -172,7 +180,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами prod
-    :FOR  ${user}  in  tender_owner  tender_owner2
+    :FOR  ${user}  in  ${tender_owner}  ${tender_owner2}
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
