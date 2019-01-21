@@ -83,7 +83,10 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
 Перейти на сторінку лота та перевірити назву
   [Arguments]  ${lot number}  ${number of multiple tender}
   ${multi_lot_selector}  Set Variable  (${multilot})[${number of multiple tender}]
-  ${lot_title}  Get Text  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${lot number}+1]/td[1]
+  ${lot title locator}  Set Variable
+  ...    xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${lot number}+1]/td[1]
+  Scroll Page To Element XPATH  ${lot title locator}
+  ${lot_title}  Get Text        ${lot title locator}
   ${selector}  Set Variable  xpath=${multi_lot_selector}/following-sibling::*[1]//table[@class="lot-description"]//tr[${lot number} + 1]/td[last()]/a[1]
   Scroll Page To Element XPATH   ${selector}
   Click Element  ${selector}

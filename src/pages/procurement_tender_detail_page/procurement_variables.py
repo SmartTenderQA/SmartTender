@@ -487,3 +487,12 @@ def get_locator(field):
             "['documents'][0]['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"])[last()-({0}-1)]//a[text()]"""
         }
         return map[result].format(id)
+    elif "cancellations" in field:
+        list = re.search('\[(?P<id>\d+)\](?P<path>.+)', field)
+        id = int(list.group('id')) + 1
+        result = list.group('path')
+        map = {
+            "['reason']": u"""(//*[contains(@data-qa,"cancel")]//*[text()="Причина скасування"]/following-sibling::div[1])[{0}]""",
+            "['documents'][0]['title']": u"""(//*[contains(@data-qa,"cancel")]//*[@data-qa="file-name"])[{0}]"""
+        }
+        return map[result].format(id)

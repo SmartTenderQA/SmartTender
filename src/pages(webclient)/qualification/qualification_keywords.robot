@@ -92,6 +92,7 @@
 Відмітити підставу відхилення
     [Arguments]  ${text}
     ${check}  Set Variable  //td[text()="${text}"]/preceding-sibling::td/img
+    Wait Until Element Is Visible  ${check}
     Click Element  ${check}
     Wait Until Page Contains Element  ${check}[contains(@src,"BoxChecked")]
 
@@ -99,6 +100,7 @@
 Вибрати переможця за номером
     [Arguments]  ${i}
     ${selector}  Set Variable  (${winners})[${i}]
+    Wait Until Element Is Visible  ${selector}  3
     Click Element  ${selector}
 
 
