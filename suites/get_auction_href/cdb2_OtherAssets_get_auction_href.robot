@@ -8,13 +8,16 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#Отримати посилання на аукціон
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#Кваліфікація учасника
+#robot --consolecolors on -L TRACE:INFO -d test_output -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
 *** Variables ***
 
 
 *** Test Cases ***
 Створити аукціон
-	[Tags]  create_tender
+	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	cdb2_OtherAssets.Створити аукціон
 
@@ -27,7 +30,7 @@ If skipped create tender
 
 
 Отримати дані про аукціон з ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
@@ -38,7 +41,7 @@ If skipped create tender
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Run Keyword If  '${site}' == 'prod'
 	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
@@ -60,7 +63,7 @@ If skipped create tender
 
 
 Перевірити відображення детальної інформації
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
@@ -97,6 +100,7 @@ If skipped create tender
 
 
 Знайти тендер учасниками
+	[Tags]  find_auction  get_auction_href  qualification
 	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
@@ -108,6 +112,7 @@ If skipped create tender
 
 
 Подати заявки на участь в тендері
+	[Tags]  make_a_proposal  get_auction_href  qualification
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
@@ -116,12 +121,14 @@ If skipped create tender
 
 
 Підтвердити заявки на участь
+	[Tags]  make_a_proposal get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -131,12 +138,14 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
+	[Tags]  get_auction_href
 	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  15m
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
+	[Tags]  get_auction_href
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
@@ -145,11 +154,67 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
+	[Tags]  get_auction_href
 	:FOR  ${i}  IN  ${tender_owner}  ${provider3}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+
+
+Дочекатися початку кваліфікації
+	[Tags]  qualification
+	Завантажити сесію для  ${provider2}
+	#todo nuzhno vinesti keyword
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+
+
+Подати кваліфікаційні документи
+	[Tags]  qualification
+	sale_keywords.Натиснути "Кваліфікаційні документи"
+	sale_keywords.Додати кваліфікаційний документ за типом  [Оберіть тип документа]
+	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують кваліфікацію
+	sale_keywords.Додати кваліфікаційний документ за типом  Цінова пропозиція
+	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують відповідність
+	sale_keywords.Додати кваліфікаційний документ за типом  Протокол аукціону
+	sale_keywords.Завантажити кваліфікаційні документи
+
+
+Перевірити відображення детальної інформації про документи
+	[Tags]  qualification
+	No Operation
+
+
+Замінити кваліфікаційні документи
+	[Tags]  qualification
+	No Operation
+
+
+Перевірити відображення детальної інформації про документи після змін
+	[Tags]  qualification
+	No Operation
+
+
+Кваліфікація переможця аукціону
+	[Tags]  qualification
+	Завантажити сесію для  ${tender_owner}
+	Відкрити сторінку Продаж/Оренда майна(тестові)
+	sale_create_tender.Знайти переможця за назвою аукціона
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
+	sale_create_tender.Додати протокол рішення
+
+
+Прикріпити та підписати договір
+	[Tags]  qualification
+	sale_create_tender.Натиснути "Прикріпити договір"
+	sale_create_tender.Заповнити поле "Номер договору"
+	sale_create_tender.Заповнити поле "Дата підписання"
+	sale_create_tender.Прикріпити документ договору
+	sale_create_tender.Зберегти договір
+	sale_create_tender.Натиснути "Підписати договір"
+	Завантажити сесію для  ${provider2}
+	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
 
 
 *** Keywords ***
