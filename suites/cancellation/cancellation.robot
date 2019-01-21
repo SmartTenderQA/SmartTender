@@ -58,7 +58,6 @@ ${multilot}                                False
 
 Перевірити збереження даних в ЦБД
     Отримати дані з cdb та зберегти їх у файл
-    debug
     procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']
