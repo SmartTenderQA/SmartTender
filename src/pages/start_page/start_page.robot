@@ -57,6 +57,8 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	...  Аукціони на продаж майна банків=menu-auctionsOfBankSssets
 	...  Аукціони на продаж державного майна=menu-auctionsOfGovernmentSssets
 	...  Торги RIALTO=menu-rialtoTrades
+	...  Договори публічних закупівель=menu-prozorroProcurementContracts
+	...  Тестові тендери=menu-testbids
 #	Про SmartTender
 	...  Про майданчик=menu-aboutCompany
 	...  Наші клієнти=menu-ourClients
@@ -67,14 +69,15 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 	...  Відгуки=menu-reviews
 #	Регламент
 	...  Регламент SmartTender=menu-etpRegulation
-    ...  Регламент Prozorro.Продажі=menu-spf
-    ...  Регламент аукціонів ФГВФО=menu-fgvfl
+#	it's link
+#    ...  Регламент Prozorro.Продажі=menu-spf
+#    ...  Регламент аукціонів ФГВФО=menu-fgvfl
 #	Інформаційний центр
 	...  Договір с майданчиком=menu-сontract
     ...  Тарифи=menu-tariffs
+    ...  Інструкції=menu-documentations
     ...  Запитання та відповіді=menu-faq
-    ...  Тестові тендери=menu-testbids
-    ...  Контракти публічних закупівель=menu-prozorroProcurementContracts
+    ...  Курси валют=menu-exchangeRates
 	${list selector}  Set Variable  //*[@data-qa="${list dict[u'${list}']}"]
 	Mouse Over  ${list selector}
 
