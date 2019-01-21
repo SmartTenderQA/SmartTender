@@ -4,7 +4,7 @@ ${ca list}       //select[@name="ca"]
 ${upload}        (//*[@id="eds_placeholder"]//input[@class="upload"])[1]
 ${pass input}    //*[@id="eds_placeholder"]//input[@name="password"]
 ${sign btn}      //*[@id="eds_placeholder"]//*[contains(@class,"btn")][text()="Підписати"]
-
+${eds index}     0
 
 
 *** Keywords ***

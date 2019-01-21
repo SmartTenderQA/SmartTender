@@ -4,8 +4,8 @@ Resource        qualification_keywords.robot
 
 *** Variables ***
 ${participant}            //*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
-${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]|//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[1]//img[not(contains(@src,"open"))]
-${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
+${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2TabPage_2_cp"]//td[@class="gridViewRowHeader"]/following-sibling::td[count(//div[@id="MainSted2TabPage_1_cp" or @id="MainSted2TabPage_2_cp"]//div[text()="Постачальник"]/ancestor::td[1]/preceding-sibling::*)][text()]
+
 
 
 *** Keywords ***
@@ -73,7 +73,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)
@@ -96,7 +96,7 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)

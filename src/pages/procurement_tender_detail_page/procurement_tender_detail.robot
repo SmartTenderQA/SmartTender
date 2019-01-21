@@ -86,8 +86,8 @@ Variables       procurement_variables.py
     ${file name}  Wait Until Keyword Succeeds  20  2  actions.Додати doc файл
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
     Виконати дії відповідно до тексту повідомлення  ${message}
-    Go Back
     Run Keyword If  '${EDS}' == 'True'  EDS.Підписати ЕЦП
+    Go Back
     [Return]  ${file name}
 
 
