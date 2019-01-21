@@ -12,7 +12,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:prod_tender_owner suites/password/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:user4 suites/password/suite.robot
 #
 *** Test Cases ***
 Перевірити можливість змінити пароль через особистий кабінет для організатора

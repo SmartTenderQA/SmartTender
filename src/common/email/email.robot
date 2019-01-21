@@ -12,7 +12,7 @@ Resource  				keywords.robot
 
 Відкрити лист в email за темою
 	[Arguments]  ${title}
-	Wait Until Keyword Succeeds  5 min  15 s  Перевірити наявність листа за темою  ${title}
+	Wait Until Keyword Succeeds  10 min  15 s  Перевірити наявність листа за темою  ${title}
 	Wait Until Keyword Succeeds  10  2  Click Element  xpath=//td[@id]//span[contains(text(), '${title}')]
 	Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
 
