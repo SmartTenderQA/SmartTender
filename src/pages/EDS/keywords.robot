@@ -1,5 +1,5 @@
 *** Variables ***
-${EDS}                  ${block}[1]//div[@class="ivu-row"]//button
+${EDS btn}              ${block}[1]//div[@class="ivu-row"]//button
 ${EDS_block}    		//*[@data-qa="modal-eds"]
 ${passwod}      		29121963
 ${iframe}       		//iframe[contains(@src, 'EDS')]
@@ -8,10 +8,10 @@ ${close button(old)}  	//div[@style]//button[@type='button' and @class='close']
 
 *** Keywords ***
 Натиснути підписати ЕЦП
-	${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS}[2]
+	${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS btn}[2]
 	Sleep  2
-	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS}[2]
-	...  ELSE  Click element  ${EDS}[1]
+	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}[2]
+	...  ELSE  Click element  ${EDS btn}[1]
 	Wait Until Page Contains Element  ${EDS_block}
 
 
