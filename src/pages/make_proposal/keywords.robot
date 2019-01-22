@@ -43,6 +43,7 @@ Ignore cancellation error
 
 Натиснути надіслати пропозицію та вичитати відповідь
 	Click Element  ${send offer button}
+	keywords.Закрити валідаційне вікно (Так/Ні)  Рекомендуємо Вам для файлів з ціновою пропозицією обрати тип  Ні
 	Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
 	Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
 	${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
@@ -82,3 +83,10 @@ Ignore error
 	${text}  Get Text  ${validation message}
 	Run Keyword If  "${text}" == "${EMPTY}"  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
 	[Return]  ${text}
+
+
+Закрити валідаційне вікно (Так/Ні)
+	[Arguments]  ${title}  ${action}
+	${button}  Set Variable  //div[contains(text(),'${title}')]/ancestor::div[@class="ivu-modal-confirm"]//button/span[text()="${action}"]
+	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${button}  3
+	Run Keyword If  '${status}' == 'True'  Click Element  ${button}
