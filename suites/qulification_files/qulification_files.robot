@@ -140,11 +140,11 @@ If skipped create tender
 
 
 Прийняти участь у тендері учасником
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
+    [Arguments]  ${username}
+    Завантажити сесію для  ${username}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == '${provider1}'  Sleep  3m
+    Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
 
 
