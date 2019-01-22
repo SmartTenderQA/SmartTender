@@ -6,9 +6,8 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 
 *** Keywords ***
 Змінити стартову сторінку для IP
-	Run Keyword If  '${IP}' != ''  Run Keywords
-	...  Set Global Variable  ${start_page}  ${IP}  AND
-	...  Go To  ${start_page}
+	Run Keyword If  '${IP}' != ''
+	...  Set Global Variable  ${start_page}  ${IP}
 
 
 Отримати стартову сторінку
