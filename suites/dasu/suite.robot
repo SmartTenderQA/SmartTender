@@ -12,8 +12,8 @@ Test Teardown  Test Postcondition
 
 *** Variables ***
 &{data}
-${UAID}                         UA-2018-12-22-000038-a
-${tender_ID}                    69ba706ec999427eba51accb441f409e
+${UAID}                         UA-2019-01-22-000137-c
+${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 
 *** Test Cases ***
@@ -130,23 +130,22 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Подати пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
-  debug
-#  ${loc}  Get Location
-#  Завантажити сесію для  ${tender_owner}
-#  Go to  ${loc}
-#  Відкрити вкладку моніторингу
-#  Відкрити бланк пояснення з власної ініціативи
-#  ${title}  Заповнити поле предмет пояснення з власної ініціативи
-#  ${description}  Заповнити поле опис пояснення з власної ініціативи
-#  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
-#  Відправити пояснення з власної ініціативи
-#  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
-#  Зберегти сесію  ${tender_owner}
+  ${loc}  Get Location
+  Завантажити сесію для  ${tender_owner}
+  Go to  ${loc}
+  Відкрити вкладку моніторингу
+  Відкрити бланк пояснення з власної ініціативи
+  ${title}  Заповнити поле предмет пояснення з власної ініціативи
+  ${description}  Заповнити поле опис пояснення з власної ініціативи
+  ${path}  ${name}  ${content}  Створити та додати файл  ${monitoring_selector}//*[@data-qa='dialogue-files']//input
+  Відправити пояснення з власної ініціативи
+  Перевірити відправлені дані пояснення з власної ініціативи  ${title}  ${description}  ${name}
+  Зберегти сесію  ${tender_owner}
 
 
 Перевірити відображення пояснення з власної ініціативи
   [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -159,6 +158,16 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
   \  Зберегти сесію  ${username}
 
 
+Підписати ЕЦП для пояснення з власної ініціативи
+  [Tags]  make_a_dialogue_individually
+#  Натиснути Підписати ЕЦП
+#  ${block}  Set Variable  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]
+#  ${EDS button}  Set Variable  ${block}//span[contains(text(), 'ЕЦП')]
+#  Click Element  ${EDS button}
+  No Operation
+
+
+
 Надати відповіть на пояснення з власної ініціативи органом ДАСУ
   [Tags]  make_a_dialogue_individually
   Сформувати та відправити відповідь органом ДАСУ
@@ -167,7 +176,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Перевірити відображення відповіді на пояснення з власної ініціативи органом ДАСУ
   [Tags]  make_a_dialogue_individually
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -177,9 +186,9 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
   \  Перевірити description відповіді на пояснення з власної ініціативи
 
 
-Підписати ЕЦП для пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-  Debug
+#Підписати ЕЦП для пояснення з власної ініціативи2
+#  [Tags]  make_a_dialogue_individually
+#  No Operation
 
 
 ################################################################
@@ -243,7 +252,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Підписати ЕЦП для відповіді на запит
   [Tags]  make_a_dialogue
-  debug
+  No Operation
 
 
 ################################################################
@@ -357,7 +366,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Накласти ЕЦП на запит за роз'ясненням
   [Tags]  request_for_clarification
-  debug
+  No Operation
 #  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]/../following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
 #  Перевірити можливість підписання ЕЦП для позову  ${selector}
 #  Відкрити вкладку моніторингу
@@ -404,7 +413,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Накласти ЕЦП на звіт про усунення порушень
   [Tags]  violation_elimination_report
-  debug
+  No Operation
 #  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Звіт про усунення порушень')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
 #  Перевірити можливість підписання ЕЦП для позову  ${selector}
 #  Відкрити вкладку моніторингу
@@ -452,7 +461,7 @@ ${tender_ID}                    69ba706ec999427eba51accb441f409e
 
 Накласти ЕЦП на позов
   [Tags]  appeal
-  debug
+  No Operation
 #  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Висновок оскаржено в суді')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
 #  Перевірити можливість підписання ЕЦП для позову  ${selector}
 #  Відкрити вкладку моніторингу
