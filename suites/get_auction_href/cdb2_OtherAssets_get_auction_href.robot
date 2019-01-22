@@ -121,7 +121,7 @@ If skipped create tender
 
 
 Підтвердити заявки на участь
-	[Tags]  make_a_proposal get_auction_href  qualification
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}

@@ -9,6 +9,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 *** Keywords ***
 ########## common ###############################
 Отримати та зберегти tender_id
+	Пошук об'єкта у webclient по полю  Загальна назва  ${data['title'].replace('[ТЕСТУВАННЯ] ','')}
 	${tender_id}  Get Element Attribute  xpath=//a[@href and contains(text(),'UA-')]  text
 	Set To Dictionary  ${data}  tender_id=${tender_id}
 
