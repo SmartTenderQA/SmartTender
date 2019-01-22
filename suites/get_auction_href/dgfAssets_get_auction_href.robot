@@ -185,8 +185,8 @@ Precondition
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}

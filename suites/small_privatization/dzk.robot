@@ -236,8 +236,8 @@ Precondition
 
 
 Знайти аукціон користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
