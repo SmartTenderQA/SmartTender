@@ -8,11 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-<<<<<<< HEAD
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -e get_tender suites/qulification_files/with_find_tender.robot
-=======
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/with_find_tender.robot
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
 *** Variables ***
 &{type}
 ...         test=Відкриті торги з публікацією англійською мовою
@@ -33,11 +29,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Відфільтрувати за типом процедури          ${type['${site}']}
     main_page.Пошук об'єкта у webclient по полю  Стадія  ${stage['${site}']}
-<<<<<<< HEAD
-=======
     Run Keyword If  '${site}' == 'prod'
     ...  main_page.Пошук об'єкта у webclient по полю  Кількість  2
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
     Зберегти дані тендера
 
 
@@ -48,14 +41,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Log  ${cdb['procurementMethodType']}
 
 
-<<<<<<< HEAD
-Відхилити організатором пропозицію першого учасника
-    Завантажити сесію для  tender_owner
-	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    main_page.Знайти тендер організатором по title  ${data['title']}
-    ${negative result file name}  qualification.Відхилити пропозицію учасника  1  ${EDS}  ${cdb['procurementMethodType']}
-    Set To Dictionary  ${data['awards'][0]['documents'][0]}  title  ${negative result file name}
-=======
 Підготувати словник data для збереження даних
     Адаптувати словник data для awards
     Адаптувати словник data для bids
@@ -67,7 +52,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${negative result file name}  qualification.Відхилити пропозицію учасника  1  ${EDS}  ${cdb['procurementMethodType']}
     Set To Dictionary  ${data['awards'][0]['documents'][1]}  title  ${negative result file name}
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
 
 
 Завантажити другим учасником кваліфікаційний документ
@@ -80,11 +64,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Завантажити другим учасником додатковий кваліфікаційний документ
     ${provider file name 2}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
-<<<<<<< HEAD
-    Set To Dictionary  ${data['bids'][1]['documents'][2]}  title  ${provider file name 2}
-=======
     Set To Dictionary  ${data['bids'][1]['documents'][3]}  title  ${provider file name 2}
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
 
 
 #TODO  Замінити другим учасником останній кваліфікаційний документ
@@ -119,11 +99,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
     Run Keyword  Перевірити публікацію кваліфікаційних файлів на сторінці користувачами ${site}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
 
 
 *** Keywords ***
@@ -172,11 +147,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
     ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
-<<<<<<< HEAD
-=======
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
     ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
 
 

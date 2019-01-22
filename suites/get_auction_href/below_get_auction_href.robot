@@ -101,7 +101,7 @@ If skipped create tender
 
 Підготувати користувачів для prod
     Set Global Variable         ${tender_owner}  prod_owner
-    Set Global Variable         ${provider}      prod_provider1
+    Set Global Variable         ${provider1}      prod_provider1
     Set Global Variable         ${provider2}     prod_provider2
     Set Global Variable         ${viewer}        prod_viewer
 
