@@ -193,6 +193,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	contract.Перевірити заголовок договору
 	contract.Перевірити перший абзац договору
 	contract.Перевірити лінки в тексті договору
+	Reload Page
 
 
 Тарифи
