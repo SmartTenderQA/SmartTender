@@ -31,6 +31,7 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	...  Не усі поля заповнені правильно. Перевірте будь ласка та внесіть відповідні зміни
 	Wait Until Element Is Visible  ${send offer button}
 	Click Element  ${send offer button}
+#	keywords.Закрити валідаційне вікно (Так/Ні)  Рекомендуємо Вам для файлів з ціновою пропозицією обрати тип  Ні
 	${text}  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
 	Should Contain Any  ${list}  ${text}
 
@@ -108,3 +109,8 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	${path}  Set Variable  ${doc[0]}
 	Choose File  xpath=(//input[@type="file"][1])[${block}]  ${path}
 	[Return]  ${doc[1]}
+
+
+
+
+

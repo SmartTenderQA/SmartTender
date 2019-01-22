@@ -9,18 +9,20 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -e -prod -v hub:None -v user:fgv_prod_owner suites/get_auction_href/dutch.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v user:Bened suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v tender_owner:Bened -v provider1:user1 -v provider2:user2 -v provider3:user3 -v viewer:test_viewer suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v where:test suites/get_auction_href/dutch.robot
+
+
 *** Test Cases ***
 Створити аукціон
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	dutch_step.Створити аукціон
 
 
 If skipped create tender
 	[Tags]  get_tender
-	${json}  Get File  ${OUTPUTDIR}/artifact.json
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
 	${data}  conver json to dict  ${json}
 	Set Global Variable  ${data}
 
@@ -28,7 +30,7 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  tender_owner
+	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
@@ -100,34 +102,34 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	:FOR  ${i}  IN  provider1  tender_owner  viewer
+	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
 	\  Зберегти сесію  ${i}
-	:FOR  ${i}  IN  2  3
-	\  Завантажити сесію для  provider${i}
+	:FOR  ${i}  IN  ${provider2}  ${provider3}
+	\  Завантажити сесію для  ${i}
 	\  Go to  ${data['tender_href']}
-	\  Зберегти сесію  provider${i}
+	\  Зберегти сесію  ${i}
 
 
 Подати заявку на участь в тендері учасниками
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
-	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
-	\  Зберегти сесію  provider${i}
+	:FOR  ${i}  IN  ${provider1}  ${provider2}
+	\  Завантажити сесію для  ${i}
+	\  Зберегти сесію  ${i}
 	\  Подати заявку для подачі пропозиції
 
 
 Підтвердити заявки на участь
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Підтвердити пропозицію
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	:FOR  ${i}  IN  provider1  provider2
+	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
 	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Додати документи"
 	\  Run Keyword If  "${site}" == "test"  Натиснути кнопку "Підтвердити пропозицію"
@@ -136,7 +138,7 @@ If skipped create tender
 Отримати посилання на аукціон для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ссылка на участие формируется быстрее чем страница формируется(простой способ не поймать 404)
-	:FOR  ${i}  IN  provider1  provider2
+	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
     \  ${auction_participate_href}  ${auction_href}  Wait Until Keyword Succeeds  5m  3
     \  ...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
@@ -146,29 +148,35 @@ If skipped create tender
 
 Перевірити неможливість отримати посилання на перегляд
 	[Documentation]  В голандском аукционе есть только ссылка на участие(особенность типа торгов)
-	:FOR  ${i}  IN  provider1  provider3  tender_owner  viewer
+	:FOR  ${i}  IN  ${provider1}  ${provider2}  ${tender_owner}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 
 
 *** Keywords ***
 Precondition
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+	...  ELSE
+	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
+	...  Set Global Variable  ${provider1}  prod_provider  AND
+	...  Set Global Variable  ${provider2}  prod_provider2  AND
+	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
 	dutch_step.Завантажити локатори
-    Додати першого користувача  ${user}  tender_owner
+    Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
 Підготувати користувачів
-    Run Keyword If  "${site}" == "prod"  Run Keywords
-    ...  Додати користувача          prod_provider		provider1     AND
-    ...  Додати користувача          prod_provider2		provider2     AND
-    ...  Додати користувача          prod_provider1		provider3     AND
-    ...  Додати користувача          prod_viewer		viewer
-    Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача          user1           	provider1     AND
-    ...  Додати користувача          user2           	provider2     AND
-    ...  Додати користувача          user3           	provider3     AND
-    ...  Додати користувача          test_viewer     	viewer
+	Додати користувача  ${provider1}
+	Додати користувача  ${provider2}
+    Додати користувача  ${provider3}
+    Додати користувача  ${viewer}
 
 
 Зберегти пряме посилання на тендер
@@ -177,8 +185,8 @@ Precondition
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}

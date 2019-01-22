@@ -15,10 +15,15 @@ Library  save_user_session.py
 Завантажити сесію для
 	[Arguments]  ${user}
 	${location}  Get Location
+	${role}  Отримати дані користувача по полю  ${user}  role
+	Set Global Variable  ${role}
 	Run Keyword If  "${location}" != "${${user}_location}"  Go To  ${${user}_location}
+	Run Keyword If  '/webclient/' in """${${user}_location}"""
+	...  Дочекатись закінчення загрузки сторінки(weclient start)
 	Delete All Cookies
 	:FOR  ${cookie}  IN  @{${user}_cookies.keys()}
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}
+	\  ${cookie}  Evaluate  '${cookie}'.replace(' ', '')
 	\  Add Cookie  ${cookie}  ${value}
 	Reload Page
 	Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords

@@ -9,23 +9,29 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/test_open_eu_get_auction_href.robot
 *** Test Cases ***
 Підготувати користувачів
-    Додати першого користувача  Bened           tender_owner
-    Додати користувача          user1           provider1
-    Додати користувача          user2           provider2
-    Додати користувача          user3           provider3
-    Додати користувача          test_viewer     viewer
+	Set Global Variable  ${tender_owner}  Bened
+	Set Global Variable  ${provider1}  user1
+	Set Global Variable  ${provider2}  user2
+	Set Global Variable  ${provider3}  user3
+	Set Global Variable  ${viewer}  test_viewer
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${provider1}
+    Додати користувача          ${provider2}
+    Додати користувача          ${provider3}
+    Додати користувача          ${viewer}
 
 
 Створити тендер
+    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
     test_open_eu.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати дані з cdb
     [Tags]  create_tender
-    Завантажити сесію для  provider1
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
 
@@ -76,19 +82,20 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері двома учасниками
-	Прийняти участь у тендері учасником  provider1
-	Прийняти участь у тендері учасником  provider2
+	Прийняти участь у тендері учасником  ${provider1}
+	Прийняти участь у тендері учасником  ${provider2}
 
 
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
-    Завантажити сесію для  provider1
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
 Відкрити браузер під роллю організатора та знайти тендер
-    Завантажити сесію для  tender_owner
+    Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
 
@@ -99,15 +106,15 @@ If skipped create tender
 
 Отримати поcилання на участь в аукціоні для учасників
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон
-    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  provider1
+    Wait Until Keyword Succeeds  20m  10  Перевірити отримання посилань на аукціон учасником  ${provider1}
 
 
 Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  viewer  #provider3
+	:FOR  ${i}  IN  ${tender_owner}  ${viewer}  #provider3
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
@@ -125,11 +132,11 @@ If skipped create tender
 
 
 Прийняти участь у тендері учасником
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
+    [Arguments]  ${username}
+    Завантажити сесію для  ${username}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == 'provider1'  Sleep  3m
+    Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
 
 
@@ -143,8 +150,8 @@ If skipped create tender
 
 
 Перевірити отримання посилань на аукціон учасником
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
+    [Arguments]  ${username}
+    Завантажити сесію для  ${username}
     Go To  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника

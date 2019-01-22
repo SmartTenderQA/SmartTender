@@ -4,7 +4,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 Start viewer
-	Start  test_viewer
+	Open Browser In Grid  test_viewer
 	Відкрити сторінку Тарифів
 	Зберегти сесію  viewer
 	${location}  Get Location

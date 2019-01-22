@@ -9,6 +9,7 @@ ${circle loading}                   css=.loading_container .sk-circle
 ${skeleton loading}                 css=.skeleton-wrapper
 ${sales spin}                       css=.ivu-spin
 ${docs spin}                        //div[contains(@style, "loading")]
+${weclient start}                   //*[@class="spinner"]
 
 
 *** Keywords ***
@@ -21,7 +22,7 @@ ${docs spin}                        //div[contains(@style, "loading")]
 
 
 Дочекатись закінчення загрузки сторінки(skeleton)
-	Дочекатись закінчення загрузки сторінки по елементу_new  ${skeleton loading}
+	Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
 
 
 Дочекатись закінчення загрузки сторінки(webclient)
@@ -34,4 +35,8 @@ ${docs spin}                        //div[contains(@style, "loading")]
 
 Дочекатись загрузки документів в тендері
 	Дочекатись закінчення загрузки сторінки по елементу  ${docs spin}
+
+
+Дочекатись закінчення загрузки сторінки(weclient start)
+	Дочекатись закінчення загрузки сторінки по елементу  ${weclient start}
 

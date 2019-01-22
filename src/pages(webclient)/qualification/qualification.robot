@@ -4,13 +4,13 @@ Resource        qualification_keywords.robot
 
 *** Variables ***
 ${participant}            //*[@data-placeid="CRITERIA"]//td//img[contains(@src,"textdocument")]
-${winners}                //*[@data-placeid="BIDS"]//td//img[contains(@src,"textdocument")]|//*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
-${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeader"]/following-sibling::td[2]
+${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2TabPage_2_cp"]//td[@class="gridViewRowHeader"]/following-sibling::td[count(//div[@id="MainSted2TabPage_1_cp" or @id="MainSted2TabPage_2_cp"]//div[text()="Постачальник"]/ancestor::td[1]/preceding-sibling::*)][text()]
+
 
 
 *** Keywords ***
 Провести прекваліфікацію учасників
-    ${count}  qualification_keywords.Дочекатись появи учасників прекваліфікації та отримати їх кількість
+    ${count}  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     :FOR  ${i}  IN RANGE  1  ${count}+1
     \  qualification_keywords.Надати рішення про допуск до аукціону учасника  ${i}
     ${status}  Run Keyword And Return Status  Wait Until Page Contains  Розгляд учасників закінчено?
@@ -68,12 +68,8 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
-    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
-    qualification_keywords.Заповнити текст рішення кваліфікації
-    ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
-    actions.Натиснути OkButton
-    validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
+    Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)
@@ -91,12 +87,12 @@ ${winners2}               //*[@data-placeid="BIDS"]//td[@class="gridViewRowHeade
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Відхилити пропозицію"
-    Run Keyword If  'above' in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
+    Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
     qualification_keywords.Заповнити текст рішення кваліфікації
     ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
-    Run Keyword If  ('${EDS}' == 'True') and ('above' in '${MethodType}')
+    Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
     ...  EDS_weclient.Накласти ЕЦП (webclient)

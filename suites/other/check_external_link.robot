@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Start in grid  ${user}
+Suite Setup  			Open Browser In Grid  ${user}
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -12,7 +12,7 @@ Test Teardown  			Run Keywords
 *** Test Cases ***
 Перевірка посилання на тендер (з порталу)
 	[Tags]  procurement
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку Державних закупівель
 	Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()

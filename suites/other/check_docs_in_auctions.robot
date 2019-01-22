@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:viewer_test -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
 # robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i procurement -v hub:None suites/other/check_docs_in_auctions.robot
@@ -67,7 +67,7 @@ Setup
   ${status}  Run Keyword And Return Status  Should Contain  ${user}  prod
   Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_image=${true}
   ...  ELSE  Set Global Variable  ${site}  test
-  Start In Grid  ${user}
+  Open Browser In Grid  ${user}
 
 
 Перейти на сторінку
@@ -113,7 +113,7 @@ Setup
 
 
 Зайти на торговий майданчик
-  Натиснути На торговельний майданчик
+  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
 
 

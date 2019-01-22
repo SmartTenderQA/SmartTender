@@ -30,13 +30,11 @@ ${ca list}              //select[@name="ca"]
 #                   Keywords                    #
 #################################################
 Натиснути підписати ЕЦП
-	${passed}  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS btn}[2]
+	${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS btn}[2]
 	Sleep  2
-	Run keyword if  "${passed}" == 'True'  Click element  ${EDS btn}[2]
-	...  ELSE
-	...  Click element  ${EDS btn}[1]
-	${iframe status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${iframe}
-	[Return]  ${iframe status}
+	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}[2]
+	...  ELSE  Click element  ${EDS btn}[1]
+	Wait Until Page Contains Element  ${EDS_block}
 
 
 Вибрати тестовий ЦСК

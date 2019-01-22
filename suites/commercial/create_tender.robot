@@ -64,7 +64,8 @@ Suite Teardown  Close All Browsers
 
 *** Keywords ***
 Suite Precondition
-	Start in grid  ${user}
+	Open Browser In Grid  ${user}
+	Авторизуватися  ${user}
 	Створити словник  data
 
 

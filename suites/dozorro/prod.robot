@@ -36,7 +36,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти випадковий тендер з потрібним статусом (Період уточнень)
     [Tags]  clarification
-    Завантажити сесію для  provider
+    Завантажити сесію для  ${provider}
     Відкрити сторінку тестових торгів
     Знайти випадковий тендер з потрібним статусом  Період уточнень
 
@@ -62,40 +62,40 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Період уточнень)
   [Tags]  clarification
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку   ${username}
 
 
 Неможливість залишити відгук ролями viewer tender_owner (Період уточнень)
   [Tags]  clarification
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Можливість залишити відгук  ${username}
 
 
 Залишити коментар дозволеними ролями (Період уточнень)
   [Tags]  clarification
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 
 Перевірити відображення коментарів всіма ролями (Період уточнень)
   [Tags]  clarification
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 
 Неможливість залишити коментар ролями viewer tender_owner (Період уточнень)
   [Tags]  clarification
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 
 Перевірити роботу фільтрів всіма ролями (Період уточнень)
   [Tags]  clarification
-  :FOR  ${username}  IN  viewer  tender_owner  provider
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -104,13 +104,13 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти випадковий тендер з потрібним статусом беру участь (Прийом пропозицій)
   [Tags]  acceptance
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Прийом пропозицій
 
 Перевірити відповідність видів відгуків з дозволеними (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  provider  provider2
+  :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
   \  Go to  ${data.tender_url}
   \  dozorro.Відкрити сторінку відгуки Dozorro
@@ -118,7 +118,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Залишити відгуки по кожному виду (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  provider  provider2
+  :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
   \  Go to  ${data.tender_url}
   \  dozorro.Відкрити сторінку відгуки Dozorro
@@ -134,18 +134,18 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer tender_owner (Прийом пропозицій)
   [Tags]  acceptance
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  provider  provider2
+  :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
   \  Go to  ${data.tender_url}
   \  Відкрити Сторінку Відгуки Dozorro
@@ -153,19 +153,19 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення коментарів всіма ролями (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer tender_owner (Прийом пропозицій)
   [Tags]  acceptance
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Прийом пропозицій)
   [Tags]  acceptance
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -174,7 +174,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти випадковий тендер з потрібним статусом беру участь (Пропозиції розглянуті)
   [Tags]  considered
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Пропозиції розглянуті
 
@@ -190,35 +190,35 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Пропозиції розглянуті)
   [Tags]  considered
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer provider2 (Пропозиції розглянуті)
   [Tags]  considered
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Пропозиції розглянуті)
   [Tags]  considered
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 Перевірити відображення коментарів всіма ролями (Пропозиції розглянуті)
   [Tags]  considered
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer provider2 (Пропозиції розглянуті)
   [Tags]  considered
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Пропозиції розглянуті)
   [Tags]  considered
-  :FOR  ${username}  IN  viewer  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -227,7 +227,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти тендер беру участь (Кваліфікація)
   [Tags]  qualification
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Кваліфікація
 
@@ -243,35 +243,35 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Кваліфікація)
   [Tags]  qualification
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
   
 Неможливість залишити відгук ролями viewer provider2 (Кваліфікація)
   [Tags]  qualification
   ...  non-critical
-   :FOR  ${username}  IN  viewer  provider2
+   :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Кваліфікація)
   [Tags]  qualification
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
  
 Перевірити відображення коментарів всіма ролями (Кваліфікація)
   [Tags]  qualification
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer provider2 (Кваліфікація)
   [Tags]  qualification
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Кваліфікація)
   [Tags]  qualification
-  :FOR  ${username}  IN  viewer  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -280,7 +280,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти тендер беру участь (Завершено)
   [Tags]  completed
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Завершено
 
@@ -296,35 +296,35 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Завершено)
   [Tags]  completed
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer provider2 (Завершено)
   [Tags]  completed
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Завершено)
   [Tags]  completed
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 Перевірити відображення коментарів всіма ролями (Завершено)
   [Tags]  completed
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer provider2 (Завершено)
   [Tags]  completed
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Завершено)
   [Tags]  completed
-  :FOR  ${username}  IN  viewer  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -333,7 +333,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти тендер беру участь (Закупівля не відбулась)
   [Tags]  not_take_place
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Закупівля не відбулась
 
@@ -349,35 +349,35 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Закупівля не відбулась)
   [Tags]  not_take_place
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer provider2 (Закупівля не відбулась)
   [Tags]  not_take_place
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Закупівля не відбулась)
   [Tags]  not_take_place
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 Перевірити відображення коментарів всіма ролями (Закупівля не відбулась)
   [Tags]  not_take_place
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer provider2 (Закупівля не відбулась)
   [Tags]  not_take_place
   ...  non-critical
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Закупівля не відбулась)
   [Tags]  not_take_place
-  :FOR  ${username}  IN  viewer  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -386,7 +386,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 ################################################################
 Знайти тендер беру участь (Закупівля відмінена)
   [Tags]  canceled
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом  Закупівля відмінена
 
@@ -402,35 +402,35 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 Перевірити відображення відгуку всіма ролями (Закупівля відмінена)
   [Tags]  canceled
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer tender_owner (Закупівля відмінена)
   [Tags]  canceled
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Закупівля відмінена)
   [Tags]  canceled
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 Перевірити відображення коментарів всіма ролями (Закупівля відмінена)
   [Tags]  canceled
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer tender_owner (Закупівля відмінена)
   [Tags]  canceled
   ...  non-critical
-  :FOR  ${username}  IN  viewer  tender_owner
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Закупівля відмінена)
   [Tags]  canceled
-  :FOR  ${username}  IN  viewer  tender_owner  provider
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -440,7 +440,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Знайти тендер беру участь (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Відкрити сторінку тестових торгів
   Знайти випадковий тендер з потрібним статусом беру участь  Опубліковано намір укласти договір
 
@@ -459,40 +459,40 @@ ${type_13_multylot}                  ${forms_13_multylot}
 Перевірити відображення відгуку всіма ролями (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення відгуку  ${username}
 
 Неможливість залишити відгук ролями viewer provider2 (Опубліковано намір укласти договір)
   [Tags]  active
   ...  non-critical
   ...  smart
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Можливість залишити відгук  ${username}
 
 Залишити коментар дозволеними ролями (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  Завантажити сесію для  provider
+  Завантажити сесію для  ${provider}
   Залишити коментар на випадковий відгук
 
 Перевірити відображення коментарів всіма ролями (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  :FOR  ${username}  IN  viewer  tender_owner  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider2}
   \  Перевірка відображення коментаря  ${username}
 
 Неможливість залишити коментар ролями viewer provider2 (Опубліковано намір укласти договір)
   [Tags]  active
   ...  non-critical
   ...  smart
-  :FOR  ${username}  IN  viewer  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider2}
   \  Set Global Variable  ${username}
   \  Можливість залишити коментар  ${username}
 
 Перевірити роботу фільтрів всіма ролями (Опубліковано намір укласти договір)
   [Tags]  active
   ...  smart
-  :FOR  ${username}  IN  viewer  provider  provider2
+  :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider2}
   \  Перевірити фільтр відгуків  ${username}
 
 
@@ -501,10 +501,16 @@ ${type_13_multylot}                  ${forms_13_multylot}
 
 *** Keywords ***
 Підготувати користувачів
-    Додати першого користувача  prod_owner      tender_owner
-    Додати користувача          prod_provider1  provider
-    Додати користувача          prod_provider2  provider2
-    Додати користувача          prod_viewer     viewer
+    Set Global Variable  ${tender_owner}  prod_owner
+    Set Global Variable  ${provider}      prod_provider1
+    Set Global Variable  ${provider2}     prod_provider2
+    Set Global Variable  ${viewer}        prod_viewer
+
+    
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${provider}
+    Додати користувача          ${provider2}
+    Додати користувача          ${viewer}
     Створити словник            data
 
 

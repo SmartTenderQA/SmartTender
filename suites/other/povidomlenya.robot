@@ -4,7 +4,9 @@ Resource  				../../src/pages/start_page/start_page.robot
 Resource  				../../src/pages/contacts/contacts.robot
 Resource  				../../src/pages/povidomlenya/povidomlenya.robot
 
-Suite Setup  			Start in grid  ${user}
+Suite Setup  			Run Keywords
+...  					Open Browser In Grid  ${user}  AND
+...  					Авторизуватися  ssp_tender_owner
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -12,13 +14,27 @@ Test Teardown  			Run Keywords
 
 
 *** Test Cases ***
-Повідомлення
-	Зайти на сторінку contacts
+Відкрити сторінку зі списком повідомлень
+	start_page.Навести мишку на іконку з заголовку  Повідомлення
+	notifications.Натиснути показати всі
+
+
+Перевірити сторінку та одне повідомлення
 	Зайти на сторінку povidomlenya
 	Перевірити заголовок сторінки повідомлень
 	Порахувати кількість повідомлень
 	Переглянути повідемлення
 	Закрити вікно з повідомленням
-	Завершити сеанс користувача
-	Зайти на сторінку contacts
+
+Завершити сеанс користувачем
+	Go To  ${start_page}
+	Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Вийти
+
+
+Негативні перевірки
+	Run Keyword And Expect Error
+	...  Element with locator '//*[@data-qa="notifications"]' not found.
+	...  start_page.Навести мишку на іконку з заголовку  Повідомлення
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Контакти
 	Перевірити відсутність дзвіночка(povidomlenya)

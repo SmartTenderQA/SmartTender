@@ -15,8 +15,6 @@ ${instruktsii link}                 css=#LoginDiv a[href='/instruktсii/']
 ${feedback link}                    css=.footer-feedback a
 ${exchange link1}                   xpath=//div[@class='bank-view'][1]//a
 ${exchange link2}                   xpath=//div[@class='bank-view'][2]//a
-${contract link1}                   css=li:nth-child(1)>a
-${contract link2}                   css=li:nth-child(2)>a
 ${dropdown menu for bid statuses}   xpath=//label[contains(text(),'Статуси')]/../../ul
 ${info form for sales}              xpath=//h5[@class='label-key' and contains(text(), 'Тип процедури')]/following-sibling::p
 ${first lot}                        //*[@data-qa="lot-list-block"]//*[@data-qa="value-list"]
@@ -26,20 +24,24 @@ ${tender_type_procurement}          //*[@data-qa="procedure-type"]//div[2]//*|//
 ${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
+#robot --consolecolors on -L TRACE:INFO -A suites/walking_man/arguments.txt -v user:user1 -i site -e -test -v hub:none suites/walking_man/suite.robot
+#just comment
+#another comment
 
 *** Test Cases ***
 Аналітика участі
-  [Tags]  your_account  -test
-  start_page.Відкрити особистий кабінет
-  personal_account.Відкрити сторінку за назвою  analytics
-  Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
-  analytics.Змінити період аукціону  Минулий місяць
-  ${status}  analytics.Перевірити відображення діаграм
-  Should Be Equal  ${status}  ${True}
-  ${status}  analytics.Перевірити відображення таблиці
-  Should Be Equal  ${status}  ${True}
-  analytics.Перевірити роботу кругової діаграми
-  Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
+	[Tags]  your_account  -test
+	Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Особистий кабінет
+	personal_account.Відкрити сторінку за назвою  analytics
+	Відкрити аналітику по конкуренту  ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ "УКРАЇНСЬКИЙ ПАПІР"
+	analytics.Змінити період аукціону  Минулий місяць
+	${status}  analytics.Перевірити відображення діаграм
+	Should Be Equal  ${status}  ${True}
+	${status}  analytics.Перевірити відображення таблиці
+	Should Be Equal  ${status}  ${True}
+	analytics.Перевірити роботу кругової діаграми
+	Перевірити роботу фільтра по періоду  Минулий місяць  Поточний рік
 
 
 Налаштування підписки
@@ -60,9 +62,12 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Юридична допомога
-  [Tags]  your_account  -ip
+  [Tags]  your_account  -ip  non-critical-test
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  legal_help
+  [Teardown]  Run Keywords
+  ...  Unselect Frame  AND
+  ...  Test Postcondition
 
 
 Особисті дані користувача
@@ -72,6 +77,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
   ...  personal_account.Відкрити сторінку за назвою  company_profile
   Run Keyword If  '${site}' == 'test'
   ...  personal_account.Відкрити сторінку за назвою  user_profile
+  [Teardown]  Run Keywords
+  ...  Unselect Frame  AND
+  ...  Test Postcondition
 
 
 Змінити пароль
@@ -99,19 +107,47 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
   Прибрати усі звіти з обраних
 
 
-Відгуки
-	[Tags]  site  -test
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Відгуки
-	Перевірити заголовок сторінки відгуків
-	Перевірити наявність відгуків
-	vidhuky.Відкрити відгук
+Про майданчик
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Про майданчик
+	pro_kompaniyu.Перевірити заголовок сторінки
+	pro_kompaniyu.Звірити початок тексту на сторінці
+
+
+Реєстрація
+	[Tags]  site
+	Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
+	start_page.Натиснути кнопку Реєстрація
+
+
+Наші клієнти
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Наші клієнти
+	nashi_klienty.Перевірити заголовок
+	Перевірити наявність клієнтів
+	${count1}  nashi_klienty.Порахувати кількість клієнтів
+	Run Keyword If  ${count1} == ${0}  Fail  клієнти потікали
+	# Зі сторінки прибрали кнопку "Показати ще"
+	#nashi_klienty.Натиснути "Показати ще"
+	#${count2}  nashi_klienty.Порахувати кількість клієнтів
+	#Run Keyword If  ${count1} >= ${count2}  Fail  Кнопка "Показати ще" не працюе
+
+
+Новини
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Новини
+	Перевірити заголовок сторінки з новинами
+	Перевірити наявність новин
+	Перевірити пошук новин через  click
+	Перевірити пошук новин через  press
+	${title}  Отримати заголовк новини за номером  1
+	novyny.Відкрити новину за номером  1
+	Перевірити заголовок відкритої новини  ${title}
 
 
 Блог
 	[Tags]  site  -test
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Блог
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Блог
 	blog.Перевірити загловок блогу
 	Перевірити наявність блогів
 	${title}  blog.Отримати назву блогу за номером  1
@@ -122,64 +158,46 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Перевірити відкритий блог  ${title}
 
 
-Договір
+Вакансії
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Вакансії
+	vakansii.Перевірити заголовок сторінки вакансій
+
+
+Контакти
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Контакти
+	Перевірити наявність контактів
+
+
+Відгуки
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Відгуки
+	Дочекатись закінчення загрузки сторінки
+	Перевірити заголовок сторінки відгуків
+	Перевірити наявність відгуків
+	vidhuky.Відкрити відгук
+
+
+Регламент SmartTender
+	[Tags]  site
+	Вибрати елемент з випадаючого списку заголовку  Регламент  Регламент SmartTender
+	Location Should Contain  /reglament/
+	Element Should Contain  //h1  Регламент
+	Element Should Contain  //h3  Терміни та визначення
+
+
+Договір з майданчиком
 	[Tags]  site  -test
-	header_old.Відкрити вікно договору
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Договір с майданчиком
 	contract.Перевірити заголовок договору
 	contract.Перевірити перший абзац договору
 	contract.Перевірити лінки в тексті договору
 
 
-Про компанію
-	[Tags]  site
-	header_old.Відкрити Сторінку Про Компанію
-	pro_kompaniyu.Перевірити заголовок сторінки
-	pro_kompaniyu.Звірити початок тексту на сторінці
-
-
-Новини
-	[Tags]  site
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Новини
-	Перевірити заголовок сторінки з новинами
-	Перевірити наявність новин
-	Перевірити пошук новин через  click
-	Перевірити пошук новин через  press
-	${title}  Отримати заголовк новини за номером  1
-	novyny.Відкрити новину за номером  1
-	Перевірити заголовок відкритої новини  ${title}
-	#Перевірити лінк хлібних для новин
-
-
-Контакти
-	[Tags]  site
-	Зайти на сторінку contacts
-	Перевірити наявність контактів
-
-
-З ким ми працюємо
-	[Tags]  site  -test
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  З ким ми працюємо
-	nashi_klienty.Перевірити заголовок
-	Перевірити наявність клієнтів
-	${count1}  nashi_klienty.Порахувати кількість клієнтів
-	# Зі сторінки прибрали кнопку "Показати ще"
-	#nashi_klienty.Натиснути "Показати ще"
-	#${count2}  nashi_klienty.Порахувати кількість клієнтів
-	#Run Keyword If  ${count1} >= ${count2}  Fail  Кнопка "Показати ще" не працюе
-
-
-Вакансії
-	[Tags]  site
-	Навести мишку на  Про компанію
-	Натиснути на елемент з випадаючого списка  Вакансії
-	vakansii.Перевірити заголовок сторінки вакансій
-
-
 Тарифи
 	[Tags]  site
-	Відкрити сторінку Тарифів
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Тарифи
 	taryfy.Перевірити кількість закладок
 	taryfy.Активувати вкладку  Публічні закупівлі ProZorro та торги RIALTO
 	taryfy.Активувати вкладку  Комерційні торги
@@ -187,15 +205,10 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	taryfy.Активувати вкладку  Продаж і оренда майна/активів Державних підприємств
 
 
-Реєстрація
-	[Tags]  site
-	Run Keyword if  '${role}' != 'viewer'  Pass Execution  only for viewer
-	header_old.Відкрити сторінку Реєстрація
-
-
 Інструкції
 	[Tags]  site
-	header_old.Відкрити сторінку інструкцій
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Інструкції
+	Дочекатись закінчення загрузки сторінки
 	Перевірити наявність інструкцій
 	instruktcii.Вибрати з видаючого списку  Показати всі
 	Перевірити наявність інструкцій
@@ -207,33 +220,33 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Перевірити наявність інструкцій
 
 
-Карта сайту
-	[Tags]  site
-	Відкрити сторінку Карта сайту
-	Порахувати кількість єлементів сторінки карта сайту
-
-
 Запитання та відповіді
 	[Tags]  site  -test
-	Навести мишку на  Торговий майданчик
-	Натиснути на елемент з випадаючого списка  Запитання та відповіді
+	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Запитання та відповіді
 	zapytannya_i_vidpovidi.Перевірити заголовок сторінки
 	Перевірити наявність запитань
 
 
 Курси валют
 	[Tags]  site  -test
+	Go To  ${start_page}/test-tenders/
 	Навести мишку на  Торговий майданчик
 	Натиснути на елемент з випадаючого списка  Курси валют
 	kursy_valyut.Перевірити заголовок сторінки
 	kursy_valyut.Перевірити посилання
 
 
+Карта сайту
+	[Tags]  site  -test  -prod
+	Відкрити сторінку Карта сайту
+	Порахувати кількість єлементів сторінки карта сайту
+
+
 Перевірити наявність всіх видів торгів в випадаючому списку
 	[Tags]  commercial
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  Перевірити назву вкладки Комерційні торги
 	...  AND  Перевірити заголовок вкладки комерційні торги  Закупівлі
 	...  AND  Перевірити заголовок вкладки комерційні торги  Продажі
@@ -279,7 +292,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  commercial
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Комерційні торги за типом  Продажі
 	...  AND  old_search.Розгорнути Розширений Пошук
 	...  AND  Click Element  ${dropdown menu for bid forms}
@@ -294,7 +307,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон на продаж. Відкриті торги
 	[Tags]  commercial  -test
-	[Setup]  Go To  ${start_page}/komertsiyni-torgy-prodazhi/
+	[Setup]  Go To  ${start_page}komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -307,7 +320,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Державних закупівель
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Конкурентні процедури
 	...  AND  Перевірити заголовок вкладки публічні закупівлі  Неконкурентні процедури
@@ -348,7 +361,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  procurement
 	[Setup]  Run Keywords
 	...  Test Precondition
-	...  AND  Натиснути На торговельний майданчик
+	...  AND  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  AND  old_search.Активувати вкладку Державних закупівель
 	...  AND  Активувати вкладку Державних закупівель за типом  Неконкурентні процедури
 	...  AND  Перевірити наявність торгів
@@ -372,7 +385,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Державні закупівлі прозорро Плани
 	[Tags]  procurement  -test
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Плани
 	old_search.Активувати вкладку Державних закупівель за типом  Плани
@@ -384,7 +397,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Державні закупівлі прозорро Договори
 	[Tags]  procurement
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку Державних закупівель
 	Перевірити заголовок вкладки публічні закупівлі  Договори
 	old_search.Активувати вкладку Державних закупівель за типом  Договори
@@ -398,7 +411,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	[Tags]  sales
 	[Setup]  Run Keywords
 	...  Test Precondition  									AND
-	...  Натиснути На торговельний майданчик  					AND
+	...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender  					AND
 	...  old_search.Активувати вкладку ФГВ  					AND
 	...  Перевірити назву вкладки new ФГВ  						AND
 	...  Перевірити заголовок вкладки ФГВ  Аукціони ФГВФО		AND
@@ -424,7 +437,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Перевірити реєстр активів Майно
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГВ
 	small_privatization_search.Активувати вкладку  Активи ФГВФО
 	Перевірити наявність активів
@@ -436,7 +449,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Перевірити реєстр активів Права вимоги
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/dgf-registry/
+	[Setup]  Go To  ${start_page}dgf-registry/
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Права вимоги
 	dgf-registry.Перейти по результату пошуку за номером  1
@@ -445,7 +458,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Оренда майна
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
@@ -457,7 +470,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Продаж майна
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Продаж майна  select
@@ -471,7 +484,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон. Мала приватизація
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -486,7 +499,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
 	[Tags]  sales  -test
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -499,7 +512,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Оренда землі
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда землі  select
@@ -514,7 +527,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Об'єкти приватизації
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Об'єкти приватизації
@@ -524,7 +537,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Реєстр інформаційних повідомлень
 	[Tags]  sales
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
   	Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 	small_privatization_search.Активувати перемемик процедури на  Реєстр інформаційних повідомлень
@@ -534,7 +547,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Запит цінових пропозицій
 	[Tags]  rialto
-	Натиснути На торговельний майданчик
+	Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку RIALTO
 	Перевірити назву вкладки RIALTO
 	Перевірити наявність торгів
@@ -547,7 +560,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Простий тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}/torgy-rialto/
+	[Setup]  Go To  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -557,7 +570,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Двохетапний тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}/torgy-rialto/
+	[Setup]  Go To  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -574,8 +587,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
-  Start In Grid  ${user}
-  Run Keyword If  "tender_owner" in "${role}"  Go To  ${start_page}
+	Open Browser In Grid  ${user}
+	Авторизуватися  ${user}
+	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
 
 
 Test Precondition
@@ -584,10 +598,10 @@ Test Precondition
 
 
 Test Postcondition
-  Log Location
-  Get Source
-  Run Keyword If Test Failed  Capture Page Screenshot
-  Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
+	Log Location
+	Get Source
+	Run Keyword If Test Failed  Capture Page Screenshot
+	Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
 
 Перевірити користувача
@@ -597,7 +611,7 @@ Test Postcondition
 
 Перевірити комерційні закупівлі за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/komertsiyni-torgy/
+	Go To  ${start_page}komertsiyni-torgy/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -607,7 +621,7 @@ Test Postcondition
 
 Перевірити Конкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/publichni-zakupivli-prozorro/
+	Go To  ${start_page}publichni-zakupivli-prozorro/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -618,7 +632,7 @@ Test Postcondition
 
 Перевірити Неконкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/publichni-zakupivli-prozorro-nekonkurentni/
+	Go To  ${start_page}publichni-zakupivli-prozorro-nekonkurentni/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -629,7 +643,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -639,7 +653,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою new
 	[Arguments]  ${name}
-	Go To  ${start_page}/auktsiony-na-prodazh-aktyviv-bankiv/
+	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	dgf_search.Розгорнути фільтр  Вид торгів
 	dgf_search.Вибрати вид торгів  ${name}
 	dgf_search.Перейти по результату пошуку за номером  last()
@@ -1033,7 +1047,8 @@ create_e-mail
   ${n}  random_number  4  20
   ${mail}  Generate Random String  ${n}  [LOWER]
   subscription.Ввести E-mail для дублювання розсилок  ${mail}
-  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+  Run Keyword And Ignore Error
+  ...  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
   Run Keyword And Expect Error  *  subscription.Видалити E-mail для дублювання розсилок за назвою  ${mail}
 
 
@@ -1070,5 +1085,5 @@ create_e-mail
 
 Перевірити наявність інструкцій
 	${count}  instruktcii.Порахувати кількість інструкції
-	Run Keyword if  ${count} < 2  Fail  Як це ми без інструкцій?!
+	Run Keyword if  ${count} < 1  Fail  Як це ми без інструкцій?!
 

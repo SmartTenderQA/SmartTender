@@ -35,7 +35,7 @@ Resource        create_tender_keywords.robot
 Зберегти чернетку
     Натиснути додати (додавання тендеру)
 	Wait Until Keyword Succeeds  60  2  Ignore WebClient Error  Конфлікт при зверненні
-	Run Keyword And Ignore Error  Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
+	Run Keyword And Ignore Error  validation.Закрити валідаційне вікно (Так/Ні)  Оголосити закупівлю  Ні
 
 
 ###############################################

@@ -16,10 +16,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 #Запуск
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
+    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
-	Завантажити сесію для  tender_owner
+	Завантажити сесію для  ${tender_owner}
 	sale_dgfAssets.Створити тендер  ${type_dict['${type}']}
 
 
@@ -32,7 +34,7 @@ If skipped create tender
 
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare
-	Знайти тендер користувачем  tender_owner
+	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
@@ -102,16 +104,16 @@ If skipped create tender
 #\['auctionPeriod']['startDate']
 
 Знайти тендер учасниками
-	Знайти тендер користувачем	provider1
+	Знайти тендер користувачем	${provider1}
 	Зберегти пряме посилання на тендер
 
 
 Подати заявки на участь в тендері
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
-	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
+	:FOR  ${i}  IN  ${provider1}  ${provider2}
+	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
-	\  Зберегти сесію  provider${i}
+	\  Зберегти сесію  ${i}
 	\  Подати заявку для подачі пропозиції
 
 
@@ -121,7 +123,7 @@ If skipped create tender
 
 Подати пропозицію
 	:FOR  ${i}  IN  1  2
-	\  Завантажити сесію для  provider${i}
+	\  Завантажити сесію для  ${provider${i}}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  ${i}
@@ -130,7 +132,7 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
-	Завантажити сесію для  provider1
+	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  10m
 
@@ -141,7 +143,7 @@ If skipped create tender
 
 
 Отримати поcилання на перегляд аукціону
-	:FOR  ${i}  IN  tender_owner  viewer   #provider3
+	:FOR  ${i}  IN  ${tender_owner}  ${viewer}   #provider3
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
@@ -151,29 +153,40 @@ If skipped create tender
 Забрати гарантійний внесок учасниками
 	[Tags]  broken
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
-	Забрати гарантійний внесок учасником  provider1
-	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  provider2
+	Забрати гарантійний внесок учасником  ${provider1}
+	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  ${provider2}
 
 
 *** Keywords ***
 Precondition
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+	...  ELSE
+	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
+	...  Set Global Variable  ${provider1}  prod_provider  AND
+	...  Set Global Variable  ${provider2}  prod_provider2  AND
+	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
 	sale_dgfAssets.Завантажити локатори
-    Додати першого користувача  Bened  tender_owner
+    Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
 Підготувати користувачів
-	Run Keyword If  "${site}" == "test"  Run Keywords
-    ...  Додати користувача			 test_tender_owner	tender_owner2 	AND
-    ...  Додати користувача          user1           	provider1     	AND
-    ...  Додати користувача          user2           	provider2     	AND
-    ...  Додати користувача          user3           	provider3     	AND
-    ...  Додати користувача          test_viewer     	viewer
+	Додати користувача  test_tender_owner
+    Додати користувача  user1
+    Додати користувача  user2
+    Додати користувача  user3
+    Додати користувача  test_viewer
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}

@@ -1,6 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
 
+Suite Setup     Precondition
 Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
@@ -12,15 +13,11 @@ ${multilot}                                False
 
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e cancel_lot suites/cancellation/cancellation.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_lot -v multilot:False suites/cancellation/cancellation.robot
 *** Test Cases ***
-Підготувати користувачів
-    Додати першого користувача  Bened           tender_owner
-    Додати користувача          test_viewer     viewer
-
-
 Створити тендер
-	Завантажити сесію для  tender_owner
+    [Setup]  Set Window Size  1440  900
+	Завантажити сесію для  ${tender_owner}
 	Run Keyword If  '${multilot}' == 'True'
 	...  test_open_trade.Створити тендер (Мультилот)  Відкриті торги  ELSE
 	...  test_open_trade.Створити тендер  Відкриті торги
@@ -54,24 +51,56 @@ ${multilot}                                False
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно бажаєте відмінити тендер  Так
 
 
-Перевірити скасування тендеру та наявність протоколу скасування
+Дочекатися статусу тендера "Закупівля відмінена"
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Закупівля відмінена
-    :FOR  ${i}  IN  tender_owner  viewer
+
+
+Перевірити збереження даних в ЦБД
+    Отримати дані з cdb та зберегти їх у файл
+    procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']
+    Run Keyword If  '${multilot}' == 'True'  Run Keywords
+    ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']  AND
+    ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['documents'][0]['title']
+
+
+Перевірити скасування на сторінці користувачами
+    :FOR  ${i}  IN  ${tender_owner}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
     \  procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
-    \  ${reason block}  Get Text  //*[@data-qa="reason"]
-    \  Run Keyword If  '${multilot}' != 'True'  Should Contain  ${reason block}  ${data['title']}
-    \  Should Contain  ${reason block}  ${data['cancellations'][0]['reason']}
-    \  Should Contain  ${reason block}  ${data['cancellations'][0]['documents'][0]['title']}
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
+    \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']
     \  Run Keyword If  '${multilot}' == 'True'  Run Keywords
-    \  ...  Should Contain  ${reason block}  ${data['cancellations'][1]['reason']}  AND
-    \  ...  Should Contain  ${reason block}  ${data['cancellations'][1]['documents'][0]['title']}
+    \  ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['reason']  AND
+    \  ...  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][1]['documents'][0]['title']
 
 
 
 *** Keywords ***
+<<<<<<< HEAD
 Адаптувати словник data
     ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
     Append to list         ${data['cancellations']}  ${new dict}
+=======
+Precondition
+	Set Global Variable         ${tender_owner}  Bened
+    Set Global Variable         ${viewer}        test_viewer
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${viewer}
+
+
+Адаптувати словник data
+    ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
+    Append to list         ${data['cancellations']}  ${new dict}
+
+
+Отримати дані з cdb та зберегти їх у файл
+    [Tags]  create_tender
+    ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
+    ${cdb}  Отримати дані тендеру з cdb по id  ${id}
+    Set Global Variable  ${cdb}
+    actions.Зберегти словник у файл  ${cdb}  cdb
+>>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d

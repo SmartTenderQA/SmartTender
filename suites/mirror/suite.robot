@@ -22,8 +22,6 @@ ${utg_start_page}  http://utg.ua/utg/purchases/prozorro.html
 ${ukroboronprom_start_page}  https://smarttender.biz/TenderMirror/?mirrorId=5804
 ${uspa_start_page}  http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
 
-${hub}  http://autotest.it.ua:4444/wd/hub
-
 
 *** Test Cases ***
 Відкрити тестову сторінку

@@ -10,7 +10,7 @@ Test Teardown  			Run Keywords
 
 *** Test Cases ***
 Перейти до об'єктів малої приватизації
-    start_page.Натиснути На торговельний майданчик
+    start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
 
