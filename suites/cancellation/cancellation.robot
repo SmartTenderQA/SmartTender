@@ -80,11 +80,6 @@ ${multilot}                                False
 
 
 *** Keywords ***
-<<<<<<< HEAD
-Адаптувати словник data
-    ${new dict}  Evaluate  ${data['cancellations'][0]}.copy()
-    Append to list         ${data['cancellations']}  ${new dict}
-=======
 Precondition
 	Set Global Variable         ${tender_owner}  Bened
     Set Global Variable         ${viewer}        test_viewer
@@ -103,4 +98,3 @@ Precondition
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
     Set Global Variable  ${cdb}
     actions.Зберегти словник у файл  ${cdb}  cdb
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d

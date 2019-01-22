@@ -167,42 +167,19 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
 
 
-<<<<<<< HEAD
-Перевірити публікацію кваліфікаційних файлів в ЦБД test
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][2]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
-
-
-Перевірити публікацію кваліфікаційних файлів в ЦБД prod
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][2]['title']
-=======
 Перевірити публікацію кваліфікаційних файлів в ЦБД prod
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами test
-<<<<<<< HEAD
-    :FOR  ${user}  in  tender_owner  tender_owner2
-    \  Завантажити сесію для  ${user}
-    \  Go to  ${data['tender_href']}
-    \  procurement_tender_detail.Розгорнути всі експандери
-    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-=======
     :FOR  ${user}  in  ${tender_owner}  ${tender_owner2}
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
@@ -210,19 +187,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами prod
-<<<<<<< HEAD
-    :FOR  ${user}  in  tender_owner  tender_owner2
-    \  Завантажити сесію для  ${user}
-    \  Go to  ${data['tender_href']}
-    \  procurement_tender_detail.Розгорнути всі експандери
-    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
-=======
     :FOR  ${user}  in  ${tender_owner}  ${tender_owner2}
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
->>>>>>> 8f6927b3270fd29142c717a6198255a60a9fa28d
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
