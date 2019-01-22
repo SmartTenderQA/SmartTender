@@ -197,7 +197,10 @@ If skipped create tender
 
 Кваліфікація переможця аукціону
 	[Tags]  qualification
-	Завантажити сесію для  ${tender_owner}
+	[Setup]  Run Keywords  Завантажити сесію для  ${tender_owner}	AND
+	...  Go To  ${start_page}										AND
+	...  Навести мишку на іконку з заголовку  Меню_користувача		AND
+	...  Натиснути  Особистий кабінет
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
