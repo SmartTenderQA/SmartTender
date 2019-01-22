@@ -444,6 +444,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Перевірити наявність активів
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Майно
+	Sleep  5
 	dgf-registry.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для активу  Майно
 
