@@ -124,6 +124,7 @@ ${IP}
 ${user}								test_viewer
 
 ${browser}							chrome
+${platform}							ANY
 ${test}                             https://test.smarttender.biz/
 ${prod}                             https://smarttender.biz/
 ${hub}                              http://autotest.it.ua:4444/wd/hub
@@ -147,7 +148,7 @@ ${torgy count tab}                   li:nth-child
 
 *** Keywords ***
 Open Browser In Grid
-	[Arguments]  ${user}=${user}  ${browser}=chrome  ${alies}=${user}  ${platform}=ANY
+	[Arguments]  ${user}=${user}  ${browser}=${browser}  ${platform}=${platform}
 	clear_test_output
 	${site}  Отримати дані користувача по полю  ${user}  site
 	Set Global Variable  ${site}
@@ -155,7 +156,7 @@ Open Browser In Grid
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Змінити стартову сторінку для IP
 #	${platform}  Evaluate  random.choice(["WIN10", "LINUX"])  random
-	Open Browser  ${start_page}  ${browser}  ${alies}  ${hub}  platformName:${platform}
+	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
 
 
 Встановити фіксований час очікування прогрузки сторінок
