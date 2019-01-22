@@ -73,16 +73,17 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 #    ...  Регламент Prozorro.Продажі=menu-spf
 #    ...  Регламент аукціонів ФГВФО=menu-fgvfl
 #	Інформаційний центр
-	...  Договір с майданчиком=menu-сontract
+	...  Договір с майданчиком=menu-[object Object]
+#	...  Договір с майданчиком=menu-сontract
     ...  Тарифи=menu-tariffs
     ...  Інструкції=menu-documentations
     ...  Запитання та відповіді=menu-faq
     ...  Курси валют=menu-exchangeRates
 	${list selector}  Set Variable  //*[@data-qa="${list dict[u'${list}']}"]
-	Mouse Over  ${list selector}
+	Wait Until Keyword Succeeds  10  1  Mouse Over  ${list selector}
 
     ${item selector}  Set Variable  //*[@data-qa="${item dict[u'${item}']}"]
-	Click Element  ${list selector}/..${item selector}
+	Wait Until Keyword Succeeds  10  1  Click Element  ${list selector}/..${item selector}
 
 
 Натиснути на іконку з баннеру
