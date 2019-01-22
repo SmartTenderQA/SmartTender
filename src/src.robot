@@ -159,6 +159,7 @@ Open Browser In Grid
 	Змінити стартову сторінку для IP
 #	${platform}  Evaluate  random.choice(["WIN10", "LINUX"])  random
 	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
+	Отримати та залогувати data_session
 
 
 Встановити фіксований час очікування прогрузки сторінок
