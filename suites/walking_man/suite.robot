@@ -1047,7 +1047,8 @@ create_e-mail
   ${n}  random_number  4  20
   ${mail}  Generate Random String  ${n}  [LOWER]
   subscription.Ввести E-mail для дублювання розсилок  ${mail}
-  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
+  Run Keyword And Ignore Error
+  ...  Wait Until Element Contains  css=.ivu-message-notice span  Неправильний формат електронної пошти
   Run Keyword And Expect Error  *  subscription.Видалити E-mail для дублювання розсилок за назвою  ${mail}
 
 
