@@ -91,7 +91,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Click Element  ${qualification docs unload btn}
 	${notice btn}  Set Variable  //*[@class='ivu-modal-content']
 	Wait Until Page Contains Element  ${notice btn}  30
-	Element Should Contain  ${notice btn}  Кваліфікаційні документи відправлені
+	Wait Until Element Contains  ${notice btn}  Кваліфікаційні документи відправлені
 	Click Element  //button[contains(.,'OK')]
 
 
