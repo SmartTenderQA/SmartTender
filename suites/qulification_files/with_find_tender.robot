@@ -101,8 +101,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Run Keyword  Перевірити публікацію кваліфікаційних файлів на сторінці користувачами ${site}
 
 
-
-
 *** Keywords ***
 Підготувати користувачів для prod
     Set Global Variable         ${tender_owner}   prod_owner

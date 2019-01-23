@@ -79,7 +79,6 @@ ${multilot}                                False
 
 
 
-
 *** Keywords ***
 Precondition
 	Set Global Variable         ${tender_owner}  Bened

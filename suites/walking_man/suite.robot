@@ -193,6 +193,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	contract.Перевірити заголовок договору
 	contract.Перевірити перший абзац договору
 	contract.Перевірити лінки в тексті договору
+	Reload Page
 
 
 Тарифи
@@ -443,6 +444,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Перевірити наявність активів
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  10  2  dgf-registry.Вибрати тип активу  Майно
+	Sleep  5
 	dgf-registry.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для активу  Майно
 
@@ -491,6 +493,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  ${TESTNAME}  select
 	Дочекатись закінчення загрузки сторінки(skeleton)
+	Sleep  10
 	new_search.Перейти по результату пошуку за номером  2
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
@@ -506,6 +509,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  ${TESTNAME}  select
 	Дочекатись закінчення загрузки сторінки(skeleton)
+	Sleep  10
 	new_search.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для аукціонів  ${TESTNAME}
 

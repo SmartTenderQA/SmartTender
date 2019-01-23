@@ -69,10 +69,6 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
     Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
-    qualification_keywords.Заповнити текст рішення кваліфікації
-    ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
-    actions.Натиснути OkButton
-    validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
     Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND

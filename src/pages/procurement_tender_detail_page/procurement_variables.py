@@ -464,6 +464,9 @@ def get_locator(field):
         id = int(list.group('id')) + 1
         result = list.group('path')
         map = {
+            "['documents'][0]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]""",
+            "['documents'][1]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]""",
+            "['documents'][2]['title']": u"""//*[@data-qa="qualification-list"][{0}]//*[contains(text(),"вкладені на")]/ancestor::div[3]//*[@data-qa="file-name"]"""
         }
         if 'documents' in result:
             list = re.search('\[(?P<id>\d+)\](?P<path>.+)', result)

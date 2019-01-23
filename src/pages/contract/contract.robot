@@ -4,7 +4,7 @@ ${contract_page}  //*[@id="modalContract"]//*[@class="ivu-modal-mask" and not(@s
 
 *** Keywords ***
 Перевірити заголовок договору
-	Element Should Contain  ${contract_page}//*[contains(@class, "header")]  Договір
+	Wait Until Keyword Succeeds  20  1  Element Should Contain  ${contract_page}//*[contains(@class, "header")]  Договір
 
 
 Перевірити перший абзац договору

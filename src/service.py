@@ -124,7 +124,7 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    return str(re.sub('https://smarttender.biz', str(IP), str(href)))
+    return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
 
 
 def download_file_and_return_content(url):
