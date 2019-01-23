@@ -16,7 +16,6 @@ ${multilot}                                False
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_lot -v multilot:False suites/cancellation/cancellation.robot
 *** Test Cases ***
 Створити тендер
-    [Setup]  Set Window Size  1440  900
 	Завантажити сесію для  ${tender_owner}
 	Run Keyword If  '${multilot}' == 'True'
 	...  test_open_trade.Створити тендер (Мультилот)  Відкриті торги  ELSE

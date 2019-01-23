@@ -161,6 +161,7 @@ Open Browser In Grid
 	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
 	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
+    Set Window Size  1280  1024
 
 
 Встановити фіксований час очікування прогрузки сторінок

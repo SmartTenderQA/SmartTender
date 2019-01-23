@@ -3,15 +3,15 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
-  	below.Заповнити endDate періоду обговорення
-  	below.Заповнити startDate періоду пропозицій
-  	below.Заповнити endDate періоду пропозицій
     below.Заповнити amount для tender
   	below.Заповнити minimalStep для tender
   	Run Keyword If  '${site}' == 'prod'  below.Заповнити contact для tender ${site}
   	below.Заповнити title для tender
   	below.Заповнити description для tender
   	below.Додати предмет в тендер
+  	below.Заповнити endDate періоду обговорення
+  	below.Заповнити startDate періоду пропозицій
+  	below.Заповнити endDate періоду пропозицій
     docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     actions.Оголосити тендер
@@ -35,7 +35,7 @@
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  25  minutes
+    ${date}  get_time_now_with_deviation  22  minutes
     ${prod date}  service.get_only_numbers  ${date}
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}  ${prod date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
