@@ -13,7 +13,7 @@
     ${filter}  Set Variable  //*[@data-qa="complaints"]//*[@data-qa="filter"]
     ${status}  Run Keyword And Return Status  Element Should Be Visible  ${filter}//input[@disabled="disabled"]
     Run Keyword If  ${status}  No Operation
-    ...  ELSE
+    ...  ELSE  Run Keywords
     ...  Click Element  ${filter}  AND
     ...  Wait Until Element Is Visible  ${filter}//li[@class][contains(text(),"${text}")]  AND
     ...  Click Element                  ${filter}//li[@class][contains(text(),"${text}")]

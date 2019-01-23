@@ -11,7 +11,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 *** Test Cases ***
 Створити тендер
-    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_ramky.Створити тендер

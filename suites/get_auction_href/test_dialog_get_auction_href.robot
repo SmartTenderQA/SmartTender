@@ -10,7 +10,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e get_tender suites/get_auction_href/test_dialog_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
-    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_dialog.Створити тендер

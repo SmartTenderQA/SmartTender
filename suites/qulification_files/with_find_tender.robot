@@ -25,7 +25,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Виконати пошук тендера на стадії Кваліфікація
     Завантажити сесію для  ${tender_owner}
-    Set Window Size  1280  1024
     desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Відфільтрувати за типом процедури          ${type['${site}']}
     main_page.Пошук об'єкта у webclient по полю  Стадія  ${stage['${site}']}

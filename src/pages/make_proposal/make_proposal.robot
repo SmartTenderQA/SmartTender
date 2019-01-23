@@ -31,7 +31,8 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 	...  Не усі поля заповнені правильно. Перевірте будь ласка та внесіть відповідні зміни
 	Wait Until Element Is Visible  ${send offer button}
 	Click Element  ${send offer button}
-#	keywords.Закрити валідаційне вікно (Так/Ні)  Рекомендуємо Вам для файлів з ціновою пропозицією обрати тип  Ні
+	Run Keyword If  "${tender_type}" == "open_trade_eng"
+	...  keywords.Закрити валідаційне вікно (Так/Ні)  Рекомендуємо Вам для файлів з ціновою пропозицією обрати тип  Ні
 	${text}  Вичитати відповіди з валідаційного вікна при негативній подачі пропозиціїї
 	Should Contain Any  ${list}  ${text}
 
