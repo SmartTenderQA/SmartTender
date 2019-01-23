@@ -20,6 +20,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	cdb2_OtherAssets.Створити аукціон
+	Знайти тендер користувачем  ${tender_owner}
+	dzk_auction.Отримати ID у цбд
 
 
 If skipped create tender
@@ -32,9 +34,7 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
-	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
