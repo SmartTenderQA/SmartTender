@@ -14,7 +14,7 @@ ${instruktcii item}						//*[@class="ivu-row"]//div//*[contains(@class, 'item')]
 	...  '${text}' == 'Інструкції для організатора'		Set Variable  3				ELSE IF
 	...  '${text}' == 'Інструкції для учасника'			Set Variable  4
 	Click Element  ${instruktcii from dropdown menu}[${n}]
-	Element Should Contain  ${instruktcii field}  ${text}
+	Wait Until Keyword Succeeds  10  1  Element Should Contain  ${instruktcii field}  ${text}
 
 
 Порахувати кількість інструкції
