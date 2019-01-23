@@ -31,10 +31,11 @@ ${elastic search clean filter}      css=.tag-holder button
 
 Очистити фільтр пошуку
 	${status}  Run Keyword And Return Status  Page Should Contain Element  ${elastic search clean filter}
-	Run Keyword If  ${status} == ${True}  Run Keywords
-	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}
-	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
-	...  AND  Wait Until Element Is Not Visible  ${elastic search clean filter}
+	Run Keyword If  ${status} == ${True}  Wait Until Keyword Succeeds  30  1
+	...  Run Keywords
+	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}  AND
+	...  Дочекатись закінчення загрузки сторінки(skeleton)  AND
+	...  Wait Until Element Is Not Visible  ${elastic search clean filter}
 
 
 Розгорнути фільтр
