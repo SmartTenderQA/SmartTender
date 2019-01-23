@@ -62,8 +62,19 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	[Arguments]  ${type}
 	${input file}  Set Variable  //input[@type='file']
 	${doc}  Створити та додати файл  ${input file}
+	${dateModified}  smart_get_time  0  s
+	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
 	${row}  Set Variable  //*[@class='file ivu-row' and contains(.,'${doc[1]}')]
 	Вибрати тип кваліфікаційного документа  ${type}
+	Run Keyword If  '${type}' == 'Протокол аукціону'
+	...  Set To Dictionary  ${docs_data}  key  awards
+	...  ELSE  Set To Dictionary  ${docs_data}  key  bids
+	Set To Dictionary  ${docs_data}  title  ${doc[1]}
+	Set To Dictionary  ${docs_data}  documentType  ${type}
+	Set To Dictionary  ${docs_data}  hash  md5:${md5}
+	Set To Dictionary  ${docs_data}  dateModified  ${dateModified}
+    ${new docs}  Evaluate  ${docs_data}.copy()
+	Append To List  ${data['documents']}  ${new docs}
 
 
 Вибрати тип кваліфікаційного документа
@@ -79,7 +90,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 Завантажити кваліфікаційні документи
 	Click Element  ${qualification docs unload btn}
 	${notice btn}  Set Variable  //*[@class='ivu-modal-content']
-	Wait Until Page Contains Element  ${notice btn}  15
+	Wait Until Page Contains Element  ${notice btn}  30
 	Element Should Contain  ${notice btn}  Кваліфікаційні документи відправлені
 	Click Element  //button[contains(.,'OK')]
 
@@ -91,6 +102,12 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 #
 #	${doc}  Створити та додати файл  ${row}//button[not(@data-toggle)]
 #	# //button[not(@data-toggle)]
+
+
+Розгорнути кваліфікаційні документи переможця
+	${locator}  Set Variable  //i[contains(@class,'dropdown')]
+	Click Element  ${locator}
+	Sleep  1
 
 
 ########################################################################################################################

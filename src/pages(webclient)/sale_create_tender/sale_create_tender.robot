@@ -28,12 +28,22 @@ ${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити пер�
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']
 	${doc}  Створити та додати файл  ${input file}
-	Wait Until Element Is Visible  ${doc[1]}
+	${dateModified}  smart_get_time  0  s
+	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
+	Wait Until Page Contains  ${doc[1]}
 	Click Element  //*[contains(text(),'ОК')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  //*[@class='dxr-lblText' and contains(text(),'Зберегти')]
 	validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
 	Дочекатись закінчення загрузки сторінки(webclient)
+	Set To Dictionary  ${docs_data}  key  bids
+	Set To Dictionary  ${docs_data}  title  ${doc[1]}
+	Set To Dictionary  ${docs_data}  documentType  Протокол рішення
+	Set To Dictionary  ${docs_data}  hash  md5:${md5}
+	Set To Dictionary  ${docs_data}  dateModified  ${dateModified}
+	${new docs}  Evaluate  ${docs_data}.copy()
+	Append To List  ${data['documents']}  ${new docs}
+
 
 
 Натиснути "Прикріпити договір"
@@ -47,6 +57,7 @@ ${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити пер�
 	${second}  random_number  10000  99999
 	${number}  Set Variable  ABC${first}-${second}
 	sale_keywords.Заповнити та перевірити текстове поле  //*[contains(text(),'Номер договору')]/following-sibling::table//input  ${number}
+	Дочекатись закінчення загрузки сторінки(webclient)
 
 
 Заповнити поле "Дата підписання"
@@ -59,9 +70,18 @@ ${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити пер�
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']
 	${doc}  Створити та додати файл  ${input file}
+	${dateModified}  smart_get_time  0  s
+	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
 	Page Should Contain  ${doc[1]}
 	Click Element  //*[contains(text(),'ОК')]
 	Дочекатись закінчення загрузки сторінки(webclient)
+	Set To Dictionary  ${docs_data}  key  contracts
+	Set To Dictionary  ${docs_data}  title  ${doc[1]}
+	Set To Dictionary  ${docs_data}  documentType  Договір
+	Set To Dictionary  ${docs_data}  hash  md5:${md5}
+	Set To Dictionary  ${docs_data}  dateModified  ${dateModified}
+    ${new docs}  Evaluate  ${docs_data}.copy()
+	Append To List  ${data['documents']}  ${new docs}
 
 
 Зберегти договір

@@ -104,6 +104,29 @@ def convert_viewed_values_to_edit_format(field, value):
     return value
 
 
+def get_selected_doc(doc, cdb_data):
+    cdb_docs = []
+    for i in cdb_data[doc['key']]:
+        if i['status'] != 'invalid' and i['status'] != 'unsuccessful':
+            cdb_docs = i['documents']
+    for i in cdb_docs:
+        if doc['title'] == i['title']:
+            result = i.copy()
+            result['documentType'] = documents_types_dictionary[i['documentType']]
+            result['dateModified'] = convert_cdb_values_to_edit_format('date', i['dateModified'])
+            return result
+
+
+documents_types_dictionary = {
+    "auctionProtocol": "Протокол аукціону",
+    "eligibilityDocuments": "Документи, що підтверджують відповідність",
+    "commercialProposal": "Цінова пропозиція",
+    "qualificationDocuments": "Документи, що підтверджують кваліфікацію",
+    "": "Протокол рішення",
+    "contractSigned": "Договір",
+}
+
+
 classification_scheme_dictionary = {
     u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',

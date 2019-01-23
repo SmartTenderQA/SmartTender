@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #Отримати посилання на аукціон
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
 *** Variables ***
 
 
@@ -95,13 +95,10 @@ If skipped create tender
 	\['items'][0]['address']['region']
 	\['items'][0]['address']['locality']
 
-#todo нужно понять что єто и зачем мі его вводим
-#
-
 
 Знайти тендер учасниками
 	[Tags]  find_auction  get_auction_href  qualification
-	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
+	:FOR  ${i}  IN  ${provider1}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
 	\  Зберегти сесію  ${i}
@@ -165,14 +162,15 @@ If skipped create tender
 Дочекатися початку кваліфікації
 	[Tags]  qualification
 	Завантажити сесію для  ${provider2}
+	cdb2_OtherAssets.Завантажити локатори для кваліфікаційних документів
 	#todo nuzhno vinesti keyword
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+	#
 
 
 Подати кваліфікаційні документи
 	[Tags]  qualification
 	sale_keywords.Натиснути "Кваліфікаційні документи"
-	sale_keywords.Додати кваліфікаційний документ за типом  [Оберіть тип документа]
 	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують кваліфікацію
 	sale_keywords.Додати кваліфікаційний документ за типом  Цінова пропозиція
 	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують відповідність
@@ -180,9 +178,33 @@ If skipped create tender
 	sale_keywords.Завантажити кваліфікаційні документи
 
 
-Перевірити відображення детальної інформації про документи
-	[Tags]  qualification
-	No Operation
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Go Back									AND
+	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
 
 
 Замінити кваліфікаційні документи
@@ -197,10 +219,7 @@ If skipped create tender
 
 Кваліфікація переможця аукціону
 	[Tags]  qualification
-	[Setup]  Run Keywords  Завантажити сесію для  ${tender_owner}	AND
-	...  Go To  ${start_page}										AND
-	...  Навести мишку на іконку з заголовку  Меню_користувача		AND
-	...  Натиснути  Особистий кабінет
+	[Setup]  Run Keywords  Завантажити сесію для  ${tender_owner}
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
@@ -210,6 +229,11 @@ If skipped create tender
 
 Прикріпити та підписати договір
 	[Tags]  qualification
+	[Setup]  Run Keywords  Завантажити сесію для  ${provider2}																		AND
+	...  small_privatization_informational_message.Дочекатися статусу повідомлення  Оплачено, очікується підписання договору  15m	AND
+	...  Завантажити сесію для  ${tender_owner}																						AND
+	...  Відкрити сторінку Продаж/Оренда майна(тестові)																				AND
+	...  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Прикріпити договір"
 	sale_create_tender.Заповнити поле "Номер договору"
 	sale_create_tender.Заповнити поле "Дата підписання"
@@ -218,6 +242,39 @@ If skipped create tender
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
 	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
+
+
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Go Back									AND
+	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
 
 
 *** Keywords ***
@@ -245,8 +302,8 @@ Precondition
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}
