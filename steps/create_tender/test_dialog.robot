@@ -3,12 +3,12 @@
 	desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Конкурентний діалог 1-ий етап
-  	test_dialog.Заповнити endDate періоду пропозицій
   	test_dialog.Заповнити amount для tender
   	test_dialog.Заповнити minimalStep для tender
   	test_dialog.Заповнити title для tender
   	test_dialog.Заповнити description для tender
   	test_dialog.Додати предмет в тендер
+  	test_dialog.Заповнити endDate періоду пропозицій
     create_tender.Зберегти чернетку
     Оголосити закупівлю
 
@@ -17,7 +17,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  38  minutes
+    ${date}  get_time_now_with_deviation  35  minutes
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 

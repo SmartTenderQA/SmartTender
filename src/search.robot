@@ -37,7 +37,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 	[Arguments]  ${status}
 	${dropdown menu for bid statuses}  Set Variable  //label[contains(text(),'Статуси')]/../../ul
 	Click Element  ${dropdown menu for bid statuses}
-	Click Element  xpath=//li[text()='${status}']
+	Wait Until Keyword Succeeds  15  1  Click Element  xpath=//li[text()='${status}']
 
 
 Відфільтрувати по даті кінця прийому пропозиції від
