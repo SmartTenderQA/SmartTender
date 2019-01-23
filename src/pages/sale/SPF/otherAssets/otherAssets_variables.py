@@ -10,12 +10,6 @@ def get_view_locators():
 def get_data():
 	return data
 
-def get_docs_data():
-	return docs_data
-
-def get_docs_view():
-	return docs_view
-
 
 #<editor-fold desc="EDIT-LOCATORS">
 edit_locators = {
@@ -152,25 +146,5 @@ data = {
 	},
 	"documents": [
 	]
-}
-#</editor-fold>
-
-
-#<editor-fold desc="DATA">
-docs_view = {
-	"title": "//*[@data-qa='file-name']",
-	"documentType": "//*[@data-qa='file-document-type']",
-	"dateModified": "//*[@data-qa='file-date-modified']"
-}
-#</editor-fold>
-
-
-#<editor-fold desc="DATA">
-docs_data = {
-	"key": "",
-	"title": "",
-	"documentType": "",
-	"hash": "",
-	"dateModified": ""
 }
 #</editor-fold>

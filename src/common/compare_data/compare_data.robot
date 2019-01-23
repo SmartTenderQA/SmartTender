@@ -5,6 +5,13 @@ Library		compare_data.py
 
 
 *** Keywords ***
+Завантажити локатори для кваліфікаційних документів
+	${docs_data}  compare_data.get_docs_data
+	${docs_view}  compare_data.get_docs_view
+	Set Global Variable  ${docs_data}
+	Set Global Variable  ${docs_view}
+
+
 Порівняти введені дані з даними в ЦБД
 	[Arguments]  ${field}  ${time format}=s
 	${value entered}  Set Variable  ${data${field}}
@@ -52,7 +59,7 @@ Library		compare_data.py
 Порівняти відображений документ з документом в ЦБД
 	[Arguments]  ${doc}
 	${cdb_doc}  get_selected_doc  ${doc}  ${cdb_data}
-	${view doc block}  Set Variable  //*[@class='ivu-row' and contains(.,'${doc['title']}')]
+	${view doc block}  Set Variable  //*[@style and @class='ivu-row' and contains(.,'${doc['title']}')]
 	Scroll Page To Element XPATH  ${view doc block}
 	${view title}  Get Text  ${view doc block}${docs_view['title']}
 	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title

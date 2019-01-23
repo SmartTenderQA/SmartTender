@@ -30,12 +30,6 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 	Set Global Variable  ${data}
 
 
-Завантажити локатори для кваліфікаційних документів
-	${docs_data}  otherAssets_variables.get_docs_data
-	${docs_view}  otherAssets_variables.get_docs_view
-	Set Global Variable  ${docs_data}
-	Set Global Variable  ${docs_view}
-
 #########################################################
 #	                  Keywords							#
 #########################################################

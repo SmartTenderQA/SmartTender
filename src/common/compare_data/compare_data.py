@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
 
+
+def get_docs_data():
+	return docs_data
+
+def get_docs_view():
+	return docs_view
+
+
 def compare_values(first_value, second_value):
     if re.match(u'^\d+[.]?\d*$', str(first_value)) and re.match(u'^\d+[.]?\d*$', str(second_value)):
         return float(first_value) == float(second_value)
@@ -140,3 +148,23 @@ accountIdentification_scheme_dictionary = {
     u'UA-MFO': u'МФО банку',
     u'accountNumber': u'Номер рахунку',
 }
+
+
+#<editor-fold desc="DATA">
+docs_view = {
+	"title": "//*[@data-qa='file-name']",
+	"documentType": "//*[@data-qa='file-document-type']",
+	"dateModified": "//*[@data-qa='file-date-modified']"
+}
+#</editor-fold>
+
+
+#<editor-fold desc="DATA">
+docs_data = {
+	"key": "",
+	"title": "",
+	"documentType": "",
+	"hash": "",
+	"dateModified": ""
+}
+#</editor-fold>

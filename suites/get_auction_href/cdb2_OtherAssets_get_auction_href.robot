@@ -162,7 +162,6 @@ If skipped create tender
 Дочекатися початку кваліфікації
 	[Tags]  qualification
 	Завантажити сесію для  ${provider2}
-	cdb2_OtherAssets.Завантажити локатори для кваліфікаційних документів
 	#todo nuzhno vinesti keyword
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
 	#
@@ -285,6 +284,7 @@ Precondition
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
 	cdb2_OtherAssets.Завантажити локатори
+	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
