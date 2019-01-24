@@ -20,6 +20,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	cdb2_PropertyLease.Створити аукціон
+	Знайти тендер користувачем  ${tender_owner}
+	dzk_auction.Отримати ID у цбд
 
 
 If skipped create tender
@@ -32,13 +34,10 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
-	dzk_auction.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
-
 
 
 Порівняти введені дані з даними в ЦБД
@@ -62,8 +61,6 @@ If skipped create tender
 	\['items'][0]['address']['streetAddress']
 	\['items'][0]['address']['region']
 	\['items'][0]['address']['locality']
-
-
 
 
 Перевірити відображення детальної інформації
@@ -102,7 +99,7 @@ If skipped create tender
 
 Знайти тендер учасниками
 	[Tags]  find_auction  get_auction_href  qualification
-	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
+	:FOR  ${i}  IN  ${provider1}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
 	\  Зберегти сесію  ${i}
@@ -168,12 +165,12 @@ If skipped create tender
 	Завантажити сесію для  ${provider2}
 	#todo nuzhno vinesti keyword
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+	#
 
 
 Подати кваліфікаційні документи
 	[Tags]  qualification
 	sale_keywords.Натиснути "Кваліфікаційні документи"
-	sale_keywords.Додати кваліфікаційний документ за типом  [Оберіть тип документа]
 	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують кваліфікацію
 	sale_keywords.Додати кваліфікаційний документ за типом  Цінова пропозиція
 	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують відповідність
@@ -198,7 +195,7 @@ If skipped create tender
 
 Кваліфікація переможця аукціону
 	[Tags]  qualification
-	Завантажити сесію для  ${tender_owner}
+	[Setup]  Завантажити сесію для  ${tender_owner}
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
@@ -225,6 +222,7 @@ Precondition
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
 	cdb2_PropertyLease.Завантажити локатори
+	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
@@ -242,8 +240,8 @@ Precondition
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}
