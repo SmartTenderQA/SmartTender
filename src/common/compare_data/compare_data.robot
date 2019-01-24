@@ -53,7 +53,6 @@ Library		compare_data.py
 	Should Be Equal  ${cdb_doc['title']}  ${doc['title']}  Oops! Помилка з title
 	Should Be Equal  ${cdb_doc['documentType']}  ${doc['documentType']}  Oops! Помилка з documentType
 	Should Be Equal  ${cdb_doc['hash']}  ${doc['hash']}  Oops! Помилка з hash
-	Should Be Equal  ${cdb_doc['dateModified']}  ${doc['dateModified']}  Oops! Помилка з dateModified
 
 
 Порівняти відображений документ з документом в ЦБД

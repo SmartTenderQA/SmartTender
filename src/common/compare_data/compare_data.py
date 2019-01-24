@@ -165,6 +165,5 @@ docs_data = {
 	"title": "",
 	"documentType": "",
 	"hash": "",
-	"dateModified": ""
 }
 #</editor-fold>

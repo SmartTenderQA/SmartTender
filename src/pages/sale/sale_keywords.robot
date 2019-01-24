@@ -62,7 +62,6 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	[Arguments]  ${type}
 	${input file}  Set Variable  //input[@type='file']
 	${doc}  Створити та додати файл  ${input file}
-	${dateModified}  smart_get_time  0  s
 	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
 	${row}  Set Variable  //*[@class='file ivu-row' and contains(.,'${doc[1]}')]
 	Вибрати тип кваліфікаційного документа  ${type}
@@ -72,7 +71,6 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Set To Dictionary  ${docs_data}  title  ${doc[1]}
 	Set To Dictionary  ${docs_data}  documentType  ${type}
 	Set To Dictionary  ${docs_data}  hash  md5:${md5}
-	Set To Dictionary  ${docs_data}  dateModified  ${dateModified}
     ${new docs}  Evaluate  ${docs_data}.copy()
 	Append To List  ${data['documents']}  ${new docs}
 
