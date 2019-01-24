@@ -21,9 +21,9 @@ Library		compare_data.py
 
 
 Порівняти відображені дані з даними в ЦБД
- 	[Arguments]  ${field}  ${time format}=s
- 	${value cdb}  compare_data.Отритами дані з ЦБД  ${field}  ${time format}
- 	${value viewed}  compare_data.Отритами дані зі сторінки  ${field}
+ 	[Arguments]  ${field}  ${procedure}=DZK
+ 	${value cdb}  compare_data.Отритами дані з ЦБД  ${field}
+ 	${value viewed}  compare_data.Отритами дані зі сторінки  ${field}  ${procedure}
  	${is equal}  compare_data.compare_values  ${value viewed}  ${value cdb}
  	Run Keyword If  ${is equal} == ${False}  Run Keywords
  	...  Scroll Page To Element XPATH  ${view_locators${field}}  AND
@@ -32,16 +32,16 @@ Library		compare_data.py
 
 
 Отритами дані зі сторінки
- 	[Arguments]  ${field}
+ 	[Arguments]  ${field}  ${procedure}=DZK
  	${selector}  Set Variable  ${view_locators${field}}
  	Wait Until Element Is Visible  ${selector}  10
  	${value}  Get Text  ${selector}
- 	${field value}  compare_data.convert_viewed_values_to_edit_format  ${field}  ${value}
+ 	${field value}  compare_data.convert_viewed_values_to_edit_format  ${field}  ${value}  ${procedure}
  	[Return]  ${field value}
 
 
 Отритами дані з ЦБД
-	[Arguments]  ${field}  ${time format}
+	[Arguments]  ${field}  ${time format}=s
  	${value}  Set Variable  ${cdb_data${field}}
  	${field value}  compare_data.convert_cdb_values_to_edit_format  ${field}  ${value}  ${time format}
 	[Return]  ${field value}

@@ -37,7 +37,7 @@ def convert_cdb_values_to_edit_format(field, value, time_format='s'):
     return value
 
 
-def convert_viewed_values_to_edit_format(field, value):
+def convert_viewed_values_to_edit_format(field, value, procedure='DZK'):
     if "['title']" == field:
         if not '[ТЕСТУВАННЯ]' in value:
             return '[ТЕСТУВАННЯ] ' + value
@@ -65,7 +65,10 @@ def convert_viewed_values_to_edit_format(field, value):
         return ret.replace(' ', '').replace(',', '.')
     elif 'leaseDuration' in field:
         list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
-        return 'P'+list.group('years')+'Y'+list.group('months')+'M'
+        if procedure == 'DZK':
+            return 'P'+list.group('years')+'Y'+list.group('months')+'M'
+        else:
+            return 'P'+str(int(list.group('years'))*12+int(list.group('months')))+'M'
     elif 'address' in field:
         list = re.search(u'(?P<postal>\d+), (?P<country>[^,]+), ((?P<region>[^,]+), )?(?P<locality>[^,]+), (?P<street>[^,]+)', value)
         if 'postal' in field:
