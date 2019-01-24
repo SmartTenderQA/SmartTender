@@ -12,3 +12,4 @@ ${diagram}                  (//*[@class="echarts"]//canvas)
 
 Натиснути по діаграмі
   Click Element At Coordinates  ${diagram}[2]  80  0
+  Дочекатись закінчення загрузки сторінки

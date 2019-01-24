@@ -161,7 +161,7 @@ Precondition
 	...  Set Global Variable  ${provider2}  user2  AND
 	...  Set Global Variable  ${provider3}  user3  AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	...  ELSE
+	...  ELSE  Run Keywords
 	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
 	...  Set Global Variable  ${provider1}  prod_provider  AND
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
@@ -185,8 +185,8 @@ Precondition
 
 
 Знайти тендер користувачем
-	[Arguments]  ${role}
-	Завантажити сесію для  ${role}
+	[Arguments]  ${user_name}
+	Завантажити сесію для  ${user_name}
 	Sleep  2
 	Відкрити сторінку тестових торгів
 	Знайти тендер по ID  ${data['tender_id']}

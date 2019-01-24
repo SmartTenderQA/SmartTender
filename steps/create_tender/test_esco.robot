@@ -2,11 +2,11 @@
 Створити тендер
 	desktop.Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
 	actions.Натиснути додати(F7)  Додавання. Тендери
-	test_esco.Заповнити endDate періоду пропозицій
 	test_esco.Заповнити minimalStep для tender
 	test_esco.Заповнити title для tender
   	test_esco.Заповнити title_eng для tender
     test_esco.Додати предмет в тендер
+    test_esco.Заповнити endDate періоду пропозицій
     docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
@@ -16,7 +16,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  40  minutes
+    ${date}  get_time_now_with_deviation  37  minutes
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 

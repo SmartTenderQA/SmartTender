@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -e get_tender suites/qulification_files/with_find_tender.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/with_find_tender.robot
 *** Variables ***
 &{type}
 ...         test=Відкриті торги з публікацією англійською мовою
@@ -40,12 +40,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Log  ${cdb['procurementMethodType']}
 
 
+Підготувати словник data для збереження даних
+    Адаптувати словник data для awards
+    Адаптувати словник data для bids
+
+
 Відхилити організатором пропозицію першого учасника
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     ${negative result file name}  qualification.Відхилити пропозицію учасника  1  ${EDS}  ${cdb['procurementMethodType']}
-    Set To Dictionary  ${data['awards'][0]['documents'][0]}  title  ${negative result file name}
+    Set To Dictionary  ${data['awards'][0]['documents'][1]}  title  ${negative result file name}
 
 
 Завантажити другим учасником кваліфікаційний документ
@@ -58,7 +63,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Завантажити другим учасником додатковий кваліфікаційний документ
     ${provider file name 2}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
-    Set To Dictionary  ${data['bids'][1]['documents'][2]}  title  ${provider file name 2}
+    Set To Dictionary  ${data['bids'][1]['documents'][3]}  title  ${provider file name 2}
 
 
 #TODO  Замінити другим учасником останній кваліфікаційний документ
@@ -85,7 +90,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Отримати дані з cdb та зберегти їх у файл
     actions.Зберегти словник у файл  ${data}  data
     Log  ${data}
-    debug
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД
@@ -94,8 +98,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
     Run Keyword  Перевірити публікацію кваліфікаційних файлів на сторінці користувачами ${site}
-
-
 
 
 *** Keywords ***
@@ -145,25 +147,29 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
     ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
     Append to list   ${data['bids'][1]['documents']}  ${new dict}
+    ${new dict}  Evaluate  ${data['bids'][1]['documents'][0]}.copy()
+    Append to list   ${data['bids'][1]['documents']}  ${new dict}
 
 
 Адаптувати словник data для awards
     ${new dict}  Evaluate  ${data['awards'][0]}.copy()
     Append to list   ${data['awards']}  ${new dict}
+    ${new dict}  Evaluate  ${data['awards'][0]['documents'][0]}.copy()
+    Append to list  ${data['awards'][0]['documents']}  ${new dict}
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД test
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][2]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['contracts'][0]['documents'][0]['title']
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД prod
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
-    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][2]['title']
+    procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
 
 
@@ -172,7 +178,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
-    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']
@@ -184,7 +190,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     \  Завантажити сесію для  ${user}
     \  Go to  ${data['tender_href']}
     \  procurement_tender_detail.Розгорнути всі експандери
-    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][0]['title']
+    \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][0]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][1]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['bids'][1]['documents'][3]['title']
     \  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['awards'][1]['documents'][0]['title']

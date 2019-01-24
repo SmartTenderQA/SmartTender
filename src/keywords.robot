@@ -6,9 +6,12 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 
 *** Keywords ***
 Змінити стартову сторінку для IP
-	Run Keyword If  '${IP}' != ''  Run Keywords
-	...  Set Global Variable  ${start_page}  ${IP}  AND
-	...  Go To  ${start_page}
+	${n}  Evaluate  random.choice([8, 9])  random
+	Run Keyword If
+	...  '${IP}' == 'iis'
+	...  Set Global Variable  ${start_page}  http://iis${n}.smarttender.biz.int/  ELSE IF
+	...  '${IP}' != ''
+	...  Set Global Variable  ${start_page}  ${IP}
 
 
 Отримати стартову сторінку
@@ -34,3 +37,14 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	...  ELSE  Set Variable  ${href}
 	[Return]  ${href}
 
+
+Отримати та залогувати data_session
+	${s2b}  get_library_instance  Selenium2Library
+	${webdriver}  Call Method  ${s2b}  _current_browser
+	Create Session  api  http://autotest.it.ua:4444/grid/api/testsession?session=${webdriver.__dict__['capabilities']['webdriver.remote.sessionid']}
+	${data}  Get Request  api  \
+	${data}  Set Variable  ${data.json()}
+	Log  ${webdriver}
+	Log  ${webdriver.__dict__}
+	Log  ${webdriver.__dict__['capabilities']}
+	Log  ${data}

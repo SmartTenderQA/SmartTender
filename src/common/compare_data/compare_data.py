@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
 
+
+def get_docs_data():
+	return docs_data
+
+def get_docs_view():
+	return docs_view
+
+
 def compare_values(first_value, second_value):
     if re.match(u'^\d+[.]?\d*$', str(first_value)) and re.match(u'^\d+[.]?\d*$', str(second_value)):
         return float(first_value) == float(second_value)
@@ -107,6 +115,29 @@ def convert_viewed_values_to_edit_format(field, value, procedure='DZK'):
     return value
 
 
+def get_selected_doc(doc, cdb_data):
+    cdb_docs = []
+    for i in cdb_data[doc['key']]:
+        if i['status'] != 'invalid' and i['status'] != 'unsuccessful':
+            cdb_docs = i['documents']
+    for i in cdb_docs:
+        if doc['title'] == i['title']:
+            result = i.copy()
+            result['documentType'] = documents_types_dictionary[i['documentType']]
+            result['dateModified'] = convert_cdb_values_to_edit_format('date', i['dateModified'])
+            return result
+
+
+documents_types_dictionary = {
+    "auctionProtocol": "Протокол аукціону",
+    "eligibilityDocuments": "Документи, що підтверджують відповідність",
+    "commercialProposal": "Цінова пропозиція",
+    "qualificationDocuments": "Документи, що підтверджують кваліфікацію",
+    "": "Протокол рішення",
+    "contractSigned": "Договір",
+}
+
+
 classification_scheme_dictionary = {
     u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',
@@ -120,3 +151,22 @@ accountIdentification_scheme_dictionary = {
     u'UA-MFO': u'МФО банку',
     u'accountNumber': u'Номер рахунку',
 }
+
+
+#<editor-fold desc="DATA">
+docs_view = {
+	"title": "//*[@data-qa='file-name']",
+	"documentType": "//*[@data-qa='file-document-type']",
+	"dateModified": "//*[@data-qa='file-date-modified']"
+}
+#</editor-fold>
+
+
+#<editor-fold desc="DATA">
+docs_data = {
+	"key": "",
+	"title": "",
+	"documentType": "",
+	"hash": "",
+}
+#</editor-fold>

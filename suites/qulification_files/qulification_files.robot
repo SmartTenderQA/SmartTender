@@ -10,7 +10,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/qulification_files/qulification_files.robot
 *** Test Cases ***
 Створити тендер
-    [Setup]  Set Window Size  1440  900
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	below.Створити тендер
@@ -140,11 +139,11 @@ If skipped create tender
 
 
 Прийняти участь у тендері учасником
-    [Arguments]  ${role}
-    Завантажити сесію для  ${role}
+    [Arguments]  ${username}
+    Завантажити сесію для  ${username}
     Go to  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${role}' == '${provider1}'  Sleep  3m
+    Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
 
 

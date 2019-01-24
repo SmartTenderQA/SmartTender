@@ -4,14 +4,12 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
-
-  	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
   	test_open_trade.Заповнити title для tender
   	test_open_trade.Заповнити description для tender
   	test_open_trade.Додати предмет в тендер
-
+    test_open_trade.Заповнити endDate періоду пропозицій
     docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
@@ -23,7 +21,6 @@
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
     tender_tab.Встановити чекбокс "Мультилоти"
-  	test_open_trade.Заповнити endDate періоду пропозицій
   	test_open_trade.Заповнити amount для lot
   	test_open_trade.Заповнити minimalStep для lot
   	test_open_trade.Заповнити title для tender
@@ -47,6 +44,7 @@
     test_open_trade.Заповнити streetAddress для item
     test_open_trade.Заповнити locality для item
 
+    test_open_trade.Заповнити endDate періоду пропозицій
   	docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
@@ -56,7 +54,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  37  minutes
+    ${date}  get_time_now_with_deviation  35  minutes
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 

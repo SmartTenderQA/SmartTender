@@ -1,7 +1,9 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Open Browser In Grid  ${user}
+Suite Setup  			Run Keywords
+...						Open Browser In Grid  ${user}  AND
+...						Авторизуватися  ${user}
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND

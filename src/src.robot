@@ -157,10 +157,13 @@ Open Browser In Grid
 	${site}  Отримати дані користувача по полю  ${user}  site
 	Set Global Variable  ${site}
 	Set Global Variable  ${start_page}  ${${site}}
-	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Змінити стартову сторінку для IP
+	Встановити фіксований час очікування прогрузки сторінок  ${site}
 #	${platform}  Evaluate  random.choice(["WIN10", "LINUX"])  random
 	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
+	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
+	...  Отримати та залогувати data_session
+    Set Window Size  1280  1024
 
 
 Встановити фіксований час очікування прогрузки сторінок

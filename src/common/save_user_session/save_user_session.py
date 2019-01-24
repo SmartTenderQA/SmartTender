@@ -6,7 +6,7 @@ def create_cookies_dict_from_string(s):
     cookie_list = s.split(';')
     cookie_dict = {}
     for item in cookie_list:
-        result = re.search('(?P<key>.*)=(?P<value>.*)', item)
+        result = re.search('(?P<key>((?!=).)*)=(?P<value>.*)', item)
         key = result.group('key')
         value = result.group('value')
         cookie_dict.update({key: value})

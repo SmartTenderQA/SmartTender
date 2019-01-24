@@ -5,7 +5,6 @@
   	create_tender.Вибрати тип процедури  Укладання рамкової угоди
     test_ramky.Заповнити кількість учасників для укладання РУ
     test_ramky.Заповнити "Срок рамкової угоди"
-  	test_ramky.Заповнити endDate періоду пропозицій
   	#Run Keyword And Ignore Error  test_ramky.Заповнити contact для tender
   	Run Keyword And Ignore Error  test_ramky.Заповнити ПІБ організації
   	test_ramky.Заповнити amount для lot
@@ -14,6 +13,7 @@
   	test_ramky.Заповнити description для tender
   	test_ramky.Заповнити title_eng для tender
   	test_ramky.Додати предмет в тендер
+  	test_ramky.Заповнити endDate періоду пропозицій
     docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
@@ -46,7 +46,7 @@
 
 
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  40  minutes
+    ${date}  get_time_now_with_deviation  37  minutes
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
