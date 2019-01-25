@@ -134,7 +134,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Новини
-	[Tags]  site
+	[Tags]  site1
 	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Новини
 	Перевірити заголовок сторінки з новинами
 	Перевірити наявність новин
