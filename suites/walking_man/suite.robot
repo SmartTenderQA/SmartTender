@@ -591,7 +591,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
-	Open Browser In Grid  ${user}
+	Open Browser In Grid  ${user}  chrome  WIN10
 	Авторизуватися  ${user}
 	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
 
