@@ -13,7 +13,7 @@ def get_data():
 
 #<editor-fold desc="EDIT-LOCATORS">
 edit_locators = {
-	"dgfID": u"//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Номер лоту')]/following-sibling::table//input",
+	"lotIdentifier": u"//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Номер лоту')]/following-sibling::table//input",
 	"items": [
 		{
 			"quantity": u"//*[@id='pcModalMode_PW-1']//span[contains(text(), 'Кількість активів')]/following-sibling::*//input",
@@ -37,6 +37,11 @@ edit_locators = {
 	"guarantee": {
 		"amount": "//*[@data-name='GUARANTEE_AMOUNT_PERCENT']//input"
 	},
+	"contractTerms": {
+		"leaseTerms": {
+			"leaseDuration": "//*[@data-name='LEASEDURATION_L']/following-sibling::table//input"
+		}
+	},
 	"minimalStep": {
 		"amount": "(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[2]//input"
 	}
@@ -47,7 +52,7 @@ edit_locators = {
 #<editor-fold desc="VIEW-LOCATORS">
 view_locators = {
 	"title": "//*[@class='ivu-col ivu-col-span-22']/h3",
-	"dgfID": "//*[@class='ivu-col ivu-col-span-md-14']/h4",
+	"lotIdentifier": "//*[@class='ivu-col ivu-col-span-md-14']/h4",
 	"auctionID": "//*[@data-qa='cdbNumber']",
 	"description": "//*[@class='ivu-col ivu-col-span-md-14']//span",
 	"value": {
@@ -69,8 +74,15 @@ view_locators = {
 		"amount": u"//*[contains(@class,'ivu-row') and contains(.,'Мінімальний крок аукціону')]//*[contains(@class,'second')]",
 	},
 	"guarantee": {
-		"amount": u"//*[contains(@class,'ivu-row') and contains(.,'Гарантійний внесок')]//*[contains(@class,'second')]"
+		"amount": u"//*[contains(@class,'ivu-row') and contains(.,'Гарантійний внесок')]//*[contains(@class,'second')]",
 	},
+
+	"contractTerms": {
+		"leaseTerms": {
+			"leaseDuration": u"//*[contains(@class,'ivu-row') and contains(.,'Тривалість оренди')]//*[contains(@class,'second')]",
+		}
+	},
+
 	"procuringEntity": {
 		"identifier": {
 			"legalName": u"//*[contains(@class,'ivu-row') and contains(.,'Назва')]//*[contains(@class,'second')]",
@@ -110,7 +122,7 @@ view_locators = {
 
 #<editor-fold desc="DATA">
 data = {
-	"dgfID": "",
+	"lotIdentifier": "",
 	"items": [
 		{
 			"unit": {
@@ -141,10 +153,13 @@ data = {
 	"guarantee": {
 		"amount": ""
 	},
+	"contractTerms": {
+		"leaseTerms": {
+			"leaseDuration": ""
+		}
+	},
 	"minimalStep": {
 		"amount": ""
-	},
-	"documents": [
-	]
+	}
 }
 #</editor-fold>

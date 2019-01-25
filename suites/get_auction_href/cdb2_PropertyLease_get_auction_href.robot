@@ -9,9 +9,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #zapusk
 #Отримати посилання на аукціон
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 *** Variables ***
 
 
@@ -19,7 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити аукціон
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb2_OtherAssets.Створити аукціон
+	cdb2_PropertyLease.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
 	dzk_auction.Отримати ID у цбд
 
@@ -47,7 +47,8 @@ If skipped create tender
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['value']['amount']
 	\['title']
-	\['dgfID']
+	\['lotIdentifier']
+	\['contractTerms']['leaseTerms']['leaseDuration']
 	\['description']
 	\['items'][0]['description']
 	\['items'][0]['quantity']
@@ -67,8 +68,8 @@ If skipped create tender
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
-	\['dgfID']
-	\['auctionID']
+	\['lotIdentifier']
+	\['contractTerms']['leaseTerms']['leaseDuration']  Lease
 	\['description']
 	\['value']['amount']
 	\['value']['valueAddedTaxIncluded']
@@ -177,33 +178,9 @@ If skipped create tender
 	sale_keywords.Завантажити кваліфікаційні документи
 
 
-Отримати дані про аукціон з ЦБД
-	[Tags]  compare  qualification
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
-	Set Global Variable  ${cdb_data}
-	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
-
-
-Перевірити коректність документів в ЦБД
-	[Tags]  compare  qualification
-	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
-	${data['documents'][0]}
-	${data['documents'][1]}
-	${data['documents'][2]}
-	${data['documents'][3]}
-
-
-Перевірити коректність відображення документів
-	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
-	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
-	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
-	${data['documents'][0]}
-	${data['documents'][1]}
-	${data['documents'][2]}
-	${data['documents'][3]}
+Перевірити відображення детальної інформації про документи
+	[Tags]  qualification
+	No Operation
 
 
 Замінити кваліфікаційні документи
@@ -228,11 +205,6 @@ If skipped create tender
 
 Прикріпити та підписати договір
 	[Tags]  qualification
-	[Setup]  Run Keywords  Завантажити сесію для  ${provider2}																		AND
-	...  small_privatization_informational_message.Дочекатися статусу повідомлення  Оплачено, очікується підписання договору  15m	AND
-	...  Завантажити сесію для  ${tender_owner}																						AND
-	...  Відкрити сторінку Продаж/Оренда майна(тестові)																				AND
-	...  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Прикріпити договір"
 	sale_create_tender.Заповнити поле "Номер договору"
 	sale_create_tender.Заповнити поле "Дата підписання"
@@ -242,40 +214,6 @@ If skipped create tender
 	Завантажити сесію для  ${provider2}
 	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
 
-
-Отримати дані про аукціон з ЦБД
-	[Tags]  compare  qualification
-	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
-	Set Global Variable  ${cdb_data}
-	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
-
-
-Перевірити коректність документів в ЦБД
-	[Tags]  compare  qualification
-	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
-	${data['documents'][0]}
-	${data['documents'][1]}
-	${data['documents'][2]}
-	${data['documents'][3]}
-	${data['documents'][4]}
-	${data['documents'][5]}
-
-
-Перевірити коректність відображення документів
-	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
-	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
-	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
-	${data['documents'][0]}
-	${data['documents'][1]}
-	${data['documents'][2]}
-	${data['documents'][3]}
-	${data['documents'][4]}
-	${data['documents'][5]}
-
-
 *** Keywords ***
 Precondition
 	Set Global Variable  ${tender_owner}  Bened
@@ -283,7 +221,7 @@ Precondition
 	Set Global Variable  ${provider2}  user2
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
-	cdb2_OtherAssets.Завантажити локатори
+	cdb2_PropertyLease.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів

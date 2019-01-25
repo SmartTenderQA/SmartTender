@@ -162,3 +162,9 @@ Resource        create_tender_keywords.robot
   	Set To Dictionary  ${data}  minimum_number_of_participants  ${quantity}
 
 
+Відкрити вкладку Умови договору аренди
+  ${selector}  Set Variable  xpath=//li[contains(@id, "mainTabControl_T4")]
+  Run Keyword And Ignore Error  Click Element  ${selector}
+  ${status}  Run Keyword And Return Status  Element Should Not Be Visible  ${selector}
+  Run Keyword If  '${status}' != 'True'  Відкрити вкладку Умови договору аренди
+

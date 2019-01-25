@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
 
+
+def get_docs_data():
+	return docs_data
+
+def get_docs_view():
+	return docs_view
+
+
 def compare_values(first_value, second_value):
     if re.match(u'^\d+[.]?\d*$', str(first_value)) and re.match(u'^\d+[.]?\d*$', str(second_value)):
         return float(first_value) == float(second_value)
@@ -29,7 +37,7 @@ def convert_cdb_values_to_edit_format(field, value, time_format='s'):
     return value
 
 
-def convert_viewed_values_to_edit_format(field, value):
+def convert_viewed_values_to_edit_format(field, value, procedure='DZK'):
     if "['title']" == field:
         if not '[ТЕСТУВАННЯ]' in value:
             return '[ТЕСТУВАННЯ] ' + value
@@ -57,7 +65,10 @@ def convert_viewed_values_to_edit_format(field, value):
         return ret.replace(' ', '').replace(',', '.')
     elif 'leaseDuration' in field:
         list = re.search(u'(?P<years>^\d+).{7}(?P<months>\d+)', value)
-        return 'P'+list.group('years')+'Y'+list.group('months')+'M'
+        if procedure == 'DZK':
+            return 'P'+list.group('years')+'Y'+list.group('months')+'M'
+        else:
+            return 'P'+str(int(list.group('years'))*12+int(list.group('months')))+'M'
     elif 'address' in field:
         list = re.search(u'(?P<postal>\d+), (?P<country>[^,]+), ((?P<region>[^,]+), )?(?P<locality>[^,]+), (?P<street>[^,]+)', value)
         if 'postal' in field:
@@ -104,6 +115,29 @@ def convert_viewed_values_to_edit_format(field, value):
     return value
 
 
+def get_selected_doc(doc, cdb_data):
+    cdb_docs = []
+    for i in cdb_data[doc['key']]:
+        if i['status'] != 'invalid' and i['status'] != 'unsuccessful':
+            cdb_docs = i['documents']
+    for i in cdb_docs:
+        if doc['title'] == i['title']:
+            result = i.copy()
+            result['documentType'] = documents_types_dictionary[i['documentType']]
+            result['dateModified'] = convert_cdb_values_to_edit_format('date', i['dateModified'])
+            return result
+
+
+documents_types_dictionary = {
+    "auctionProtocol": "Протокол аукціону",
+    "eligibilityDocuments": "Документи, що підтверджують відповідність",
+    "commercialProposal": "Цінова пропозиція",
+    "qualificationDocuments": "Документи, що підтверджують кваліфікацію",
+    "": "Протокол рішення",
+    "contractSigned": "Договір",
+}
+
+
 classification_scheme_dictionary = {
     u'CPV': u'CPV',
     u'CAV-PS': u'CAV-PS',
@@ -117,3 +151,22 @@ accountIdentification_scheme_dictionary = {
     u'UA-MFO': u'МФО банку',
     u'accountNumber': u'Номер рахунку',
 }
+
+
+#<editor-fold desc="DATA">
+docs_view = {
+	"title": "//*[@data-qa='file-name']",
+	"documentType": "//*[@data-qa='file-document-type']",
+	"dateModified": "//*[@data-qa='file-date-modified']"
+}
+#</editor-fold>
+
+
+#<editor-fold desc="DATA">
+docs_data = {
+	"key": "",
+	"title": "",
+	"documentType": "",
+	"hash": "",
+}
+#</editor-fold>

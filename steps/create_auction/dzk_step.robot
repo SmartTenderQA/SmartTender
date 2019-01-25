@@ -143,7 +143,7 @@ Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 
 
 Заповнити "Дата проведення аукціону"
-	${delta minutes}  Set Variable  33
+	${delta minutes}  Set Variable  40
 	${start}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  datetime
 	dzk_auction.Заповнити auctionPeriod.shouldStartAfter  ${start}
 	Set To Dictionary  ${data['auctionPeriod']}  shouldStartAfter  ${start}
