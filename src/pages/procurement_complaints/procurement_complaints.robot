@@ -8,7 +8,7 @@
     Run Keyword If  '${status}' == 'False'  Click Element  ${complaints tab}
 
 
-Обрати у фільтрі предмет вимоги
+Обрати у фільтрі предмет вимоги(скарги)
     [Arguments]  ${text}
     ${filter}  Set Variable  //*[@data-qa="complaints"]//*[@data-qa="filter"]
     ${status}  Run Keyword And Return Status  Element Should Be Visible  ${filter}//input[@disabled="disabled"]
@@ -19,7 +19,7 @@
     ...  Click Element                  ${filter}//li[@class][contains(text(),"${text}")]
 
 
-Порахувати кількісь вимог на сторінці
+Порахувати кількісь вимог(скарг) на сторінці
     ${complaint title}  Set Variable  //*[@data-qa="complaint"]//*[@data-qa="title"]//*[@class="break-word"]
     ${count}  Get Element Count  ${complaint title}
     [Return]  ${count}
@@ -32,7 +32,14 @@
     Wait Until Element Contains  //*[@data-qa="new-complaint"]//*[@class="ivu-card-head"]  Подання вимоги
 
 
-Заповнити тему вимоги
+Натиснути кнопку Подати скаргу до "АМКУ"
+    ${submit complaint}  Set Variable  //*[@data-qa="submit-complaint"]
+    Scroll Page To Element XPATH       ${submit complaint}
+    Click Element                      ${submit complaint}
+    Wait Until Element Contains  //*[@data-qa="new-complaint"]//*[@class="ivu-card-head"]  Подання скарги
+
+
+Заповнити тему вимоги(скарги)
     [Arguments]  ${text}
     ${complaint theme}  Set Variable  //*[@data-qa="new-complaint"]//label[text()="Тема"]/following-sibling::div//input
     Input Text  ${complaint theme}  ${text}
@@ -41,7 +48,7 @@
     Should Be Equal  ${get}  ${text}
 
 
-Заповнити текст вимоги
+Заповнити текст вимоги(скарги)
     [Arguments]  ${text}
     ${complaint text}  Set Variable  //*[@data-qa="new-complaint"]//label[text()="Опис"]/following-sibling::div//textarea
     Input Text  ${complaint text}  ${text}
@@ -50,13 +57,13 @@
     Should Be Equal  ${get}  ${text}
 
 
-Натиснути кнопку "Подати" вимогу
+Натиснути кнопку "Подати" вимогу(скаргу)
     ${complaint send btn}  Set Variable  //*[@data-qa="add-complaint"]
     Click Element  ${complaint send btn}
     Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${complaint send btn}  30
 
 
-Розгорнути всі експандери вимог
+Розгорнути всі експандери вимог(скарг)
     ${selector down}  Set Variable  //*[@data-qa="complaint"]//*[@data-qa="expander"]/i[contains(@class,"down")]
     ${count}  Get Element Count  ${selector down}
     Run Keyword If  ${count} != 0  Run Keywords
