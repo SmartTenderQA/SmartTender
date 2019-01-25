@@ -82,11 +82,11 @@
     ${add button}  Set Variable  //span[contains(text(), "Перегляд")]
     Click Element  ${add button}
     Дочекатись закінчення загрузки сторінки(webclient)
-    ${name}  Додати doc файл
+    ${name}  ${hash}  Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}
-    [Return]  ${name}
+    [Return]  ${name}  ${hash}
 
 
 Відмітити підставу відхилення
@@ -120,8 +120,8 @@
     ${add button}  Set Variable  //span[contains(text(), "Обзор")]|//span[contains(text(), "Перегляд")]
     Click Element  ${add button}
     Дочекатись закінчення загрузки сторінки(webclient)
-    ${name}  actions.Додати doc файл
+    ${name}  ${hash}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки(webclient)
     Page Should Contain  ${name}
-    [Return]  ${name}
+    [Return]  ${name}  ${hash}
