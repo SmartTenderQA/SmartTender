@@ -207,11 +207,13 @@ conver json to dict
 
 
 Scroll Page To Element XPATH
-	[Arguments]    ${xpath}
-	${xpath}  Set Variable  ${xpath.replace("'", '"')}
-	${xpath}  Set Variable  ${xpath.replace('xpath=', '')}
-	Run Keyword And Ignore Error
-	...  Execute JavaScript  document.evaluate('${xpath}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
+	[Arguments]  ${locator}
+	${x}  Get Horizontal Position  ${locator}
+	${y}  Get Vertical Position  ${locator}
+	@{size}  Get Window Size
+	${x}  Evaluate  ${x}-${size[0]}/2
+	${y}  Evaluate  ${y}-${size[1]}/2
+	Execute JavaScript  window.scrollTo(${x},${y});
 
 
 Clear input By JS
