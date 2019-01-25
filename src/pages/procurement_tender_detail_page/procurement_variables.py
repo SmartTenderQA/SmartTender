@@ -262,6 +262,9 @@ data = {
                 },
             ],
         },
+    ],
+    "qulification_documents": [
+
     ]
 }
 
@@ -440,6 +443,30 @@ locators = {
         },
     ]
 }
+
+
+docs_view = {
+    "title": "//*[@data-qa='file-name']",
+    "documentType": "//*[@data-qa='file-document-type']",
+    "dateModified": "//*[@data-qa='file-date-modified']"
+}
+
+
+docs_data = {
+    "key": "",
+    "title": "",
+    "hash": ""
+}
+
+
+def get_cdb_doc(doc, cdb_data):
+    cdb_docs = []
+    for i in cdb_data[doc['key']]:
+            cdb_docs = i['documents']
+    for i in cdb_docs:
+        if doc['title'] == i['title']:
+            result = i.copy()
+            return result
 
 
 def get_locator(field):

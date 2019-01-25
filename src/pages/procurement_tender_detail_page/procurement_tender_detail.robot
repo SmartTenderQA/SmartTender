@@ -83,12 +83,12 @@ Variables       procurement_variables.py
     [Arguments]  ${EDS}=None
     Натиснути "Завантажити кваліфікаційні документи"
     loading.Дочекатись закінчення загрузки сторінки
-    ${file name}  Wait Until Keyword Succeeds  20  2  actions.Додати doc файл
+    ${file name}  ${hash}  Wait Until Keyword Succeeds  20  2  actions.Додати doc файл
     ${message}  Натиснути "Завантадити документи" та отримати відповідь
     Виконати дії відповідно до тексту повідомлення  ${message}
     Run Keyword If  '${EDS}' == 'True'  EDS.Підписати ЕЦП
     Go Back
-    [Return]  ${file name}
+    [Return]  ${file name}  ${hash}
 
 
 Розгорнути всі експандери
@@ -105,3 +105,20 @@ Variables       procurement_variables.py
     Click Element  ${selector}
     Element Text Should Be  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]
     ...  Причина відміни
+
+
+Порівняти створений документ з документом в ЦБД procurement
+	[Arguments]  ${doc}
+	${cdb_doc}  get_cdb_doc  ${doc}  ${cdb}
+	Should Be Equal  ${cdb_doc['title']}  ${doc['title']}  Oops! Помилка з title
+	Should Be Equal  ${cdb_doc['hash']}  ${doc['hash']}  Oops! Помилка з hash
+
+
+Порівняти відображений документ з документом в ЦБД procurement
+	[Arguments]  ${doc}
+	${cdb_doc}  get_cdb_doc  ${doc}  ${cdb}
+	${view doc block}  Set Variable  //*[@style and @class='ivu-row' and contains(.,'${doc['title']}')]
+	Scroll Page To Element XPATH  ${view doc block}
+	${view title}  Get Text  ${view doc block}${docs_view['title']}
+	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
+
