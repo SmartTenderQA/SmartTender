@@ -68,6 +68,9 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
+    qualification_keywords.Заповнити текст рішення кваліфікації
+    ${file name}  ${hash}  qualification_keywords.Додати файл до рішення кваліфікації
+    actions.Натиснути OkButton
     Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити чек-бокс у рішенні
     Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
@@ -77,7 +80,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
     ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
-    [Return]  ${file name}
+    [Return]  ${file name}  ${hash}
 
 
 Відхилити пропозицію учасника
@@ -89,7 +92,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     qualification_keywords.Натиснути "Відхилити пропозицію"
     Run Keyword If  'below' not in '${MethodType}'  qualification_keywords.Відмітити підставу відхилення  Не відповідає кваліфікаційним критеріям
     qualification_keywords.Заповнити текст рішення кваліфікації
-    ${file name}  qualification_keywords.Додати файл до рішення кваліфікації
+    ${file name}  ${hash}  qualification_keywords.Додати файл до рішення кваліфікації
     actions.Натиснути OkButton
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
     Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
@@ -100,13 +103,13 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
     ...  validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
-    [Return]  ${file name}
+    [Return]  ${file name}  ${hash}
 
 
 Додати договір до переможця
     actions.Натиснути кнопку "Прикріпити договір"
     qualification_keywords.Заповнити номер договору
-    ${dogovir name}  qualification_keywords.Вкласти договірній документ
+    ${dogovir name}  ${hash}  qualification_keywords.Вкласти договірній документ
     actions.Натиснути OkButton
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    [Return]  ${dogovir name}
+    [Return]  ${dogovir name}  ${hash}
