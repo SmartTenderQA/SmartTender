@@ -871,7 +871,7 @@ Test Postcondition
 Звірити documents.datePublished запиту
   ${cdb_time}  Set Variable  ${data_cdb['documents'][0]['datePublished']}
   ${site}  Get Text  ${monitoring_selector}//*[contains(text(), "${data_cdb['title']}")]/../following-sibling::*//a/../following-sibling::*
-  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  s
+  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  m
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${site}
   Should Be Equal  ${status}  ${True}
 
@@ -954,7 +954,7 @@ Test Postcondition
 Перевірити documents.datePublished інформації про усунення порушення
   ${cdb_time}  Set Variable  ${data_cdb['eliminationReport']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-eliminationReport-description"]/following-sibling::*/div[2]/div/div/div[2]
-  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  s
+  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  m
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
@@ -983,7 +983,7 @@ Test Postcondition
 Перевірити documents.datePublished позову
   ${cdb_time}  Set Variable  ${data_cdb['appeal']['documents'][0]['datePublished']}
   ${file_date_site}  Get Text  ${monitoring_selector}//*[@data-qa="monitoring-appeal-description"]/following-sibling::*/div[2]/div/div/div[2]
-  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  s
+  ${cdb_time}  service.convert_datetime_to_smart_format  ${cdb_time}  m
   ${status}  compare_dates_smarttender  ${cdb_time}  ==  ${file_date_site}
   Should Be Equal  ${status}  ${True}
 
@@ -1053,7 +1053,7 @@ Test Postcondition
 
 Перевірити documents.datePublished пояснення з власної ініціативи
   ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${cdb_time}  service.convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  s
+  ${cdb_time}  service.convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  m
   ${status}  compare_dates_smarttender  ${documents.datePublished}  ==  ${cdb_time}
   Should Be Equal  ${status}  ${True}
 
@@ -1198,7 +1198,7 @@ Test Postcondition
 
 Перевірити documents.datePublished відповіді на запит
   ${documents.datePublished}  Get Text  xpath=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-row'][1]//a/../following-sibling::div
-  ${cdb_time}  service.convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  s
+  ${cdb_time}  service.convert_datetime_to_smart_format  ${data_cdb['documents'][0]['datePublished']}  m
   ${status}  compare_dates_smarttender  ${documents.datePublished}  ==  ${cdb_time}
   Should Be Equal  ${status}  ${True}
 
