@@ -10,7 +10,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v type:claims -v site:test -v hub:none suites/complaints/procurement_complaints.robot
 *** Variables ***
 &{types}
-...         claims=Подати вимогу "Замовнику"
+...         claims=вимогу "Замовнику"
 ...         complaints=скаргу до "АМКУ"
 
 
@@ -58,7 +58,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 Заповнити необхідні поля та подати вимогу
     [Tags]  claims
-    Run Keyword  procurement_complaints.Натиснути кнопку ${types['${type}']}
+    Run Keyword  procurement_complaints.Натиснути кнопку подати ${types['${type}']}
     procurement_complaints.Заповнити тему вимоги(скарги)   ${data['complaints'][${n}]['title']}
     procurement_complaints.Заповнити текст вимоги(скарги)  ${data['complaints'][${n}]['description']}
     Додати файл до вимоги(скарги)
