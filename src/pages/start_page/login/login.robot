@@ -45,4 +45,5 @@ Close login window
 	[Arguments]  ${text}=Невірний e-mail та/або пароль
 	${selector}  Set Variable  css=.ivu-message-notice-content
 	Wait Until Page Contains Element  ${selector}  10
+	Wait Until Element Is Visible  ${selector}
 	Element Should Contain  ${selector}  ${text}
