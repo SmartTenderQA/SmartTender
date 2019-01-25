@@ -1,13 +1,13 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Підготувати користувачів
+Suite Setup     Precondition
 Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
 ...                                         Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None suites/questions/procurement_questions.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v site:prod -v hub:none suites/questions/procurement_questions.robot
 *** Test Cases ***
 Знайти випадковий тендер з потрібним статусом (Період уточнень)
     Завантажити сесію для  ${provider}
@@ -17,10 +17,12 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     ${date}  smart_get_time  1  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
-    old_search.Перейти по результату пошуку за номером  1
+    old_search.Перейти по результату пошуку за номером  2
+    Run Keyword If  '${site}' == 'prod'  search.Додаткова перевірка на тестові торги для продуктива
     ${tender_href}  Get Location
     Log  ${tender_href}  WARN
     Set To Dictionary  ${data}  tender_href  ${tender_href}
+
 
 Перейти на сторінку запитань та порахувати їх кількість
     procurement_questions.Активувати вкладку "Запитання"
@@ -61,12 +63,23 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 
 *** Keywords ***
-Підготувати користувачів
+Precondition
+    Run Keyword  Підготувати користувачів ${site}
+
+
+Підготувати користувачів test
     Set Global Variable         ${provider}  user1
     Set Global Variable         ${viewer}    test_viewer
     Додати першого користувача  ${provider}
     Додати користувача          ${viewer}
-    
+
+
+Підготувати користувачів prod
+    Set Global Variable         ${provider}  prod_provider1
+    Set Global Variable         ${viewer}    prod_viewer
+    Додати першого користувача  ${provider}
+    Додати користувача          ${viewer}
+
     
 Отримати дані з cdb та зберегти їх у файл
     [Tags]  create_tender
