@@ -3,13 +3,13 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
-  	test_open_eu.Заповнити endDate періоду пропозицій
   	test_open_eu.Заповнити amount для tender
   	test_open_eu.Заповнити minimalStep для tender
   	test_open_eu.Заповнити title для tender
   	test_open_eu.Заповнити title_eng для tender
   	test_open_eu.Заповнити description для tender
   	test_open_eu.Додати предмет в тендер
+  	test_open_eu.Заповнити endDate періоду пропозицій
     docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
@@ -19,7 +19,7 @@
 #	                  Keywords							#
 #########################################################
 Заповнити endDate періоду пропозицій
-    ${date}  get_time_now_with_deviation  40  minutes
+    ${date}  get_time_now_with_deviation  37  minutes
     tender_tab.Заповнити "Прийом пропозицій по"  ${date}
     Set To Dictionary  ${data['tenderPeriod']}  endDate  ${date}
 
