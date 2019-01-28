@@ -220,7 +220,7 @@ If skipped create tender
 	[Tags]  qualification
 	[Setup]  Завантажити сесію для  ${tender_owner}
 	Відкрити сторінку Продаж/Оренда майна(тестові)
-	sale_create_tender.Знайти переможця за назвою аукціона
+	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
 	sale_create_tender.Додати протокол рішення
