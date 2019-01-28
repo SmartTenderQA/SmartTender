@@ -337,7 +337,7 @@ Postcondition
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['unit']['name']}
-	Element Should Contain  //h4  Вхід на даний момент закритий.
+	Page Should Contain Element  //h4[contains(text(),'Вхід на даний момент закритий.')]|//h4[contains(text(),'Ви зареєстровані як учасник. Очікуйте старту аукціону.')]
 
 
 Неможливість отримати поcилання на участь в аукціоні глядачем
