@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation
-Metadata
+Metadata  Команда запуска
+...  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -e get_tender -v hub:none suites/qulification_files/suite.robot
 
 Resource   ../../src/src.robot
 Suite Setup     Precondition
@@ -9,29 +10,38 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:none suites/qulification_files/suite.robot
+
 *** Test Cases ***
 Створити тендер
+	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
     test_open_eu.Отримати дані тендера та зберегти їх у файл
 
 
 Отримати тип процедури з cdb
+    [Tags]  create_tender
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     Log  ${cdb['procurementMethodType']}
 
 
+If skipped create tender
+	[Tags]  get_tender
+	${json}  Get File  ${OUTPUTDIR}/artifact_data.json
+	${data}  conver json to dict  ${json}
+	Set Global Variable  ${data}
+
+
 Подати заявку на участь в тендері двома учасниками
 	Прийняти участь у тендері учасником  ${provider1}
+	Додати додатковий документ до пропозиції
 	Прийняти участь у тендері учасником  ${provider2}
+	Додати додатковий документ до пропозиції
 
 
-Підготувати користувача та дочекатись початку періоду перкваліфікації
+Дочекатись початку періоду перкваліфікації
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
-    Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
@@ -50,8 +60,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
-    procurement_page_keywords.Дочекатись закінчення прийому пропозицій
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
+
+
+Перевірити наявність ЕЦП finance document в поданих пропозиціях
+    Go to  ${data['tender_href']}
+    Отримати дані з cdb та зберегти їх у файл
+    :FOR  ${i}  IN  1  2
+    \  procurement_tender_detail.Розгорнути всі експандери учасника  ${i}
+    \  ${hash}  Скачати файл з іменем та індексом  sign.p7s  2
+    \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
+    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qulification_documents'][${i}-1]}  2
+    \  procurement_tender_detail.Згорнути всі експандери учасника  ${i}
 
 
 Відхилити організатором пропозицію першого учасника
@@ -95,30 +115,27 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
     Go to  ${data['tender_href']}
     actions.Зберегти словник у файл  ${data}  data
     Отримати дані з cdb та зберегти їх у файл
-    debug
-
-#TODO  Перевірити наявність ЕЦП finance document в поданих пропозиціях
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД
     [Template]  procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement
-    ${data['qulification_documents'][0]}
-	${data['qulification_documents'][1]}
-	${data['qulification_documents'][2]}
+    ${data['qulification_documents'][2]}
 	${data['qulification_documents'][3]}
-    ${data['qulification_documents'][4]}
+	${data['qulification_documents'][4]}
+	${data['qulification_documents'][5]}
+    ${data['qulification_documents'][6]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
     [Setup]  Run Keywords
     ...  Go to  ${data['tender_href']}  AND
-    ...   procurement_tender_detail.Розгорнути всі експандери
+    ...  procurement_tender_detail.Розгорнути всі експандери
     [Template]  procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement
-    ${data['qulification_documents'][0]}
-	${data['qulification_documents'][1]}
-	${data['qulification_documents'][2]}
+    ${data['qulification_documents'][2]}
 	${data['qulification_documents'][3]}
-    ${data['qulification_documents'][4]}
+	${data['qulification_documents'][4]}
+	${data['qulification_documents'][5]}
+    ${data['qulification_documents'][6]}
 
 
 
@@ -134,6 +151,13 @@ Precondition
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
     Додати користувача          ${viewer}
+    Підготувати браузер
+
+
+Підготувати браузер
+    Close Browser
+    Create Directory  ${OUTPUTDIR}/downloads/
+    Відкрити браузер Chrome з вказаною папкою для завантаження файлів  ${OUTPUTDIR}/downloads/
 
 
 Отримати дані з cdb та зберегти їх у файл
@@ -162,6 +186,14 @@ Precondition
     Go Back
 
 
+Додати додатковий документ до пропозиції
+    Перевірити кнопку подачі пропозиції
+    actions.Додати doc файл
+    Подати пропозицію
+	EDS.Підписати ЕЦП
+    Go Back
+
+
 Зберегти дані файлу у словник docs_data
     [Arguments]  ${key}  ${file name}  ${hash}
     Set To Dictionary  ${docs_data}  key  ${key}
@@ -169,3 +201,38 @@ Precondition
     Set To Dictionary  ${docs_data}  hash  md5:${hash}
     ${new doc}  Evaluate  ${docs_data}.copy()
 	Append To List  ${data['qulification_documents']}  ${new doc}
+
+
+Скачати файл з іменем та індексом
+    [Arguments]  ${name}  ${index}
+    ${selector}  Set Variable  (//*[@data-qa="file-name"][text()="${name}"])[${index}]
+    ${download locator}  Set Variable  ${selector}/ancestor::div[@class="ivu-poptip"]//*[@data-qa="file-download"]
+    Mouse Over  ${selector}
+    Wait Until Element Is Visible  ${download locator}
+    Click Element                  ${download locator}
+    Sleep  3
+    ${md5}   get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
+    Empty Directory   ${OUTPUTDIR}/downloads/
+    [Return]  ${md5}
+
+
+Відкрити браузер Chrome з вказаною папкою для завантаження файлів
+    [Arguments]  ${downloadDir}
+    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
+    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
+    Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
+    #Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    ${webdriverCreated}  Run Keyword And Return Status  Create Webdriver  Chrome  chrome_options=${chromeOptions}
+    Should Be True  ${webdriverCreated}
+
+
+Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement
+	[Arguments]  ${doc}  ${index}
+	${cdb_doc}  get_cdb_fin_doc  ${doc}  ${cdb}
+	${view doc block}  Set Variable  (//*[@style and @class='ivu-row' and contains(.,'${doc['title']}')])[${index}]
+	Scroll Page To Element XPATH    ${view doc block}
+	${view title}         Get Text  ${view doc block}${docs_view['title']}
+	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
+    ${view dateModified}  Get Text  ${view doc block}${docs_view['dateModified']}
+	Should Be Equal  ${view dateModified}  ${cdb_doc['dateModified']}  Oops! Помилка з dateModified
