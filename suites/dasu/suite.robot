@@ -615,7 +615,7 @@ Test Postcondition
   ${tab}             Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab')]//*[contains(text(), 'Моніторинг ДАСУ')]
   ${not_active_tab}  Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and not(contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
   ${active tab}      Set Variable  xpath=//*[contains(@class, 'ivu-tabs-tab') and (contains(@class, 'active'))]//*[contains(text(), 'Моніторинг ДАСУ') ]
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Wait Until Element Is Visible  ${tab}  20
   Scroll Page To Element XPATH  ${tab}
   ${status}  Run Keyword And Return Status  Page Should Contain Element  ${active_tab}
   Run Keyword If  '${status}' == 'False'  Wait Until Keyword Succeeds  15  3  Click Element  ${tab}
