@@ -145,6 +145,7 @@
     Input Text  ${input field}  ${data['items'][0]['classification']['id']}
     Press Key  ${input field}  \\13
     Sleep  1
+    Press Key  ${input field}  \\13
 
 
 Заповнити unit.name для item (другий лот)

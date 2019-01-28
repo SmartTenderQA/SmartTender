@@ -1,7 +1,7 @@
 *** Keywords ***
 Активувати вкладку "Вимоги/скарги на умови закупівлі"
     ${complaints tab}  Set Variable  //*[@data-qa="tabs"]//*[text()="Вимоги/скарги на умови закупівлі"]
-    Click Element  ${complaints tab}
+    Wait Until Keyword Succeeds  10  2  Click Element  ${complaints tab}
     loading.Дочекатись закінчення загрузки сторінки
     ${status}  Run Keyword And Return Status
     ...  Element Should Be Visible  ${complaints tab}/ancestor::div[contains(@class,"tab-active")]

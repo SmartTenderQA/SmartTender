@@ -10,7 +10,7 @@ Variables       procurement_variables.py
 *** Keywords ***
 Активувати вкладку "Тендер"
     ${tender tab}  Set Variable  //*[@data-qa="tabs"]//*[text()=" Тендер "]
-    Click Element  ${tender tab}
+    Wait Until Keyword Succeeds  10  2  Click Element  ${tender tab}
     ${status}  Run Keyword And Return Status
     ...  Element Should Be Visible  ${tender tab}/ancestor::div[contains(@class,"tab-active")]
     Run Keyword If  '${status}' == 'False'  Click Element  ${tender tab}
