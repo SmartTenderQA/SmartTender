@@ -6,7 +6,7 @@
     Run Keyword And Ignore Error
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Увага! Бюджет перевищує  Так
     Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на тендер?  Ні
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП  Ні
 
 
 Оголосити тендер
@@ -129,7 +129,7 @@
 
 
 Натиснути OkButton
-	${button}  Set Variable  //*[@data-name="OkButton"]
+	${button}  Set Variable  //*[@data-name="OkButton"]|//*[@title="OK"]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
 	Дочекатись закінчення загрузки сторінки(webclient)
@@ -186,7 +186,7 @@
 
 
 Натиснути кнопку "Отмена лота"
-    ${selector}  Set Variable  //a[@title="Отмена лота"]
+    ${selector}  Set Variable  //a[@title="Отмена лота"]|//a[@title="Відміна лоту"]
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)

@@ -153,6 +153,7 @@
     Input Text  ${input field}  ${data['items'][0]['unit']['name']}
     Press Key  ${input field}  \\13
     Sleep  1
+    Press Key  ${input field}  \\13
     ${get}  Get Element Attribute  ${input field}  value
     ${status}  Run Keyword And Return Status  Should Be Equal As Strings  ${get}  ${data['items'][0]['unit']['name']}
     Run Keyword If  '${status}' == 'False'  Заповнити unit.name для item (другий лот)
