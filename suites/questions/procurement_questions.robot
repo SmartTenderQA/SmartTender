@@ -14,7 +14,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     search.Відкрити сторінку тестових торгів
     old_search.Розгорнути розширений пошук
     search.Відфільтрувати по статусу торгів  Період уточнень
-    ${date}  smart_get_time  1  d
+    ${date}  smart_get_time  2  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
     old_search.Перейти по результату пошуку за номером  2

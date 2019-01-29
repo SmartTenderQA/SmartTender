@@ -97,9 +97,6 @@ If skipped create tender
 	\['items'][0]['address']['region']
 	\['items'][0]['address']['locality']
 
-#todo нужно понять что єто и зачем мі его вводим
-#\['minimalStep']['amount']
-
 
 Знайти тендер учасниками
 	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
@@ -147,6 +144,7 @@ If skipped create tender
 
 
 Перевірити неможливість отримати посилання на перегляд
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Documentation]  В голандском аукционе есть только ссылка на участие(особенность типа торгов)
 	:FOR  ${i}  IN  ${provider1}  ${provider2}  ${tender_owner}  ${viewer}
 	\  Завантажити сесію для  ${i}

@@ -4,9 +4,10 @@ Resource  keywords.robot
 
 *** Keywords ***
 Підписати ЕЦП
-	${iframe status}  Натиснути підписати ЕЦП
-	Run Keyword If  ${iframe status}
-	...  Підписати ЕЦП iframe
-	...  ELSE
-	...  Підписати ЕЦП no iframe
+	Натиснути підписати ЕЦП
+	Вибрати тестовий ЦСК
+	Завантажити ключ
+	Ввести пароль ключа
+	Wait Until Keyword Succeeds  3m  10  Натиснути Підписати
+	Перевірити успішність підписання
 

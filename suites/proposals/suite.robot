@@ -39,6 +39,7 @@ ${no tender}                        False
 	Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  1
 	Додаткова перевірка на тестові торги для продуктива
+	Run Keyword If  '${tender_type}' == 'ESCO'  Отримати значення Максимального фіксованого відсотку платежів
 	Перевірити кнопку подачі пропозиції
 	Скасувати пропозицію за необхідністю
 	${lots amount}  Порахувати Кількість Лотів
@@ -173,24 +174,33 @@ Postcondition
 
 ###    ESCO    ###
 Fill ESCO
-    [Arguments]  ${number_of_lot}  ${percent}=95
+    [Arguments]  ${number_of_lot}
+    ${percent}  Evaluate  random.randint(${ESCO_percent_from}, ${ESCO_percent_to})  random
     ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
     input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
     input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
     input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
-    ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${error selector}  3
-    Run Keyword If  ${status}  Змінити значення фіксованого відсотку  ${number_of_lot}
+#    ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${error selector}  3
+#    Run Keyword If  ${status}  Змінити значення фіксованого відсотку  ${number_of_lot}
     input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
 
 
-Змінити значення фіксованого відсотку
-    [Arguments]  ${number_of_lot}
-    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
-    ${value}  Get Text   ${error selector}
-    ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
-    ${percent}  random_number  ${value[0]}  ${value[1]}
-    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+Отримати значення Максимального фіксованого відсотку платежів
+	${selector}  Set Variable  //*[@data-qa="cost-reduction-percent"]/div[2]
+	${value}  Get Text  ${selector}
+	${list of value}  Evaluate  re.findall(r'\\d+', u'${value}')  re
+	Set Global Variable  ${ESCO_percent_from}  ${list of value[0]}
+	Set Global Variable  ${ESCO_percent_to}  ${list of value[1]}
+
+
+#Змінити значення фіксованого відсотку
+#    [Arguments]  ${number_of_lot}
+#    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
+#    ${value}  Get Text   ${error selector}
+#    ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
+#    ${percent}  random_number  ${value[0]}  ${value[1]}
+#    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
 
 
 ###    Useful indicators    ###

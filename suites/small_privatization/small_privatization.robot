@@ -28,6 +28,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати дані про об'єкт з ЦБД
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
@@ -98,6 +99,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Отримати дані про інформаційне повідомлення з ЦБД
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
@@ -268,9 +270,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	${viewer}
 	${tender_owner2}
 
-#todo ubrat` posle reliza
-#provider3
-
 
 *** Keywords ***
 Precondition
@@ -337,7 +336,7 @@ Postcondition
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['description']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['quantity']}
 	Element Should Contain  //*[contains(@ng-repeat, 'items')]  ${asset_data['items'][0]['unit']['name']}
-	Element Should Contain  //h4  Вхід на даний момент закритий.
+	Page Should Contain Element  //h4[contains(text(),'Вхід на даний момент закритий.')]|//h4[contains(text(),'Ви зареєстровані як учасник. Очікуйте старту аукціону.')]
 
 
 Неможливість отримати поcилання на участь в аукціоні глядачем

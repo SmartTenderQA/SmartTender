@@ -3,6 +3,12 @@
 # data     - для наполнения в него введенных даных
 # locators - для получения локатора для конкретного значения словаря
 import re
+import sys
+
+sys.path.append('../../src/')
+
+from service import convert_datetime_to_smart_format
+
 
 data = {
     "procurementMethod": "",
@@ -262,6 +268,9 @@ data = {
                 },
             ],
         },
+    ],
+    "qulification_documents": [
+
     ]
 }
 
@@ -440,6 +449,40 @@ locators = {
         },
     ]
 }
+
+
+docs_view = {
+    "title": "//*[@data-qa='file-name']",
+    "documentType": "//*[@data-qa='file-document-type']",
+    "dateModified": "//*[@data-qa='file-date-modified']"
+}
+
+
+docs_data = {
+    "key": "",
+    "title": "",
+    "hash": ""
+}
+
+
+def get_cdb_doc(doc, cdb_data):
+    for i in cdb_data[doc['key']]:
+        cdb_docs = i['documents']
+        for i in cdb_docs:
+            if doc['title'] == i['title']:
+                result = i.copy()
+                result['dateModified'] = convert_datetime_to_smart_format(i['dateModified'], 'm')
+                return result
+
+
+def get_cdb_fin_doc(doc, cdb_data):
+    for i in cdb_data[doc['key']]:
+        cdb_docs = i['financialDocuments']
+        for i in cdb_docs:
+            if doc['hash'] == i['hash']:
+                result = i.copy()
+                result['dateModified'] = convert_datetime_to_smart_format(i['dateModified'], 'm')
+                return result
 
 
 def get_locator(field):

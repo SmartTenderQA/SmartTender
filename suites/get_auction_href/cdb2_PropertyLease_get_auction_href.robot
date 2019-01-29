@@ -9,9 +9,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #zapusk
 #Отримати посилання на аукціон
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 *** Variables ***
 
 
@@ -19,7 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити аукціон
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb2_OtherAssets.Створити аукціон
+	cdb2_PropertyLease.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
 	dzk_auction.Отримати ID у цбд
 
@@ -47,7 +47,8 @@ If skipped create tender
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['value']['amount']
 	\['title']
-	\['dgfID']
+	\['lotIdentifier']
+	\['contractTerms']['leaseTerms']['leaseDuration']
 	\['description']
 	\['items'][0]['description']
 	\['items'][0]['quantity']
@@ -67,8 +68,8 @@ If skipped create tender
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
-	\['dgfID']
-	\['auctionID']
+	\['lotIdentifier']
+	\['contractTerms']['leaseTerms']['leaseDuration']  Lease
 	\['description']
 	\['value']['amount']
 	\['value']['valueAddedTaxIncluded']
@@ -288,7 +289,7 @@ Precondition
 	Set Global Variable  ${provider2}  user2
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
-	cdb2_OtherAssets.Завантажити локатори
+	cdb2_PropertyLease.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів

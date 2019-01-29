@@ -73,8 +73,7 @@ ${sign up button}					//*[@data-qa="btn-registration"]
 #    ...  Регламент Prozorro.Продажі=menu-spf
 #    ...  Регламент аукціонів ФГВФО=menu-fgvfl
 #	Інформаційний центр
-	...  Договір с майданчиком=menu-[object Object]
-#	...  Договір с майданчиком=menu-сontract
+	...  Договір с майданчиком=menu-сontract
     ...  Тарифи=menu-tariffs
     ...  Інструкції=menu-documentations
     ...  Запитання та відповіді=menu-faq
