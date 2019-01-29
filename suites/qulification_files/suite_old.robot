@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/with_find_tender.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/suite.robot
 *** Variables ***
 &{type}
 ...         test=Відкриті торги з публікацією англійською мовою
@@ -103,23 +103,22 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 *** Keywords ***
 Підготувати користувачів для prod
     Set Global Variable         ${tender_owner}   prod_owner
-    Set Global Variable         ${tender_owner2}  prod_ssp_owner
     Set Global Variable         ${provider2}      prod_provider2
-
+    Set Global Variable         ${viewer}         prod_viewer
     Додати першого користувача  ${tender_owner}
-    Додати користувача          ${tender_owner2}
     Додати користувача          ${provider2}
+    Додати користувача          ${viewer}
 
 
 
 Підготувати користувачів для test
     Set Global Variable         ${tender_owner}   PPR_OR
-    Set Global Variable         ${tender_owner2}  Bened
     Set Global Variable         ${provider2}      user2
+    Set Global Variable         ${viewer}         test_viewer
 
     Додати першого користувача  ${tender_owner}
-    Додати користувача          ${tender_owner2}
     Додати користувача          ${provider2}
+    Додати користувача          ${viewer}
 
 
 Зберегти дані тендера

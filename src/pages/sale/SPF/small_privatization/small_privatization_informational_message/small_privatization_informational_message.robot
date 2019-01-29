@@ -10,7 +10,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 Зберегти чернетку інформаційного повідомлення
 	${save btn}  Set variable  //div[@class='ivu-col ivu-col-span-6']//button[@type='button']
     Scroll Page To Element XPATH  ${save btn}
-    Click Element  ${save btn}
+    Wait Until Keyword Succeeds  30  3  Click Element  ${save btn}
     Wait Until Element Is Visible  ${notice message}  15
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  було

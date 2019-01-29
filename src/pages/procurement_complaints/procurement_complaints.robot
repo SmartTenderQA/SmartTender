@@ -1,7 +1,7 @@
 *** Keywords ***
 Активувати вкладку "Вимоги/скарги на умови закупівлі"
     ${complaints tab}  Set Variable  //*[@data-qa="tabs"]//*[text()="Вимоги/скарги на умови закупівлі"]
-    Click Element  ${complaints tab}
+    Wait Until Keyword Succeeds  10  2  Click Element  ${complaints tab}
     loading.Дочекатись закінчення загрузки сторінки
     ${status}  Run Keyword And Return Status
     ...  Element Should Be Visible  ${complaints tab}/ancestor::div[contains(@class,"tab-active")]
@@ -25,14 +25,14 @@
     [Return]  ${count}
 
 
-Натиснути кнопку Подати вимогу "Замовнику"
+Натиснути кнопку подати вимогу "Замовнику"
     ${submit claim}  Set Variable  //*[@data-qa="submit-claim"]
     Scroll Page To Element XPATH       ${submit claim}
     Click Element                      ${submit claim}
     Wait Until Element Contains  //*[@data-qa="new-complaint"]//*[@class="ivu-card-head"]  Подання вимоги
 
 
-Натиснути кнопку Подати скаргу до "АМКУ"
+Натиснути кнопку подати скаргу до "АМКУ"
     ${submit complaint}  Set Variable  //*[@data-qa="submit-complaint"]
     Scroll Page To Element XPATH       ${submit complaint}
     Click Element                      ${submit complaint}

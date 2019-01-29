@@ -13,13 +13,13 @@ ${multilot}                                False
 
 
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -e cancel_lot -v multilot:False suites/cancellation/cancellation.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v site:prod -e cancel_tender -v multilot:True suites/cancellation/cancellation.robot
 *** Test Cases ***
 Створити тендер
 	Завантажити сесію для  ${tender_owner}
 	Run Keyword If  '${multilot}' == 'True'
-	...  test_open_trade.Створити тендер (Мультилот)  Відкриті торги  ELSE
-	...  test_open_trade.Створити тендер  Відкриті торги
+	...  test_open_eu.Створити тендер (Мультилот)  ELSE
+	...  test_open_eu.Створити тендер
     test_open_trade.Отримати дані тендера та зберегти їх у файл
 
 
@@ -80,8 +80,19 @@ ${multilot}                                False
 
 *** Keywords ***
 Precondition
-	Set Global Variable         ${tender_owner}  Bened
+    Run Keyword  Підготувати користувачів ${site}
+
+
+Підготувати користувачів test
+    Set Global Variable         ${tender_owner}  Bened
     Set Global Variable         ${viewer}        test_viewer
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${viewer}
+
+
+Підготувати користувачів prod
+    Set Global Variable         ${tender_owner}  prod_owner
+    Set Global Variable         ${viewer}        prod_viewer
     Додати першого користувача  ${tender_owner}
     Додати користувача          ${viewer}
 
