@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #Отримати посилання на аукціон
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 *** Variables ***
 
 
@@ -178,9 +178,33 @@ If skipped create tender
 	sale_keywords.Завантажити кваліфікаційні документи
 
 
-Перевірити відображення детальної інформації про документи
-	[Tags]  qualification
-	No Operation
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Go Back									AND
+	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
 
 
 Замінити кваліфікаційні документи
@@ -197,14 +221,17 @@ If skipped create tender
 	[Tags]  qualification
 	[Setup]  Завантажити сесію для  ${tender_owner}
 	Відкрити сторінку Продаж/Оренда майна(тестові)
-	sale_create_tender.Знайти переможця за назвою аукціона
+	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
 	sale_create_tender.Додати протокол рішення
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити оплату"
 
 
 Прикріпити та підписати договір
 	[Tags]  qualification
+	[Setup]  Sleep  2m
 	sale_create_tender.Натиснути "Прикріпити договір"
 	sale_create_tender.Заповнити поле "Номер договору"
 	sale_create_tender.Заповнити поле "Дата підписання"
@@ -212,7 +239,40 @@ If skipped create tender
 	sale_create_tender.Зберегти договір
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
-	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
+
+
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
+
 
 *** Keywords ***
 Precondition
