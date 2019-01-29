@@ -99,6 +99,27 @@ Variables       procurement_variables.py
     ...  Розгорнути всі експандери
 
 
+Розгорнути всі експандери учасника
+    [Arguments]  ${member}
+    ${selector down}  Set Variable
+    ...  (//*[@data-qa="qualification-list"])[${member}]//*[contains(@class,"expander")]/i[contains(@class,"down")]
+    ${count}  Get Element Count  ${selector down}
+    Run Keyword If  ${count} != 0  Run Keywords
+    ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
+    ...  Розгорнути всі експандери учасника  ${member}
+
+
+Згорнути всі експандери учасника
+    [Arguments]  ${member}
+    ${selector up}  Set Variable
+    ...  (//*[@data-qa="qualification-list"])[${member}]//*[contains(@class,"expander")]/i[contains(@class,"up")]
+    Click Element  ${selector up}
+    Sleep  .5
+    ${count}  Get Element Count  ${selector up}
+    Run Keyword If  ${count} != 0
+    ...  Згорнути всі експандери учасника  ${member}
+
+
 Відкрити вікно "Причина відміни" детальніше
     ${selector}  Set Variable  //*[@data-qa="show-reason-button"]
     Element Should Be Visible  ${selector}
@@ -121,4 +142,5 @@ Variables       procurement_variables.py
 	Scroll Page To Element XPATH  ${view doc block}
 	${view title}  Get Text  ${view doc block}${docs_view['title']}
 	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
-
+    ${view dateModified}  Get Text  ${view doc block}${docs_view['dateModified']}
+	Should Be Equal  ${view dateModified}  ${cdb_doc['dateModified']}  Oops! Помилка з dateModified

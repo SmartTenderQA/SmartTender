@@ -28,7 +28,6 @@ ${multilot}                                False
     Адаптувати словник data
     :FOR  ${i}  IN  1  2
     \  main_page.Вибрати лот за номером (webclient)  ${i}
-    \  debug
     \  actions.Натиснути кнопку "Отмена лота"
     \  ${reason}  cancellation.Вказати причину скасування лота
     \  Set To Dictionary  ${data['cancellations'][${i}-1]}  reason  ${reason}
