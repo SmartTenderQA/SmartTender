@@ -110,6 +110,7 @@ If skipped create tender
 
 Подати заявки на участь в тендері
 	[Tags]  make_a_proposal  get_auction_href  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
@@ -126,6 +127,7 @@ If skipped create tender
 
 Подати пропозицію
 	[Tags]  make_a_proposal  get_auction_href  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -136,6 +138,7 @@ If skipped create tender
 
 Дочекатися початку аукціону першим учасником
 	[Tags]  get_auction_href
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  15m
@@ -143,6 +146,7 @@ If skipped create tender
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
 	[Tags]  get_auction_href
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
@@ -152,6 +156,7 @@ If skipped create tender
 
 Отримати поcилання на перегляд аукціону
 	[Tags]  get_auction_href
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${provider3}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
@@ -161,6 +166,7 @@ If skipped create tender
 
 Дочекатися початку кваліфікації
 	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider2}
 	#todo nuzhno vinesti keyword
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
@@ -169,6 +175,7 @@ If skipped create tender
 
 Подати кваліфікаційні документи
 	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	sale_keywords.Натиснути "Кваліфікаційні документи"
 	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують кваліфікацію
 	sale_keywords.Додати кваліфікаційний документ за типом  Цінова пропозиція
@@ -224,15 +231,14 @@ If skipped create tender
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
 	sale_create_tender.Додати протокол рішення
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити оплату"
 
 
 Прикріпити та підписати договір
 	[Tags]  qualification
-	[Setup]  Run Keywords  Завантажити сесію для  ${provider2}																		AND
-	...  small_privatization_informational_message.Дочекатися статусу повідомлення  Оплачено, очікується підписання договору  15m	AND
-	...  Завантажити сесію для  ${tender_owner}																						AND
-	...  Відкрити сторінку Продаж/Оренда майна(тестові)																				AND
-	...  sale_create_tender.Знайти переможця за назвою аукціона
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Sleep  2m
 	sale_create_tender.Натиснути "Прикріпити договір"
 	sale_create_tender.Заповнити поле "Номер договору"
 	sale_create_tender.Заповнити поле "Дата підписання"
@@ -240,7 +246,7 @@ If skipped create tender
 	sale_create_tender.Зберегти договір
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
-	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
 
 
 Отримати дані про аукціон з ЦБД
@@ -264,8 +270,7 @@ If skipped create tender
 
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}

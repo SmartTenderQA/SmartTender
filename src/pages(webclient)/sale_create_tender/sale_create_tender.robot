@@ -9,7 +9,7 @@ ${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити пер�
 	Click Element  //a[contains(@title,'Перечитати')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Пошук об'єкта у webclient по полю  Загальна назва  ${data['title']}
-	Click Element  //tr[@class and contains(.,'Очікується завантаження протоколу')]
+	Click Element  //*[@class='gridbox' and contains(.,'Учасник')]//tr[not(contains(@class,'has-system-column')) and @class]
 	Wait Until Page Contains Element  //a[@title='Кваліфікація']
 
 
@@ -44,6 +44,11 @@ ${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити пер�
 	${new docs}  Evaluate  ${docs_data}.copy()
 	Append To List  ${data['documents']}  ${new docs}
 
+
+Натиснути "Підтвердити оплату"
+	Wait Until Keyword Succeeds  10s  2s  Click Element  //*[contains(@class,'dxb') and contains(.,'Підтвердити оплату')]
+	Дочекатись закінчення загрузки сторінки(webclient)
+	validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
 
 
 Натиснути "Прикріпити договір"
