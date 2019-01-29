@@ -44,7 +44,7 @@ Ignore cancellation error
 Натиснути надіслати пропозицію та вичитати відповідь
 	Click Element  ${send offer button}
 	keywords.Закрити валідаційне вікно (Так/Ні)  Рекомендуємо Вам для файлів з ціновою пропозицією обрати тип  Ні
-	Run Keyword And Ignore Error  Wait Until Page Contains Element  ${loading}
+	Run Keyword And Ignore Error  Wait Until Element Is Visible      ${loading}
 	Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
 	${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
 	Capture Page Screenshot  ${OUTPUTDIR}/my_screen{index}.png
