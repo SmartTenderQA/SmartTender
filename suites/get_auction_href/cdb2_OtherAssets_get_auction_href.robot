@@ -224,15 +224,13 @@ If skipped create tender
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
 	sale_create_tender.Додати протокол рішення
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити оплату"
 
 
 Прикріпити та підписати договір
 	[Tags]  qualification
-	[Setup]  Run Keywords  Завантажити сесію для  ${provider2}																		AND
-	...  small_privatization_informational_message.Дочекатися статусу повідомлення  Оплачено, очікується підписання договору  15m	AND
-	...  Завантажити сесію для  ${tender_owner}																						AND
-	...  Відкрити сторінку Продаж/Оренда майна(тестові)																				AND
-	...  sale_create_tender.Знайти переможця за назвою аукціона
+	[Setup]  Sleep  2m
 	sale_create_tender.Натиснути "Прикріпити договір"
 	sale_create_tender.Заповнити поле "Номер договору"
 	sale_create_tender.Заповнити поле "Дата підписання"
@@ -240,7 +238,7 @@ If skipped create tender
 	sale_create_tender.Зберегти договір
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
-	small_privatization_informational_message.Статус повідомлення повинен бути  Завершено
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
 
 
 Отримати дані про аукціон з ЦБД
@@ -264,8 +262,7 @@ If skipped create tender
 
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}
