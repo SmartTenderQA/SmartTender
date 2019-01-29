@@ -33,6 +33,7 @@ If skipped create tender
 
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
 	dzk_auction.Отримати ID у цбд
@@ -99,8 +100,6 @@ If skipped create tender
 	\['items'][0]['address']['region']
 	\['items'][0]['address']['locality']
 
-#todo пока отлижили єту проверку
-#\['auctionPeriod']['startDate']
 
 Знайти тендер учасниками
 	Знайти тендер користувачем	${provider1}
@@ -108,6 +107,7 @@ If skipped create tender
 
 
 Подати заявки на участь в тендері
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
@@ -117,10 +117,12 @@ If skipped create tender
 
 
 Підтвердити заявки на участь
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
 	\  Дочекатись закінчення загрузки сторінки(skeleton)
@@ -131,17 +133,20 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
 	procurement_tender_detail.Дочекатися статусу тендера  Аукціон  10m
 
 
 Отримати посилання на аукціон для першого учасника
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Wait Until Keyword Succeeds  5m  3
     ...  Отримати поcилання на участь та перегляд аукціону першим учасником
 
 
 Отримати поcилання на перегляд аукціону
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}   #provider3
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
@@ -151,6 +156,7 @@ If skipped create tender
 
 Забрати гарантійний внесок учасниками
 	[Tags]  broken
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація  90m
 	Забрати гарантійний внесок учасником  ${provider1}
 	Run Keyword And Expect Error  *  Забрати гарантійний внесок учасником  ${provider2}
