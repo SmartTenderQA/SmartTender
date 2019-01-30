@@ -5,7 +5,7 @@ Library  ../../src/pages/sale/DGF/dutch/dutch_variables.py
 *** Keywords ***
 Створити аукціон
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
-	actions.Натиснути додати(F7)  Додавання. Тендери
+	Відкрити вікно створення тендеру
 
 	create_tender.Вибрати тип процедури  Голландський аукціон
 
