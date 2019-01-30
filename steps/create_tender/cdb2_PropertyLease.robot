@@ -4,7 +4,7 @@ Library  ../../src/pages/sale/SPF/propertyLease/propertyLease_variables.py
 *** Keywords ***
 Створити аукціон
 	Відкрити сторінку Продаж/Оренда майна(тестові)
-	Відкрити вікно створення тендеру
+	actions.Натиснути додати(F7)  Додавання. Тендери
 	create_tender.Вибрати тип процедури  Оренда майна
 	cdb2_PropertyLease.Заповнити "День старту електроного аукціону"
 	cdb2_PropertyLease.Заповнити "Початкова ціна реалізації лоту"
