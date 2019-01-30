@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Додати першого користувача  ${user}
+Suite Setup     Додати першого користувача  ${user}
 Suite Teardown  Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
@@ -63,6 +63,7 @@ ${no tender}                        False
 Підписати ЕЦП
 	[Tags]  EDS
     Підписати ЕЦП
+    Валідація підпису ЕЦП
 
 
 Внести зміни у пропозицію
@@ -85,13 +86,14 @@ ${no tender}                        False
 
 Перевірити присутність ЕЦП після зміни пропозиції
 	[Tags]  EDS
-    ${status}  Run Keyword And Return Status  Перевірити успішність підписання
+    ${status}  Run Keyword And Return Status  Перевірити дату підписання ЕЦП
 	Run Keyword If  ${status} == ${False}  Fail  Зникло ЕЦП після зміни пропозиції
 
 
 Накласти ЕЦП на виправлену пропозицію
 	[Tags]  EDS
 	Підписати ЕЦП
+	Валідація підпису ЕЦП
 
 #########################  ВІДКЛЮЧЕНО ЗА НЕОБХІДНІСТЮ  ############################
 #Скасувати пропозицію на процедуру/лот
