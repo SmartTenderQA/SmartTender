@@ -2,7 +2,8 @@
 Documentation    Suite description
 
 *** Variables ***
-${approve btn}			//*[@class="dxb" and contains(.,'Підтвердити перевірку')]
+${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердити перевірку')]
+
 
 *** Keywords ***
 Знайти переможця за назвою аукціона
