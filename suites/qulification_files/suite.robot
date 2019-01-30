@@ -209,7 +209,12 @@ Precondition
     Mouse Over  ${selector}
     Wait Until Element Is Visible  ${download locator}
     Click Element                  ${download locator}
-    Sleep  3
+    Sleep  5
+    ${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Go Back      AND
+    ...  Reload Page  AND
+    ...  Скачати файл з іменем та індексом  ${name}  ${index}
     ${md5}   get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
