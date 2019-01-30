@@ -1,9 +1,14 @@
 *** Variables ***
-${EDS btn}              ${block}[1]//div[@class="ivu-row"]//button
-${EDS_block}    		//*[@data-qa="modal-eds"]
-${passwod}      		29121963
-${iframe}       		//iframe[contains(@src, 'EDS')]
-${close button(old)}  	//div[@style]//button[@type='button' and @class='close']
+${EDS btn}                 ${block}[1]//div[@class="ivu-row"]//button
+${EDS_block}    		   //*[@data-qa="modal-eds"]
+${EDS validation message}  //*[@class="ivu-notice-title"]
+${EDS submit btn}          //*[@data-qa="eds-submit-sign"]
+${EDS stamp}               //button[contains(., 'ЕЦП')]/following-sibling::*//*[@class="smt-tooltip"]
+${passwod}      		   29121963
+${iframe}       		   //iframe[contains(@src, 'EDS')]
+${close button(old)}  	   //div[@style]//button[@type='button' and @class='close']
+
+${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 
 *** Keywords ***
@@ -31,14 +36,45 @@ ${close button(old)}  	//div[@style]//button[@type='button' and @class='close']
 	Input Password  ${EDS_block}//*[@data-qa="eds-password"]//input  ${passwod}
 
 
-Натиснути Підписати
-	Click Element  //*[@data-qa="eds-submit-sign"]
-	Wait Until Element Is Not Visible  //*[@data-qa="eds-submit-sign"]  120
+Натиснути Підписати та отримати відповідь
+	Click Element  ${EDS submit btn}
+	Wait Until Element Is Not Visible  ${EDS submit btn}  120
+	${message}  Отримати відповідь про підписання ЕЦП
 	Reload Page
+	[Return]  ${message}
 
 
 Перевірити успішність підписання
-	${now}  smart_get_time
-	${get}  Get Text  //button[contains(., 'ЕЦП')]/following-sibling::*//*[@class="smt-tooltip"]
+    [Arguments]  ${message}
+    Run Keyword If  "${EDS succeed}" in """${message}"""  No Operation
+    ...  ELSE  Fail  Помилка підписання ЕЦП! Look to message
+    Перевірити дату підписання ЕЦП
+
+
+##########################################################
+########################  KEYWORDS  ######################
+##########################################################
+Отримати відповідь про підписання ЕЦП
+    Wait Until Element Is Visible  ${EDS validation message}
+    ${message}  Get Text  ${EDS validation message}
+    Run Keyword If  '${message}' == 'None'  Fail  Де валідаційне повідомлення?
+    [Return]  ${message}
+
+
+Перевірити дату підписання ЕЦП
+    ${now}  smart_get_time
+	${get}  Get Text  ${EDS stamp}
 	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
 	compare_dates_smarttender  ${now}  >=  ${parse}
+
+
+Валідація файла підпису ЕЦП
+    ${poptip}  Set Variable  (//*[@class="ivu-poptip-inner"])[1]
+    Click Element                   ${EDS stamp}
+    Дочекатись закінчення загрузки сторінки
+    Wait Until Element is Visible   ${poptip}
+    ${validation poptip}  Get text  ${poptip}
+    Should Contain  ${validation poptip}  Підпис ЭЦП/КЭП
+    Should Contain  ${validation poptip}  Власник: Шурек Костянтин Вадимович
+    Should Contain  ${validation poptip}  ЦСК: Тестовий ЦСК АТ "ІІТ"
+    Should Contain  ${validation poptip}  Серійний номер: 5B63D88375D9201804000000D7060000614E0000
