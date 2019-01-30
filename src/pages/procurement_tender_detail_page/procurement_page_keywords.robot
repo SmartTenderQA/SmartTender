@@ -28,6 +28,7 @@
 
 Натиснути "Завантажити кваліфікаційні документи"
     ${selector}  Set Variable  //*[@data-qa="qualif-documents-button"]
+    Wait Until Element Is Visible  ${selector}  30
     Open Button  ${selector}
 
 
