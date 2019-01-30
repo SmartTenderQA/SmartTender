@@ -160,6 +160,8 @@ data = {
 	},
 	"minimalStep": {
 		"amount": ""
-	}
+	},
+	"documents": [
+	]
 }
 #</editor-fold>
