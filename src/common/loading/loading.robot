@@ -5,7 +5,7 @@ Resource  			keywords.robot
 *** Variables ***
 ${loading}                          css=div.smt-load
 #${webClient loading}                //*[contains(@class, 'LoadingPanel')]
-${webClient loading}                //*[@id="adorner"]
+${webClient loading}                //*[contains(@class, 'LoadingPanel')]|//*[@id="adorner"]
 ${circle loading}                   css=.loading_container .sk-circle
 ${skeleton loading}                 css=.skeleton-wrapper
 ${sales spin}                       css=.ivu-spin
