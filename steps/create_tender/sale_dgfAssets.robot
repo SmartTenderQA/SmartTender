@@ -6,7 +6,7 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 Створити тендер
 	[Arguments]  ${auction_type}
 	Відкрити сторінку Аукціони ФГВ(test)
-	actions.Натиснути додати(F7)  Додавання. Тендери
+	Відкрити вікно створення тендеру
 
 	create_tender.Вибрати тип процедури  ${auction_type}
 
