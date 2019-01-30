@@ -74,7 +74,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
     Дочекатись закінчення загрузки сторінки
     Wait Until Element is Visible   ${poptip}
     ${validation poptip}  Get text  ${poptip}
-    Should Contain  ${validation poptip}  Підпис ЭЦП/КЭП
+    Should Contain Any  ${validation poptip}  Підпис ЭЦП/КЭП  Підпис ЕЦП/КЕП
     Should Contain  ${validation poptip}  Власник: Шурек Костянтин Вадимович
     Should Contain  ${validation poptip}  ЦСК: Тестовий ЦСК АТ "ІІТ"
     Should Contain  ${validation poptip}  Серійний номер: 5B63D88375D9201804000000D7060000614E0000
