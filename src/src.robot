@@ -159,7 +159,16 @@ Open Browser In Grid
 	Set Global Variable  ${start_page}  ${${site}}
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
-	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
+
+	${chrome options} =     Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+	Call Method    ${chrome options}   add_argument    headless
+	Call Method    ${chrome options}   add_argument    disable-gpu
+	${options}=     Call Method     ${chrome_options}    to_capabilities
+	Set To Dictionary  ${options}  platform  WIN10
+	Create Webdriver    Remote   command_executor=${hub}    desired_capabilities=${options}
+	Go To  ${start_page}
+
+#	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
 	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
     Set Window Size  1280  1024
