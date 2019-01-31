@@ -24,7 +24,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     ${date}  smart_get_time  1  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
-    old_search.Перейти по результату пошуку за номером  1
+    old_search.Перейти по результату пошуку за номером  2
     Run Keyword If  '${site}' == 'prod'  search.Додаткова перевірка на тестові торги для продуктива
 
 
