@@ -64,7 +64,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 Перевірити дату підписання ЕЦП
     ${now}  smart_get_time
-    Wait Until Element Is Visisble  ${EDS stamp}  10
+    Wait Until Element Is Visible  ${EDS stamp}  10
 	${get}  Get Text  ${EDS stamp}
 	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
 	compare_dates_smarttender  ${now}  >=  ${parse}
