@@ -21,7 +21,7 @@ Variables       procurement_variables.py
     ${button}  Run Keyword If  "${selector}" == "None"
     ...  Set Variable  xpath=//*[@class='show-control button-lot']|//*[@data-qa="bid-button"]
     ...  ELSE  Set Variable  ${selector}
-    Page Should Contain Element  ${button}
+    Wait Until Element Is Visible  ${button}  20
     Open button  ${button}
     Location Should Contain  /edit/
     Wait Until Keyword Succeeds  5m  3  Run Keywords
