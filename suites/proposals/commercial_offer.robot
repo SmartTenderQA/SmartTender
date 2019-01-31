@@ -11,7 +11,7 @@ Test Teardown  Run Keywords
 *** Variables ***
 ${tender}                           Простой однолотовый
 ${prepared_tender}                  xpath=//tr[@class='head']/td/a[contains(text(), '${tender}') and @href]
-${make proposal link}               xpath=//*[@data-qa='tender-divSubmit-btnSubmit']
+${make proposal link}               //*[@data-qa='tender-divSubmit-btnSubmit']|//a[@type="success"]
 
 ${delivery_term_field}              xpath=(//label[contains(text(), 'Термін поставки')]/ancestor::tr//input)[1]
 ${guaranty_field}                   xpath=//label[contains(text(), 'Гарантія(років)')]/ancestor::td/following-sibling::td//input
@@ -35,7 +35,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 
 
 Подати пропозицію
-	Wait Until Keyword Succeeds  60  3  Натиснути кнопку подачі пропозиції  ${make proposal link}
+	Натиснути кнопку подачі пропозиції  ${make proposal link}
 	${location}  Get Location
 	Set To Dictionary  ${data}  tender_url=${location}
 	Заповтини поле з ціною
@@ -198,8 +198,8 @@ Postcondition
 
 Натиснути кнопку подачі пропозиції
   [Arguments]  ${selector}
-  Run Keyword And Ignore Error  Page Should Contain Element  ${selector}
-  Run Keyword And Ignore Error  Click Element  ${selector}
+  Wait Until Keyword Succeeds  20  1  Page Should Contain Element  ${selector}
+  Open Button  ${selector}
   Location Should Contain  /edit/
 
 
