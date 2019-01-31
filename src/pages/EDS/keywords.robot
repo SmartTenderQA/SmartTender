@@ -41,6 +41,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 	Wait Until Element Is Not Visible  ${EDS submit btn}  120
 	${message}  Отримати відповідь про підписання ЕЦП
 	Reload Page
+	loading.Дочекатись закінчення загрузки сторінки
 	[Return]  ${message}
 
 
@@ -63,6 +64,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 Перевірити дату підписання ЕЦП
     ${now}  smart_get_time
+    Wait Until Element Is Visisble  ${EDS stamp}  10
 	${get}  Get Text  ${EDS stamp}
 	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
 	compare_dates_smarttender  ${now}  >=  ${parse}
