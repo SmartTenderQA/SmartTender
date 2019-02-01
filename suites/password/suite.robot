@@ -88,7 +88,7 @@ Postcondition
     Fill login  ${users_variables["${user}"]["login"]}
     Fill password  ${users_variables["${user}"]["password"]}
     Click Element  //*[@data-qa="form-login-success"]
-    Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
+    notice.Дочекатись сповіщення з текстом  Невірний e-mail та/або пароль
     Close login window
 
 
