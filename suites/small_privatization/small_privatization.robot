@@ -287,6 +287,7 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
 	Додати першого користувача  ${tender_owner}
+	debug
     Підготувати користувачів
 
 

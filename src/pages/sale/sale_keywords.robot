@@ -11,11 +11,12 @@ ${notice message}						//*[@class='ivu-notice-desc']
 ########## common ###############################
 Натиснути кнопку зберегти
 	${save btn}  Set variable  //*[@data-qa='button-success']
+	elements.Дочекатися відображення елемента на сторінці  ${save btn}  10
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-	elements.Дочекатися відображення елемента на сторінці  ${notice message}  10
+	elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
-	Should Contain  ${notice text}  успішно
+	Should Contain Any  ${notice text}  успішно
 	Wait Until Page Does Not Contain Element  ${notice message}
 	Дочекатись закінчення загрузки сторінки по елементу  //*[contains(@class,'disabled-block')]
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -28,7 +29,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Click Element  ${publish btn}
     elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
-	Should Contain  ${notice text}  успішно
+	Should Contain Any  ${notice text}  успішно  Інформаційне повідомлення було опубліковано
 	Wait Until Page Does Not Contain Element  ${notice message}
 
 
