@@ -12,8 +12,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:test -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:prod -v hub:none suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -test -v where:test -v hub:none suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  ${tender_owner}
@@ -274,18 +274,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Keywords ***
 Precondition
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...  Set Global Variable  ${tender_owner}  ssp_tender_owner  AND
-	...  Set Global Variable  ${tender_owner2}  test_tender_owner  AND
-	...  Set Global Variable  ${provider1}  user1  AND
-	...  Set Global Variable  ${provider2}  user2  AND
-	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${tender_owner}  ssp_tender_owner			AND
+	...  Set Global Variable  ${tender_owner2}  test_tender_owner		AND
+	...  Set Global Variable  ${provider1}  user1						AND
+	...  Set Global Variable  ${provider2}  user2						AND
+	...  Set Global Variable  ${provider3}  user3						AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	...  ELSE
-	...  Set Global Variable  ${tender_owner}  prod_ssp_owner  AND
-	...  Set Global Variable  ${tender_owner2}  prod_tender_owner  AND
-	...  Set Global Variable  ${provider1}  prod_provider  AND
-	...  Set Global Variable  ${provider2}  prod_provider2  AND
-	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	Run Keyword If  '${where}' == 'prod'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  prod_ssp_owner			AND
+	...  Set Global Variable  ${tender_owner2}  prod_tender_owner		AND
+	...  Set Global Variable  ${provider1}  prod_provider				AND
+	...  Set Global Variable  ${provider2}  prod_provider2				AND
+	...  Set Global Variable  ${provider3}  prod_provider1				AND
 	...  Set Global Variable  ${viewer}  prod_viewer
 	Додати першого користувача  ${tender_owner}
     Підготувати користувачів
