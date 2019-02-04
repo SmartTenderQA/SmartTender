@@ -13,8 +13,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	${save btn}  Set variable  //*[@data-qa='button-success']
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-	notice.Дочекатись сповіщення з текстом  Перевіряємо введені дані
-    Wait Until Page Contains Element  ${notice message}  5
+	elements.Дочекатися відображення елемента на сторінці  ${notice message}  10
     ${notice text}  Get Text  ${notice message}
 	Should Contain  ${notice text}  успішно
 	Wait Until Page Does Not Contain Element  ${notice message}
@@ -24,11 +23,10 @@ ${notice message}						//*[@class='ivu-notice-desc']
 
 Натиснути кнопку опублікувати
 	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]
-	Wait Until Element Is Visible  ${publish btn}  10
-   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+	elements.Дочекатися відображення елемента на сторінці  ${publish btn}  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-    Wait Until Element Is Visible  ${notice message}  30
+    elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
 	Should Be Equal  ${notice text}  успішно
 	Wait Until Page Does Not Contain Element  ${notice message}
