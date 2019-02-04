@@ -23,7 +23,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
-	Log  url=${location}  WARN
+	Log  ОП url= ${location}  WARN
 	Зберегти словник у файл  ${data}  asset
 
 
@@ -90,12 +90,12 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	small_privatization_step.Завантажити локатори для ІП
-	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
+	small_privatization_step.Створити інформаційне повідомлення МП  ${data['assetID']}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
-	Log  url=${location}  WARN
+	Log  ИС url= ${location}  WARN
 	Зберегти словник у файл  ${data}  message
 
 
