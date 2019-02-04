@@ -28,6 +28,8 @@ Resource    common(webclient)/validation/validation.robot
 
 Resource  	elements/actions.robot
 Resource  	elements/other.robot
+Resource  	elements/notice.robot
+Resource  	elements/elements.robot
 
 
 Resource    Faker/faker.robot

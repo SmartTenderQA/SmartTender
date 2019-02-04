@@ -64,7 +64,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
 Визначити учасника переможцем
     [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
@@ -87,7 +87,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
 Відхилити пропозицію учасника
     [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Відхилити пропозицію"

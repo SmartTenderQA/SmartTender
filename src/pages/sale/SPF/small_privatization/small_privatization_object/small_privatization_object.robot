@@ -61,6 +61,7 @@
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
 	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Об'єкту  ${UAID}
 	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Об'єкту
+    Set Global Variable  ${assetID}  ${UAID}
     Set To Dictionary  ${data}  assetID  ${UAID}
 
 

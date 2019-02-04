@@ -18,7 +18,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Run Keyword  Отримати prozorro ID для ${site}
 
 
-Отримати prozorro ID для prod торгів
+Отримати prozorro ID для prod
 	Open button  //*[@data-qa='cdbNumber']
 	${text}  Get Text  //*[@class='tender--head--inf' and contains(text(),'UA')]
 	${cdb id}  Evaluate  (re.findall(r'.{32}$','${text}'))[0]  re
@@ -27,7 +27,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Отримати prozorro ID для тестових торгів
+Отримати prozorro ID для test
 	${url}  Get Location
 	${status}  Evaluate  'privatization-' in '${url}'
     ${cdb locator}  Set Variable If  ${status} == ${True}  //*[@data-qa='cdbNumber']  //*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a
