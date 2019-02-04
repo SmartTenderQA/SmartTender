@@ -43,7 +43,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	small_privatization_step.Заповнити "Умови аукціону"
 	small_privatization_step.Заповнити "Банківські реквізити"
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
-	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
+	sale_keywords.Натиснути кнопку опублікувати
 
 
 Завантажити локатори для ІП

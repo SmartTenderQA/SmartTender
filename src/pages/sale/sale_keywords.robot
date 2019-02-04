@@ -16,7 +16,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
     Click Element  ${save btn}
 	elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
-	Should Contain Any  ${notice text}  успішно
+	Should Contain Any  ${notice text}  Аукціон було успішно  Об'єкт приватизації було успішно  Інформаційне повідомлення було
 	Wait Until Page Does Not Contain Element  ${notice message}
 	Дочекатись закінчення загрузки сторінки по елементу  //*[contains(@class,'disabled-block')]
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -29,7 +29,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Click Element  ${publish btn}
     elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
-	Should Contain Any  ${notice text}  успішно  Інформаційне повідомлення було опубліковано
+	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано
 	Wait Until Page Does Not Contain Element  ${notice message}
 
 

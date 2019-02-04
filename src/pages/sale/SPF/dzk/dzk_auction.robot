@@ -17,11 +17,10 @@
 Отримати UAID та href для Аукціону
 	Reload Page
 	${selector}  Set Variable  ${view_locators['auctionID']}
-    Wait Until Element Is Visible  ${selector}  10
-    Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+	Дочекатись закінчення загрузки сторінки(skeleton)
 	${UAID}  Get Text  ${selector}
 	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Аукціону  ${UAID}
-	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Аукціону
+	Run Keyword If  ${correct status} == ${False}  Отримати UAID та href для Аукціону
     Set To Dictionary  ${data}  auctionID  ${UAID}
     ${tender_href}  Get Location
     Set To Dictionary  ${data}  tender_href  ${tender_href}
