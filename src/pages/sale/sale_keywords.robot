@@ -4,10 +4,36 @@
 *** Variables ***
 ${qualification docs btn}				//a[@class='ivu-btn ivu-btn-primary ivu-btn-circle font-18 action-block-btn']
 ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@class,'ivu-btn-long')]
+${notice message}						//*[@class='ivu-notice-desc']
 
 
 *** Keywords ***
 ########## common ###############################
+Натиснути кнопку зберегти
+	${save btn}  Set variable  //*[@data-qa='button-success']
+    Scroll Page To Element XPATH  ${save btn}
+    Click Element  ${save btn}
+	notice.Дочекатись сповіщення з текстом  Перевіряємо введені дані
+    Wait Until Page Contains Element  ${notice message}  5
+    ${notice text}  Get Text  ${notice message}
+	Should Contain  ${notice text}  успішно
+	Wait Until Page Does Not Contain Element  ${notice message}
+	Дочекатись закінчення загрузки сторінки по елементу  //*[contains(@class,'disabled-block')]
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Натиснути кнопку опублікувати
+	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]
+	Wait Until Element Is Visible  ${publish btn}  10
+   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+	Scroll Page To Element XPATH  ${publish btn}
+	Click Element  ${publish btn}
+    Wait Until Element Is Visible  ${notice message}  30
+    ${notice text}  Get Text  ${notice message}
+	Should Be Equal  ${notice text}  успішно
+	Wait Until Page Does Not Contain Element  ${notice message}
+
+
 Отримати та зберегти tender_id
 	Пошук об'єкта у webclient по полю  Загальна назва  ${data['title'].replace('[ТЕСТУВАННЯ] ','')}
 	${tender_id}  Get Element Attribute  xpath=//a[@href and contains(text(),'UA-')]  text

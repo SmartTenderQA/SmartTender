@@ -16,8 +16,8 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	small_privatization_step.Заповнити "Опис об'єкту приватизації"
 	small_privatization_step.Заповнити "Рішення про затвердження переліку об'єктів"
 	small_privatization_step.Заповнити "Загальну інформацію про об'єкт"
-	small_privatization_object.Натиснути кнопку зберегти
-	small_privatization_object.Опублікувати об'єкт у реєстрі
+	sale_keywords.Натиснути кнопку зберегти
+	sale_keywords.Натиснути кнопку опублікувати
 
 
 Завантажити локатори для об'єкта
