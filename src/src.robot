@@ -163,9 +163,21 @@ Open Browser In Grid
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
-	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
-	...  Отримати та залогувати data_session
+	#Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
+	#...  Отримати та залогувати data_session
     Set Window Size  1280  1024
+
+
+Відкрити браузер Chrome з вказаною папкою для завантаження файлів
+    [Arguments]  ${downloadDir}
+    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
+    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
+    #Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
+    Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    ${browser started}  Run Keyword And Return Status
+    ...  Open Browser  ${start_page}  chrome  ${user}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
+    Should Be True  ${browser started}
 
 
 Встановити фіксований час очікування прогрузки сторінок

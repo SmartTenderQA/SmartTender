@@ -126,6 +126,7 @@ If skipped create tender
 
 
 Підписати організатором договір з переможцем
+    [Tags]  non-critical
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -133,6 +134,7 @@ If skipped create tender
 
 
 Переконатись що статус закупівлі "Завершено"
+    [Tags]  non-critical
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
@@ -248,17 +250,6 @@ Precondition
     ${md5}   get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
-
-
-Відкрити браузер Chrome з вказаною папкою для завантаження файлів
-    [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${webdriverCreated}  Run Keyword And Return Status  Create Webdriver  Chrome  chrome_options=${chromeOptions}
-    Should Be True  ${webdriverCreated}
 
 
 Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement
