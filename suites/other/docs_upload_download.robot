@@ -34,7 +34,7 @@ Test Teardown  			Run Keywords
     small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
     Загрузити файл  ${1 full name}
     Загрузити файл  ${2 full name}
-    small_privatization_object.Натиснути кнопку зберегти
+    sale_keywords.Натиснути кнопку зберегти
 
 
 Перевірка загрузки файлів
@@ -51,6 +51,7 @@ Test Teardown  			Run Keywords
     Створити словник  cdb
     ${cdb}  Отримати дані об'єкту приватизації з cdb по id  41fef353ba5648158c0d38dd41305afa
     Set Global Variable  ${cdb}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 Отримати контрольні суми файлів з ЦБД, до загрузки та після скачування та порівняти їх

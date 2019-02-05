@@ -43,7 +43,7 @@ edit_locators = {
 		}
 	},
 	"minimalStep": {
-		"amount": "(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[2]//input"
+		"amount": "(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[3]//input"
 	}
 }
 #</editor-fold>

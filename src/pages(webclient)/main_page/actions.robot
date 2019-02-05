@@ -94,7 +94,7 @@
 	[Arguments]  ${text}  ${end_to_xpath}=${Empty}
 	${current tab}  Set Variable  //*[contains(@class, "active-tab")]
 	${current tab name}  Get Text  ${current tab}//td[text()]
-	Run Keyword If  "${text}" != "${current tab name}"  Click Element  //li[contains(@class, "page-tab") and contains(., "${text}")]${end_to_xpath}
+	Run Keyword If  "${text}" != "${current tab name}"  Click Element  (//li[contains(@class, "page-tab") and contains(., "${text}")])[1]${end_to_xpath}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Contains Element  ${current tab}//td[contains(text(), "${text}")]
 	Sleep  2
@@ -105,6 +105,13 @@
 ###############################################
 Натиснути кнопку Просмотр (F4)
     ${selector}  Set Variable  //*[@title="Просмотр (F4)"]|//*[@title="Перегляд (F4)"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку Змінити (F4)
+    ${selector}  Set Variable  //*[@title="Змінити (F4)"]
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)
@@ -187,6 +194,13 @@
 
 Натиснути кнопку "Отмена лота"
     ${selector}  Set Variable  //a[@title="Отмена лота"]|//a[@title="Відміна лоту"]
+    Wait Until Element Is Visible  ${selector}  15
+    Click Element  ${selector}
+    Дочекатись закінчення загрузки сторінки(webclient)
+
+
+Натиснути кнопку "Зберегти"
+    ${selector}  Set Variable  //a[@title="Зберегти"]
     Wait Until Element Is Visible  ${selector}  15
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки(webclient)

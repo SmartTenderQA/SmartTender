@@ -2,7 +2,7 @@
 Надати рішення про допуск до аукціону учасника
     [Arguments]  ${i}
     ${selector}  Set Variable  (${participant})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     Wait Until Keyword Succeeds  10  2  Натиснути кнопку Просмотр (F4)
     Page Should Contain  Відіслати рішення
     Натиснути елемент у якого title  Допустити учасника до аукціону
@@ -15,7 +15,7 @@
 Вказати ціну за одиницю номенклатури для переможця
     [Arguments]  ${i}
     ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     Натиснути кнопку "Заповнити ціни за одиницю товару"
     Запонити поле з ціною відповідно до пропозиції
 
@@ -101,7 +101,7 @@
     [Arguments]  ${i}
     ${selector}  Set Variable  (${winners})[${i}]
     Wait Until Element Is Visible  ${selector}  3
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
 
 
 Заповнити номер договору

@@ -2,7 +2,7 @@
 
 
 *** Variables ***
-${notice message}			//*[@class='ivu-notice-desc']
+
 
 *** Keywords ***
 ###########################################################################
@@ -14,36 +14,13 @@ ${notice message}			//*[@class='ivu-notice-desc']
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Натиснути кнопку зберегти
-	${save btn}  Set variable  //*[@data-qa='button-success']
-    Scroll Page To Element XPATH  ${save btn}
-    Click Element  ${save btn}
-    Wait Until Page Contains Element  ${notice message}  15
-    ${notice text}  Get Text  ${notice message}
-	Should Contain  ${notice text}  Аукціон було успішно
-	Wait Until Page Does Not Contain Element  ${notice message}
-
-
-Опублікувати аукціон у реєстрі
-	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]
-	Wait Until Element Is Visible  ${publish btn}  10
-   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
-	Scroll Page To Element XPATH  ${publish btn}
-	Click Element  ${publish btn}
-    Wait Until Element Is Visible  ${notice message}  30
-    ${notice text}  Get Text  ${notice message}
-	Should Be Equal  ${notice text}  Аукціон було успішно опубліковано
-	Wait Until Page Does Not Contain Element  ${notice message}
-
-
 Отримати UAID та href для Аукціону
 	Reload Page
 	${selector}  Set Variable  ${view_locators['auctionID']}
-    Wait Until Element Is Visible  ${selector}  10
-    Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
+	Дочекатись закінчення загрузки сторінки(skeleton)
 	${UAID}  Get Text  ${selector}
 	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Аукціону  ${UAID}
-	Run Keyword If  ${correct status} == ${False}  Отримати UAID для Аукціону
+	Run Keyword If  ${correct status} == ${False}  Отримати UAID та href для Аукціону
     Set To Dictionary  ${data}  auctionID  ${UAID}
     ${tender_href}  Get Location
     Set To Dictionary  ${data}  tender_href  ${tender_href}

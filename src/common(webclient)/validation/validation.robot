@@ -37,8 +37,9 @@
 
 
 Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    ${status}  Run Keyword And Return Status
-    ...  Wait Until Element Contains  //span[@id="pcModalMode_PWH-1T"]  Завантаження документації
+    ${status}  Run Keyword And Return Status  Run Keywords
+    ...  Wait Until Element Is Visible  //span[@id="pcModalMode_PWH-1T"]  AND
+    ...  Wait Until Element Contains    //span[@id="pcModalMode_PWH-1T"]  Завантаження документації
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@title="OK"]
     ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
@@ -49,8 +50,18 @@ Ignore WebClient Error
 	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "${text}")]
 	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${window}
 	Run Keyword If  ${status} == ${True}  Run Keywords
-	...  actions.Натиснути OkButton
-	...  AND  Ignore WebClient Error  ${text}
+	...  actions.Натиснути OkButton  AND
+	...  Ignore WebClient Error  ${text}
+
+
+Ignore updateConflict Error
+	[Arguments]  ${text}=Конфлікт оновлення
+	${window}  Set Variable  //*[@id="pcModalMode_PW-1"]//span[contains(text(), "${text}")]
+	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${window}
+	Run Keyword If  ${status} == ${True}  Run Keywords
+	...  Click Element  //a[@title="Записати"]  AND
+	...  Дочекатись закінчення загрузки сторінки(webclient)  AND
+	...  Ignore updateConflict Error  ${text}
 
 
 Перевірка на успішність публікації тендера

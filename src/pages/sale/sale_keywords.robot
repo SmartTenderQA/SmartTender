@@ -4,10 +4,35 @@
 *** Variables ***
 ${qualification docs btn}				//a[@class='ivu-btn ivu-btn-primary ivu-btn-circle font-18 action-block-btn']
 ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@class,'ivu-btn-long')]
+${notice message}						//*[@class='ivu-notice-desc']
 
 
 *** Keywords ***
 ########## common ###############################
+Натиснути кнопку зберегти
+	${save btn}  Set variable  //*[@data-qa='button-success']
+	elements.Дочекатися відображення елемента на сторінці  ${save btn}  10
+    Scroll Page To Element XPATH  ${save btn}
+    Click Element  ${save btn}
+	elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+    ${notice text}  Get Text  ${notice message}
+	Should Contain Any  ${notice text}  Аукціон було успішно  Об'єкт приватизації було успішно  Інформаційне повідомлення було
+	Wait Until Page Does Not Contain Element  ${notice message}
+	Дочекатись закінчення загрузки сторінки по елементу  //*[contains(@class,'disabled-block')]
+	Дочекатись закінчення загрузки сторінки(skeleton)
+
+
+Натиснути кнопку опублікувати
+	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]
+	elements.Дочекатися відображення елемента на сторінці  ${publish btn}  10
+	Scroll Page To Element XPATH  ${publish btn}
+	Click Element  ${publish btn}
+    elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+    ${notice text}  Get Text  ${notice message}
+	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано
+	Wait Until Page Does Not Contain Element  ${notice message}
+
+
 Отримати та зберегти tender_id
 	Пошук об'єкта у webclient по полю  Загальна назва  ${data['title'].replace('[ТЕСТУВАННЯ] ','')}
 	${tender_id}  Get Element Attribute  xpath=//a[@href and contains(text(),'UA-')]  text
@@ -18,7 +43,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Run Keyword  Отримати prozorro ID для ${site}
 
 
-Отримати prozorro ID для prod торгів
+Отримати prozorro ID для prod
 	Open button  //*[@data-qa='cdbNumber']
 	${text}  Get Text  //*[@class='tender--head--inf' and contains(text(),'UA')]
 	${cdb id}  Evaluate  (re.findall(r'.{32}$','${text}'))[0]  re
@@ -27,7 +52,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Отримати prozorro ID для тестових торгів
+Отримати prozorro ID для test
 	${url}  Get Location
 	${status}  Evaluate  'privatization-' in '${url}'
     ${cdb locator}  Set Variable If  ${status} == ${True}  //*[@data-qa='cdbNumber']  //*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a
@@ -81,7 +106,7 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Click Element  ${file type locator}
 	${menu locator}  Set Variable  (//*[@class="dropdown-menu"])[last()]
 	Wait Until Element Is Visible  ${menu locator}
-	Click Element  ${menu locator}//a[contains(text(),'${type}')]
+	Click Element  ${menu locator}//*[contains(text(),'${type}')]
 	Element Should Contain  ${file type locator}  ${type}
 
 

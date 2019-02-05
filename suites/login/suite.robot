@@ -66,7 +66,7 @@ Login with wrong data and check message
     Fill login  ${users_variables["${name1}"]["login"]}
     Fill password  ${users_variables["${name2}"]["password"]}
     Click Element  //*[@data-qa="form-login-success"]
-    Дочекатись валідаційного повідомлення з текстом  Невірний e-mail та/або пароль
+    notice.Дочекатись сповіщення з текстом  Невірний e-mail та/або пароль
 	Close login window
 
 

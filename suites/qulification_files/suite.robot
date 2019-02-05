@@ -111,6 +111,34 @@ If skipped create tender
     Зберегти дані файлу у словник docs_data  contracts  ${dogovir name}  ${hash}
 
 
+Дочекатися статусу тендера "Пропозиції розглянуті"
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Завантажити сесію для  ${provider1}
+    Go to  ${data['tender_href']}
+	procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
+
+
+Додати переможцем кваліфікаційний документ на стадії "Пропозиції розглянуті"
+    Завантажити сесію для  ${provider2}
+    Go to  ${data['tender_href']}
+    ${provider file name 3}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
+    Зберегти дані файлу у словник docs_data  bids  ${provider file name 3}  ${hash}
+
+
+Підписати організатором договір з переможцем
+    Завантажити сесію для  ${tender_owner}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
+    qualification.Підписати договір з переможцем  2
+
+
+Переконатись що статус закупівлі "Завершено"
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Завантажити сесію для  ${provider1}
+    Go to  ${data['tender_href']}
+    procurement_tender_detail.Дочекатися статусу тендера  Завершено
+
+
 Підготуватися до перевірки відображення документів на сторінці
     Go to  ${data['tender_href']}
     actions.Зберегти словник у файл  ${data}  data
@@ -124,6 +152,7 @@ If skipped create tender
 	${data['qulification_documents'][4]}
 	${data['qulification_documents'][5]}
     ${data['qulification_documents'][6]}
+    ${data['qulification_documents'][7]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
@@ -136,6 +165,7 @@ If skipped create tender
 	${data['qulification_documents'][4]}
 	${data['qulification_documents'][5]}
     ${data['qulification_documents'][6]}
+    ${data['qulification_documents'][7]}
 
 
 
@@ -226,7 +256,7 @@ Precondition
     ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
     Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
     Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    #Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    Call Method    ${chromeOptions}    add_argument    --disable-gpu
     ${webdriverCreated}  Run Keyword And Return Status  Create Webdriver  Chrome  chrome_options=${chromeOptions}
     Should Be True  ${webdriverCreated}
 

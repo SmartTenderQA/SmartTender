@@ -64,7 +64,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
 Визначити учасника переможцем
     [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Визначити переможцем"
@@ -87,7 +87,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
 Відхилити пропозицію учасника
     [Arguments]  ${i}  ${EDS}=None  ${MethodType}=None
     ${selector}  Set Variable  (${winners})[${i}]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  20  2  Click Element  ${selector}
     actions.Натиснути кнопку "Кваліфікація"
     Run Keyword And Ignore Error  validation.Закрити валідаційне вікно  Увага! Натискання кнопки  ОК
     qualification_keywords.Натиснути "Відхилити пропозицію"
@@ -114,3 +114,14 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     actions.Натиснути OkButton
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
     [Return]  ${dogovir name}  ${hash}
+
+
+Підписати договір з переможцем
+    [Arguments]  ${i}
+    qualification_keywords.Вибрати переможця за номером  ${i}
+    actions.Натиснути кнопку "Підписати договір"
+    validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на договір?  Ні
+    validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
+    Wait Until Page Contains  Договір підписаний    60
+    Wait Until Keyword Succeeds  10  2  Click Element  //*[@id="IMMessageBoxBtnOK_CD"]//span[text()="ОК"]

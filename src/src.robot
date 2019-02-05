@@ -28,6 +28,8 @@ Resource    common(webclient)/validation/validation.robot
 
 Resource  	elements/actions.robot
 Resource  	elements/other.robot
+Resource  	elements/notice.robot
+Resource  	elements/elements.robot
 
 
 Resource    Faker/faker.robot
@@ -100,6 +102,7 @@ Resource    pages(webclient)/second_stage/second_stage.robot
 Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.robot
 Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 Resource    pages(webclient)/sale_create_tender/sale_create_tender.robot
+Resource    pages(webclient)/questions/questions.robot
 
 
 Resource    ../steps/Authentication/Authentication.robot
