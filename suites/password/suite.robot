@@ -38,7 +38,8 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     ...  Навести мишку на іконку з заголовку  Меню_користувача	AND
     ...  Натиснути  Вийти										AND
     ...  Авторизуватися  ${user}								AND
-    ...  Перевірити сторінку "Змінити пароль" для tender_owner
+    ...  Перевірити сторінку "Змінити пароль" для tender_owner  AND
+    ...  Go To  ${start_page}
 
 
 Змінити пароль користувача
