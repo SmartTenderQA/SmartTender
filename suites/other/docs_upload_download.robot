@@ -49,7 +49,7 @@ Test Teardown  			Run Keywords
 
 Отримати дані з cdb та зберегти їх у файл
     Створити словник  cdb
-    ${cdb}  Отримати дані об'єкту приватизації з cdb по id  41fef353ba5648158c0d38dd41305afa
+    ${cdb}  Отримати дані об'єкту приватизації з cdb по id  d458a0205be2452c85de6483eda9185d
     Set Global Variable  ${cdb}
     Зберегти словник у файл  ${cdb}  cdb
 
