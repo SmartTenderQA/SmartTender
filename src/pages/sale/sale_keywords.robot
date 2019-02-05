@@ -214,7 +214,10 @@ ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@
 	Click Element  ${selector}
 	Sleep  .5
 	Run Keyword And Ignore Error  Clear input By JS  ${selector}
-	Input Text  ${selector}  ${text.replace('.','').replace(' ','').replace(':','')}
+	Run Keyword If  '${site}' == 'prod'
+	...  Input Text  ${selector}  ${text.replace('.','').replace(' ','').replace(':','')}
+	Run Keyword If  '${site}' == 'test'
+	...  Input Text  ${selector}  ${text}
 	${got}  Get Element Attribute  ${selector}  value
 	Press Key  ${selector}  \\13
 	Should Be Equal As Strings  ${got}  ${text}
