@@ -18,7 +18,6 @@ import operator
 import uuid
 import hashlib
 import json
-import random
 
 
 reload(sys)
@@ -125,9 +124,8 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    if str(IP) == 'iis':
-        n = random.choice([8, 9])
-        site = 'iis' + str(n) + '.smarttender.biz.int'
+    if 'iis' in str(IP):
+        site = str(IP) + '.smarttender.biz.int'
         href = href.replace('https', 'http')
         href = href.replace('smarttender.biz', site)
         return href
