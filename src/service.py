@@ -127,8 +127,8 @@ def convert_url(href, IP):
     if 'iis' in str(IP):
         site = str(IP) + '.smarttender.biz.int'
         href = href.replace('https', 'http')
-        href = href.replace('smarttender.biz', site)
-        return href
+        ret = href.replace('smarttender.biz', site)
+        return ret
     else:
         return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
 
