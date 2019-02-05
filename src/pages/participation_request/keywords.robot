@@ -29,3 +29,19 @@
 	Sleep  3
 	Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'Ваша заявка відправлена!') or contains(text(), 'Ваша заявка розглядається!')]/ancestor::*[@class='ivu-modal-content']//a
 	Wait Until Element Is Not Visible  xpath=//*[contains(text(), 'Ваша заявка відправлена!')]/ancestor::*[@class='ivu-modal-content']//a  20
+
+
+Вибрати правовий статус
+	[Arguments]  ${text}
+	${locator}  Set Variable  //*[@class='ivu-form-item' and contains(.,'Правовий статус')]
+	elements.Дочекатися відображення елемента на сторінці  ${locator}  3
+	Click Element  ${locator}
+	${item}  Set Variable  ${locator}//li[contains(text(),'${text}')]
+	elements.Дочекатися відображення елемента на сторінці  ${item}  3
+	Click Element  ${item}
+
+
+Ввести ІПН
+	${locator}  Set Variable  //input[@placeholder='ІПН']
+	Input Text  ${locator}  1234567890
+	Sleep  .5

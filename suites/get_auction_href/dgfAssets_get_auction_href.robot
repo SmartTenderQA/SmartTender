@@ -15,8 +15,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:requirements -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
 *** Test Cases ***
 Створити тендер
 	[Tags]  create_tender
@@ -113,7 +113,7 @@ If skipped create tender
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  Зберегти сесію  ${i}
-	\  Подати заявку для подачі пропозиції
+	\  Подати заявку на участь в аукціоні
 
 
 Підтвердити заявки на участь
@@ -250,3 +250,13 @@ Precondition
 	Wait Until Element Is Visible  //*[text()='Ви впевнені? Дана дія має незворотній характер!']
 	Click Element  //*[@id='secondYes']
 	Wait Until Element Is Not Visible  //*[@id='secondYes']
+
+
+Подати заявку на участь в аукціоні
+	Відкрити бланк подачі заявки
+	Додати файл для подачі заявки
+	Ввести ім'я для подачі заявки
+	Вибрати правовий статус  Фізична особа
+	Ввести ІПН
+	Підтвердити відповідність для подачі заявки
+	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
