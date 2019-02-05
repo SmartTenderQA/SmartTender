@@ -122,7 +122,7 @@ If skipped create tender
     Завантажити сесію для  ${provider2}
     Go to  ${data['tender_href']}
     ${provider file name 3}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
-    Зберегти дані файлу у словник docs_data  bids  ${provider file name}  ${hash}
+    Зберегти дані файлу у словник docs_data  bids  ${provider file name 3}  ${hash}
 
 
 Підписати організатором договір з переможцем
