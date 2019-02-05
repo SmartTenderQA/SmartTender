@@ -22,7 +22,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	${selector}  Set Variable  //*[contains(@class,'tab-pane') and contains(., "${tab name}")]
 	${class}  Get Element Attribute  ${selector}  class
 	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
-	Run Keyword If  ${tab status} == ${False}  Wait Until Keyword Succeeds  10  1  Click Element  ${selector}
+	Run Keyword If  ${tab status} == ${False}  Wait Until Keyword Succeeds  60  1  Click Element  ${selector}
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
