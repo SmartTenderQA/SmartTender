@@ -125,12 +125,14 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    n = random.choice([8, 9])
-    if ip != 'iis':
-        return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
+    if str(IP) == 'iis':
+        n = random.choice([8, 9])
+        site = 'iis' + str(n) + '.smarttender.biz.int'
+        href = href.replace('https', 'http')
+        href = href.replace('smarttender.biz', site)
+        return href
     else:
-        start = 'http: // iis' + str(n) + '.smarttender.biz.int /'
-        return str(re.sub(start, str(IP), str(href)))
+        return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
 
 
 def download_file_and_return_content(url):
