@@ -294,9 +294,9 @@ If skipped create tender
 Precondition
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...  Set Global Variable  ${tender_owner}  Bened  AND
-	...  Set Global Variable  ${provider1}  user1  AND
-	...  Set Global Variable  ${provider2}  user2  AND
-	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${provider1}  user2  AND
+	...  Set Global Variable  ${provider2}  user3  AND
+	...  Set Global Variable  ${provider3}  user4  AND
 	...  Set Global Variable  ${viewer}  test_viewer
 	...  ELSE
 	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
@@ -384,7 +384,8 @@ Precondition
 	Відкрити бланк подачі заявки
 	Додати файл для подачі заявки
 	Ввести ім'я для подачі заявки
-	Вибрати правовий статус  Фізична особа
-	Ввести ІПН
+	Run Keyword If  '${type}' == 'requirements'  Run Keywords
+	...  Вибрати правовий статус  Фізична особа		AND
+	...  Ввести ІПН
 	Підтвердити відповідність для подачі заявки
 	Відправити заявку для подачі пропозиції та закрити валідаційне вікно
