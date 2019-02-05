@@ -88,7 +88,7 @@
 Заповнити guarantee.amount
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['guarantee']['amount']
-	sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
 
