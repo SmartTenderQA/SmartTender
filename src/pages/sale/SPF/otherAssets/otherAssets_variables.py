@@ -38,7 +38,7 @@ edit_locators = {
 		"amount": "//*[@data-name='GUARANTEE_AMOUNT_PERCENT']//input"
 	},
 	"minimalStep": {
-		"amount": "(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[3]//input"
+		"amount": "//*[@data-name='MINSTEP_PERCENT']//input"
 	}
 }
 #</editor-fold>
@@ -143,6 +143,11 @@ data = {
 	},
 	"minimalStep": {
 		"amount": ""
+	},
+	"procuringEntity": {
+		"contactPoint": {
+			"name": ""
+		}
 	},
 	"documents": [
 	]

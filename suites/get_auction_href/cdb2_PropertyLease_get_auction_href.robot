@@ -9,7 +9,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #zapusk
 #Отримати посилання на аукціон
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#test
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#prod
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i make_proposal -v hub:None -v where:prod suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 #Кваліфікація учасника
 #robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
 *** Variables ***
@@ -17,7 +20,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 *** Test Cases ***
 Створити аукціон
-	[Tags]  create_tender  get_auction_href  qualification
+	[Tags]  create_tender  make_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	cdb2_PropertyLease.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
@@ -32,7 +35,7 @@ If skipped create tender
 
 
 Отримати дані про аукціон з ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  make_proposal  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	synchronization.Дочекатись синхронізації  auctions
 	${cdb_data}  Отримати дані Аукціону ФГИ з cdb по id  ${data['id']}
@@ -41,7 +44,7 @@ If skipped create tender
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  make_proposal  get_auction_href
 	[Setup]  Run Keyword If  '${site}' == 'prod'
 	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
@@ -64,7 +67,7 @@ If skipped create tender
 
 
 Перевірити відображення детальної інформації
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  make_proposal  get_auction_href
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
@@ -98,7 +101,7 @@ If skipped create tender
 
 
 Знайти тендер учасниками
-	[Tags]  find_auction  get_auction_href  qualification
+	[Tags]  find_auction  make_proposal  get_auction_href  qualification
 	:FOR  ${i}  IN  ${provider1}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
@@ -110,7 +113,7 @@ If skipped create tender
 
 
 Подати заявки на участь в тендері
-	[Tags]  make_a_proposal  get_auction_href  qualification
+	[Tags]  make_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  1  2
@@ -120,14 +123,14 @@ If skipped create tender
 
 
 Підтвердити заявки на участь
-	[Tags]  make_a_proposal  get_auction_href  qualification
+	[Tags]  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
-	[Tags]  make_a_proposal  get_auction_href  qualification
+	[Tags]  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
@@ -284,11 +287,18 @@ If skipped create tender
 
 *** Keywords ***
 Precondition
-	Set Global Variable  ${tender_owner}  Bened
-	Set Global Variable  ${provider1}  user1
-	Set Global Variable  ${provider2}  user2
-	Set Global Variable  ${provider3}  user3
-	Set Global Variable  ${viewer}  test_viewer
+	Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+	Run Keyword If  '${where}' == 'prod'	Run Keywords
+	...  Set Global Variable  ${tender_owner}  fgv_prod_owner	AND
+	...  Set Global Variable  ${provider1}  prod_provider  AND
+	...  Set Global Variable  ${provider2}  prod_provider2  AND
+	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
 	cdb2_PropertyLease.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
