@@ -35,11 +35,13 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 Відфільтрувати по організатору
     [Arguments]  ${name}
-    ${owner block}  Set Variable  //*[.="Організатори"]
+    ${owner block}    Set Variable  //*[.="Організатори"]
+    ${dropdown item}  Set Variable  //li[contains(@class, "dropdown-item")]
     Input Text  ${owner block}//input  ${name}
-    Wait Until Keyword Succeeds  10  1  Click Element  //li/b[contains(text(),"${name}")]
-    Wait Until Keyword Succeeds  3  1
-    ...  Element Should Be Visible  ${owner block}/following-sibling::ul//p[contains(text(),"${name}")]
+    elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  15
+    Click Element     (${dropdown item})[1]
+    ${get}  Get Text  (${owner block}/following-sibling::*//li[contains(@class, "input-token-facebook")]//p)[1]
+    Should Contain  ${get}  ${name}
 
 
 Відфільтрувати по статусу торгів
