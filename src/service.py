@@ -124,7 +124,13 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
+    if 'iis' in str(IP):
+        site = str(IP) + '.smarttender.biz.int'
+        href = href.replace('https', 'http')
+        href = href.replace('smarttender.biz', site)
+        return href
+    else:
+        return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
 
 
 def download_file_and_return_content(url):

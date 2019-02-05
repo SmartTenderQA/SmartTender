@@ -16,7 +16,7 @@ ${content}  Приймаю умови Договору приєднання пр
 
 
 Перевірити особистій кабінет
-	Go To  https://smarttender.biz/invoicepage/purchase/
+	Go To  ${start_page}invoicepage/purchase/
 	Закрити вікно LLC2
 
 
