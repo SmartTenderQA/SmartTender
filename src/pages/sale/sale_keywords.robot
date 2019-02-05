@@ -106,7 +106,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Click Element  ${file type locator}
 	${menu locator}  Set Variable  (//*[@class="dropdown-menu"])[last()]
 	Wait Until Element Is Visible  ${menu locator}
-	Click Element  ${menu locator}//a[contains(text(),'${type}')]
+	Click Element  ${menu locator}//*[contains(text(),'${type}')]
 	Element Should Contain  ${file type locator}  ${type}
 
 
