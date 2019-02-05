@@ -2,7 +2,7 @@
 
 
 *** Variables ***
-${notice element locator}				css=.ivu-message-notice-content
+${notice element locator}				//*[@class='ivu-message-notice-content']|//*[@class='ivu-notice-notice-content']
 
 
 *** Keywords ***
