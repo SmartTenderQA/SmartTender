@@ -18,6 +18,7 @@ import operator
 import uuid
 import hashlib
 import json
+import random
 
 
 reload(sys)
@@ -124,7 +125,12 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
+    n = random.choice([8, 9])
+    if ip != 'iis':
+        return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
+    else:
+        start = 'http: // iis' + str(n) + '.smarttender.biz.int /'
+        return str(re.sub(start, str(IP), str(href)))
 
 
 def download_file_and_return_content(url):
