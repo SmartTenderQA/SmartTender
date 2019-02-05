@@ -33,6 +33,15 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 	Дочекатись закінчення загрузки сторінки(skeleton)
 
 
+Відфільтрувати по організатору
+    [Arguments]  ${name}
+    ${owner block}  Set Variable  //*[.="Організатори"]
+    Input Text  ${owner block}//input  ${name}
+    Wait Until Keyword Succeeds  10  1  Click Element  //li/b[contains(text(),"${name}")]
+    Wait Until Keyword Succeeds  3  1
+    ...  Element Should Be Visible  ${owner block}/following-sibling::ul//p[contains(text(),"${name}")]
+
+
 Відфільтрувати по статусу торгів
 	[Arguments]  ${status}
 	${dropdown menu for bid statuses}  Set Variable  //label[contains(text(),'Статуси')]/../../ul
