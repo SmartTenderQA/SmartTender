@@ -42,6 +42,7 @@
 	${name}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову контактну особу
 	[Return]  ${name}
 
+
 Заповнити title
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['title']

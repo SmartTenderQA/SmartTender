@@ -43,7 +43,7 @@ edit_locators = {
 		}
 	},
 	"minimalStep": {
-		"amount": "(//*[contains(text(), 'Мінімальний крок аукціону')]/following-sibling::table)[2]//input"
+		"amount": "//*[@data-name='MINSTEP_PERCENT']//input"
 	}
 }
 #</editor-fold>
@@ -158,8 +158,15 @@ data = {
 			"leaseDuration": ""
 		}
 	},
+	"procuringEntity": {
+		"contactPoint": {
+			"name": ""
+		}
+	},
 	"minimalStep": {
 		"amount": ""
-	}
+	},
+	"documents": [
+	]
 }
 #</editor-fold>

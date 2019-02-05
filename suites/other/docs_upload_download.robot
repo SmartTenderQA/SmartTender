@@ -34,7 +34,7 @@ Test Teardown  			Run Keywords
     small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
     Загрузити файл  ${1 full name}
     Загрузити файл  ${2 full name}
-    small_privatization_object.Натиснути кнопку зберегти
+    sale_keywords.Натиснути кнопку зберегти
 
 
 Перевірка загрузки файлів
