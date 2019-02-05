@@ -15,11 +15,30 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 #robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:user4 suites/password/suite.robot
 #
 *** Test Cases ***
+Відновлення пароля через email
+    [Tags]  reset_password
+    Перейти на сторінку відновлення пароля
+    Відправити лист "Відновлення паролю" на пошту
+    Розпочати роботу з Gmail  ${user}
+    Відкрити лист в email за темою  SmartTender: Відновлення паролю
+    Перейти за посиланням в листі  Відновити пароль→
+    Ввести новий пароль
+    Go To  ${start_page}
+    Переконатися що пароль змінено
+    Авторизуватися з новим паролем  ${new password}
+    Навести мишку на іконку з заголовку  Меню_користувача
+	Натиснути  Змінити пароль
+    Змінити пароль  ${new password}  ${password}
+
+
 Перевірити можливість змінити пароль через особистий кабінет для організатора
     [Tags]  change_password
+    Go To  ${start_page}
     Run Keyword If  '${role}' == 'tender_owner'  Run Keywords
-    ...  Перевірити сторінку "Змінити пароль" для tender_owner  AND
-    ...  Go To  ${start_page}
+    ...  Навести мишку на іконку з заголовку  Меню_користувача	AND
+    ...  Натиснути  Вийти										AND
+    ...  Авторизуватися  ${user}								AND
+    ...  Перевірити сторінку "Змінити пароль" для tender_owner
 
 
 Змінити пароль користувача
@@ -37,28 +56,15 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Змінити пароль  ${new password}  ${password}
 
 
-Відновлення пароля через email
-    [Tags]  reset_password
-    Перейти на сторінку відновлення пароля
-    Відправити лист "Відновлення паролю" на пошту
-    Розпочати роботу з Gmail  ${user}
-    Відкрити лист в email за темою  SmartTender: Відновлення паролю
-    Перейти за посиланням в листі  Відновити пароль→
-    Ввести новий пароль
-    Go To  ${start_page}
-    Переконатися що пароль змінено
-    Авторизуватися з новим паролем  ${new password}
-    Навести мишку на іконку з заголовку  Меню_користувача
-	Натиснути  Змінити пароль
-    Змінити пароль  ${new password}  ${password}
-
-
 *** Keywords ***
 Precondition
    	Open Browser In Grid  ${user}
-   	Авторизуватися  ${user}
    	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
 	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
+	${role}  Отримати дані користувача по полю  ${user}  role
+	${name}  Отримати дані користувача по полю  ${user}  name
+	Set Global Variable  ${role}
+	Set Global Variable  ${name}
 
 
 Postcondition
@@ -107,9 +113,6 @@ Postcondition
 
 
 Перейти на сторінку відновлення пароля
-	Go To  ${start_page}
-    start_page.Навести мишку на іконку з заголовку  Меню_користувача
-	menu-user.Натиснути  Вийти
 	Відкрити вікно авторизації
 	Click I forgot password
 
