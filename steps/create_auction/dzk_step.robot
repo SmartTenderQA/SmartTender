@@ -20,9 +20,9 @@ Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 	dzk_step.Заповнити "Реквізити для перерахування гарантійних внесків"
 	dzk_step.Заповнити "Реквізити рахунку(рахунків) виконавця для сплати винагороди та/або витрат на підготовку"
 	dzk_step.Заповнити "Загальну інформацію про предмет"
-	dzk_auction.Натиснути кнопку зберегти
+	sale_keywords.Натиснути кнопку зберегти
 	#todo nuzhno ubrat` posle fixa
-	Wait Until Keyword Succeeds  3x  35  dzk_auction.Опублікувати аукціон у реєстрі
+	Wait Until Keyword Succeeds  3x  35  sale_keywords.Натиснути кнопку опублікувати
 	###
 
 

@@ -6,16 +6,6 @@
 
 *** Keywords ***
 ###########################################################################
-################################## STEPS ##################################
-###########################################################################
-
-###########################################################################
-################################# /STEPS ##################################
-###########################################################################
-
-
-
-###########################################################################
 ################################# COMMON ##################################
 ###########################################################################
 Натиснути кнопку "Коригувати об'єкт приватизації"
@@ -30,28 +20,6 @@
     ${selector}  Set Variable  //*[@data-qa="file-name"]
     ${count}  Get Element Count  ${selector}
     [Return]  ${count}
-
-
-Натиснути кнопку зберегти
-	${save btn}  Set variable  //*[@data-qa='button-success']
-    Scroll Page To Element XPATH  ${save btn}
-    Click Element  ${save btn}
-    Wait Until Element Is Visible  ${notice message}  15
-    ${notice text}  Get Text  ${notice message}
-	Should Contain  ${notice text}  успішно
-	Wait Until Page Does Not Contain Element  ${notice message}
-
-
-Опублікувати об'єкт у реєстрі
-	${publish btn}  Set Variable  //*[@data-qa='button-publish-asset']
-	Wait Until Element Is Visible  ${publish btn}  10
-   	Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
-	Scroll Page To Element XPATH  ${publish btn}
-	Click Element  ${publish btn}
-    Wait Until Element Is Visible  ${notice message}  15
-    ${notice text}  Get Text  ${notice message}
-	Should Contain  ${notice text}  успішно
-	Wait Until Page Does Not Contain Element  ${notice message}
 
 
 Отримати UAID для Об'єкту

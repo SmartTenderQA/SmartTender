@@ -55,7 +55,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	\['items'][0]['address']['streetAddress']
 
 
-
 Перевірити відображення детальної інформації про об'єкт
 	[Tags]  compare  -prod
 	[Setup]  Run Keywords
