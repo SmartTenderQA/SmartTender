@@ -7,6 +7,7 @@ Resource        create_tender_keywords.robot
 Вибрати тип процедури
 	[Arguments]  ${type}
 	Click Element  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table
+	elements.Дочекатися відображення елемента на сторінці  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '${type}')]
 	Click Element  xpath=//*[@class='dxeListBoxItemRow_DevEx']/td[contains(text(), '${type}')]
 	${taken}  Get Element Attribute  xpath=//*[contains(text(), 'Процедура')]/following-sibling::table//td[2]//input  value
 	${status}  Run Keyword And Return Status  Should Be Equal  ${taken}  ${type}
@@ -114,9 +115,6 @@ Resource        create_tender_keywords.robot
 	Wait Until Page Contains Element  ${selector}  15
 	Wait Until Keyword Succeeds  15  2  Click Element  ${selector}
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Run Keyword If  '${site}' == 'prod'  Wait Until Keyword Succeeds  120  3  Element Should Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
-	Run Keyword If  '${site}' == 'prod'  Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
-	Run Keyword If  '${site}' == 'prod'  Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
 
 
 Відкрити сторінку для створення публічних закупівель
@@ -163,7 +161,7 @@ Resource        create_tender_keywords.robot
 
 
 Відкрити вкладку Умови договору аренди
-  ${selector}  Set Variable  xpath=//li[contains(@id, "mainTabControl_T4")]
+  ${selector}  Set Variable  xpath=//li[contains(@class, 'dxtc-tab') and contains(.,'Умови договору оренди')]
   Run Keyword And Ignore Error  Click Element  ${selector}
   ${status}  Run Keyword And Return Status  Element Should Not Be Visible  ${selector}
   Run Keyword If  '${status}' != 'True'  Відкрити вкладку Умови договору аренди

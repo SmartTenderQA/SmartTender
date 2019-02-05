@@ -72,6 +72,7 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 
 Прикріпити документ договору
+	elements.Дочекатися відображення елемента на сторінці  //*[contains(text(),'Обзор...')]
 	Click Element  //*[contains(text(),'Обзор...')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']
@@ -89,13 +90,15 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 
 Зберегти договір
-	Click Element  //*[contains(text(),'OK')]
+	elements.Дочекатися відображення елемента на сторінці  //span[contains(text(),'OK')]
+	Click Element  //span[contains(text(),'OK')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Element Should Not Be Visible  //span[contains(text(),'Вкладення договірних документів')]
 
 
 Натиснути "Підписати договір"
-	Click Element  //*[contains(text(),'Підписати договір')]
+	elements.Дочекатися відображення елемента на сторінці  //*[@class="dxr-tabWrapper"]//*[contains(text(),'Підписати договір')]
+	Click Element  //*[@class="dxr-tabWrapper"]//*[contains(text(),'Підписати договір')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
 	Дочекатись закінчення загрузки сторінки(webclient)

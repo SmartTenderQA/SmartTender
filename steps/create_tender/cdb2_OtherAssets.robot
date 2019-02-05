@@ -4,12 +4,16 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 
 *** Keywords ***
 Створити аукціон
+	Run Keyword If  '${site}' == 'prod'
+	...  desktop.Змінити групу  Організатор. Реализация державного майна (E_ORGSPA)
 	Відкрити сторінку Продаж/Оренда майна(тестові)
 	Відкрити вікно створення тендеру
 	create_tender.Вибрати тип процедури  Продаж майна
 
-	cdb2_OtherAssets.Заповнити "День старту електроного аукціону"
+	Run Keyword  cdb2_OtherAssets.Заповнити "День старту електроного аукціону" ${site}
 	cdb2_OtherAssets.Заповнити "Початкова ціна реалізації лоту"
+	Run Keyword If  '${site}' == 'prod'
+	...  cdb2_OtherAssets.Заповнити "Контактна особа"
 	cdb2_OtherAssets.Заповнити "Предмет продажу"
 	cdb2_OtherAssets.Заповнити "Позиції аукціону"
 	cdb2_OtherAssets.Заповнити "Гарантійний внесок"
@@ -32,8 +36,14 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 #########################################################
 #	                  Keywords							#
 #########################################################
-Заповнити "День старту електроного аукціону"
-	${startDate}  get_time_now_with_deviation  18  minutes
+Заповнити "День старту електроного аукціону" test
+	${startDate}  get_formated_time_with_delta  18  minutes  m
+	otherAssets.Заповнити auctionPeriod.startDate  ${startDate}
+    Set To Dictionary  ${data}  date  ${startDate}
+
+
+Заповнити "День старту електроного аукціону" prod
+	${startDate}  get_formated_time_with_delta  5  days  m
 	otherAssets.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 
@@ -56,6 +66,11 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 	Set To Dictionary  ${data['minimalStep']}  amount  ${minimal_step}
 
 
+Заповнити "Контактна особа"
+	${name}  otherAssets.Заповнити procuringEntity.contactPoint.name
+	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
+
+
 Заповнити "Предмет продажу"
 	cdb2_OtherAssets.Заповнити "Загальна назва аукціону"
 	cdb2_OtherAssets.Заповнити "Номер лоту в замовника"
@@ -64,7 +79,7 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 
 Заповнити "Загальна назва аукціону"
 	${title}  create_sentence  5
-	otherAssets.Заповнити title  ${title}
+	otherAssets.Заповнити title  [ТЕСТУВАННЯ] ${title}
 	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
