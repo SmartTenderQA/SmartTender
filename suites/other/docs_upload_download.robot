@@ -17,7 +17,7 @@ Test Teardown  			Run Keywords
 
 Виконати пошук потрібного обєкту
     small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
-    new_search.Ввести фразу для пошуку  UA-AR-P-2018-12-10-000004-3
+    new_search.Ввести фразу для пошуку  UA-AR-P-2019-02-04-000001-1
     small_privatization_search.Натиснути кнопку пошуку
     small_privatization_search.Перейти по результату пошуку за номером  1
 
@@ -51,6 +51,7 @@ Test Teardown  			Run Keywords
     Створити словник  cdb
     ${cdb}  Отримати дані об'єкту приватизації з cdb по id  41fef353ba5648158c0d38dd41305afa
     Set Global Variable  ${cdb}
+    Зберегти словник у файл  ${cdb}  cdb
 
 
 Отримати контрольні суми файлів з ЦБД, до загрузки та після скачування та порівняти їх

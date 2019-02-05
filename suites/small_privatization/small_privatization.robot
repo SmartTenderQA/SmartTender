@@ -12,22 +12,23 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -v user:ssp_tender_owner -v hub:None suites/small_privatization/small_privatization.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:test -v hub:None suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:prod -v hub:none suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -test -v where:test -v hub:none suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
 	Завантажити сесію для  ${tender_owner}
 	small_privatization_step.Завантажити локатори для об'єкта
 	small_privatization_step.Створити об'єкт МП
 	small_privatization_object.Отримати UAID для Об'єкту
-	small_privatization_object.Отримати ID у цбд
+	Run Keyword If  '${site}' == 'test'
+	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
-	Log To Console  url=${location}
+	Log  ОП url= ${location}  WARN
 	Зберегти словник у файл  ${data}  asset
 
 
 Отримати дані про об'єкт з ЦБД
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -35,7 +36,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['title']
 	\['description']
@@ -56,7 +57,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про об'єкт
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
@@ -89,16 +90,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	small_privatization_step.Завантажити локатори для ІП
-	small_privatization_step.Створити інформаційне повідомлення МП  ${cdb_data['assetID']}
+	small_privatization_step.Створити інформаційне повідомлення МП  ${assetID}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
-	small_privatization_object.Отримати ID у цбд
+	Run Keyword If  '${site}' == 'test'
+	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
-	Log To Console  url=${location}
+	Log  ИС url= ${location}  WARN
 	Зберегти словник у файл  ${data}  message
 
 
 Отримати дані про інформаційне повідомлення з ЦБД
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -106,7 +108,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['decisions'][0]['decisionID']
 	\['decisions'][0]['decisionDate']  m
@@ -133,7 +135,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
-	[Tags]  compare
+	[Tags]  compare  -prod
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
@@ -274,18 +276,18 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Keywords ***
 Precondition
 	Run Keyword If  '${where}' == 'test'  Run Keywords
-	...  Set Global Variable  ${tender_owner}  ssp_tender_owner  AND
-	...  Set Global Variable  ${tender_owner2}  test_tender_owner  AND
-	...  Set Global Variable  ${provider1}  user1  AND
-	...  Set Global Variable  ${provider2}  user2  AND
-	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${tender_owner}  ssp_tender_owner			AND
+	...  Set Global Variable  ${tender_owner2}  test_tender_owner		AND
+	...  Set Global Variable  ${provider1}  user1						AND
+	...  Set Global Variable  ${provider2}  user2						AND
+	...  Set Global Variable  ${provider3}  user3						AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	...  ELSE
-	...  Set Global Variable  ${tender_owner}  prod_ssp_owner  AND
-	...  Set Global Variable  ${tender_owner2}  prod_tender_owner  AND
-	...  Set Global Variable  ${provider1}  prod_provider  AND
-	...  Set Global Variable  ${provider2}  prod_provider2  AND
-	...  Set Global Variable  ${provider3}  prod_provider1  AND
+	Run Keyword If  '${where}' == 'prod'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  prod_ssp_owner			AND
+	...  Set Global Variable  ${tender_owner2}  prod_tender_owner		AND
+	...  Set Global Variable  ${provider1}  prod_provider				AND
+	...  Set Global Variable  ${provider2}  prod_provider2				AND
+	...  Set Global Variable  ${provider3}  prod_provider1				AND
 	...  Set Global Variable  ${viewer}  prod_viewer
 	Додати першого користувача  ${tender_owner}
     Підготувати користувачів

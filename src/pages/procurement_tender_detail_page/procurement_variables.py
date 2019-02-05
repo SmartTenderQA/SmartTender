@@ -535,7 +535,8 @@ def get_locator(field):
         result = list.group('path')
         map = {
             "['title']": u"""(//*[@data-qa="questions"]//*[@class="bold break-word"])[last()-({0}-1)]""",
-            "['description']": u"""(//*[@data-qa="questions"]//*[@class="break-word"])[last()-({0}-1)]"""
+            "['description']": u"""(//*[@data-qa="questions"]//*[@class="ivu-card-body"])[last()-({0}-1)]//*[contains(@class,"card-padding")]""",
+            "['answer']": u"""(//*[@data-qa="questions"]//*[contains(@class,"card-padding")])[last()-({0}-1)]"""
         }
         return map[result].format(id)
     elif "complaints" in field:
