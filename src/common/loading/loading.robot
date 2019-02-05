@@ -11,6 +11,7 @@ ${skeleton loading}                 css=.skeleton-wrapper
 ${sales spin}                       css=.ivu-spin
 ${docs spin}                        //div[contains(@style, "loading")]
 ${weclient start}                   //*[@class="spinner"]
+${loading bar}                      //div[@class="ivu-loading-bar"]   # полоса вверху страницы http://joxi.ru/Dr8xjNeT47v7Dr
 
 
 *** Keywords ***
@@ -41,3 +42,6 @@ ${weclient start}                   //*[@class="spinner"]
 Дочекатись закінчення загрузки сторінки(weclient start)
 	Дочекатись закінчення загрузки сторінки по елементу  ${weclient start}
 
+
+Дочекатись закінчення загрузки сторінки(полоса)
+	Дочекатись закінчення загрузки сторінки по елементу  ${loading bar}

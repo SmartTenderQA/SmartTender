@@ -12,6 +12,7 @@ ${eds index}     0
     loading.Дочекатись закінчення загрузки сторінки(webclient)
     Run Keyword If      '${eds index}' != '1'  Накласти ЕЦП (webclient) перший раз
     Set Global Variable  ${eds index}  1
+    loading.Дочекатись закінчення загрузки сторінки(webclient)
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
 
 

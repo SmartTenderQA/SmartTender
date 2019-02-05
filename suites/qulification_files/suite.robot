@@ -111,6 +111,36 @@ If skipped create tender
     Зберегти дані файлу у словник docs_data  contracts  ${dogovir name}  ${hash}
 
 
+Дочекатися статусу тендера "Пропозиції розглянуті"
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Завантажити сесію для  ${provider1}
+    Go to  ${data['tender_href']}
+	procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
+
+
+Додати переможцем кваліфікаційний документ на стадії "Пропозиції розглянуті"
+    Завантажити сесію для  ${provider2}
+    Go to  ${data['tender_href']}
+    ${provider file name 3}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
+    Зберегти дані файлу у словник docs_data  bids  ${provider file name 3}  ${hash}
+
+
+Підписати організатором договір з переможцем
+    [Tags]  non-critical
+    Завантажити сесію для  ${tender_owner}
+	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
+    main_page.Знайти тендер організатором по title  ${data['title']}
+    qualification.Підписати договір з переможцем  2
+
+
+Переконатись що статус закупівлі "Завершено"
+    [Tags]  non-critical
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    Завантажити сесію для  ${provider1}
+    Go to  ${data['tender_href']}
+    procurement_tender_detail.Дочекатися статусу тендера  Завершено
+
+
 Підготуватися до перевірки відображення документів на сторінці
     Go to  ${data['tender_href']}
     actions.Зберегти словник у файл  ${data}  data
@@ -124,6 +154,7 @@ If skipped create tender
 	${data['qulification_documents'][4]}
 	${data['qulification_documents'][5]}
     ${data['qulification_documents'][6]}
+    ${data['qulification_documents'][7]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
@@ -136,6 +167,7 @@ If skipped create tender
 	${data['qulification_documents'][4]}
 	${data['qulification_documents'][5]}
     ${data['qulification_documents'][6]}
+    ${data['qulification_documents'][7]}
 
 
 
@@ -209,21 +241,15 @@ Precondition
     Mouse Over  ${selector}
     Wait Until Element Is Visible  ${download locator}
     Click Element                  ${download locator}
-    Sleep  3
+    Sleep  5
+    ${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Go Back      AND
+    ...  Reload Page  AND
+    ...  Скачати файл з іменем та індексом  ${name}  ${index}
     ${md5}   get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
-
-
-Відкрити браузер Chrome з вказаною папкою для завантаження файлів
-    [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    #Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${webdriverCreated}  Run Keyword And Return Status  Create Webdriver  Chrome  chrome_options=${chromeOptions}
-    Should Be True  ${webdriverCreated}
 
 
 Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement

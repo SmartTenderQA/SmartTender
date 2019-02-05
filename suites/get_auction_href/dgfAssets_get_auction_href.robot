@@ -15,11 +15,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None suites/get_auction_href/dgfAssets_get_auction_href.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v type:property -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
+#Отримати посилання на аукціон
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v type:property -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v type:requirements -v hub:None -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
+#Кваліфікація учасника
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v where:test suites/get_auction_href/dgfAssets_get_auction_href.robot
+
 *** Test Cases ***
 Створити тендер
-	[Tags]  create_tender
+	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	sale_dgfAssets.Створити тендер  ${type_dict['${type}']}
 
@@ -32,7 +36,7 @@ If skipped create tender
 
 
 Отримати дані про аукціон з ЦБД
-	[Tags]  compare
+	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
@@ -43,7 +47,7 @@ If skipped create tender
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare
+	[Tags]  compare  get_auction_href
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['dgfDecisionID']
 	\['dgfDecisionDate']  d
@@ -66,7 +70,7 @@ If skipped create tender
 
 
 Перевірити відображення детальної інформації
-	[Tags]  compare
+	[Tags]  compare  get_auction_href
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
@@ -102,26 +106,30 @@ If skipped create tender
 
 
 Знайти тендер учасниками
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	Знайти тендер користувачем	${provider1}
 	Зберегти пряме посилання на тендер
 
 
 Подати заявки на участь в тендері
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  Зберегти сесію  ${i}
-	\  Подати заявку для подачі пропозиції
+	\  Подати заявку на участь в аукціоні
 
 
 Підтвердити заявки на участь
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
@@ -133,6 +141,7 @@ If skipped create tender
 
 
 Дочекатися початку аукціону першим учасником
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
 	Дочекатись дати  ${data['date']}
@@ -140,18 +149,137 @@ If skipped create tender
 
 
 Отримати посилання на аукціон для першого учасника
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     Wait Until Keyword Succeeds  5m  3
     ...  Отримати поcилання на участь та перегляд аукціону першим учасником
 
 
 Отримати поcилання на перегляд аукціону
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}   #provider3
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
+
+
+Дочекатися початку кваліфікації
+	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Завантажити сесію для  ${provider2}
+	#todo nuzhno vinesti keyword
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+	#
+
+
+Подати кваліфікаційні документи
+	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	sale_keywords.Натиснути "Кваліфікаційні документи"
+	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують кваліфікацію
+	sale_keywords.Додати кваліфікаційний документ за типом  Цінова пропозиція
+	sale_keywords.Додати кваліфікаційний документ за типом  Документи, що підтверджують відповідність
+	sale_keywords.Додати кваліфікаційний документ за типом  Протокол аукціону
+	sale_keywords.Завантажити кваліфікаційні документи
+
+
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Go Back									AND
+	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+
+
+Замінити кваліфікаційні документи
+	[Tags]  qualification
+	No Operation
+
+
+Перевірити відображення детальної інформації про документи після змін
+	[Tags]  qualification
+	No Operation
+
+
+Кваліфікація переможця аукціону
+	[Tags]  qualification
+	[Setup]  Завантажити сесію для  ${tender_owner}
+	Відкрити сторінку Аукціони ФГВ(test)
+	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
+	sale_create_tender.Додати протокол рішення
+	sale_create_tender.Натиснути "Кваліфікація"
+	sale_create_tender.Натиснути "Підтвердити оплату"
+
+
+Прикріпити та підписати договір
+	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Sleep  2m
+	sale_create_tender.Натиснути "Прикріпити договір"
+	sale_create_tender.Заповнити поле "Номер договору"
+	sale_create_tender.Заповнити поле "Дата підписання"
+	sale_create_tender.Прикріпити документ договору
+	sale_create_tender.Зберегти договір
+	sale_create_tender.Натиснути "Підписати договір"
+	Завантажити сесію для  ${provider2}
+	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
+
+
+Отримати дані про аукціон з ЦБД
+	[Tags]  compare  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
+	Set Global Variable  ${cdb_data}
+	Зберегти словник у файл  ${cdb_data}  cdb_data_with_docs
+
+
+Перевірити коректність документів в ЦБД
+	[Tags]  compare  qualification
+	[Template]  compare_data.Порівняти створений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
+
+
+Перевірити коректність відображення документів
+	[Tags]  compare  qualification
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
+	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
+	${data['documents'][0]}
+	${data['documents'][1]}
+	${data['documents'][2]}
+	${data['documents'][3]}
+	${data['documents'][4]}
+	${data['documents'][5]}
 
 
 Забрати гарантійний внесок учасниками
@@ -166,9 +294,9 @@ If skipped create tender
 Precondition
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...  Set Global Variable  ${tender_owner}  Bened  AND
-	...  Set Global Variable  ${provider1}  user1  AND
-	...  Set Global Variable  ${provider2}  user2  AND
-	...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${provider1}  user2  AND
+	...  Set Global Variable  ${provider2}  user3  AND
+	...  Set Global Variable  ${provider3}  user4  AND
 	...  Set Global Variable  ${viewer}  test_viewer
 	...  ELSE
 	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
@@ -250,3 +378,14 @@ Precondition
 	Wait Until Element Is Visible  //*[text()='Ви впевнені? Дана дія має незворотній характер!']
 	Click Element  //*[@id='secondYes']
 	Wait Until Element Is Not Visible  //*[@id='secondYes']
+
+
+Подати заявку на участь в аукціоні
+	Відкрити бланк подачі заявки
+	Додати файл для подачі заявки
+	Ввести ім'я для подачі заявки
+	Run Keyword If  '${type}' == 'requirements'  Run Keywords
+	...  Вибрати правовий статус  Фізична особа		AND
+	...  Ввести ІПН
+	Підтвердити відповідність для подачі заявки
+	Відправити заявку для подачі пропозиції та закрити валідаційне вікно

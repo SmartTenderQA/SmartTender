@@ -54,6 +54,11 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	Set To Dictionary  ${data['message']}  document-name  ${doc[1]}
 
 
+Натиснути Додати реквізити
+	Click Element  //*[contains(text(),'Додати реквізити')]
+	Sleep  .5
+
+
 Перейти до Коригування інформації
 	${edit btn}  Set Variable  //*[@data-qa='button-to-edit-page']
    	Wait Until Element Is Visible  ${edit btn}

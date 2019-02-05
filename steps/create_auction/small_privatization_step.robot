@@ -16,8 +16,8 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	small_privatization_step.Заповнити "Опис об'єкту приватизації"
 	small_privatization_step.Заповнити "Рішення про затвердження переліку об'єктів"
 	small_privatization_step.Заповнити "Загальну інформацію про об'єкт"
-	small_privatization_object.Натиснути кнопку зберегти
-	small_privatization_object.Опублікувати об'єкт у реєстрі
+	sale_keywords.Натиснути кнопку зберегти
+	sale_keywords.Натиснути кнопку опублікувати
 
 
 Завантажити локатори для об'єкта
@@ -46,7 +46,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	small_privatization_step.Заповнити "Умови аукціону"
 	small_privatization_step.Заповнити "Банківські реквізити"
 	small_privatization_informational_message.Зберегти чернетку інформаційного повідомлення
-	small_privatization_informational_message.Передати на перевірку інформаційне повідомлення
+	sale_keywords.Натиснути кнопку опублікувати
 
 
 Завантажити локатори для ІП
@@ -266,6 +266,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Заповнити "Банківські реквізити"
 	small_privatization_step.Заповнити "Найменування банку"
+	small_privatization_informational_message.Натиснути Додати реквізити
 	small_privatization_step.Заповнити "Тип реквізиту"
 	small_privatization_step.Заповнити "Значення реквізиту"
 	small_privatization_step.Заповнити "Опис реквізиту"
