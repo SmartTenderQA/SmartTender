@@ -12,10 +12,17 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 *** Variables ***
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -prod -v where:prod -v hub:none suites/small_privatization/small_privatization.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e -test -v where:test -v hub:none suites/small_privatization/small_privatization.robot
+#Отримати посилання на аукціон
+#prod
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i create_tender -v where:prod -v hub:none suites/small_privatization/small_privatization.robot
+#test
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v where:test -v hub:none suites/small_privatization/small_privatization.robot
+#Кваліфікація учасника
+#test
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v where:test -v hub:none suites/small_privatization/small_privatization.robot
 *** Test Cases ***
 Створити об'єкт МП
+	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	small_privatization_step.Завантажити локатори для об'єкта
 	small_privatization_step.Створити об'єкт МП
@@ -28,7 +35,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Отримати дані про об'єкт з ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -36,7 +43,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['title']
 	\['description']
@@ -56,7 +63,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про об'єкт
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
@@ -86,6 +93,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Створити інформаційне повідомлення МП
+	[Tags]  create_tender  make_a_proposal  get_auction_href
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	small_privatization_step.Завантажити локатори для ІП
@@ -99,7 +107,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Отримати дані про інформаційне повідомлення з ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -107,7 +115,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['decisions'][0]['decisionID']
 	\['decisions'][0]['decisionDate']  m
@@ -134,7 +142,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
@@ -193,7 +201,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку прийому пропозицій
-	[Tags]  -prod
+	[Tags]  make_a_proposal  get_auction_href
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  25 min
 	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
 	small_privatization_informational_message.Перейти до аукціону
@@ -204,7 +212,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Знайти аукціон учасниками
-	[Tags]  -prod
+	[Tags]  make_a_proposal  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти аукціон користувачем  ${provider1}
 	Зберегти сесію  ${provider1}
@@ -218,7 +226,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Подати заявки на участь в тендері
-	[Tags]  -prod
+	[Tags]  make_a_proposal  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
@@ -226,13 +234,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Підтвердити заявки на участь
-	[Tags]  -prod
+	[Tags]  make_a_proposal  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
-	[Tags]  -prod
+	[Tags]  make_a_proposal  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
@@ -244,14 +252,14 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку аукціону
-	[Tags]  -prod
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
 	small_privatization_auction.Дочекатися статусу лота  Аукціон  30 min
 
 
 Отримати поcилання на участь учасниками
-	[Tags]  -prod
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
     :FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
@@ -265,7 +273,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити неможливість отримати поcилання на участь в аукціоні
-	[Tags]  -prod
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	${viewer}
