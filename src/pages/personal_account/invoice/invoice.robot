@@ -54,3 +54,14 @@
 Перевірити перехід на сторінку Platon
     ${url}  Get Location
     Should Contain  ${url}  https://secure.platononline.com/payment/purchase?token
+
+
+Перевірити що на сторінці стільки типів оплати
+    [Arguments]  ${desired ammount}
+    ${actual ammount}  Get Element Count  //div[contains(@class, "payment-method")]
+    Should Be Equal As Strings  ${desired ammount}  ${actual ammount}  На сторінці ${actual ammount} тип(а) оплати, а повинно бути ${desired ammount}
+
+
+Перевірити що на сторінці є тип оплати
+    [Arguments]  ${type}
+    Element Should Be Visible  //div[contains(@class, "payment-method")]//p[text()="${type}"]
