@@ -10,7 +10,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 *** Keywords ***
 ########## common ###############################
 Натиснути кнопку зберегти
-	${save btn}  Set variable  //*[@data-qa='button-success']
+	${save btn}  Set variable  //*[@data-qa='button-success']|//*[@data-qa='btn-success']
 	elements.Дочекатися відображення елемента на сторінці  ${save btn}  10
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
