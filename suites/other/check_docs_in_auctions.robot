@@ -30,13 +30,13 @@ Test Teardown    		Run Keywords
 	...  Натиснути на іконку з баннеру  Аукціони на продаж майна банків
 
 
-Перевірка тендерів на сторінці пошука
+Пошук та перевірка необхідних файлів
 	:FOR  ${page}  IN RANGE  1  6
 	\  Активувати вкладку за номером  ${page}
-	\  ${tenders count}  Порахувати кількість тендерів на сторінці
+	\  ${tenders count}  Порахувати кількість процедур на сторінці
 	\  Run Keyword If  '${type}' != 'bank_aucs'
-	...  Перевірити тендер за номером  		${tenders count}  ELSE
-	...  Перевірити тендер за номером new  	${tenders count}
+	...  Почати пошук файлів у процедурах  		${tenders count}  ELSE
+	...  Почати пошук файлів у процедурах new  	${tenders count}
 
 
 *** Keywords ***
@@ -47,8 +47,8 @@ Preconditions
 	...  checked_docx	${false}
 #	...  checked_pdf	${false}
 	Set Global Variable  &{checks}
-#	Run Keyword If  '${site}' == 'test'  		Set To Dictionary  ${checks}  checked_image	${false}
-	Run Keyword If  '${type}' == 'procurement'  Set To Dictionary  ${checks}  checked_p7s	${false}
+#	Run Keyword If  '${site}' == 'test'				Set To Dictionary  ${checks}  checked_image	${false}
+	Run Keyword If  '${type}' == 'procurement'		Set To Dictionary  ${checks}  checked_p7s	${false}
 
 
 Активувати вкладку за номером
@@ -67,7 +67,7 @@ Preconditions
     ...  ELSE  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Порахувати кількість тендерів на сторінці
+Порахувати кількість процедур на сторінці
 	${selector}  Run Keyword If  '${type}' != 'bank_aucs'
 	...  Set Variable  //tr[@class="head"]  ELSE
 	...  Set Variable  //div[@class="panel panel-default panel-highlight"]
@@ -76,17 +76,18 @@ Preconditions
 	[Return]  ${tenders_on_page}
 
 
-Перевірити тендер за номером
+Почати пошук файлів у процедурах
 	[Arguments]  ${tenders_on_page}
 	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}
 	\  Log Many  &{checks}
 	\  Wait Until Keyword Succeeds  20  .5  Розкрити тендер за номером  ${tender}
-	\  ${list of files}  Отримати список файлів у тендері  ${tender}
+	\  ${list of files}  Отримати список файлів у процедурі  ${tender}
 	\  Log Many  @{list of files}
 	\  ${files for checks}  Сформувати список файлів до перевірки  ${list of files}
 	\  Log Many  @{files for checks}
 	\  Continue For Loop If  ${files for checks} == []
 	\  Відкрити сторінку детальної інформації процедури за номером  ${tender}
+	\  Перевірити всі необхідні документи  ${files for checks}
 	\  Завершити тест при виконанні вимог
 	\  Закрити сторінку детальної інформації
 
@@ -101,7 +102,7 @@ Preconditions
 	Scroll Page To Element XPATH  (//tr[@class="head"])[${number}+1]/td/span
 
 
-Отримати список файлів у тендері
+Отримати список файлів у процедурі
 	[Arguments]  ${number}
 	${list of files}  Create List
 	${file selector}  Set Variable  (//tr[@class="head"])[${number}]/following-sibling::tr//*[@class="item"]/a[@href]
@@ -157,6 +158,7 @@ Preconditions
 	${location}  Get Location
 	Log  ${location}  WARN
 	:FOR  ${file}  IN  @{files for checks}
+	\  Wait Until Keyword Succeeds  10  .5  Page Should Not Contain  ${file}
 	\  ${doc_type}  Отримати формат файлу  ${file}
 	\  Run Keyword If  "${doc_type}" == "p7s"  Run Keywords
 	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
@@ -184,7 +186,7 @@ Preconditions
 	[Arguments]  ${doc_type}
 	${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type[:3]}
 	${upper_doc_type}  Run Keyword If  ${lowercase_status} == ${False}  Convert To Uppercase  ${doc_type}
-	Run Keyword If  ${lowercase_status} != ${true}  Location Should Contain  ${upper_doc_type[:3]}
+	Run Keyword If  ${lowercase_status} == ${False}  Location Should Contain  ${upper_doc_type[:3]}
 
 
 Завершити тест при виконанні вимог
@@ -196,7 +198,7 @@ Preconditions
 	Pass Execution If  ${status}  Вимоги для завершення тесту виконані
 
 
-Перевірити тендер за номером new
+Почати пошук файлів у процедурах new
 	[Arguments]  ${tenders_on_page}
 	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}+1
 	\  Відкрити сторінку детальної інформації процедури за номером new  ${tender}
