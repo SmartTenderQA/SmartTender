@@ -36,7 +36,7 @@ Resource  				keywords.robot
 Перевірити вкладений файл за назвою
 	[Arguments]  ${amount}  ${title}
 	Відкрити файл в листі за назвою  ${title}
-	Wait Until Page Contains  Ɋɚɡɨɦ ${amount},00
+	Wait Until Page Contains Element  //p[contains(text(),'Ɋɚɡɨɦ ${amount}')]|//p[contains(text(),'Разом ${amount}')]
 
 
 Відкрити файл в листі за назвою
