@@ -122,10 +122,10 @@ Variables       procurement_variables.py
 
 Відкрити вікно "Причина відміни" детальніше
     ${selector}  Set Variable  //*[@data-qa="show-reason-button"]
-    Element Should Be Visible  ${selector}
+    elements.Дочекатися відображення елемента на сторінці  ${selector}  10
     Click Element  ${selector}
-    Element Text Should Be  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]
-    ...  Причина відміни
+    Wait Until Keyword Succeeds  10  .5  Element Text Should Be
+    ...  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]  Причина відміни
 
 
 Порівняти створений документ з документом в ЦБД procurement
