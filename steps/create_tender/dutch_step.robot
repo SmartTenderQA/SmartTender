@@ -38,9 +38,7 @@ Library  ../../src/pages/sale/DGF/dutch/dutch_variables.py
 #########################################################
 Заповнити "День старту електроного аукціону"
 	${date}  get_formated_time_with_delta  5  days  m
-	${formated date}  Run Keyword If  "${site}" == "prod"  convert_data_for_web_client  ${date}
-	...  ELSE IF  "${site}" == "test"  Set Variable  ${date}
-	dutch.Заповнити auctionPeriod.startDate  ${formated date}
+	dutch.Заповнити auctionPeriod.startDate  ${date}
     Set To Dictionary  ${data}  date  ${date}
 
 
@@ -59,10 +57,8 @@ Library  ../../src/pages/sale/DGF/dutch/dutch_variables.py
 
 Заповнити "Дату рішення"
 	${dgfDecisionDate}  smart_get_time  0  d
-	${formated date}  Run Keyword If  "${site}" == "prod"  convert_data_for_web_client  ${dgfDecisionDate}
-	...  ELSE IF  "${site}" == "test"  Set Variable  ${dgfDecisionDate}
-	dutch.Заповнити dgfDecisionDate  ${formated date}
-	Set To Dictionary  ${data}  dgfDecisionDate  ${formated date}
+	dutch.Заповнити dgfDecisionDate  ${dgfDecisionDate}
+	Set To Dictionary  ${data}  dgfDecisionDate  ${dgfDecisionDate}
 
 
 Заповнити "Початкова ціна реалізації лоту"
