@@ -42,7 +42,7 @@
 
 Перевірити що підказка містить текст
     [Arguments]  ${text}
-    Page Should Contain Element  //*[@class="ivu-alert-desc"]//span[contains(text(), "${text}")]
+    Wait Until Element Is Visible  //*[@class="ivu-alert-desc"]//span[contains(text(), "${text}")]
 
 
 Перевірити підтвердження формування рахунку-фактури
