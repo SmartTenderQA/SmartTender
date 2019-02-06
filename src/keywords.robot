@@ -8,8 +8,9 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 Змінити стартову сторінку для IP
 	${n}  Evaluate  random.choice([8, 9])  random
 	Run Keyword If
-	...  '${IP}' == 'iis'
-	...  Set Global Variable  ${start_page}  http://iis${n}.smarttender.biz.int/  ELSE IF
+	...  '${IP}' == 'iis'  Run Keywords
+	...  Set Global Variable  ${start_page}  http://iis${n}.smarttender.biz.int/   AND
+	...  Set Global Variable  ${IP}  iss${n}  ELSE IF
 	...  '${IP}' != ''
 	...  Set Global Variable  ${start_page}  ${IP}
 
