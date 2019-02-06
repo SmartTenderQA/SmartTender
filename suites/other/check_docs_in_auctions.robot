@@ -158,7 +158,7 @@ Preconditions
 	${location}  Get Location
 	Log  ${location}  WARN
 	:FOR  ${file}  IN  @{files for checks}
-	\  Wait Until Keyword Succeeds  10  .5  Page Should Not Contain  ${file}
+	\  Wait Until Keyword Succeeds  10  .5  Page Should Contain  ${file}
 	\  ${doc_type}  Отримати формат файлу  ${file}
 	\  Run Keyword If  "${doc_type}" == "p7s"  Run Keywords
 	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
