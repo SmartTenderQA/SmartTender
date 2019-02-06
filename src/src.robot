@@ -163,8 +163,8 @@ Open Browser In Grid
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
 	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
-	#Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
-	#...  Отримати та залогувати data_session
+	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
+	...  Отримати та залогувати data_session
     Set Window Size  1280  1024
 
 
