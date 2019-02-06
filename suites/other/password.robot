@@ -12,7 +12,11 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -v user:user4 suites/password/suite.robot
+#test
+#robot --consolecolors on -L TRACE:INFO -d test_output -v user:user4 suites/other/password.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v user:test_tender_owner suites/other/password.robot
+#prod
+#robot --consolecolors on -L TRACE:INFO -d test_output -v user:prod_tender_owner suites/other/password.robot
 #
 *** Test Cases ***
 Відновлення пароля через email
@@ -126,6 +130,8 @@ Postcondition
 
 Ввести новий пароль
     Дочекатись Закінчення Загрузки Сторінки
+    elements.Дочекатися відображення елемента на сторінці  //input[@placeholder='']
     Input Password  xpath=//input[@placeholder='']  ${new password}
     Click Element  ${submit btn locator}
+    Дочекатись Закінчення Загрузки Сторінки
     Wait Until Page Contains  Пароль успішно змінений

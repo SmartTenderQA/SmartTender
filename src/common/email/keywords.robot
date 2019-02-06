@@ -7,7 +7,9 @@ ${field_password}       //input[@type="password"]
 *** Keywords ***
 Авторизуватися в Gmail
 	[Arguments]  ${user}
-	Click Element  css=[data-g-label="Sign in"]
+	${sign in btn}  Set Variable  //div[@class="h-c-header__cta"]//a[contains(text(),'Sign in')]|//*[@data-g-label="Sign in"]
+	elements.Дочекатися відображення елемента на сторінці  ${sign in btn}  15
+	Open button  ${sign in btn}
 	Wait Until Page Contains Element  ${field_login}
 	Wait Until Keyword Succeeds  20  2
 	...  Input Password  ${field_login}  ${users_variables["${user}"]["login"]}
@@ -45,7 +47,7 @@ ${field_password}       //input[@type="password"]
 	Reload Page
 	Wait Until Element Is Not Visible  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  10
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
-	${time now -3 min}  Evaluate  '{:%H:%M}'.format(datetime.datetime.now() + datetime.timedelta(minutes=-3))  modules=datetime
+	${time now -3 min}  Отримати час на машині  time  -3
 	${time is}  Get Text  ${time selector}
 	${is today}  Evaluate  not '.' in '${time is}'
 	Run Keyword If  ${is today} == ${False}  Fail
