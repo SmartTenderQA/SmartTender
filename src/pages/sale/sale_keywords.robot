@@ -23,13 +23,13 @@ ${notice message}						//*[@class='ivu-notice-desc']
 
 
 Натиснути кнопку опублікувати
-	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]
+	${publish btn}  Set Variable  //button[contains(.,'Опублікувати')]|//button[contains(.,'Передати на перевірку')]
 	elements.Дочекатися відображення елемента на сторінці  ${publish btn}  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
     elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
     ${notice text}  Get Text  ${notice message}
-	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано
+	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано  Інформаційне повідомлення було передано на перевірку, за умови успішного результату через деякий час будуть перенесені усі дані з об'єкту приватизації
 	Wait Until Page Does Not Contain Element  ${notice message}
 
 
