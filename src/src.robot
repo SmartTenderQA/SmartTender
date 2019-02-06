@@ -275,3 +275,17 @@ Input Type Flex
 
 Очистити Кеш
 	Execute Javascript    window.location.reload(true)
+
+
+Отримати час на машині
+	[Documentation]  ${format}=s,m,d,time  |  ${deviation}= time deviation +-...m
+	[Arguments]  ${format}=time  ${deviation}=0
+	${time}  Execute Javascript  return new Date().getTime();
+	${time}  Evaluate  int(${time}) + (int(${deviation}) * 60)
+	${time format}  Set Variable If
+	...  '${format}' == 'time'	"%H:%M"
+	...  '${format}' == 's'		"%d.%m.%Y %H:%M:%S"
+	...  '${format}' == 'm'		"%d.%m.%Y %H:%M"
+	...  '${format}' == 'd'		"%d.%m.%Y"
+	${formated time}  Evaluate  time.strftime(${time format}, time.localtime(${time}))  time
+	[Return]  ${formated time}
