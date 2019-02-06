@@ -17,7 +17,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 	Sleep  2
 	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}[2]
 	...  ELSE  Click element  ${EDS btn}[1]
-	Wait Until Page Contains Element  ${EDS_block}
+	elements.Дочекатися відображення елемента на сторінці  ${EDS_block}
 
 
 Вибрати тестовий ЦСК
