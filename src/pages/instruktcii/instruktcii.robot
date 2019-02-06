@@ -14,8 +14,8 @@ ${instruktcii item}						//*[@class="ivu-row"]//div//*[contains(@class, 'item')]
 	...  '${text}' == 'Інструкції для організатора'		Set Variable  3				ELSE IF
 	...  '${text}' == 'Інструкції для учасника'			Set Variable  4
 	Click Element  ${instruktcii from dropdown menu}[${n}]
-	Wait Until Keyword Succeeds  10  1  Element Should Contain  ${instruktcii field}  ${text}
-
+	${status}  Run Keyword And Return Status  Element Should Contain  ${instruktcii field}  ${text}
+    Run Keyword If  '${status}' == 'False'  Вибрати з видаючого списку  ${text}
 
 Порахувати кількість інструкції
 	${n}  Get Element Count  ${instruktcii item}
