@@ -80,7 +80,7 @@ Preconditions
 	[Arguments]  ${tenders_on_page}
 	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}
 	\  Log Many  &{checks}
-	\  Wait Until Keyword Succeeds  20  .5  Розкрити тендер за номером  ${tender}
+	\  Розкрити тендер за номером  ${tender}
 	\  ${list of files}  Отримати список файлів у процедурі  ${tender}
 	\  Log Many  @{list of files}
 	\  ${files for checks}  Сформувати список файлів до перевірки  ${list of files}
@@ -98,8 +98,8 @@ Preconditions
 	Click Element  ${tender_expand}
 	Дочекатись загрузки документів в тендері
 	${tender header}  Set Variable  (//h3[@class="tender-header-row"])[${number}]
-	Click Element  ${tender header}
-	Scroll Page To Element XPATH  (//tr[@class="head"])[${number}+1]/td/span
+	Run Keyword And Ignore Error  Click Element  ${tender header}
+	Run Keyword And Ignore Error  Scroll Page To Element XPATH  (//tr[@class="head"])[${number}+1]/td/span
 
 
 Отримати список файлів у процедурі
