@@ -21,7 +21,8 @@ Resource  				keywords.robot
 	[Arguments]  ${title}
 	${link selector}  Set Variable  //a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	Wait Until Keyword Succeeds  10  2  Click Element  xpath=(${link selector})[last()]
+	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]
+	Click Element  xpath=(${link selector})[last()]
 	Select Window  New
 	sleep  0.5
 
@@ -36,7 +37,7 @@ Resource  				keywords.robot
 Перевірити вкладений файл за назвою
 	[Arguments]  ${amount}  ${title}
 	Відкрити файл в листі за назвою  ${title}
-	Wait Until Page Contains  Ɋɚɡɨɦ ${amount},00
+	Wait Until Page Contains Element  //p[contains(text(),'Ɋɚɡɨɦ ${amount}')]|//p[contains(text(),'Разом ${amount}')]
 
 
 Відкрити файл в листі за назвою
