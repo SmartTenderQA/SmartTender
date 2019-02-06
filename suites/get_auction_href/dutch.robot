@@ -9,13 +9,15 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v tender_owner:Bened -v provider1:user1 -v provider2:user2 -v provider3:user3 -v viewer:test_viewer suites/get_auction_href/dutch.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -e get_tender -v hub:None -v where:test suites/get_auction_href/dutch.robot
+#test
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/dutch.robot
+#prod
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:prod suites/get_auction_href/dutch.robot
 
 
 *** Test Cases ***
 Створити аукціон
-	[Tags]  create_tender
+	[Tags]  create_tender  get_auction_href
 	Завантажити сесію для  ${tender_owner}
 	dutch_step.Створити аукціон
 
@@ -28,7 +30,7 @@ If skipped create tender
 
 
 Отримати дані про аукціон з ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
@@ -39,7 +41,7 @@ If skipped create tender
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  Run Keyword If  '${site}' == 'prod'
 	...  compare_data.Порівняти введені дані з даними в ЦБД  ['procuringEntity']['contactPoint']['name']
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
@@ -63,7 +65,7 @@ If skipped create tender
 
 
 Перевірити відображення детальної інформації
-	[Tags]  compare  -prod
+	[Tags]  compare  get_auction_href
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
@@ -99,6 +101,7 @@ If skipped create tender
 
 
 Знайти тендер учасниками
+	[Tags]  get_auction_href
 	:FOR  ${i}  IN  ${provider1}  ${tender_owner}  ${viewer}
 	\  Знайти тендер користувачем  ${i}
 	\  Зберегти пряме посилання на тендер
@@ -110,6 +113,7 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері учасниками
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
@@ -119,12 +123,14 @@ If skipped create tender
 
 
 Підтвердити заявки на участь
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${tender_owner}
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Підтвердити пропозицію
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
@@ -133,6 +139,7 @@ If skipped create tender
 
 
 Отримати посилання на аукціон для учасників
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Sleep  1m  #    Ссылка на участие формируется быстрее чем страница формируется(простой способ не поймать 404)
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
@@ -144,6 +151,7 @@ If skipped create tender
 
 
 Перевірити неможливість отримати посилання на перегляд
+	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Documentation]  В голандском аукционе есть только ссылка на участие(особенность типа торгов)
 	:FOR  ${i}  IN  ${provider1}  ${provider2}  ${tender_owner}  ${viewer}
@@ -159,7 +167,7 @@ Precondition
 	...  Set Global Variable  ${provider2}  user2  AND
 	...  Set Global Variable  ${provider3}  user3  AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	...  ELSE  Run Keywords
+	Run Keyword If  '${where}' == 'prod'  Run Keywords
 	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
 	...  Set Global Variable  ${provider1}  prod_provider  AND
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
