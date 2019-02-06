@@ -21,7 +21,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     old_search.Розгорнути розширений пошук
     old_search.Вибрати Тип Процедури  Відкриті торги з публікацією англійською мовою
     search.Відфільтрувати по статусу торгів  Прийом пропозицій
-    ${date}  smart_get_time  2  d
+    ${date}  smart_get_time  3  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
     old_search.Перейти по результату пошуку за номером  2
