@@ -36,7 +36,7 @@
 
 Перевірити що підказок на сторінці
     [Arguments]  ${desired ammount}
-    ${actual ammount}  Get Element Count  //div[contains(@class, "ivu-alert")]
+    ${actual ammount}  Get Element Count   //div[contains(@class, "ivu-alert-with-desc")]
     Should Be Equal As Strings  ${desired ammount}  ${actual ammount}  На сторінці ${actual ammount} підказка(и), а повинно бути ${desired ammount}
 
 
