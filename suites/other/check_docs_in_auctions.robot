@@ -8,10 +8,10 @@ Test Teardown    		Run Keywords
 						...  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:none suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:procurement -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:procurement -v hub:none suites/other/check_docs_in_auctions.robot
 
 # убрать с прода проверку картинок
 
@@ -68,9 +68,9 @@ Preconditions
 
 
 Порахувати кількість процедур на сторінці
-	${selector}  Run Keyword If  '${type}' != 'bank_aucs'
-	...  Set Variable  //tr[@class="head"]  ELSE
-	...  Set Variable  //div[@class="panel panel-default panel-highlight"]
+	${selector}  Set Variable If
+	...  '${type}' != 'bank_aucs'   //tr[@class="head"]
+	...                             //div[@class="panel panel-default panel-highlight"]
 	Wait Until Element Is Visible  ${selector}
 	${tenders_on_page}  Get Element Count  ${selector}
 	[Return]  ${tenders_on_page}
@@ -164,10 +164,11 @@ Preconditions
 	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
 	...  Exit For Loop
 	\  Відкрити документ  ${file}
-	\  Перевірити наявність найменування файлу в локації  ${doc_type}
+	\  Run Keyword If  '${type}' == 'commercial'  Перевірити наявність найменування файлу в локації  ${doc_type}
 	\  ${location}  Get Location
 	\  Should Not Contain  ${location}  error
 	\  Page Should Not Contain  an error
+	\  Page Should Not Contain  омилка
 	\  Go Back
 
 
