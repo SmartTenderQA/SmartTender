@@ -70,7 +70,7 @@ If skipped create tender
     \  procurement_tender_detail.Розгорнути всі експандери учасника  ${i}
     \  ${hash}  Скачати файл з іменем та індексом  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
-    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qulification_documents'][${i}-1]}  2
+    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}-1]}  2
     \  procurement_tender_detail.Згорнути всі експандери учасника  ${i}
 
 
@@ -149,12 +149,12 @@ If skipped create tender
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД
     [Template]  procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement
-    ${data['qulification_documents'][2]}
-	${data['qulification_documents'][3]}
-	${data['qulification_documents'][4]}
-	${data['qulification_documents'][5]}
-    ${data['qulification_documents'][6]}
-    ${data['qulification_documents'][7]}
+    ${data['qualification_documents'][2]}
+	${data['qualification_documents'][3]}
+	${data['qualification_documents'][4]}
+	${data['qualification_documents'][5]}
+    ${data['qualification_documents'][6]}
+    ${data['qualification_documents'][7]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
@@ -162,12 +162,12 @@ If skipped create tender
     ...  Go to  ${data['tender_href']}  AND
     ...  procurement_tender_detail.Розгорнути всі експандери
     [Template]  procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement
-    ${data['qulification_documents'][2]}
-	${data['qulification_documents'][3]}
-	${data['qulification_documents'][4]}
-	${data['qulification_documents'][5]}
-    ${data['qulification_documents'][6]}
-    ${data['qulification_documents'][7]}
+    ${data['qualification_documents'][2]}
+	${data['qualification_documents'][3]}
+	${data['qualification_documents'][4]}
+	${data['qualification_documents'][5]}
+    ${data['qualification_documents'][6]}
+    ${data['qualification_documents'][7]}
 
 
 
@@ -231,7 +231,7 @@ Precondition
     Set To Dictionary  ${docs_data}  title  ${file name}
     Set To Dictionary  ${docs_data}  hash  md5:${hash}
     ${new doc}  Evaluate  ${docs_data}.copy()
-	Append To List  ${data['qulification_documents']}  ${new doc}
+	Append To List  ${data['qualification_documents']}  ${new doc}
 
 
 Скачати файл з іменем та індексом
