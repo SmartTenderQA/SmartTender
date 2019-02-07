@@ -1,397 +1,245 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup  Setup  ${user}
-Suite Teardown  Close All Browsers
-Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
+Suite Setup				Preconditions
+Suite Teardown  		Close All Browsers
+Test Teardown    		Run Keywords
+						...  Log  ${checks}  AND
+						...  Log Location  AND
+						...  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i commercial -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:None suites/other/check_docs_in_auctions.robot
 
 # Команда запуска проверки прозорро
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -i procurement -v hub:None suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:procurement -v hub:None suites/other/check_docs_in_auctions.robot
+
+# убрать с прода проверку картинок
+
+
 *** Variables ***
-${type}
-${site}                        prod
-&{checks}                      checked_doc=${false}  checked_docx=${false}  checked_image=${false}  checked_pdf=${false}  checked_signature=${false}
 @{image_format}                png  jpg  jpeg  gif  tif  tiff  bmp
 
 
 *** Test Cases ***
-Зайти на стоінку закупівель
-  [Tags]  commercial
-  Set Global Variable  ${type}  com
-  Set To Dictionary  ${checks}  checked_signature=${true}
-  Зайти на торговий майданчик
+Відкрити сторінку торгів ${type}
+	Run Keyword If  '${type}' == 'commercial'
+	...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
+	...  ELSE IF  '${type}' == 'procurement'
+	...  Натиснути на іконку з баннеру  Державні закупівлі Prozorro
+	...  ELSE IF  '${type}' == 'bank_aucs'
+	...  Натиснути на іконку з баннеру  Аукціони на продаж майна банків
 
 
-Перевірка тендерів на сторінці пошука
-  [Tags]  commercial
-  :FOR  ${page}  IN RANGE  1  7
-  \  Перейти на сторінку  ${page}
-  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Перевірити тендери  ${tenders_on_page}
-  \  Run Keyword  Завершити виконання тесту${site}
-
-
-Зайти на стоінку закупівель
-  [Tags]  procurement
-  Set Global Variable  ${type}  proz
-  Зайти на торговий майданчик
-  old_search.Активувати вкладку Державних закупівель
-
-
-Перевірка тендерів на сторінці пошука
-  [Tags]  procurement
-  :FOR  ${page}  IN RANGE  1  7
-  \  Перейти на сторінку  ${page}
-  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Перевірити тендери  ${tenders_on_page}
-  \  Run Keyword  Завершити виконання тесту${site}
-
-
-Зайти на сторінку банківських аукціонів
-  [Tags]  bank_aucs
-  Set Global Variable  ${type}  proz
-  Зайти на торговий майданчик
-  Run Keyword  Зайти на сторінку банківських аукціонів ${site}
-
-
-Перевірка тендерів на сторінці пошука
-  [Tags]  bank_aucs
-  Run Keyword  Перевірка тендерів на сторінці пошука ${site}
+Пошук та перевірка необхідних файлів
+	:FOR  ${page}  IN RANGE  1  6
+	\  Активувати вкладку за номером  ${page}
+	\  ${tenders count}  Порахувати кількість процедур на сторінці
+	\  Run Keyword If  '${type}' != 'bank_aucs'
+	...  Почати пошук файлів у процедурах  		${tenders count}  ELSE
+	...  Почати пошук файлів у процедурах new  	${tenders count}
 
 
 *** Keywords ***
-Setup
-  [Arguments]  ${user}
-  ${status}  Run Keyword And Return Status  Should Contain  ${user}  prod
-  Run Keyword If  ${status} == ${true}  Set To Dictionary  ${checks}  checked_image=${true}
-  ...  ELSE  Set Global Variable  ${site}  test
-  Open Browser In Grid  ${user}
+Preconditions
+	Open Browser In Grid  ${user}
+	&{checks}  Create Dictionary
+	...  checked_doc	${false}
+	...  checked_docx	${false}
+#	...  checked_pdf	${false}
+	Set Global Variable  &{checks}
+#	Run Keyword If  '${site}' == 'test'				Set To Dictionary  ${checks}  checked_image	${false}
+	Run Keyword If  '${type}' == 'procurement'		Set To Dictionary  ${checks}  checked_p7s	${false}
 
 
-Перейти на сторінку
+Активувати вкладку за номером
     [Arguments]  ${page}
-    Set Test Variable  ${page}
-    Run Keyword If  ${page} == 6  Set Tags  non-critical
-    Should Be True  ${page} != 6
-    ${selector}  Set Variable  //a[@class="pager-button" and text()=${page}]
-    ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}
+    ${selector}  Run Keyword If  '${type}' != 'bank_aucs'
+    ...  Set Variable  //a[@class="pager-button" and text()=${page}]  ELSE
+    ...  Set Variable  //li[@class="ivu-page-item" and @title=${page}]
+    ${status}  Run Keyword If  '${page}' != '1'
+    ...  Run Keyword And Return Status  Element Should Be Visible  ${selector}
     # Вийти з цикла якщо не існує наступної сторінки
     Run Keyword If  ${status} == ${false}  Exit For Loop
-    Run Keyword If  '${page}' != '1'  Click Element  ${selector}
-    Run Keyword And Ignore Error  Run Keywords  Видалити кнопку "Замовити звонок"  Видалити кнопку "Поставити запитання"
+    ...  ELSE IF  ${status} == ${true}  Click Element  ${selector}
+    Run Keyword If  '${type}' != 'bank_aucs'  Run Keyword And Ignore Error  Run Keywords
+    ...  Видалити кнопку "Замовити звонок"
+    ...  Видалити кнопку "Поставити запитання"
+    ...  ELSE  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Перейти на сторінку[new]
-    [Arguments]  ${page}
-    Set Test Variable  ${page}
-    Run Keyword If  ${page} == 6  Set Tags  non-critical
-    Should Be True  ${page} != 6
-    Дочекатись закінчення загрузки сторінки(skeleton)
-    ${selector}  Set Variable  //li[@class="ivu-page-item" and @title=${page}]
-    ${status}  Run Keyword If  '${page}' != '1'  Run Keyword And Return Status  Element Should Be Visible  ${selector}
-    # Вийти з цикла якщо не існує наступної сторінки
-    Run Keyword If  ${status} == ${false}  Exit For Loop
-    Run Keyword If  '${page}' != '1'  Click Element  ${selector}
-    Run Keyword And Ignore Error  Run Keywords  Видалити кнопку "Замовити звонок"  Видалити кнопку "Поставити запитання"
+Порахувати кількість процедур на сторінці
+	${selector}  Run Keyword If  '${type}' != 'bank_aucs'
+	...  Set Variable  //tr[@class="head"]  ELSE
+	...  Set Variable  //div[@class="panel panel-default panel-highlight"]
+	Wait Until Element Is Visible  ${selector}
+	${tenders_on_page}  Get Element Count  ${selector}
+	[Return]  ${tenders_on_page}
 
 
-Завершити виконання тестуtest
-  ${status}  Run keyword and return status  Dictionary Should Contain Value  ${checks}  ${true}
-  Exit For Loop If  ${checks.checked_doc} == ${true} or ${checks.checked_docx} == ${true} or ${checks.checked_pdf} == ${true} or ${checks.checked_image} == ${true}
+Почати пошук файлів у процедурах
+	[Arguments]  ${tenders_on_page}
+	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}
+	\  Log Many  &{checks}
+	\  Розкрити тендер за номером  ${tender}
+	\  ${list of files}  Отримати список файлів у процедурі  ${tender}
+	\  Log Many  @{list of files}
+	\  ${files for checks}  Сформувати список файлів до перевірки  ${list of files}
+	\  Log Many  @{files for checks}
+	\  Continue For Loop If  ${files for checks} == []
+	\  Відкрити сторінку детальної інформації процедури за номером  ${tender}
+	\  Перевірити всі необхідні документи  ${files for checks}
+	\  Завершити тест при виконанні вимог
+	\  Закрити сторінку детальної інформації
 
 
-Завершити виконання тестуprod
-  ${status}  Run keyword and return status  Dictionary Should Not Contain Value  ${checks}  ${false}
-  Exit For Loop If  ${status} == ${true}
+Розкрити тендер за номером
+	[Arguments]  ${number}
+	${tender_expand}  Set Variable  (//tr[@class="head"])[${number}]/td/span
+	Click Element  ${tender_expand}
+	Дочекатись загрузки документів в тендері
+	${tender header}  Set Variable  (//h3[@class="tender-header-row"])[${number}]
+	Run Keyword And Ignore Error  Click Element  ${tender header}
+	Run Keyword And Ignore Error  Scroll Page To Element XPATH  (//tr[@class="head"])[${number}+1]/td/span
 
 
-Завершити перевірку аукціонів
-  ${status}  Run keyword and return status  Dictionary Should Contain Value  ${checks}  ${true}
-  Exit For Loop If  ${status} == ${true}
+Отримати список файлів у процедурі
+	[Arguments]  ${number}
+	${list of files}  Create List
+	${file selector}  Set Variable  (//tr[@class="head"])[${number}]/following-sibling::tr//*[@class="item"]/a[@href]
+	${doc_quantity}  Get Element Count  ${file selector}
+	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
+	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  (//tr[@class="head"])[${number}]/following::div[@class="item"][${file}]//span
+#	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  ${file selector}[${file}]
+	\  Append To List  ${list of files}  ${file name}
+	[Return]  ${list of files}
 
 
-Зайти на торговий майданчик
-  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[2]/a
+Сформувати список файлів до перевірки
+	[Arguments]  ${list of files}
+	${files for checks}  Create List
+	:FOR  ${file}  IN  @{list of files}
+	\  ${doc_type}  Отримати формат файлу  ${file}
+	\  ${status}  Run Keyword And Return Status
+	...  Dictionary Should Contain Key  ${checks}  checked_${doc_type}
+	\  Run Keyword If  ${status}
+	...  Run Keyword If  """${checks["checked_${doc_type}"]}""" == "${False}"  Run Keywords
+	...  Append To List  ${files for checks}  ${file}  AND
+	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
+	...  Log  ${doc_type}  WARN  AND
+	...  Log  ${checks}  WARN
+	[Return]  ${files for checks}
 
 
-Зайти на сторінку банківських аукціонів test
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[3]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[3]/a
+Отримати формат файлу
+	[Arguments]  ${file name}
+	${doc_type}  Fetch From Right  ${file name}  .
+	${doc_type}  Convert To Lowercase  ${doc_type}
+	${image_status}  Run Keyword And Return Status  List Should Contain Value  ${image_format}  ${doc_type}
+	${doc_type}  Run Keyword If  ${image_status}  Set Variable  image  ELSE  Set Variable  ${doctype}
+	[Return]  ${doc_type}
 
 
-Зайти на сторінку банківських аукціонів prod
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[3]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[3]/a
-  Wait Until Element Is Visible  //*[contains(@class, "btn-search")]//*
-  Click Element  //*[contains(@class, "btn-search")]//*
+Відкрити сторінку детальної інформації процедури за номером
+	[Arguments]  ${tender_number}
+	${button_selector}  Set Variable  xpath=(//a[contains(@class, "analysis-button")])[${tender_number}]
+	Scroll Page To Element XPATH  ${button_selector}
+	Sleep  .5
+	Click Element  ${button_selector}
+	Select Window  NEW
 
 
-Зайти на сторінку комерційних закупівель
-  Wait Until Element Is Visible  //div[@id="MainMenuTenders"]//li[1]/a
-  Click Element  //div[@id="MainMenuTenders"]//li[1]/a
-  Wait Until Page Contains   Закупівлі
+Закрити сторінку детальної інформації
+	Close Window
+	Select Window  MAIN
 
 
-Підрахувати кількість тендерів на сторінці
-  ${selector}  Set Variable  //tr[@class="head"]
-  Wait Until Element Is Visible  ${selector}
-  ${tenders_on_page}  Get Element Count  ${selector}
-  [Return]  ${tenders_on_page}
+Перевірити всі необхідні документи
+	[Arguments]  ${files for checks}
+	${location}  Get Location
+	Log  ${location}  WARN
+	:FOR  ${file}  IN  @{files for checks}
+	\  Wait Until Keyword Succeeds  10  .5  Page Should Contain  ${file}
+	\  ${doc_type}  Отримати формат файлу  ${file}
+	\  Run Keyword If  "${doc_type}" == "p7s"  Run Keywords
+	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
+	...  Exit For Loop
+	\  Відкрити документ  ${file}
+	\  Перевірити наявність найменування файлу в локації  ${doc_type}
+	\  ${location}  Get Location
+	\  Should Not Contain  ${location}  error
+	\  Page Should Not Contain  an error
+	\  Go Back
 
 
-Підрахувати кількість тендерів на сторінці[new]
-  ${selector}  Set Variable  //div[@class="panel panel-default panel-highlight"]
-  Wait Until Element Is Visible  ${selector}
-  ${tenders_on_page}  Get Element Count  ${selector}
-  [Return]  ${tenders_on_page}
+Відкрити документ
+	[Arguments]  ${file}
+	${file selector}  Set Variable  //*[contains(text(), "${file}")]
+	Wait Until Keyword Succeeds  10  .5
+	...  Scroll Page To Element XPATH  ${file selector}
+	Mouse Over  ${file selector}
+	Wait Until Keyword Succeeds  30  1  Run Keywords
+	...  Open Button  ${file selector}/ancestor::*[@class="ivu-poptip"]//*[@data-qa="file-preview"]  AND
+	...  Wait Until Page Does Not Contain Element  ${file selector}/ancestor::*[@class="ivu-poptip"]//*[@data-qa="file-preview"]
 
 
-Перевірити тендери
-  [Arguments]  ${tenders_on_page}
-  :FOR  ${items}  IN RANGE  1  ${tenders_on_page}+1
-  \  Розкрити тендер  ${items}
-  \  ${doc_quantity}  Перевірити наявність документів в тендері  ${items}
-  \  Continue For Loop If  ${doc_quantity} < 1
-  \  Перевірити документ  ${doc_quantity}
-  \  Run Keyword  Завершити виконання тесту${site}
+Перевірити наявність найменування файлу в локації
+	[Arguments]  ${doc_type}
+	${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type[:3]}
+	${upper_doc_type}  Run Keyword If  ${lowercase_status} == ${False}  Convert To Uppercase  ${doc_type}
+	Run Keyword If  ${lowercase_status} == ${False}  Location Should Contain  ${upper_doc_type[:3]}
 
 
-Розкрити тендер
-  [Arguments]  ${number}
-  Set Global Variable  ${tender_selector}  (//tr[@class="head"])[${number}]
-  ${selector}  Set Variable  xpath=${tender_selector}/following-sibling::tr[@class="content"]//td[@colspan="2"]
-  ${tender_info}  Get Text  xpath=${tender_selector}/td[@class="col1"]/span
-  Click Element  xpath=${tender_selector}/td/span
-  Execute JavaScript    window.scrollBy(30,0)
-  Sleep  .5
-  Click Element  xpath=(//h3[@class="tender-header-row"])[${number}]
-  Wait Until Element Is Visible  ${selector}
+Завершити тест при виконанні вимог
+	${status}
+	...  Run Keyword If  '${site}' == 'test'  Run Keyword And Return Status
+	...  		Dictionary Should Contain Value  ${checks}  ${True}
+	...  ELSE IF  '${site}' == 'prod'  Run Keyword And Return Status
+	...  		Dictionary Should Not Contain Value  ${checks}  ${False}
+	Pass Execution If  ${status}  Вимоги для завершення тесту виконані
 
 
-Перевірити наявність документів в тендері
-  [Arguments]  ${number}
-  Дочекатись загрузки документів в тендері
-  ${status}  Run Keyword And Return Status  Page Should Contain Element  xpath=${tender_selector}/following-sibling::tr//*[@class="item"]/a[@href]
-  Run Keyword If  ${status} == ${true}  Wait Until Element Is Visible  xpath=${tender_selector}/following-sibling::tr//*[@class="item"]/a[@href]
-  ${doc_quantity}  Get Element Count  xpath=${tender_selector}/following-sibling::tr//*[@class="item"]/a[@href]
-  Set Global Variable  ${tender_number}  ${number}
-  [Return]  ${doc_quantity}
-
-Перевірити документ
-  [Arguments]  ${doc_quantity}
-  :FOR  ${items}  IN RANGE  1  ${doc_quantity}+1
-  \  ${move_next}  Визначити необхідність перевірки документу  ${items}
-  \  Continue For Loop If  ${move_next} == ${true}
-  \  Run Keyword  Відкрити сторінку тендера${type}  ${items}
+Почати пошук файлів у процедурах new
+	[Arguments]  ${tenders_on_page}
+	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}+1
+	\  Відкрити сторінку детальної інформації процедури за номером new  ${tender}
+	\  Log Many  &{checks}
+	\  ${list of files}  Отримати список файлів у процедурі new
+	\  Log Many  @{list of files}
+	\  ${files for checks}  Сформувати список файлів до перевірки  ${list of files}
+	\  Log Many  @{files for checks}
+	\  Перевірити всі необхідні документи new  ${files for checks}
+	\  Завершити тест при виконанні вимог
+	\  Go Back
+	\  Дочекатись закінчення загрузки сторінки(skeleton)
 
 
-Визначити необхідність перевірки документу
-  [Arguments]  ${doc_number}
-  ${doc_title}  Get Text  xpath=(${tender_selector}/following::div[@class="item"])[${doc_number}]//span
-  Set Global Variable  ${doc_title}
-  ${doc_type}  Fetch From Right  ${doc_title}  .
-  ${doc_type}  Convert To Lowercase  ${doc_type}
-  Set Global Variable  ${doc_type}
-  ${status}  Run Keyword And Return Status  List Should Contain Value  ${image_format}  ${doc_type}
-  ${move_next}  Run Keyword If  "${doc_type}" == "doc" and ${checks.checked_doc} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_doc=${true}
-  ...  ELSE IF  "${doc_type}" == "docx" and ${checks.checked_docx} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_docx=${true}
-  ...  ELSE IF  ${status} and ${checks.checked_image} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_image=${true}
-  ...  ELSE IF  "${doc_type}" == "pdf" and ${checks.checked_pdf} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_pdf=${true}
-  ...  ELSE IF  "${doc_type}" == "p7s" and ${checks.checked_signature} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_signature=${true}
-  ...  ELSE  Set Variable  ${true}
-  [Return]  ${move_next}
+Отримати список файлів у процедурі new
+	${list of files}  Create List
+	${selector}  Set Variable  //*[@data-qa="file-name"]
+	${n}  Get Element Count  ${selector}
+	:FOR  ${file}  IN RANGE  1  ${n}+1
+	\  ${file name}  Get Text  (${selector})[${file}]
+	\  Append To List  ${list of files}  ${file name}
+	[Return]  ${list of files}
 
 
-Відкрити сторінку тендераcom
-  [Arguments]  ${doc_number}
-  ${selector}  Set Variable  xpath=(//div[contains(@class, "filename")])
-  ${button_selector}  Set Variable  xpath=(//a[contains(@class, "analysis-button")])[${tender_number}]
-  Scroll Page To Element XPATH  ${button_selector}
-  Sleep  .5
-  Click Element  ${button_selector}
-  Select Window  NEW
-  Wait Until Page Contains  Інформація про тендер
-  ${docs_on_page}  Get Element Count  ${selector}
-  :FOR  ${doc}  IN RANGE  1  ${docs_on_page}+1
-  \  Scroll Page To Element XPATH  ${selector}[${doc}]
-  \  ${text}  Get Text  ${selector}[${doc}]
-  \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
-  \  Set Suite Variable   ${doc}
-  \  Exit For Loop If  ${status} == ${true}
-  Mouse Over  ${selector}[${doc}]//span
-  Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
-  Sleep  .5
-  Run Keyword If  "${doc_type}" != "p7s"  Виконати перевірку файлів комерційних торгів  ${doc}
-  Close Window
-  Select Window  MAIN
+Перевірити всі необхідні документи new
+	[Arguments]  ${files for checks}
+	:FOR  ${file}  IN  @{files for checks}
+	\  ${doc_type}  Отримати формат файлу  ${file}
+	\  Відкрити документ  ${file}
+	\  ${doc_type for check location}  Fetch From Right  ${file}  .
+	\  Перевірити наявність найменування файлу в локації  ${doc_type for check location}
+	\  ${location}  Get Location
+	\  Should Not Contain  ${location}  error
+	\  Page Should Not Contain  an error
+	\  Go Back
 
 
-Відкрити сторінку аукціона та перевірити документи
-  [Arguments]  ${aucs_on_page}
-  :FOR  ${items}  IN RANGE  1  ${aucs_on_page}+1
-  \  ${doc_type}  Відкрити сторінку аукціона  ${items}
-  \  Завершити перевірку аукціонів
-
-
-Відкрити сторінку аукціона та перевірити документи[new]
-  [Arguments]  ${aucs_on_page}
-  :FOR  ${items}  IN RANGE  1  ${aucs_on_page}+1
-  \  ${doc_type}  Відкрити сторінку аукціона[new]  ${items}
-  \  Перевірити документи
-  \  Завершити перевірку аукціонів
-
-
-Відкрити сторінку аукціона[new]
-  [Arguments]  ${auc_number}
-  ${status}  Run Keyword And Return Status  Click Element  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]//a
-  Run Keyword If  ${status} == ${False}  Run Keywords  Scroll Page To Element XPATH  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]
-  ...  AND  Sleep  5
-  ...  AND  Click Element  xpath=(//div[@class="panel panel-default panel-highlight"])[${auc_number}]//a
-
-
-Відкрити сторінку аукціона
-  [Arguments]  ${auc_number}
-  ${selector}  Set Variable  (//div[contains(@class, "filename")])
-  ${status}  Run Keyword And Return Status  Click Element  xpath=(//tr[@class="head"])[${auc_number}]//a
-  Run Keyword If  ${status} == ${False}  Run Keywords  Scroll Page To Element XPATH  xpath=(//tr[@class="head"])[${auc_number}]//td[@class="col2"]
-  ...  AND  Sleep  5
-  ...  AND  Click Element  xpath=(//tr[@class="head"])[${auc_number}]//a
-  Select Window  NEW
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  ${docs_on_page}  Get Element Count  ${selector}
-  :FOR  ${doc}  IN RANGE  1  ${docs_on_page}+1
-  \  Scroll Page To Element XPATH  ${selector}[${doc}]
-  \  ${doc_title}  Get Text  ${selector}[${doc}]//span
-  \  ${doc_type}  Fetch From Right  ${doc_title}  .
-  \  ${doc_type}  Convert To Lowercase  ${doc_type}
-  \  Set Global Variable  ${doc_type}
-  \  ${move_next}  Визначити необхідність перевірки файлу  ${doc_type}
-  \  Continue For Loop If  ${move_next} == ${true}
-  \  Mouse Over  ${selector}[${doc}]//span
-  \  Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
-  \  Sleep  .5
-  \  Run Keyword If  "${doc_type}" != "p7s"  Виконати перевірку файлів торгів prozorro  ${doc}
-  \  Завершити перевірку аукціонів
-  Close Window
-  Select Window  MAIN
-
-
-Перевірити документи
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  ${selector}  Set Variable  (//div[contains(@class, "filename")])
-  ${docs_on_page}  Get Element Count  ${selector}
-  :FOR  ${doc}  IN RANGE  1  ${docs_on_page}+1
-    \  Scroll Page To Element XPATH  ${selector}[${doc}]
-  \  ${doc_title}  Get Text  ${selector}[${doc}]//span
-  \  ${doc_type}  Fetch From Right  ${doc_title}  .
-  \  ${doc_type}  Convert To Lowercase  ${doc_type}
-  \  Set Global Variable  ${doc_type}
-  \  ${move_next}  Визначити необхідність перевірки файлу  ${doc_type}
-  \  Continue For Loop If  ${move_next} == ${true}
-  \  Mouse Over  ${selector}[${doc}]//span
-  \  Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
-  \  Sleep  .5
-  \  Run Keyword If  "${doc_type}" != "p7s"  Виконати перевірку файлів торгів prozorro  ${doc}
-  \  Завершити перевірку аукціонів
-  Go Back
-
-
-
-Визначити необхідність перевірки файлу
-  [Arguments]  ${doc_type}
-  ${status}  Run Keyword And Return Status  List Should Contain Value  ${image_format}  ${doc_type}
-  ${move_next}  Run Keyword If  "${doc_type}" == "doc" and ${checks.checked_doc} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_doc=${true}
-  ...  ELSE IF  "${doc_type}" == "docx" and ${checks.checked_docx} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_docx=${true}
-  ...  ELSE IF  ${status} and ${checks.checked_image} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_image=${true}
-  ...  ELSE IF  "${doc_type}" == "pdf" and ${checks.checked_pdf} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_pdf=${true}
-  ...  ELSE IF  "${doc_type}" == "p7s" and ${checks.checked_signature} == ${false}
-  ...  Set To Dictionary  ${checks}  checked_signature=${true}
-  ...  ELSE  Set Variable  ${true}
-  [Return]  ${move_next}
-
-
-Відкрити сторінку тендераproz
-  [Arguments]  ${doc_number}
-  ${selector}  Set Variable  (//div[contains(@class, "filename")])
-  ${button_selector}  Set Variable  xpath=(//a[contains(@class, "analysis-button")])[${tender_number}]
-  Scroll Page To Element XPATH  ${button_selector}
-  Sleep  .5
-  Click Element  ${button_selector}
-  Select Window  NEW
-  Дочекатись закінчення загрузки сторінки(skeleton)
-  ${docs_on_page}  Get Element Count  ${selector}
-  :FOR  ${doc}  IN RANGE  1  ${docs_on_page}+1
-  \  Scroll Page To Element XPATH  ${selector}[${doc}]
-  \  ${text}  Get Text  ${selector}[${doc}]
-  \  ${status}  Run Keyword And Return Status  Should Contain  ${text}  ${doc_title}
-  \  Set Suite Variable   ${doc}
-  \  Exit For Loop If  ${status} == ${true}
-  Mouse Over  ${selector}[${doc}]//span
-  Wait Until Element Is Visible  xpath=(//*[@data-qa="file-download"])[${doc}]
-  Sleep  .5
-  Run Keyword If  "${doc_type}" != "p7s"  Виконати перевірку файлів торгів prozorro  ${doc}
-  Close Window
-  Select Window  MAIN
-
-
-Виконати перевірку файлів комерційних торгів
-  [Arguments]  ${doc_number}
-  ${selector}  Set Variable  (//*[@data-qa="file-preview"])[${doc_number}]
-  :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}
-  \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
-  \  Exit For Loop If  ${status} == ${true}
-  ${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type}
-  ${upper_doc_type}  Run Keyword If  ${lowercase_status} != ${true}  Convert To Uppercase  ${doc_type}
-  Run Keyword If  ${lowercase_status} != ${true}  Location Should Contain  ${upper_doc_type}
-  Check document for error
-
-
-Виконати перевірку файлів торгів prozorro
-  [Arguments]  ${doc_number}
-  ${selector}  Set Variable  (//*[@data-qa="file-name"])[${doc_number}]/following::*[@data-qa="file-preview"]
-  :FOR  ${i}  IN RANGE  10
-  \  Open Button  ${selector}
-  \  ${status}  Run Keyword And Return Status  Wait Until Page Does Not Contain Element  ${selector}
-  \  Exit For Loop If  ${status} == ${true}
-  Check document for error
-
-
-Check document for error
-  Run Keyword And Expect Error  *  Location Should Contain  error
-  Run Keyword And Expect Error  *  Page Should Contain  an error
-  Go Back
-
-
-Дочекатись закінчення загрузки сторінки(skeleton)
-  Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
-
-
-Перевірка тендерів на сторінці пошука prod
-  [Tags]  bank_aucs
-  :FOR  ${page}  IN RANGE  1  7
-  \  Перейти на сторінку  ${page}
-  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці
-  \  Відкрити сторінку аукціона та перевірити документи  ${tenders_on_page}
-  \  Завершити перевірку аукціонів
-
-
-Перевірка тендерів на сторінці пошука test
-  [Tags]  bank_aucs
-  :FOR  ${page}  IN RANGE  1  7
-  \  Перейти на сторінку[new]  ${page}
-  \  ${tenders_on_page}  Підрахувати кількість тендерів на сторінці[new]
-  \  Відкрити сторінку аукціона та перевірити документи[new]  ${tenders_on_page}
-  \  Завершити перевірку аукціонів
+Відкрити сторінку детальної інформації процедури за номером new
+	[Arguments]  ${tender_number}
+	${button_selector}  Set Variable  (//div[@class="panel panel-default panel-highlight"])[${tender_number}]//a
+	Scroll Page To Element XPATH  ${button_selector}
+	Sleep  .5
+	Click Element  ${button_selector}
+	Дочекатись закінчення загрузки сторінки(skeleton)
