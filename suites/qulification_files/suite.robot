@@ -247,7 +247,7 @@ Precondition
     ...  Go Back      AND
     ...  Reload Page  AND
     ...  Скачати файл з іменем та індексом  ${name}  ${index}
-    ${md5}   get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
+    ${md5}   Wait Until Keyword Succeeds  30  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
 
