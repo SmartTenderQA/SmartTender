@@ -544,9 +544,12 @@ def get_locator(field):
         id = int(list.group('id')) + 1
         result = list.group('path')
         map = {
-            "['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="title"]//*[@class="break-word"])[last()-({0}-1)]""",
+            "['title']": u"""(//*[@data-qa="complaint"])[last()-({0}-1)]//*[@data-qa="title"]//*[@class="break-word"]""",
             "['description']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"]//span/following-sibling::div)[last()-({0}-1)]""",
-            "['documents'][0]['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"])[last()-({0}-1)]//a[text()]"""
+            "['resolution']": u"""(//*[@data-qa="complaint"])[last()-({0}-1)]//*[@data-qa="events"]//*[@class="content break-word"]""",
+            "['resolutionType']": u"""(//*[@data-qa="complaint"])[last()-({0}-1)]//*[@data-qa="events"]//span[text()="Тип рішення: "]/span""",
+            "['documents'][0]['title']": u"""(//*[@data-qa="complaint"]//*[@data-qa="description"])[last()-({0}-1)]//a[text()]""",
+            "['documents'][1]['title']": u"""(//*[@data-qa="complaint"])[last()-({0}-1)]//*[@data-qa="events"]//a[text()]"""
         }
         return map[result].format(id)
     elif "cancellations" in field:
