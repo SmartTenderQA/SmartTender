@@ -75,6 +75,9 @@ If skipped create tender
 Заповнити рамкову угоду та опублікувати її
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     main_page.Вибрати тендер за номером (webclient)  1
+    # Ждем окончания периода обжалования  5 мин == 5 дней
+    Sleep  5m
+    #####################################################
     framework_agreement.Заповнити поля Рамкової угоди
     actions.Натиснути кнопку "Заключить рамочное соглашение"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
