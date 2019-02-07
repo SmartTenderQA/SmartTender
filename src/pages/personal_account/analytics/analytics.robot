@@ -20,7 +20,7 @@ ${company name input}       //*[@class='ivu-input-wrapper ivu-input-type']//inpu
 Ввести назву компанії
   [Arguments]  ${company name}
   Input Text  ${company name input}  ${company name}
-  Wait Until Page Contains Element  //tbody[@class='ivu-table-tbody']//tr  10
+  Wait Until Page Contains Element  //tbody[@class='ivu-table-tbody']//tr  20
 
 
 Вибрати конкурента з списка за номером
