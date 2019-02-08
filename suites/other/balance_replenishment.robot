@@ -30,8 +30,9 @@ Test Teardown  			Run Keywords
     invoice.Перевірити що підказок на сторінці  2
     invoice.Перевірити що підказка містить текст  Сума до оплати має бути кратною
     invoice.Перевірити що підказка містить текст  У разі сплати карткою Visa/MasterCard
-    Спробувати поповнити баланс з сумою та без
-    invoice.Перевірити перехід на сторінку Platon
+    ${amount}  Спробувати поповнити баланс з сумою та без
+    Wait Until Keyword Succeeds  15  2  invoice.Перевірити перехід на сторінку Platon
+    Перевірити суму на сторінці Platon  ${amount}
 
 
 
@@ -78,3 +79,13 @@ Preconditions
 	Перевірити вкладений файл за назвою  ${amount}  Рахунок
 	Close Browser
 	Switch Browser  1
+
+
+Перевірити суму на сторінці Platon
+    [Documentation]  amount = platon amount - 2.7%
+    [Arguments]  ${amount}
+    Wait Until Element Is Visible  //span[@class="price"]
+    ${platon amount}  Get Text  //span[@class="price"]
+    ${platon amount}  Convert To Number  ${platon amount[:-4]}
+    ${approximate amount}  Evaluate  int(round(${platon amount}*0.973))
+    should be equal as strings  ${amount}  ${approximate amount}
