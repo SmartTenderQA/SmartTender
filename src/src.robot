@@ -103,6 +103,7 @@ Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.r
 Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 Resource    pages(webclient)/sale_create_tender/sale_create_tender.robot
 Resource    pages(webclient)/questions/questions.robot
+Resource    pages(webclient)/complaints/complaints.robot
 
 
 Resource    ../steps/Authentication/Authentication.robot
@@ -166,18 +167,6 @@ Open Browser In Grid
 	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
     Set Window Size  1280  1024
-
-
-Відкрити браузер Chrome з вказаною папкою для завантаження файлів
-    [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    #Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${browser started}  Run Keyword And Return Status
-    ...  Open Browser  ${start_page}  chrome  ${user}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
-    Should Be True  ${browser started}
 
 
 Встановити фіксований час очікування прогрузки сторінок

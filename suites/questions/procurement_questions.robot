@@ -10,8 +10,8 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v site:prod -v hub:none suites/questions/procurement_questions.robot
 *** Variables ***
 &{org}
-...  prod=Astartia
-...  test=Демо организатор
+...         prod=Astartia
+...         test=Демо организатор
 
 
 *** Test Cases ***
@@ -96,7 +96,6 @@ Precondition
     Set Global Variable         ${provider}  user1
     Set Global Variable         ${viewer}    test_viewer
     Set Global Variable         ${tender_owner}  Bened
-
     Додати першого користувача  ${provider}
     Додати користувача          ${tender_owner}
     Додати користувача          ${viewer}
