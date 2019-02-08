@@ -24,7 +24,7 @@ ${tender_type_procurement}          //*[@data-qa="procedure-type"]//div[2]//*|//
 ${report}                           //*[@class="ivu-card-body"]//*[@class="favoriteStar"]
 ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
-#robot --consolecolors on -L TRACE:INFO -A suites/walking_man/arguments.txt -v user:user1 -i site -e -test -v hub:none suites/walking_man/subscription.robot
+#robot --consolecolors on -L TRACE:INFO -A suites/walking_man/arguments.txt -v user:user1 -i site -e -test -v hub:none suites/walking_man/suite.robot
 #just comment
 #another comment
 

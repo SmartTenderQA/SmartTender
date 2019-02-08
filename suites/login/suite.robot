@@ -15,8 +15,8 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v env:prod suites/login/subscription.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -v env:test suites/login/subscription.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v env:prod suites/login/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v env:test suites/login/suite.robot
 *** Test Cases ***
 Спроба залогінитися з невірними даними
     [Template]  Login with wrong data
