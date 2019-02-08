@@ -68,4 +68,4 @@
     ${count}  Get Element Count  ${selector down}
     Run Keyword If  ${count} != 0  Run Keywords
     ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
-    ...  Розгорнути всі експандери
+    ...  Розгорнути всі експандери вимог(скарг)
