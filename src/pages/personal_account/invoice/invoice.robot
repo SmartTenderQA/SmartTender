@@ -9,7 +9,9 @@
 	Wait Until Page Contains Element  ${input field}  60
 	Input Text  ${input field}  ${amount}
 	${get}  Get Element Attribute  ${input field}  value
-	Run Keyword If  "${get}" == ""  Ввести суму до оплати
+	${get}  Remove String  ${get}  ${SPACE}
+	${status}  Run Keyword And Return Status  Should Be Equal as Strings  '${amount}'  '${get}'
+	Run Keyword If  ${status} == ${False}  Ввести суму до оплати  ${amount}
 
 
 Натиснути сформувати рахунок
