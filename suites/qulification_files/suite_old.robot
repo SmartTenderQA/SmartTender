@@ -8,7 +8,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
 ...                                        Capture Page Screenshot
 
-#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/suite.robot
+#  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -v hub:None -v site:test suites/qulification_files/subscription.robot
 *** Variables ***
 &{type}
 ...         test=Відкриті торги з публікацією англійською мовою
