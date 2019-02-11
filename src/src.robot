@@ -103,6 +103,7 @@ Resource    pages(webclient)/commercial_create_tender/commercial_create_tender.r
 Resource    pages(webclient)/framework_agreement/framework_agreement.robot
 Resource    pages(webclient)/sale_create_tender/sale_create_tender.robot
 Resource    pages(webclient)/questions/questions.robot
+Resource    pages(webclient)/complaints/complaints.robot
 
 
 Resource    ../steps/Authentication/Authentication.robot

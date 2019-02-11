@@ -9,7 +9,9 @@
 	Wait Until Page Contains Element  ${input field}  60
 	Input Text  ${input field}  ${amount}
 	${get}  Get Element Attribute  ${input field}  value
-	Run Keyword If  "${get}" == ""  Ввести суму до оплати
+	${get}  Remove String  ${get}  ${SPACE}
+	${status}  Run Keyword And Return Status  Should Be Equal as Strings  '${amount}'  '${get}'
+	Run Keyword If  ${status} == ${False}  Ввести суму до оплати  ${amount}
 
 
 Натиснути сформувати рахунок
@@ -35,9 +37,9 @@
 
 
 Перевірити що підказок на сторінці
-    [Arguments]  ${desired ammount}
-    ${actual ammount}  Get Element Count  //div[contains(@class, "ivu-alert")]
-    Should Be Equal As Strings  ${desired ammount}  ${actual ammount}  На сторінці ${actual ammount} підказка(и), а повинно бути ${desired ammount}
+    [Arguments]  ${desired amount}
+    ${actual amount}  Get Element Count   //div[contains(@class, "ivu-alert-with-desc")]
+    Should Be Equal As Strings  ${desired amount}  ${actual amount}  На сторінці ${actual amount} підказка(и), а повинно бути ${desired amount}
 
 
 Перевірити що підказка містить текст
@@ -57,9 +59,9 @@
 
 
 Перевірити що на сторінці стільки типів оплати
-    [Arguments]  ${desired ammount}
-    ${actual ammount}  Get Element Count  //div[contains(@class, "payment-method")]
-    Should Be Equal As Strings  ${desired ammount}  ${actual ammount}  На сторінці ${actual ammount} тип(а) оплати, а повинно бути ${desired ammount}
+    [Arguments]  ${desired amount}
+    ${actual amount}  Get Element Count  //div[contains(@class, "payment-method")]
+    Should Be Equal As Strings  ${desired amount}  ${actual amount}  На сторінці ${actual amount} тип(а) оплати, а повинно бути ${desired amount}
 
 
 Перевірити що на сторінці є тип оплати

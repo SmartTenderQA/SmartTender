@@ -1,5 +1,4 @@
 *** Variables ***
-${IP}
 ${users_variables_path1}   /home/testadm/users_variables.py
 ${users_variables_path2}   ${EXECDIR}/users_variables.py
 
@@ -10,7 +9,7 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	Run Keyword If
 	...  '${IP}' == 'iis'  Run Keywords
 	...  Set Global Variable  ${start_page}  http://iis${n}.smarttender.biz.int/   AND
-	...  Set Global Variable  ${IP}  iss${n}  ELSE IF
+	...  Set Global Variable  ${IP}  iis${n}  ELSE IF
 	...  '${IP}' != ''
 	...  Set Global Variable  ${start_page}  ${IP}
 
