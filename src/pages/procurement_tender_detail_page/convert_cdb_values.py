@@ -23,7 +23,15 @@ def convert_cdb_values(field, value):
         ret = str(value)
     elif 'hash' in field:
         ret = str(value[4:])
+    elif 'resolutionType' in field:
+        ret = convert_resolution_type[value]
     else:
         ret = value
     return ret
 
+
+convert_resolution_type = {
+    u'declined': u'Відхилено',
+    u'invalid': u'Недійсне',
+    u'': u'',
+}

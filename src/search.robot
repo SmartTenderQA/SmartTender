@@ -38,7 +38,10 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
     ${owner block}    Set Variable  //*[.="Організатори"]
     ${dropdown item}  Set Variable  //li[contains(@class, "dropdown-item")]
     Input Text  ${owner block}//input  ${name}
-    elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  15
+    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  15
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Clear Element Text  ${owner block}//input  AND
+    ...  Відфільтрувати по організатору  ${name}
     Click Element     (${dropdown item})[1]
     ${get}  Get Text  (${owner block}/following-sibling::*//li[contains(@class, "input-token-facebook")]//p)[1]
     Should Contain  ${get}  ${name}
