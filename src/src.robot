@@ -157,6 +157,7 @@ ${torgy count tab}                   li:nth-child
 *** Keywords ***
 Open Browser In Grid
 	[Arguments]  ${user}=${user}  ${browser}=${browser}  ${platform}=${platform}
+	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
 	clear_test_output
 	${site}  Отримати дані користувача по полю  ${user}  site
 	Set Global Variable  ${site}

@@ -1,16 +1,13 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Run Keywords
-...						Open Browser In Grid  ${user}  AND
-...						Авторизуватися  ${user}  AND
-...                     Preconditions
+Suite Setup  			Preconditions
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
 						...  Run Keyword If Test Failed  Capture Page Screenshot
 
-
+#robot --consolecolors on -L TRACE:INFO -d test_output -i $tag -v suite:$tag -v where:$where suites/other/balance_replenishment.robot
 
 
 *** Test Cases ***
@@ -46,6 +43,17 @@ Test Teardown  			Run Keywords
 
 *** Keywords ***
 Preconditions
+	${site}  Set Variable If  '${where}' == 'test'  test  prod
+	${user}  Run Keyword If  'prod' in '${site}'  Set Variable If
+	...  "identified-invoice" == "${suite}"		new_provider
+	...  "identified-card" == "${suite}"		new_provider
+	...  "unidentified" == "${suite}"			prod_provider1
+	...  ELSE  Set Variable If
+	...  "identified-invoice" == "${suite}"		user4
+	...  "identified-card" == "${suite}"		user4
+	...  "unidentified == ${suite}"				user3
+	Open Browser In Grid  ${user}
+	Авторизуватися  ${user}
     Навести мишку на іконку з заголовку  Баланс
     balance.Натиснути сформувати Invoice
     Дочекатись закінчення загрузки сторінки
