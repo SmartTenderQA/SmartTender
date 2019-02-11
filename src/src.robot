@@ -129,6 +129,7 @@ Library		service.py
 *** Variables ***
 ${tab_keybutton}					\\13
 ${IP}
+${where}
 ${user}								test_viewer
 
 ${browser}							chrome
