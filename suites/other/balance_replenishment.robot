@@ -31,7 +31,7 @@ Test Teardown  			Run Keywords
     invoice.Перевірити що підказка містить текст  Сума до оплати має бути кратною
     invoice.Перевірити що підказка містить текст  У разі сплати карткою Visa/MasterCard
     ${amount}  Спробувати поповнити баланс з сумою та без
-    Wait Until Keyword Succeeds  15  2  invoice.Перевірити перехід на сторінку Platon
+    Wait Until Keyword Succeeds  60  5  invoice.Перевірити перехід на сторінку Platon
     Перевірити суму на сторінці Platon  ${amount}
 
 
