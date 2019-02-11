@@ -169,18 +169,6 @@ Open Browser In Grid
     Set Window Size  1280  1024
 
 
-Відкрити браузер Chrome з вказаною папкою для завантаження файлів
-    [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    #Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${browser started}  Run Keyword And Return Status
-    ...  Open Browser  ${start_page}  chrome  ${user}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
-    Should Be True  ${browser started}
-
-
 Встановити фіксований час очікування прогрузки сторінок
 	[Arguments]  ${site}
 	Set Global Variable  ${swt}  ${swt ${site}}
