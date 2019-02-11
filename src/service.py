@@ -124,7 +124,7 @@ def get_number(value):
 
 
 def convert_url(href, IP):
-    if 'iis' in str(IP):
+    if 'iis' in str(IP) and 'iis' not in href:
         site = str(IP) + '.smarttender.biz.int'
         href = href.replace('https', 'http')
         ret = href.replace('smarttender.biz', site)
