@@ -192,6 +192,7 @@ Postcondition
 
 Перевірити вміст файлу
   ${href}  Get Element Attribute  xpath=//*[contains(text(), 'Список завантажених файлів')]/..//td[2]//a  href
+  ${href}  Поправити лінку для IP  ${href}
   ${content}  download_file_and_return_content  ${href}
   Should Be Equal  ${content}  ${data.file.content}
 

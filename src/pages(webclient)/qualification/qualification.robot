@@ -118,6 +118,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
 
 Підписати договір з переможцем
     [Arguments]  ${i}
+    Sleep  8m
     qualification_keywords.Вибрати переможця за номером  ${i}
     actions.Натиснути кнопку "Підписати договір"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так

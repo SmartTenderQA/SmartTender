@@ -14,6 +14,13 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	...  Set Global Variable  ${start_page}  ${IP}
 
 
+Поправити лінку для IP
+	[Arguments]  ${href}
+	${href}  Run Keyword If  '${IP}' != '${EMPTY}'  convert_url  ${href}  ${IP}
+	...  ELSE  Set Variable  ${href}
+	[Return]  ${href}
+
+
 Отримати стартову сторінку
 	[Arguments]  ${site}
 	${start_page}  Run Keyword If  "${site}" == "prod"  Set Variable  ${prod}
@@ -29,14 +36,6 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	${a}  Create Dictionary  a  ${users_variables}
 	${users_variables}  Set Variable  ${a.a}
 	[Return]  ${users_variables.${user}.${key}}
-
-
-Поправити лінку для IP
-	[Arguments]  ${href}
-	${href}  Run Keyword If  '${IP}' != '${EMPTY}'  convert_url  ${href}  ${IP}
-	...  ELSE  Set Variable  ${href}
-	[Return]  ${href}
-
 
 Отримати та залогувати data_session
 	${s2b}  get_library_instance  Selenium2Library

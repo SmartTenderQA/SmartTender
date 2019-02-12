@@ -129,7 +129,7 @@ Library		service.py
 *** Variables ***
 ${tab_keybutton}					\\13
 ${IP}
-${user}								test_viewer
+${where}
 
 ${browser}							chrome
 ${platform}							ANY
@@ -157,6 +157,7 @@ ${torgy count tab}                   li:nth-child
 *** Keywords ***
 Open Browser In Grid
 	[Arguments]  ${user}=${user}  ${browser}=${browser}  ${platform}=${platform}
+	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
 	clear_test_output
 	${site}  Отримати дані користувача по полю  ${user}  site
 	Set Global Variable  ${site}
@@ -167,18 +168,6 @@ Open Browser In Grid
 	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
     Set Window Size  1280  1024
-
-
-Відкрити браузер Chrome з вказаною папкою для завантаження файлів
-    [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    #Call Method    ${chromeOptions}    add_argument    --window-size\=1440,900
-    Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${browser started}  Run Keyword And Return Status
-    ...  Open Browser  ${start_page}  chrome  ${user}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
-    Should Be True  ${browser started}
 
 
 Встановити фіксований час очікування прогрузки сторінок

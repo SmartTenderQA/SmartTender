@@ -13,6 +13,7 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 	[Arguments]  ${tenderID}
 	Виконати пошук тендера  ${tenderID}
 	${tender_href}=  Get Element Attribute  ${tender found}  href
+	${tender_href}  Поправити лінку для IP  ${tender_href}
 	Go To  ${tender_href}
 	Log  ${tender_href}  WARN
 	Додаткова перевірка на тестові торги для продуктива

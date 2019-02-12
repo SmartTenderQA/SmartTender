@@ -43,6 +43,7 @@
 Отримати ID у цбд
     ${cdb locator}  Set Variable If  '${site}' == 'test'  //*[@data-qa='cdbNumber']  //*[text()='Перейти']
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
+	${cdb href}  Поправити лінку для IP  ${cdb href}
     ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
     Set To Dictionary  ${data}  id  ${cdb id}
 

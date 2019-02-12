@@ -266,8 +266,6 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Заповнити "Банківські реквізити"
 	small_privatization_step.Заповнити "Найменування банку"
-	Run Keyword If  '${site}' == 'test'
-	...  small_privatization_informational_message.Натиснути Додати реквізити
 	small_privatization_step.Заповнити "Тип реквізиту"
 	small_privatization_step.Заповнити "Значення реквізиту"
 	small_privatization_step.Заповнити "Опис реквізиту"
