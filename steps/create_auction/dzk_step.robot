@@ -20,6 +20,7 @@ Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 	dzk_step.Заповнити "Реквізити для перерахування гарантійних внесків"
 	dzk_step.Заповнити "Реквізити рахунку(рахунків) виконавця для сплати винагороди та/або витрат на підготовку"
 	dzk_step.Заповнити "Загальну інформацію про предмет"
+	dzk_step.Додати проект договору
 	sale_keywords.Натиснути кнопку зберегти
 	#todo nuzhno ubrat` posle fixa
 	Wait Until Keyword Succeeds  3x  35  sale_keywords.Натиснути кнопку опублікувати
@@ -376,3 +377,15 @@ Library  ../../src/pages/sale/SPF/dzk/dzk_variables.py
 	${streetAddress}  get_some_uuid
 	dzk_auction.Заповнити items.0.address.streetAddress  ${streetAddress}
 	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}
+
+
+Додати проект договору
+	${doc}  Створити файл
+	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
+	dzk_auction.Додати документ з типом  ${doc}  Проект договору
+	Set To Dictionary  ${docs_data}  title  ${doc[1]}
+	Set To Dictionary  ${docs_data}  documentType  Проект договору
+	Set To Dictionary  ${docs_data}  hash  md5:${md5}
+    ${new docs}  Evaluate  ${docs_data}.copy()
+	Append To List  ${data['documents']}  ${new docs}
+
