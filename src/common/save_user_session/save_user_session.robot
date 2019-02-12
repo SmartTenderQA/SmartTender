@@ -17,17 +17,16 @@ Library  save_user_session.py
 	${location}  Get Location
 	${role}  Отримати дані користувача по полю  ${user}  role
 	Set Global Variable  ${role}
-	Run Keyword If  "${location}" != "${${user}_location}"  Go To  ${${user}_location}
-	Run Keyword If  '/webclient/' in """${${user}_location}"""
-	...  Дочекатись закінчення загрузки сторінки(weclient start)
+	Run Keyword If  "${location}" != "${start_page}"  Go To  ${start_page}
 	Delete All Cookies
 	:FOR  ${cookie}  IN  @{${user}_cookies.keys()}
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}
 	\  ${cookie}  Evaluate  '${cookie}'.replace(' ', '')
 	\  Add Cookie  ${cookie}  ${value}
 	Reload Page
+	Go To  ${${user}_location}
 	Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords
-    ...  Дочекатись закінчення загрузки сторінки  AND
+    ...  Дочекатись закінчення загрузки сторінки(webclient)  AND
     ...  Location Should Contain  /webclient/
     Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"
-    ...  Authentication.Авторизуватися(webclient)  ${user}
+    ...  Authentication.Авторизуватися  ${user}
