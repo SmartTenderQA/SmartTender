@@ -45,7 +45,7 @@ Library  ../../src/pages/sale/SPF/propertyLease/propertyLease_variables.py
 
 
 Заповнити "День старту електроного аукціону" prod
-	${startDate}  get_formated_time_with_delta  5  days  m
+	${startDate}  get_formated_time_with_delta  7  days  m
 	propertyLease.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 
