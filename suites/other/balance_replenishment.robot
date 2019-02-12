@@ -17,7 +17,7 @@ Test Teardown  			Run Keywords
     invoice.Перевірити що підказок на сторінці  1
     invoice.Перевірити що підказка містить текст  Сума до оплати має бути кратною
     ${amount}  Спробувати поповнити баланс з сумою та без
-    invoice.Перевірити підтвердження формування рахунку-фактури
+#    invoice.Перевірити підтвердження формування рахунку-фактури
     Перевірити email рахунок-фактуру  ${amount}
 
 
@@ -52,6 +52,7 @@ Preconditions
 	...  "identified-invoice" == "${suite}"		user4
 	...  "identified-card" == "${suite}"		user4
 	...  "unidentified == ${suite}"				user3
+   	Set Global Variable  ${user}  ${user}
 	Open Browser In Grid  ${user}
 	Авторизуватися  ${user}
     Навести мишку на іконку з заголовку  Баланс
@@ -85,8 +86,6 @@ Preconditions
 	Розпочати роботу з Gmail  ${user}
 	Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
 	Перевірити вкладений файл за назвою  ${amount}  Рахунок
-	Close Browser
-	Switch Browser  1
 
 
 Перевірити суму на сторінці Platon
