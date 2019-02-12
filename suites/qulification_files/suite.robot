@@ -12,6 +12,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 *** Test Cases ***
+Підготувати браузер (змінена папка для загрузок)
+    Підготувати браузер
+
+
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
@@ -182,7 +186,6 @@ Precondition
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
     Додати користувача          ${viewer}
-    Підготувати браузер
 
 
 Підготувати браузер
