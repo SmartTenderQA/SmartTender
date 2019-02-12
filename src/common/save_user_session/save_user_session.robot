@@ -29,4 +29,4 @@ Library  save_user_session.py
     ...  Дочекатись закінчення загрузки сторінки(webclient)  AND
     ...  Location Should Contain  /webclient/
     Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"
-    ...  Authentication.Авторизуватися(webclient)  ${user}
+    ...  Authentication.Авторизуватися  ${user}
