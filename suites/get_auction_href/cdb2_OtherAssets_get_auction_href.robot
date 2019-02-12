@@ -234,6 +234,7 @@ If skipped create tender
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити перевірку протоколу"
 	sale_create_tender.Додати протокол рішення
+	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Кваліфікація"
 	sale_create_tender.Натиснути "Підтвердити оплату"
 
@@ -247,6 +248,7 @@ If skipped create tender
 	sale_create_tender.Заповнити поле "Дата підписання"
 	sale_create_tender.Прикріпити документ договору
 	sale_create_tender.Зберегти договір
+	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
 	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
