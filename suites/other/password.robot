@@ -2,6 +2,7 @@
 Resource        ../../src/src.robot
 Suite Setup     Precondition
 Suite Teardown  Postcondition
+Test Setup  	Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 ...  AND  Log Location
 
@@ -12,20 +13,18 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 
 #zapusk
-#test
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:user4 suites/other/password.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:test_tender_owner suites/other/password.robot
-#prod
-#robot --consolecolors on -L TRACE:INFO -d test_output -v user:prod_tender_owner suites/other/password.robot
-#
+#robot --consolecolors on -L TRACE:INFO -d test_output -v role:provider -v where:$where suites/other/password.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v role:tender_owner -v where:$where suites/other/password.robot
+
+
 *** Test Cases ***
 Відновлення пароля через email
     [Tags]  reset_password
     Перейти на сторінку відновлення пароля
     Відправити лист "Відновлення паролю" на пошту
-    Розпочати роботу з Gmail  ${user}
-    Відкрити лист в email за темою  SmartTender: Відновлення паролю
-    Перейти за посиланням в листі  Відновити пароль→
+    email.Розпочати роботу з Gmail  ${user}
+    email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
+    email.Перейти за посиланням в листі  Відновити пароль→
     Ввести новий пароль
     Go To  ${start_page}
     Переконатися що пароль змінено
