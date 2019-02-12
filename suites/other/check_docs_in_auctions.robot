@@ -41,6 +41,7 @@ Test Teardown    		Run Keywords
 
 *** Keywords ***
 Preconditions
+	${user}  Set Variable If  "prod" in "${where}"  prod_viewer  test_viewer
 	Open Browser In Grid  ${user}
 	&{checks}  Create Dictionary
 	...  checked_doc	${false}
