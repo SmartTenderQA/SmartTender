@@ -21,6 +21,7 @@ Resource  				keywords.robot
 	[Arguments]  ${title}
 	${link selector}  Set Variable  //a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
+	Sleep  30   #ждем пока догрузится gmail
 	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]  30
 	Open button  xpath=(${link selector})[last()]
 	sleep  0.5
