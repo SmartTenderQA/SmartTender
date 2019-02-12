@@ -63,6 +63,10 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 *** Keywords ***
 Precondition
+	${user}  Set Variable If
+	...  "prod" in "${where}"  prod_tender_owner
+	...  "test" in "${where}" and "${role}" == "provider"  user4
+	...  "test" in "${where}" and "${role}" == "tender_owner"  test_tender_owner
    	Open Browser In Grid  ${user}
    	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
 	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
