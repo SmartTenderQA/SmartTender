@@ -202,7 +202,7 @@ Precondition
     Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
     Call Method    ${chromeOptions}    add_argument    --disable-gpu
     ${browser started}  Run Keyword And Return Status
-    ...  Open Browser  ${start_page}  chrome  ${user}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
+    ...  Open Browser  ${start_page}  chrome  ${viewer}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
     Should Be True  ${browser started}
     Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
