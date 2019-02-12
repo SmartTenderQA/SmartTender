@@ -40,6 +40,9 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	small_privatization_search.Натиснути створити  інформаційне повідомлення
 	small_privatization_step.Заповнити "Унікальний код об'єкту"  ${id}
 	small_privatization_step.Заповнити "Рішення про затверждення умов продажу"
+	sale_keywords.Натиснути кнопку зберегти
+	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
+	small_privatization_informational_message.Перейти до коригування інформації
 	small_privatization_step.Заповнити "Умови аукціону"
 	small_privatization_step.Заповнити "Банківські реквізити"
 	sale_keywords.Натиснути кнопку зберегти
@@ -263,7 +266,6 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Заповнити "Банківські реквізити"
 	small_privatization_step.Заповнити "Найменування банку"
-	small_privatization_informational_message.Натиснути Додати реквізити
 	small_privatization_step.Заповнити "Тип реквізиту"
 	small_privatization_step.Заповнити "Значення реквізиту"
 	small_privatization_step.Заповнити "Опис реквізиту"

@@ -202,7 +202,7 @@ Precondition
     Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
     Call Method    ${chromeOptions}    add_argument    --disable-gpu
     ${browser started}  Run Keyword And Return Status
-    ...  Open Browser  ${start_page}  chrome  ${viewer}  ${hub}  platformName:${platform}  chrome_options=${chromeOptions}
+    ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
     Should Be True  ${browser started}
     Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
 	...  Отримати та залогувати data_session
@@ -264,7 +264,7 @@ Precondition
     ...  Go Back      AND
     ...  Reload Page  AND
     ...  Скачати файл з іменем та індексом  ${name}  ${index}
-    ${md5}   Wait Until Keyword Succeeds  30  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
+    ${md5}   Wait Until Keyword Succeeds  10  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
 
