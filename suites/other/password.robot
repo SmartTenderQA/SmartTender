@@ -68,6 +68,7 @@ Precondition
 	...  "prod" in "${where}" and "${role}" == "tender_owner"  prod_tender_owner
 	...  "test" in "${where}" and "${role}" == "provider"  user4
 	...  "test" in "${where}" and "${role}" == "tender_owner"  test_tender_owner
+   	Set Global Variable  ${user}  ${user}
    	Open Browser In Grid  ${user}
    	Set Global Variable  ${login}  ${users_variables["${user}"]["login"]}
 	Set Global Variable  ${password}  ${users_variables["${user}"]["password"]}
