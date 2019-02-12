@@ -182,7 +182,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 Регламент SmartTender
 	[Tags]  site
 	Вибрати елемент з випадаючого списку заголовку  Регламент  Регламент SmartTender
-	Location Should Contain  /reglament/Блог
+	Location Should Contain  /reglament/
 	Element Should Contain  //h1  Регламент
 	Element Should Contain  //h3  Терміни та визначення
 
