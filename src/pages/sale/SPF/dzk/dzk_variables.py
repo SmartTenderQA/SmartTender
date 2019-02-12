@@ -115,6 +115,7 @@ edit_locators = {
 			},
 		},
 	],
+	"documents": "//input[@type='file' and @multiple]",
 }
 #</editor-fold>
 
@@ -405,5 +406,7 @@ data = {
     "amount": "",
     "valueAddedTaxIncluded": "",
   },
+  "documents": [
+  ]
 }
 #</editor-fold>

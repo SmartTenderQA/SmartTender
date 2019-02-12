@@ -241,6 +241,14 @@
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['items'][0]['address']['streetAddress']
 	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
+Додати документ з типом
+	[Arguments]  ${doc}  ${doc_type}
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['documents']
+	Choose File  ${selector}  ${doc[0]}
+	Page Should Contain  ${doc[1]}
+	sale_keywords.Вибрати тип документа  ${doc_type}
 #######################################################end-region#######################################################
 #                                                    Заповнити поля                                                    #
 ########################################################################################################################
