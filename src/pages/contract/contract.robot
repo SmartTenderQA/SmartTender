@@ -1,5 +1,5 @@
 *** Variables ***
-${contract_page}  //*[@id="modalContract"]//*[@class="ivu-modal-mask" and not(@style="display: none;")]/following-sibling::*
+${contract_page}  //*[@class="ivu-modal-mask" and not(@style="display: none;")]/following-sibling::*
 
 
 *** Keywords ***
