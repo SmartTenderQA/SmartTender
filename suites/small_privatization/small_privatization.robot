@@ -289,7 +289,7 @@ Precondition
 	...  Set Global Variable  ${provider2}  user2						AND
 	...  Set Global Variable  ${provider3}  user3						AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	Run Keyword If  '${where}' == 'prod'  Run Keywords
+	Run Keyword If  'prod' in '${where}'  Run Keywords
 	...  Set Global Variable  ${tender_owner}  prod_ssp_owner			AND
 	...  Set Global Variable  ${tender_owner2}  prod_tender_owner		AND
 	...  Set Global Variable  ${provider1}  prod_provider				AND
