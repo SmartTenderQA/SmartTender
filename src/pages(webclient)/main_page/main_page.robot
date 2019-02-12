@@ -7,6 +7,7 @@
 Отримати tender_href вибраного тендера
     ${href}  Get Element Attribute
     ...  ${first tender}/following-sibling::td/a|${first tender}/preceding-sibling::td/a  href
+    ${href}  Поправити лінку для IP  ${href}
     [Return]  ${href}
 
 
