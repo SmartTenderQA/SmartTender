@@ -155,7 +155,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	blog.Виконати пошук
 	Перевірити результат пошуку на сторінці блогів
 	blog.Відкрити Блог за номером  1
-	Перевірити відкритий блог  ${title} | блог Smarttender
+	Перевірити відкритий блог  ${title}
 
 
 Вакансії
@@ -182,7 +182,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 Регламент SmartTender
 	[Tags]  site
 	Вибрати елемент з випадаючого списку заголовку  Регламент  Регламент SmartTender
-	Location Should Contain  /reglament/
+	Location Should Contain  /reglament/Блог
 	Element Should Contain  //h1  Регламент
 	Element Should Contain  //h3  Терміни та визначення
 
