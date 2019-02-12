@@ -42,13 +42,15 @@
 
 
 Заповнити contact для tender test
-    ${name}  Set Variable  Дудник Лилия
+    ${name}  Set Variable  Прохоров И.А.
     tender_tab.Заповнити "Контактна особа"  ${name}
     Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
 Заповнити contact для tender prod
-    ${name}  Вибрати "Контактна особа"
+    #${name}  Вибрати "Контактна особа"
+    ${name}  Set Variable  Прохоров И.А.
+    tender_tab.Заповнити "Контактна особа"  ${name}
     Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 

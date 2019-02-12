@@ -67,7 +67,8 @@ Library  ../../src/pages/sale/SPF/otherAssets/otherAssets_variables.py
 
 
 Заповнити "Контактна особа"
-	${name}  otherAssets.Заповнити procuringEntity.contactPoint.name
+    ${name}  Set Variable  Прохоров И.А.
+    tender_tab.Заповнити "Контактна особа"  ${name}
 	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 

@@ -89,7 +89,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	${doc}  Створити та додати файл  ${input file}
 	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
 	${row}  Set Variable  //*[@class='file ivu-row' and contains(.,'${doc[1]}')]
-	Вибрати тип кваліфікаційного документа  ${type}
+	sale_keywords.Вибрати тип документа  ${type}
 	Run Keyword If  '${type}' == 'Протокол аукціону'
 	...  Set To Dictionary  ${docs_data}  key  awards
 	...  ELSE  Set To Dictionary  ${docs_data}  key  bids
@@ -100,9 +100,10 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Append To List  ${data['documents']}  ${new docs}
 
 
-Вибрати тип кваліфікаційного документа
+Вибрати тип документа
 	[Arguments]  ${type}
 	${file type locator}  Set Variable  (//*[@class='dropdown'])[last()]
+	Scroll Page To Element XPATH  ${file type locator}
 	Click Element  ${file type locator}
 	${menu locator}  Set Variable  (//*[@class="dropdown-menu"])[last()]
 	Wait Until Element Is Visible  ${menu locator}

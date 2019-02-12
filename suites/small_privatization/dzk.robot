@@ -11,7 +11,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e -test suites/small_privatization/dzk.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -e broken --noncritical compare -e -test suites/small_privatization/dzk.robot
 *** Test Cases ***
 Створити аукціон
 	Завантажити сесію для  ${tender_owner}
