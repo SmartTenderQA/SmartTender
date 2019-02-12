@@ -130,7 +130,6 @@ Library		service.py
 ${tab_keybutton}					\\13
 ${IP}
 ${where}
-${user}								test_viewer
 
 ${browser}							chrome
 ${platform}							ANY
