@@ -117,6 +117,7 @@ Test Teardown  			Run Keywords
     \  Mouse Over  ${selector}/preceding-sibling::i
     \  Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  15
     \  ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
+    \  ${link}  Поправити лінку для IP  ${link}
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
     \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file}
     \  Sleep  3
