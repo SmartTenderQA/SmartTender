@@ -68,7 +68,6 @@ If skipped create tender
     Отримати дані з cdb та зберегти їх у файл
     :FOR  ${i}  IN  1  2
     \  procurement_tender_detail.Розгорнути всі експандери учасника  ${i}
-    \  debug
     \  ${hash}  Скачати файл з іменем та індексом  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
     \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}-1]}  2
@@ -180,7 +179,6 @@ Precondition
     Set Global Variable         ${provider2}      user2
     Set Global Variable         ${viewer}         test_viewer
     Додати першого користувача  ${tender_owner}
-    debug
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
     Додати користувача          ${viewer}
