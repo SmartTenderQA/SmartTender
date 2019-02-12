@@ -179,7 +179,8 @@ Open Browser In Grid
 Додати першого користувача
     [Arguments]  ${user}
     Open Browser In Grid  ${user}
-    Authentication.Авторизуватися  ${user}
+    Run Keyword If  'iis' in '${IP}'  Authentication.Авторизуватися(webclient)  ${user}
+    ...  ELSE  Authentication.Авторизуватися  ${user}
     Зберегти сесію  ${user}
 
 

@@ -21,3 +21,19 @@ Resource  ../../src/pages/start_page/login/login.robot
 	...  Дочекатись закінчення загрузки сторінки
 	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
 	...  Wait Until Page Contains  ${name}  10
+
+
+Авторизуватися(webclient)
+	[Arguments]  ${user}
+	${login}		Отримати дані користувача по полю  ${user}  login
+	${password}		Отримати дані користувача по полю  ${user}  password
+	${role}			Отримати дані користувача по полю  ${user}  role
+	${name}			Отримати дані користувача по полю  ${user}  name
+	Set Global Variable  ${role}
+	Set Global Variable  ${name}
+	Go To  ${start_page}/webclient/
+	Wait Until Page Contains  Вхід в систему  60
+	Input Text  xpath=//*[@data-name="Login"]//input  ${login}
+	Input Text  xpath=//*[@data-name="Password"]//input  ${password}
+	Click Element At Coordinates  xpath=(//*[contains(text(), 'Увійти')])[1]  -40  0
+	Дочекатись закінчення загрузки сторінки(webclient)
