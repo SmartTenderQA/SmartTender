@@ -96,26 +96,18 @@ If skipped create tender
 
 *** Keywords ***
 Підготувати користувачів
-    Run Keyword  Підготувати користувачів для ${site}
-
-Підготувати користувачів для prod
-    Set Global Variable         ${tender_owner}  prod_owner
-    Set Global Variable         ${provider1}      prod_provider1
-    Set Global Variable         ${provider2}     prod_provider2
-    Set Global Variable         ${viewer}        prod_viewer
-
-    Додати першого користувача  ${tender_owner}
-    Додати користувача          ${provider1}
-    Додати користувача          ${provider2}
-    Додати користувача          ${viewer}
-
-
-Підготувати користувачів для test
-    Set Global Variable         ${tender_owner}  Bened
-    Set Global Variable         ${provider1}     user1
-    Set Global Variable         ${provider2}     user2
-    #Set Global Variable         ${provider3}     user3
-    Set Global Variable         ${viewer}        test_viewer
+    Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider1}     user1  AND
+	...  Set Global Variable  ${provider2}     user2  AND
+	#...  Set Global Variable  ${provider3}  user3  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+	Run Keyword If  'prod' in '${where}'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  prod_owner	   AND
+	...  Set Global Variable  ${provider1}     prod_provider1  AND
+	...  Set Global Variable  ${provider2}     prod_provider2  AND
+	#...  Set Global Variable  ${provider3}  prod_provider  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
 
     Додати першого користувача  ${tender_owner}
     Додати користувача          ${provider1}
