@@ -80,20 +80,14 @@ ${multilot}                                False
 
 *** Keywords ***
 Precondition
-    Run Keyword  Підготувати користувачів ${site}
+    Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${viewer}  test_viewer
+    Run Keyword If  'prod' in '${where}'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  prod_owner  AND
+	...  Set Global Variable  ${viewer}  prod_viewer
 
-
-Підготувати користувачів test
-    Set Global Variable         ${tender_owner}  Bened
-    Set Global Variable         ${viewer}        test_viewer
-    Додати першого користувача  ${tender_owner}
-    Додати користувача          ${viewer}
-
-
-Підготувати користувачів prod
-    Set Global Variable         ${tender_owner}  prod_owner
-    Set Global Variable         ${viewer}        prod_viewer
-    Додати першого користувача  ${tender_owner}
+	Додати першого користувача  ${tender_owner}
     Додати користувача          ${viewer}
 
 
