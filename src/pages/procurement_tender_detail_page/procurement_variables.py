@@ -269,8 +269,7 @@ data = {
             ],
         },
     ],
-    "qulification_documents": [
-
+    "qualification_documents": [
     ]
 }
 
