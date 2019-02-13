@@ -17,6 +17,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Створити тендер
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
