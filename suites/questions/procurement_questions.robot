@@ -89,24 +89,17 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 *** Keywords ***
 Precondition
-    Run Keyword  Підготувати користувачів ${site}
+    Run Keyword If  '${where}' == 'test'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  Bened  AND
+	...  Set Global Variable  ${provider}      user1  AND
+	...  Set Global Variable  ${viewer}        test_viewer
+	Run Keyword If  'prod' in '${where}'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  prod_owner	   AND
+	...  Set Global Variable  ${provider}      prod_provider1  AND
+	...  Set Global Variable  ${viewer}        prod_viewer
 
-
-Підготувати користувачів test
-    Set Global Variable         ${provider}  user1
-    Set Global Variable         ${viewer}    test_viewer
-    Set Global Variable         ${tender_owner}  Bened
-    Додати першого користувача  ${provider}
-    Додати користувача          ${tender_owner}
-    Додати користувача          ${viewer}
-
-
-Підготувати користувачів prod
-    Set Global Variable         ${provider}  prod_provider1
-    Set Global Variable         ${viewer}    prod_viewer
-    Set Global Variable         ${tender_owner}  prod_owner
-    Додати першого користувача  ${provider}
-    Додати користувача          ${tender_owner}
+    Додати першого користувача  ${tender_owner}
+    Додати користувача          ${provider}
     Додати користувача          ${viewer}
 
     

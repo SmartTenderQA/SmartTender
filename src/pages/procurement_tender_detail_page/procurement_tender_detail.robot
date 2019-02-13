@@ -16,16 +16,16 @@ Variables       procurement_variables.py
     Run Keyword If  '${status}' == 'False'  Click Element  ${tender tab}
 
 
-Перевірити доступні вкладки на сторінці
+Порахувати доступні вкладки за типом процедури
     [Arguments]  ${name}
     ${tab locator}  Set Variable  //*[@data-qa="tabs"]//*[contains(@class,"ivu-tabs-tab")][not(@data-qa)]
     ${count}  Get Element Count  ${tab locator}
-    actions.Створити словник  dict of tabs
+    ${list of tabs}  Create List
     :FOR  ${tab}  IN RANGE  1  ${count}+1
     \  ${tab name}  Get Text  (${tab locator})[${tab}]
-    \  Set To Dictionary  ${dict of tabs}    Назва вкладки ${tab}   ${tab name}
-    Log  ${dict of tabs}
-    Should Be Equal  ${count}  5  Не всі вкладки відображені!
+    \  Append To List  ${list of tabs}  ${tab name}
+    Log  ${list of tabs}
+    Should Be Equal As Strings  ${count}  5  Не всі вкладки відображені!
 
 
 Перевірити кнопку подачі пропозиції
