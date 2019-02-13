@@ -62,7 +62,7 @@ Variables       procurement_variables.py
 	[Arguments]  ${field}
 	${selector}  procurement_variables.get_locator  ${field}
 	${selector}  Set Variable If  '${selector}' == 'None'  ${locators${field}}  ${selector}
-	Wait Until Element Is Visible  ${selector}  3
+	Wait Until Element Is Visible  ${selector}  10
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}
 	[Return]  ${field value}
