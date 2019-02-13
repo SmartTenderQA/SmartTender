@@ -45,7 +45,7 @@ Library  ../../src/pages/sale/SPF/propertyLease/propertyLease_variables.py
 
 
 Заповнити "День старту електроного аукціону" prod
-	${startDate}  get_formated_time_with_delta  5  days  m
+	${startDate}  get_formated_time_with_delta  7  days  m
 	propertyLease.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 
@@ -69,7 +69,8 @@ Library  ../../src/pages/sale/SPF/propertyLease/propertyLease_variables.py
 
 
 Заповнити "Контактна особа"
-	${name}  propertyLease.Заповнити procuringEntity.contactPoint.name
+    ${name}  Set Variable  Прохоров И.А.
+    tender_tab.Заповнити "Контактна особа"  ${name}
 	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 

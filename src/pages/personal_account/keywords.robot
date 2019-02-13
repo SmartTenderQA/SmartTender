@@ -52,6 +52,7 @@ ${collapsed menu button your account}           //*[contains(@class, "page-conta
 	[Arguments]  ${item name}
 	${item locator}  Set Variable  ${${item name}}
 	${item href}  Get Element Attribute  ${item locator}  href
+	${item href}  Поправити лінку для IP  ${item href}
 	${item should not open in new tab}  Run Keyword And Return Status  Should Contain  '${item href[-1]}'  '#'
 	Run Keyword If  ${item should not open in new tab} == ${True}
 	...  Click Element  ${item locator}

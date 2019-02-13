@@ -1,7 +1,7 @@
 *** Keywords ***
 Створити тендер
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-	actions.Натиснути додати(F7)  Додавання. Тендери
+	Wait Until Keyword Succeeds  30  .5  actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
     below.Заповнити amount для tender
   	below.Заповнити minimalStep для tender

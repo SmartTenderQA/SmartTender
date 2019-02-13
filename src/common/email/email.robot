@@ -5,7 +5,7 @@ Resource  				keywords.robot
 *** Keywords ***
 Розпочати роботу з Gmail
 	[Arguments]  ${user}
-	Open Browser  https://www.google.com/gmail/about/#  chrome  email  ${hub}  platformName:ANY
+	Go To  https://www.google.com/gmail/about/#
 	Авторизуватися в Gmail  ${user}
 	Закрити валідаційне вікно (за необходністю)
 
@@ -21,16 +21,18 @@ Resource  				keywords.robot
 	[Arguments]  ${title}
 	${link selector}  Set Variable  //a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]
-	Click Element  xpath=(${link selector})[last()]
-	Select Window  New
+	Sleep  30   #ждем пока догрузится gmail
+	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]  30
+	Open button  xpath=(${link selector})[last()]
 	sleep  0.5
 
 
 Розгорнути останній лист (за необхідність)
 	${count}  Get Element Count  //img[@class='ajT']
 	sleep  0.5
-	Wait Until Keyword Succeeds  10 s  1 s  Run Keyword If  ${count} > 0  Click Element  xpath=(//img[@class='ajT'])[last()]
+	Wait Until Keyword Succeeds  10 s  1 s  Run Keyword If  ${count} > 0  Run Keywords
+	...  elements.Дочекатися відображення елемента на сторінці  xpath=(//img[@class='ajT'])[last()]		AND
+	...  Click Element  xpath=(//img[@class='ajT'])[last()]
 	sleep  1
 
 

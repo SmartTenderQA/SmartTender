@@ -12,6 +12,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 *** Test Cases ***
+Підготувати браузер (змінена папка для загрузок)
+    Підготувати браузер
+
+
 Створити тендер
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
@@ -182,13 +186,26 @@ Precondition
     Додати користувача          ${provider1}
     Додати користувача          ${provider2}
     Додати користувача          ${viewer}
-    Підготувати браузер
 
 
 Підготувати браузер
     Close Browser
     Create Directory  ${OUTPUTDIR}/downloads/
     Відкрити браузер Chrome з вказаною папкою для завантаження файлів  ${OUTPUTDIR}/downloads/
+
+
+Відкрити браузер Chrome з вказаною папкою для завантаження файлів
+    [Arguments]  ${downloadDir}
+    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
+    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
+    Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
+    Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    ${browser started}  Run Keyword And Return Status
+    ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
+    Should Be True  ${browser started}
+    Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
+	...  Отримати та залогувати data_session
 
 
 Отримати дані з cdb та зберегти їх у файл
@@ -247,7 +264,7 @@ Precondition
     ...  Go Back      AND
     ...  Reload Page  AND
     ...  Скачати файл з іменем та індексом  ${name}  ${index}
-    ${md5}  Wait Until Keyword Succeeds  30  1  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
+    ${md5}   Wait Until Keyword Succeeds  10  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
     [Return]  ${md5}
 

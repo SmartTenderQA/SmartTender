@@ -134,7 +134,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Новини
-	[Tags]  site1
+	[Tags]  site
 	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Новини
 	Перевірити заголовок сторінки з новинами
 	Перевірити наявність новин
@@ -188,7 +188,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Договір з майданчиком
-	[Tags]  site  -test
+	[Tags]  site1  -test
 	Вибрати елемент з випадаючого списку заголовку  Інформаційний центр  Договір с майданчиком
 	contract.Перевірити заголовок договору
 	contract.Перевірити перший абзац договору

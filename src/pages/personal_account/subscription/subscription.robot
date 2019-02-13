@@ -91,7 +91,7 @@ Resource    	keywords.robot
   ${input selector}  Set Variable  //input[contains(@placeholder, "Введіть назву компанії")]
   ${result selector}  Set Variable  xpath=${input selector}/parent::*/following-sibling::*//li[@class="ivu-select-item"]
   Input Text  ${input selector}  ${search_query}
-  Run Keyword And Ignore Error  Click Element  ${input selector}
+#  Run Keyword And Ignore Error  Click Element  ${input selector}
   Дочекатися відображення елемента на сторінці  ${result selector}
   ${result text}  Get Text  ${result selector}
   ${status}  Run Keyword And Return Status  Should Contain  ${result text}  ${search query}

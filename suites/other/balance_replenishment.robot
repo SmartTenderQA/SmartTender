@@ -1,16 +1,13 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Run Keywords
-...						Open Browser In Grid  ${user}  AND
-...						Авторизуватися  ${user}  AND
-...                     Preconditions
+Suite Setup  			Preconditions
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
 						...  Run Keyword If Test Failed  Capture Page Screenshot
 
-
+#robot --consolecolors on -L TRACE:INFO -d test_output -i $tag -v suite:$tag -v where:$where suites/other/balance_replenishment.robot
 
 
 *** Test Cases ***
@@ -20,7 +17,7 @@ Test Teardown  			Run Keywords
     invoice.Перевірити що підказок на сторінці  1
     invoice.Перевірити що підказка містить текст  Сума до оплати має бути кратною
     ${amount}  Спробувати поповнити баланс з сумою та без
-    invoice.Перевірити підтвердження формування рахунку-фактури
+#    invoice.Перевірити підтвердження формування рахунку-фактури
     Перевірити email рахунок-фактуру  ${amount}
 
 
@@ -46,6 +43,18 @@ Test Teardown  			Run Keywords
 
 *** Keywords ***
 Preconditions
+	${site}  Set Variable If  '${where}' == 'test'  test  prod
+	${user}  Run Keyword If  'prod' in '${site}'  Set Variable If
+	...  "identified-invoice" == "${suite}"		new_provider
+	...  "identified-card" == "${suite}"		new_provider
+	...  "unidentified" == "${suite}"			prod_provider1
+	...  ELSE  Set Variable If
+	...  "identified-invoice" == "${suite}"		user4
+	...  "identified-card" == "${suite}"		user4
+	...  "unidentified == ${suite}"				user3
+   	Set Global Variable  ${user}  ${user}
+	Open Browser In Grid  ${user}
+	Авторизуватися  ${user}
     Навести мишку на іконку з заголовку  Баланс
     balance.Натиснути сформувати Invoice
     Дочекатись закінчення загрузки сторінки
@@ -77,8 +86,6 @@ Preconditions
 	Розпочати роботу з Gmail  ${user}
 	Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
 	Перевірити вкладений файл за назвою  ${amount}  Рахунок
-	Close Browser
-	Switch Browser  1
 
 
 Перевірити суму на сторінці Platon
