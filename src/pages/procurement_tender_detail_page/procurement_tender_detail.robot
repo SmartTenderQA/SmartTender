@@ -16,6 +16,18 @@ Variables       procurement_variables.py
     Run Keyword If  '${status}' == 'False'  Click Element  ${tender tab}
 
 
+Порахувати доступні вкладки за типом процедури
+    [Arguments]  ${name}
+    ${tab locator}  Set Variable  //*[@data-qa="tabs"]//*[contains(@class,"ivu-tabs-tab")][not(@data-qa)]
+    ${count}  Get Element Count  ${tab locator}
+    ${list of tabs}  Create List
+    :FOR  ${tab}  IN RANGE  1  ${count}+1
+    \  ${tab name}  Get Text  (${tab locator})[${tab}]
+    \  Append To List  ${list of tabs}  ${tab name}
+    Log  ${list of tabs}
+    Should Be Equal As Strings  ${count}  5  Не всі вкладки відображені!
+
+
 Перевірити кнопку подачі пропозиції
     [Arguments]  ${selector}=None
     ${button}  Run Keyword If  "${selector}" == "None"
@@ -62,7 +74,7 @@ Variables       procurement_variables.py
 	[Arguments]  ${field}
 	${selector}  procurement_variables.get_locator  ${field}
 	${selector}  Set Variable If  '${selector}' == 'None'  ${locators${field}}  ${selector}
-	Wait Until Element Is Visible  ${selector}  3
+	Wait Until Element Is Visible  ${selector}  10
 	${value}  Get Text  ${selector}
 	${field value}  convert_page_values  ${field}  ${value}
 	[Return]  ${field value}

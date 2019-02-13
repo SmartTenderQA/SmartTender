@@ -17,6 +17,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 
 Створити тендер
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
@@ -204,8 +205,6 @@ Precondition
     ${browser started}  Run Keyword And Return Status
     ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
     Should Be True  ${browser started}
-    Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
-	...  Отримати та залогувати data_session
 
 
 Отримати дані з cdb та зберегти їх у файл
