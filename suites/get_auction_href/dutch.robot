@@ -173,6 +173,7 @@ Precondition
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
+   	Set Global Variable  ${user}  ${tender_owner}
 	dutch_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
