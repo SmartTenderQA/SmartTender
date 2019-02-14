@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object_variables.py
-Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_asset_page/cdb2_ssp_asset_variables.py
+Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
@@ -14,19 +14,19 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 #Запуск
 #Отримати посилання на аукціон
 #prod
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i create_tender -v where:prod -v hub:none suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i create_tender -v where:prod -v hub:none suites/get_auction_href/cdb2_ssp.robot
 #test
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v where:test -v hub:none suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v where:test -v hub:none suites/get_auction_href/cdb2_ssp.robot
 #Кваліфікація учасника
 #test
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v where:test -v hub:none suites/small_privatization/small_privatization.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v where:test -v hub:none suites/get_auction_href/cdb2_ssp.robot
 *** Test Cases ***
 Створити об'єкт МП
 	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	small_privatization_step.Завантажити локатори для об'єкта
-	small_privatization_step.Створити об'єкт МП
-	small_privatization_object.Отримати UAID для Об'єкту
+	cdb2_ssp_step.Завантажити локатори для об'єкта
+	cdb2_ssp_step.Створити об'єкт МП
+	cdb2_ssp_asset_page.Отримати UAID для Об'єкту
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
@@ -96,9 +96,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  create_tender  make_a_proposal  get_auction_href
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
-	small_privatization_step.Завантажити локатори для ІП
-	small_privatization_step.Створити інформаційне повідомлення МП  ${assetID}
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Опубліковано  10 min
+	cdb2_ssp_step.Завантажити локатори для ІП
+	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  10 min
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location
@@ -202,10 +202,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Дочекатися початку прийому пропозицій
 	[Tags]  make_a_proposal  get_auction_href
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Аукціон  25 min
-	small_privatization_informational_message.Дочекатися опублікування посилання на лот  15 min
-	small_privatization_informational_message.Перейти до аукціону
-	small_privatization_auction.Отримати UAID та href для Аукціону
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Аукціон  25 min
+	cdb2_ssp_lot_page.Дочекатися опублікування посилання на лот  15 min
+	cdb2_ssp_lot_page.Перейти до аукціону
+	cdb2_ssp_auction_page.Отримати UAID та href для Аукціону
 	Log To Console  lot-id=${data['tender_id']}
 	Log To Console  lot-href=${data['tender_href']}
 	Зберегти сесію  tender_owner
@@ -255,7 +255,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
-	small_privatization_auction.Дочекатися статусу лота  Аукціон  30 min
+	cdb2_ssp_auction_page.Дочекатися статусу лота  Аукціон  30 min
 
 
 Отримати поcилання на участь учасниками

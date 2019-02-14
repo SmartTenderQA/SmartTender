@@ -31,7 +31,7 @@ Test Teardown  			Run Keywords
 
 Загрузити файли до об'єкту приватизації
     #Видалити файли з об'єкту приватизації  # На випадок якщо, файли не видалились коли тест зафейлився
-    small_privatization_object.Натиснути кнопку "Коригувати об'єкт приватизації"
+    cdb2_ssp_asset_page.Натиснути кнопку "Коригувати об'єкт приватизації"
     Загрузити файл  ${1 full name}
     Загрузити файл  ${2 full name}
     sale_keywords.Натиснути кнопку зберегти
@@ -83,7 +83,7 @@ Test Teardown  			Run Keywords
 
 Отримати md5 файлу із словника ЦБД
     [Arguments]  ${file name}
-    ${n}  small_privatization_object.Отримати кілкість документів обєкту приватизації
+    ${n}  cdb2_ssp_asset_page.Отримати кілкість документів обєкту приватизації
     :FOR  ${i}  IN RANGE  ${n}+1
     \  ${title}  Get From Dictionary  ${cdb['documents'][${i}]}  title
     \  ${md5}  Run Keyword If  '${title}' == '${file name}'  Get From Dictionary  ${cdb['documents'][${i}]}  hash

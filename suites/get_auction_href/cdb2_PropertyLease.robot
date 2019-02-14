@@ -10,11 +10,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #zapusk
 #Отримати посилання на аукціон
 #test
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb2_PropertyLease.robot
 #prod
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i make_proposal -v hub:None -v where:prod suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i make_proposal -v hub:None -v where:prod suites/get_auction_href/cdb2_PropertyLease.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease.robot
 *** Variables ***
 
 
@@ -22,10 +22,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити аукціон
 	[Tags]  create_tender  make_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb2_PropertyLease.Створити аукціон
+	cdb2_PropertyLease_step.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
 	Run Keyword If  not('iis' in '${IP}')
-	...  dzk_auction.Отримати ID у цбд
+	...  cdb2_LandLease_page.Отримати ID у цбд
 
 
 If skipped create tender
@@ -253,7 +253,7 @@ If skipped create tender
 	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Завершено  10m
 
 
 Отримати дані про аукціон з ЦБД
@@ -303,7 +303,7 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
    	Set Global Variable  ${user}  ${tender_owner}
-	cdb2_PropertyLease.Завантажити локатори
+	cdb2_PropertyLease_step.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
