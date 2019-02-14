@@ -80,14 +80,14 @@ Resource    pages/vakansii/vakansii.robot
 Resource    pages/vidhuky/vidhuky.robot
 Resource    pages/zapytannya_i_vidpovidi/zapytannya_i_vidpovidi.robot
 Resource    pages/sale/sale_keywords.robot
-Resource    pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message.robot
-Resource    pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object.robot
-Resource    pages/sale/SPF/small_privatization/small_privatization_auction/small_privatization_auction.robot
-Resource    pages/sale/SPF/dzk/dzk_auction.robot
-Resource    pages/sale/SPF/otherAssets/otherAssets.robot
-Resource    pages/sale/SPF/propertyLease/propertyLease.robot
-Resource    pages/sale/DGF/dgfAssets/dgfAssets.robot
-Resource    pages/sale/DGF/dutch/dutch.robot
+Resource    pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_page.robot
+Resource    pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_asset_page/cdb2_ssp_asset_page.robot
+Resource    pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_auction_page/cdb2_ssp_auction_page.robot
+Resource    pages/sale/SPF/cdb2_LandLease_page/cdb2_LandLease_page.robot
+Resource    pages/sale/SPF/cdb2_OtherAssets_page/cdb2_OtherAssets_page.robot
+Resource    pages/sale/SPF/cdb2_PropertyLease_page/cdb2_PropertyLease_page.robot
+Resource    pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_page.robot
+Resource    pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_page.robot
 
 
 Resource    pages(webclient)/desktop/desktop.robot
@@ -107,18 +107,18 @@ Resource    pages(webclient)/complaints/complaints.robot
 
 
 Resource    ../steps/Authentication/Authentication.robot
-Resource    ../steps/create_tender/sale_dgfAssets.robot
+Resource    ../steps/create_tender/cdb1_dgfAssets_step.robot
 Resource    ../steps/create_tender/below.robot
 Resource    ../steps/create_tender/test_dialog.robot
 Resource    ../steps/create_tender/test_esco.robot
 Resource    ../steps/create_tender/test_open_eu.robot
 Resource    ../steps/create_tender/test_open_trade.robot
 Resource    ../steps/create_tender/test_ramky.robot
-Resource    ../steps/create_tender/dutch_step.robot
-Resource    ../steps/create_tender/cdb2_OtherAssets.robot
-Resource    ../steps/create_tender/cdb2_PropertyLease.robot
-Resource    ../steps/create_auction/dzk_step.robot
-Resource    ../steps/create_auction/small_privatization_step.robot
+Resource    ../steps/create_tender/cdb1_dutch_step.robot
+Resource    ../steps/create_tender/cdb2_OtherAssets_step.robot
+Resource    ../steps/create_tender/cdb2_PropertyLease_step.robot
+Resource    ../steps/create_tender/cdb2_LandLease_step.robot
+Resource    ../steps/create_tender/cdb2_ssp_step.robot
 
 
 Resource	keywords.robot
