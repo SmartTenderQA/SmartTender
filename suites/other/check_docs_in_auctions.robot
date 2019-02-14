@@ -35,7 +35,6 @@ ${tender boby on old search}   /../../following-sibling::tr[1][not(contains(@sty
 	:FOR  ${page}  IN RANGE  1  6
 	\  Активувати вкладку за номером  ${page}
 	\  ${tenders count}  Порахувати кількість процедур на сторінці
-	\  debug
 	\  Run Keyword If  '${type}' != 'bank_aucs'
 	...  Почати пошук файлів у процедурах  		${tenders count}  ELSE
 	...  Почати пошук файлів у процедурах new  	${tenders count}
