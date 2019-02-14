@@ -111,8 +111,8 @@ Preconditions
 	${file selector}  Set Variable  (${tender head on old search})[${number}]/td/span${tender boby on old search}//*[@class="item"]
 	${doc_quantity}  Get Element Count  ${file selector}//a[@href]
 	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
-	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  ${file selector}[${file}]//a[@href]/span
-	\  Append To List  ${list of files}  ${file name}
+	\  ${file name}  Wait Until Keyword Succeeds  15  .5  Run Keyword And Ignore Error  Get Text  ${file selector}[${file}]//a[@href]/span
+	\  Append To List  ${list of files}  ${file name[1]}
 	[Return]  ${list of files}
 
 
