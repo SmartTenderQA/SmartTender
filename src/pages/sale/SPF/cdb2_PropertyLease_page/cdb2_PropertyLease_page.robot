@@ -23,7 +23,19 @@
 Заповнити minimalStep.amount
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['minimalStep']['amount']
-	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  cdb2_PropertyLease_page.Заповнити поле мінімальний крок  ${selector}  ${text}
+
+
+Заповнити поле мінімальний крок
+	[Arguments]  ${selector}  ${text}
+	Scroll Page To Element XPATH  ${selector}
+	Click Element  ${selector}
+	Sleep  .5
+	Run Keyword And Ignore Error  Clear input By JS  ${selector}
+	Input Text  ${selector}  ${text}
+	${got}  Get Element Attribute  ${selector}  value
+	Click Element  //*[@data-name="MINSTEP_L"]
+	Should Be Equal As Strings  ${got}  ${text}
 
 
 Заповнити title
@@ -32,9 +44,9 @@
 	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
-Заповнити dgfID
+Заповнити lotIdentifier
 	[Arguments]  ${text}
-	${selector}  sale_keywords.Отримати локатор по назві поля  ['dgfID']
+	${selector}  sale_keywords.Отримати локатор по назві поля  ['lotIdentifier']
 	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
@@ -64,7 +76,7 @@
 
 
 Заповнити items.0.classification
-	${classification}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову класифікацію
+	${classification}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкову класифікацію
 	[Return]  ${classification}
 
 
@@ -81,7 +93,7 @@
 
 
 Заповнити items.0.address.locality
-	${locality}  ${region}  ${countryName}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкове місто
+	${locality}  ${region}  ${countryName}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкове місто
 	[Return]  ${locality}  ${region}  ${countryName}
 
 
@@ -91,8 +103,18 @@
 	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
 
 
+Очистити поле "Прийом пропозицій по"
+    Clear input By JS  //*[contains(text(), 'Прийом пропозицій')]/following-sibling::table//input
+
+
+Заповнити contractTerms.leaseTerms.leaseDuration
+    [Arguments]  ${text}
+    ${selector}  sale_keywords.Отримати локатор по назві поля  ['contractTerms']['leaseTerms']['leaseDuration']
+    Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+
+
 Заповнити procuringEntity.contactPoint.name
-	${name}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову контактну особу
+	${name}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкову контактну особу
 	[Return]  ${name}
 
 ###########################################################################

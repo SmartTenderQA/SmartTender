@@ -39,7 +39,7 @@
 
 
 Заповнити procuringEntity.contactPoint.name
-	${name}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову контактну особу
+	${name}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкову контактну особу
 	[Return]  ${name}
 
 
@@ -81,7 +81,7 @@
 
 
 Заповнити items.0.classification
-	${classification}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкову класифікацію
+	${classification}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкову класифікацію
 	[Return]  ${classification}
 
 
@@ -98,7 +98,7 @@
 
 
 Заповнити items.0.address.locality
-	${locality}  ${region}  ${countryName}  Wait Until Keyword Succeeds  30  3  dgfAssets.Вибрати та повернути випадкове місто
+	${locality}  ${region}  ${countryName}  Wait Until Keyword Succeeds  30  3  cdb1_dgfAssets_page.Вибрати та повернути випадкове місто
 	[Return]  ${locality}  ${region}  ${countryName}
 
 

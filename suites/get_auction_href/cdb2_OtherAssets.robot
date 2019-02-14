@@ -10,11 +10,11 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 #zapusk
 #Отримати посилання на аукціон
 #test
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb2_OtherAssets.robot
 #prod
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i make_proposal -v hub:None -v where:prod suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i make_proposal -v hub:None -v where:prod suites/get_auction_href/cdb2_OtherAssets.robot
 #Кваліфікація учасника
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_PropertyLease_get_auction_href.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i qualification -v hub:None suites/get_auction_href/cdb2_OtherAssets.robot
 *** Variables ***
 
 
@@ -22,9 +22,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити аукціон
 	[Tags]  create_tender  make_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb2_PropertyLease.Створити аукціон
+	cdb2_OtherAssets_step.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
-	dzk_auction.Отримати ID у цбд
+	Run Keyword If  not('iis' in '${IP}')
+	...  cdb2_LandLease_page.Отримати ID у цбд
 
 
 If skipped create tender
@@ -50,8 +51,7 @@ If skipped create tender
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['value']['amount']
 	\['title']
-	\['lotIdentifier']
-	\['contractTerms']['leaseTerms']['leaseDuration']
+	\['dgfID']
 	\['description']
 	\['items'][0]['description']
 	\['items'][0]['quantity']
@@ -71,8 +71,8 @@ If skipped create tender
 	[Setup]  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
 	[Template]  compare_data.Порівняти відображені дані з даними в ЦБД
 	\['title']
-	\['lotIdentifier']
-	\['contractTerms']['leaseTerms']['leaseDuration']  Lease
+	\['dgfID']
+	\['auctionID']
 	\['description']
 	\['value']['amount']
 	\['value']['valueAddedTaxIncluded']
@@ -173,7 +173,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider2}
 	#todo nuzhno vinesti keyword
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Кваліфікація  120m
 	#
 
 
@@ -252,7 +252,7 @@ If skipped create tender
 	Wait Until Keyword Succeeds  10m  30s  sale_create_tender.Знайти переможця за назвою аукціона
 	sale_create_tender.Натиснути "Підписати договір"
 	Завантажити сесію для  ${provider2}
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Завершено  10m
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Завершено  10m
 
 
 Отримати дані про аукціон з ЦБД
@@ -301,7 +301,8 @@ Precondition
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
-	cdb2_PropertyLease.Завантажити локатори
+   	Set Global Variable  ${user}  ${tender_owner}
+	cdb2_OtherAssets_step.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів

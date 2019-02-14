@@ -1,6 +1,6 @@
 *** Settings ***
-Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_object/small_privatization_object_variables.py
-Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_informational_message/small_privatization_informational_message_variables.py
+Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_asset_page/cdb2_ssp_asset_variables.py
+Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_variables.py
 
 
 *** Keywords ***
@@ -12,10 +12,10 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	Run Keyword If  '${site}' == 'test'
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  об'єкт
-	small_privatization_step.Заповнити "Назву об'єкту приватизації"
-	small_privatization_step.Заповнити "Опис об'єкту приватизації"
-	small_privatization_step.Заповнити "Рішення про затвердження переліку об'єктів"
-	small_privatization_step.Заповнити "Загальну інформацію про об'єкт"
+	cdb2_ssp_step.Заповнити "Назву об'єкту приватизації"
+	cdb2_ssp_step.Заповнити "Опис об'єкту приватизації"
+	cdb2_ssp_step.Заповнити "Рішення про затвердження переліку об'єктів"
+	cdb2_ssp_step.Заповнити "Загальну інформацію про об'єкт"
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
 
@@ -38,13 +38,13 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	Run Keyword If  '${site}' == 'test'
 	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Натиснути створити  інформаційне повідомлення
-	small_privatization_step.Заповнити "Унікальний код об'єкту"  ${id}
-	small_privatization_step.Заповнити "Рішення про затверждення умов продажу"
+	cdb2_ssp_step.Заповнити "Унікальний код об'єкту"  ${id}
+	cdb2_ssp_step.Заповнити "Рішення про затверждення умов продажу"
 	sale_keywords.Натиснути кнопку зберегти
-	small_privatization_informational_message.Опублікувати інформаційне повідомлення у реєстрі
-	small_privatization_informational_message.Перейти до коригування інформації
-	small_privatization_step.Заповнити "Умови аукціону"
-	small_privatization_step.Заповнити "Банківські реквізити"
+	cdb2_ssp_lot_page.Опублікувати інформаційне повідомлення у реєстрі
+	cdb2_ssp_lot_page.Перейти до коригування інформації
+	cdb2_ssp_step.Заповнити "Умови аукціону"
+	cdb2_ssp_step.Заповнити "Банківські реквізити"
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
 
@@ -64,56 +64,56 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 #####################  Об'єкт ###########################
 Заповнити "Назву об'єкту приватизації"
 	${title}  create_sentence  5
-	small_privatization_object.Заповнити title  ${title}
+	cdb2_ssp_asset_page.Заповнити title  ${title}
 	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
 Заповнити "Опис об'єкту приватизації"
 	${description}  create_sentence  20
-	small_privatization_object.Заповнити description  ${description}
+	cdb2_ssp_asset_page.Заповнити description  ${description}
 	Set To Dictionary  ${data}  description  ${description}
 
 
 Заповнити "Рішення про затвердження переліку об'єктів"
-	small_privatization_step.Заповнити "Назву рішення"
-	small_privatization_step.Заповнити "Номер рішення"
-	small_privatization_step.Заповнити "Дату рішення"
+	cdb2_ssp_step.Заповнити "Назву рішення"
+	cdb2_ssp_step.Заповнити "Номер рішення"
+	cdb2_ssp_step.Заповнити "Дату рішення"
 
 
 Заповнити "Назву рішення"
 	${title}  create_sentence  5
-	small_privatization_object.Заповнити decisions.0.title  ${title}
+	cdb2_ssp_asset_page.Заповнити decisions.0.title  ${title}
 	Set To Dictionary  ${data['decisions'][0]}  title  ${title}
 
 
 Заповнити "Номер рішення"
 	${decisionID}  random_number  10000  100000
-	small_privatization_object.Заповнити decisions.0.decisionID  ${decisionID}
+	cdb2_ssp_asset_page.Заповнити decisions.0.decisionID  ${decisionID}
 	Set To Dictionary  ${data['decisions'][0]}  decisionID  ${decisionID}
 
 
 Заповнити "Дату рішення"
 	${decisionDate}  smart_get_time  0  m
-	small_privatization_object.Заповнити decisions.0.decisionDate  ${decisionDate}
+	cdb2_ssp_asset_page.Заповнити decisions.0.decisionDate  ${decisionDate}
 	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}:00
 
 
 Заповнити "Загальну інформацію про об'єкт"
-	small_privatization_step.Заповнити "Опис об'єкту"
-	small_privatization_step.Заповнити "Вид об'єкту"
-	small_privatization_step.Заповнити "Кількість"
-	small_privatization_step.Заповнити "Одиниця виміру"
-	small_privatization_step.Заповнити "Адресу"
+	cdb2_ssp_step.Заповнити "Опис об'єкту"
+	cdb2_ssp_step.Заповнити "Вид об'єкту"
+	cdb2_ssp_step.Заповнити "Кількість"
+	cdb2_ssp_step.Заповнити "Одиниця виміру"
+	cdb2_ssp_step.Заповнити "Адресу"
 
 
 Заповнити "Опис об'єкту"
 	${description}  create_sentence  20
-	small_privatization_object.Заповнити items.0.description  ${description}
+	cdb2_ssp_asset_page.Заповнити items.0.description  ${description}
 	Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити "Вид об'єкту"
-	${kind}  small_privatization_object.Заповнити items.0.classification.kind
+	${kind}  cdb2_ssp_asset_page.Заповнити items.0.classification.kind
 	Set To Dictionary  ${data['items'][0]['classification']}  kind  ${kind}
 	Run Keyword If  "102" in "${kind}"  Run Keywords
 	...  Set To Dictionary  ${data['items'][0]['classification']}  id  42990000-2
@@ -124,11 +124,11 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	...  ELSE IF  "302" in "${kind}"  Run Keywords
 	...  Set To Dictionary  ${data['items'][0]['classification']}  id  08160000-5
 	...  AND  Set To Dictionary  ${data['items'][0]['classification']}  description  Корпоративні права інші
-	...  ELSE  small_privatization_step.Заповнити "Класифікація об'єкту"
+	...  ELSE  cdb2_ssp_step.Заповнити "Класифікація об'єкту"
 
 
 Заповнити "Класифікація об'єкту"
-	${description}  small_privatization_object.Заповнити items.0.classification.description
+	${description}  cdb2_ssp_asset_page.Заповнити items.0.classification.description
 	${id}  Evaluate  (re.findall(r'[0-9]*[-][0-9]*', "${description}"))[0]  re
 	Set To Dictionary  ${data['items'][0]['classification']}  id  ${id}
 	${description}  Evaluate  re.sub(r'[0-9]*[-][0-9]*.', '', "${description}", 1)  re
@@ -139,25 +139,25 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	${first}  random_number  1  1000
 	${second}  random_number  1  100
     ${quantity}  Evaluate  str(round(float(${first})/float(${second}), 3))
-	small_privatization_object.Заповнити items.0.quantity  ${quantity}
+	cdb2_ssp_asset_page.Заповнити items.0.quantity  ${quantity}
 	Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити "Одиниця виміру"
-	${name}  small_privatization_object.Заповнити items.0.unit.name
+	${name}  cdb2_ssp_asset_page.Заповнити items.0.unit.name
 	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 
 Заповнити "Адресу"
-	small_privatization_step.Заповнити "Поштовий індекс предмету"
-	small_privatization_step.Заповнити "Країна предмету"
-	small_privatization_step.Заповнити "Місто предмету"
-	small_privatization_step.Заповнити "Вулиця предмету"
+	cdb2_ssp_step.Заповнити "Поштовий індекс предмету"
+	cdb2_ssp_step.Заповнити "Країна предмету"
+	cdb2_ssp_step.Заповнити "Місто предмету"
+	cdb2_ssp_step.Заповнити "Вулиця предмету"
 
 
 Заповнити "Поштовий індекс предмету"
 	${postalCode}  random_number  10000  99999
-	small_privatization_object.Заповнити items.0.address.postalCode  ${postalCode}
+	cdb2_ssp_asset_page.Заповнити items.0.address.postalCode  ${postalCode}
 	Set To Dictionary  ${data['items'][0]['address']}  postalCode  ${postalCode}
 
 
@@ -166,7 +166,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 
 Заповнити "Місто предмету"
-	${locality}  small_privatization_object.Заповнити items.0.address.locality
+	${locality}  cdb2_ssp_asset_page.Заповнити items.0.address.locality
 	${region}  Evaluate  (re.findall(r'[А-я][^(]+[.]','${locality}'))[0]  re
 	Set To Dictionary  ${data['items'][0]['address']}  region  ${region}
 	${locality}  Evaluate  re.sub(r'.[(].*','','${locality}')  re
@@ -175,7 +175,7 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Заповнити "Вулиця предмету"
 	${streetAddress}  get_some_uuid
-	small_privatization_object.Заповнити items.0.address.streetAddress  ${streetAddress}
+	cdb2_ssp_asset_page.Заповнити items.0.address.streetAddress  ${streetAddress}
 	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}
 
 
@@ -183,34 +183,34 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 #####################  ИС ###########################
 Заповнити "Унікальний код об'єкту"
 	[Arguments]  ${id}
-	small_privatization_informational_message.Ввести унікальний код об'єкту  ${id}
+	cdb2_ssp_lot_page.Ввести унікальний код об'єкту  ${id}
 
 
 Заповнити "Рішення про затверждення умов продажу"
-	small_privatization_step.Заповнити "Номер рішення для ІП"
-	small_privatization_step.Заповнити "Дату рішення для ІП"
+	cdb2_ssp_step.Заповнити "Номер рішення для ІП"
+	cdb2_ssp_step.Заповнити "Дату рішення для ІП"
 
 
 Заповнити "Номер рішення для ІП"
 	${decisionID}  random_number  1000  1000000
-	small_privatization_informational_message.Заповнити decisions.0.decisionID  ${decisionID}
+	cdb2_ssp_lot_page.Заповнити decisions.0.decisionID  ${decisionID}
 	Set To Dictionary  ${data['decisions'][0]}  decisionID  ${decisionID}
 
 
 Заповнити "Дату рішення для ІП"
 	${decisionDate}  smart_get_time  0  m
-	small_privatization_informational_message.Заповнити decisions.0.decisionDate  ${decisionDate}
+	cdb2_ssp_lot_page.Заповнити decisions.0.decisionDate  ${decisionDate}
 	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
 
 
 Заповнити "Умови аукціону"
-	small_privatization_step.Заповнити "Дата проведення аукціону"
-	small_privatization_step.Заповнити "Період між аукціонами"
-	small_privatization_step.Заповнити "Стартова ціна об’єкта"
-	small_privatization_step.Заповнити "Крок аукціону"
-	small_privatization_step.Заповнити "Розмір гарантійного внеску"
-	small_privatization_step.Заповнити "Реєстраційний внесок"
-	small_privatization_step.Заповнити "Кількість кроків аукціону"
+	cdb2_ssp_step.Заповнити "Дата проведення аукціону"
+	cdb2_ssp_step.Заповнити "Період між аукціонами"
+	cdb2_ssp_step.Заповнити "Стартова ціна об’єкта"
+	cdb2_ssp_step.Заповнити "Крок аукціону"
+	cdb2_ssp_step.Заповнити "Розмір гарантійного внеску"
+	cdb2_ssp_step.Заповнити "Реєстраційний внесок"
+	cdb2_ssp_step.Заповнити "Кількість кроків аукціону"
 
 
 Заповнити "Дата проведення аукціону"
@@ -222,71 +222,71 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 	...  '${site}' == 'test'  ${date + delta test}
 	...  '${site}' == 'prod'  ${date + delta prod}
 	${date + delta}  Evaluate  '${date + delta}'[:-2]+'00'
-	small_privatization_informational_message.Заповнити auctions.0.auctionPeriod.startDate  ${date + delta}
+	cdb2_ssp_lot_page.Заповнити auctions.0.auctionPeriod.startDate  ${date + delta}
 	Set To Dictionary  ${data['auctions'][0]['auctionPeriod']}  startDate  ${date + delta}
 
 
 Заповнити "Період між аукціонами"
 	${period}  random_number  20  35
-	small_privatization_informational_message.Заповнити auctions.1.tenderingDuration  ${period}
+	cdb2_ssp_lot_page.Заповнити auctions.1.tenderingDuration  ${period}
 	:FOR  ${i}  IN RANGE  1  3
     \    Set To Dictionary  ${data['auctions'][${i}]}  tenderingDuration  P${period}D
 
 
 Заповнити "Стартова ціна об’єкта"
 	${value}  random_number  100000  1000000
-	small_privatization_informational_message.Заповнити auctions.0.value.amount  ${value}
+	cdb2_ssp_lot_page.Заповнити auctions.0.value.amount  ${value}
 	Set To Dictionary  ${data['auctions'][0]['value']}  amount  ${value}
 
 
 Заповнити "Крок аукціону"
 	${step}  random_number  1000  10000
-	small_privatization_informational_message.Заповнити auctions.0.minimalStep.amount  ${step}
+	cdb2_ssp_lot_page.Заповнити auctions.0.minimalStep.amount  ${step}
 	Set To Dictionary  ${data['auctions'][0]['minimalStep']}  amount  ${step}
 
 
 Заповнити "Розмір гарантійного внеску"
 	${warrantyFee}  random_number  100  5000
-	small_privatization_informational_message.Заповнити auctions.0.guarantee.amount  ${warrantyFee}
+	cdb2_ssp_lot_page.Заповнити auctions.0.guarantee.amount  ${warrantyFee}
 	Set To Dictionary  ${data['auctions'][0]['guarantee']}  amount  ${warrantyFee}
 
 
 Заповнити "Реєстраційний внесок"
 	${registrationFee}  random_number  100  5000
-	small_privatization_informational_message.Заповнити auctions.0.registrationFee.amount  ${registrationFee}
+	cdb2_ssp_lot_page.Заповнити auctions.0.registrationFee.amount  ${registrationFee}
 	:FOR  ${i}  IN RANGE  0  3
     \    Set To Dictionary  ${data['auctions'][${i}]['registrationFee']}  amount  ${registrationFee}
 
 
 Заповнити "Кількість кроків аукціону"
 	${stepCount}  random_number  1  99
-	small_privatization_informational_message.Заповнити auctions.2.auctionParameters.dutchSteps  ${stepCount}
+	cdb2_ssp_lot_page.Заповнити auctions.2.auctionParameters.dutchSteps  ${stepCount}
 	Set To Dictionary  ${data['auctions'][2]['auctionParameters']}  dutchSteps  ${stepCount}
 
 
 Заповнити "Банківські реквізити"
-	small_privatization_step.Заповнити "Найменування банку"
-	small_privatization_step.Заповнити "Тип реквізиту"
-	small_privatization_step.Заповнити "Значення реквізиту"
-	small_privatization_step.Заповнити "Опис реквізиту"
+	cdb2_ssp_step.Заповнити "Найменування банку"
+	cdb2_ssp_step.Заповнити "Тип реквізиту"
+	cdb2_ssp_step.Заповнити "Значення реквізиту"
+	cdb2_ssp_step.Заповнити "Опис реквізиту"
 
 
 Заповнити "Найменування банку"
 	${bankName}  create_sentence  5
-	small_privatization_informational_message.Заповнити auctions.0.bankAccount.bankName  ${bankName}
+	cdb2_ssp_lot_page.Заповнити auctions.0.bankAccount.bankName  ${bankName}
 	:FOR  ${i}  IN RANGE  0  3
     \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']}  bankName  ${bankName}
 
 
 Заповнити "Тип реквізиту"
-	${type}  small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
+	${type}  cdb2_ssp_lot_page.Заповнити auctions.0.bankAccount.accountIdentification.0.scheme
 	:FOR  ${i}  IN RANGE  0  3
     \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  scheme  ${type}
 
 
 Заповнити "Значення реквізиту"
 	${id}  random_number  1000000  9999999
-	small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.id  ${id}
+	cdb2_ssp_lot_page.Заповнити auctions.0.bankAccount.accountIdentification.0.id  ${id}
 	:FOR  ${i}  IN RANGE  0  3
     \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  id  ${id}
 
@@ -294,6 +294,6 @@ Library  ../../src/pages/sale/SPF/small_privatization/small_privatization_inform
 
 Заповнити "Опис реквізиту"
 	${description}  create_sentence  10
-	small_privatization_informational_message.Заповнити auctions.0.bankAccount.accountIdentification.0.description  ${description}
+	cdb2_ssp_lot_page.Заповнити auctions.0.bankAccount.accountIdentification.0.description  ${description}
 	:FOR  ${i}  IN RANGE  0  3
     \    Set To Dictionary  ${data['auctions'][${i}]['bankAccount']['accountIdentification'][0]}  description  ${description}
