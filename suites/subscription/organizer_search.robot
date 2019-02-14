@@ -18,6 +18,9 @@ Test Teardown  			Run Keywords
 
 *** Keywords ***
 Precondition
+    ${user}  Set Variable If
+    ...  '${where}' == 'test'  user1
+    ...  'prod' in '${where}'  prod_provider1
     Open Browser In Grid  ${user}
     Авторизуватися  ${user}
     start_page.Навести мишку на іконку з заголовку  Меню_користувача
