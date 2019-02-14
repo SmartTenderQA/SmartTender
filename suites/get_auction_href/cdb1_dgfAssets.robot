@@ -25,6 +25,9 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
 	cdb1_dgfAssets_step.Створити тендер  ${type_dict['${type}']}
+	Знайти тендер користувачем  ${tender_owner}
+	Run Keyword If  not('iis' in '${IP}')
+	...  cdb2_LandLease_page.Отримати ID у цбд
 
 
 If skipped create tender
@@ -37,9 +40,6 @@ If skipped create tender
 Отримати дані про аукціон з ЦБД
 	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	Знайти тендер користувачем  ${tender_owner}
-	synchronization.Дочекатись синхронізації  auctions
-	cdb2_LandLease_page.Отримати ID у цбд
 	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
