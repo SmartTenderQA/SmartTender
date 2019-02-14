@@ -108,11 +108,10 @@ Preconditions
 Отримати список файлів у процедурі
 	[Arguments]  ${number}
 	${list of files}  Create List
-	${file selector}  Set Variable  (${tender head on old search})[${number}]/following-sibling::tr//*[@class="item"]/a[@href]
-	${doc_quantity}  Get Element Count  ${file selector}
+	${file selector}  Set Variable  (${tender head on old search})[${number}]/td/span${tender boby on old search}//*[@class="item"]
+	${doc_quantity}  Get Element Count  ${file selector}//a[@href]
 	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
-	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  (${tender head on old search})[${number}]/following::div[@class="item"][${file}]//span
-#	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  ${file selector}[${file}]
+	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  ${file selector}[${file}]//a[@href]/span
 	\  Append To List  ${list of files}  ${file name}
 	[Return]  ${list of files}
 
