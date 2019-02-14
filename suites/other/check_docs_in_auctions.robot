@@ -35,6 +35,7 @@ ${tender boby on old search}   /../../following-sibling::tr[1][not(contains(@sty
 	:FOR  ${page}  IN RANGE  1  6
 	\  Активувати вкладку за номером  ${page}
 	\  ${tenders count}  Порахувати кількість процедур на сторінці
+	\  debug
 	\  Run Keyword If  '${type}' != 'bank_aucs'
 	...  Почати пошук файлів у процедурах  		${tenders count}  ELSE
 	...  Почати пошук файлів у процедурах new  	${tenders count}
@@ -111,9 +112,8 @@ Preconditions
 	${file selector}  Set Variable  (${tender head on old search})[${number}]/td/span${tender boby on old search}//*[@class="item"]
 	${doc_quantity}  Get Element Count  ${file selector}//a[@href]
 	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
-	\  ${file name}  Wait Until Keyword Succeeds  15  .5  Run Keyword And Ignore Error
-	...  Get Text  ${file selector}[${file}]//a[@href]/span
-	\  Append To List  ${list of files}  ${file name}
+	\  ${file name}  Wait Until Keyword Succeeds  15  .5  Run Keyword And Ignore Error  Get Text  ${file selector}[${file}]//a[@href]/span
+	\  Append To List  ${list of files}  ${file name[1]}
 	[Return]  ${list of files}
 
 
