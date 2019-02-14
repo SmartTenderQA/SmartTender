@@ -24,7 +24,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	Завантажити сесію для  ${tender_owner}
 	cdb2_OtherAssets.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
-	dzk_auction.Отримати ID у цбд
+	Run Keyword If  not('iis' in '${IP}')
+	...  dzk_auction.Отримати ID у цбд
 
 
 If skipped create tender
@@ -300,6 +301,7 @@ Precondition
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
+   	Set Global Variable  ${user}  ${tender_owner}
 	cdb2_OtherAssets.Завантажити локатори
 	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
