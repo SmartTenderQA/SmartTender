@@ -25,9 +25,9 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 
 Завантажити локатори
-	${edit_locators}  dutch_variables.get_edit_locators
-	${view_locators}  dutch_variables.get_view_locators
-	${data}  dutch_variables.get_data
+	${edit_locators}  cdb1_dutch_variables.get_edit_locators
+	${view_locators}  cdb1_dutch_variables.get_view_locators
+	${data}  cdb1_dutch_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}

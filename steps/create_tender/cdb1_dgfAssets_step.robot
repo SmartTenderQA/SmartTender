@@ -24,9 +24,9 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 
 
 Завантажити локатори
-	${edit_locators}  dgfAssets_variables.get_edit_locators
-	${view_locators}  dgfAssets_variables.get_view_locators
-	${data}  dgfAssets_variables.get_data
+	${edit_locators}  cdb1_dgfAssets_variables.get_edit_locators
+	${view_locators}  cdb1_dgfAssets_variables.get_view_locators
+	${data}  cdb1_dgfAssets_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}
