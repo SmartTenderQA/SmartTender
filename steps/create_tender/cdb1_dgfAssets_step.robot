@@ -1,5 +1,5 @@
 *** Settings ***
-Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
+Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.py
 
 
 *** Keywords ***
@@ -10,12 +10,12 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 
 	create_tender.Вибрати тип процедури  ${auction_type}
 
-	sale_dgfAssets.Заповнити "День старту електроного аукціону"
-	sale_dgfAssets.Заповнити "Рішення дирекції/комітету"
-	sale_dgfAssets.Заповнити "Початкова ціна реалізації лоту"
-	sale_dgfAssets.Заповнити "Предмет продажу"
-	sale_dgfAssets.Заповнити "Позиції аукціону"
-	sale_dgfAssets.Заповнити "Гарантійний внесок"
+	cdb1_dgfAssets_step.Заповнити "День старту електроного аукціону"
+	cdb1_dgfAssets_step.Заповнити "Рішення дирекції/комітету"
+	cdb1_dgfAssets_step.Заповнити "Початкова ціна реалізації лоту"
+	cdb1_dgfAssets_step.Заповнити "Предмет продажу"
+	cdb1_dgfAssets_step.Заповнити "Позиції аукціону"
+	cdb1_dgfAssets_step.Заповнити "Гарантійний внесок"
 
 	create_tender.Зберегти чернетку
 	actions.Оголосити тендер
@@ -24,9 +24,9 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 
 
 Завантажити локатори
-	${edit_locators}  dgfAssets_variables.get_edit_locators
-	${view_locators}  dgfAssets_variables.get_view_locators
-	${data}  dgfAssets_variables.get_data
+	${edit_locators}  cdb1_dgfAssets_variables.get_edit_locators
+	${view_locators}  cdb1_dgfAssets_variables.get_view_locators
+	${data}  cdb1_dgfAssets_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}
@@ -35,56 +35,56 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 #########################################################
 Заповнити "День старту електроного аукціону"
 	${startDate}  get_time_now_with_deviation  20  minutes
-	dgfAssets.Заповнити auctionPeriod.startDate  ${startDate}
+	cdb1_dgfAssets_page.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
 
 
 Заповнити "Рішення дирекції/комітету"
-	sale_dgfAssets.Заповнити "Номер рішення"
-	sale_dgfAssets.Заповнити "Дату рішення"
+	cdb1_dgfAssets_step.Заповнити "Номер рішення"
+	cdb1_dgfAssets_step.Заповнити "Дату рішення"
 
 
 Заповнити "Номер рішення"
 	${id_f}  random_number  1000  9999
 	${id_l}  random_number  0  9
 	${dgfDecisionID}  Set Variable  ${id_f}/${id_l}
-	dgfAssets.Заповнити dgfDecisionID  ${dgfDecisionID}
+	cdb1_dgfAssets_page.Заповнити dgfDecisionID  ${dgfDecisionID}
 	Set To Dictionary  ${data}  dgfDecisionID  ${dgfDecisionID}
 
 
 Заповнити "Дату рішення"
 	${dgfDecisionDate}  smart_get_time  0  d
-	dgfAssets.Заповнити dgfDecisionDate  ${dgfDecisionDate}
+	cdb1_dgfAssets_page.Заповнити dgfDecisionDate  ${dgfDecisionDate}
 	Set To Dictionary  ${data}  dgfDecisionDate  ${dgfDecisionDate}
 
 
 Заповнити "Початкова ціна реалізації лоту"
-	sale_dgfAssets.Заповнити "Ціна"
-	sale_dgfAssets.Заповнити "Мінімальний крок аукціону"
+	cdb1_dgfAssets_step.Заповнити "Ціна"
+	cdb1_dgfAssets_step.Заповнити "Мінімальний крок аукціону"
 
 
 Заповнити "Ціна"
 	${amount}  random_number  100000  100000000
-	dgfAssets.Заповнити value.amount  ${amount}
+	cdb1_dgfAssets_page.Заповнити value.amount  ${amount}
 	Set To Dictionary  ${data['value']}  amount  ${amount}
 
 
 Заповнити "Мінімальний крок аукціону"
 	${minimal_step_percent}  random_number  1  5
-	dgfAssets.Заповнити minimalStep.amount  ${minimal_step_percent}
+	cdb1_dgfAssets_page.Заповнити minimalStep.amount  ${minimal_step_percent}
 	${minimal_step}  Evaluate  float(${data['value']['amount']})*${minimal_step_percent}/100
 	Set To Dictionary  ${data['minimalStep']}  amount  ${minimal_step}
 
 
 Заповнити "Предмет продажу"
-	sale_dgfAssets.Заповнити "Загальна назва аукціону"
-	sale_dgfAssets.Заповнити "Номер лоту в ФГВ"
-	sale_dgfAssets.Заповнити "Детальний опис"
+	cdb1_dgfAssets_step.Заповнити "Загальна назва аукціону"
+	cdb1_dgfAssets_step.Заповнити "Номер лоту в ФГВ"
+	cdb1_dgfAssets_step.Заповнити "Детальний опис"
 
 
 Заповнити "Загальна назва аукціону"
 	${title}  create_sentence  5
-	dgfAssets.Заповнити title  ${title}
+	cdb1_dgfAssets_page.Заповнити title  ${title}
 	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
@@ -92,43 +92,43 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 	${first}  random_number  10000000  99999999
 	${second}  random_number  10000  99999
 	${dgfID}  Set Variable  F${first}-${second}
-	dgfAssets.Заповнити dgfID  ${dgfID}
+	cdb1_dgfAssets_page.Заповнити dgfID  ${dgfID}
 	Set To Dictionary  ${data}  dgfID  ${dgfID}
 
 
 Заповнити "Детальний опис"
 	${description}  create_sentence  20
-	dgfAssets.Заповнити description  ${description}
+	cdb1_dgfAssets_page.Заповнити description  ${description}
 	Set To Dictionary  ${data}  description  ${description}
 
 
 Заповнити "Позиції аукціону"
-	sale_dgfAssets.Заповнити "Опис активу"
-	sale_dgfAssets.Заповнити "Кількість активів"
-	sale_dgfAssets.Заповнити "Од. вим."
-	sale_dgfAssets.Заповнити "Класифікація"
-	sale_dgfAssets.Заповнити "Розташування об'єкту"
+	cdb1_dgfAssets_step.Заповнити "Опис активу"
+	cdb1_dgfAssets_step.Заповнити "Кількість активів"
+	cdb1_dgfAssets_step.Заповнити "Од. вим."
+	cdb1_dgfAssets_step.Заповнити "Класифікація"
+	cdb1_dgfAssets_step.Заповнити "Розташування об'єкту"
 
 
 Заповнити "Опис активу"
 	${description}  create_sentence  3
-	dgfAssets.Заповнити items.0.description  ${description}
+	cdb1_dgfAssets_page.Заповнити items.0.description  ${description}
 	Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити "Кількість активів"
 	${quantity}  random_number  1  1000
-	dgfAssets.Заповнити items.0.quantity  ${quantity}
+	cdb1_dgfAssets_page.Заповнити items.0.quantity  ${quantity}
 	Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити "Од. вим."
-	${name}  dgfAssets.Заповнити items.0.unit.name
+	${name}  cdb1_dgfAssets_page.Заповнити items.0.unit.name
 	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 
 Заповнити "Класифікація"
-	${classification}  dgfAssets.Заповнити items.0.classification
+	${classification}  cdb1_dgfAssets_page.Заповнити items.0.classification
 	${scheme}  Set Variable  CAV
 	Set To Dictionary  ${data['items'][0]['classification']}  scheme  ${scheme}
 	Set To Dictionary  ${data['items'][0]['classification']}  id  ${classification[0]}
@@ -137,27 +137,27 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 
 
 Заповнити "Розташування об'єкту"
-	sale_dgfAssets.Заповнити "Індекс"
-	sale_dgfAssets.Заповнити "Вулиця"
-	sale_dgfAssets.Заповнити "Місто"
+	cdb1_dgfAssets_step.Заповнити "Індекс"
+	cdb1_dgfAssets_step.Заповнити "Вулиця"
+	cdb1_dgfAssets_step.Заповнити "Місто"
 
 
 Заповнити "Індекс"
 	${postalCode}  random_number  10000  99999
-	dgfAssets.Заповнити items.0.address.postalCode  ${postalCode}
+	cdb1_dgfAssets_page.Заповнити items.0.address.postalCode  ${postalCode}
 	Set To Dictionary  ${data['items'][0]['address']}  postalCode  ${postalCode}
 
 
 Заповнити "Вулиця"
 	${text}  create_sentence  1
 	${streetAddress}  Set Variable  ${text[:-1]}
-	dgfAssets.Заповнити items.0.address.streetAddress  ${streetAddress}
+	cdb1_dgfAssets_page.Заповнити items.0.address.streetAddress  ${streetAddress}
 	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}
 
 
 Заповнити "Місто"
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
-	${locality}  ${region}  ${countryName}  dgfAssets.Заповнити items.0.address.locality
+	${locality}  ${region}  ${countryName}  cdb1_dgfAssets_page.Заповнити items.0.address.locality
 	Set To Dictionary  ${data['items'][0]['address']}  locality  ${locality}
 	Set To Dictionary  ${data['items'][0]['address']}  region  ${region}
 	Set To Dictionary  ${data['items'][0]['address']}  countryName  ${countryName}
@@ -168,5 +168,5 @@ Library  ../../src/pages/sale/DGF/dgfAssets/dgfAssets_variables.py
 	${amount}  Evaluate  float(${data['value']['amount']})*${guarantee_amount_percent}/100
 	Set To Dictionary  ${data['guarantee']}  amount  ${amount}
 	Відкрити вкладку Гарантійний внесок
-	dgfAssets.Заповнити guarantee.amount  ${guarantee_amount_percent}
+	cdb1_dgfAssets_page.Заповнити guarantee.amount  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон

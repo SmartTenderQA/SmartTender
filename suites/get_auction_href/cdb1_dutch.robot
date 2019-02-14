@@ -10,16 +10,16 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 
 #zapusk
 #test
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:test suites/get_auction_href/cdb1_dutch.robot
 #prod
-#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:prod suites/get_auction_href/dutch.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output --noncritical compare -i get_auction_href -v hub:None -v where:prod suites/get_auction_href/cdb1_dutch.robot
 
 
 *** Test Cases ***
 Створити аукціон
 	[Tags]  create_tender  get_auction_href
 	Завантажити сесію для  ${tender_owner}
-	dutch_step.Створити аукціон
+	cdb1_dutch_step.Створити аукціон
 
 
 If skipped create tender
@@ -34,7 +34,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти тендер користувачем  ${tender_owner}
 	synchronization.Дочекатись синхронізації  auctions
-	dzk_auction.Отримати ID у цбд
+	cdb2_LandLease_page.Отримати ID у цбд
 	${cdb_data}  Отримати дані Аукціону ФГВ з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  cdb_data
@@ -173,7 +173,8 @@ Precondition
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
-	dutch_step.Завантажити локатори
+   	Set Global Variable  ${user}  ${tender_owner}
+	cdb1_dutch_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 

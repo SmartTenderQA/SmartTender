@@ -31,6 +31,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
     [Documentation]  Вибираємо режим сторінки. "Кабінет"  або "ПУблічний режим"
     Дочекатись закінчення загрузки сторінки(skeleton)
     ${selector}  Set Variable  //*[@data-qa="page-mode"]//span[text()="${type}"]
+    elements.Дочекатися відображення елемента на сторінці  ${selector}  20
     Click Element   ${selector}
     Дочекатись закінчення загрузки сторінки(skeleton)
     Element Should Be Visible
