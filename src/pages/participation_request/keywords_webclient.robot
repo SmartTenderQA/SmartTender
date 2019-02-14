@@ -11,7 +11,7 @@
 Підтвердити заявки на продуктиві організатором для ФГВ
     ${save location}  Get Location
 	Go To  ${start_page}webclient/
-	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися(webclient)  ${user}  ${login}  ${password}
+	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися  ${user}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
 	Відкрити вікно підтвердження заявок
@@ -23,7 +23,7 @@
 Підтвердити заявки на продуктиві організатором для ФГИ
     ${save location}  Get Location
 	Go To  ${start_page}webclient/
-	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися(webclient)  ${user}  ${login}  ${password}
+	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися  ${user}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
 	Відкрити вікно підтвердження заявок
