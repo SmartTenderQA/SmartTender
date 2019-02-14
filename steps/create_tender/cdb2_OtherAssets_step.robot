@@ -25,9 +25,9 @@ Library  ../../src/pages/sale/SPF/cdb2_OtherAssets_page/cdb2_OtherAssets_variabl
 
 
 Завантажити локатори
-	${edit_locators}  otherAssets_variables.get_edit_locators
-	${view_locators}  otherAssets_variables.get_view_locators
-	${data}  otherAssets_variables.get_data
+	${edit_locators}  cdb2_OtherAssets_variables.get_edit_locators
+	${view_locators}  cdb2_OtherAssets_variables.get_view_locators
+	${data}  cdb2_OtherAssets_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}

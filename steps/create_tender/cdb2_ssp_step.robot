@@ -21,9 +21,9 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 
 Завантажити локатори для об'єкта
-	${edit_locators}  small_privatization_object_variables.get_edit_locators
-	${view_locators}  small_privatization_object_variables.get_view_locators
-	${data}  small_privatization_object_variables.get_data
+	${edit_locators}  cdb2_ssp_asset_variables.get_edit_locators
+	${view_locators}  cdb2_ssp_asset_variables.get_view_locators
+	${data}  cdb2_ssp_asset_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}
@@ -50,9 +50,9 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 
 Завантажити локатори для ІП
-	${edit_locators}  small_privatization_informational_message_variables.get_edit_locators
-	${view_locators}  small_privatization_informational_message_variables.get_view_locators
-	${data}  small_privatization_informational_message_variables.get_data
+	${edit_locators}  cdb2_ssp_lot_variables.get_edit_locators
+	${view_locators}  cdb2_ssp_lot_variables.get_view_locators
+	${data}  cdb2_ssp_lot_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}

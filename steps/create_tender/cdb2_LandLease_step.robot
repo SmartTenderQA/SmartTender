@@ -28,9 +28,9 @@ Library  ../../src/pages/sale/SPF/cdb2_LandLease_page/cdb2_LandLease_variables.p
 
 
 Завантажити локатори
-	${edit_locators}  dzk_variables.get_edit_locators
-	${view_locators}  dzk_variables.get_view_locators
-	${data}  dzk_variables.get_data
+	${edit_locators}  cdb2_LandLease_variables.get_edit_locators
+	${view_locators}  cdb2_LandLease_variables.get_view_locators
+	${data}  cdb2_LandLease_variables.get_data
 	Set Global Variable  ${edit_locators}
 	Set Global Variable  ${view_locators}
 	Set Global Variable  ${data}
