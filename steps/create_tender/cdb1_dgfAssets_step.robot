@@ -10,7 +10,11 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 
 	create_tender.Вибрати тип процедури  ${auction_type}
 
-	cdb1_dgfAssets_step.Заповнити "День старту електроного аукціону"
+	Run Keyword  cdb1_dgfAssets_step.Заповнити "День старту електроного аукціону" ${site}
+
+	Run Keyword If  '${site}' == 'prod'
+	...  cdb1_dgfAssets_step.Заповнити "Контактна особа"
+
 	cdb1_dgfAssets_step.Заповнити "Рішення дирекції/комітету"
 	cdb1_dgfAssets_step.Заповнити "Початкова ціна реалізації лоту"
 	cdb1_dgfAssets_step.Заповнити "Предмет продажу"
@@ -33,10 +37,22 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 #########################################################
 #	                  Keywords							#
 #########################################################
-Заповнити "День старту електроного аукціону"
-	${startDate}  get_time_now_with_deviation  20  minutes
+Заповнити "День старту електроного аукціону" test
+	${startDate}  get_formated_time_with_delta  20  minutes  m
 	cdb1_dgfAssets_page.Заповнити auctionPeriod.startDate  ${startDate}
     Set To Dictionary  ${data}  date  ${startDate}
+
+
+Заповнити "День старту електроного аукціону" prod
+	${startDate}  get_formated_time_with_delta  7  days  m
+	cdb1_dgfAssets_page.Заповнити auctionPeriod.startDate  ${startDate}
+    Set To Dictionary  ${data}  date  ${startDate}
+
+
+Заповнити "Контактна особа"
+    ${name}  Set Variable  Прохоров И.А.
+    tender_tab.Заповнити "Контактна особа"  ${name}
+	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
 Заповнити "Рішення дирекції/комітету"
