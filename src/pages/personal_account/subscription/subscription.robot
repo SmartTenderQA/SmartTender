@@ -86,13 +86,19 @@ Resource    	keywords.robot
   ...  Page Should Contain Element  ${tender type cb}[contains(@class, "checked")]
 
 
-Виконати пошук за реквізитами організатора та перевірити видачу
+Виконати пошук за реквізитами організатора
   [Arguments]  ${search query}
   ${input selector}  Set Variable  //input[contains(@placeholder, "Введіть назву компанії")]
-  ${result selector}  Set Variable  xpath=${input selector}/parent::*/following-sibling::*//li[@class="ivu-select-item"]
   Input Text  ${input selector}  ${search_query}
-#  Run Keyword And Ignore Error  Click Element  ${input selector}
-  Дочекатися відображення елемента на сторінці  ${result selector}
+#
+  Run Keyword And Ignore Error  Click Element  ${input selector}
+# нужно для появления результатов поиска
+
+
+Перевірити результати пошука за реквізитами організатора
+  [Arguments]  ${search query}
+  ${result selector}  Set Variable  xpath=//input[contains(@placeholder, "Введіть назву компанії")]/parent::*/following-sibling::*//li[@class="ivu-select-item"]
+  Дочекатися відображення елемента на сторінці  ${result selector}  5
   ${result text}  Get Text  ${result selector}
-  ${status}  Run Keyword And Return Status  Should Contain  ${result text}  ${search query}
-  Run Keyword If  ${status} == ${False}  Виконати пошук за реквізитами організатора та перевірити видачу  ${search query}
+  Should Contain  ${result text.lower()}  ${search query.lower()}
+
