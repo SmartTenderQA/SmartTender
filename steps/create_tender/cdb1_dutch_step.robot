@@ -1,5 +1,5 @@
 *** Settings ***
-Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
+Library  ../../src/pages/sale/DGF/cdb1_dutch_page./cdb1_dutch_variables.py
 
 
 *** Keywords ***
@@ -38,7 +38,7 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 #########################################################
 Заповнити "День старту електроного аукціону"
 	${date}  get_formated_time_with_delta  5  days  m
-	cdb1_dutch_pageЗаповнити auctionPeriod.startDate  ${date}
+	cdb1_dutch_page.Заповнити auctionPeriod.startDate  ${date}
     Set To Dictionary  ${data}  date  ${date}
 
 
@@ -51,13 +51,13 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 	${id_f}  random_number  1000  9999
 	${id_l}  random_number  0  9
 	${dgfDecisionID}  Set Variable  ${id_f}/${id_l}
-	cdb1_dutch_pageЗаповнити dgfDecisionID  ${dgfDecisionID}
+	cdb1_dutch_page.Заповнити dgfDecisionID  ${dgfDecisionID}
 	Set To Dictionary  ${data}  dgfDecisionID  ${dgfDecisionID}
 
 
 Заповнити "Дату рішення"
 	${dgfDecisionDate}  smart_get_time  0  d
-	cdb1_dutch_pageЗаповнити dgfDecisionDate  ${dgfDecisionDate}
+	cdb1_dutch_page.Заповнити dgfDecisionDate  ${dgfDecisionDate}
 	Set To Dictionary  ${data}  dgfDecisionDate  ${dgfDecisionDate}
 
 
@@ -68,19 +68,19 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 Заповнити "Ціна"
 	${amount}  random_number  100000  100000000
-	cdb1_dutch_pageЗаповнити value.amount  ${amount}
+	cdb1_dutch_page.Заповнити value.amount  ${amount}
 	Set To Dictionary  ${data['value']}  amount  ${amount}
 
 
 Заповнити "Мінімальний крок аукціону"
 	${minimal_step_percent}  random_number  1  5
-	cdb1_dutch_pageЗаповнити minimalStep.amount  ${minimal_step_percent}
+	cdb1_dutch_page.Заповнити minimalStep.amount  ${minimal_step_percent}
 	${minimal_step}  Evaluate  float(${data['value']['amount']})*${minimal_step_percent}/100
 	Set To Dictionary  ${data['minimalStep']}  amount  ${minimal_step}
 
 
 Заповнити "Контактна особа"
-	${name}  cdb1_dutch_pageЗаповнити procuringEntity.contactPoint.name
+	${name}  cdb1_dutch_page.Заповнити procuringEntity.contactPoint.name
 	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
@@ -92,7 +92,7 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 Заповнити "Загальна назва аукціону"
 	${title}  create_sentence  5
-	cdb1_dutch_pageЗаповнити title  [ТЕСТУВАННЯ] ${title}
+	cdb1_dutch_page.Заповнити title  [ТЕСТУВАННЯ] ${title}
 	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
@@ -100,13 +100,13 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 	${first}  random_number  10000000  99999999
 	${second}  random_number  10000  99999
 	${dgfID}  Set Variable  F${first}-${second}
-	cdb1_dutch_pageЗаповнити dgfID  ${dgfID}
+	cdb1_dutch_page.Заповнити dgfID  ${dgfID}
 	Set To Dictionary  ${data}  dgfID  ${dgfID}
 
 
 Заповнити "Детальний опис"
 	${description}  create_sentence  20
-	cdb1_dutch_pageЗаповнити description  ${description}
+	cdb1_dutch_page.Заповнити description  ${description}
 	Set To Dictionary  ${data}  description  ${description}
 
 
@@ -120,23 +120,23 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 Заповнити "Опис активу"
 	${description}  create_sentence  3
-	cdb1_dutch_pageЗаповнити items.0.description  ${description}
+	cdb1_dutch_page.Заповнити items.0.description  ${description}
 	Set To Dictionary  ${data['items'][0]}  description  ${description}
 
 
 Заповнити "Кількість активів"
 	${quantity}  random_number  1  1000
-	cdb1_dutch_pageЗаповнити items.0.quantity  ${quantity}
+	cdb1_dutch_page.Заповнити items.0.quantity  ${quantity}
 	Set To Dictionary  ${data['items'][0]}  quantity  ${quantity}
 
 
 Заповнити "Од. вим."
-	${name}  cdb1_dutch_pageЗаповнити items.0.unit.name
+	${name}  cdb1_dutch_page.Заповнити items.0.unit.name
 	Set To Dictionary  ${data['items'][0]['unit']}  name  ${name}
 
 
 Заповнити "Класифікація"
-	${classification}  cdb1_dutch_pageЗаповнити items.0.classification
+	${classification}  cdb1_dutch_page.Заповнити items.0.classification
 	${scheme}  Set Variable  CAV
 	Set To Dictionary  ${data['items'][0]['classification']}  scheme  ${scheme}
 	Set To Dictionary  ${data['items'][0]['classification']}  id  ${classification[0]}
@@ -151,20 +151,20 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 Заповнити "Індекс"
 	${postalCode}  random_number  10000  99999
-	cdb1_dutch_pageЗаповнити items.0.address.postalCode  ${postalCode}
+	cdb1_dutch_page.Заповнити items.0.address.postalCode  ${postalCode}
 	Set To Dictionary  ${data['items'][0]['address']}  postalCode  ${postalCode}
 
 
 Заповнити "Вулиця"
 	${text}  create_sentence  1
 	${streetAddress}  Set Variable  ${text[:-1]}
-	cdb1_dutch_pageЗаповнити items.0.address.streetAddress  ${streetAddress}
+	cdb1_dutch_page.Заповнити items.0.address.streetAddress  ${streetAddress}
 	Set To Dictionary  ${data['items'][0]['address']}  streetAddress  ${streetAddress}
 
 
 Заповнити "Місто"
 	${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
-	${locality}  ${region}  ${countryName}  cdb1_dutch_pageЗаповнити items.0.address.locality
+	${locality}  ${region}  ${countryName}  cdb1_dutch_page.Заповнити items.0.address.locality
 	Set To Dictionary  ${data['items'][0]['address']}  locality  ${locality}
 	Set To Dictionary  ${data['items'][0]['address']}  region  ${region}
 	Set To Dictionary  ${data['items'][0]['address']}  countryName  ${countryName}
@@ -175,5 +175,5 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 	${amount}  Evaluate  float(${data['value']['amount']})*${guarantee_amount_percent}/100
 	Set To Dictionary  ${data['guarantee']}  amount  ${amount}
 	Відкрити вкладку Гарантійний внесок
-	cdb1_dutch_pageЗаповнити guarantee.amount  ${guarantee_amount_percent}
+	cdb1_dutch_page.Заповнити guarantee.amount  ${guarantee_amount_percent}
 	Відкрити вкладку Тестовий аукціон
