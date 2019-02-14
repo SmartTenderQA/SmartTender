@@ -24,7 +24,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	Завантажити сесію для  ${tender_owner}
 	cdb2_OtherAssets.Створити аукціон
 	Знайти тендер користувачем  ${tender_owner}
-	Run Keyword If  '${IP}' != 'iis'
+	Run Keyword If  not('iis' in '${IP}')
 	...  dzk_auction.Отримати ID у цбд
 
 
