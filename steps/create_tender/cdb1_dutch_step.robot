@@ -1,5 +1,5 @@
 *** Settings ***
-Library  ../../src/pages/sale/DGF/cdb1_dutch_page./cdb1_dutch_variables.py
+Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 
 *** Keywords ***
