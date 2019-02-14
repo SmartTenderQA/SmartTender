@@ -293,27 +293,28 @@ If skipped create tender
 Precondition
 	Run Keyword If  '${where}' == 'test'  Run Keywords
 	...  Set Global Variable  ${tender_owner}  Bened  AND
-	...  Set Global Variable  ${provider1}  user2  AND
-	...  Set Global Variable  ${provider2}  user3  AND
-	...  Set Global Variable  ${provider3}  user4  AND
+	...  Set Global Variable  ${provider1}  user1  AND
+	...  Set Global Variable  ${provider2}  user2  AND
+	...  Set Global Variable  ${provider3}  user3  AND
 	...  Set Global Variable  ${viewer}  test_viewer
-	...  ELSE
-	...  Set Global Variable  ${tender_owner}  fgv_prod_owner  AND
+	Run Keyword If  'prod' in '${where}'  Run Keywords
+	...  Set Global Variable  ${tender_owner}  fgv_prod_owner	AND
 	...  Set Global Variable  ${provider1}  prod_provider  AND
 	...  Set Global Variable  ${provider2}  prod_provider2  AND
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
+   	Set Global Variable  ${user}  ${tender_owner}
 	cdb1_dgfAssets_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
 
 Підготувати користувачів
-	Додати користувача  test_tender_owner
-    Додати користувача  user1
-    Додати користувача  user2
-    Додати користувача  user3
-    Додати користувача  test_viewer
+	Додати користувача  ${tender_owner}
+    Додати користувача  ${provider1}
+    Додати користувача  ${provider2}
+    Додати користувача  ${provider3}
+    Додати користувача  ${viewer}
 
 
 Знайти тендер користувачем

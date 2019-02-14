@@ -17,7 +17,7 @@ ${view auction link}                       //*[@data-qa="link-view"]
 	Click Element                  ${go to auction btn}
 	get_auction_href_keywords.Дочекатись формування посилань на аукціон
 	${auction_participate_href}    get_auction_href_keywords.Отримати URL для участі в аукціоні
-	${auction_href}                Run Keyword If  '${SUITE NAME}' != 'Dutch'
+	${auction_href}                Run Keyword If  '${SUITE NAME}' != 'Cdb1 Dutch'
 	...  get_auction_href_keywords.Отримати URL на перегляд
 	[Return]                       ${auction_participate_href}  ${auction_href}
 
