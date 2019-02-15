@@ -80,7 +80,8 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 
 Заповнити "Контактна особа"
-	${name}  cdb1_dutch_page.Заповнити procuringEntity.contactPoint.name
+    ${name}  Set Variable  Прохоров И.А.
+    tender_tab.Заповнити "Контактна особа"  ${name}
 	Set To Dictionary  ${data['procuringEntity']['contactPoint']}  name  ${name}
 
 
