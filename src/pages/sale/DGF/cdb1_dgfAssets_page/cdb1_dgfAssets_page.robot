@@ -11,7 +11,7 @@
 Заповнити auctionPeriod.startDate
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['auctionPeriod']['startDate']
-	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з датою  ${selector}  ${text}
 
 
 Заповнити dgfDecisionID
@@ -23,7 +23,7 @@
 Заповнити dgfDecisionDate
 	[Arguments]  ${text}
 	${selector}  sale_keywords.Отримати локатор по назві поля  ['dgfDecisionDate']
-	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  ${selector}  ${text}
+	Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити поле з датою  ${selector}  ${text}
 
 
 Заповнити value.amount
