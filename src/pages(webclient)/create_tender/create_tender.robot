@@ -120,6 +120,7 @@ Resource        create_tender_keywords.robot
 Відкрити сторінку для створення публічних закупівель
     Wait Until Page Contains Element  xpath=//*[contains(text(), 'Публічні закупівлі')]  120
     Wait Until Keyword Succeeds  120  3  Натиснути кнопку публічних закупівель
+    Очистити фільтр "Умова відбору"
     Wait Until Keyword Succeeds  20  2  Click Element  xpath=//*[contains(text(), 'OK')]
     Wait Until Keyword Succeeds  120  3  Element Should Not Be Visible  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору')]
 

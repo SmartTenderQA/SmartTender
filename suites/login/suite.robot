@@ -78,7 +78,7 @@ Login with wrong data and check message
 
 Залогінитися та перевірити користувача prod
 	Login With Correct Data  prod_provider			#role:provider
-	Login With Correct Data  prod_owner  			#role:tender_owner
+	Run Keyword If  "iis" not in "${IP}"  Login With Correct Data  prod_owner  			#role:tender_owner
 	Login With Correct Data  prod_ssp_owner			#role:ssp_tender_owner
 
 
