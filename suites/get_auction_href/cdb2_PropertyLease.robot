@@ -174,7 +174,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider2}
 	#todo nuzhno vinesti keyword
-	small_privatization_informational_message.Дочекатися статусу повідомлення  Кваліфікація  120m
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Кваліфікація  120m
 	#
 
 
