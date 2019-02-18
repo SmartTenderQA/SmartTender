@@ -106,6 +106,8 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Set To Dictionary  ${docs_data}  hash  md5:${md5}
     ${new docs}  Evaluate  ${docs_data}.copy()
 	Append To List  ${data['documents']}  ${new docs}
+	Log  ${new docs}
+	Log  ${data}
 
 
 Вибрати тип документа

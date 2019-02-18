@@ -4,8 +4,9 @@ Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
-
+...                                        Capture Page Screenshot  AND
+...                                        Log  ${data}  AND
+...                                        Log  ${cdb_data}
 
 #zapusk
 #Отримати посилання на аукціон
