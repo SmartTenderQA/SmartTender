@@ -19,7 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	cdb2_ssp_asset_page.Отримати UAID для Об'єкту
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
-	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
+	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
 
@@ -51,7 +51,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
-	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
+	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  lot_cdb_data
 	sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
