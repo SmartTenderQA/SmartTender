@@ -8,6 +8,7 @@ ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']
 
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 ${dropdown item}                    //li[contains(@class, "dropdown-item")]
+${owner block}                      //*[.="Організатори"]
 
 
 *** Keywords ***
@@ -38,7 +39,6 @@ ${dropdown item}                    //li[contains(@class, "dropdown-item")]
 
 Відфільтрувати по організатору
     [Arguments]  ${name}
-    ${owner block}    Set Variable  //*[.="Організатори"]
     Виконати пошук організатора  ${name}
     Click Element     (${dropdown item})[1]
     ${get}  Get Text  (${owner block}/following-sibling::*//li[contains(@class, "input-token-facebook")]//p)[1]
