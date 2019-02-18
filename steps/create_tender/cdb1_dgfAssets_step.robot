@@ -5,6 +5,8 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 *** Keywords ***
 Створити тендер
 	[Arguments]  ${auction_type}
+	cdb1_dgfAssets_step.Завантажити локатори
+
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 

@@ -4,6 +4,8 @@ Library  ../../src/pages/sale/SPF/cdb2_LandLease_page/cdb2_LandLease_variables.p
 
 *** Keywords ***
 Створити аукціон
+	cdb2_LandLease_step.Завантажити локатори
+
 	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	Run Keyword If  '${site}' == 'test'

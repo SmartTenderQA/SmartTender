@@ -24,7 +24,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Створити тендер
 	[Tags]  create_tender  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb1_dgfAssets_step.Створити тендер  ${type_dict['${type}']}
+	cdb1_dgfAssets_step.Створити аукціон  ${type_dict['${type}']}
 	Знайти тендер користувачем  ${tender_owner}
 	Run Keyword If  not('iis' in '${IP}')
 	...  cdb2_LandLease_page.Отримати ID у цбд
@@ -304,7 +304,6 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
    	Set Global Variable  ${user}  ${tender_owner}
-	cdb1_dgfAssets_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 

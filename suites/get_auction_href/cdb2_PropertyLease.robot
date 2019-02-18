@@ -303,8 +303,6 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
    	Set Global Variable  ${user}  ${tender_owner}
-	cdb2_PropertyLease_step.Завантажити локатори
-	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 

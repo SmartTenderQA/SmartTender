@@ -221,7 +221,6 @@ Precondition
 	Set Global Variable  ${provider2}  user2
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
-	cdb2_LandLease_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
