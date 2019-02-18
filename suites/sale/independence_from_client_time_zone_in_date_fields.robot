@@ -54,9 +54,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  lot_cdb_data
-	sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)
-	compare_data.Порівняти введені дані з даними в ЦБД  ['decisions']['decisionDate']
-    compare_data.Порівняти відображені дані з даними в ЦБД  ['decisions']['decisionDate']
 
 
 Перевірити дату рішення для об'єкта ІП в ЦБД
