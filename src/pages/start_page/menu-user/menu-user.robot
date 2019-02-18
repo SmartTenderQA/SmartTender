@@ -2,9 +2,9 @@
 Отримати
 	[Arguments]  ${text}
 	${dict}  Create Dictionary
-	...  організацію=menu-user-organization
-	...  фио=menu-user-fio
-	...  login=menu-user-login
+	...  організацію=title-menu-user-organization
+	...  фио=title-menu-user-fio
+	...  login=title-menu-user-login
 	${selector}  Set Variable
 	...  //*[@data-qa="${dict[u'${text}']}"]
 	${get}  Get Text  ${selector}
@@ -14,10 +14,10 @@
 Натиснути
 	[Arguments]  ${text}
 	${dict}  Create Dictionary
-	...  Особистий кабінет=menu-user-personal-area
-	...  Управління користувачами=menu-user-user-management
-	...  Змінити пароль=menu-user-change-password
-	...  Вийти=menu-user-exit
+	...  Особистий кабінет=title-menu-user-personal-area
+	...  Управління користувачами=title-menu-user-user-management
+	...  Змінити пароль=title-menu-user-change-password
+	...  Вийти=title-menu-user-exit
 	${selector}  Set Variable
 	...  //*[@data-qa="${dict[u'${text}']}"]
 	Click Element  ${selector}
