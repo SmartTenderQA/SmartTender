@@ -45,7 +45,7 @@ def create_fake_doc(n=10):
     name = create_sentence(1, 'file')
     path = locality + '/test_output/' + name
     f = open(path, 'w+')
-    f.write(content.encode('utf8'))
+    f.write(str(content.encode('utf8')))
     f.close()
     return path, name, content
 
