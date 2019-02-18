@@ -16,8 +16,9 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 Натиснути "Кваліфікація"
 	Click Element  //a[@title='Кваліфікація']
-	Wait Until Page Contains Element  ${approve btn}
-	Wait Until Element Is Visible  //span[contains(text(),'Рішення кваліфікації')]
+	Дочекатись закінчення загрузки сторінки(webclient)
+	Wait Until Page Contains Element  ${approve btn}  10
+	elements.Дочекатися відображення елемента на сторінці  //span[contains(text(),'Рішення кваліфікації')]
 
 
 Натиснути "Підтвердити перевірку протоколу"
