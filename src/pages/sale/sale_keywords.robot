@@ -43,6 +43,13 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	Run Keyword  Отримати prozorro ID для ${site}
 
 
+Отримати посилання в ЦБД
+    ${cdb locator}  Set Variable  //*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a
+    Wait Until Element Is Visible  ${cdb locator}  120
+    ${cdb href}  Get Element Attribute  ${cdb locator}  href
+    Set Global Variable  ${cdb href}  ${cdb href}
+
+
 Отримати prozorro ID для prod
 	Open button  //*[@data-qa='cdbNumber']
 	${text}  Get Text  //*[@class='tender--head--inf' and contains(text(),'UA')]

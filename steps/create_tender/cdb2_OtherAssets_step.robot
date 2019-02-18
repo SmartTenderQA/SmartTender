@@ -4,6 +4,9 @@ Library  ../../src/pages/sale/SPF/cdb2_OtherAssets_page/cdb2_OtherAssets_variabl
 
 *** Keywords ***
 Створити аукціон
+	cdb2_OtherAssets_step.Завантажити локатори
+	compare_data.Завантажити локатори для кваліфікаційних документів
+
 	Run Keyword If  '${site}' == 'prod'
 	...  desktop.Змінити групу  Організатор. Реализация державного майна (E_ORGSPA)
 	Відкрити сторінку Продаж/Оренда майна(тестові)
