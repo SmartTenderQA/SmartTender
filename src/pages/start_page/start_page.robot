@@ -30,10 +30,10 @@ ${sign up button}					//*[@data-qa="form-login-success"]
 Навести мишку на іконку з заголовку
 	[Arguments]  ${icon name}
 	${dict}  Create Dictionary
-	...  Календар=title-btn-podii
-	...  Повідомлення=title-btn-notifications
-	...  Баланс=title-balance
-	...  Меню_користувача=title-menu-user-fio
+	...  Календар=podii
+	...  Повідомлення=notifications
+	...  Баланс=balance
+	...  Меню_користувача=menu-user
 	${selector}  Set Variable
 	...  //*[@data-qa="${dict[u'${icon name}']}"]
 	Mouse Over  ${selector}
@@ -88,12 +88,12 @@ ${sign up button}					//*[@data-qa="form-login-success"]
 Натиснути на іконку з баннеру
 	[Arguments]  ${icon name}
 	&{dict}  Create Dictionary
-	...  Державні закупівлі Prozorro=['page-banner-btn-prozorro', '/publichni-zakupivli-prozorro/']
-	...  Аукціони на продаж майна банків=['page-banner-btn-bank', '/auktsiony-na-prodazh-aktyviv-bankiv']
-	...  Комерційні тендери SmartTender=['page-banner-btn-commercialZakupki', '/komertsiyni-torgy/']
-	...  Аукціони на продаж державного майна=['page-banner-btn-auctionGov', '/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv']
-	...  Комерційні продажі товарів та послуг=['page-banner-btn-commercialSales', '/komertsiyni-torgy-prodazhi/']
-	...  Оренда землі=['page-banner-btn-house', '/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv']
+	...  Державні закупівлі Prozorro=['btn-banner-item-prozorro', '/publichni-zakupivli-prozorro/']
+	...  Аукціони на продаж майна банків=['btn-banner-item-bank', '/auktsiony-na-prodazh-aktyviv-bankiv']
+	...  Комерційні тендери SmartTender=['btn-banner-item-commercialZakupki', '/komertsiyni-torgy/']
+	...  Аукціони на продаж державного майна=['btn-banner-item-auctionGov', '/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv']
+	...  Комерційні продажі товарів та послуг=['btn-banner-item-commercialSales', '/komertsiyni-torgy-prodazhi/']
+	...  Оренда землі=['btn-banner-item-house', '/auktsiony-na-prodazh-aktyviv-derzhpidpryemstv']
 	${item}  Get From Dictionary  ${dict}  ${icon name}
 	@{list}  Evaluate  list(${item})
 	${data-qa}  Set Variable  ${list[0]}
