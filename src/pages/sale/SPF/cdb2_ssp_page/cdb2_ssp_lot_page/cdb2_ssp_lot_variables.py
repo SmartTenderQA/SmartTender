@@ -72,13 +72,13 @@ view_locators = {
     "description": "//*[@class='text-justify']/span",
     "decisions": [
         {
-            "decisionDate": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[4]",
-            "decisionID": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[4]",
+            "decisionDate": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Рішення органу приватизації про затверждення умов продажу')]//*[@data-qa='value']",
+            "decisionID": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Рішення органу приватизації про затверждення умов продажу')]//*[@data-qa='value']",
         },
         {
-            "decisionDate": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]",
-            "decisionID": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]",
-            "title": u"(//*[@class='ivu-card-body' and contains(.,'Загальна інформація')]//*[@data-qa='value'])[3]"
+            "decisionDate": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Рішення про затвердження переліку')]//*[@data-qa='value']",
+            "decisionID": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Рішення про затвердження переліку')]//*[@data-qa='value']",
+            "title": u"//*[contains(@class,'margin-bottom-16') and contains(.,'Рішення про затвердження переліку')]//*[@data-qa='value']",
         }
     ],
     "auctions": [
