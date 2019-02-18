@@ -204,7 +204,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 Заповнити "Дату рішення для ІП"
 	${decisionDate}  smart_get_time  0  m
 	cdb2_ssp_lot_page.Заповнити decisions.0.decisionDate  ${decisionDate}
-	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
+	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}:00
 
 
 Заповнити "Умови аукціону"
