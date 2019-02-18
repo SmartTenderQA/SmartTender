@@ -260,3 +260,9 @@ Resource        create_tender_keywords.robot
     Click Element  ${selector}
     Wait Until Element Is Visible  ${type selector}
     Click Element  ${type selector}
+
+
+Заповнити "Вид предмету закупівлі"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name='IDCATGROUP']//input[@class]
+    Заповнити текстове поле  ${selector}  ${value}
