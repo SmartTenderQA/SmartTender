@@ -19,6 +19,7 @@
 Заповнити тему запитання
     [Arguments]  ${text}
     ${question theme}  Set Variable  //*[@data-qa="questions"]//label[text()="Тема"]/following-sibling::div//input
+    elements.Дочекатися відображення елемента на сторінці  ${question theme}
     Input Text  ${question theme}  ${text}
     Sleep  .5
     ${get}  Get Element Attribute  ${question theme}  value
