@@ -4,6 +4,8 @@ Library  ../../src/pages/sale/DGF/cdb1_dutch_page/cdb1_dutch_variables.py
 
 *** Keywords ***
 Створити аукціон
+	cdb1_dutch_step.Завантажити локатори
+
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 

@@ -74,3 +74,15 @@
 	${data}  Set Variable  ${data.json()}
 	${cdb_data}  Set Variable  ${data['data']}
 	[Return]  ${cdb_data}
+
+
+Отримати дані з cdb
+	[Arguments]  ${tender_href}
+	Create Session  api  ${tender_href}
+	${data}  Get Request  api  \
+	Should Be Equal  ${data.status}  200
+	${data}  Set Variable  ${data.json()}
+	${cdb_data}  Set Variable  ${data['data']}
+	[Return]  ${cdb_data}
+
+

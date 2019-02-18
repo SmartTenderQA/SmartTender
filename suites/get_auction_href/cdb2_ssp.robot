@@ -24,7 +24,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Створити об'єкт МП
 	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
 	Завантажити сесію для  ${tender_owner}
-	cdb2_ssp_step.Завантажити локатори для об'єкта
 	cdb2_ssp_step.Створити об'єкт МП
 	cdb2_ssp_asset_page.Отримати UAID для Об'єкту
 	Run Keyword If  '${site}' == 'test'
@@ -37,7 +36,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Отримати дані про об'єкт з ЦБД
 	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
+	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
 
@@ -96,7 +95,6 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  create_tender  make_a_proposal  get_auction_href
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
-	cdb2_ssp_step.Завантажити локатори для ІП
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
 	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  10 min
 	Run Keyword If  '${site}' == 'test'
@@ -109,7 +107,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 Отримати дані про інформаційне повідомлення з ЦБД
 	[Tags]  compare  get_auction_href
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
-	${cdb_data}  Wait Until Keyword Succeeds  60  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
+	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  message_cdb_data
 

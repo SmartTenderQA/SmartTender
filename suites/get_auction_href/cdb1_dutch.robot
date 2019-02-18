@@ -174,7 +174,6 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
    	Set Global Variable  ${user}  ${tender_owner}
-	cdb1_dutch_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 

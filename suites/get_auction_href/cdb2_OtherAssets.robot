@@ -4,8 +4,9 @@ Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
-
+...                                        Capture Page Screenshot  AND
+...                                        Log  ${data}  AND
+...                                        Log  ${cdb_data}
 
 #zapusk
 #Отримати посилання на аукціон
@@ -302,8 +303,6 @@ Precondition
 	...  Set Global Variable  ${provider3}  prod_provider1  AND
 	...  Set Global Variable  ${viewer}  prod_viewer
    	Set Global Variable  ${user}  ${tender_owner}
-	cdb2_OtherAssets_step.Завантажити локатори
-	compare_data.Завантажити локатори для кваліфікаційних документів
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
