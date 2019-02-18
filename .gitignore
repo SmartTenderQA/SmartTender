@@ -9,3 +9,5 @@ debug.log
 users_variables.py
 
 *.pyc
+
+/venv/*

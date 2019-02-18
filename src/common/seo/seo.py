@@ -3,13 +3,10 @@
 # ==============
 #      Main script file
 # ==============
-import sys
-import urllib2
-import json
-import re
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
+import requests
+import re
 
 
 def get_seo_data(data_type, status, page_href):
@@ -29,8 +26,8 @@ def get_seo_data(data_type, status, page_href):
         url += 'test.'
     url += 'smarttender.biz/Seo/GetPageSeoParam?key='
     url += page_href
-    response = urllib2.urlopen(url)
-    data = json.load(response)
+    response = requests.get(url)
+    data = response.json()
 
     for val in data:
         if(val['TypeId'] == keys[data_type]):
