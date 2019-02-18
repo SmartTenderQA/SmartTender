@@ -44,6 +44,7 @@
 Вказати тип рішення вимоги
     [Arguments]  ${solution}
     ${input}  Set Variable  //*[@data-name="RESOLUTYPE"]//input[@class]
+    elements.Дочекатися відображення елемента на сторінці  ${input}
     Click Element  ${input}
     Wait Until Keyword Succeeds  5  .5
     ...  Click Element  //td[contains(@class,"ListBoxItem")][.="${solution}"]
