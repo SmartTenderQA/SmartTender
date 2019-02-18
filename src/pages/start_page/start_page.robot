@@ -7,15 +7,15 @@ Resource    	notifications/notifications.robot
 
 
 *** Variables ***
-${log in button}					//*[@data-qa="title-btn-modal-login"]
-${sign up button}					//*[@data-qa="form-login-success"]
+${log in button}					//*[@data-qa="btn-showModalLogin"]
+${sign up button}					//*[@data-qa="btn-registration"]
 
 
 *** Keywords ***
 Відкрити вікно авторизації
 	Wait Until Page Contains Element  ${log in button}
 	Click Element  ${log in button}
-	Wait Until Page Contains Element  ${sign up button}  ${swt}
+	Wait Until Page Contains Element  //*[@id="ModalLogin"]  ${swt}
 
 
 Натиснути кнопку Реєстрація
