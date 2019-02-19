@@ -20,7 +20,7 @@ ${close button}							//*[@class="ivu-modal-close"]
 	${title}  Get Text  (${messages block})[1]
 	Click Element  (${messages block})[1]
 	Sleep  5
-	${message title}  Get Text  //table//div[contains(text(),'ТЕСТУВАННЯ')]
+	${message title}  Get Text  //td[contains(@style,'background-color: rgb(48,63,159)')]//div[contains(@style,'color:#fff')]
 	Should Be Equal  ${title}  ${message title}
 
 
