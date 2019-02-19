@@ -38,7 +38,7 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 	Click Element  //*[@class='dxr-lblText' and contains(text(),'Зберегти')]
 	validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені у своєму рішенні?  Так
 	Дочекатись закінчення загрузки сторінки(webclient)
-	Set To Dictionary  ${docs_data}  key  bids
+	Set To Dictionary  ${docs_data}  key  awards
 	Set To Dictionary  ${docs_data}  title  ${doc[1]}
 	Set To Dictionary  ${docs_data}  documentType  Протокол рішення
 	Set To Dictionary  ${docs_data}  hash  md5:${md5}
