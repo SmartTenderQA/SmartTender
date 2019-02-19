@@ -45,8 +45,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Налаштування підписки
-  [Tags]  your_account
+  [Tags]  your_account  -pre_prod
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  # отключено для pre_prod - при клике в личном кабинете кидает на smarttender.biz
   personal_account.Відкрити сторінку за назвою  subscription
   Перевірити блок запиту допомоги з налаштування підписки
   Перевірити блок Персональне запрошення організатора
