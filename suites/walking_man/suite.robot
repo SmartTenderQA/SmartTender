@@ -596,12 +596,12 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  "${role}" == "tender_owner"  Bened
 	...  "${role}" == "provider"  user1
 	...  "${role}" == "ssp_tender_owner"  ssp_tender_owner
-	...  "${role}" == "test_viewer"  test_viewer
+	...  "${role}" == "viewer"  test_viewer
 	...  ELSE IF  'prod' in '${where}'  Set Variable If
 	...  "${role}" == "tender_owner"  fgv_prod_owner
 	...  "${role}" == "provider"  prod_provider
-	...  "${role}" == "prod_ssp_owner"  ssp_tender_owner
-	...  "${role}" == "test_viewer"  prod_viewer
+	...  "${role}" == "ssp_tender_owner"  ssp_tender_owner
+	...  "${role}" == "viewer"  prod_viewer
 	Set Global Variable  ${user}
 	Open Browser In Grid  ${user}  chrome  WIN10
 	Авторизуватися  ${user}
