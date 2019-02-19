@@ -562,6 +562,7 @@ Test Postcondition
   ${message}  EDS_keywords.Натиснути Підписати та отримати відповідь  ${index}
   Run Keyword If  "${EDS succeed}" in """${message}"""  No Operation
   ...  ELSE  Fail  Помилка підписання ЕЦП! Look to message
+  Відкрити вкладку моніторингу
   Run Keyword And Ignore Error  Перевірити дату підписання ЕЦП ДАСУ  ${block}
 
 
