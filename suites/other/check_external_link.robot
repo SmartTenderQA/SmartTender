@@ -35,4 +35,4 @@ Test Teardown  			Run Keywords
 Preconditions
     Run Keyword If  '${where}' == 'test'  Set Global Variable  ${user}  user1
 	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${user}  prod_provider
-    Додати першого користувача  ${user}
+    Open Browser In Grid  ${user}
