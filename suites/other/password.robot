@@ -21,9 +21,11 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 Відновлення пароля через email
     [Tags]  reset_password
     Перейти на сторінку відновлення пароля
-    Відправити лист "Відновлення паролю" на пошту
+    Ввести mail в поле для відновлення паролю
+    Wait Until Keyword Succeeds  3x  5  Відправити лист "Відновлення паролю" на пошту
     email.Розпочати роботу з Gmail  ${user}
-    email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
+	email.Дочекатися отримання листа на пошту  10m  SmartTender: Відновлення паролю
+    Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
     email.Перейти за посиланням в листі  Відновити пароль→
     Ввести новий пароль
     Go To  ${start_page}
@@ -127,10 +129,16 @@ Postcondition
 	Click I forgot password
 
 
+Ввести mail в поле для відновлення паролю
+    ${forgot password input}  Set Variable  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]
+    elements.Дочекатися відображення елемента на сторінці  ${forgot password input}
+    Input Text  ${forgot password input}  ${login}
+
+
 Відправити лист "Відновлення паролю" на пошту
-    Input Password  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]  ${login}
     Click Element  ${submit btn locator}
     Дочекатись Закінчення Загрузки Сторінки
+    Page Should Contain Element  //*[text()='Перейдіть за посиланням в листі для відновлення пароля']
 
 
 Ввести новий пароль

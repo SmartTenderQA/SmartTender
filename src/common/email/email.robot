@@ -12,9 +12,14 @@ Resource  				keywords.robot
 
 Відкрити лист в email за темою
 	[Arguments]  ${title}
-	Wait Until Keyword Succeeds  10 min  15 s  Перевірити наявність листа за темою  ${title}
-	Wait Until Keyword Succeeds  10  2  Click Element  xpath=//td[@id]//span[contains(text(), '${title}')]
-	Wait Until Page Contains Element  xpath=//*[@class='Bu bAn']
+	Wait Until Keyword Succeeds  30  2  Click Element  xpath=//td[@id]//span[contains(text(), '${title}')]
+	Дочекатись закінчення загрузки сторінки по елементу  //span[@class='v1']
+	Page Should Contain Element  xpath=//*[@class='Bu bAn']
+
+
+Дочекатися отримання листа на пошту
+	[Arguments]  ${timeout}  ${subject}
+	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}
 
 
 Перейти за посиланням в листі
@@ -30,7 +35,7 @@ Resource  				keywords.robot
 Розгорнути останній лист (за необхідність)
 	${count}  Get Element Count  //img[@class='ajT']
 	sleep  0.5
-	Wait Until Keyword Succeeds  10 s  1 s  Run Keyword If  ${count} > 0  Run Keywords
+	Wait Until Keyword Succeeds  30 s  1 s  Run Keyword If  ${count} > 0  Run Keywords
 	...  elements.Дочекатися відображення елемента на сторінці  xpath=(//img[@class='ajT'])[last()]		AND
 	...  Click Element  xpath=(//img[@class='ajT'])[last()]
 	sleep  1
