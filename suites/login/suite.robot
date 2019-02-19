@@ -15,8 +15,9 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -v env:prod suites/login/suite.robot
-#robot --consolecolors on -L TRACE:INFO -d test_output -v env:test suites/login/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -v where:prod suites/login/suite.robot
+
+
 *** Test Cases ***
 Спроба залогінитися з невірними даними
     [Template]  Login with wrong data
@@ -44,6 +45,9 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 
 *** Keywords ***
 Precondition
+	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${env}  prod
+	...  ELSE  Set Global Variable  ${env}  prod
+	Run Keyword If  'pre_prod' == '${where}'  Set Global Variable  ${IP}  iis
 	Run Keyword  Open Browser In Grid  ${env}_viewer
 
 
