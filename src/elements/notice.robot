@@ -8,6 +8,7 @@ ${notice element locator}				//*[@class='ivu-message-notice-content']|//*[@class
 *** Keywords ***
 Дочекатись сповіщення з текстом
 	[Arguments]  ${text}  ${timeout}=10
+	Register Keyword To Run On Failure  No Operation
 	Wait Until Keyword Succeeds  ${timeout}  .25  notice.Текст сповіщення повинен бути  ${text}
 	Wait Until Keyword Succeeds  10  .5  Element Should Not Be Visible  ${notice element locator}
 
