@@ -49,7 +49,7 @@ ${owner block}                      //*[.="Організатори"]
 Виконати пошук організатора
     [Arguments]  ${name}
     Input Text  ${owner block}//input  ${name}
-    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  10
+    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  30
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Clear Element Text  ${owner block}/ancestor::div[1]//li//input  AND
     ...  Press Key     ${owner block}/ancestor::div[1]//li//input  \\09  AND
