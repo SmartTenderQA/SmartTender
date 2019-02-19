@@ -7,6 +7,9 @@ ${first found element}              //*[@id='tenders']//tbody/*[@class='head']//
 ${last found multiple element}       xpath=(//*[@id='tenders']//*[@class='head']//span[@class='Multilots']/../..//a[@class='linkSubjTrading'])[last()]
 
 ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
+${dropdown item}                    //li[contains(@class, "dropdown-item")]
+${owner block}                      //*[.="Організатори"]
+
 
 *** Keywords ***
 Знайти тендер по ID
@@ -36,16 +39,20 @@ ${button komertsiyni-torgy}         css=.with-drop>a[href='/komertsiyni-torgy/']
 
 Відфільтрувати по організатору
     [Arguments]  ${name}
-    ${owner block}    Set Variable  //*[.="Організатори"]
-    ${dropdown item}  Set Variable  //li[contains(@class, "dropdown-item")]
-    Input Text  ${owner block}//input  ${name}
-    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  15
-    Run Keyword If  '${status}' == 'False'  Run Keywords
-    ...  Clear Element Text  ${owner block}//input  AND
-    ...  Відфільтрувати по організатору  ${name}
+    Виконати пошук організатора  ${name}
     Click Element     (${dropdown item})[1]
     ${get}  Get Text  (${owner block}/following-sibling::*//li[contains(@class, "input-token-facebook")]//p)[1]
     Should Contain  ${get}  ${name}
+
+
+Виконати пошук організатора
+    [Arguments]  ${name}
+    Input Text  ${owner block}//input  ${name}
+    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  (${dropdown item})[1]  10
+    Run Keyword If  '${status}' == 'False'  Run Keywords
+    ...  Clear Element Text  ${owner block}/ancestor::div[1]//li//input  AND
+    ...  Press Key     ${owner block}/ancestor::div[1]//li//input  \\09  AND
+    ...  Виконати пошук організатора  ${name}
 
 
 Відфільтрувати по статусу торгів

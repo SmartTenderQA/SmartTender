@@ -4,6 +4,9 @@ Library  ../../src/pages/sale/SPF/cdb2_PropertyLease_page/cdb2_PropertyLease_var
 
 *** Keywords ***
 Створити аукціон
+	cdb2_PropertyLease_step.Завантажити локатори
+	compare_data.Завантажити локатори для кваліфікаційних документів
+
 	Run Keyword If  '${site}' == 'prod'
 	...  desktop.Змінити групу  Організатор. Реализация державного майна (E_ORGSPA)
 	Відкрити сторінку Продаж/Оренда майна(тестові)

@@ -5,6 +5,8 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 *** Keywords ***
 Створити об'єкт МП
+	cdb2_ssp_step.Завантажити локатори для об'єкта
+
 	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
@@ -31,6 +33,8 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 Створити інформаційне повідомлення МП
 	[Arguments]  ${id}
+	cdb2_ssp_step.Завантажити локатори для ІП
+
 	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	old_search.Активувати вкладку ФГИ
 	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
@@ -200,7 +204,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 Заповнити "Дату рішення для ІП"
 	${decisionDate}  smart_get_time  0  m
 	cdb2_ssp_lot_page.Заповнити decisions.0.decisionDate  ${decisionDate}
-	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}
+	Set To Dictionary  ${data['decisions'][0]}  decisionDate  ${decisionDate}:00
 
 
 Заповнити "Умови аукціону"

@@ -1,11 +1,10 @@
 *** Settings ***
-Resource  keywords.robot
+Resource  EDS_keywords.robot
 
 
 *** Keywords ***
 Підписати ЕЦП
 	Натиснути підписати ЕЦП
-	Вибрати тестовий ЦСК
 	Завантажити ключ
 	Ввести пароль ключа
 	${message}  Натиснути Підписати та отримати відповідь

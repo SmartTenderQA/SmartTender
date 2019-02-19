@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Додати першого користувача  prod_ssp_owner
+Suite Setup  			Precondition
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -71,6 +71,10 @@ Test Teardown  			Run Keywords
 
 
 *** Keywords ***
+Precondition
+	Set Variable If  "${where}" == "pre_prod"  ${IP}  iis
+	Додати першого користувача  prod_ssp_owner
+
 Створити папку загрузок
     Create Directory  ${OUTPUTDIR}/downloads/
 

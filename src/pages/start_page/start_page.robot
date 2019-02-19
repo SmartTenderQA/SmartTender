@@ -8,7 +8,7 @@ Resource    	notifications/notifications.robot
 
 *** Variables ***
 ${log in button}					//*[@data-qa="title-btn-modal-login"]
-${sign up button}					//*[@data-qa="form-login-success"]
+${sign up button}					//*[@data-qa="title-btn-registration"]
 
 
 *** Keywords ***
