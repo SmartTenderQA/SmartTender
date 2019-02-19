@@ -149,6 +149,11 @@ data = {
 	},
 	"minimalStep": {
 		"amount": ""
-	}
+	},
+	"procuringEntity": {
+		"contactPoint": {
+			"name": ""
+		}
+	},
 }
 #</editor-fold>

@@ -18,7 +18,8 @@ Test Teardown    		Run Keywords
 
 *** Variables ***
 @{image_format}                png  jpg  jpeg  gif  tif  tiff  bmp
-
+${tender head on old search}   //tr[@class="head"]
+${tender boby on old search}   /../../following-sibling::tr[1][not(contains(@style, "display: none"))]
 
 *** Test Cases ***
 Відкрити сторінку торгів ${type}
@@ -71,7 +72,7 @@ Preconditions
 
 Порахувати кількість процедур на сторінці
 	${selector}  Set Variable If
-	...  '${type}' != 'bank_aucs'   //tr[@class="head"]
+	...  '${type}' != 'bank_aucs'   ${tender head on old search}
 	...                             //div[@class="panel panel-default panel-highlight"]
 	Wait Until Element Is Visible  ${selector}
 	${tenders_on_page}  Get Element Count  ${selector}
@@ -96,23 +97,22 @@ Preconditions
 
 Розкрити тендер за номером
 	[Arguments]  ${number}
-	${tender_expand}  Set Variable  (//tr[@class="head"])[${number}]/td/span
-	Click Element  ${tender_expand}
-	Дочекатись загрузки документів в тендері
-	${tender header}  Set Variable  (//h3[@class="tender-header-row"])[${number}]
-	Click Element  ${tender header}
-	Scroll Page To Element XPATH  (//tr[@class="head"])[${number}+1]/td/span
+	${tender_expand}  Set Variable  (${tender head on old search})[${number}]/td/span
+	Wait Until Keyword Succeeds  1m  .5  Run Keywords
+	...  Click Element  ${tender_expand}  AND
+	...  Дочекатись загрузки документів в тендері  AND
+	...  Wait Until Page contains element  ${tender_expand}${tender boby on old search}
+	Scroll Page To Element XPATH  (${tender head on old search})[${number}+1]/td/span
 
 
 Отримати список файлів у процедурі
 	[Arguments]  ${number}
 	${list of files}  Create List
-	${file selector}  Set Variable  (//tr[@class="head"])[${number}]/following-sibling::tr//*[@class="item"]/a[@href]
-	${doc_quantity}  Get Element Count  ${file selector}
+	${file selector}  Set Variable  (${tender head on old search})[${number}]/td/span${tender boby on old search}//*[@class="item"]
+	${doc_quantity}  Get Element Count  ${file selector}//a[@href]
 	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
-	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  (//tr[@class="head"])[${number}]/following::div[@class="item"][${file}]//span
-#	\  ${file name}  Wait Until Keyword Succeeds  10  .5  Get Text  ${file selector}[${file}]
-	\  Append To List  ${list of files}  ${file name}
+	\  ${file name}  Wait Until Keyword Succeeds  15  .5  Run Keyword And Ignore Error  Get Text  ${file selector}[${file}]//a[@href]/span
+	\  Append To List  ${list of files}  ${file name[1]}
 	[Return]  ${list of files}
 
 
@@ -166,7 +166,6 @@ Preconditions
 	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
 	...  Exit For Loop
 	\  Відкрити документ  ${file}
-	\  Run Keyword If  '${type}' == 'commercial'  Перевірити наявність найменування файлу в локації  ${doc_type}
 	\  ${location}  Get Location
 	\  Should Not Contain  ${location}  error
 	\  Page Should Not Contain  an error

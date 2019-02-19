@@ -11,13 +11,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 #Запуск
-#robot --consolecolors on -L TRACE:INFO -d test_output -e broken --noncritical compare -e -test suites/small_privatization/dzk.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -e broken --noncritical compare -e -test suites/get_auction_href/cdb2_LandLease.robot
 *** Test Cases ***
 Створити аукціон
 	Завантажити сесію для  ${tender_owner}
-	dzk_step.Створити аукціон
-	dzk_auction.Отримати UAID та href для Аукціону
-	dzk_auction.Отримати ID у цбд
+	cdb2_LandLease_step.Створити аукціон
+	cdb2_LandLease_page.Отримати UAID та href для Аукціону
+	cdb2_LandLease_page.Отримати ID у цбд
 	Зберегти словник у файл  ${data}  data
 	Log To Console  url=${data['tender_href']}
 
@@ -185,7 +185,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Tags]  -prod  -test
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
-	small_privatization_auction.Дочекатися статусу лота  Аукціон  35 min
+	cdb2_ssp_auction_page.Дочекатися статусу лота  Аукціон  35 min
 
 
 Отримати поcилання на участь учасниками
@@ -221,7 +221,6 @@ Precondition
 	Set Global Variable  ${provider2}  user2
 	Set Global Variable  ${provider3}  user3
 	Set Global Variable  ${viewer}  test_viewer
-	dzk_step.Завантажити локатори
     Додати першого користувача  ${tender_owner}
     Підготувати користувачів
 
