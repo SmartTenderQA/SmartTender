@@ -600,7 +600,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  ELSE IF  'prod' in '${where}'  Set Variable If
 	...  "${role}" == "tender_owner"  fgv_prod_owner
 	...  "${role}" == "provider"  prod_provider
-	...  "${role}" == "ssp_tender_owner"  ssp_tender_owner
+	...  "${role}" == "ssp_tender_owner"  prod_ssp_owner
 	...  "${role}" == "viewer"  prod_viewer
 	Set Global Variable  ${user}
 	Open Browser In Grid  ${user}  chrome  WIN10
