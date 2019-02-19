@@ -130,7 +130,9 @@ Postcondition
 
 
 Ввести mail в поле для відновлення паролю
-    Wait Until Keyword Succeeds  30  3  sale_keywords.Заповнити та перевірити текстове поле  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]  ${login}
+    ${forgot password input}  Set Variable  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]
+    elements.Дочекатися відображення елемента на сторінці  ${forgot password input}
+    Input Text  ${forgot password input}  ${login}
 
 
 Відправити лист "Відновлення паролю" на пошту
