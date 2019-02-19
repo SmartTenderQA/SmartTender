@@ -20,7 +20,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
     search.Відкрити сторінку тестових торгів
     old_search.Розгорнути розширений пошук
     search.Відфільтрувати по організатору    ${org['${site}']}
-    search.Відфільтрувати по статусу торгів  Період уточнень
+    Wait Until Keyword Succeeds  40  1  search.Відфільтрувати по статусу торгів  Період уточнень
     ${date}  smart_get_time  2  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
