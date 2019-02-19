@@ -34,7 +34,7 @@ Test Teardown  			Run Keywords
 
 Негативні перевірки
 	Run Keyword And Expect Error
-	...  Element with locator '//*[@data-qa="title-btn-notifications"]' not found.
+	...  Element with locator '//*[@data-qa="notifications"]' not found.
 	...  start_page.Навести мишку на іконку з заголовку  Повідомлення
 	Вибрати елемент з випадаючого списку заголовку  Про SmartTender  Контакти
 	Перевірити відсутність дзвіночка(povidomlenya)
