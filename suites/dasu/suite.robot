@@ -249,9 +249,8 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 Підписати ЕЦП для відповіді на запит
   [Tags]  make_a_dialogue  EDS
-  log to console  Підписати ЕЦП для відповіді
-  debug
-  Підписати ЕЦП ДАСУ
+  ${block}  Set Variable  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]
+  Підписати ЕЦП ДАСУ  ${block}  2
 
 
 ################################################################
