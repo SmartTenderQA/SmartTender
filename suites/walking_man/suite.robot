@@ -63,7 +63,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Юридична допомога
-  [Tags]  your_account  -ip  non-critical-test
+  [Tags]  your_account  -ip  non-critical-test  -pre_prod
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  legal_help
   [Teardown]  Run Keywords
