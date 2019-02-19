@@ -238,7 +238,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Карта сайту
-	[Tags]  site  -test  -prod
+	[Tags]  site  -test  -prod  -pre_prod
 	Відкрити сторінку Карта сайту
 	Порахувати кількість єлементів сторінки карта сайту
 
@@ -282,7 +282,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Перевірити комерційні закупівлі test
-	[Tags]  commercial  -prod
+	[Tags]  commercial  -prod  -pre_prod
 	[Setup]  No Operation
 	[Template]  Перевірити комерційні закупівлі за назвою
 	Відкриті торги. Аукціон
@@ -591,6 +591,17 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 #######                                      ##########
 #######################################################
 Відкрити головну сторінку SmartTender.biz під потрібною роллю
+	${user}  Run Keyword If  '${where}' == 'test'  Set Variable If
+	...  "${role}" == "tender_owner"  Bened
+	...  "${role}" == "provider"  user1
+	...  "${role}" == "ssp_tender_owner"  ssp_tender_owner
+	...  "${role}" == "test_viewer"  test_viewer
+	...  ELSE IF  'prod' in '${where}'  Set Variable If
+	...  "${role}" == "tender_owner"  fgv_prod_owner
+	...  "${role}" == "provider"  prod_provider
+	...  "${role}" == "prod_ssp_owner"  ssp_tender_owner
+	...  "${role}" == "test_viewer"  prod_viewer
+	Set Global Variable  ${user}
 	Open Browser In Grid  ${user}  chrome  WIN10
 	Авторизуватися  ${user}
 	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
