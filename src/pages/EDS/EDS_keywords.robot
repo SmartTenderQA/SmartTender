@@ -29,16 +29,19 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 
 Завантажити ключ
-	Choose File  ${EDS_block}//input[@type='file']  ${EXECDIR}/src/pages/EDS/Key-6.dat
+    [Arguments]  ${index}=1
+	Choose File  (${EDS_block}//input[@type='file'])[${index}]  ${EXECDIR}/src/pages/EDS/Key-6.dat
 
 
 Ввести пароль ключа
-	Input Password  ${EDS_block}//*[@data-qa="eds-password"]//input  ${passwod}
+    [Arguments]  ${index}=1
+	Input Password  (${EDS_block}//*[@data-qa="eds-password"]//input)[${index}]  ${passwod}
 
 
 Натиснути Підписати та отримати відповідь
-	Click Element  ${EDS submit btn}
-	Wait Until Element Is Not Visible  ${EDS submit btn}  120
+	[Arguments]  ${index}=1
+	Click Element  (${EDS submit btn})[${index}]
+	Wait Until Element Is Not Visible  (${EDS submit btn})[${index}]  120
 	${message}  Отримати відповідь про підписання ЕЦП
 	Reload Page
 	loading.Дочекатись закінчення загрузки сторінки
