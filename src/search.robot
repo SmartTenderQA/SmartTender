@@ -42,7 +42,8 @@ ${owner block}                      //*[.="Організатори"]
     Виконати пошук організатора  ${name}
     Click Element     (${dropdown item})[1]
     ${get}  Get Text  (${owner block}/following-sibling::*//li[contains(@class, "input-token-facebook")]//p)[1]
-    Should Contain  ${get}  ${name}
+    ${status}  Run Keyword And Return Status   Should Contain  ${get}  ${name}
+    Run Keyword If  '${status}' == 'False'  Відфільтрувати по організатору  ${name}
 
 
 Виконати пошук організатора
