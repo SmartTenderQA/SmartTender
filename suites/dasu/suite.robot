@@ -159,12 +159,9 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 
 Підписати ЕЦП для пояснення з власної ініціативи
-  [Tags]  make_a_dialogue_individually
-#  Натиснути Підписати ЕЦП
-#  ${block}  Set Variable  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]
-#  ${EDS button}  Set Variable  ${block}//span[contains(text(), 'ЕЦП')]
-#  Click Element  ${EDS button}
-  No Operation
+  [Tags]  make_a_dialogue_individually  EDS
+  Підписати ЕЦП ДАСУ
+
 
 
 
@@ -186,9 +183,9 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   \  Перевірити description відповіді на пояснення з власної ініціативи
 
 
-#Підписати ЕЦП для пояснення з власної ініціативи2
-#  [Tags]  make_a_dialogue_individually
-#  No Operation
+Підписати ЕЦП для пояснення з власної ініціативи2
+  [Tags]  make_a_dialogue_individually  EDS
+  Підписати ЕЦП ДАСУ
 
 
 ################################################################
@@ -237,7 +234,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 Перевірити відображення інформації про відповідь на запит
   [Tags]  make_a_dialogue
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -251,8 +248,9 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 
 Підписати ЕЦП для відповіді на запит
-  [Tags]  make_a_dialogue
-  No Operation
+  [Tags]  make_a_dialogue  EDS
+  ${block}  Set Variable  //*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]
+  Підписати ЕЦП ДАСУ  ${block}  2
 
 
 ################################################################
@@ -352,7 +350,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 Перевірити відображення відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   [Tags]  request_for_clarification
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -363,14 +361,9 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   \  Зберегти сесію  ${username}
 
 
-
 Накласти ЕЦП на запит за роз'ясненням
-  [Tags]  request_for_clarification
-  No Operation
-#  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), "Запит роз'яснень організатором")]/../following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
-#  Перевірити можливість підписання ЕЦП для позову  ${selector}
-#  Відкрити вкладку моніторингу
-#  Перевірити успішність підписання ЕЦП  ${selector}
+  [Tags]  request_for_clarification  EDS
+  Підписати ЕЦП ДАСУ
 
 
 ################################################################
@@ -400,7 +393,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 Перевірити відображення інформації про усунення порушення
   [Tags]  violation_elimination_report
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -411,13 +404,11 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   \  Перевірити documents.datePublished інформації про усунення порушення
   \  Зберегти сесію  ${username}
 
+
 Накласти ЕЦП на звіт про усунення порушень
-  [Tags]  violation_elimination_report
-  No Operation
-#  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Звіт про усунення порушень')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
-#  Перевірити можливість підписання ЕЦП для позову  ${selector}
-#  Відкрити вкладку моніторингу
-#  Перевірити успішність підписання ЕЦП  ${selector}
+  [Tags]  violation_elimination_report  EDS
+  ${block}  Set Variable  //*[contains(text(),"${data_cdb['eliminationReport']['description']}")]/ancestor::*[@class='ivu-timeline-item-content'][1]
+  Підписати ЕЦП ДАСУ  ${block}  2
 
 
 ################################################################
@@ -447,7 +438,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 Перевірити відображення інформації про позов
   [Tags]  appeal
-  :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
+  :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
   \  Go to  ${loc}
@@ -460,12 +451,10 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 
 Накласти ЕЦП на позов
-  [Tags]  appeal
-  No Operation
-#  ${selector}  Set Variable  ${monitoring_selector}//*[contains(text(), 'Висновок оскаржено в суді')]/following-sibling::*//*[contains(text(), 'Підписати ЕЦП')]
-#  Перевірити можливість підписання ЕЦП для позову  ${selector}
-#  Відкрити вкладку моніторингу
-#  Перевірити успішність підписання ЕЦП  ${selector}
+  [Tags]  appeal  EDS
+  #[Tags]  violation_elimination_report
+  ${block}  Set Variable  //*[contains(text(),"${data_cdb['appeal']['description']}")]/ancestor::*[@class='ivu-timeline-item-content'][1]
+  Підписати ЕЦП ДАСУ  ${block}  2
 
 
 ################################################################
@@ -561,6 +550,30 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 Test Postcondition
   Log Location
   Run Keyword If Test Failed  Capture Page Screenshot
+
+
+Підписати ЕЦП ДАСУ
+  [Arguments]  ${block}=//*[contains(text(), "${data_cdb['title']}")]/ancestor::*[@class='ivu-card-body'][1]
+  ...          ${index}=1
+  ${EDS button}  Set Variable  ${block}//span[contains(text(), 'ЕЦП')]
+  Click Element  ${EDS button}
+  EDS_keywords.Завантажити ключ  ${index}
+  EDS_keywords.Ввести пароль ключа  ${index}
+  ${message}  EDS_keywords.Натиснути Підписати та отримати відповідь  ${index}
+  Run Keyword If  "${EDS succeed}" in """${message}"""  No Operation
+  ...  ELSE  Fail  Помилка підписання ЕЦП! Look to message
+  Відкрити вкладку моніторингу
+  Run Keyword And Ignore Error  Перевірити дату підписання ЕЦП ДАСУ  ${block}
+
+
+Перевірити дату підписання ЕЦП ДАСУ
+    [Arguments]  ${block}
+    ${EDS time stamp}  Set Variable  ${block}//*[@class="smt-tooltip"]
+    ${now}  smart_get_time
+    Wait Until Element Is Visible  ${EDS time stamp}  10
+	${get}  Get Text  ${EDS time stamp}
+	${parse}  Evaluate  re.search(r'\\d{2}.+', '''${get}''').group(0)  re
+	compare_dates_smarttender  ${now}  >=  ${parse}
 
 
 Отримати UAID та tender_Id для створеного тендера

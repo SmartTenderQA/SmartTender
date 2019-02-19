@@ -1,5 +1,5 @@
 *** Settings ***
-Resource  keywords.robot
+Resource  EDS_keywords.robot
 
 
 *** Keywords ***
