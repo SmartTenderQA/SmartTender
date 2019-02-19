@@ -63,7 +63,8 @@ Preconditions
 
 
 Спробувати сформувати рахунок без суми
-    Run Keyword And Ignore Error  Натиснути сформувати рахунок
+	${create invoice btn}  Set Variable  //*[@class="ivu-card-body"]//button
+	Click Element  (${create invoice btn})[last()]
     Дочекатись сповіщення з текстом  Заповніть будь-ласка вірно усі необхідні поля
 
 
