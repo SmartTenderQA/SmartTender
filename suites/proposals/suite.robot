@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Додати першого користувача  ${user}
+Suite Setup     Preconditions
 Suite Teardown  Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
@@ -111,6 +111,12 @@ ${no tender}                        False
 ###################################################################################
 
 *** Keywords ***
+Preconditions
+    Run Keyword If  '${where}' == 'test'  Set Global Variable  ${user}  user1
+	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${user}  prod_provider
+    Додати першого користувача  ${user}
+
+
 Postcondition
 	Close All Browsers
 

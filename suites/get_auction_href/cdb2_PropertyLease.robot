@@ -220,14 +220,14 @@ If skipped create tender
 	${data['documents'][3]}
 
 
-Замінити кваліфікаційні документи
-	[Tags]  qualification
-	No Operation
-
-
-Перевірити відображення детальної інформації про документи після змін
-	[Tags]  qualification
-	No Operation
+#Замінити кваліфікаційні документи
+#	[Tags]  qualification
+#	No Operation
+#
+#
+#Перевірити відображення детальної інформації про документи після змін
+#	[Tags]  qualification
+#	No Operation
 
 
 Кваліфікація переможця аукціону
