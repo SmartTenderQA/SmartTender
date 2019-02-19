@@ -12,3 +12,12 @@
 	Click Element  //*[contains(@title, 'Змінити групу: ')]
 	Дочекатися відображення елемента на сторінці  //*[@class="dx-vam" and text()="${text}"]  5
 	Click Element  //*[@class="dx-vam" and text()="${text}"]
+
+
+Змінити мову (webclient)
+    [Arguments]  ${lang}
+    Click Element  //*[@data-name="MAINMENU__CHANGELANG"]
+    Дочекатись закінчення загрузки сторінки(webclient)
+    elements.Дочекатися відображення елемента на сторінці  //span[text()="${lang}"]
+    Click Element  //span[text()="${lang}"]
+    Дочекатись закінчення загрузки сторінки(webclient)

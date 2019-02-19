@@ -63,7 +63,8 @@ Preconditions
 
 
 Спробувати сформувати рахунок без суми
-    Run Keyword And Ignore Error  Натиснути сформувати рахунок
+	${create invoice btn}  Set Variable  //*[@class="ivu-card-body"]//button
+	Click Element  (${create invoice btn})[last()]
     Дочекатись сповіщення з текстом  Заповніть будь-ласка вірно усі необхідні поля
 
 
@@ -84,7 +85,8 @@ Preconditions
 Перевірити email рахунок-фактуру
 	[Arguments]  ${amount}
 	Розпочати роботу з Gmail  ${user}
-	Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
+	email.Дочекатися отримання листа на пошту  10m  SmartTender - Рахунок за Надання послуг
+	Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
 	Перевірити вкладений файл за назвою  ${amount}  Рахунок
 
 
