@@ -33,7 +33,7 @@ If skipped create tender
 
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  ${tender_owner}
-	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
+	desktop.Перейти у розділ (webclient)  Рамкові угоди(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
 
 
@@ -51,7 +51,7 @@ If skipped create tender
 Провести кваліфікацію та визначити переможців
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${tender_owner}
-	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
+	desktop.Перейти у розділ (webclient)  Рамкові угоди(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     main_page.Дочекатись стадії закупівлі  Квалификация
     qualification.Визнати всіх учасників переможцями
@@ -67,7 +67,7 @@ If skipped create tender
 Заповнити ціни за одиницю номенклатури по кожному переможцю
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${tender_owner}
-	desktop.Перейти у розділ (webclient)  Рамочные соглашения(тестовые)
+	desktop.Перейти у розділ (webclient)  Рамкові угоди(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     qualification.Заповнити ціни за одиницю номенклатури для всіх переможців
 
