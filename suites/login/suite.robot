@@ -46,7 +46,7 @@ ${registration link prod}					https://smarttender.biz/reestratsiya/
 *** Keywords ***
 Precondition
 	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${env}  prod
-	...  ELSE  Set Global Variable  ${env}  prod
+	...  ELSE  Set Global Variable  ${env}  test
 	Run Keyword If  'pre_prod' == '${where}'  Set Global Variable  ${IP}  iis
 	Run Keyword  Open Browser In Grid  ${env}_viewer
 
