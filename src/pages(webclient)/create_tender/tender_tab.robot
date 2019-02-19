@@ -244,7 +244,7 @@ Resource        create_tender_keywords.robot
 
 Встановити чекбокс "Мультилоти"
     ${selector}  Set Variable  //*[@data-name="ISMULTYLOT"]
-    Click Element  ${selector}
+    Wait Until Keyword Succeeds  5  .5  Click Element  ${selector}
     Sleep  1
     ${status}  Run Keyword And Return Status
     ...  Element Should Be Visible  ${selector}//span[contains(@class,"Checked")]
@@ -260,3 +260,9 @@ Resource        create_tender_keywords.robot
     Click Element  ${selector}
     Wait Until Element Is Visible  ${type selector}
     Click Element  ${type selector}
+
+
+Заповнити "Вид предмету закупівлі"
+    [Arguments]  ${value}
+    ${selector}  set variable  //*[@data-name='IDCATGROUP']//input[@class]
+    Заповнити текстове поле  ${selector}  ${value}

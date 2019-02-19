@@ -3,8 +3,10 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 
 
 *** Keywords ***
-Створити тендер
+Створити аукціон
 	[Arguments]  ${auction_type}
+	cdb1_dgfAssets_step.Завантажити локатори
+
 	Run Keyword  Відкрити сторінку Аукціони ФГВ(${site})
 	Відкрити вікно створення тендеру
 
@@ -100,7 +102,7 @@ Library  ../../src/pages/sale/DGF/cdb1_dgfAssets_page/cdb1_dgfAssets_variables.p
 
 Заповнити "Загальна назва аукціону"
 	${title}  create_sentence  5
-	cdb1_dgfAssets_page.Заповнити title  ${title}
+	cdb1_dgfAssets_page.Заповнити title  [ТЕСТУВАННЯ] ${title}
 	Set To Dictionary  ${data}  title  [ТЕСТУВАННЯ] ${title}
 
 
