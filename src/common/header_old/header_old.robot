@@ -1,5 +1,6 @@
 *** Settings ***
 Resource  			keywords.robot
+Resource            user-menu/user-menu.robot
 
 *** Variables ***
 ${events}                           xpath=//*[@id="LoginDiv"]//a[2]
@@ -61,3 +62,10 @@ ${site map}                         css=a[href='/karta-saytu/']
 	[Arguments]  ${text}
 	${selector}  Set Variable  //*[@id='MenuList']//div[@class='dropdown']//li/a[contains(text(), '${text}')]
 	Click Element  ${selector}
+
+
+Розгорнути меню користувача
+    ${selector}  Set Variable  xpath=//i[@class="fa fa-user"]/parent::*
+    Click Element  ${selector}
+    Wait Until Page Contains Element  ${selector}[@aria-expanded = "true"]
+    Wait Until Element Is Visible  ${selector}/following-sibling::*[@class="dropdown-menu"]
