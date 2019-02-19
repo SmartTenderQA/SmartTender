@@ -451,10 +451,10 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 
 
 Накласти ЕЦП на позов
-  [Tags]  appeal  EDS
+  [Tags]  appeal  EDS not-critical
   #[Tags]  violation_elimination_report
   ${block}  Set Variable  //*[contains(text(),"${data_cdb['appeal']['description']}")]/ancestor::*[@class='ivu-timeline-item-content'][1]
-  Підписати ЕЦП ДАСУ  ${block}  2
+  Підписати ЕЦП ДАСУ  ${block}
 
 
 ################################################################
