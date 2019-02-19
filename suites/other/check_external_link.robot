@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Open Browser In Grid  ${user}
+Suite Setup  			Preconditions
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -31,3 +31,8 @@ Test Teardown  			Run Keywords
 	${link to tender}  Set Variable  ${start page}/publichni-zakupivli-prozorro/${id}
 	[Return]  ${link to tender}
 
+
+Precondition
+    Run Keyword If  '${where}' == 'test'  Set Global Variable  ${user}  user1
+	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${user}  prod_provider
+    Додати першого користувача  ${user}
