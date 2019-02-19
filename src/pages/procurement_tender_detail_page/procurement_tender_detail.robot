@@ -105,6 +105,7 @@ Variables       procurement_variables.py
 
 Розгорнути всі експандери
     ${selector down}  Set Variable  //*[contains(@class,"expander")]/i[contains(@class,"down")]
+    elements.Дочекатися відображення елемента на сторінці  ${selector down}  20
     ${count}  Get Element Count  ${selector down}
     Run Keyword If  ${count} != 0  Run Keywords
     ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
