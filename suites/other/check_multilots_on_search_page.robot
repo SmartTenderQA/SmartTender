@@ -1,9 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Run Keywords
-                ...  Open Browser In Grid  ${user}  AND
-                ...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender  AND
-                ...  old_search.Активувати вкладку Державних закупівель
+Suite Setup     Preconditions
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
 
@@ -122,3 +119,12 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
   #Дочекатись появи появи мультилоту або перейти до наступної сторінки
   ${mulilots_on_page}  Get Element Count  ${multilot}
   [Return]  ${mulilots_on_page}
+
+
+*** Keywords ***
+Preconditions
+    Run Keyword If  '${where}' == 'test'  Set Global Variable  ${user}  test_viewer
+	Run Keyword If  'prod' in '${where}'  Set Global Variable  ${user}  prod_viewer
+    Open Browser In Grid  ${user}
+    Натиснути на іконку з баннеру  Комерційні тендери SmartTender
+    old_search.Активувати вкладку Державних закупівель

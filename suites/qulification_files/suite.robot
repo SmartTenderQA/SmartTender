@@ -254,6 +254,7 @@ Precondition
     [Arguments]  ${name}  ${index}
     ${selector}  Set Variable  (//*[@data-qa="file-name"][text()="${name}"])[${index}]
     ${download locator}  Set Variable  ${selector}/ancestor::div[@class="ivu-poptip"]//*[@data-qa="file-download"]
+    elements.Дочекатися відображення елемента на сторінці  ${selector}  30
     Mouse Over  ${selector}
     Wait Until Element Is Visible  ${download locator}
     Click Element                  ${download locator}

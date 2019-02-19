@@ -4,7 +4,9 @@ Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
+...                                        Capture Page Screenshot  AND
+...                                        Log  ${data}  AND
+...                                        Log  ${cdb_data}
 
 
 #zapusk
@@ -218,14 +220,14 @@ If skipped create tender
 	${data['documents'][3]}
 
 
-Замінити кваліфікаційні документи
-	[Tags]  qualification
-	No Operation
-
-
-Перевірити відображення детальної інформації про документи після змін
-	[Tags]  qualification
-	No Operation
+#Замінити кваліфікаційні документи
+#	[Tags]  qualification
+#	No Operation
+#
+#
+#Перевірити відображення детальної інформації про документи після змін
+#	[Tags]  qualification
+#	No Operation
 
 
 Кваліфікація переможця аукціону
