@@ -81,7 +81,7 @@ Preconditions
 
 Почати пошук файлів у процедурах
 	[Arguments]  ${tenders_on_page}
-	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}
+	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}-1
 	\  Log Many  &{checks}
 	\  Wait Until Keyword Succeeds  20  .5  Розкрити тендер за номером  ${tender}
 	\  ${list of files}  Отримати список файлів у процедурі  ${tender}
