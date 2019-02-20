@@ -45,8 +45,9 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Налаштування підписки
-  [Tags]  your_account
+  [Tags]  your_account  -pre_prod
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  # отключено для pre_prod - при клике в личном кабинете кидает на smarttender.biz
   personal_account.Відкрити сторінку за назвою  subscription
   Перевірити блок запиту допомоги з налаштування підписки
   Перевірити блок Персональне запрошення організатора
@@ -62,7 +63,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 
 Юридична допомога
-  [Tags]  your_account  -ip  non-critical-test
+  [Tags]  your_account  -ip  non-critical-test  -pre_prod
   [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  legal_help
   [Teardown]  Run Keywords
@@ -595,12 +596,12 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  "${role}" == "tender_owner"  Bened
 	...  "${role}" == "provider"  user1
 	...  "${role}" == "ssp_tender_owner"  ssp_tender_owner
-	...  "${role}" == "test_viewer"  test_viewer
+	...  "${role}" == "viewer"  test_viewer
 	...  ELSE IF  'prod' in '${where}'  Set Variable If
 	...  "${role}" == "tender_owner"  fgv_prod_owner
 	...  "${role}" == "provider"  prod_provider
-	...  "${role}" == "prod_ssp_owner"  ssp_tender_owner
-	...  "${role}" == "test_viewer"  prod_viewer
+	...  "${role}" == "ssp_tender_owner"  prod_ssp_owner
+	...  "${role}" == "viewer"  prod_viewer
 	Set Global Variable  ${user}
 	Open Browser In Grid  ${user}  chrome  WIN10
 	Авторизуватися  ${user}
