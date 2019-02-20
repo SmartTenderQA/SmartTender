@@ -131,10 +131,10 @@ If skipped create tender
 
 
 Підписати організатором договір з переможцем
-    [Tags]  non-critical
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
+    Sleep  9m
     qualification.Підписати договір з переможцем  2
 
 
