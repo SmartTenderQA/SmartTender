@@ -1,5 +1,5 @@
 *** Variables ***
-${EDS btn}                 '${block}'[1]//div[@class="ivu-row"]//button
+${EDS btn}                 ${block}[1]//div[@class="ivu-row"]//button
 ${EDS_block}    		   //*[@data-qa="modal-eds"]
 ${EDS validation message}  //*[@class="ivu-notice-title"]
 ${EDS submit btn}          //*[@data-qa="eds-submit-sign"]
