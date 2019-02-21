@@ -130,13 +130,15 @@ Library		service.py
 ${tab_keybutton}					\\13
 ${IP}
 ${where}
-${headless}                         headless
 
 ${browser}							chrome
 ${platform}							ANY
+${hub}                              http://autotest.it.ua:4444/wd/hub
+${headless}                         ${False}
+
 ${test}                             https://test.smarttender.biz/
 ${prod}                             https://smarttender.biz/
-${hub}                              http://autotest.it.ua:4444/wd/hub
+
 
 ${swt test}							10  # час очікування прогрузки сторінок в секундах для теста
 ${swt prod}							5	# час очікування прогрузки сторінок в секундах для проду
@@ -165,10 +167,34 @@ Open Browser In Grid
 	Set Global Variable  ${start_page}  ${${site}}
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
-	${headless}  Set Variable If  '${browser}' == 'chrome'  ${headless}  ${EMPTY}
-	Open Browser  ${start_page}  ${headless}${browser}  ${user}  ${hub}  platformName:${platform}
-	Run Keyword If  '${hub.lower()}' != 'none'  Отримати та залогувати data_session
+    ${options}  Run Keyword  Сформувати налаштування запуску браузера ${browser.lower()}
+    Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
+    ...  Create Webdriver  Remote  alias=${user}  command_executor=${hub}  desired_capabilities=${options}  AND
+    ...  Отримати та залогувати data_session  ELSE
+    ...  Create Webdriver  ${browse}  desired_capabilities=${options}
+    Go To  ${start_page}
     Set Window Size  1280  1024
+
+
+Сформувати налаштування запуску браузера firefox
+    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].${browser[0].upper()}${browser[1:].lower()}Options()  sys, selenium.webdriver
+    Run Keyword If  ${headless} == ${True}  Run Keywords
+    ...  Call Method    ${class_options}    add_argument    headless  AND
+    ...  Call Method    ${class_options}    add_argument    disable-gpu
+    Run Keyword If  '${platform}' != 'ANY'
+    ...  Call Method    ${class_options}    set_preference  platform  ${platform}
+    [Return]  ${class_options.to_capabilities()}
+
+
+Сформувати налаштування запуску браузера chrome
+    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].${browser[0].upper()}${browser[1:].lower()}Options()  sys, selenium.webdriver
+    Run Keyword If  ${headless} == ${True}  Run Keywords
+    ...  Call Method    ${class_options}    add_argument    headless  AND
+    ...  Call Method    ${class_options}    add_argument    disable-gpu
+    Run Keyword If  '${platform}' != 'ANY'
+    ...  Call Method    ${class_options}    set_capability  platform  ${platform}
+    [Return]  ${class_options.to_capabilities()}
+
 
 
 Встановити фіксований час очікування прогрузки сторінок
