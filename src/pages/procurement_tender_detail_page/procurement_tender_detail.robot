@@ -105,7 +105,7 @@ Variables       procurement_variables.py
 
 Розгорнути всі експандери
     ${selector down}  Set Variable  //*[contains(@class,"expander")]/i[contains(@class,"down")]
-    elements.Дочекатися відображення елемента на сторінці  ${selector down}  20
+    Run Keyword And Ignore Error  elements.Дочекатися відображення елемента на сторінці  ${selector down}  20
     ${count}  Get Element Count  ${selector down}
     Run Keyword If  ${count} != 0  Run Keywords
     ...  Repeat Keyword  ${count} times  Click Element  ${selector down}  AND
@@ -139,6 +139,18 @@ Variables       procurement_variables.py
     Click Element  ${selector}
     Wait Until Keyword Succeeds  10  .5  Element Text Should Be
     ...  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]  Причина відміни
+
+
+Скачати файл на сторінці
+    [Arguments]  ${file}
+    ${selector}  Set Variable  //*[@data-qa="file-name"][text()="${file}"]
+    Mouse Over  ${selector}/preceding-sibling::i
+    Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]
+    ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
+    ${link}  Поправити лінку для IP  ${link}
+    ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
+    download_file_to_my_path  ${link}  ${OUTPUTDIR}/${file}
+    Sleep  3
 
 
 Порівняти створений документ з документом в ЦБД procurement
