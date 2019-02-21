@@ -4,7 +4,7 @@ Resource  		../../common/loading/loading.robot
 
 
 *** Variables ***
-${cancel. offers confirm button}    ${block}[last()]//div[@class="ivu-poptip-footer"]/button[2]
+${cancel. offers confirm button}    '${block}'[last()]//div[@class="ivu-poptip-footer"]/button[2]
 
 ${succeed}                          Пропозицію прийнято
 ${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
