@@ -5,7 +5,7 @@
   	create_tender.Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
   	Run Keyword If  '${site}' == 'prod'  Run Keywords
   	...  test_open_eu.Заповнити contact для tender  AND
-  	...  test_open_eu.Заповнити ПІБ організації  AND
+  	#...  test_open_eu.Заповнити ПІБ організації  AND
     ...  tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_eu.Заповнити amount для tender
   	test_open_eu.Заповнити minimalStep для tender
@@ -26,7 +26,7 @@
     tender_tab.Встановити чекбокс "Мультилоти"
    	Run Keyword If  '${site}' == 'prod'  Run Keywords
   	...  test_open_eu.Заповнити contact для tender  AND
-  	...  test_open_eu.Заповнити ПІБ організації  AND
+  	#...  test_open_eu.Заповнити ПІБ організації  AND
   	...  tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_eu.Заповнити amount для lot
   	test_open_eu.Заповнити minimalStep для lot

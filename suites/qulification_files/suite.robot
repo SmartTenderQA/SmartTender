@@ -88,7 +88,7 @@ If skipped create tender
     procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
     procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
     #  Перевірити неможливість перегляду конфіденційного документу
-    Run Keyword And Expect Error  *not visible
+    Run Keyword And Expect Error  *not visible*
     ...  procurement_tender_detail.Скачати файл на сторінці  ${data['qualification_documents'][0]['title']}
     #  Порівняти причину конфіденційності в ЦБД
     Should Be Equal  ${private reason}  ${cdb['bids'][0]['documents'][0]['confidentialityRationale']}

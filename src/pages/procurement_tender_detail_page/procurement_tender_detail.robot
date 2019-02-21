@@ -135,7 +135,7 @@ Variables       procurement_variables.py
 
 Відкрити вікно "Причина відміни" детальніше
     ${selector}  Set Variable  //*[@data-qa="show-reason-button"]
-    elements.Дочекатися відображення елемента на сторінці  ${selector}  10
+    elements.Дочекатися відображення елемента на сторінці  ${selector}  3
     Click Element  ${selector}
     Wait Until Keyword Succeeds  10  .5  Element Text Should Be
     ...  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]  Причина відміни
