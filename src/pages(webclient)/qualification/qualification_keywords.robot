@@ -94,7 +94,7 @@
     ${check}  Set Variable  //td[text()="${text}"]/preceding-sibling::td/img
     Wait Until Element Is Visible  ${check}
     Click Element  ${check}
-    Wait Until Page Contains Element  ${check}[contains(@src,"BoxChecked")]
+    Wait Until Page Contains Element  ${check}\[contains(@src,"BoxChecked")]
 
 
 Вибрати переможця за номером

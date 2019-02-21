@@ -14,7 +14,7 @@ ${checkbox2}                        //*[@id="SelfQualified"]//input
 ${button add file}                  //input[@type="file"][1]
 ${file loading}                     css=div.loader
 
-${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel"]/button
+${cancellation offers button}       ${block}\[last()]//div[@class="ivu-poptip-rel"]/button
 
 
 
@@ -60,9 +60,9 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
 
 Розгорнути лот
 	[Arguments]  ${lot}
-	${status}  Run Keyword And Return Status  Page Should Contain Element  ${block}[${lot}+1]//button/i
-	${class}  Run Keyword If  ${status} == ${True}  Get Element Attribute  ${block}[${lot}+1]//button/i  class
-	Run Keyword If  "checkmark" not in "${class}" and ${status} == ${True}  Click Element  ${block}[${lot}+1]//button
+	${status}  Run Keyword And Return Status  Page Should Contain Element  ${block}\[${lot}+1]//button/i
+	${class}  Run Keyword If  ${status} == ${True}  Get Element Attribute  ${block}\[${lot}+1]//button/i  class
+	Run Keyword If  "checkmark" not in "${class}" and ${status} == ${True}  Click Element  ${block}\[${lot}+1]//button
 
 
 Розгорнути усі лоти
@@ -75,7 +75,7 @@ ${cancellation offers button}       ${block}[last()]//div[@class="ivu-poptip-rel
   ...  fill bid field with max available price
   [Arguments]  ${lot number}  ${coefficient}
   ${block number}  Set Variable  ${lot number}+1
-  ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
+  ${a}=  Get Text  ${block}\[${block number}]//div[@class='amount lead'][1]
   ${a}=  get_number  ${a}
   ${amount}=  Evaluate  int(${a}*${coefficient})
   ${amount}  Run Keyword If  ${amount} == 0  Set Variable  1  ELSE

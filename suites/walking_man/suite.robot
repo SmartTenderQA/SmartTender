@@ -709,7 +709,7 @@ Test Postcondition
 
 Зайти на сторінку клієнтів
 	Mouse Over  ${button pro-kompaniyu}
-	Click Element  ${dropdown navigation}[href='/nashi-klienty/']
+	Click Element  ${dropdown navigation}\[href='/nashi-klienty/']
 	Location Should Contain  /nashi-klienty/
 
 
@@ -802,7 +802,7 @@ Test Postcondition
 Перевірити тип процедури для малої приватизації
 	[Arguments]  ${type}
 	${breadcrumbs}  Set Variable  //*[contains(@class, "breadcrumbs")]//li
-	${is}  Get Text  ${breadcrumbs}[last()]
+	${is}  Get Text  ${breadcrumbs}\[last()]
 	Should Contain  ${is}  ${type}
 
 
@@ -944,7 +944,7 @@ create_e-mail
 
 
 Розгорнути перший лот
-  Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}[2]//button
+  Run Keyword If  '${multiple status}' == 'multiple'  Click Element  ${block}\[2]//button
 
 
 Додати файл до openeu
