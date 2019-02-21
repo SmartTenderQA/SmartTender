@@ -85,7 +85,17 @@ Preconditions
 
 
 Видалити змінені елементи зі словників
+    Видалити інформацію про аукціон в мультилотах  ${cdb['lots']}
+    Видалити інформацію про аукціон в мультилотах  ${cdb old['lots']}
     Remove From Dictionary  ${cdb['enquiryPeriod']}  invalidationDate
     Remove From Dictionary  ${cdb old['enquiryPeriod']}  invalidationDate
-    Remove From Dictionary  ${cdb old}  title  dateModified
+    Remove From Dictionary  ${cdb old}  title  dateModified  auctionPeriod
     Remove From Dictionary  ${cdb}  title  dateModified  auctionPeriod
+
+
+Видалити інформацію про аукціон в мультилотах
+    [Arguments]  ${tender json}
+    ${list of lots}  Set Variable  ${tender json}
+    :FOR  ${lot}  IN  @{list of lots}
+    \  Remove From Dictionary  ${lot}  auctionPeriod
+    Set Global Variable  ${tender json}  ${list of lots}
