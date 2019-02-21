@@ -44,9 +44,9 @@
 	${row}  Set Variable  ${tab}//tr[contains(@class, 'Row')]
 	${n}  Get Element Count  ${row}
 	:FOR  ${i}  IN RANGE  1  ${n}+1
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'checkBoxUnchecked')]
+	\  Click Element  ${row}\[${i}]//img[contains(@src, 'checkBoxUnchecked')]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'checkBoxUnchecked')][last()]
+	\  Click Element  ${row}\[${i}]//img[contains(@src, 'checkBoxUnchecked')][last()]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Підтвердити заявку для ФГВ  ${i}  ${row}
 
@@ -54,11 +54,11 @@
 Підтвердити заявку для ФГВ
     [Arguments]  ${i}  ${row}
     Sleep  30
-	Click Element  ${row}[${i}]//img[contains(@src, 'qe0102')]
+	Click Element  ${row}\[${i}]//img[contains(@src, 'qe0102')]
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  //*[@id='pcModalMode_PW-1' and contains(., 'Решение')]//li[contains(., 'Принять')]
 	Дочекатись закінчення загрузки сторінки(webclient)
-	${status}  Run Keyword And Return Status  Element Should Contain  ${row}[${i}]//td[2]  Принята
+	${status}  Run Keyword And Return Status  Element Should Contain  ${row}\[${i}]//td[2]  Принята
 	Run Keyword If  ${status} == ${false}  Закрити валідаційне вікно  Тендер, на який ви хочете подати пропозицію не існує! Перевірте правильність посилання  ОК
 	Run Keyword If  ${status} == ${false}  Підтвердити заявку для ФГВ  ${i}  ${row}
 
@@ -68,14 +68,14 @@
 	${row}  Set Variable  ${tab}//tr[contains(@class, 'Row')]
 	${n}  Get Element Count  ${row}
 	:FOR  ${i}  IN RANGE  1  ${n}+1
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'checkBoxUnchecked')]
+	\  Click Element  ${row}\[${i}]//img[contains(@src, 'checkBoxUnchecked')]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'checkBoxUnchecked')][last()]
+	\  Click Element  ${row}\[${i}]//img[contains(@src, 'checkBoxUnchecked')][last()]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Sleep  180
-	\  Click Element  ${row}[${i}]//img[contains(@src, 'qe0102')]
+	\  Click Element  ${row}\[${i}]//img[contains(@src, 'qe0102')]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Click Element  //*[@id='pcModalMode_PW-1' and contains(., 'Решение')]//li[contains(., 'Принять')]
 	\  Дочекатись закінчення загрузки сторінки(webclient)
 	\  Закрити валідаційне вікно  Внимание! Гарантийного взноса недостаточно для подачи предложения!  Так
-	\  Element Should Contain  ${row}[${i}]//td[2]  Принята
+	\  Element Should Contain  ${row}\[${i}]//td[2]  Принята

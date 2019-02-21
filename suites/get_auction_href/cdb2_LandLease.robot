@@ -301,7 +301,7 @@ Precondition
   ...  fill bid field with max available price
   [Arguments]  ${lot number}  ${coefficient}
   ${block number}  Set Variable  ${lot number}+1
-  ${a}=  Get Text  ${block}[${block number}]//div[@class='amount lead'][1]
+  ${a}=  Get Text  ${block}\[${block number}]//div[@class='amount lead'][1]
   ${a}=  get_number  ${a}
   ${amount}=  Evaluate  int(${a}*${coefficient})
   ${field number}=  Evaluate  ${lot number}-1

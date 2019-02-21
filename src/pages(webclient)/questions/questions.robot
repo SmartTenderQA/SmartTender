@@ -30,7 +30,7 @@
     [Arguments]  ${title}
     ${question row}  Set Variable  //td[.="${title}"]
     Click Element  ${question row}
-    Wait Until Page Contains Element  ${question row}[@class="cellselected"]  2
+    Wait Until Page Contains Element  ${question row}\[@class="cellselected"]  2
 
 
 Внести текст відповіді
@@ -42,7 +42,7 @@
 Поставити чекбокс "Зафіксувати відповідь"
     ${check}  Set Variable  (//*[.="Зафіксувати відповідь"]/preceding-sibling::td//span)[1]
     Click Element  ${check}
-    Wait Until Page Contains Element  ${check}[contains(@class, "Checked")]
+    Wait Until Page Contains Element  ${check}\[contains(@class, "Checked")]
 
 
 Додати файл до відповіді на запитання

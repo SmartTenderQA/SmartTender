@@ -69,9 +69,9 @@ Resource    	keywords.robot
   ...  Set Variable  2
   ...  ELSE IF  "${text}" == "RIALTO.Закупівлі" or "${text}" == "Аукціони на продаж активів держпідприємств"
   ...  Set Variable  3
-  Click Element  ${selector}[${n}]
+  Click Element  ${selector}\[${n}]
   ${status}  Run Keyword And Return Status
-  ...  Page Should Contain Element  ${selector}[${n}][contains(@class, "active")]
+  ...  Page Should Contain Element  ${selector}\[${n}][contains(@class, "active")]
   Перевірити наявність всіх елементів в блоці категорії
   Run Keyword If  "${status}" != "True"  Вибрати вкладку для підписки та перевірити наявність всіх елементів в блоці категорії  ${text}
 
@@ -83,7 +83,7 @@ Resource    	keywords.robot
   Set Global Variable  ${tender type cb}  //*[contains(@class, "ivu-row-flex-space-between")]//label[${n}]
   Click Element  ${tender type cb}
   ${status}  Run Keyword And Return Status
-  ...  Page Should Contain Element  ${tender type cb}[contains(@class, "checked")]
+  ...  Page Should Contain Element  ${tender type cb}\[contains(@class, "checked")]
 
 
 Виконати пошук за реквізитами організатора

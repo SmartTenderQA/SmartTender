@@ -105,8 +105,8 @@
     Click element  ${type input}
     Wait Until Element Is Visible  ${clear checkbox}
     Click Element  ${clear checkbox}
-    Wait Until Element Is Visible  ${clear checkbox}[@checkedcombo='false']
+    Wait Until Element Is Visible  ${clear checkbox}\[@checkedcombo='false']
     Click Element  ${type checkbox}
-    Wait Until Element Is Visible  ${type checkbox}[@checkedcombo='true']
+    Wait Until Element Is Visible  ${type checkbox}\[@checkedcombo='true']
     Press Key  ${type input}  \\13
     Дочекатись закінчення загрузки сторінки(webclient)

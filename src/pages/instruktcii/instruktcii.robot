@@ -13,7 +13,7 @@ ${instruktcii item}						//*[@class="ivu-row"]//div//*[contains(@class, 'item')]
 	...  '${text}' == 'Інструкції загального напрямку'  Set Variable  2				ELSE IF
 	...  '${text}' == 'Інструкції для організатора'		Set Variable  3				ELSE IF
 	...  '${text}' == 'Інструкції для учасника'			Set Variable  4
-	Click Element  ${instruktcii from dropdown menu}[${n}]
+	Click Element  ${instruktcii from dropdown menu}\[${n}]
 	${status}  Run Keyword And Return Status  Element Should Contain  ${instruktcii field}  ${text}
     Run Keyword If  '${status}' == 'False'  Вибрати з видаючого списку  ${text}
 
