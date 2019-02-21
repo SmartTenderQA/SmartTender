@@ -130,6 +130,7 @@ Library		service.py
 ${tab_keybutton}					\\13
 ${IP}
 ${where}
+${headless}                         headless
 
 ${browser}							chrome
 ${platform}							ANY
@@ -164,9 +165,9 @@ Open Browser In Grid
 	Set Global Variable  ${start_page}  ${${site}}
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
-	Open Browser  ${start_page}  ${browser}  ${user}  ${hub}  platformName:${platform}
-	Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
-	...  Отримати та залогувати data_session
+	${headless}  Set Variable If  '${browser}' == 'chrome'  ${headless}  ${EMPTY}
+	Open Browser  ${start_page}  ${headless}${browser}  ${user}  ${hub}  platformName:${platform}
+	Run Keyword If  '${hub.lower()}' != 'none'  Отримати та залогувати data_session
     Set Window Size  1280  1024
 
 
