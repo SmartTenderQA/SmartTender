@@ -7,6 +7,7 @@ ${kontakty block}						//div[@itemscope='itemscope']/div[contains(@class, 'ivu-c
 Зайти на сторінку povidomlenya
 	Click Element  ${button messages}
 	Location Should Contain  /povidomlenya/
+	loading.Дочекатись закінчення загрузки сторінки(circle)
 	${header text}  Set Variable  //h1
 	${should header}  Set Variable  Повідомлення
 	${is header}  Get Text  ${header text}
@@ -14,7 +15,7 @@ ${kontakty block}						//div[@itemscope='itemscope']/div[contains(@class, 'ivu-c
 
 
 Перевірити відсутність дзвіночка(povidomlenya)
-	Run Keyword And Expect Error  Element with locator '${button messages}' not found.  Зайти на сторінку povidomlenya
+	Run Keyword And Expect Error  *${button messages}* not found.  Зайти на сторінку povidomlenya
 
 
 Порахувати кількість контактів
