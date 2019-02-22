@@ -22,7 +22,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 #robot --consolecolors on -L TRACE:INFO -d test_output -i $where -v where:$where suites/mirror/suite.robot
 *** Test Cases ***
 Відкрити стартову сторінку
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	${start_page}  Set Variable If
 	...  '${where}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
 	...  '${where}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
