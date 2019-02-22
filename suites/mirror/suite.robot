@@ -26,9 +26,11 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	${start_page}  Set Variable If
 	...  '${where}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
 	...  '${where}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
-	...  '${where}' == 'ukroboronprom'        https://smarttender.biz/TenderMirror/?mirrorId=5804
+	...  '${where}' == 'ukroboronprom' or '${where}' == 'pre_prod'       https://smarttender.biz/TenderMirror/?mirrorId=5804
 	...  '${where}' == 'uspa'                 http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
 	Set Global Variable  ${start_page}
+	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
+	Змінити стартову сторінку для IP
 	Open Browser  ${start_page}  ${browser}  mirror  ${hub}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
