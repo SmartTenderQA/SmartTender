@@ -31,7 +31,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	Set Global Variable  ${start_page}
 	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
 	Змінити стартову сторінку для IP
-	Open Browser  ${start_page}  ${browser}  mirror  ${hub}
+	Open Browser In Grid  ${where}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
 	Дочекатись закінчення загрузки сторінки(skeleton)
