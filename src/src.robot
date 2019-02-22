@@ -132,6 +132,8 @@ ${IP}
 ${where}
 
 ${browser}							chrome
+${browser_version}
+${environment}
 ${platform}							ANY
 ${hub}                              http://autotest.it.ua:4444/wd/hub
 ${headless}                         ${False}
@@ -159,7 +161,7 @@ ${torgy count tab}                   li:nth-child
 
 *** Keywords ***
 Open Browser In Grid
-	[Arguments]  ${user}=${user}  ${browser}=${browser}  ${platform}=${platform}
+	[Arguments]  ${user}=${user}
 	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
 	clear_test_output
 	${site}  Отримати дані користувача по полю  ${user}  site
@@ -168,7 +170,6 @@ Open Browser In Grid
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
     Run Keyword  Відкрити браузер ${browser.lower()}  ${user}
-    Go To  ${start_page}
     Set Window Size  1280  1024
 
 
@@ -176,39 +177,49 @@ Open Browser In Grid
     [Arguments]  ${alias}
     ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys, selenium.webdriver
     Run Keyword If  ${headless} == ${True}  Run Keywords
-    ...  Call Method    ${class_options}    add_argument    headless  AND
+    ...  Call Method    ${class_options}    set_headless    ${True}  AND
     ...  Call Method    ${class_options}    add_argument    disable-gpu
-    Run Keyword If  '${platform}' != 'ANY'
-    ...  Call Method    ${class_options}    set_preference  platform  ${platform}
+    Run Keyword If  '${browser_version}' != ''
+    ...  Call Method    ${class_options}    set_capability  version  ${browser_version}
+
     ${options}  Call Method  ${class_options}  to_capabilities
+
     Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
     ...  Create Webdriver  Remote  alias=${alias}  command_executor=${hub}  desired_capabilities=${options}  AND
     ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  Firefox  alias=${alias}  desired_capabilities=${options}
+    ...  Create Webdriver  Firefox  alias=${alias}
+    Go To  ${start_page}
 
 
 Відкрити браузер chrome
     [Arguments]  ${alias}
     ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
     Run Keyword If  ${headless} == ${True}  Run Keywords
-    ...  Call Method    ${class_options}    add_argument    headless  AND
+    ...  Call Method    ${class_options}    set_headless    ${True}  AND
     ...  Call Method    ${class_options}    add_argument    disable-gpu
+
+    Run Keyword If  '${browser_version}' != ''
+    ...  Call Method    ${class_options}    set_capability  version  ${browser_version}
+
     Run Keyword If  '${platform}' != 'ANY'
     ...  Call Method    ${class_options}    set_capability  platform  ${platform}
+
     ${options}  Call Method  ${class_options}  to_capabilities
+
     Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
     ...  Create Webdriver  Remote  alias=${alias}  command_executor=${hub}  desired_capabilities=${options}  AND
     ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  Chrome  alias=${alias}  desired_capabilities=${options}
+    ...  Create Webdriver  Chrome  alias=${alias}
+    Go To  ${start_page}
 
 
 Відкрити браузер edge
     [Arguments]  ${alias}
-    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].DesiredCapabilities.EDGE  sys, selenium.webdriver
+#    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].DesiredCapabilities.EDGE  sys, selenium.webdriver
     Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
-    ...  Create Webdriver  Remote  alias=${alias}  command_executor=${hub}  AND
+    ...  Open Browser  ${start_page}  edge  alias=${alias}  ${hub}  AND
     ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  Edge  alias=${alias}
+    ...  Open Browser  ${start_page}  edge  alias=${alias}
 
 
 Встановити фіксований час очікування прогрузки сторінок

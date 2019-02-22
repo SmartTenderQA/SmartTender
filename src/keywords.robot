@@ -45,5 +45,7 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	${data}  Set Variable  ${data.json()}
 	Log  ${webdriver}
 	Log  ${webdriver.__dict__}
+	Log To Console  ${webdriver.__dict__['capabilities']}
 	Log  ${webdriver.__dict__['capabilities']}
+	Log To Console  ${data}
 	Log  ${data}

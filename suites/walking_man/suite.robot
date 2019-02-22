@@ -603,7 +603,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	...  "${role}" == "ssp_tender_owner"  prod_ssp_owner
 	...  "${role}" == "viewer"  prod_viewer
 	Set Global Variable  ${user}
-	Open Browser In Grid  ${user}  chrome  WIN10
+	Open Browser In Grid  ${user}
 	Авторизуватися  ${user}
 	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
 
