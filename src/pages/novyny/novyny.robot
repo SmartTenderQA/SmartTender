@@ -1,13 +1,13 @@
 *** Variables ***
-${novyny title}					css=[class="row content"] h1
+${novyny title}					//h1[@class="text-center"]
 ${news block}					//*[contains(@class, 'ivu-row-undefined-space-between')]
 ${news search input}			css=.ivu-card-body input
-${news search button}			css=.ivu-card-body button
+${news search button}			//div[contains(@class,"search-btn")]
 
 
 *** Keywords ***
 Перевірити заголовок сторінки з новинами
-	${should}  Set Variable  Новини
+	${should}  Set Variable  Актуальні новини про тендери в Україні вiд SmartTender
 	${is}  Get Text  ${novyny title}
 	Should Be Equal  ${is}  ${should}
 

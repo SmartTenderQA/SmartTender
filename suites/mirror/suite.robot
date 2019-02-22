@@ -39,13 +39,13 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Переконатися в наявності тендерів
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	${count}  Отримати кількість тендерів на сторінці
 	Run Keyword if  '${count}' == '0'  Fail  Oops! На сторінці немає жодного тендера
 
 
 Перевірити наявність компонентів в панелі пошуку
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Page Should Contain Element  ${search field}
 	Page Should Contain Element  ${search button}
 	Run Keyword If  '${where}' != 'ukroboronprom'
@@ -55,7 +55,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Виконати негативний пошук
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Input text  ${search field}  Тендернезнайдено.Тадам!
 	Click Element  ${search button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -119,7 +119,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Перевірити роботу фільтра вид торгів
-	[Tags]  ukroboronprom
+	[Tags]  ukroboronprom  pre_prod
 	[Template]  Перевірити тендер
 	Відкриті торги. Аукціон
 	Відкриті торги. Аналіз пропозицій
