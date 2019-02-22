@@ -171,7 +171,7 @@ Open Browser In Grid
     Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
     ...  Create Webdriver  Remote  alias=${user}  command_executor=${hub}  desired_capabilities=${options}  AND
     ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  ${browse}  desired_capabilities=${options}
+    ...  Create Webdriver  ${browser}  desired_capabilities=${options}
     Go To  ${start_page}
     Set Window Size  1280  1024
 
