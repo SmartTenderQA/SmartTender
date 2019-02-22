@@ -58,6 +58,14 @@ Test Teardown  			Run Keywords
     Go to  ${data['tender_href']}
     Set Global Variable  ${cdb old}  ${cdb}
     Отримати дані з cdb та зберегти їх у файл  cdb_edit
+
+Видалити зайві дані про мультилоти
+    [Tags]  open_eu
+    Видалити інформацію про аукціон в мультилотах  ${cdb['lots']}
+    Видалити інформацію про аукціон в мультилотах  ${cdb old['lots']}
+
+
+Перевірити дані в ЦБД
     Перевірити що в ЦБД було змінено тільки назву та дату модифікації
 
 
@@ -85,8 +93,6 @@ Preconditions
 
 
 Видалити змінені елементи зі словників
-    Видалити інформацію про аукціон в мультилотах  ${cdb['lots']}
-    Видалити інформацію про аукціон в мультилотах  ${cdb old['lots']}
     Remove From Dictionary  ${cdb['enquiryPeriod']}  invalidationDate
     Remove From Dictionary  ${cdb old['enquiryPeriod']}  invalidationDate
     Remove From Dictionary  ${cdb old}  title  dateModified  auctionPeriod
