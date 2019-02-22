@@ -42,23 +42,21 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері першим учасником
-    [Tags]  proposal
+    [Tags]  proposal  privat
     Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Sleep  3m
     Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
+	make_proposal.Заповнити поле з ціною  1  1
     ${file name}  ${hash}  actions.Додати doc файл
     #  Позначаемо файл як конфіденційний та зберігаємо інфу про нього
-    ${private reason}  Позначити файл як конфіденційний  ${file name}
-    actions.Створити словник  private_doc
-    Set To Dictionary  ${private_doc}  title   ${file name}
-    Set To Dictionary  ${private_doc}  hash    md5:${hash}
-    Set To Dictionary  ${private_doc}  reason  ${private reason}
+    ${private reason}  make_proposal.Позначити файл як конфіденційний  ${file name}
+    Set Global Variable  ${private reason}
+    Зберегти дані файлу у словник docs_data  bids  ${file name}  ${hash}
     #################################################################
 	Run Keyword And Ignore Error  Підтвердити відповідність
-	Подати пропозицію
+	make_proposal.Подати пропозицію
 	EDS.Підписати ЕЦП
     Go Back
     Додати додатковий документ до пропозиції
@@ -83,6 +81,19 @@ If skipped create tender
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
+Перевірити наявність конфіденційного документу на сторінці та в ЦБД
+    [Tags]  privat
+    Отримати дані з cdb та зберегти їх у файл
+    procurement_tender_detail.Розгорнути всі експандери
+    procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
+    procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
+    #  Перевірити неможливість перегляду конфіденційного документу
+    Run Keyword And Expect Error  *not visible*
+    ...  procurement_tender_detail.Скачати файл на сторінці  ${data['qualification_documents'][0]['title']}
+    #  Порівняти причину конфіденційності в ЦБД
+    Should Be Equal  ${private reason}  ${cdb['bids'][0]['documents'][0]['confidentialityRationale']}
+
+
 Відкрити браузер під роллю організатора та знайти тендер
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
@@ -99,6 +110,11 @@ If skipped create tender
 	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
+
+
+Перевірити відображення причини конфіденційності документу
+    #procurement_tender_detail.Розгорнути всі експандери
+    No Operation
 
 
 Перевірити наявність ЕЦП finance document в поданих пропозиціях
@@ -253,7 +269,7 @@ Precondition
 Додати додатковий документ до пропозиції
     Перевірити кнопку подачі пропозиції
     actions.Додати doc файл
-    Подати пропозицію
+    make_proposal.Подати пропозицію
 	EDS.Підписати ЕЦП
     Go Back
 
@@ -297,12 +313,3 @@ Precondition
 	Should Be Equal  ${view dateModified}  ${cdb_doc['dateModified']}  Oops! Помилка з dateModified
 
 
-Позначити файл як конфіденційний
-    [Arguments]  ${name}
-	${doc block}  Set Variable  //*[contains(text(),"${name}")]/ancestor::div[@class="ivu-row"]
-    Click Element  ${doc block}//*[contains(@class,"ivu-switch")]
-    elements.Дочекатися відображення елемента на сторінці  ${doc block}//*[contains(@class,"switch-checked")]  3
-    #Вказати причину конфіденційності
-    ${private reason}  create_sentence
-    Input Text  ${doc block}//input[@placeholder]  ${private reason}
-    [Return]  ${private reason}

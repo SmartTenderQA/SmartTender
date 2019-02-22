@@ -112,6 +112,14 @@ ${cancellation offers button}       ${block}\[last()]//div[@class="ivu-poptip-re
 	[Return]  ${doc[1]}
 
 
-
+Позначити файл як конфіденційний
+    [Arguments]  ${name}
+	${doc block}  Set Variable  //*[contains(text(),"${name}")]/ancestor::div[@class="ivu-row"]
+    Click Element  ${doc block}//*[contains(@class,"ivu-switch")]
+    elements.Дочекатися відображення елемента на сторінці  ${doc block}//*[contains(@class,"switch-checked")]  3
+    #Вказати причину конфіденційності
+    ${private reason}  create_sentence
+    Input Text  ${doc block}//input[@placeholder]  ${private reason}
+    [Return]  ${private reason}
 
 
