@@ -57,7 +57,7 @@ def create_pdf_file():
     pdf_name = 'test_output/' + name + '.pdf'
     content = (create_sentence(50)).encode('utf8')
     pdf.set_font('Arial', 'B', 24)
-    pdf.cell(40, 10, content)
+    pdf.cell(40, 10, str(content))
     pdf.output(pdf_name, 'F')
     return pdf_name
 
