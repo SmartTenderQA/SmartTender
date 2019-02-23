@@ -136,7 +136,7 @@ ${browser_version}
 ${environment}
 ${platform}							ANY
 ${hub}                              http://autotest.it.ua:4444/wd/hub
-${headless}                         ${False}
+${headless}                         ${True}
 
 ${test}                             https://test.smarttender.biz/
 ${prod}                             https://smarttender.biz/
