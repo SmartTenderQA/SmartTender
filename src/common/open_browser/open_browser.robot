@@ -45,9 +45,9 @@
     [Arguments]  ${alias}
 #    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].DesiredCapabilities.EDGE  sys, selenium.webdriver
     Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
-    ...  Open Browser  ${start_page}  edge  alias=${alias}  ${hub}  AND
+    ...  Open Browser  ${start_page}  edge  ${alias}  ${hub}  AND
     ...  Отримати та залогувати data_session  ELSE
-    ...  Open Browser  ${start_page}  edge  alias=${alias}
+    ...  Open Browser  ${start_page}  edge  ${alias}
 
 
 Отримати та залогувати data_session
