@@ -1,5 +1,5 @@
 *** Variables ***
-${button_next}          //*[contains(@id, "Next")]
+${button_next}          //*[contains(@id, "Next")]|//*[contains(text(),'Далі')]
 ${field_login}          //input[@type="email"]
 ${field_password}       //input[@type="password"]
 
