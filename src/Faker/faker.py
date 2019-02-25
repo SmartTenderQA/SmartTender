@@ -3,9 +3,10 @@
 # ==============
 #      Main script file
 # ==============
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 
 import os
@@ -21,7 +22,7 @@ faker_data = locality + '/src/Faker/faker_data.json'
 
 
 def load_data_from_file(file_name):
-    with open(file_name) as f:
+    with open(file_name, encoding='utf-8') as f:
         data = json.load(f)
         return data
 
@@ -44,7 +45,7 @@ def create_fake_doc(n=10):
     name = create_sentence(1, 'file')
     path = locality + '/test_output/' + name
     f = open(path, 'w+')
-    f.write(content.encode('utf8'))
+    f.write(str(content.encode('utf8')))
     f.close()
     return path, name, content
 
@@ -56,7 +57,7 @@ def create_pdf_file():
     pdf_name = 'test_output/' + name + '.pdf'
     content = (create_sentence(50)).encode('utf8')
     pdf.set_font('Arial', 'B', 24)
-    pdf.cell(40, 10, content)
+    pdf.cell(40, 10, str(content))
     pdf.output(pdf_name, 'F')
     return pdf_name
 

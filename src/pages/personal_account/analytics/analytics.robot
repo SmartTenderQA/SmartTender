@@ -47,7 +47,7 @@ ${company name input}       //*[@class='ivu-input-wrapper ivu-input-type']//inpu
 Перевірити відображення діаграм
   ${result}  Set Variable  ${True}
   : FOR  ${i}  IN RANGE  1  7
-  \  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${diagram}[${i}]
+  \  ${status}  Run Keyword And Return Status  Element Should Be Visible  ${diagram}\[${i}]
   \  ${result}  Evaluate  ${result} and ${status}
   [Return]  ${True}
 

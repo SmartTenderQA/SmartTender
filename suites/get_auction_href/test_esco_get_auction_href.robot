@@ -147,10 +147,10 @@ If skipped create tender
 Fill ESCO
     [Arguments]  ${number_of_lot}
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
-    input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
-    input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block}[${number_of_lot}]//input)[3]  95
-    input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
+    input text  xpath=(${block}\[${number_of_lot}]//input)[1]  1
+    input text  xpath=(${block}\[${number_of_lot}]//input)[2]  0
+    input text  xpath=(${block}\[${number_of_lot}]//input)[3]  95
+    input text  xpath=(${block}\[${number_of_lot}]//input)[6]  100
 
 
 Відкрити браузер під роллю організатора та знайти потрібний тендер

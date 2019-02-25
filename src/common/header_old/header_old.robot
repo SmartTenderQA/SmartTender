@@ -67,5 +67,5 @@ ${site map}                         css=a[href='/karta-saytu/']
 Розгорнути меню користувача
     ${selector}  Set Variable  xpath=//i[@class="fa fa-user"]/parent::*
     Click Element  ${selector}
-    Wait Until Page Contains Element  ${selector}[@aria-expanded = "true"]
+    Wait Until Page Contains Element  ${selector}\[@aria-expanded = "true"]
     Wait Until Element Is Visible  ${selector}/following-sibling::*[@class="dropdown-menu"]

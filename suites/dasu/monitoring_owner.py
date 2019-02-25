@@ -1,15 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# ==============
-#      Main script file
-# ==============
-import sys
 import requests
-from datetime import datetime, timedelta
-
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
+from datetime import datetime
 
 
 def check_response(data):

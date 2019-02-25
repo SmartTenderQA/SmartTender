@@ -1,5 +1,5 @@
 *** Variables ***
-${EDS btn}                 ${block}[1]//div[@class="ivu-row"]//button
+${EDS btn}                 ${block}\[1]//div[@class="ivu-row"]//button
 ${EDS_block}    		   //*[@data-qa="modal-eds"]
 ${EDS validation message}  //*[@class="ivu-notice-title"]
 ${EDS submit btn}          //*[@data-qa="eds-submit-sign"]
@@ -13,10 +13,10 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 *** Keywords ***
 Натиснути підписати ЕЦП
-	${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS btn}[2]
+	${passed}=  Run Keyword And Return Status  Wait Until Page Contains Element  ${EDS btn}\[2]
 	Sleep  2
-	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}[2]
-	...  ELSE  Click element  ${EDS btn}[1]
+	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}\[2]
+	...  ELSE  Click element  ${EDS btn}\[1]
 	elements.Дочекатися відображення елемента на сторінці  ${EDS_block}
 
 

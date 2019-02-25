@@ -4,7 +4,7 @@ Resource  		../../common/loading/loading.robot
 
 
 *** Variables ***
-${cancel. offers confirm button}    ${block}[last()]//div[@class="ivu-poptip-footer"]/button[2]
+${cancel. offers confirm button}    ${block}\[last()]//div[@class="ivu-poptip-footer"]/button[2]
 
 ${succeed}                          Пропозицію прийнято
 ${succeed2}                         Не вдалося зчитати пропозицію з ЦБД!
@@ -71,7 +71,7 @@ Ignore error
 
 
 Перевірка на мультилот
-  ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}[2]//button
+  ${status}=  Run Keyword And Return Status  Wait Until Page Contains element  ${block}\[2]//button
   Run Keyword If  '${status}'=='${True}'   Set Global Variable  ${multiple status}  multiple
   ...  ELSE  Set Global Variable  ${multiple status}  withoutlot
   [Return]  ${multiple status}
