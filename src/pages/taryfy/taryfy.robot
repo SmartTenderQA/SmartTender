@@ -1,6 +1,6 @@
 *** Variables ***
 ${taryfy iframe}  					css=iframe
-${taryfy text}                      //*[@class="body-content"]//ul[@class="nav nav-pills nav-justified"]//li
+${taryfy text}                      //a[@data-toggle="tab"]
 
 
 *** Keywords ***
