@@ -5,8 +5,8 @@ ${button trading-platform}          css=.with-drop>a[href='/komertsiyni-torgy/']
 
 *** Keywords ***
 Отримати словник для випадаючих списків
-	${pro-kompaniyu}  		Encode String To Bytes  Про компанію  		UTF-8
-	${trading-platform}  	Encode String To Bytes  Торговий майданчик  UTF-8
+	${pro-kompaniyu}  		Set Variable  Про компанію
+	${trading-platform}  	Set Variable  Торговий майданчик
 	${dict}  Create Dictionary
 	...  ${pro-kompaniyu}=${button pro-kompaniyu}
 	...  ${trading-platform}=${button trading-platform}

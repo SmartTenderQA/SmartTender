@@ -54,7 +54,7 @@ ${site map}                         css=a[href='/karta-saytu/']
 	[Documentation]  ${text}==Про компанію|Торговий майданчик
 	[Arguments]  ${text}
 	${dict}  Отримати словник для випадаючих списків
-	${text}  Encode String To Bytes  ${text}  UTF-8
+	#${text}  Encode String To Bytes  ${text}  UTF-8
 	Mouse Over  ${dict['${text}']}
 
 
