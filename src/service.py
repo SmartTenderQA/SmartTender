@@ -123,8 +123,6 @@ def convert_url(href, IP):
         href = href.replace('https', 'http')
         ret = href.replace('smarttender.biz', site)
         return ret
-    elif IP not in href:
-        return str(re.sub('https://test.smarttender.biz/', str(IP), str(href)))
     else:
         return str(re.sub('https://smarttender.biz/', str(IP), str(href)))
 
