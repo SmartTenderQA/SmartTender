@@ -38,6 +38,7 @@
     ...  Отримати та залогувати data_session  ELSE
     ...  Create Webdriver  Chrome  alias=${alias}
     Go To  ${start_page}
+    elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="title-logo"]  30
     Set Window Size  1280  1024
 
 
