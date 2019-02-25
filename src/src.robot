@@ -171,6 +171,8 @@ Open Browser In Grid
 	Змінити стартову сторінку для IP
 	Встановити фіксований час очікування прогрузки сторінок  ${site}
     Run Keyword  Відкрити браузер ${browser.lower()}  ${user}
+    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="title-logo"]  30
+    Run Keyword If  '${status}' == 'False'  Reload Page
 
 
 Встановити фіксований час очікування прогрузки сторінок

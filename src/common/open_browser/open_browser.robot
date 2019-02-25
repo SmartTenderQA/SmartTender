@@ -15,8 +15,6 @@
     ...  Отримати та залогувати data_session  ELSE
     ...  Create Webdriver  Firefox  alias=${alias}
     Go To  ${start_page}
-    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="title-logo"]  30
-    Run Keyword If  '${status}' == 'False'  Reload Page
     Set Window Size  1280  1024
 
 
@@ -40,8 +38,6 @@
     ...  Отримати та залогувати data_session  ELSE
     ...  Create Webdriver  Chrome  alias=${alias}
     Go To  ${start_page}
-    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="title-logo"]  30
-    Run Keyword If  '${status}' == 'False'  Reload Page
     Set Window Size  1280  1024
 
 
@@ -52,8 +48,6 @@
     ...  Open Browser  ${start_page}  edge  alias=${alias}  ${hub}  AND
     ...  Отримати та залогувати data_session  ELSE
     ...  Open Browser  ${start_page}  edge  alias=${alias}
-    ${status}  Run Keyword And Return Status  elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="title-logo"]  30
-    Run Keyword If  '${status}' == 'False'  Reload Page
 
 
 Отримати та залогувати data_session
