@@ -26,11 +26,10 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	${start_page}  Set Variable If
 	...  '${where}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
 	...  '${where}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
-	...  '${where}' == 'ukroboronprom' or '${where}' == 'pre_prod'       https://smarttender.biz/TenderMirror/?mirrorId=5804
+	...  '${where}' == 'ukroboronprom'        https://smarttender.biz/TenderMirror/?mirrorId=5804
+	...  '${where}' == 'pre_prod'             http://iis8.smarttender.biz.int//TenderMirror/?mirrorId=5804
 	...  '${where}' == 'uspa'                 http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
 	Set Global Variable  ${start_page}
-	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
-	Змінити стартову сторінку для IP
 	Run Keyword  Відкрити браузер ${browser.lower()}  ${where}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
@@ -48,7 +47,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Page Should Contain Element  ${search field}
 	Page Should Contain Element  ${search button}
-	Run Keyword If  '${where}' != 'ukroboronprom'
+	Run Keyword If  '${where}' != 'ukroboronprom' and '${where}' != 'pre_prod'
 	...  Page Should Contain Element  ${select status button}
 	Page Should Contain Element  ${select type bidding button}
 	Page Should Contain Element  ${search-organizers}
