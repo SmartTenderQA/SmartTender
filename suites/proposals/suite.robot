@@ -39,7 +39,8 @@ ${no tender}                        False
 	Виконати пошук тендера
 	${n}  Run Keyword If
 	...  '${ua_tender_type}' == 'Відкриті торги'  Set Variable  2  ELSE IF
-	...  '${tender_type}' == 'ESCO'               Set Variable  2  ELSE  1
+	...  '${tender_type}' == 'ESCO'               Set Variable  2  ELSE
+	...                                           Set Variable  1
 	old_search.Перейти по результату пошуку за номером  ${n}
 	Додаткова перевірка на тестові торги для продуктива
 	Run Keyword If  '${tender_type}' == 'ESCO'  Отримати значення Максимального фіксованого відсотку платежів
