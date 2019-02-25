@@ -79,7 +79,7 @@ ${owner block}                      //*[.="Організатори"]
 
 Додаткова перевірка на тестові торги для продуктива
 	${selector}  Set Variable  //*[@data-qa="title"]|(//h3)[2]
-	Wait Until Element Is Visible  //*[@data-qa="title"]|(//h3)[2]  15
+	elements.Дочекатися відображення елемента на сторінці    ${selector}  45
 	Sleep  1
 	${test}  Run Keyword And Return Status  Location Should Contain  test.
 	${status}  Run Keyword And Return Status  Run Keyword If  ${test} == ${False}  Run Keywords

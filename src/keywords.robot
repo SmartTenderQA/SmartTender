@@ -37,15 +37,3 @@ ${users_variables_path2}   ${EXECDIR}/users_variables.py
 	${users_variables}  Set Variable  ${a.a}
 	[Return]  ${users_variables.${user}.${key}}
 
-Отримати та залогувати data_session
-	${s2b}  get_library_instance  Selenium2Library
-	${webdriver}  Call Method  ${s2b}  _current_browser
-	Create Session  api  http://autotest.it.ua:4444/grid/api/testsession?session=${webdriver.__dict__['capabilities']['webdriver.remote.sessionid']}
-	${data}  Get Request  api  \
-	${data}  Set Variable  ${data.json()}
-	Log  ${webdriver}
-	Log  ${webdriver.__dict__}
-	Log To Console  ${webdriver.__dict__['capabilities']}
-	Log  ${webdriver.__dict__['capabilities']}
-	Log To Console  ${data}
-	Log  ${data}
