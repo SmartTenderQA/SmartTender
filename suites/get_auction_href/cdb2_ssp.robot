@@ -34,7 +34,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Отримати дані про об'єкт з ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -42,7 +42,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['title']
 	\['description']
@@ -62,7 +62,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про об'єкт
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['assetCustodian']['identifier']['scheme']
@@ -92,7 +92,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Створити інформаційне повідомлення МП
-	[Tags]  create_tender  make_a_proposal  get_auction_href
+	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
 	[Setup]  Go To  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
@@ -105,7 +105,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Отримати дані про інформаційне повідомлення з ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
@@ -113,7 +113,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Порівняти введені дані з даними в ЦБД
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Template]  compare_data.Порівняти введені дані з даними в ЦБД
 	\['decisions'][0]['decisionID']
 	\['decisions'][0]['decisionDate']  m
@@ -140,7 +140,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Перевірити відображення детальної інформації про інформаційне повідомлення
-	[Tags]  compare  get_auction_href
+	[Tags]  compare  get_auction_href  qualification
 	[Setup]  Run Keywords
 	...  sale_keywords.Розгорнути детальну інформацію по всіх полях (за необхідністю)		AND
 	...  Run Keyword If  '${site}' == 'test'  compare_data.Порівняти відображені дані з даними в ЦБД  ['lotCustodian']['identifier']['scheme']
@@ -199,8 +199,8 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Дочекатися початку прийому пропозицій
-	[Tags]  make_a_proposal  get_auction_href
-	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Аукціон  25 min
+	[Tags]  make_a_proposal  get_auction_href  qualification
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Аукціон  30 min
 	cdb2_ssp_lot_page.Дочекатися опублікування посилання на лот  15 min
 	cdb2_ssp_lot_page.Перейти до аукціону
 	cdb2_ssp_auction_page.Отримати UAID та href для Аукціону
@@ -210,7 +210,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Знайти аукціон учасниками
-	[Tags]  make_a_proposal  get_auction_href
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Знайти аукціон користувачем  ${provider1}
 	Зберегти сесію  ${provider1}
@@ -224,7 +224,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Подати заявки на участь в тендері
-	[Tags]  make_a_proposal  get_auction_href
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
@@ -232,13 +232,13 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 
 Підтвердити заявки на участь
-	[Tags]  make_a_proposal  get_auction_href
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Підтвердити заявки на участь у тендері  ${data['tender_id']}
 
 
 Подати пропозицію учасниками
-	[Tags]  make_a_proposal  get_auction_href
+	[Tags]  make_a_proposal  get_auction_href  qualification
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
@@ -276,6 +276,26 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Template]  Неможливість отримати поcилання на участь в аукціоні глядачем
 	${viewer}
 	${tender_owner2}
+
+
+Дочекатися початку кваліфікації
+	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	Завантажити сесію для  ${tender_owner}
+	#todo nuzhno vinesti keyword
+	cdb2_ssp_auction_page.Дочекатися статусу лота  Очікується опублікування протоколу  120m
+	#
+
+
+Дискваліфікувати переможця аукціону
+	[Tags]  qualification
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
+	cdb2_ssp_auction_page.Розгорнути результати аукціону для учасника  ${provider3}
+	cdb2_ssp_auction_page.Натиснути "Дискваціфікувати"
+	cdb2_ssp_auction_page.Натиснути дискваліфікація  Завантажити рішення про відмову у затвердженні протоколу
+	cdb2_ssp_auction_page.Завантажити кваліфікаційний документ  Рішення про відмову у затвердженні протоколу
+
+
 
 
 *** Keywords ***

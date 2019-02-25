@@ -216,7 +216,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 Заповнити "Дата проведення аукціону"
 	${delta days}  Set Variable  6
-	${delta minutes}  Set Variable  15
+	${delta minutes}  Set Variable  20
 	${date + delta prod}  get_formated_time_with_delta  ${delta days}  days  s
 	${date + delta test}  get_formated_time_with_delta  ${delta minutes}  minutes  s
 	${date + delta}  Set Variable If
