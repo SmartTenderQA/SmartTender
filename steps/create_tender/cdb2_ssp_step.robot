@@ -44,9 +44,6 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 	small_privatization_search.Натиснути створити  інформаційне повідомлення
 	cdb2_ssp_step.Заповнити "Унікальний код об'єкту"  ${id}
 	cdb2_ssp_step.Заповнити "Рішення про затверждення умов продажу"
-	sale_keywords.Натиснути кнопку зберегти
-	cdb2_ssp_lot_page.Опублікувати інформаційне повідомлення у реєстрі
-	cdb2_ssp_lot_page.Перейти до коригування інформації
 	cdb2_ssp_step.Заповнити "Умови аукціону"
 	cdb2_ssp_step.Заповнити "Банківські реквізити"
 	sale_keywords.Натиснути кнопку зберегти
@@ -270,7 +267,6 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 Заповнити "Банківські реквізити"
 	cdb2_ssp_step.Заповнити "Найменування банку"
-	cdb2_ssp_lot_page.Натиснути Додати реквізити
 	cdb2_ssp_step.Заповнити "Тип реквізиту"
 	cdb2_ssp_step.Заповнити "Значення реквізиту"
 	cdb2_ssp_step.Заповнити "Опис реквізиту"
