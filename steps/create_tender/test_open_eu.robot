@@ -38,6 +38,8 @@
   	# Додаєм ще один лот
   	actions.Натиснути додати (додавання предмету)
   	tender_tab.Змінити тип елементу на  Лот
+
+#  	Перейти на вкладку Тестовий тендер
   	test_open_eu.Заповнити amount для lot
   	test_open_eu.Заповнити minimalStep для lot
   	actions.Натиснути додати (додавання предмету)
@@ -54,7 +56,7 @@
     test_open_eu.Заповнити locality для item
 
     test_open_eu.Заповнити endDate періоду пропозицій
-  	docs_tab.Додати документ до тендара власником (webclient)
+    docs_tab.Додати документ до тендара власником (webclient)
     create_tender.Зберегти чернетку
     Оголосити закупівлю
 
@@ -174,10 +176,20 @@
 
 Заповнити id для item (другий лот)
     ${input field}  Set Variable  //*[@data-name="MAINCLASSIFICATION"]//input[not(contains(@type,'hidden'))]
+    Clear input By JS  ${input field}
     Input Text  ${input field}  ${data['items'][0]['classification']['id']}
     Press Key  ${input field}  \\13
     Sleep  1
-    Press Key  ${input field}  \\13
+    ${status}  Run Keyword And Return Status
+    ...  test_open_eu.Перевірити заповнення id для item (другий лот)  ${input field}  ${data['items'][0]['classification']['id']}
+    Run Keyword If  ${status} == ${False}  test_open_eu.Заповнити id для item (другий лот)
+
+
+Перевірити заповнення id для item (другий лот)
+    [Arguments]  ${input field}  ${supposed_text}
+    ${text}  Get Element Attribute  ${input field}  value
+    ${text}  evaluate  (re.findall('[0-9]+.[0-9]+', '${text}'))[0]  re
+    Should Be Equal As Strings  ${text}  ${supposed_text}
 
 
 Заповнити unit.name для item (другий лот)

@@ -7,7 +7,7 @@ Test Teardown  			Run Keywords
 						...  Log Location  AND
 						...  Run Keyword If Test Failed  Capture Page Screenshot
 
-
+#  robot --consolecolors on -L TRACE:INFO -d test_output -e below -v where:test -v hub:none -v headless suites/procurement/synchronization_correctness.robot
 *** Test Cases ***
 Створити тендер
     [Tags]  below
@@ -21,11 +21,13 @@ Test Teardown  			Run Keywords
 
 
 Отримати дані з cdb
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
 
 
 Дочекатись синхронізації х2
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Run Keywords  synchronization.Дочекатись синхронізації  procurement  AND  synchronization.Дочекатись синхронізації  procurement
 
 
@@ -55,17 +57,20 @@ Test Teardown  			Run Keywords
 
 
 Отримати оновлену інформацію з цбд
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Go to  ${data['tender_href']}
     Set Global Variable  ${cdb old}  ${cdb}
     Отримати дані з cdb та зберегти їх у файл  cdb_edit
 
 Видалити зайві дані про мультилоти
     [Tags]  open_eu
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Видалити інформацію про аукціон в мультилотах  ${cdb['lots']}
     Видалити інформацію про аукціон в мультилотах  ${cdb old['lots']}
 
 
 Перевірити дані в ЦБД
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Перевірити що в ЦБД було змінено тільки назву та дату модифікації
 
 
