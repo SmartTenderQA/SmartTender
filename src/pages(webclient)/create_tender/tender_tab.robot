@@ -266,3 +266,8 @@ Resource        create_tender_keywords.robot
     [Arguments]  ${value}
     ${selector}  set variable  //*[@data-name='IDCATGROUP']//input[@class]
     Заповнити текстове поле  ${selector}  ${value}
+
+
+Перейти на вкладку Тестовий тендер
+    Wait Until Keyword Succeeds  30  2  Click Element  xpath=//*[contains(@id,'mainTabControl_T0T')]//*[contains(text(),'тендер')]
+    Wait Until Page Contains Element  xpath=//*[contains(@id,'mainTabControl_AT0T')]//*[contains(text(),'тендер')]  15
