@@ -19,8 +19,8 @@ ${taryfy text}                      //a[@data-toggle="tab"]
 	...  '${text}' == 'Комерційні торги'  										Set Variable  2  ELSE IF
 	...  '${text}' == 'Продаж активів банків, що ліквідуються (ФГВФО)'  		Set Variable  3  ELSE IF
 	...  '${text}' == 'Продаж і оренда майна/активів Державних підприємств'  	Set Variable  4
-	Click Element  ${taryfy text}\[${n}]
-	Page Should Contain Element  ${taryfy text}\[${n}][@class="active"]
-	${is}  Get Text  ${taryfy text}\[${n}]
+	Click Element  (${taryfy text})[${n}]
+	Page Should Contain Element  (${taryfy text})[${n}]/ancestor::li[@class="active"]
+	${is}  Get Text  (${taryfy text})[${n}]
 	Should Be Equal  ${is}  ${text}
 	Unselect Frame
