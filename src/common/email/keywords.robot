@@ -43,11 +43,10 @@ ${field_password}       //input[@type="password"]
 
 
 Перевірити наявність листа за темою
-	[Arguments]  ${title}
+	[Arguments]  ${title}  ${time now -3 min}
 	Reload Page
 	Wait Until Element Is Not Visible  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  10
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
-	${time now -3 min}  Отримати час на машині  time  -3
 	${time is}  Get Text  ${time selector}
 	${is today}  Evaluate  not '.' in '${time is}'
 	Run Keyword If  ${is today} == ${False}  Fail
