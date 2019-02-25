@@ -270,6 +270,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 
 Заповнити "Банківські реквізити"
 	cdb2_ssp_step.Заповнити "Найменування банку"
+	cdb2_ssp_lot_page.Натиснути Додати реквізити
 	cdb2_ssp_step.Заповнити "Тип реквізиту"
 	cdb2_ssp_step.Заповнити "Значення реквізиту"
 	cdb2_ssp_step.Заповнити "Опис реквізиту"
