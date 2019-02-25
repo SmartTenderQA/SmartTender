@@ -19,7 +19,8 @@ Resource  				keywords.robot
 
 Дочекатися отримання листа на пошту
 	[Arguments]  ${timeout}  ${subject}
-	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}
+	${time now -3 min}  Отримати час на машині  time  -3
+	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}  ${time now -3 min}
 
 
 Перейти за посиланням в листі
