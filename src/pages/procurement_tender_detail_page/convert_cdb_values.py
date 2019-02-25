@@ -16,7 +16,7 @@ def convert_cdb_values(field, value):
     elif 'agreementDuration' in field:
         ret = get_only_numbers(value)
     elif 'locality' in field:
-        ret = str(value).decode("utf-8")
+        ret = str(value)
     elif 'quantity' in field:
         ret = int(value)
     elif 'maxAwardsCount' in field:
