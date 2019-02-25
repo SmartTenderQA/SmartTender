@@ -1,6 +1,6 @@
 *** Variables ***
 ${pro_kompaniyu header text}					//h1[@class="text-center"]
-${pro-kompaniyu text}               			//*[@class="ivu-card-body"]//*[@class="margin-top-10 ivu-row"]/div[1]
+${pro-kompaniyu text}               			//h1[@class="text-center"]/..//*[@class="margin-top-10 ivu-row"]/div[1]
 
 
 *** Keywords ***
