@@ -129,7 +129,7 @@ Library		service.py
 
 *** Variables ***
 ${tab_keybutton}					\\13
-${IP}
+${IP}                               http://192.168.150.5/
 ${where}
 
 ${browser}							chrome
@@ -137,6 +137,7 @@ ${browser_version}
 ${platform}							ANY
 ${hub}                              http://autotest.it.ua:4444/wd/hub
 ${headless}                         ${True}
+
 
 ${test}                             https://test.smarttender.biz/
 ${prod}                             https://smarttender.biz/
