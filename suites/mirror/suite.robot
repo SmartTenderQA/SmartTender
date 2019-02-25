@@ -22,7 +22,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 #robot --consolecolors on -L TRACE:INFO -d test_output -i $where -v where:$where suites/mirror/suite.robot
 *** Test Cases ***
 Відкрити стартову сторінку
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	${start_page}  Set Variable If
 	...  '${where}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
 	...  '${where}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
@@ -31,7 +31,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	Set Global Variable  ${start_page}
 	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
 	Змінити стартову сторінку для IP
-	Open Browser  ${start_page}  ${browser}  mirror  ${hub}
+	Run Keyword  Відкрити браузер ${browser.lower()}  ${where}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -39,13 +39,13 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Переконатися в наявності тендерів
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	${count}  Отримати кількість тендерів на сторінці
 	Run Keyword if  '${count}' == '0'  Fail  Oops! На сторінці немає жодного тендера
 
 
 Перевірити наявність компонентів в панелі пошуку
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Page Should Contain Element  ${search field}
 	Page Should Contain Element  ${search button}
 	Run Keyword If  '${where}' != 'ukroboronprom'
@@ -55,7 +55,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Виконати негативний пошук
-	[Tags]  test  utg  ukroboronprom  uspa
+	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Input text  ${search field}  Тендернезнайдено.Тадам!
 	Click Element  ${search button}
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -119,7 +119,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 Перевірити роботу фільтра вид торгів
-	[Tags]  ukroboronprom
+	[Tags]  ukroboronprom  pre_prod
 	[Template]  Перевірити тендер
 	Відкриті торги. Аукціон
 	Відкриті торги. Аналіз пропозицій

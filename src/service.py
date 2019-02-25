@@ -3,9 +3,8 @@
 # ==============
 #      Main script file
 # ==============
-import sys
+
 import re
-import urllib2
 import requests
 
 from iso8601 import parse_date
@@ -17,11 +16,6 @@ import os
 import operator
 import uuid
 import hashlib
-import json
-
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 
 def get_tender_variables(tender_type, tender_sign):
@@ -134,9 +128,10 @@ def convert_url(href, IP):
 
 
 def download_file_and_return_content(url):
-    response = urllib2.urlopen(url)
-    file_content = response.read()
+    response = requests.get(url)
+    file_content = response.text
     return file_content
+
 
 
 def download_file_to_my_path(url, path):
@@ -186,10 +181,10 @@ def get_time_with_delta(delta, deviation):
 	days = int(delta)
 	weekends_url = 'http://standards.openprocurement.org/calendar/workdays-off.json'
 	workdays_url = 'http://standards.openprocurement.org/calendar/weekends-on.json'
-	response = urllib2.urlopen(weekends_url)
-	weekends = json.load(response)
-	response = urllib2.urlopen(workdays_url)
-	workdays = json.load(response)
+	response = requests.get(weekends_url)
+	weekends = response.json()
+	response = requests.get(workdays_url)
+	workdays = response.json()
 	if deviation == 'days':
 		while True:
 			weekends_count = 0

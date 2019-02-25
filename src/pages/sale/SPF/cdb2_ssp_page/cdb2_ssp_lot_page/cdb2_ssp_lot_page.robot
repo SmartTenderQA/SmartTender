@@ -153,12 +153,12 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
     ...  Reload Page  												AND
     ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
-    ...  Page Should Contain Element  ${auction locator}[1]
+    ...  Page Should Contain Element  ${auction locator}\[1]
 
 
 Перейти до аукціону
-	Scroll Page To Element XPATH  ${auction locator}[1]
-	Click Element  ${auction locator}[1]
+	Scroll Page To Element XPATH  ${auction locator}\[1]
+	Click Element  ${auction locator}\[1]
 	Дочекатись Закінчення Загрузки Сторінки
 
 

@@ -22,7 +22,7 @@
     [Arguments]  ${title}
     ${question row}  Set Variable  //td[.="${title}"]
     Click Element  ${question row}
-    Wait Until Page Contains Element  ${question row}[@class="cellselected"]  2
+    Wait Until Page Contains Element  ${question row}\[@class="cellselected"]  2
 
 
 Внести текст рішення на вимогу

@@ -9,7 +9,7 @@ Test Teardown  Run Keywords
 
 *** Variables ***
 ${error}                            //*[@class='ivu-notice-notice ivu-notice-notice-closable ivu-notice-notice-with-desc']
-${amount}                           ${block}[2]//div[@class='amount lead'][1]
+${amount}                           ${block}\[2]//div[@class='amount lead'][1]
 ${proposal}                         http://test.smarttender.biz/bid/edit
 ${useful indicators open}           //span[@class='ivu-select-selected-value']
 ${useful indicators list}           //div[@class='ivu-select-dropdown']/ul[2]/li
@@ -185,14 +185,14 @@ Postcondition
 Fill ESCO
     [Arguments]  ${number_of_lot}
     ${percent}  Evaluate  random.randint(${ESCO_percent_from}, ${ESCO_percent_to})  random
-    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
+    ${error selector}  Set Variable  xpath=(${block}\[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
     ${number_of_lot}  Evaluate  ${number_of_lot}+1
-    input text  xpath=(${block}[${number_of_lot}]//input)[1]  1
-    input text  xpath=(${block}[${number_of_lot}]//input)[2]  0
-    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+    input text  xpath=(${block}\[${number_of_lot}]//input)[1]  1
+    input text  xpath=(${block}\[${number_of_lot}]//input)[2]  0
+    input text  xpath=(${block}\[${number_of_lot}]//input)[3]  ${percent}
 #    ${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${error selector}  3
 #    Run Keyword If  ${status}  Змінити значення фіксованого відсотку  ${number_of_lot}
-    input text  xpath=(${block}[${number_of_lot}]//input)[6]  100
+    input text  xpath=(${block}\[${number_of_lot}]//input)[6]  100
 
 
 Отримати значення Максимального фіксованого відсотку платежів
@@ -205,22 +205,22 @@ Fill ESCO
 
 #Змінити значення фіксованого відсотку
 #    [Arguments]  ${number_of_lot}
-#    ${error selector}  Set Variable  xpath=(${block}[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
+#    ${error selector}  Set Variable  xpath=(${block}\[${number_of_lot}]//input)[3]/..//span[contains(@class,"validation-error")]
 #    ${value}  Get Text   ${error selector}
 #    ${value}  Evaluate  re.findall(r'[\\d]+', '''${value}''')  re
 #    ${percent}  random_number  ${value[0]}  ${value[1]}
-#    input text  xpath=(${block}[${number_of_lot}]//input)[3]  ${percent}
+#    input text  xpath=(${block}\[${number_of_lot}]//input)[3]  ${percent}
 
 
 ###    Useful indicators    ###
 Вибрати випадковий неціновий показник
     [Documentation]  takes block number and list number
     [Arguments]  ${block number}  ${list number}
-	Click Element  (${block}[${block number}]${useful indicators open})[${list number}]
-    Wait Until Element Is Visible  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}  10
-    ${count}  Get Element Count  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}
+	Click Element  (${block}\[${block number}]${useful indicators open})[${list number}]
+    Wait Until Element Is Visible  ${block}\[${block number}]//*[contains(@class, 'visible')]${useful indicators list}  10
+    ${count}  Get Element Count  ${block}\[${block number}]//*[contains(@class, 'visible')]${useful indicators list}
     ${n}  random_number  1  ${count}
-    Click Element  ${block}[${block number}]//*[contains(@class, 'visible')]${useful indicators list}[${n}]
+    Click Element  ${block}\[${block number}]//*[contains(@class, 'visible')]${useful indicators list}\[${n}]
     Sleep  2
 
 
@@ -228,7 +228,7 @@ Fill ESCO
 	${list of useful indicators}  Create List
 	Set Global Variable  ${list of useful indicators}
 	:FOR  ${block number}  IN RANGE  1  ${blocks amount}
-	\  ${n}  Get Element Count	${block}[${block number}]${useful indicators open}
+	\  ${n}  Get Element Count	${block}\[${block number}]${useful indicators open}
 	\  Append To List  ${list of useful indicators}  ${n}
 	Log  ${list of useful indicators}
 
@@ -252,17 +252,17 @@ Fill ESCO
 Delete file
     [Documentation]  deleta last file
     [Arguments]  ${block number}
-    wait until page contains element  ${block}[${block number}]${delete file}//button
-    click element  ${block}[${block number}]${delete file}//button
-    wait until page contains element  ${block}[${block number}]${delete file}${delete file confirm}
-    click element  ${block}[${block number}]${delete file}${delete file confirm}
+    wait until page contains element  ${block}\[${block number}]${delete file}//button
+    click element  ${block}\[${block number}]${delete file}//button
+    wait until page contains element  ${block}\[${block number}]${delete file}${delete file confirm}
+    click element  ${block}\[${block number}]${delete file}${delete file confirm}
 
 
 ###    Choice type of file     ###
 Обрати тип файлу
     [Arguments]  ${block number}  ${type of file number}  ${file number}
-    Click Element  ${block}[${block number}]${file button path}[${file number}]${choice file button}
-    Click Element  ${block}${choice file list}[${type of file number}]
+    Click Element  ${block}\[${block number}]${file button path}\[${file number}]${choice file button}
+    Click Element  ${block}${choice file list}\[${type of file number}]
 
 
 Отримати всі доступні типи файлі зі словника
@@ -287,7 +287,7 @@ Delete file
 Add info about sub
     [Arguments]  ${block number}
     ${text}  create_sentence
-    Input Text  ${block}[${block number}]//textarea  ${text}
+    Input Text  ${block}\[${block number}]//textarea  ${text}
 
 
 Add info about sub LOOP
@@ -298,14 +298,14 @@ Add info about sub LOOP
 ###    Confidentiality    ###
 Confidentiality
 	[Arguments]  ${block number}  ${doc_count}
-	Click element  (${block}[${block number}]${switch})[${doc_count}]
+	Click element  (${block}\[${block number}]${switch})[${doc_count}]
 	Sleep  2
 
 
 File description
 	[Arguments]  ${block number}
 	${text}  create_sentence
-    Input text  ${block}[${block number}]${switch field}  ${text}
+    Input text  ${block}\[${block number}]${switch field}  ${text}
 
 
 ###    Other    ###

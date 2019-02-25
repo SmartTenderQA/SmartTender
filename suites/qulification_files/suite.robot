@@ -4,20 +4,23 @@ Metadata  Команда запуска
 ...  robot --consolecolors on -L TRACE:INFO -d test_output -v EDS:True -e get_tender -v hub:none suites/qulification_files/suite.robot
 
 Resource   ../../src/src.robot
+
 Suite Setup     Precondition
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Run Keywords
-...                                        Log Location  AND
-...                                        Capture Page Screenshot
+Test Setup      Stop The Whole Test Execution If Previous Test Failed
+Test Teardown   Run Keyword If Test Failed  Run Keywords
+...                                         Log Location  AND
+...                                         Capture Page Screenshot
 
 
 *** Test Cases ***
 Підготувати браузер (змінена папка для загрузок)
-    Підготувати браузер
+    Close Browser
+    Create Directory  ${OUTPUTDIR}/downloads/
+    Відкрити браузер Chrome з вказаною папкою для завантаження файлів  ${OUTPUTDIR}/downloads/
 
 
 Створити тендер
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Tags]  create_tender
 	Завантажити сесію для  ${tender_owner}
 	test_open_eu.Створити тендер
@@ -38,16 +41,57 @@ If skipped create tender
 	Set Global Variable  ${data}
 
 
-Подати заявку на участь в тендері двома учасниками
-	Прийняти участь у тендері учасником  ${provider1}
-	Додати додатковий документ до пропозиції
-	Прийняти участь у тендері учасником  ${provider2}
-	Додати додатковий документ до пропозиції
+Подати заявку на участь в тендері першим учасником
+    [Tags]  proposal  privat
+    Завантажити сесію для  ${provider1}
+    Go to  ${data['tender_href']}
+    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
+    Sleep  3m
+    Перевірити кнопку подачі пропозиції
+	make_proposal.Заповнити поле з ціною  1  1
+    ${file name}  ${hash}  actions.Додати doc файл
+    #  Позначаемо файл як конфіденційний та зберігаємо інфу про нього
+    ${private reason}  make_proposal.Позначити файл як конфіденційний  ${file name}
+    Set Global Variable  ${private reason}
+    Зберегти дані файлу у словник docs_data  bids  ${file name}  ${hash}
+    #################################################################
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	make_proposal.Подати пропозицію
+	EDS.Підписати ЕЦП
+    Go Back
+    Додати додатковий документ до пропозиції
+
+
+Подати заявку на участь в тендері другим учасником
+    [Tags]  proposal
+    Завантажити сесію для  ${provider2}
+    Go to  ${data['tender_href']}
+    Перевірити кнопку подачі пропозиції
+	Заповнити поле з ціною  1  1
+	actions.Додати doc файл
+	Run Keyword And Ignore Error  Підтвердити відповідність
+	Подати пропозицію
+	EDS.Підписати ЕЦП
+    Go Back
+    Додати додатковий документ до пропозиції
 
 
 Дочекатись початку періоду перкваліфікації
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    [Tags]  sync  pre-qualification
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
+
+
+Перевірити наявність конфіденційного документу на сторінці та в ЦБД
+    [Tags]  privat
+    Отримати дані з cdb та зберегти їх у файл
+    procurement_tender_detail.Розгорнути всі експандери
+    procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
+    procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement  ${data['qualification_documents'][0]}
+    #  Перевірити неможливість перегляду конфіденційного документу
+    Run Keyword And Expect Error  *not visible*
+    ...  procurement_tender_detail.Скачати файл на сторінці  ${data['qualification_documents'][0]['title']}
+    #  Порівняти причину конфіденційності в ЦБД
+    Should Be Equal  ${private reason}  ${cdb['bids'][0]['documents'][0]['confidentialityRationale']}
 
 
 Відкрити браузер під роллю організатора та знайти тендер
@@ -57,18 +101,24 @@ If skipped create tender
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    [Tags]  pre-qualification
     qualification.Провести прекваліфікацію учасників
 
 
 Дочекатися статусу тендера "Кваліфікація"
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    [Tags]  sync  qualification
 	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
 	procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
+Перевірити відображення причини конфіденційності документу
+    #procurement_tender_detail.Розгорнути всі експандери
+    No Operation
+
+
 Перевірити наявність ЕЦП finance document в поданих пропозиціях
+    [Tags]  EDS  validation
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     :FOR  ${i}  IN  1  2
@@ -80,6 +130,7 @@ If skipped create tender
 
 
 Відхилити організатором пропозицію першого учасника
+    [Tags]  qualification  EDS
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -88,6 +139,7 @@ If skipped create tender
 
 
 Завантажити другим учасником кваліфікаційний документ
+    [Tags]  qualification-docs  EDS
     Завантажити сесію для  ${provider2}
     Go to  ${data['tender_href']}
     ${provider file name}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
@@ -95,6 +147,7 @@ If skipped create tender
 
 
 Завантажити другим учасником додатковий кваліфікаційний документ
+    [Tags]  qualification-docs  EDS
     ${provider file name 2}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
     Зберегти дані файлу у словник docs_data  bids  ${provider file name 2}  ${hash}
 
@@ -103,6 +156,7 @@ If skipped create tender
 
 
 Визнати переможцем другого учасника
+    [Tags]  qualification  EDS
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
@@ -111,19 +165,21 @@ If skipped create tender
 
 
 Прикріпити договір до переможця
+    [Tags]  contract
     qualification_keywords.Вибрати переможця за номером  2
     ${dogovir name}  ${hash}  qualification.Додати договір до переможця
     Зберегти дані файлу у словник docs_data  contracts  ${dogovir name}  ${hash}
 
 
 Дочекатися статусу тендера "Пропозиції розглянуті"
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    [Tags]  sync
 	Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
 	procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
 
 
 Додати переможцем кваліфікаційний документ на стадії "Пропозиції розглянуті"
+     [Tags]  qualification-docs  EDS
     Завантажити сесію для  ${provider2}
     Go to  ${data['tender_href']}
     ${provider file name 3}  ${hash}  procurement_tender_detail.Додати кваліфікаційний документ  ${EDS}
@@ -131,16 +187,16 @@ If skipped create tender
 
 
 Підписати організатором договір з переможцем
-    [Tags]  non-critical
+    [Tags]  contract
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
+    Sleep  9m
     qualification.Підписати договір з переможцем  2
 
 
 Переконатись що статус закупівлі "Завершено"
-    [Tags]  non-critical
-    [Setup]  Stop The Whole Test Execution If Previous Test Failed
+    [Tags]  sync
     Завантажити сесію для  ${provider1}
     Go to  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
@@ -153,6 +209,7 @@ If skipped create tender
 
 
 Перевірити публікацію кваліфікаційних файлів в ЦБД
+    [Tags]  validation
     [Template]  procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement
     ${data['qualification_documents'][2]}
 	${data['qualification_documents'][3]}
@@ -163,6 +220,7 @@ If skipped create tender
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
+    [Tags]  validation
     [Setup]  Run Keywords
     ...  Go to  ${data['tender_href']}  AND
     ...  procurement_tender_detail.Розгорнути всі експандери
@@ -189,12 +247,6 @@ Precondition
     Додати користувача          ${viewer}
 
 
-Підготувати браузер
-    Close Browser
-    Create Directory  ${OUTPUTDIR}/downloads/
-    Відкрити браузер Chrome з вказаною папкою для завантаження файлів  ${OUTPUTDIR}/downloads/
-
-
 Відкрити браузер Chrome з вказаною папкою для завантаження файлів
     [Arguments]  ${downloadDir}
     ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
@@ -214,29 +266,10 @@ Precondition
     actions.Зберегти словник у файл  ${cdb}  cdb
 
 
-Прийняти участь у тендері учасником
-    [Arguments]  ${username}
-    Завантажити сесію для  ${username}
-    Go to  ${data['tender_href']}
-    procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
-    Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
-    Подати пропозицію учасником
-
-
-Подати пропозицію учасником
-	Перевірити кнопку подачі пропозиції
-	Заповнити поле з ціною  1  1
-    actions.Додати doc файл
-	Run Keyword And Ignore Error  Підтвердити відповідність
-	Подати пропозицію
-	EDS.Підписати ЕЦП
-    Go Back
-
-
 Додати додатковий документ до пропозиції
     Перевірити кнопку подачі пропозиції
     actions.Додати doc файл
-    Подати пропозицію
+    make_proposal.Подати пропозицію
 	EDS.Підписати ЕЦП
     Go Back
 
@@ -278,3 +311,5 @@ Precondition
 	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
     ${view dateModified}  Get Text  ${view doc block}${docs_view['dateModified']}
 	Should Be Equal  ${view dateModified}  ${cdb_doc['dateModified']}  Oops! Помилка з dateModified
+
+

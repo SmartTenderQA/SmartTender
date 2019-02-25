@@ -1,7 +1,7 @@
 *** Settings ***
 Resource  				../../src/src.robot
 
-Suite Setup  			Run Keyword  Preconditions
+Suite Setup  			Run Keyword  Підготувати користувачів
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
@@ -13,11 +13,13 @@ Test Teardown  			Run Keywords
     [Tags]  below
     below.Створити тендер
     below.Отримати дані тендера та зберегти їх у файл
+    Зберегти сесію  ${tender_owner}
 
 Створити тендер
 	[Tags]  open_eu
 	test_open_eu.Створити тендер (Мультилот)
     test_open_eu.Отримати дані тендера та зберегти їх у файл
+    Зберегти сесію  ${tender_owner}
 
 
 Отримати дані з cdb
@@ -31,14 +33,15 @@ Test Teardown  			Run Keywords
     Run Keywords  synchronization.Дочекатись синхронізації  procurement  AND  synchronization.Дочекатись синхронізації  procurement
 
 
-Перейти в особистий кабінет користувача
-    header_old.Розгорнути меню користувача
-    user-menu.Натиснути кнопку Особистий кабінет
-    Дочекатись закінчення загрузки сторінки(weclient start)
+#Перейти в особистий кабінет користувача
+#    header_old.Розгорнути меню користувача
+#    user-menu.Натиснути кнопку Особистий кабінет
+#    Дочекатись закінчення загрузки сторінки(weclient start)
 
 
 Змінити назву тендера
     [Tags]  below
+    Завантажити сесію для  ${tender_owner}
     desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     actions.Натиснути кнопку Змінити (F4)
@@ -48,6 +51,7 @@ Test Teardown  			Run Keywords
 
 Змінити назву тендера
     [Tags]  open_eu
+    Завантажити сесію для  ${tender_owner}
     desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
     actions.Натиснути кнопку Змінити (F4)
@@ -75,13 +79,23 @@ Test Teardown  			Run Keywords
 
 
 *** Keywords ***
-Preconditions
-    ${site}  Set Variable If  '${where}' == 'test'  test  prod
-    ${user}  Run Keyword If  'prod' in '${site}'  Set Variable  prod_owner
-    ...  ELSE  Set Variable  Bened
-   	Set Global Variable  ${user}  ${user}
-	Open Browser In Grid  ${user}
-	Авторизуватися  ${user}
+Підготувати користувачів
+    Run Keyword If  '${where}' == 'test'
+	...  Set Global Variable  ${tender_owner}  Bened
+	Run Keyword If  'prod' in '${where}'
+	...  Set Global Variable  ${tender_owner}  prod_owner
+    Додати першого користувача  ${tender_owner}
+
+
+
+
+#Preconditions
+#    ${site}  Set Variable If  '${where}' == 'test'  test  prod
+#    ${user}  Run Keyword If  'prod' in '${site}'  Set Variable  prod_owner
+#    ...  ELSE  Set Variable  Bened
+#   	Set Global Variable  ${user}  ${user}
+#	Open Browser In Grid  ${user}
+#	Авторизуватися  ${user}
 
 
 Отримати дані з cdb та зберегти їх у файл

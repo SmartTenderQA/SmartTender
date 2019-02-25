@@ -1,11 +1,11 @@
 *** Variables ***
-${pro_kompaniyu header text}					css=div[itemscope=itemscope] h1
-${pro-kompaniyu text}               			//div[@itemscope='itemscope']//div[1]/*[@class='ivu-card-body']/div[2]/div[1]
+${pro_kompaniyu header text}					//h1[@class="text-center"]
+${pro-kompaniyu text}               			//*[@class="ivu-card-body"]//*[@class="margin-top-10 ivu-row"]/div[1]
 
 
 *** Keywords ***
 Перевірити заголовок сторінки
-	${should header}  Set Variable  Про майданчик SmartTender
+	${should header}  Set Variable  Про майданчик
 	${is header}  Get Text  ${pro_kompaniyu header text}
 	Should Be Equal  ${is header}  ${should header}
 
