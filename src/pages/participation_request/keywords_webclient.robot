@@ -3,7 +3,7 @@
 	[Arguments]  ${tender_id}
 	Create Session  api  https://test.smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.ACCEPTAUCTIONBIDREQUEST&args={%22IDLOT%22:%22${tender_id}%22,%22SUCCESS%22:%22true%22}&ticket=
 	${response}  Get Request  api  \
-	${status}  Set Variable  ${response.content.find('True') != -1}
+	${status}  Set Variable  ${response.text.find('True') != -1}
 	Should Be True  ${status}  Oops! Щось пішло не так, заявки не підтверджено
 	Delete All Sessions
 
