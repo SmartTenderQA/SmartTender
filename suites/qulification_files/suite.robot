@@ -249,14 +249,15 @@ Precondition
 
 Відкрити браузер Chrome з вказаною папкою для завантаження файлів
     [Arguments]  ${downloadDir}
-    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+    ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
     ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
-    Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
-    Call Method    ${chromeOptions}    add_argument    --disable-gpu
-    ${browser started}  Run Keyword And Return Status
-    ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
-    Should Be True  ${browser started}
+    Call Method    ${class_options}    add_experimental_option    prefs    ${prefs}
+    Run Keyword If  '${headless}' == '${True}'  Run Keywords
+    ...  Call Method    ${class_options}    set_headless    ${True}  AND
+    ...  Call Method    ${class_options}    add_argument    disable-gpu
+    ${options}  Call Method  ${class_options}  to_capabilities
+	Create Webdriver  Chrome  desired_capabilities=${options}
+    Set Window Size  1280  1024
 
 
 Отримати дані з cdb та зберегти їх у файл

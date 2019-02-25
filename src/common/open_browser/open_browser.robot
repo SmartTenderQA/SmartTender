@@ -2,7 +2,7 @@
 Відкрити браузер firefox
     [Arguments]  ${alias}
     ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys, selenium.webdriver
-    Run Keyword If  ${headless} == ${True}  Run Keywords
+    Run Keyword If  '${headless}' == '${True}'  Run Keywords
     ...  Call Method    ${class_options}    set_headless    ${True}  AND
     ...  Call Method    ${class_options}    add_argument    disable-gpu
     Run Keyword If  '${browser_version}' != ''
@@ -21,7 +21,7 @@
 Відкрити браузер chrome
     [Arguments]  ${alias}
     ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
-    Run Keyword If  ${headless} == ${True}  Run Keywords
+    Run Keyword If  '${headless}' == '${True}'  Run Keywords
     ...  Call Method    ${class_options}    set_headless    ${True}  AND
     ...  Call Method    ${class_options}    add_argument    disable-gpu
 
