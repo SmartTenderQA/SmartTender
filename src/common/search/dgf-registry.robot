@@ -18,6 +18,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 #	Run Keyword If  ${status} == ${False}  Вибрати тип активу  ${type}
 #	Wait Until Element Is Visible  ${type locator}
 #	Sleep  .3
+	elements.Дочекатися відображення елемента на сторінці  ${type locator}  20
 	Click Element  ${type locator}
 	Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
 	Дочекатись закінчення загрузки сторінки(skeleton)
