@@ -19,18 +19,18 @@ Resource  				keywords.robot
 
 Дочекатися отримання листа на пошту
 	[Arguments]  ${timeout}  ${subject}
-	${time now -3 min}  Отримати час на машині  time  -3
-	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}  ${time now -3 min}
+	${time now -5 min}  Отримати час на машині  time  -5
+	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}  ${time now -5 min}
 
 
 Перейти за посиланням в листі
 	[Arguments]  ${title}
 	${link selector}  Set Variable  //a[contains(text(),'${title}')]
 	Розгорнути останній лист (за необхідність)
-	Sleep  30   #ждем пока догрузится gmail
 	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]  30
 	Open button  xpath=(${link selector})[last()]
 	sleep  0.5
+	Run Keyword And Ignore Error  Handle Alert  action=DISMISS
 
 
 Розгорнути останній лист (за необхідність)
