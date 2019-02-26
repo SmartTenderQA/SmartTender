@@ -48,6 +48,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_v
 	cdb2_ssp_step.Заповнити "Банківські реквізити"
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
+	sale_keywords.Натиснути кнопку опублікувати
 
 
 Завантажити локатори для ІП
