@@ -47,7 +47,23 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Створити та перевірити ІП для МП
 	[Tags]  cdb2_ssp
 	Go To  ${start page}
-	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
+
+	cdb2_ssp_step.Завантажити локатори для ІП
+
+	start_page.Натиснути на іконку з баннеру  Комерційні тендери SmartTender
+	old_search.Активувати вкладку ФГИ
+	small_privatization_search.Активувати вкладку  Реєстр об'єктів приватизації
+	small_privatization_search.Вибрати режим сторінки об'єктів приватизації  Кабінет
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	small_privatization_search.Натиснути створити  інформаційне повідомлення
+	cdb2_ssp_step.Заповнити "Унікальний код об'єкту"  ${assetID}
+	cdb2_ssp_step.Заповнити "Рішення про затверждення умов продажу"
+	cdb2_ssp_step.Заповнити "Умови аукціону"
+	cdb2_ssp_step.Заповнити "Банківські реквізити"
+	sale_keywords.Натиснути кнопку зберегти
+	sale_keywords.Натиснути кнопку опублікувати
+
 	sale_keywords.Отримати prozorro ID
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
