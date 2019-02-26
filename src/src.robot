@@ -134,7 +134,6 @@ ${where}
 
 ${browser}							chrome
 ${browser_version}
-${environment}
 ${platform}							ANY
 ${hub}                              http://autotest.it.ua:4444/wd/hub
 ${headless}                         ${True}
@@ -280,5 +279,5 @@ Input Type Flex
 	...  '${format}' == 's'		"%d.%m.%Y %H:%M:%S"
 	...  '${format}' == 'm'		"%d.%m.%Y %H:%M"
 	...  '${format}' == 'd'		"%d.%m.%Y"
-	${formated time}  Evaluate  time.strftime(${time format}, time.localtime(${time}))  time
+	${formated time}  Evaluate  time.strftime(${time format}, time.localtime(${time}/1000))  time
 	[Return]  ${formated time}
