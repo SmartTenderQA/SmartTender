@@ -60,7 +60,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 Відповісти організатором на поставлене запитання
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
-    main_page.Знайти тендер організатором по title  ${data['title']}
+    main_page.Знайти тендер організатором по title  ${data['title'][13:]}
     actions.Активувати вкладку  Обговорення закупівлі  /preceding-sibling::li[1]
     ${answer}  Відповісти організатором на запитання  ${data['questions'][${n}]['title']}
     Set To Dictionary  ${data['questions'][${n}]}  answer  ${answer}

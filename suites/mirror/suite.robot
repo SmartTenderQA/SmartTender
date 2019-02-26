@@ -19,19 +19,18 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 
 
 #zapusk
-#robot --consolecolors on -L TRACE:INFO -d test_output -i $where -v where:$where suites/mirror/suite.robot
+#robot --consolecolors on -L TRACE:INFO -d test_output -i $env -v env:$env suites/mirror/suite.robot
 *** Test Cases ***
 Відкрити стартову сторінку
 	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	${start_page}  Set Variable If
-	...  '${where}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
-	...  '${where}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
-	...  '${where}' == 'ukroboronprom' or '${where}' == 'pre_prod'       https://smarttender.biz/TenderMirror/?mirrorId=5804
-	...  '${where}' == 'uspa'                 http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
+	...  '${env}' == 'test'                 http://test.smarttender.biz/TenderMirror/?mirrorId=1
+	...  '${env}' == 'utg'                  http://utg.ua/utg/purchases/prozorro.html
+	...  '${env}' == 'ukroboronprom'        https://smarttender.biz/TenderMirror/?mirrorId=5804
+	...  '${env}' == 'pre_prod'             http://iis8.smarttender.biz.int//TenderMirror/?mirrorId=5804
+	...  '${env}' == 'uspa'                 http://www.uspa.gov.ua/ru/gosudarstvennye-zakupki/elektronnaya-ploshchadka-smarttender-biz
 	Set Global Variable  ${start_page}
-	Run Keyword If  "${where}" == "pre_prod"  Set Global Variable  ${IP}  iis
-	Змінити стартову сторінку для IP
-	Run Keyword  Відкрити браузер ${browser.lower()}  ${where}
+	Run Keyword  Відкрити браузер ${browser.lower()}  ${env}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
 	Дочекатись закінчення загрузки сторінки(skeleton)
@@ -48,7 +47,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Page Should Contain Element  ${search field}
 	Page Should Contain Element  ${search button}
-	Run Keyword If  '${where}' != 'ukroboronprom'
+	Run Keyword If  '${env}' != 'ukroboronprom' and '${env}' != 'pre_prod'
 	...  Page Should Contain Element  ${select status button}
 	Page Should Contain Element  ${select type bidding button}
 	Page Should Contain Element  ${search-organizers}

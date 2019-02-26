@@ -34,7 +34,7 @@ Resource  ../../src/pages/start_page/login/login.robot
 	[Arguments]  ${user}  ${login}  ${password}
 	Go To  ${start_page}/webclient/
 	Wait Until Page Contains  Вхід в систему  60
-	Input Text  xpath=//*[@data-name="Login"]//input  ${login}
+	Заповнити текстове поле  xpath=//*[@data-name="Login"]//input  ${login}
 	Input Text  xpath=//*[@data-name="Password"]//input  ${password}
 	Click Element At Coordinates  xpath=(//*[contains(text(), 'Увійти')])[1]  -40  0
 	Дочекатись закінчення загрузки сторінки(webclient)

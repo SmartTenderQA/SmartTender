@@ -1,7 +1,7 @@
 *** Variables ***
 ${blog}							//*[@class='ivu-card-body']/*[contains(@class,'ivu-row')]
 ${blog input}					css=.ivu-card-body input
-${blog search button}			css=.ivu-card-body button
+${blog search button}			//div[contains(@class,"search-btn")]
 
 
 *** Keywords ***

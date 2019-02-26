@@ -167,6 +167,7 @@ If skipped create tender
 	:FOR  ${i}  IN  ${tender_owner}  ${provider3}  ${viewer}
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
+	\  дочекатись закінчення загрузки сторінки(skeleton)
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
