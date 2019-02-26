@@ -44,11 +44,12 @@ ${field_password}       //input[@type="password"]
 
 Перевірити наявність листа за темою
 	[Arguments]  ${title}  ${time now -3 min}
-	Reload Page
-	Wait Until Element Is Not Visible  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  10
+	elements.Дочекатися зникнення елемента зі сторінки  //*[@class='msg' and contains(text(),'Завантаження Gmail')]  30
 	${time selector}  Set Variable  //*[contains(text(),'${title}')]/ancestor::tr//*[@class='xW xY ']
 	${time is}  Get Text  ${time selector}
 	${is today}  Evaluate  not '.' in '${time is}'
 	Run Keyword If  ${is today} == ${False}  Fail
 	${time}  compare_dates_smarttender  ${time now -3 min}  <=  ${time is}
 	Should Be Equal  ${time}  ${True}
+	Reload Page
+	Run Keyword And Ignore Error  Handle Alert  action=DISMISS
