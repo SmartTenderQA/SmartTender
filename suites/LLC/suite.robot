@@ -46,4 +46,4 @@ ${content}  Приймаю умови Договору приєднання пр
   ...  AND  Wait Until Page Contains Element  //*[contains(text(),"${content}")]
   ...  AND  Click Element   (//*[contains(@class, "ivu-modal-close")])[last()]
   ...  AND  Wait Until Page Does Not Contain  (//*[contains(@class, "ivu-modal-close")])[last()]  15
-  ...  AND  Location Should Be  ${start_page}
+  ...  AND  Wait Until Keyword Succeeds  60  1  Location Should Be  ${start_page}
