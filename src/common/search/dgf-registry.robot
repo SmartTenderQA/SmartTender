@@ -11,7 +11,8 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 Вибрати тип активу
 	[Arguments]  ${type}
 	${type locator}  Set Variable  //li[contains(text(),'${type}')]
-	Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
+	elements.Дочекатися відображення елемента на сторінці  xpath=//span[contains(text(),'Оберіть тип активу')]  5
+	Wait Until Keyword Succeeds  5  .5  Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
 	elements.Дочекатися відображення елемента на сторінці  ${type locator}
 	Click Element  ${type locator}
 	Дочекатись закінчення загрузки сторінки(skeleton)
