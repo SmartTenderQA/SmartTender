@@ -671,6 +671,7 @@ Test Postcondition
 Перевірити аукціони за назвою new
 	[Arguments]  ${name}
 	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
+	Дочекатись закінчення загрузки сторінки
 	dgf_search.Розгорнути фільтр  Вид торгів
 	dgf_search.Вибрати вид торгів  ${name}
 	dgf_search.Перейти по результату пошуку за номером  last()

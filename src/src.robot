@@ -134,7 +134,6 @@ ${where}
 
 ${browser}							chrome
 ${browser_version}
-${environment}
 ${platform}							ANY
 ${hub}                              http://autotest.it.ua:4444/wd/hub
 ${headless}                         ${True}
