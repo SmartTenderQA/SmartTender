@@ -1,6 +1,6 @@
 *** Variables ***
-${nashi-klienty text}               //*[@data-qa="head-vip-client"]/h2
-${nashi-klienty text1}              //*[@data-qa="head-last-connected-client"]/h2
+${nashi-klienty text}               xpath=(//*[@class="row text-center"]//b)[1]
+${nashi-klienty text1}              xpath=(//*[@class="row text-center"]//b)[2]
 ${client banner}                    //*[@data-qa="card-client"]
 
 

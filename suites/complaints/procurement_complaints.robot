@@ -36,7 +36,7 @@ Metadata  Команда запуска скарг
     ${date}  smart_get_time  2  d
     search.Відфільтрувати по даті кінця прийому пропозиції від  ${date}
     old_search.Виконати пошук тендера
-    ${n}  Set Variable If  '${site}' == 'prod'  2  1
+    ${n}  Set Variable If  '${site}' == 'prod'  last()  1
     old_search.Перейти по результату пошуку за номером  ${n}
     Run Keyword If  '${site}' == 'prod'  search.Додаткова перевірка на тестові торги для продуктива
     Зберегти дані тендера
