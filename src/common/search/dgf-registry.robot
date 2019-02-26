@@ -12,16 +12,12 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	[Arguments]  ${type}
 	${type locator}  Set Variable  //li[contains(text(),'${type}')]
 	Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
-	Sleep  .5
-#	${status}  Run Keyword And Return Status
-#	...  Wait Until Page Contains Element  ${type locator}
-#	Run Keyword If  ${status} == ${False}  Вибрати тип активу  ${type}
-#	Wait Until Element Is Visible  ${type locator}
-#	Sleep  .3
-	elements.Дочекатися відображення елемента на сторінці  ${type locator}  20
+	elements.Дочекатися відображення елемента на сторінці  ${type locator}
 	Click Element  ${type locator}
-	Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
 	Дочекатись закінчення загрузки сторінки(skeleton)
+	${status}  Run Keyword And Return Status
+	...  elements.Дочекатися відображення елемента на сторінці  //li[contains(text(),'${type}') and contains(@class,'selected')]
+	Run Keyword If  '${status}' == '${False}'  Вибрати тип активу  ${type}
 
 
 Перейти по результату пошуку за номером
