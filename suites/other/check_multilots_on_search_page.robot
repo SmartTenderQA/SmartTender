@@ -1,8 +1,12 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Suite Setup     Preconditions
-Suite Teardown  Close All Browsers
-Test Teardown  Run Keywords  Log Location  AND  Run Keyword If Test Failed  Capture Page Screenshot
+Suite Setup                     Preconditions
+Suite Teardown                  Close All Browsers
+Test Teardown                   Run Keywords
+                                  ...  Log  ${checked_single}  WARN  AND
+                                  ...  Log  ${checked_multiple}  WARN  AND
+                                  ...  Log Location  AND
+                                  ...  Run Keyword If Test Failed  Capture Page Screenshot
 
 # Команда запуска
 # robot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:test_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot
@@ -61,9 +65,9 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
   [Arguments]  ${lots_quantity}  ${number of multiple tender}
   :FOR  ${lot number}  IN RANGE  1  ${lots_quantity} + 1
   \  Перейти на сторінку лота та перевірити назву  ${lot number}  ${number of multiple tender}
-  Run Keyword If  ${lots_quantity} == ${1}
-  ...  Set Global Variable  ${checked_single}  ${true}  ELSE
-  ...  Set Global Variable  ${checked_multiple}  ${true}
+  Run Keyword If  ${lots_quantity} == ${1}  Run Keywords
+  ...  Set Global Variable  ${checked_single}  ${true}  AND  Log  ${checked_single}  WARN  ELSE
+  ...  Run Keywords  Set Global Variable  ${checked_multiple}  ${true}  AND  Log  ${checked_multiple}  WARN
   Завершити виконання тесту якщо умови виконані
 
 
