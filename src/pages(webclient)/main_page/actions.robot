@@ -66,6 +66,7 @@
 
 Підтвердити вибір(F10)
 	${ok button}  Set Variable  //*[@title="Вибрати"]
+	elements.Дочекатися відображення елемента на сторінці  ${ok button}
 	Click Element  ${ok button}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Does Not Contain Element  ${ok button}

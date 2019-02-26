@@ -23,6 +23,7 @@
 	${status}  Run Keyword And Return Status
 	...  Wait Until Page Contains Element  ${button}
 	Run Keyword If  '${status}' == 'True'  Run Keywords
+	...  elements.Дочекатися відображення елемента на сторінці  ${button}  AND
 	...  Click Element  ${button}  AND
 	...  Дочекатись закінчення загрузки сторінки(webclient)
 
