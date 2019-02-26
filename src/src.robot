@@ -196,7 +196,8 @@ Open Browser In Grid
     ${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
     Run Keyword If  ${headless} == ${True}  Run Keywords
     ...  Call Method    ${class_options}    set_headless    ${True}  AND
-    ...  Call Method    ${class_options}    add_argument    disable-gpu
+    ...  Call Method    ${class_options}    add_argument    disable-gpu  AND
+    ...  Call Method    ${class_options}    add_argument    --window-size\=1280,1024
 
     Run Keyword If  '${browser_version}' != ''
     ...  Call Method    ${class_options}    set_capability  version  ${browser_version}
