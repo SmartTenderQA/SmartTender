@@ -33,12 +33,6 @@ Test Teardown  			Run Keywords
     Run Keywords  synchronization.Дочекатись синхронізації  procurement  AND  synchronization.Дочекатись синхронізації  procurement
 
 
-#Перейти в особистий кабінет користувача
-#    header_old.Розгорнути меню користувача
-#    user-menu.Натиснути кнопку Особистий кабінет
-#    Дочекатись закінчення загрузки сторінки(weclient start)
-
-
 Змінити назву тендера
     [Tags]  below
     Завантажити сесію для  ${tender_owner}
@@ -85,17 +79,6 @@ Test Teardown  			Run Keywords
 	Run Keyword If  'prod' in '${where}'
 	...  Set Global Variable  ${tender_owner}  prod_owner
     Додати першого користувача  ${tender_owner}
-
-
-
-
-#Preconditions
-#    ${site}  Set Variable If  '${where}' == 'test'  test  prod
-#    ${user}  Run Keyword If  'prod' in '${site}'  Set Variable  prod_owner
-#    ...  ELSE  Set Variable  Bened
-#   	Set Global Variable  ${user}  ${user}
-#	Open Browser In Grid  ${user}
-#	Авторизуватися  ${user}
 
 
 Отримати дані з cdb та зберегти їх у файл
