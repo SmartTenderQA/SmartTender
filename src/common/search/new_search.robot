@@ -30,6 +30,7 @@ ${elastic search clean filter}      css=.tag-holder button
 
 
 Порахувати кількість торгів
+	elements.Дочекатися відображення елемента на сторінці  ${item dogovory}  10
 	${count}  Get Element Count  ${item dogovory}
 	[Return]  ${count}
 

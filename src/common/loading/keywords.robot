@@ -10,6 +10,10 @@
     ...  Wait Until Element Is Not Visible
     ...  ${locator}
     ...  120
+    Run Keyword If  '${locator}' == '${webClient loading}'
+    ...  Wait Until Element Is Not Visible
+    ...  //*[@id="adorner"]
+    ...  30
 
 
 Дочекатись закінчення загрузки сторінки по елементу_new

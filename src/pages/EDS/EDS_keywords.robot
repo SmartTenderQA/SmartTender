@@ -18,6 +18,7 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 	Run keyword if   "${passed}" == "${True}"  Click element  ${EDS btn}\[2]
 	...  ELSE  Click element  ${EDS btn}\[1]
 	elements.Дочекатися відображення елемента на сторінці  ${EDS_block}
+	Дочекатись закінчення загрузки сторінки
 
 
 Вибрати тестовий ЦСК
@@ -35,7 +36,9 @@ ${EDS succeed}             ЕЦП/КЕП успішно накладено
 
 Ввести пароль ключа
     [Arguments]  ${index}=1
-	Input Password  (${EDS_block}//*[@data-qa="eds-password"]//input)[${index}]  ${passwod}
+    ${input}  Set Variable  (${EDS_block}//*[@data-qa="eds-password"]//input)[${index}]
+    elements.Дочекатися відображення елемента на сторінці  ${input}  15
+	Input Password  ${input}  ${passwod}
 
 
 Натиснути Підписати та отримати відповідь

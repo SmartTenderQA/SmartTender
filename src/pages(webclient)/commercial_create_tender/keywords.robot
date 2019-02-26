@@ -4,6 +4,7 @@
 	Wait Until Element Is Visible  ${row}  10
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
+	Дочекатись закінчення загрузки сторінки(webclient)
 	Click Element  (${row})[${n}]
 	Sleep  3
 	${classification_name}  Get Text  (${row})[${n}]
