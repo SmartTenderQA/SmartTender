@@ -254,7 +254,8 @@ Precondition
     Call Method    ${class_options}    add_experimental_option    prefs    ${prefs}
     Run Keyword If  '${headless}' == '${True}'  Run Keywords
     ...  Call Method    ${class_options}    set_headless    ${True}  AND
-    ...  Call Method    ${class_options}    add_argument    disable-gpu
+    ...  Call Method    ${class_options}    add_argument    disable-gpu  AND
+    ...  Call Method    ${class_options}    add_argument    --window-size\=1280,1024
     ${options}  Call Method  ${class_options}  to_capabilities
 	Create Webdriver  Chrome  desired_capabilities=${options}
     Set Window Size  1280  1024
