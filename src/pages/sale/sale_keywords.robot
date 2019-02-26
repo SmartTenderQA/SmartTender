@@ -51,7 +51,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
 
 
 Отримати prozorro ID для prod
-    ${cdb locator}  Set Variable  //*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a|//*[contains(@class,'margin-bottom') and contains(.,'Посилання в ЦБД')]//a
+    ${cdb locator}  Set Variable  (//*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a|//*[contains(@class,'margin-bottom') and contains(.,'Посилання в ЦБД')]//a)[last()
     Wait Until Element Is Visible  ${cdb locator}  120
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb href}  Поправити лінку для IP  ${cdb href}
