@@ -44,7 +44,8 @@ ${elastic search clean filter}      css=.tag-holder button
 
 
 Очистити фільтр пошуку
-	${status}  Run Keyword And Return Status  Page Should Contain Element  ${elastic search clean filter}
+	Дочекатись закінчення загрузки сторінки(skeleton)
+	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${elastic search clean filter}
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}
 	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
