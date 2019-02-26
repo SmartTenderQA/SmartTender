@@ -36,6 +36,7 @@
 #				Alt+Right					  #
 ###############################################
 Натиснути надіслати вперед(Alt+Right)
+	elements.Дочекатися відображення елемента на сторінці  //*[contains(@title, "Alt+Right")]
 	Click Element  //*[contains(@title, "Alt+Right")]
 	Дочекатись закінчення загрузки сторінки(webclient)
 
@@ -65,6 +66,7 @@
 
 Підтвердити вибір(F10)
 	${ok button}  Set Variable  //*[@title="Вибрати"]
+	elements.Дочекатися відображення елемента на сторінці  ${ok button}
 	Click Element  ${ok button}
 	Дочекатись закінчення загрузки сторінки(webclient)
 	Wait Until Page Does Not Contain Element  ${ok button}
