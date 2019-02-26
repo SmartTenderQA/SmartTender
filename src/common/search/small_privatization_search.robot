@@ -19,6 +19,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 Активувати вкладку
 	[Documentation]  ${tab name} == Аукціони|Реєстр об'єктів приватизації
 	[Arguments]  ${tab name}
+	Дочекатись закінчення загрузки сторінки
 	${selector}  Set Variable  //*[contains(@class,'tab-pane') and contains(., "${tab name}")]
 	${class}  Get Element Attribute  ${selector}  class
 	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
