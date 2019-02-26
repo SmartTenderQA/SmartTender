@@ -17,8 +17,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  cdb2_ssp
 	cdb2_ssp_step.Створити об'єкт МП
 	cdb2_ssp_asset_page.Отримати UAID для Об'єкту
-	Run Keyword If  '${site}' == 'test'
-	...  sale_keywords.Отримати prozorro ID
+	sale_keywords.Отримати prozorro ID
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  asset_cdb_data
@@ -49,8 +48,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	[Tags]  cdb2_ssp
 	Go To  ${start page}
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
-	Run Keyword If  '${site}' == 'test'
-	...  sale_keywords.Отримати prozorro ID
+	sale_keywords.Отримати prozorro ID
 	${cdb_data}  Wait Until Keyword Succeeds  180  15  Отримати дані інформаційного повідомлення приватизації з cdb по id  ${data['id']}
 	Set Global Variable  ${cdb_data}
 	Зберегти словник у файл  ${cdb_data}  lot_cdb_data
