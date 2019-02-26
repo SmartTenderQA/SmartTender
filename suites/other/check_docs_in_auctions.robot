@@ -19,7 +19,7 @@ Test Teardown    		Run Keywords
 *** Variables ***
 @{image_format}                png  jpg  jpeg  gif  tif  tiff  bmp
 ${tender head on old search}   //tr[@class="head"]
-${tender boby on old search}   /../../following-sibling::tr[1][not(contains(@style, "display: none"))]
+${tender boby on old search}   /following-sibling::tr[@class="content"][1][not(contains(@style, "display: none"))]
 
 *** Test Cases ***
 Відкрити сторінку торгів ${type}
@@ -81,6 +81,9 @@ Preconditions
 
 Почати пошук файлів у процедурах
 	[Arguments]  ${tenders_on_page}
+	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}
+	\  ${sel}  Set Variable  //tr[@class="head"][${tender}]
+	\  Assign Id To Element  ${sel}  tender_id#${tender}
 	:FOR  ${tender}  IN RANGE  1  ${tenders_on_page}-1
 	\  Log Many  &{checks}
 	\  Wait Until Keyword Succeeds  20  .5  Розкрити тендер за номером  ${tender}
@@ -97,18 +100,16 @@ Preconditions
 
 Розкрити тендер за номером
 	[Arguments]  ${number}
-	${tender_expand}  Set Variable  (${tender head on old search})[${number}]/td/span
-	Wait Until Keyword Succeeds  1m  .5  Run Keywords
-	...  Click Element  ${tender_expand}  AND
-	...  Дочекатись загрузки документів в тендері  AND
-	...  Wait Until Page contains element  ${tender_expand}${tender boby on old search}
-	Scroll Page To Element XPATH  (${tender head on old search})[${number}+1]/td/span
+	${tender_expand}  Set Variable  //*[@id="tender_id#${number}"]//td/span
+	Click Element  ${tender_expand}
+	Дочекатись загрузки документів в тендері
+	Click Element  //*[@id="tender_id#${number}"]${tender boby on old search}//*[contains(text(),"Сайт")]
 
 
 Отримати список файлів у процедурі
 	[Arguments]  ${number}
 	${list of files}  Create List
-	${file selector}  Set Variable  (${tender head on old search})[${number}]/td/span${tender boby on old search}//*[@class="item"]
+	${file selector}  Set Variable  //*[@id="tender_id#${number}"]${tender boby on old search}//*[@class="item"]
 	${doc_quantity}  Get Element Count  ${file selector}//a[@href]
 	:FOR  ${file}  IN RANGE  1  ${doc_quantity}+1
 	\  ${file name}  Wait Until Keyword Succeeds  15  .5  Run Keyword And Ignore Error  Get Text  ${file selector}\[${file}]//a[@href]/span
@@ -160,7 +161,7 @@ Preconditions
 	${location}  Get Location
 	Log  ${location}  WARN
 	:FOR  ${file}  IN  @{files for checks}
-	\  Wait Until Keyword Succeeds  10  .5  Page Should Contain  ${file}
+	\  Wait Until Keyword Succeeds  20  .5  Page Should Contain  ${file}
 	\  ${doc_type}  Отримати формат файлу  ${file}
 	\  Run Keyword If  "${doc_type}" == "p7s"  Run Keywords
 	...  Set To Dictionary  ${checks}  checked_${doc_type}  ${True}  AND
