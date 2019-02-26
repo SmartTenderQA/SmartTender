@@ -36,6 +36,7 @@
 #				Alt+Right					  #
 ###############################################
 Натиснути надіслати вперед(Alt+Right)
+	elements.Дочекатися відображення елемента на сторінці  //*[contains(@title, "Alt+Right")]
 	Click Element  //*[contains(@title, "Alt+Right")]
 	Дочекатись закінчення загрузки сторінки(webclient)
 
