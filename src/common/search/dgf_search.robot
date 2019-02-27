@@ -22,6 +22,7 @@ ${elastic search clean filter}      css=.tag-holder button
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  xpath=(//*[@class='panel-body']//h4//a)[${n}]
+	Дочекатись закінчення загрузки сторінки(skeleton)
 	Wait Until Page Contains Element  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
