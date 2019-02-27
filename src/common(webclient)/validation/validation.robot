@@ -12,7 +12,7 @@
 	${button}  Set Variable  //*[contains(@class, "headerText") and contains(text(), "${title}")]/ancestor::*//span[contains(text(), '${action}')]
 	Wait Until Page Contains Element  ${button}
 	Click Element  ${button}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Element Is Not Visible  ${button}
 
 
@@ -25,7 +25,7 @@
 	Run Keyword If  '${status}' == 'True'  Run Keywords
 	...  elements.Дочекатися відображення елемента на сторінці  ${button}  AND
 	...  Click Element  ${button}  AND
-	...  Дочекатись закінчення загрузки сторінки(webclient)
+	...  Дочекатись закінчення загрузки сторінки
 
 
 Очистити фільтр "Умова відбору"
@@ -33,7 +33,7 @@
 	...  Wait Until Page Contains Element  //*[contains(@class, "headerText") and contains(text(), "Умова відбору")]
 	Run Keyword If  '${status}' == 'True'  Run Keywords
 	...  Click Element  //*[@data-name="clearFilter"]|//*[@data-name="CLEARFILTERKEY"]|//*[@title="Очистити"]  AND
-	...  Дочекатись закінчення загрузки сторінки(webclient)
+	...  Дочекатись закінчення загрузки сторінки
 
 
 
@@ -43,7 +43,7 @@
     ...  Wait Until Element Contains    //span[@id="pcModalMode_PWH-1T"]  Завантаження документації
     Run Keyword If  '${status}' == 'True'  Run Keywords
     ...  Click Element  xpath=//*[@title="OK"]
-    ...  AND  Дочекатись закінчення загрузки сторінки(webclient)
+    ...  AND  Дочекатись закінчення загрузки сторінки
 
 
 Ignore WebClient Error
@@ -61,7 +61,7 @@ Ignore updateConflict Error
 	${status}  Run Keyword And Return Status  Wait Until Element Is Visible  ${window}
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Click Element  //a[@title="Записати"]  AND
-	...  Дочекатись закінчення загрузки сторінки(webclient)  AND
+	...  Дочекатись закінчення загрузки сторінки  AND
 	...  Ignore updateConflict Error  ${text}
 
 
@@ -80,4 +80,4 @@ Ignore updateConflict Error
     ${status}  Run Keyword And Return Status
     ...  Wait Until Page Contains  Договір підписаний  10
     Run Keyword If  ${status}  Click Element  //*[@id="IMMessageBoxBtnOK"]//span[text()="ОК"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки

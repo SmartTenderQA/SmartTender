@@ -39,7 +39,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	${edit btn}  Set Variable  //*[@data-qa="button-to-edit-page"]
 	elements.Дочекатися відображення елемента на сторінці  ${edit btn}
 	Click Element  ${edit btn}
-	Дочекатись Закінчення Загрузки Сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${decisionDate is}  Get Element Attribute  ${edit_locators['decisions'][0]['decisionDate']}  value
 	Should Be Equal  ${decisionDate is}  ${data['decisions'][0]['decisionDate'][:-3]}  Oops! decisionDate на сторінці редагування змінилася
 
@@ -86,7 +86,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 	${edit btn}  Set Variable  //*[@data-qa="button-to-edit-page"]
 	elements.Дочекатися відображення елемента на сторінці  ${edit btn}
 	Click Element  ${edit btn}
-	Дочекатись Закінчення Загрузки Сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${decisionDate is}  Get Element Attribute  ${edit_locators['decisions'][0]['decisionDate']}  value
 	Should Be Equal  ${decisionDate is}  ${data['decisions'][0]['decisionDate'][:-3]}  Oops! decisionDate на сторінці редагування змінилася
 

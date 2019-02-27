@@ -11,13 +11,13 @@
 Натиснути створити аукціон
 	Wait Until Element Is Visible  //*[@data-qa='button-create-auction']  15
 	Click Element  //*[@data-qa='button-create-auction']
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Отримати UAID та href для Аукціону
 	Reload Page
 	${selector}  Set Variable  ${view_locators['auctionID']}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${UAID}  Get Text  ${selector}
 	${correct status}  Run Keyword And Return Status  Перевірити коректність UAID для Аукціону  ${UAID}
 	Run Keyword If  ${correct status} == ${False}  Отримати UAID та href для Аукціону

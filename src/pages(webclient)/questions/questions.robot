@@ -47,10 +47,10 @@
 
 Додати файл до відповіді на запитання
     Click Element  //*[@data-name="ATTACHMENTBTN"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${name}  ${hash}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${get}  Get Element Attribute  //*[@data-name="ATTACHMENT"]//input  value
     Should Be Equal  ${get}  ${name}
     [Return]  ${name}  ${hash}

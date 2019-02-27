@@ -160,9 +160,9 @@ Resource        create_tender_keywords.robot
 Вибрати "Контактна особа"
     ${input field}  Set Variable  //*[@data-name="N_KDK_M"]//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  10  2  Click Element  ${input field}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Keyword Succeeds  10  2  Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Вибрати довільну персону з довідника персоналу
     ${person}  Get Element Attribute  ${input field}  value
     [Return]  ${person}
@@ -195,9 +195,9 @@ Resource        create_tender_keywords.robot
 Заповнити "Класифікація"
     ${input field}  Set Variable  //*[@data-name="MAINCLASSIFICATION"]//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	${id}  Вибрати довільну ЗЕЛЕНУ класифікацію
 	Підтвердити вибір(F10)
 	${id}  Get Element Attribute  ${input field}  value
@@ -208,9 +208,9 @@ Resource        create_tender_keywords.robot
     ${input field}  Set Variable  //*[@data-name='EDI']//input[not(contains(@type,'hidden'))]
     Wait Until Keyword Succeeds  15  2  Click Element  ${input field}
 	Sleep  1
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Keyword Succeeds  10  2  Click Element  ${input field}/ancestor::tr/td[@title="Вибір з довідника (F10)"]
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	${unit}  Вибрати довільну одиницю виміру
 	Підтвердити вибір(F10)
 	${unit}  Get Element Attribute  ${input field}  value

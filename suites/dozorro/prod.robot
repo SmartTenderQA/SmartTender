@@ -720,7 +720,7 @@ Postcondition
   ${comment_num}  random_number  1  ${n}
   Set Global Variable  ${comment_num}
   Click Element  xpath=(//div/h5)[${comment_num}]/../..//*[contains(text(), 'Додати коментар')]
-  Дочекатись закінчення загрузки сторінки(circle)
+  Дочекатись закінчення загрузки сторінки
   Input Text  xpath=//*[@class="controls"]/textarea  ${text}
   Set To Dictionary  ${data}  comment_text=${text}
   Wait Until Keyword Succeeds  120  10  dozorro.Подати коментар

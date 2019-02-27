@@ -175,7 +175,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	:FOR  ${i}  IN  1  3
 	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  Натиснути на кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  1
 	\  Подати пропозицію
@@ -194,7 +194,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
     :FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  Натиснути кнопку "До аукціону"
 	\  ${viewer_href}  Отримати URL на перегляд
     \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
@@ -235,7 +235,7 @@ Precondition
 
 Дочекатися довантаження даних з ЦБД
 	Reload Page
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${title locator}  Set Variable  ${view_locators['title']}
 	${title}  Get Text  ${title locator}
 	Should Contain  ${title}  [ТЕСТУВАННЯ]
@@ -253,9 +253,9 @@ Precondition
 	new_search.Очистити фільтр пошуку
 	new_search.Ввести фразу для пошуку  ${data['id']}
 	new_search.Натиснути кнопку пошуку
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	new_search.Перейти по результату пошуку за номером  1
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Перейти та перевірити сторінку участі в аукціоні
@@ -280,7 +280,7 @@ Precondition
 	[Arguments]  ${user}
 	Завантажити сесію для  ${user}
 	Go to  ${data['tender_href']}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${auction_participate_href}  Run Keyword And Expect Error  *  Run Keywords
 	...  Натиснути кнопку "До аукціону"
 	...  AND  Отримати URL для участі в аукціоні

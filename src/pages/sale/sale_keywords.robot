@@ -18,8 +18,7 @@ ${notice message}						//*[@class='ivu-notice-desc']
     ${notice text}  Get Text  ${notice message}
 	Should Contain Any  ${notice text}  Аукціон було успішно  Об'єкт приватизації було успішно  Інформаційне повідомлення було
 	Wait Until Page Does Not Contain Element  ${notice message}
-	Дочекатись закінчення загрузки сторінки по елементу  //*[contains(@class,'disabled-block')]
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Натиснути кнопку опублікувати

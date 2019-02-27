@@ -19,7 +19,7 @@ Test Teardown  			Run Keywords
 	${id}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderID']
 	${title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	${link}  Сформувати пряме посилання на тендер  ${id}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${new_title}  procurement_tender_detail.Отритами дані зі сторінки  ['title']
 	Should Be Equal  ${title}  ${new_title}
 

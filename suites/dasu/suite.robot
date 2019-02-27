@@ -1299,7 +1299,7 @@ Test Postcondition
 
 Перейти у webclient
   Go To  ${start_page}/webclient/
-  Дочекатись закінчення загрузки сторінки(webclient)
+  Дочекатись закінчення загрузки сторінки
 
 
 Змінити мову на укр.
@@ -1312,7 +1312,7 @@ Test Postcondition
   Sleep  2
   Click Element  ${selector}
   Wait Until Element Is Not Visible  ${selector}  15
-  Дочекатись закінчення загрузки сторінки(webclient)
+  Дочекатись закінчення загрузки сторінки
 
 
 Сформувати та відправити відповідь органом ДАСУ

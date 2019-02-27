@@ -13,7 +13,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	${status}  Run Keyword And Return Status  Should Contain  ${class}  checked
 	Run Keyword If  ${status} == ${False}  Run Keywords
 	...  Wait Until Keyword Succeeds  60  1  Click Element  ${selector}
-	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
+	...  AND  Дочекатись закінчення загрузки сторінки
 
 
 Активувати вкладку
@@ -24,17 +24,17 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	${class}  Get Element Attribute  ${selector}  class
 	${tab status}  Run Keyword And Return Status  Should Contain  ${class}  active
 	Run Keyword If  ${tab status} == ${False}  Wait Until Keyword Succeeds  60  1  Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Вибрати режим сторінки об'єктів приватизації
     [Arguments]  ${type}
     [Documentation]  Вибираємо режим сторінки. "Кабінет"  або "ПУблічний режим"
-    Дочекатись закінчення загрузки сторінки(skeleton)
+    Дочекатись закінчення загрузки сторінки
     ${selector}  Set Variable  //*[@data-qa="page-mode"]//span[text()="${type}"]
     elements.Дочекатися відображення елемента на сторінці  ${selector}  20
     Click Element   ${selector}
-    Дочекатись закінчення загрузки сторінки(skeleton)
+    Дочекатись закінчення загрузки сторінки
     Element Should Be Visible
     ...  ${selector}/preceding-sibling::span[contains(@class,"radio-checked")]
 
@@ -45,7 +45,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	${switcher locator}  Set Variable  //*[@data-qa='test-mode-switch']
 	${switcher status}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa='test-mode-span']  ${switcher mode}
 	Run Keyword If  ${switcher status} == ${False}  Click Element  ${switcher locator}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Перейти по результату пошуку за номером
@@ -55,12 +55,12 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Натиснути кнопку пошуку
 	Click Element  ${elastic search button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element  //*[@class="tag-holder"]
 
 
@@ -69,4 +69,4 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	[Arguments]  ${create button}
 	${create button locator}  Set Variable  //*[contains(@class,'action-block-item')]//button[contains(.,"${create button}")]
 	Click Element  ${create button locator}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки

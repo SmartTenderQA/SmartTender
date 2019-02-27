@@ -15,7 +15,7 @@ ${elastic search clean filter}      css=.tag-holder button
 
 Натиснути кнопку пошуку
 	Click Element  ${elastic search button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element  ${elastic search clean filter}
 
 
@@ -26,7 +26,7 @@ ${elastic search clean filter}      css=.tag-holder button
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Порахувати кількість торгів
@@ -44,11 +44,11 @@ ${elastic search clean filter}      css=.tag-holder button
 
 
 Очистити фільтр пошуку
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${status}  Run Keyword And Return Status  Wait Until Page Contains Element  ${elastic search clean filter}
 	Run Keyword If  ${status} == ${True}  Run Keywords
 	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}
-	...  AND  Дочекатись закінчення загрузки сторінки(skeleton)
+	...  AND  Дочекатись закінчення загрузки сторінки
 	...  AND  Wait Until Element Is Not Visible  ${elastic search clean filter}
 
 
