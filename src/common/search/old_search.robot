@@ -30,8 +30,7 @@ ${take_part}                            xpath=//div[@class="dhxform_base"]//*[co
 	${selector}  Set Variable  (${first found element})[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки
+	Go To Smart  ${href}
 
 
 Виконати пошук тендера

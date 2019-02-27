@@ -62,7 +62,7 @@ Login with wrong data
     Fill password  ${users_variables["${name2}"]["password"]}
     Run Keyword And Expect Error  *  Click Log In
 #	Close login window
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 
 Login with wrong data and check message
     [Arguments]  ${name1}  ${name2}
@@ -88,7 +88,7 @@ Login with wrong data and check message
 
 Login with correct data
 	[Arguments]  ${user}
-	Go To  ${start page}
+	Go To Smart  ${start page}
     Авторизуватися  ${user}
     Reload and check
 	start_page.Навести мишку на іконку з заголовку  Меню_користувача
@@ -96,5 +96,5 @@ Login with correct data
 
 
 Reload and check
-    Go To  ${start page}
+    Go To Smart  ${start page}
     Wait Until Page Contains  ${name}  10

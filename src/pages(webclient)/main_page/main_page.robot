@@ -22,7 +22,7 @@
 	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
 	${value}  Get Element Attribute  //*[@id="pcCustomDialog_PW-1"]//a  onclick
 	${href}  ${ticket}  get_tender_href_for_commercial_owner  ${value}
-	Go To  ${href}${ticket}
+	Go To Smart  ${href}${ticket}
 	Location Should Contain  ?ticket=
 	[Return]  ${href}
 

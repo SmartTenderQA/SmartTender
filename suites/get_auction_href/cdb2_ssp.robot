@@ -92,7 +92,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Створити інформаційне повідомлення МП
 	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
-	[Setup]  Go To  ${start page}
+	[Setup]  Go To Smart  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
 	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  10 min
@@ -214,10 +214,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Знайти аукціон користувачем  ${provider1}
 	Зберегти сесію  ${provider1}
 	Завантажити сесію для  ${provider2}
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	Зберегти сесію  ${provider2}
 	Завантажити сесію для  ${provider3}
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	Зберегти сесію  ${provider3}
 	Sleep  90
 

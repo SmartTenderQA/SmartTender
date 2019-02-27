@@ -10,19 +10,19 @@
 
 Підтвердити заявки на продуктиві організатором для ФГВ
     ${save location}  Get Location
-	Go To  ${start_page}webclient/
+	Go To Smart  ${start_page}webclient/
 	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися  ${user}
 	Дочекатись закінчення загрузки сторінки
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
 	Відкрити вікно підтвердження заявок
 	Wait Until Keyword Succeeds  20  2  Пошук об'єкта у webclient по полю  Найменування лоту  ${data['title']}
 	Підтвердити всі заявки для ФГВ
-	Go To  ${save location}
+	Go To Smart  ${save location}
 
 
 Підтвердити заявки на продуктиві організатором для ФГИ
     ${save location}  Get Location
-	Go To  ${start_page}webclient/
+	Go To Smart  ${start_page}webclient/
 	Run Keyword If  'iis' in "${IP}" and "tender_owner" == "${role}"  Авторизуватися  ${user}
 	Дочекатись закінчення загрузки сторінки
 	Змінити групу  Администратор ЭТП (стандартный доступ) (E_ADM_STND)
@@ -30,7 +30,7 @@
 	Активувати вкладку  Заявки на участие в торгах ФГИ  /preceding-sibling::*[1]
 	Wait Until Keyword Succeeds  20  2  Пошук об'єкта у webclient по полю ФГИ  Найменування лоту  ${data['title']}
 	Підтвердити всі заявки для ФГИ
-	Go To  ${save location}
+	Go To Smart  ${save location}
 
 
 Відкрити вікно підтвердження заявок
