@@ -7,7 +7,7 @@ ${news search button}			//div[contains(@class,"search-btn")]
 
 *** Keywords ***
 Перевірити заголовок сторінки з новинами
-	${should}  Set Variable  Актуальні новини про тендери в Україні вiд SmartTender
+	${should}  Set Variable  Новини
 	${is}  Get Text  ${novyny title}
 	Should Be Equal  ${is}  ${should}
 

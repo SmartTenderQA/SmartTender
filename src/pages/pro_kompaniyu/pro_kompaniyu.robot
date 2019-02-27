@@ -5,7 +5,7 @@ ${pro-kompaniyu text}               			//*[@class="ivu-card-body"]//*[@class="ma
 
 *** Keywords ***
 Перевірити заголовок сторінки
-	${should header}  Set Variable  Про майданчик
+	${should header}  Set Variable  Про майданчик SmartTender
 	${is header}  Get Text  ${pro_kompaniyu header text}
 	Should Be Equal  ${is header}  ${should header}
 
