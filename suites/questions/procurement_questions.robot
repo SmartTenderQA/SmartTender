@@ -80,6 +80,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 	\  Завантажити сесію для  ${i}
 	\  Go To  ${data['tender_href']}
 	\  procurement_questions.Активувати вкладку "Запитання"
+	\  procurement_tender_detail.Розгорнути всі експандери
 	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['title']
 	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['description']
 	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['answer']
