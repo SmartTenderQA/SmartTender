@@ -16,7 +16,7 @@
     ${status}  Run Keyword And Return Status
     ...  Wait Until Page Contains  Рамкову угоду успішно активовано  10
     Run Keyword If  ${status}  Click Element  //*[@id="IMMessageBoxBtnOK"]//span[text()="ОК"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
 
 
 Заповнити дати РУ

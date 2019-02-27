@@ -33,10 +33,10 @@
 
 Додати файл до відповіді на вимогу
     Click Element  //*[@data-name="BTADD_ATTACHMENT_ORGANIZER"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${name}  ${hash}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     elements.Дочекатися відображення елемента на сторінці  //div[@data-key]//*[contains(text(),"${name}")]
     [Return]  ${name}  ${hash}
 

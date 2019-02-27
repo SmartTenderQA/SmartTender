@@ -34,7 +34,7 @@ ${owner block}                      //*[.="Організатори"]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
 	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Відфільтрувати по організатору
@@ -74,7 +74,7 @@ ${owner block}                      //*[.="Організатори"]
 	${search_button}  Set Variable  css=.search-field button
 	Wait Until Page Contains Element  ${search_button}
 	Click Element  ${search_button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Додаткова перевірка на тестові торги для продуктива

@@ -23,9 +23,7 @@ Resource  ../../src/pages/start_page/login/login.robot
 	...  login.Fill Login  ${login}  AND
 	...  login.Fill Password  ${password}  AND
 	...  login.Click Log In
-	Run Keyword If  "tender_owner" == "${role}"
-	...  Дочекатись закінчення загрузки сторінки(webclient)  ELSE
-	...  Дочекатись закінчення загрузки сторінки
+	Дочекатись закінчення загрузки сторінки
 	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
 	...  Wait Until Page Contains  ${name}  10
 
@@ -37,4 +35,4 @@ Resource  ../../src/pages/start_page/login/login.robot
 	Заповнити текстове поле  xpath=//*[@data-name="Login"]//input  ${login}
 	Input Text  xpath=//*[@data-name="Password"]//input  ${password}
 	Click Element At Coordinates  xpath=(//*[contains(text(), 'Увійти')])[1]  -40  0
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки

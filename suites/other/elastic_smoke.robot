@@ -5,7 +5,7 @@ Suite Setup  			Run Keywords
 	...  debug  AND
 						...  Open Browser In Grid  ${user}  								AND
 						...  Go To  ${start_page}/Participation/tenders/  			AND
-						...  Дочекатись закінчення загрузки сторінки(skeleton)
+						...  Дочекатись закінчення загрузки сторінки
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  											AND

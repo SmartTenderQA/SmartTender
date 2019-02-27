@@ -200,7 +200,7 @@ Precondition
 
 Натиснути кнопку "Додати документи"
     Reload Page
-    Дочекатись закінчення загрузки сторінки(skeleton)
+    Дочекатись закінчення загрузки сторінки
     ${selector}  Set Variable  //a[contains(@class, "btn-success") and contains(text(), "Додати документи")]
     Click Element  ${selector}
 

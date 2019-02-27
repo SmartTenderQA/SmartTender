@@ -132,7 +132,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
@@ -204,7 +204,7 @@ If skipped create tender
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
 	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  Дочекатись закінчення загрузки сторінки			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}
@@ -270,7 +270,7 @@ If skipped create tender
 
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}

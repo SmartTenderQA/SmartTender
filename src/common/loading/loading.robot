@@ -1,47 +1,39 @@
 *** Settings ***
-Resource  			keywords.robot
 
 
 *** Variables ***
-${loading}                          css=div.smt-load
+${loading}                          //div[@class='smt-load']
 #${webClient loading}                //*[contains(@class, 'LoadingPanel')]
-${webClient loading}                //*[contains(@class, "LoadingPanel")]|//*[@id="adorner"]
-${circle loading}                   css=.loading_container .sk-circle
-${skeleton loading}                 css=.skeleton-wrapper
-${sales spin}                       css=.ivu-spin
+${webClient loading}                //*[contains(@class, "LoadingPanel")]
+${circle loading}                   //*[@class='loading_container']//*[@class='sk-circle']
+${skeleton loading}                 //*[contains(@class,'skeleton-wrapper')]
+${sales spin}                       //*[@class='ivu-spin']
 ${docs spin}                        //div[contains(@style, "loading")]
 ${weclient start}                   //*[@class="spinner"]
 ${loading bar}                      //div[@class="ivu-loading-bar"]   # полоса вверху страницы http://joxi.ru/Dr8xjNeT47v7Dr
+${blocker}                          //*[@id="adorner"]
+${sale web loading}                 //*[contains(@class,'disabled-block')]
 
+${loadings}                         ${loading}|${webClient loading}|${circle loading}|${skeleton loading}|${sales spin}|${docs spin}|${weclient start}|${loading bar}|${blocker}|${sale web loading}
 
 *** Keywords ***
 Дочекатись закінчення загрузки сторінки
-	Дочекатись закінчення загрузки сторінки по елементу  ${loading}
+	Sleep  1
+	elements.Дочекатися зникнення елемента зі сторінки  ${loadings}  120
+	Sleep  .5
+	${is visible}  Run Keyword And Return Status  Element Should Be Visible  ${loadings}
+	Run Keyword If  ${is visible}
+	...  Дочекатись закінчення загрузки сторінки lgklkh
 
 
-Дочекатись закінчення загрузки сторінки(circle)
-	Дочекатись закінчення загрузки сторінки по елементу  ${circle loading}
-
-
-Дочекатись закінчення загрузки сторінки(skeleton)
-	Дочекатись закінчення загрузки сторінки по елементу  ${skeleton loading}
-
-
-Дочекатись закінчення загрузки сторінки(webclient)
-	Дочекатись закінчення загрузки сторінки по елементу  ${webClient loading}
-
-
-Дочекатись закінчення загрузки сторінки(sales spin)
-	Дочекатись закінчення загрузки сторінки по елементу  ${sales spin}
-
-
-Дочекатись загрузки документів в тендері
-	Дочекатись закінчення загрузки сторінки по елементу  ${docs spin}
-
-
-Дочекатись закінчення загрузки сторінки(weclient start)
-	Дочекатись закінчення загрузки сторінки по елементу  ${weclient start}
-
-
-Дочекатись закінчення загрузки сторінки(полоса)
-	Дочекатись закінчення загрузки сторінки по елементу  ${loading bar}
+Дочекатись закінчення загрузки сторінки по елементу
+    [Arguments]  ${locator}
+    ${status}  ${message}  Run Keyword And Ignore Error
+    ...  Wait Until Element Is Visible
+    ...  ${locator}
+    ...  3
+    Run Keyword If  "${status}" == "PASS"
+    ...  Run Keyword And Ignore Error
+    ...  Wait Until Element Is Not Visible
+    ...  ${locator}
+    ...  120

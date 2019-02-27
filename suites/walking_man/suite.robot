@@ -466,7 +466,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда майна  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	new_search.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для аукціонів  Оренда майна
 
@@ -477,7 +477,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Продаж майна  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	new_search.Перейти по результату пошуку за номером  2
 	${status}  Run Keyword And Return Status
 	...  Перевірити тип процедури для аукціонів  Продаж майна
@@ -493,7 +493,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  ${TESTNAME}  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Sleep  10
 	new_search.Перейти по результату пошуку за номером  2
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
@@ -509,7 +509,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  ${TESTNAME}  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Sleep  10
 	new_search.Перейти по результату пошуку за номером  1
 	Перевірити тип процедури для аукціонів  ${TESTNAME}
@@ -521,7 +521,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда землі  select
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${status}  Run Keyword And Return Status  new_search.Перейти по результату пошуку за номером  1
 	Run Keyword If  '${status}' == 'False'  Run Keywords
 	...  Go back  AND
@@ -642,7 +642,7 @@ Test Postcondition
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Перевірити тип процедури для закупівель  ${name}
 	procurement_tender_detail.Порахувати доступні вкладки за типом процедури  ${name}
 
@@ -654,7 +654,7 @@ Test Postcondition
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
 	old_search.Перейти по результату пошуку за номером  last()
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Перевірити тип процедури для закупівель  ${name}
 
 
@@ -876,7 +876,7 @@ Test Postcondition
 
 Вибрати тип процедури для малої приватизації
   Click Element  //*[contains(text(), "${TESTNAME}")]
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки
   ${status}  Run Keyword And Return Status  Page Should Contain Element
   ...  //*[contains(text(), "${TESTNAME}")]/../*[contains(@class, 'checked')]
   Run Keyword If  '${status}' == 'False' and "${TESTNAME}" != "Аукціони"  Вибрати тип процедури для малої приватизації
@@ -892,7 +892,7 @@ Test Postcondition
   ${id}  Get Text  //*[@class="content-block"]/div[last()]//*[contains(text(), 'UA')]
   Виконати пошук малої приватизації  ${id}
   Open Button  //*[@class="content-block"]/div//a
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки
   ${text}  Get Text  //*[@class="ivu-card-body"]//a[@href and @rel="noopener noreferrer"]|//h4/a|//h4/following-sibling::a
   Should Be Equal  ${text}  ${id}
 
@@ -901,7 +901,7 @@ Test Postcondition
   [Arguments]  ${id}
   Input Text  //*[contains(@class, 'inner-button')]//input  ${id}
   Click Element  //*[contains(@class, 'inner-button')]//input/following-sibling::*//button
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки
   ${n}  Get Element Count  //*[@class="content-block"]/div
   Should Be Equal  '${n}'  '1'
 
