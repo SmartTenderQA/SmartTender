@@ -54,8 +54,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	Wait Until Element Is Visible  ${selector}  10
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки
+	Go To Smart  ${href}
 
 
 Натиснути кнопку пошуку

@@ -111,7 +111,7 @@ If skipped create tender
 	\  Зберегти сесію  ${i}
 	:FOR  ${i}  IN  2  3
 	\  Завантажити сесію для  ${provider${i}}
-	\  Go to  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  Зберегти сесію  ${provider${i}}
 
 
@@ -166,7 +166,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${provider3}  ${viewer}
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  Дочекатись закінчення загрузки сторінки
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника

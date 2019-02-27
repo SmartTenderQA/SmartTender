@@ -188,7 +188,7 @@ Open Browser In Grid
 Додати користувача
     [Arguments]  ${user}
     Delete All Cookies
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 	Authentication.Авторизуватися  ${user}
 	Зберегти сесію  ${user}
 
@@ -198,7 +198,7 @@ Open button
 	[Arguments]  ${selector}
 	${href}=  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
+	Go To Smart  ${href}
 
 
 conver dict to json
@@ -281,3 +281,9 @@ Input Type Flex
 	...  '${format}' == 'd'		"%d.%m.%Y"
 	${formated time}  Evaluate  time.strftime(${time format}, time.localtime((${time}/1000) + int(${deviation}) * 60))  time
 	[Return]  ${formated time}
+
+
+Go To Smart
+	[Arguments]  ${href}
+	Go To  ${href}
+	loading.Дочекатись закінчення загрузки сторінки

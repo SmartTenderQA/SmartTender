@@ -30,7 +30,7 @@ Resource  ../../src/pages/start_page/login/login.robot
 
 Авторизуватися(webclient)
 	[Arguments]  ${user}  ${login}  ${password}
-	Go To  ${start_page}/webclient/
+	Go To Smart  ${start_page}/webclient/
 	Wait Until Page Contains  Вхід в систему  60
 	Заповнити текстове поле  xpath=//*[@data-name="Login"]//input  ${login}
 	Input Text  xpath=//*[@data-name="Password"]//input  ${password}

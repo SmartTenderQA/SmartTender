@@ -6,7 +6,7 @@
 	...  Open Button  ${first lot}
 	...  AND  Select Frame  css=iframe
 	...  AND  Відкрити сторінку гарантійного внеску
-	...  AND  Go To  ${location}
+	...  AND  Go To Smart  ${location}
 
 
 Перевірити необхідність наявності кнопки гарантійного внеску для мультилоту

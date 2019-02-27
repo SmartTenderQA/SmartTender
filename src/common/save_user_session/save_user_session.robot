@@ -17,14 +17,14 @@ Library  save_user_session.py
 	${location}  Get Location
 	${role}  Отримати дані користувача по полю  ${user}  role
 	Set Global Variable  ${role}
-	Run Keyword If  "${location}" != "${start_page}"  Go To  ${start_page}
+	Run Keyword If  "${location}" != "${start_page}"  Go To Smart  ${start_page}
 	Delete All Cookies
 	:FOR  ${cookie}  IN  @{${user}_cookies.keys()}
 	\  ${value}  Get From Dictionary  ${${user}_cookies}  ${cookie}
 	\  ${cookie}  Evaluate  '${cookie}'.replace(' ', '')
 	\  Add Cookie  ${cookie}  ${value}
 	Reload Page
-	Go To  ${${user}_location}
+	Go To Smart  ${${user}_location}
 	Run Keyword If  '/webclient/' in """${${user}_location}"""  Run Keywords
     ...  Дочекатись закінчення загрузки сторінки  AND
     ...  Location Should Contain  /webclient/

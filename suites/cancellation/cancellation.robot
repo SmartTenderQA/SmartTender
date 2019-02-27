@@ -51,7 +51,7 @@ ${multilot}                                False
 
 
 Дочекатися статусу тендера "Закупівля відмінена"
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Закупівля відмінена
 
 
@@ -68,7 +68,7 @@ ${multilot}                                False
 Перевірити скасування на сторінці користувачами
     :FOR  ${i}  IN  ${tender_owner}  ${viewer}
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
     \  procurement_tender_detail.Відкрити вікно "Причина відміни" детальніше
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['reason']
     \  procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['cancellations'][0]['documents'][0]['title']

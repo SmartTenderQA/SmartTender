@@ -46,7 +46,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Налаштування підписки
   [Tags]  your_account  -pre_prod
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   # отключено для pre_prod - при клике в личном кабинете кидает на smarttender.biz
   personal_account.Відкрити сторінку за назвою  subscription
   Перевірити блок запиту допомоги з налаштування підписки
@@ -58,13 +58,13 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Заявки на отримання тендерного забезпечення
   [Tags]  your_account
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  tender_providing
 
 
 Юридична допомога
   [Tags]  your_account  -ip  non-critical-test  -pre_prod
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  legal_help
   [Teardown]  Run Keywords
   ...  Unselect Frame  AND
@@ -73,7 +73,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Особисті дані користувача
   [Tags]  your_account
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   Run Keyword If  '${site}' == 'prod'
   ...  personal_account.Відкрити сторінку за назвою  company_profile
   Run Keyword If  '${site}' == 'test'
@@ -85,19 +85,19 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Змінити пароль
   [Tags]  your_account  -ip
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  change_password
 
 
 Управління користувачами
   [Tags]  your_account
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  user_management
 
 
 Звіти
   [Tags]  your_account
-  [Setup]  Go To  ${start page}/webparts/?id=_PERSONALCABINET
+  [Setup]  Go To Smart  ${start page}/webparts/?id=_PERSONALCABINET
   personal_account.Відкрити сторінку за назвою  reports
   reports.Встановити фільтр Тільки обрані звіти  увімкнути
   Прибрати усі звіти з обраних
@@ -231,7 +231,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Курси валют
 	[Tags]  site  -test
-	Go To  ${start_page}/test-tenders/
+	Go To Smart  ${start_page}/test-tenders/
 	Навести мишку на  Торговий майданчик
 	Натиснути на елемент з випадаючого списка  Курси валют
 	kursy_valyut.Перевірити заголовок сторінки
@@ -309,7 +309,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон на продаж. Відкриті торги
 	[Tags]  commercial  -test
-	[Setup]  Go To  ${start_page}komertsiyni-torgy-prodazhi/
+	[Setup]  Go To Smart  ${start_page}komertsiyni-torgy-prodazhi/
 	Перевірити наявність торгів
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
@@ -452,7 +452,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Перевірити реєстр активів Права вимоги
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}dgf-registry/
+	[Setup]  Go To Smart  ${start_page}dgf-registry/
 	dgf-registry.Розгорнути детальний пошук
 	Wait Until Keyword Succeeds  30  1  dgf-registry.Вибрати тип активу  Права вимоги
 	dgf-registry.Перейти по результату пошуку за номером  1
@@ -473,7 +473,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Продаж майна
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Продаж майна  select
@@ -487,7 +487,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон. Мала приватизація
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Англійський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -503,7 +503,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Аукціон за методом покрокового зниження стартової ціни та подальшого подання цінових пропозицій
 	[Tags]  sales  -test
-	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  ${TESTNAME}
 	...  ELSE  Set Variable  Голландський аукціон. Мала приватизація
 	new_search.Очистити фільтр пошуку
@@ -517,7 +517,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Оренда землі
 	[Tags]  sales
-	[Setup]  Go To  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
+	[Setup]  Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-derzhpidpryemstv
 	new_search.Очистити фільтр пошуку
 	new_search.Розгорнути фільтр  Вид торгів
 	new_search.Операція над чекбоксом  Оренда землі  select
@@ -565,7 +565,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Простий тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}torgy-rialto/
+	[Setup]  Go To Smart  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -575,7 +575,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 
 Двохетапний тендер
 	[Tags]  rialto
-	[Setup]  Go To  ${start_page}torgy-rialto/
+	[Setup]  Go To Smart  ${start_page}torgy-rialto/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${TESTNAME}
 	old_search.Виконати пошук тендера
@@ -605,12 +605,12 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	Set Global Variable  ${user}
 	Open Browser In Grid  ${user}
 	Авторизуватися  ${user}
-	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
+	Run Keyword If  "tender_owner" == "${role}"  Go To Smart  ${start_page}
 
 
 Test Precondition
 	${location}  Get Location
-	Run Keyword If  '${start_page}' != '${location}'  Go To  ${start_page}
+	Run Keyword If  '${start_page}' != '${location}'  Go To Smart  ${start_page}
 
 
 Test Postcondition
@@ -627,7 +627,7 @@ Test Postcondition
 
 Перевірити комерційні закупівлі за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}komertsiyni-torgy/
+	Go To Smart  ${start_page}komertsiyni-torgy/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -637,7 +637,7 @@ Test Postcondition
 
 Перевірити Конкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}publichni-zakupivli-prozorro/
+	Go To Smart  ${start_page}publichni-zakupivli-prozorro/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -649,7 +649,7 @@ Test Postcondition
 
 Перевірити Неконкурентні процедури за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}publichni-zakupivli-prozorro-nekonkurentni/
+	Go To Smart  ${start_page}publichni-zakupivli-prozorro-nekonkurentni/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -660,7 +660,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою
 	[Arguments]  ${name}
-	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
+	Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  ${name}
 	old_search.Виконати пошук тендера
@@ -670,8 +670,7 @@ Test Postcondition
 
 Перевірити аукціони за назвою new
 	[Arguments]  ${name}
-	Go To  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
-	Дочекатись закінчення загрузки сторінки
+	Go To Smart  ${start_page}auktsiony-na-prodazh-aktyviv-bankiv/
 	dgf_search.Розгорнути фільтр  Вид торгів
 	dgf_search.Вибрати вид торгів  ${name}
 	dgf_search.Перейти по результату пошуку за номером  last()

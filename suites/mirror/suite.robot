@@ -207,8 +207,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	elements.Дочекатися Відображення Елемента На Сторінці  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки
+	Go To Smart  ${href}
 
 
 Виділити портрібний iFrame(за необхідністю)

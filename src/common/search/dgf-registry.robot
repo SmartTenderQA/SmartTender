@@ -26,8 +26,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	${selector}  Set Variable  (${item}//a)[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки
+	Go To Smart  ${href}
 
 
 Порахувати активи

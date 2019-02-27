@@ -116,7 +116,7 @@ If skipped create tender
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  Зберегти сесію  ${i}
 	\  Подати заявку на участь в аукціоні
 
@@ -159,7 +159,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}   #provider3
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
@@ -330,7 +330,7 @@ Precondition
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}
