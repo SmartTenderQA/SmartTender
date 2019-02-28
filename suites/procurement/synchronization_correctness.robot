@@ -5,7 +5,7 @@ Suite Setup  			Run Keyword  Підготувати користувачів
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Page Screenshot
+						...  Run Keyword If Test Failed  Capture Full Screenshot
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -e below -v where:test -v hub:none -v headless suites/procurement/synchronization_correctness.robot
 *** Test Cases ***

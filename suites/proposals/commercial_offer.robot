@@ -4,7 +4,7 @@ Suite Setup  Precondition
 Suite Teardown  Postcondition
 Test Teardown  Run Keywords
 ...  Log Location
-...  AND  Run Keyword If Test Failed  Capture Page Screenshot
+...  AND  Run Keyword If Test Failed  Capture Full Screenshot
 
 
 

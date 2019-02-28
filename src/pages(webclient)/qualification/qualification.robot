@@ -24,7 +24,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     actions.Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${participant}
     Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Capture Page Screenshot  AND
+    ...  Capture Full Screenshot  AND
     ...  Sleep  30                AND
     ...  Дочекатись появи учасників прекваліфікації та отримати їх кількість
     [Return]  ${count}
@@ -48,7 +48,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     actions.Натиснути кнопку Перечитать (Shift+F4)
     ${count}  Get Element Count  ${winners}
     Run Keyword If  '${count}' == '0'  Run Keywords
-    ...  Capture Page Screenshot  AND
+    ...  Capture Full Screenshot  AND
     ...  Sleep  30                AND
     ...  Отримати кількість можливих переможців
     [Return]  ${count}
