@@ -33,6 +33,7 @@
 
 Заповнити Поле
     [Arguments]  ${selector}  ${text}
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  ${selector}
     Click Element  ${selector}
     Sleep  .5
