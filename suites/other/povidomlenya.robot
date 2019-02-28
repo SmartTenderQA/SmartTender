@@ -10,7 +10,6 @@ Test Teardown  			Run Keywords
 						...  Log Location  AND
 						...  Run Keyword If Test Failed  Capture Page Screenshot
 
-
 #zapusk
 #robot --consolecolors on -L TRACE:INFO -d test_output -v where:test suites/other/povidomlenya.robot
 *** Test Cases ***
@@ -20,11 +19,10 @@ Test Teardown  			Run Keywords
 
 
 Перевірити сторінку та одне повідомлення
-	Зайти на сторінку povidomlenya
-	Перевірити заголовок сторінки повідомлень
 	Порахувати кількість повідомлень
 	Переглянути повідемлення
 	Закрити вікно з повідомленням
+
 
 Завершити сеанс користувачем
 	Go To Smart  ${start_page}

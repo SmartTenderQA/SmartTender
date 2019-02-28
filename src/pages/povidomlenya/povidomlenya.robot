@@ -1,7 +1,7 @@
 *** Variables ***
-${page title}							//*[@type='flex']//h1
-${messages block}                    	//*[contains(@class,'long-text')]/span
-${close button}							//*[@class="ivu-modal-close"]
+${page title}							//h1
+${messages block}                    	//*[@class="a-card"]//*[contains(@class,"ivu-col-span-sm-19")]
+${close button}							//*[@class="ivu-modal-wrap vertical-center-modal"]//*[@class="ivu-modal-close"]
 
 
 *** Keywords ***
@@ -19,7 +19,7 @@ ${close button}							//*[@class="ivu-modal-close"]
 Переглянути повідемлення
 	${title}  Get Text  (${messages block})[1]
 	Click Element  (${messages block})[1]
-	Sleep  5
+	elements.Дочекатися відображення елемента на сторінці  ${close button}
 	${message title}  Get Text  //td[contains(@style,'background-color: rgb(48,63,159)')]//div[contains(@style,'color:#fff')]
 	Should Be Equal  ${title}  ${message title}
 
