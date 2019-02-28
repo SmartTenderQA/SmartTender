@@ -163,7 +163,7 @@ Variables       procurement_variables.py
 Порівняти відображений документ з документом в ЦБД procurement
 	[Arguments]  ${doc}
 	${cdb_doc}  get_cdb_doc  ${doc}  ${cdb}
-	${view doc block}  Set Variable  //*[@style and @class='ivu-row' and contains(.,'${doc['title']}')]
+	${view doc block}  Set Variable  //*[@style and @class="ivu-row" and contains(.,"""${doc['title']}""")]
 	Scroll Page To Element XPATH  ${view doc block}
 	${view title}  Get Text  ${view doc block}${docs_view['title']}
 	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
