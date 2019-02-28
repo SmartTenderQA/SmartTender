@@ -20,6 +20,7 @@
 	...  Вийти=title-menu-user-exit
 	${selector}  Set Variable
 	...  //*[@data-qa="${dict[u'${text}']}"]
+	elements.Дочекатися відображення елемента на сторінці  ${selector}
 	Click Element  ${selector}
 	Run Keyword  Перевірити виконання дії після натискання ${text}
 
