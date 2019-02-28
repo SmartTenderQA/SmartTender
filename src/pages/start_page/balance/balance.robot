@@ -17,6 +17,7 @@
 
 
 Натиснути сформувати Invoice
+	elements.Дочекатися зникнення елемента зі сторінки  //*[@data-qa="btn-create-invoice"]
 	Click Element  //*[@data-qa="btn-create-invoice"]
 	Дочекатись закінчення загрузки сторінки
 	Location Should Contain  /invoicepage/purchase/
