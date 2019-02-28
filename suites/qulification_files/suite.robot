@@ -247,28 +247,16 @@ Precondition
 
 Відкрити браузер Chrome з вказаною папкою для завантаження файлів
     [Arguments]  ${downloadDir}
-	${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
+    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
     ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${class_options}    add_experimental_option    prefs    ${prefs}
-
-    Run Keyword If  '${headless}' == '${True}'  Run Keywords
-    ...  Call Method    ${class_options}    set_headless    ${True}  AND
-    ...  Call Method    ${class_options}    add_argument    disable-gpu  AND
-    ...  Call Method    ${class_options}    add_argument    --window-size\=1280,1024
-
-    Run Keyword If  '${browser_version}' != ''
-    ...  Call Method    ${class_options}    set_capability  version  ${browser_version}
-
-    Run Keyword If  '${platform}' != 'ANY'
-    ...  Call Method    ${class_options}    set_capability  platform  ${platform}
-
-    ${options}  Call Method  ${class_options}  to_capabilities
-
-    Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
-    ...  Create Webdriver  Remote  alias=new_chrome  command_executor=${hub}  desired_capabilities=${options}  AND
-    ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  Chrome  alias=new_chrome
-    Set Window Size  1280  1024
+    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
+    Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
+    Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    ${browser started}  Run Keyword And Return Status
+    ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
+    Should Be True  ${browser started}
+    Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
+	...  Отримати та залогувати data_session
 
 
 Отримати дані з cdb та зберегти їх у файл
