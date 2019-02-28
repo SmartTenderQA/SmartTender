@@ -17,14 +17,14 @@ ${owner block}                      //*[.="Організатори"]
 	Виконати пошук тендера  ${tenderID}
 	${tender_href}=  Get Element Attribute  ${tender found}  href
 	${tender_href}  Поправити лінку для IP  ${tender_href}
-	Go To  ${tender_href}
+	Go To Smart  ${tender_href}
 	Log  ${tender_href}  WARN
 	Додаткова перевірка на тестові торги для продуктива
 
 
 Відкрити сторінку тестових торгів
 	${location}  Get Location
-	Run Keyword If  '${location}' != '${start_page}'  Go To  ${start_page}
+	Run Keyword If  '${location}' != '${start_page}'  Go To Smart  ${start_page}
 	Вибрати елемент з випадаючого списку заголовку  Торговий майданчик  Тестові тендери
 	Location Should Contain  /test-tenders/
 
@@ -33,8 +33,7 @@ ${owner block}                      //*[.="Організатори"]
 	[Arguments]  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Go To Smart  ${href}
 
 
 Відфільтрувати по організатору
@@ -74,7 +73,7 @@ ${owner block}                      //*[.="Організатори"]
 	${search_button}  Set Variable  css=.search-field button
 	Wait Until Page Contains Element  ${search_button}
 	Click Element  ${search_button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Додаткова перевірка на тестові торги для продуктива
@@ -91,10 +90,10 @@ ${owner block}                      //*[.="Організатори"]
 Перевірити тендер по API на тестовість
 	${tender_id}  Get Text  //h4/following-sibling::a|//*[@data-qa="prozorro-number"]//a
 	${location}  Get Location
-	Go to  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=
+	Go To Smart  http://smarttender.biz/ws/webservice.asmx/ExecuteEx?calcId=_QA.TEST.GETTENDERMODE&args={"TENDERNUM":"${tender_id}"}&ticket=
 	Wait Until Keyword Succeeds  30  3  Page Should Contain Element  css=.text
 	Element Should Contain  css=.text  test
-	Go to  ${location}
+	Go To Smart  ${location}
     Wait Until Element Is Visible  //*[@data-qa="title"]|(//h3)[2]  15
 
 

@@ -30,8 +30,7 @@ ${take_part}                            xpath=//div[@class="dhxform_base"]//*[co
 	${selector}  Set Variable  (${first found element})[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Go To Smart  ${href}
 
 
 Виконати пошук тендера
@@ -70,7 +69,7 @@ ${take_part}                            xpath=//div[@class="dhxform_base"]//*[co
 
 Активувати вкладку ФГИ
 	Click Element  ${torgy top/bottom tab}(1) ${torgy count tab}(4)
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Активувати вкладку RIALTO
@@ -104,4 +103,4 @@ ${take_part}                            xpath=//div[@class="dhxform_base"]//*[co
 	...  'Аукціони' == '${text}'  Set Variable  1  ELSE IF
 	...  'Реєстр активів' == '${text}'  Set Variable  2
 	Click Element  ${torgy top/bottom tab}(2) ${torgy count tab}(${i})
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки

@@ -116,7 +116,7 @@ If skipped create tender
     Sleep  1m  #    Ждем пока в ЦБД сформируются даты приема предложений
 	:FOR  ${i}  IN  ${provider1}  ${provider2}
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  Зберегти сесію  ${i}
 	\  Подати заявку на участь в аукціоні
 
@@ -132,7 +132,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  Перевірити кнопку подачі пропозиції  //*[contains(text(), 'Подача пропозиції')]
 	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
@@ -159,7 +159,7 @@ If skipped create tender
 	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}   #provider3
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
@@ -204,7 +204,7 @@ If skipped create tender
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
 	[Setup]  Run Keywords  Go Back									AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	...  Дочекатись закінчення загрузки сторінки			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}
@@ -270,7 +270,7 @@ If skipped create tender
 
 Перевірити коректність відображення документів
 	[Tags]  compare  qualification
-	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки(skeleton)			AND
+	[Setup]  Run Keywords  Дочекатись закінчення загрузки сторінки			AND
 	...  sale_keywords.Розгорнути кваліфікаційні документи переможця
 	[Template]  compare_data.Порівняти відображений документ з документом в ЦБД
 	${data['documents'][0]}
@@ -330,7 +330,7 @@ Precondition
 
 
 Отримати поcилання на участь та перегляд аукціону першим учасником
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Set Global Variable  		${auction_href}

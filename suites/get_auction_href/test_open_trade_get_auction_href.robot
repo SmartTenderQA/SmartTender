@@ -25,7 +25,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Отримати дані з cdb
     [Tags]  create_tender
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
 
 
@@ -89,7 +89,7 @@ If skipped create tender
 Отримати поcилання на перегляд аукціону
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}  #provider3
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
@@ -120,7 +120,7 @@ If skipped create tender
 Прийняти участь у тендері учасником
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${username}' == 'user1'  Sleep  3m
     Подати пропозицію учасником
@@ -138,7 +138,7 @@ If skipped create tender
 Перевірити отримання посилань на аукціон учасником
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go To  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}

@@ -112,7 +112,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  acceptance
   :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
-  \  Go to  ${data.tender_url}
+  \  Go To Smart  ${data.tender_url}
   \  dozorro.Відкрити сторінку відгуки Dozorro
   \  Перевірити відповідність видів відгуків  ${type_1-8_10}
 
@@ -120,7 +120,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  acceptance
   :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
-  \  Go to  ${data.tender_url}
+  \  Go To Smart  ${data.tender_url}
   \  dozorro.Відкрити сторінку відгуки Dozorro
   #\  Надати відгук  1
   #\  Надати відгук  2
@@ -147,7 +147,7 @@ ${type_13_multylot}                  ${forms_13_multylot}
   [Tags]  acceptance
   :FOR  ${username}  IN  ${provider}  ${provider2}
   \  Завантажити сесію для  ${username}
-  \  Go to  ${data.tender_url}
+  \  Go To Smart  ${data.tender_url}
   \  Відкрити Сторінку Відгуки Dozorro
   \  Залишити коментар на випадковий відгук
 
@@ -676,7 +676,7 @@ Postcondition
 Перевірка відображення відгуку
   [Arguments]  ${username}
   Завантажити сесію для  ${username}
-  Go to  ${data.tender_url}
+  Go To Smart  ${data.tender_url}
   dozorro.Відкрити сторінку відгуки Dozorro
   ${text}  Get Text  xpath=((//*[@data-qa="dozorro"]//div[@class="ivu-card-body"])[2]//div[contains(@style,"padding-left")])[last()]
   Should Be Equal  ${text}  ${data.review_text}
@@ -685,7 +685,7 @@ Postcondition
 Перевірити фільтр відгуків
   [Arguments]  ${username}
   Завантажити сесію для  ${username}
-  Go to  ${data.tender_url}
+  Go To Smart  ${data.tender_url}
   dozorro.Відкрити сторінку відгуки Dozorro
   ${title}  Get Text  xpath=(//*[@class="ivu-card-body"]//h5)[1]
   Scroll Page To Element XPATH  xpath=//div[@data-qa="dozorro"]//div[@class="ivu-select-selection"]
@@ -699,7 +699,7 @@ Postcondition
 Можливість залишити відгук
   [Arguments]  ${username}
   Завантажити сесію для  ${username}
-  Go to  ${data.tender_url}
+  Go To Smart  ${data.tender_url}
   dozorro.Відкрити сторінку відгуки Dozorro
   Run Keyword And Expect Error  *  Element Should Be Visible  ${review add}
 
@@ -713,14 +713,14 @@ Postcondition
 
 ########################### КОМЕНТАР ###############################
 Залишити коментар на випадковий відгук
-  Go to  ${data.tender_url}
+  Go To Smart  ${data.tender_url}
   dozorro.Відкрити сторінку відгуки Dozorro
   ${text}  create_sentence  8
   ${n}=  Get Element Count  xpath=//div/h5
   ${comment_num}  random_number  1  ${n}
   Set Global Variable  ${comment_num}
   Click Element  xpath=(//div/h5)[${comment_num}]/../..//*[contains(text(), 'Додати коментар')]
-  Дочекатись закінчення загрузки сторінки(circle)
+  Дочекатись закінчення загрузки сторінки
   Input Text  xpath=//*[@class="controls"]/textarea  ${text}
   Set To Dictionary  ${data}  comment_text=${text}
   Wait Until Keyword Succeeds  120  10  dozorro.Подати коментар
@@ -729,7 +729,7 @@ Postcondition
 Перевірка відображення коментаря
   [Arguments]  ${username}
   Завантажити сесію для  ${username}
-  Go to  ${data.tender_url}
+  Go To Smart  ${data.tender_url}
   dozorro.Відкрити сторінку відгуки Dozorro
   ${text}  Get Text  xpath=((//*[@class="ivu-card-body"]//h5/ancestor::*[@class="ivu-card-body"])[${comment_num}]//div)[last()-1]
   Should Be Equal  ${text}  ${data.comment_text}

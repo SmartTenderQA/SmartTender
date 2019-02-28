@@ -9,10 +9,10 @@ ${eds index}     0
 
 *** Keywords ***
 Накласти ЕЦП (webclient)
-    loading.Дочекатись закінчення загрузки сторінки(webclient)
+    loading.Дочекатись закінчення загрузки сторінки
     Run Keyword If      '${eds index}' != '1'  Накласти ЕЦП (webclient) перший раз
     Set Global Variable  ${eds index}  1
-    loading.Дочекатись закінчення загрузки сторінки(webclient)
+    loading.Дочекатись закінчення загрузки сторінки
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
 
 
@@ -22,5 +22,5 @@ ${eds index}     0
     Choose File                    ${upload}      ${EXECDIR}/src/pages(webclient)/EDS/Key-6.dat
     Input Password                 ${pass input}  ${pass}
     Click Element                  ${sign btn}
-    loading.Дочекатись закінчення загрузки сторінки(webclient)
+    loading.Дочекатись закінчення загрузки сторінки
     validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю

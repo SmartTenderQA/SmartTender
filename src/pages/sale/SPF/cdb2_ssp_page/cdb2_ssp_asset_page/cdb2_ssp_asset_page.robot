@@ -12,7 +12,7 @@
      ${selector}  Set Variable  //*[@data-qa="button-to-edit-page"]
      Scroll Page To Element XPATH  ${selector}
      Click Element  ${selector}
-     Дочекатись закінчення загрузки сторінки(skeleton)
+     Дочекатись закінчення загрузки сторінки
      Location Should Contain  /privatization-objects/edit/
 
 

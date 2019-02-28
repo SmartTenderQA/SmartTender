@@ -20,7 +20,7 @@
 	[Arguments]  ${auction status}  ${time}
     Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
     ...  Reload Page  												AND
-    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Дочекатись закінчення загрузки сторінки  		AND
     ...  Статус лота повинен бути  ${auction status}
 
 

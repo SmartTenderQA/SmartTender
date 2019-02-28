@@ -14,7 +14,7 @@
     ...  Create Webdriver  Remote  alias=${alias}  command_executor=${hub}  desired_capabilities=${options}  AND
     ...  Отримати та залогувати data_session  ELSE
     ...  Create Webdriver  Firefox  alias=${alias}
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Set Window Size  1280  1024
 
 
@@ -38,7 +38,7 @@
     ...  Create Webdriver  Remote  alias=${alias}  command_executor=${hub}  desired_capabilities=${options}  AND
     ...  Отримати та залогувати data_session  ELSE
     ...  Create Webdriver  Chrome  alias=${alias}
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Set Window Size  1280  1024
 
 

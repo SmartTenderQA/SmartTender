@@ -92,7 +92,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 
 Створити інформаційне повідомлення МП
 	[Tags]  create_tender  make_a_proposal  get_auction_href  qualification
-	[Setup]  Go To  ${start page}
+	[Setup]  Go To Smart  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
 	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  10 min
@@ -214,10 +214,10 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	Знайти аукціон користувачем  ${provider1}
 	Зберегти сесію  ${provider1}
 	Завантажити сесію для  ${provider2}
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	Зберегти сесію  ${provider2}
 	Завантажити сесію для  ${provider3}
-	Go To  ${data['tender_href']}
+	Go To Smart  ${data['tender_href']}
 	Зберегти сесію  ${provider3}
 	Sleep  90
 
@@ -242,7 +242,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  Натиснути на кнопку подачі пропозиції
 	\  Заповнити поле з ціною  1  ${i}
 	\  Подати пропозицію
@@ -261,7 +261,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
     :FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
 	\  Reload Page
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 	\  ${participate_href}  ${viewer_href}  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
     \  Set To Dictionary  ${data}  viewer_href  ${viewer_href}
 	\  Set To Dictionary  ${data}  provider${i}_participate_href  ${participate_href}
@@ -342,9 +342,9 @@ Postcondition
 	new_search.Очистити фільтр пошуку
 	new_search.Ввести фразу для пошуку  ${data['tender_id']}
 	new_search.Натиснути кнопку пошуку
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	new_search.Перейти по результату пошуку за номером  1
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Перейти та перевірити сторінку участі в аукціоні
@@ -369,7 +369,7 @@ Postcondition
 	[Arguments]  ${user}
 	Завантажити сесію для  ${user}
 	Go to  ${data['tender_href']}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 

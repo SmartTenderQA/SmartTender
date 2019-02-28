@@ -68,7 +68,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 
 Перевірити публікацію запитання в ЦБД
     Завантажити сесію для  ${provider}
-    Go To  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['questions'][${n}]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['questions'][${n}]['description']
@@ -78,7 +78,7 @@ Test Teardown   Run Keyword If Test Failed  Run Keywords
 Перевірити публікацію запитання на сторінці користувачами
     :FOR  ${i}  IN  ${provider}  ${viewer}
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  procurement_questions.Активувати вкладку "Запитання"
 	\  procurement_tender_detail.Розгорнути всі експандери
 	\  procurement_tender_detail.Порівняти відображені дані з даними в ЦБД  ['questions'][${n}]['title']

@@ -28,7 +28,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
     email.Перейти за посиланням в листі  Відновити пароль→
     Ввести новий пароль
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Переконатися що пароль змінено
     Авторизуватися з новим паролем  ${new password}
     Навести мишку на іконку з заголовку  Меню_користувача
@@ -38,13 +38,13 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 Перевірити можливість змінити пароль через особистий кабінет для організатора
     [Tags]  change_password
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Run Keyword If  '${role}' == 'tender_owner'  Run Keywords
     ...  Навести мишку на іконку з заголовку  Меню_користувача	AND
     ...  Натиснути  Вийти										AND
     ...  Авторизуватися  ${user}								AND
     ...  Перевірити сторінку "Змінити пароль" для tender_owner  AND
-    ...  Go To  ${start_page}
+    ...  Go To Smart  ${start_page}
 
 
 Змінити пароль користувача
@@ -52,7 +52,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Навести мишку на іконку з заголовку  Меню_користувача
 	Натиснути  Змінити пароль
     Змінити пароль  ${password}  ${new password}
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
 	start_page.Навести мишку на іконку з заголовку  Меню_користувача
 	menu-user.Натиснути  Вийти
     Переконатися що пароль змінено
@@ -86,7 +86,7 @@ Postcondition
 Перевірити сторінку "Змінити пароль" для tender_owner
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     elements.Дочекатися відображення елемента на сторінці  //span[contains(text(),'Змінити свій пароль')]
     Sleep  0.5
     Click Element  //span[contains(text(),'Змінити свій пароль')]
@@ -117,12 +117,10 @@ Postcondition
     Fill login  ${users_variables["${user}"]["login"]}
     Fill password  ${new password}
     Click Log In
-    Run Keyword If  "tender_owner" == "${role}"
-	...  Дочекатись закінчення загрузки сторінки(webclient)  ELSE
-	...  Дочекатись закінчення загрузки сторінки
+    Дочекатись закінчення загрузки сторінки
 	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
 	...  Wait Until Page Contains  ${name}  10
-	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
+	Run Keyword If  "tender_owner" == "${role}"  Go To Smart  ${start_page}
 
 
 Перейти на сторінку відновлення пароля

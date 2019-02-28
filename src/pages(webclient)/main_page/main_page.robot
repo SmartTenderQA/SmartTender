@@ -22,7 +22,7 @@
 	Wait Until Page Contains Element  //*[@id="pcCustomDialog_PW-1"]//a
 	${value}  Get Element Attribute  //*[@id="pcCustomDialog_PW-1"]//a  onclick
 	${href}  ${ticket}  get_tender_href_for_commercial_owner  ${value}
-	Go To  ${href}${ticket}
+	Go To Smart  ${href}${ticket}
 	Location Should Contain  ?ticket=
 	[Return]  ${href}
 
@@ -30,13 +30,13 @@
 Вибрати тендер за номером (webclient)
     [Arguments]  ${i}
     Click Element  xpath=(//div[contains(@class,'selectable')]/table//tr[contains(@class,'Row')])[${i}]//td[2]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
 
 
 Вибрати лот за номером (webclient)
     [Arguments]  ${i}
     Click Element  xpath=(//*[@data-placeid="LOTS"]//td[text()="Лот"])[${i}]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
 
 
 Порахувати кількість торгів (webclient)
@@ -59,7 +59,7 @@
 	#${status}  Run Keyword And Return Status  Should Be Equal  ${get}  ${value}
 	#Run Keyword If  '${status}' == 'False'  Пошук об'єкта у webclient по полю  Номер тендер  ${value}
 	Press Key  ${find tender field}  \\13
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 
 
 Пошук об'єкта у webclient по полю ФГИ
@@ -109,4 +109,4 @@
     Click Element  ${type checkbox}
     Wait Until Element Is Visible  ${type checkbox}\[@checkedcombo='true']
     Press Key  ${type input}  \\13
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки

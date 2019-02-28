@@ -67,7 +67,7 @@ Preconditions
     Run Keyword If  '${type}' != 'bank_aucs'  Run Keyword And Ignore Error  Run Keywords
     ...  Видалити кнопку "Замовити звонок"
     ...  Видалити кнопку "Поставити запитання"
-    ...  ELSE  Дочекатись закінчення загрузки сторінки(skeleton)
+    ...  ELSE  Дочекатись закінчення загрузки сторінки
 
 
 Порахувати кількість процедур на сторінці
@@ -102,7 +102,7 @@ Preconditions
 	[Arguments]  ${number}
 	${tender_expand}  Set Variable  //*[@id="tender_id#${number}"]//td/span
 	Click Element  ${tender_expand}
-	Дочекатись загрузки документів в тендері
+	Дочекатись закінчення загрузки сторінки
 	Click Element  //*[@id="tender_id#${number}"]${tender boby on old search}//*[contains(text(),"Сайт")]
 
 
@@ -213,7 +213,7 @@ Preconditions
 	\  Перевірити всі необхідні документи new  ${files for checks}
 	\  Завершити тест при виконанні вимог
 	\  Go Back
-	\  Дочекатись закінчення загрузки сторінки(skeleton)
+	\  Дочекатись закінчення загрузки сторінки
 
 
 Отримати список файлів у процедурі new
@@ -245,4 +245,4 @@ Preconditions
 	Scroll Page To Element XPATH  ${button_selector}
 	Sleep  .5
 	Click Element  ${button_selector}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки

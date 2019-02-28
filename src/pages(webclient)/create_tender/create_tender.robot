@@ -97,13 +97,13 @@ Resource        create_tender_keywords.robot
 	${selector}  Set Variable  //*[contains(text(), 'Аукціони ФГВ(тестові)')]
 	Wait Until Page Contains Element  ${selector}  15
 	Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 
 
 Відкрити сторінку Аукціони ФГВ(prod)
     ${selector}  Set Variable  xpath=//*[@style="position:relative;"]//*[contains(text(), 'Умова відбору торгів')]
     Wait Until Keyword Succeeds  15  2  Click Element  xpath=//*[contains(text(), 'Аукціони на продаж')]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${status}  Run Keyword And Return Status  Wait Until Keyword Succeeds  15  3  Element Should Be Visible  ${selector}
     Run Keyword If  ${status} == ${true}  Run Keywords
     ...  Wait Until Keyword Succeeds  20  2  Click Element  ${selector}/following::*[contains(text(), 'OK')]
@@ -114,7 +114,7 @@ Resource        create_tender_keywords.robot
 	${selector}  Set Variable  //*[contains(text(), 'ProZorro.Продаж') and contains(text(), '(тестові)')]
 	Wait Until Page Contains Element  ${selector}  15
 	Wait Until Keyword Succeeds  15  2  Click Element  ${selector}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 
 
 Відкрити сторінку для створення публічних закупівель

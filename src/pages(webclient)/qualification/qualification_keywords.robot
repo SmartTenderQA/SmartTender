@@ -58,7 +58,7 @@
 Натиснути елемент у якого title
     [Arguments]  ${title}
     Click Element  //div[@title="${title}"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
 
 
 Відмітити чек-бокс у рішенні
@@ -81,10 +81,10 @@
 Додати файл до рішення кваліфікації
     ${add button}  Set Variable  //span[contains(text(), "Перегляд")]
     Click Element  ${add button}
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${name}  ${hash}  Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     Page Should Contain  ${name}
     [Return]  ${name}  ${hash}
 
@@ -119,9 +119,9 @@
 Вкласти договірній документ
     ${add button}  Set Variable  //span[contains(text(), "Обзор")]|//span[contains(text(), "Перегляд")]
     Click Element  ${add button}
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${name}  ${hash}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     Page Should Contain  ${name}
     [Return]  ${name}  ${hash}
