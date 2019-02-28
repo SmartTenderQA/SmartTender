@@ -4,12 +4,13 @@ Suite Setup     Precondition
 Suite Teardown  Postcondition
 Test Setup  	Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
-...  AND  Log Location
+#...  AND  Log Location
 
 
 *** Variables ***
 ${new password}             qwerty12345
-${submit btn locator}       xpath=//button[@type='button' and contains(@class,'btn-success')]
+${submit btn locator}       //*[@data-qa="forgon-password-btn"]
+${reset btn locator}        //*[@data-qa="reset-password-btn"]
 
 
 #zapusk
@@ -96,9 +97,10 @@ Postcondition
 
 Змінити пароль
     [Arguments]  ${old password}  ${new password}
-    Input Password  xpath=(//input[@autocomplete])[1]  ${old password}
-    Input Password  xpath=(//input[@autocomplete])[2]  ${new Password}
-    Click Element  ${submit btn locator}
+    Input Password  //*[@data-qa="change-password-old-password"]//input  ${old password}
+    Input Password  //*[@data-qa="change-password-new-password"]//input  ${new Password}
+    Input Password  //*[@data-qa="change-password-confirm-new-password"]//input  ${new Password}
+    Click Element   //*[@data-qa="change-password-new-btn"]
     Wait Until Page Contains Element  xpath=//div[contains(@class,'alert')]
 
 
@@ -129,7 +131,7 @@ Postcondition
 
 
 Ввести mail в поле для відновлення паролю
-    ${forgot password input}  Set Variable  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]
+    ${forgot password input}  Set Variable  //*[@data-qa="forgon-password-email"]//input
     elements.Дочекатися відображення елемента на сторінці  ${forgot password input}
     Input Text  ${forgot password input}  ${login}
 
@@ -141,9 +143,10 @@ Postcondition
 
 
 Ввести новий пароль
+	${input}  Set Variable  //*[@data-qa="reset-password-new-password"]//input
     Дочекатись Закінчення Загрузки Сторінки
-    elements.Дочекатися відображення елемента на сторінці  //input[@placeholder='']
-    Input Password  xpath=//input[@placeholder='']  ${new password}
-    Click Element  ${submit btn locator}
+    elements.Дочекатися відображення елемента на сторінці  ${input}
+    Input Password  ${input}  ${new password}
+    Click Element  ${reset btn locator}
     Дочекатись Закінчення Загрузки Сторінки
     Wait Until Page Contains  Пароль успішно змінений
