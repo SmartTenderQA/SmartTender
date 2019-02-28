@@ -24,6 +24,7 @@
 
 Отримати UAID для Об'єкту
 	Reload Page
+	Дочекатись закінчення загрузки сторінки
     Wait Until Element Is Visible  //*[@data-qa='cdbNumber']  10
     Wait Until Element Is Not Visible  //*[@class='ivu-message']  10
 	${UAID}  Get Text  //*[@data-qa='cdbNumber']
