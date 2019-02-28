@@ -122,11 +122,9 @@ If skipped create tender
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     :FOR  ${i}  IN  1  2
-    \  procurement_tender_detail.Розгорнути всі експандери учасника  ${i}
-    \  ${hash}  Скачати файл з іменем та індексом  sign.p7s  2
+    \  ${hash}  Wait Until Keyword Succeeds  60  1  Скачати файл з іменем та індексом для користувача  ${i}  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
     \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}-1]}  2
-    \  procurement_tender_detail.Згорнути всі експандери учасника  ${i}
 
 
 Відхилити організатором пропозицію першого учасника
@@ -273,9 +271,6 @@ Precondition
     Set Window Size  1280  1024
 
 
-
-
-
 Отримати дані з cdb та зберегти їх у файл
     ${id}  procurement_tender_detail.Отритами дані зі сторінки  ['id']
     ${cdb}  Отримати дані тендеру з cdb по id  ${id}
@@ -300,22 +295,22 @@ Precondition
 	Append To List  ${data['qualification_documents']}  ${new doc}
 
 
-Скачати файл з іменем та індексом
-    [Arguments]  ${name}  ${index}
+Скачати файл з іменем та індексом для користувача
+    [Arguments]  ${user index}  ${name}  ${index}
     ${selector}  Set Variable  (//*[@data-qa="file-name"][text()="${name}"])[${index}]
     ${download locator}  Set Variable  ${selector}/ancestor::div[@class="ivu-poptip"]//*[@data-qa="file-download"]
-    elements.Дочекатися відображення елемента на сторінці  ${selector}  30
+    procurement_tender_detail.Розгорнути всі експандери учасника  ${user index}
+    elements.Дочекатися відображення елемента на сторінці  ${selector}
     Mouse Over  ${selector}
     Wait Until Element Is Visible  ${download locator}
     Click Element                  ${download locator}
-    Sleep  5
     ${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Go Back      AND
-    ...  Reload Page  AND
-    ...  Скачати файл з іменем та індексом  ${name}  ${index}
+    ...  Reload Page
     ${md5}   Wait Until Keyword Succeeds  10  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
+    procurement_tender_detail.Згорнути всі експандери учасника  ${user index}
     [Return]  ${md5}
 
 
