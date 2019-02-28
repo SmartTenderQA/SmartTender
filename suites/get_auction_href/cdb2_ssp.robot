@@ -4,7 +4,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_asset_page/cdb2_ssp_ass
 Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Full Screenshot
 ...  AND  Log Location
 ...  AND  Log  ${data}
 

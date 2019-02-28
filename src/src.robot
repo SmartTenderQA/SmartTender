@@ -1,5 +1,5 @@
 *** Settings ***
-Library     Selenium2Library
+Library     Selenium2Library   #run_on_failure=Capture Full Screenshot
 Library     BuiltIn
 Library     Collections
 Library	    RequestsLibrary
@@ -287,3 +287,7 @@ Go To Smart
 	[Arguments]  ${href}
 	Go To  ${href}
 	loading.Дочекатись закінчення загрузки сторінки
+
+
+Capture Full Screenshot
+	Capture Element Screenshot  //body

@@ -6,7 +6,7 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Full Screenshot
 
 *** Variables ***
 ${multilot}                                False

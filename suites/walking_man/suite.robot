@@ -616,7 +616,7 @@ Test Precondition
 Test Postcondition
 	Log Location
 	Get Source
-	Run Keyword If Test Failed  Capture Page Screenshot
+	Run Keyword If Test Failed  Capture Full Screenshot
 	Run Keyword If  "${role}" != "viewer" and "${role}" != "Bened"  Перевірити користувача
 
 

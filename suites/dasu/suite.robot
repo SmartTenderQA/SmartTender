@@ -549,7 +549,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
 *** Keywords ***
 Test Postcondition
   Log Location
-  Run Keyword If Test Failed  Capture Page Screenshot
+  Run Keyword If Test Failed  Capture Full Screenshot
 
 
 Підписати ЕЦП ДАСУ
