@@ -24,10 +24,10 @@ ${reset btn locator}        //*[@data-qa="reset-password-btn"]
     Перейти на сторінку відновлення пароля
     Ввести mail в поле для відновлення паролю
     Wait Until Keyword Succeeds  3x  5  Відправити лист "Відновлення паролю" на пошту
-    email.Розпочати роботу з Gmail  ${user}
-	email.Дочекатися отримання листа на пошту  10m  SmartTender: Відновлення паролю
-    Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
-    email.Перейти за посиланням в листі  Відновити пароль→
+    ${gmail}  email.Розпочати роботу з Gmail  ${user}
+	${message}  email.Дочекатися отримання листа на пошту  ${gmail}  10m  SmartTender: Відновлення паролю
+	${reset password href}  Отримати посилання з листа  ${message}
+	Go To Smart  ${reset password href}
     Ввести новий пароль
     Go To Smart  ${start_page}
     Переконатися що пароль змінено
@@ -150,3 +150,10 @@ Postcondition
     Click Element  ${reset btn locator}
     Дочекатись Закінчення Загрузки Сторінки
     Wait Until Page Contains  Пароль успішно змінений
+
+
+Отримати посилання з листа
+	[Arguments]  ${message}
+	${content}  get_message_content  ${message}
+	${href}  get_href_from_message  ${content}
+	[Return]  ${href}

@@ -1,54 +1,29 @@
 *** Settings ***
-Resource  				keywords.robot
 
 
 *** Keywords ***
 Розпочати роботу з Gmail
 	[Arguments]  ${user}
-	Go To  https://www.google.com/gmail/about/#
-	Авторизуватися в Gmail  ${user}
-	Закрити валідаційне вікно (за необходністю)
-
-
-Відкрити лист в email за темою
-	[Arguments]  ${title}
-	Wait Until Keyword Succeeds  30  2  Click Element  xpath=//td[@id]//span[contains(text(), '${title}')]
-	Дочекатись закінчення загрузки сторінки по елементу  //span[@class='v1']
-	Page Should Contain Element  xpath=//*[@class='Bu bAn']
+	${login}  Отримати дані користувача по полю  ${user}  login
+	${mail_password}  Отримати дані користувача по полю  ${user}  mail_password
+	${gmail}  create_email_object  ${login}  ${mail_password}
+	[Return]  ${gmail}
 
 
 Дочекатися отримання листа на пошту
-	[Arguments]  ${timeout}  ${subject}
+	[Arguments]  ${gmail}  ${timeout}  ${subject}
 	${time now -5 min}  Отримати час на машині  time  -5
-	Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${subject}  ${time now -5 min}
+	${message}  Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${gmail}  ${subject}  ${time now -5 min}
+	[Return]  ${message}
 
 
-Перейти за посиланням в листі
-	[Arguments]  ${title}
-	${link selector}  Set Variable  //a[contains(text(),'${title}')]
-	Розгорнути останній лист (за необхідність)
-	elements.Дочекатися відображення елемента на сторінці  (${link selector})[last()]  30
-	Open button  xpath=(${link selector})[last()]
-	sleep  0.5
-	Run Keyword And Ignore Error  Handle Alert  action=DISMISS
-
-
-Розгорнути останній лист (за необхідність)
-	${count}  Get Element Count  //img[@class='ajT']
-	sleep  0.5
-	Wait Until Keyword Succeeds  30 s  1 s  Run Keyword If  ${count} > 0  Run Keywords
-	...  elements.Дочекатися відображення елемента на сторінці  xpath=(//img[@class='ajT'])[last()]		AND
-	...  Click Element  xpath=(//img[@class='ajT'])[last()]
-	sleep  1
-
-
-Перевірити вкладений файл за назвою
-	[Arguments]  ${amount}  ${title}
-	Відкрити файл в листі за назвою  ${title}
-	Wait Until Page Contains Element  //p[contains(text(),'Ɋɚɡɨɦ ${amount}')]|//p[contains(text(),'Разом ${amount}')]
-
-
-Відкрити файл в листі за назвою
-    [Arguments]  ${title}
-   	Wait Until Keyword Succeeds  10 s  1 s  Click Element  (//a[contains(., '${title}')])[last()]
-   	Element Should Contain  //*[@class='aLF-aPX-aPU-awE']  ${title}
+Перевірити наявність листа за темою
+	[Arguments]  ${gmail}  ${subject}  ${time now -5 min}
+	${message}  Call Method  ${gmail}  get_last_mail_with_subject  ${subject}
+	${date is}  get_message_date  ${message}
+	${is today}  Evaluate  '${date is}'[:'${date is}'.index('.')] == str(datetime.date.today().day)  datetime
+	Run Keyword If  ${is today} == ${False}  Fail
+	${time is}  get_message_time  ${message}
+	${time status}  compare_dates_smarttender  ${time now -5 min}  <=  ${time is}
+	Should Be Equal  ${time status}  ${True}
+	[Return]  ${message}

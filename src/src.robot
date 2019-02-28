@@ -12,6 +12,7 @@ Library     DateTime
 Resource    common/breadcrumbs/breadcrumbs.robot
 Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
+Library     common/email/email_lib.py
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/open_browser/open_browser.robot
