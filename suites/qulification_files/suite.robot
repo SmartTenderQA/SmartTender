@@ -255,8 +255,6 @@ Precondition
     ${browser started}  Run Keyword And Return Status
     ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
     Should Be True  ${browser started}
-    Run Keyword If  '${hub}' != 'none' and '${hub}' != 'NONE'
-	...  Отримати та залогувати data_session
 
 
 Отримати дані з cdb та зберегти їх у файл
