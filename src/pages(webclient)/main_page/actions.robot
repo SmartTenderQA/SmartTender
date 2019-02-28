@@ -87,7 +87,7 @@
 Натиснути додати(F7)
 	[Arguments]  ${text}  ${additional_xpath}=${EMPTY}
 	elements.Дочекатися відображення елемента на сторінці  ${additional_xpath}//*[@title="Додати (F7)"]  30
-	Click Element  ${additional_xpath}//*[@title="Додати (F7)"]
+	Wait Until Keyword Succeeds  15  3  Click Element  ${additional_xpath}//*[@title="Додати (F7)"]
 	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element
 	...  //*[contains(@id, "pcModalMode") and contains(., "${text}") and not(contains(@style, "visibility: hidden"))]
