@@ -10,7 +10,8 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Page Screenshot  AND
+...                                         actions.Зберегти словник у файл  ${data}  data
 
 
 *** Test Cases ***
@@ -124,7 +125,7 @@ If skipped create tender
     :FOR  ${i}  IN  1  2
     \  ${hash}  Wait Until Keyword Succeeds  60  1  Скачати файл з іменем та індексом для користувача  ${i}  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
-    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}-1]}  2
+    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}]}  2
 
 
 Відхилити організатором пропозицію першого учасника
@@ -209,12 +210,12 @@ If skipped create tender
 Перевірити публікацію кваліфікаційних файлів в ЦБД
     [Tags]  validation
     [Template]  procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement
-    ${data['qualification_documents'][2]}
-	${data['qualification_documents'][3]}
+    ${data['qualification_documents'][3]}
 	${data['qualification_documents'][4]}
 	${data['qualification_documents'][5]}
-    ${data['qualification_documents'][6]}
+	${data['qualification_documents'][6]}
     ${data['qualification_documents'][7]}
+    ${data['qualification_documents'][8]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
@@ -223,12 +224,12 @@ If skipped create tender
     ...  Go to  ${data['tender_href']}  AND
     ...  procurement_tender_detail.Розгорнути всі експандери
     [Template]  procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement
-    ${data['qualification_documents'][2]}
-	${data['qualification_documents'][3]}
+    ${data['qualification_documents'][3]}
 	${data['qualification_documents'][4]}
 	${data['qualification_documents'][5]}
-    ${data['qualification_documents'][6]}
+	${data['qualification_documents'][6]}
     ${data['qualification_documents'][7]}
+    ${data['qualification_documents'][8]}
 
 
 
