@@ -28,7 +28,7 @@ ${terms_of_delivery_field}          xpath=//label[contains(text(), 'Умови �
 	old_search.Розгорнути Розширений Пошук
 	old_search.Вибрати Тип Процедури  Відкриті торги. Аналіз пропозицій
 	Виконати пошук тендера
-	Перейти по результату пошуку  ${prepared_tender}
+	old_search.Перейти по результату пошуку за номером  1
 	${location}  Get Location
 	Log  ${location}  WARN
 	Set To Dictionary  ${data}  tender_url=${location}
@@ -85,17 +85,17 @@ Postcondition
   ${status}  Run Keyword And Return Status  Should Not Be Empty  ${value}
   ${max}  Run Keyword If  ${status} == ${True}  Get Text  ${max price selector}
   ...  ELSE  Set Variable  10000000
-  ${max}  Evaluate  ${max}-1
   ${amount}  Evaluate  '${max}'.replace(" ", "")
+  ${amount}  Evaluate  ${amount}-1
   ${bin}  Evaluate  str(int(float(${amount})))
   Input Text  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[1]  ${bin}
   Set To Dictionary  ${data}  bid_value=${bin}
 
 
 Змінити кількість одиниць
-  ${max}  Get Text  xpath=//label[contains(text(), 'Потреба')]/../following-sibling::*
+  ${max}  Get Text  xpath=(//label[contains(text(), 'Потреба')]/../following-sibling::*)
   ${count}  random_number  1  ${max}
-  Input Text  xpath=(//label[contains(text(), 'Кількість')]/ancestor::tr//input)[last()]  ${count}
+  Input Text  xpath=//label[contains(text(), 'Кількість')]/ancestor::tr//input[contains(@name, "KOL")]  ${count}
   Set To Dictionary  ${data}  bid_count=${count}
 
 
@@ -129,7 +129,7 @@ Postcondition
 
 
 Перевірити кількість
-  ${value}  Get Element Attribute  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input)[last()]  value
+  ${value}  Get Element Attribute  xpath=(//label[contains(text(), 'Ціна за одиницю')]/ancestor::tr//input[contains(@name, "KOL")])  value
   Should Be Equal  ${value}  ${data.bid_count}
 
 
