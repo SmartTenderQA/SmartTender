@@ -62,6 +62,7 @@ ${cancellation offers button}       ${block}\[last()]//div[@class="ivu-poptip-re
 	[Arguments]  ${lot}
 	${status}  Run Keyword And Return Status  Page Should Contain Element  ${block}\[${lot}+1]//button/i
 	${class}  Run Keyword If  ${status} == ${True}  Get Element Attribute  ${block}\[${lot}+1]//button/i  class
+	Дочекатись закінчення загрузки сторінки
 	Run Keyword If  "checkmark" not in "${class}" and ${status} == ${True}  Click Element  ${block}\[${lot}+1]//button
 
 
