@@ -5,7 +5,7 @@ from email.header import decode_header, make_header
 import re
 import os
 import slate3k as slate
-
+import logging
 
 
 
@@ -108,6 +108,7 @@ def get_attachment_from_message(msg, att_type):
 			file_name = __decode_content__(i.get_filename())
 			path = os.getcwd() + '/test_output/' + file_name
 			open(path, 'wb').write(i.get_payload(decode=True))
+			logging.getLogger('pdfminer').setLevel(logging.ERROR)
 			with open(path, 'rb') as f:
 				file_content = slate.PDF(f)
 			return { 'name': file_name, 'content': file_content[0]}
