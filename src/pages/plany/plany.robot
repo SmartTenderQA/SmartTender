@@ -16,7 +16,7 @@ ${item plan}                         //tr[@data-planid]//a
 	${selector}  Set Variable  xpath=(${item plan})[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
+	Go To Smart  ${href}
 
 
 Отримати назву плану за номером

@@ -58,7 +58,6 @@ Preconditions
     Навести мишку на іконку з заголовку  Баланс
     balance.Натиснути сформувати Invoice
     Дочекатись закінчення загрузки сторінки
-    Дочекатись закінчення загрузки сторінки(полоса)
     invoice.Перевірити сторінку
 
 
@@ -84,10 +83,10 @@ Preconditions
 
 Перевірити email рахунок-фактуру
 	[Arguments]  ${amount}
-	Розпочати роботу з Gmail  ${user}
-	email.Дочекатися отримання листа на пошту  10m  SmartTender - Рахунок за Надання послуг
-	Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в Email за темою  SmartTender - Рахунок за Надання послуг
-	Перевірити вкладений файл за назвою  ${amount}  Рахунок
+	${gmail}  email.Розпочати роботу з Gmail  ${user}
+	${message}  email.Дочекатися отримання листа на пошту  ${gmail}  10m  SmartTender - Рахунок за Надання послуг
+	${file}  get_attachment_from_message  ${message}  pdf
+	Should Contain  ${file['content']}  ${amount},00
 
 
 Перевірити суму на сторінці Platon

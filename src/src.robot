@@ -12,6 +12,7 @@ Library     DateTime
 Resource    common/breadcrumbs/breadcrumbs.robot
 Resource    common/cdb_api/get_api_data.robot
 Resource    common/email/email.robot
+Library     common/email/email_lib.py
 Resource    common/header_old/header_old.robot
 Resource    common/loading/loading.robot
 Resource    common/open_browser/open_browser.robot
@@ -46,7 +47,7 @@ Resource    pages/contract/contract.robot
 Resource    pages/dozorro/dozorro.robot
 Resource    pages/dogovory/dogovory.robot
 Resource    pages/EDS/EDS.robot
-Resource    pages(webclient)/EDS/EDS_weclient.robot
+Resource    pages(webclient)/EDS/EDS_webclient.robot
 Resource    pages/guarantee_amount/guarantee_amount.robot
 Resource    pages/instruktcii/instruktcii.robot
 Resource    pages/karta_saytu/karta_saytu.robot
@@ -187,7 +188,7 @@ Open Browser In Grid
 Додати користувача
     [Arguments]  ${user}
     Delete All Cookies
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 	Authentication.Авторизуватися  ${user}
 	Зберегти сесію  ${user}
 
@@ -197,7 +198,7 @@ Open button
 	[Arguments]  ${selector}
 	${href}=  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
+	Go To Smart  ${href}
 
 
 conver dict to json
@@ -280,3 +281,9 @@ Input Type Flex
 	...  '${format}' == 'd'		"%d.%m.%Y"
 	${formated time}  Evaluate  time.strftime(${time format}, time.localtime((${time}/1000) + int(${deviation}) * 60))  time
 	[Return]  ${formated time}
+
+
+Go To Smart
+	[Arguments]  ${href}
+	Go To  ${href}
+	loading.Дочекатись закінчення загрузки сторінки

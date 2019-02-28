@@ -94,7 +94,7 @@ Metadata  Команда запуска скарг
 Перевірити публікацію вимоги в ЦБД
     [Tags]  claims
     Завантажити сесію для  ${provider}
-    Go To  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['complaints'][${n}]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['complaints'][${n}]['description']
@@ -109,7 +109,7 @@ Metadata  Команда запуска скарг
 Перевірити публікацію скарги в ЦБД
     [Tags]  complaints
     Завантажити сесію для  ${provider}
-    Go To  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['complaints'][${n}]['title']
     procurement_tender_detail.Порівняти введені дані з даними в ЦБД  ['complaints'][${n}]['description']
@@ -121,7 +121,7 @@ Metadata  Команда запуска скарг
     [Tags]  claims
     :FOR  ${user}  IN  ${provider}  ${viewer}
 	\  Завантажити сесію для  ${user}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  procurement_complaints.Активувати вкладку "Вимоги/скарги на умови закупівлі"
 	\  procurement_complaints.Обрати у фільтрі предмет вимоги(скарги)  ${data['title']}
 	\  procurement_complaints.Розгорнути всі експандери вимог(скарг)
@@ -137,7 +137,7 @@ Metadata  Команда запуска скарг
     [Tags]  complaints
     :FOR  ${user}  IN  ${provider}  ${viewer}
 	\  Завантажити сесію для  ${user}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  procurement_complaints.Активувати вкладку "Вимоги/скарги на умови закупівлі"
 	\  procurement_complaints.Обрати у фільтрі предмет вимоги(скарги)  ${data['title']}
 	\  procurement_complaints.Розгорнути всі експандери вимог(скарг)

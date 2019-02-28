@@ -92,7 +92,7 @@ ${multilot}                    //span[@class='Multilots']/ancestor::tr
   Scroll Page To Element XPATH   ${selector}
   Click Element  ${selector}
   Select Window  NEW
-  Дочекатись закінчення загрузки сторінки(skeleton)
+  Дочекатись закінчення загрузки сторінки
   Перевірити назву на сторінці лота  ${lot_title}
   Close Window
   Select Window  MAIN

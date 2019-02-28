@@ -33,7 +33,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	Run Keyword  Відкрити браузер ${browser.lower()}  ${env}
 	Set Window Size  1280  1024
 	Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Sleep  1
 
 
@@ -57,7 +57,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	[Tags]  test  pre_prod  utg  ukroboronprom  uspa
 	Input text  ${search field}  Тендернезнайдено.Тадам!
 	Click Element  ${search button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	elements.Дочекатися відображення елемента на сторінці  ${negative result}
 	${is}  Get Text  ${negative result}
 	Should Be Equal  ${is}  За Вашим запитом нічого не знайдено
@@ -156,7 +156,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	...  Element Should Contain  //*[@data-qa="status"]  ${tender_status}           AND
 	...  Go Back                                                                    AND
 	...  Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)  AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)
+	...  Дочекатись закінчення загрузки сторінки
 
 
 Перевірити тендер
@@ -171,7 +171,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	...  Element Should Contain  ${bidding type block}  ${tender_type}              AND
 	...  Go Back                                                                    AND
 	...  Run Keyword And Ignore Error  Виділити портрібний iFrame(за необхідністю)  AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)
+	...  Дочекатись закінчення загрузки сторінки
 
 
 Залогувати дані про відсутність тендерів
@@ -193,7 +193,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	Wait Until Keyword Succeeds  10s  1s  Click Element  ${item}
 	Sleep  .5
 	Click Element  ${filter locator}//i[contains(@class,'arrow-down-b')]
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 
 
 Отримати кількість тендерів на сторінці
@@ -207,8 +207,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 	elements.Дочекатися Відображення Елемента На Сторінці  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Go To Smart  ${href}
 
 
 Виділити портрібний iFrame(за необхідністю)

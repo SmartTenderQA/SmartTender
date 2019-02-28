@@ -4,12 +4,13 @@ Suite Setup     Precondition
 Suite Teardown  Postcondition
 Test Setup  	Stop The Whole Test Execution If Previous Test Failed
 Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
-...  AND  Log Location
+#...  AND  Log Location
 
 
 *** Variables ***
 ${new password}             qwerty12345
-${submit btn locator}       xpath=//button[@type='button' and contains(@class,'btn-success')]
+${submit btn locator}       //*[@data-qa="forgon-password-btn"]
+${reset btn locator}        //*[@data-qa="reset-password-btn"]
 
 
 #zapusk
@@ -23,12 +24,12 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Перейти на сторінку відновлення пароля
     Ввести mail в поле для відновлення паролю
     Wait Until Keyword Succeeds  3x  5  Відправити лист "Відновлення паролю" на пошту
-    email.Розпочати роботу з Gmail  ${user}
-	email.Дочекатися отримання листа на пошту  10m  SmartTender: Відновлення паролю
-    Wait Until Keyword Succeeds  30s  5s  email.Відкрити лист в email за темою  SmartTender: Відновлення паролю
-    email.Перейти за посиланням в листі  Відновити пароль→
+    ${gmail}  email.Розпочати роботу з Gmail  ${user}
+	${message}  email.Дочекатися отримання листа на пошту  ${gmail}  10m  SmartTender: Відновлення паролю
+	${reset password href}  Отримати посилання з листа  ${message}
+	Go To Smart  ${reset password href}
     Ввести новий пароль
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Переконатися що пароль змінено
     Авторизуватися з новим паролем  ${new password}
     Навести мишку на іконку з заголовку  Меню_користувача
@@ -38,13 +39,13 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
 
 Перевірити можливість змінити пароль через особистий кабінет для організатора
     [Tags]  change_password
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
     Run Keyword If  '${role}' == 'tender_owner'  Run Keywords
     ...  Навести мишку на іконку з заголовку  Меню_користувача	AND
     ...  Натиснути  Вийти										AND
     ...  Авторизуватися  ${user}								AND
     ...  Перевірити сторінку "Змінити пароль" для tender_owner  AND
-    ...  Go To  ${start_page}
+    ...  Go To Smart  ${start_page}
 
 
 Змінити пароль користувача
@@ -52,7 +53,7 @@ ${submit btn locator}       xpath=//button[@type='button' and contains(@class,'b
     Навести мишку на іконку з заголовку  Меню_користувача
 	Натиснути  Змінити пароль
     Змінити пароль  ${password}  ${new password}
-    Go To  ${start_page}
+    Go To Smart  ${start_page}
 	start_page.Навести мишку на іконку з заголовку  Меню_користувача
 	menu-user.Натиснути  Вийти
     Переконатися що пароль змінено
@@ -86,7 +87,7 @@ Postcondition
 Перевірити сторінку "Змінити пароль" для tender_owner
     Run Keyword If  '${site}' == 'test'
     ...  Click Element  xpath=//*[@title='${login}']
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     elements.Дочекатися відображення елемента на сторінці  //span[contains(text(),'Змінити свій пароль')]
     Sleep  0.5
     Click Element  //span[contains(text(),'Змінити свій пароль')]
@@ -96,9 +97,10 @@ Postcondition
 
 Змінити пароль
     [Arguments]  ${old password}  ${new password}
-    Input Password  xpath=(//input[@autocomplete])[1]  ${old password}
-    Input Password  xpath=(//input[@autocomplete])[2]  ${new Password}
-    Click Element  ${submit btn locator}
+    Input Password  //*[@data-qa="change-password-old-password"]//input  ${old password}
+    Input Password  //*[@data-qa="change-password-new-password"]//input  ${new Password}
+    Input Password  //*[@data-qa="change-password-confirm-new-password"]//input  ${new Password}
+    Click Element   //*[@data-qa="change-password-new-btn"]
     Wait Until Page Contains Element  xpath=//div[contains(@class,'alert')]
 
 
@@ -117,12 +119,10 @@ Postcondition
     Fill login  ${users_variables["${user}"]["login"]}
     Fill password  ${new password}
     Click Log In
-    Run Keyword If  "tender_owner" == "${role}"
-	...  Дочекатись закінчення загрузки сторінки(webclient)  ELSE
-	...  Дочекатись закінчення загрузки сторінки
+    Дочекатись закінчення загрузки сторінки
 	Run Keyword If  "${role}" != "viewer" and "${role}" != "tender_owner"
 	...  Wait Until Page Contains  ${name}  10
-	Run Keyword If  "tender_owner" == "${role}"  Go To  ${start_page}
+	Run Keyword If  "tender_owner" == "${role}"  Go To Smart  ${start_page}
 
 
 Перейти на сторінку відновлення пароля
@@ -131,7 +131,7 @@ Postcondition
 
 
 Ввести mail в поле для відновлення паролю
-    ${forgot password input}  Set Variable  xpath=//div[@class='ivu-card-body']//input[@autocomplete="off"]
+    ${forgot password input}  Set Variable  //*[@data-qa="forgon-password-email"]//input
     elements.Дочекатися відображення елемента на сторінці  ${forgot password input}
     Input Text  ${forgot password input}  ${login}
 
@@ -143,9 +143,17 @@ Postcondition
 
 
 Ввести новий пароль
+	${input}  Set Variable  //*[@data-qa="reset-password-new-password"]//input
     Дочекатись Закінчення Загрузки Сторінки
-    elements.Дочекатися відображення елемента на сторінці  //input[@placeholder='']
-    Input Password  xpath=//input[@placeholder='']  ${new password}
-    Click Element  ${submit btn locator}
+    elements.Дочекатися відображення елемента на сторінці  ${input}
+    Input Password  ${input}  ${new password}
+    Click Element  ${reset btn locator}
     Дочекатись Закінчення Загрузки Сторінки
     Wait Until Page Contains  Пароль успішно змінений
+
+
+Отримати посилання з листа
+	[Arguments]  ${message}
+	${content}  get_message_content  ${message}
+	${href}  get_href_from_message  ${content}
+	[Return]  ${href}

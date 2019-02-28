@@ -152,7 +152,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	[Arguments]  ${time}
 	Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
     ...  Reload Page  												AND
-    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Дочекатись закінчення загрузки сторінки  		AND
     ...  Page Should Contain Element  ${auction locator}\[1]
 
 
@@ -182,7 +182,7 @@ ${auction locator}			(//a[contains(text(),'Перейти до аукціону'
 	[Arguments]  ${message status}  ${time}
     Wait Until Keyword Succeeds  ${time}  30 sec  Run Keywords
     ...  Reload Page  												AND
-    ...  Дочекатись закінчення загрузки сторінки(skeleton)  		AND
+    ...  Дочекатись закінчення загрузки сторінки  		AND
     ...  Статус повідомлення повинен бути  ${message status}
 
 

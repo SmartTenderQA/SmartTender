@@ -2,7 +2,7 @@
 Перейти у розділ (webclient)
     [Arguments]  ${name}
     Click Element  xpath=(//*[@title="${name}"])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     Очистити фільтр "Умова відбору"
     Run Keyword And Ignore Error  Закрити валідаційне вікно  Умова відбору тендерів  OK
 
@@ -17,7 +17,7 @@
 Змінити мову (webclient)
     [Arguments]  ${lang}
     Click Element  //*[@data-name="MAINMENU__CHANGELANG"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     elements.Дочекатися відображення елемента на сторінці  //span[text()="${lang}"]
     Click Element  //span[text()="${lang}"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки

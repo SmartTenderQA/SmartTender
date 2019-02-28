@@ -15,7 +15,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	Wait Until Keyword Succeeds  5  .5  Click Element  xpath=//span[contains(text(),'Оберіть тип активу')]
 	elements.Дочекатися відображення елемента на сторінці  ${type locator}
 	Click Element  ${type locator}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	${status}  Run Keyword And Return Status
 	...  Wait Until Page Contains Element  //li[contains(text(),'${type}') and contains(@class,'selected')]
 	Run Keyword If  '${status}' == '${False}'  Вибрати тип активу  ${type}
@@ -26,8 +26,7 @@ ${advanced search}                 	//span[contains(text(),'Розгорнути
 	${selector}  Set Variable  (${item}//a)[${n}]
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Go To Smart  ${href}
 
 
 Порахувати активи

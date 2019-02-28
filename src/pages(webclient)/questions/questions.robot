@@ -29,7 +29,9 @@
 Вибрати запитання за назвою
     [Arguments]  ${title}
     ${question row}  Set Variable  //td[.="${title}"]
+    Дочекатись закінчення загрузки сторінки
     Click Element  ${question row}
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  ${question row}\[@class="cellselected"]  2
 
 
@@ -47,10 +49,10 @@
 
 Додати файл до відповіді на запитання
     Click Element  //*[@data-name="ATTACHMENTBTN"]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${name}  ${hash}  actions.Додати doc файл
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     ${get}  Get Element Attribute  //*[@data-name="ATTACHMENT"]//input  value
     Should Be Equal  ${get}  ${name}
     [Return]  ${name}  ${hash}

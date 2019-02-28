@@ -7,7 +7,7 @@ ${kontakty block}						//div[@itemscope='itemscope']/div[contains(@class, 'ivu-c
 Зайти на сторінку povidomlenya
 	Click Element  ${button messages}
 	Location Should Contain  /povidomlenya/
-	loading.Дочекатись закінчення загрузки сторінки(circle)
+	loading.Дочекатись закінчення загрузки сторінки
 	${header text}  Set Variable  //h1
 	${should header}  Set Variable  Повідомлення
 	${is header}  Get Text  ${header text}

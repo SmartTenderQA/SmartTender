@@ -13,7 +13,7 @@ Start viewer
 
 Start provider
 	Delete All Cookies
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 	${login}  ${password}  Отримати дані користувача  user1
 	Авторизуватися  ${login}  ${password}
 	header_old.Відкрити сторінку інструкцій
@@ -24,10 +24,10 @@ Start provider
 
 Start tender_owner
 	Delete All Cookies
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 	${login}  ${password}  Отримати дані користувача  Bened
 	Авторизуватися  ${login}  ${password}
-	Go To  ${start_page}
+	Go To Smart  ${start_page}
 	Відкрити сторінку Карта сайту
 	Зберегти сесію  tender_owner
 	${location}  Get Location

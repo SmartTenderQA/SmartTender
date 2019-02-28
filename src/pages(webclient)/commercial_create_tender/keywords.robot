@@ -4,8 +4,9 @@
 	Wait Until Element Is Visible  ${row}  10
 	${count}  Get Element Count  ${row}
 	${n}  random_number  1  ${count}
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	Click Element  (${row})[${n}]
+	Дочекатись закінчення загрузки сторінки
 	Sleep  3
 	${classification_name}  Get Text  (${row})[${n}]
 	[Return]  ${classification_name}
@@ -37,7 +38,7 @@
 	#${n}  random_number  1  ${count}
 	${n}  random_number  1  15
 	${unit_name}  Вибрати довільну одиницю виміру Click  (${row})[${n}]
-	Дочекатись закінчення загрузки сторінки(webclient)
+	Дочекатись закінчення загрузки сторінки
 	[Return]  ${unit_name}
 
 

@@ -64,7 +64,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   Wait Until Keyword Succeeds  30  2  Знайти потрібний моніторинг за номером  ${monitoring_id}
   :FOR  ${username}  IN  ${viewer}  ${provider1}
   \  Завантажити сесію для  ${username}
-  \  Go To  ${data['location']}
+  \  Go To Smart  ${data['location']}
   \  Відкрити вкладку моніторингу
   \  Зберегти сесію  ${username}
 
@@ -75,7 +75,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Звірити статус моніторингу
   \  Звірити дату створення
   \  Звірити адитора
@@ -91,7 +91,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Звірити опис сказування
@@ -107,7 +107,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Звірити опис рішення
@@ -123,7 +123,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Run Keyword And Expect Error  *  Відкрити бланк пояснення з власної ініціативи
   \  Зберегти сесію  ${username}
 
@@ -132,7 +132,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   [Tags]  make_a_dialogue_individually
   ${loc}  Get Location
   Завантажити сесію для  ${tender_owner}
-  Go to  ${loc}
+  Go To Smart  ${loc}
   Відкрити вкладку моніторингу
   Відкрити бланк пояснення з власної ініціативи
   ${title}  Заповнити поле предмет пояснення з власної ініціативи
@@ -148,7 +148,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити date пояснення з власної ініціативи
   \  Перевірити title пояснення з власної ініціативи
@@ -176,7 +176,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title відповіді на пояснення з власної ініціативи
   \  Перевірити datePublished відповіді на пояснення з власної ініціативи
@@ -203,7 +203,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title запиту  ${data_cdb}
   \  Перевірити description запиту  ${data_cdb}
@@ -237,7 +237,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити date відповіді на запит
   \  Перевірити title відповіді на запит
@@ -268,7 +268,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити результат висновку
   \  Звірити дату висновку
@@ -291,7 +291,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Відкрити вікно інспекції
   \  Перевірити наявність description інспекціїї
@@ -308,7 +308,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Run Keyword And Expect Error  *  Відкрити бланк запиту за роз'ясненнями
   \  Зберегти сесію  ${username}
@@ -332,7 +332,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити title запиту
   \  Звірити description запиту
@@ -353,7 +353,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити title відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
   \  Перевірити datePublished відповіді на запит за роз'ясненнями щодо висновку органом ДАСУ
@@ -374,7 +374,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Run Keyword And Expect Error  *  Відкрити бланк звіту про усунення порушення
   \  Зберегти сесію  ${username}
 
@@ -396,7 +396,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити дату інформації про усунення порушення
   \  Перевірити description інформації про усунення порушення
@@ -419,7 +419,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Run Keyword And Expect Error  *  Вікрити бланк позову
   \  Зберегти сесію  ${username}
 
@@ -441,7 +441,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${provider1}  ${viewer}  ${tender_owner}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Перевірити дату позову
   \  Перевірити description позову
@@ -473,7 +473,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Перевірити опис факту усунення порушення
@@ -494,7 +494,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Отримати дані моніторингу по API
   \  Звірити статус моніторингу
@@ -518,7 +518,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити дату висновку
   \  Зберегти сесію  ${username}
@@ -535,7 +535,7 @@ ${tender_ID}                    5db517ca10c34271a2636dd2db0fc959
   :FOR  ${username}  IN  ${tender_owner}  ${provider1}  ${viewer}
   \  ${loc}  Get Location
   \  Завантажити сесію для  ${username}
-  \  Go to  ${loc}
+  \  Go To Smart  ${loc}
   \  Відкрити вкладку моніторингу
   \  Звірити статус моніторингу
   \  Зберегти сесію  ${username}
@@ -1298,8 +1298,7 @@ Test Postcondition
 
 
 Перейти у webclient
-  Go To  ${start_page}/webclient/
-  Дочекатись закінчення загрузки сторінки(webclient)
+  Go To Smart  ${start_page}/webclient/
 
 
 Змінити мову на укр.
@@ -1312,7 +1311,7 @@ Test Postcondition
   Sleep  2
   Click Element  ${selector}
   Wait Until Element Is Not Visible  ${selector}  15
-  Дочекатись закінчення загрузки сторінки(webclient)
+  Дочекатись закінчення загрузки сторінки
 
 
 Сформувати та відправити відповідь органом ДАСУ

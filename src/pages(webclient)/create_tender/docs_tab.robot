@@ -11,12 +11,12 @@
 
 Додати документ власником
     Click Element  xpath=//*[@data-name="BTADDATTACHMENT"]/div
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  xpath=//*[@type='file'][1]
     ${doc}=  create_fake_doc
     ${path}  Set Variable  ${doc[0]}
     ${name}  Set Variable  ${doc[1]}
     Choose File  xpath=//*[@type='file'][1]  ${path}
     Click Element  xpath=(//span[.='ОК'])[1]
-    Дочекатись закінчення загрузки сторінки(webclient)
+    Дочекатись закінчення загрузки сторінки
     Page Should Contain  ${name}

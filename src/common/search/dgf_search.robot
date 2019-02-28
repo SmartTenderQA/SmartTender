@@ -15,19 +15,18 @@ ${elastic search clean filter}      css=.tag-holder button
 
 Натиснути кнопку пошуку
 	Click Element  ${elastic search button}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element  ${elastic search clean filter}
 
 
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
 	${selector}  Set Variable  xpath=(//*[@class='panel-body']//h4//a)[${n}]
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element  ${selector}
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To  ${href}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Go To Smart  ${href}
 
 
 Очистити фільтр пошуку
@@ -35,7 +34,7 @@ ${elastic search clean filter}      css=.tag-holder button
 	Run Keyword If  ${status} == ${True}  Wait Until Keyword Succeeds  30  1
 	...  Run Keywords
 	...  Wait Until Keyword Succeeds  10  1  Click Element  ${elastic search clean filter}  AND
-	...  Дочекатись закінчення загрузки сторінки(skeleton)  AND
+	...  Дочекатись закінчення загрузки сторінки  AND
 	...  Wait Until Element Is Not Visible  ${elastic search clean filter}
 
 
@@ -54,4 +53,4 @@ ${elastic search clean filter}      css=.tag-holder button
 	new_search.Очистити фільтр пошуку
 	${bid form locator}  Set Variable  //*[@class='ivu-checkbox-group' and contains(.,'Конкурентні')]//label[contains(text(),'${bid form}')]
 	Click Element  ${bid form locator}
-	Дочекатись закінчення загрузки сторінки(skeleton)
+	Дочекатись закінчення загрузки сторінки
