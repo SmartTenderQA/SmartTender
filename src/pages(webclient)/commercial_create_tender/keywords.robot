@@ -6,6 +6,7 @@
 	${n}  random_number  1  ${count}
 	Дочекатись закінчення загрузки сторінки
 	Click Element  (${row})[${n}]
+	Дочекатись закінчення загрузки сторінки
 	Sleep  3
 	${classification_name}  Get Text  (${row})[${n}]
 	[Return]  ${classification_name}

@@ -67,6 +67,7 @@
 Підтвердити вибір(F10)
 	${ok button}  Set Variable  //*[@title="Вибрати"]
 	elements.Дочекатися відображення елемента на сторінці  ${ok button}
+	Дочекатись закінчення загрузки сторінки
 	Click Element  ${ok button}
 	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Does Not Contain Element  ${ok button}
@@ -116,6 +117,7 @@
 Натиснути кнопку Змінити (F4)
     ${selector}  Set Variable  //*[@title="Змінити (F4)"]
     Wait Until Element Is Visible  ${selector}  15
+    Дочекатись закінчення загрузки сторінки
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки
 

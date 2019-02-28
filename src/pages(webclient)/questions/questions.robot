@@ -29,7 +29,9 @@
 Вибрати запитання за назвою
     [Arguments]  ${title}
     ${question row}  Set Variable  //td[.="${title}"]
+    Дочекатись закінчення загрузки сторінки
     Click Element  ${question row}
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  ${question row}\[@class="cellselected"]  2
 
 
