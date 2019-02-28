@@ -76,7 +76,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
-    ...  EDS_weclient.Накласти ЕЦП (webclient)
+    ...  EDS_webclient.Накласти ЕЦП (webclient)
     ...  ELSE
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
@@ -99,7 +99,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     Run Keyword If  ('${EDS}' == 'True') and ('below' not in '${MethodType}')
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Так  AND
-    ...  EDS_weclient.Накласти ЕЦП (webclient)
+    ...  EDS_webclient.Накласти ЕЦП (webclient)
     ...  ELSE
     ...  Run Keywords
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на рішення по пропозиції?  Ні  AND
@@ -122,7 +122,7 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     actions.Натиснути кнопку "Підписати договір"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
     validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на договір?  Так
-    EDS_weclient.Накласти ЕЦП (webclient)
+    EDS_webclient.Накласти ЕЦП (webclient)
     #validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
     Wait Until Page Contains  Договір підписаний    60
     Wait Until Keyword Succeeds  10  2  Click Element  //*[@id="IMMessageBoxBtnOK_CD"]//span[text()="ОК"]
