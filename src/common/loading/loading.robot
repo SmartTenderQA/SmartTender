@@ -23,7 +23,7 @@ ${loadings}                         ${loading}|${webClient loading}|${circle loa
 	Sleep  .5
 	${is visible}  Run Keyword And Return Status  Element Should Be Visible  ${loadings}
 	Run Keyword If  ${is visible}
-	...  Дочекатись закінчення загрузки сторінки lgklkh
+	...  Дочекатись закінчення загрузки сторінки
 
 
 Дочекатись закінчення загрузки сторінки по елементу
