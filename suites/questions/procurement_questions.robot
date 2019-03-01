@@ -5,7 +5,7 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Element Screenshot  //body
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v site:prod -v hub:none suites/questions/procurement_questions.robot
 *** Variables ***
