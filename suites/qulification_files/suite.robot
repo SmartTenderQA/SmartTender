@@ -10,7 +10,8 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Element Screenshot  //body  AND
+...                                         actions.Зберегти словник у файл  ${data}  data
 
 
 *** Test Cases ***
@@ -79,6 +80,7 @@ If skipped create tender
 Дочекатись початку періоду перкваліфікації
     [Tags]  sync  pre-qualification
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
+    procurement_page_keywords.Дочекатися відображення блоку прекваліфікація на сторінці  3m
 
 
 Перевірити наявність конфіденційного документу на сторінці та в ЦБД
@@ -122,11 +124,9 @@ If skipped create tender
     Go to  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
     :FOR  ${i}  IN  1  2
-    \  procurement_tender_detail.Розгорнути всі експандери учасника  ${i}
-    \  ${hash}  Скачати файл з іменем та індексом  sign.p7s  2
+    \  ${hash}  Wait Until Keyword Succeeds  60  1  Скачати файл з іменем та індексом для користувача  ${i}  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
-    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}-1]}  2
-    \  procurement_tender_detail.Згорнути всі експандери учасника  ${i}
+    \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}]}  2
 
 
 Відхилити організатором пропозицію першого учасника
@@ -211,12 +211,12 @@ If skipped create tender
 Перевірити публікацію кваліфікаційних файлів в ЦБД
     [Tags]  validation
     [Template]  procurement_tender_detail.Порівняти створений документ з документом в ЦБД procurement
-    ${data['qualification_documents'][2]}
-	${data['qualification_documents'][3]}
+    ${data['qualification_documents'][3]}
 	${data['qualification_documents'][4]}
 	${data['qualification_documents'][5]}
-    ${data['qualification_documents'][6]}
+	${data['qualification_documents'][6]}
     ${data['qualification_documents'][7]}
+    ${data['qualification_documents'][8]}
 
 
 Перевірити публікацію кваліфікаційних файлів на сторінці користувачами
@@ -225,12 +225,12 @@ If skipped create tender
     ...  Go to  ${data['tender_href']}  AND
     ...  procurement_tender_detail.Розгорнути всі експандери
     [Template]  procurement_tender_detail.Порівняти відображений документ з документом в ЦБД procurement
-    ${data['qualification_documents'][2]}
-	${data['qualification_documents'][3]}
+    ${data['qualification_documents'][3]}
 	${data['qualification_documents'][4]}
 	${data['qualification_documents'][5]}
-    ${data['qualification_documents'][6]}
+	${data['qualification_documents'][6]}
     ${data['qualification_documents'][7]}
+    ${data['qualification_documents'][8]}
 
 
 
@@ -249,31 +249,14 @@ Precondition
 
 Відкрити браузер Chrome з вказаною папкою для завантаження файлів
     [Arguments]  ${downloadDir}
-	${class_options}=  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
+    ${chromeOptions} =    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
     ${prefs} =    Create Dictionary    download.default_directory=${downloadDir}
-    Call Method    ${class_options}    add_experimental_option    prefs    ${prefs}
-
-    Run Keyword If  '${headless}' == '${True}'  Run Keywords
-    ...  Call Method    ${class_options}    set_headless    ${True}  AND
-    ...  Call Method    ${class_options}    add_argument    disable-gpu  AND
-    ...  Call Method    ${class_options}    add_argument    --window-size\=1280,1024
-
-    Run Keyword If  '${browser_version}' != ''
-    ...  Call Method    ${class_options}    set_capability  version  ${browser_version}
-
-    Run Keyword If  '${platform}' != 'ANY'
-    ...  Call Method    ${class_options}    set_capability  platform  ${platform}
-
-    ${options}  Call Method  ${class_options}  to_capabilities
-
-    Run Keyword If  '${hub.lower()}' != 'none'  Run Keywords
-    ...  Create Webdriver  Remote  alias=new_chrome  command_executor=${hub}  desired_capabilities=${options}  AND
-    ...  Отримати та залогувати data_session  ELSE
-    ...  Create Webdriver  Chrome  alias=new_chrome
-    Set Window Size  1280  1024
-
-
-
+    Call Method    ${chromeOptions}    add_experimental_option    prefs    ${prefs}
+    Call Method    ${chromeOptions}    add_argument    --window-size\=1280,1024
+    Call Method    ${chromeOptions}    add_argument    --disable-gpu
+    ${browser started}  Run Keyword And Return Status
+    ...  Create Webdriver  Chrome  chrome_options=${chromeOptions}
+    Should Be True  ${browser started}
 
 
 Отримати дані з cdb та зберегти їх у файл
@@ -300,22 +283,22 @@ Precondition
 	Append To List  ${data['qualification_documents']}  ${new doc}
 
 
-Скачати файл з іменем та індексом
-    [Arguments]  ${name}  ${index}
+Скачати файл з іменем та індексом для користувача
+    [Arguments]  ${user index}  ${name}  ${index}
     ${selector}  Set Variable  (//*[@data-qa="file-name"][text()="${name}"])[${index}]
     ${download locator}  Set Variable  ${selector}/ancestor::div[@class="ivu-poptip"]//*[@data-qa="file-download"]
-    elements.Дочекатися відображення елемента на сторінці  ${selector}  30
+    procurement_tender_detail.Розгорнути всі експандери учасника  ${user index}
+    elements.Дочекатися відображення елемента на сторінці  ${selector}
     Mouse Over  ${selector}
     Wait Until Element Is Visible  ${download locator}
     Click Element                  ${download locator}
-    Sleep  5
     ${status}  Run Keyword And Return Status  Element Should Be Visible  ${selector}
     Run Keyword If  '${status}' == 'False'  Run Keywords
     ...  Go Back      AND
-    ...  Reload Page  AND
-    ...  Скачати файл з іменем та індексом  ${name}  ${index}
+    ...  Reload Page
     ${md5}   Wait Until Keyword Succeeds  10  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
+    procurement_tender_detail.Згорнути всі експандери учасника  ${user index}
     [Return]  ${md5}
 
 

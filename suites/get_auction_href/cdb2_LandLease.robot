@@ -2,7 +2,7 @@
 Resource  ../../src/src.robot
 Suite Setup  Precondition
 Suite Teardown  Close All Browsers
-Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Element Screenshot  //body
 ...  AND  Log Location
 ...  AND  Log  ${data}
 

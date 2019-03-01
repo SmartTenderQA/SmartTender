@@ -7,10 +7,10 @@
 Заповнити та перевірити текстове поле
 	[Arguments]  ${selector}  ${text}
 	Click Element  ${selector}
-	Sleep  .5
+	Дочекатись закінчення загрузки сторінки
 	Clear input By JS  ${selector}
 	Input Text  ${selector}  ${text}
-	Sleep  1
+	Дочекатись закінчення загрузки сторінки
 	${got}  Get Element Attribute  ${selector}  value
 	Click Element  ${selector}
 	Should Be Equal  ${got}  ${text}
@@ -33,6 +33,7 @@
 
 Заповнити Поле
     [Arguments]  ${selector}  ${text}
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  ${selector}
     Click Element  ${selector}
     Sleep  .5

@@ -2,7 +2,7 @@
 Resource  ../../src/src.robot
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Element Screenshot  //body
 Suite Teardown  Close All Browsers
 
 

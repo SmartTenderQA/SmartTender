@@ -78,7 +78,7 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']
 	${doc}  Створити та додати файл  ${input file}
 	${md5}  get_checksum_md5  ${OUTPUTDIR}/${doc[1]}
-	Page Should Contain  ${doc[1]}
+	elements.Дочекатися відображення елемента на сторінці  //*[contains(text(), "${doc[1]}")]
 	Click Element  //*[contains(text(),'ОК')]
 	Дочекатись закінчення загрузки сторінки
 	Set To Dictionary  ${docs_data}  key  contracts

@@ -12,18 +12,14 @@
 
 Дочекатися отримання листа на пошту
 	[Arguments]  ${gmail}  ${timeout}  ${subject}
-	${time now -5 min}  Отримати час на машині  time  -5
-	${message}  Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${gmail}  ${subject}  ${time now -5 min}
+	${message}  Wait Until Keyword Succeeds  ${timeout}  15 s  Перевірити наявність листа за темою  ${gmail}  ${subject}
 	[Return]  ${message}
 
 
 Перевірити наявність листа за темою
-	[Arguments]  ${gmail}  ${subject}  ${time now -5 min}
+	[Arguments]  ${gmail}  ${subject}
 	${message}  Call Method  ${gmail}  get_last_mail_with_subject  ${subject}
-	${date is}  get_message_date  ${message}
-	${is today}  Evaluate  '${date is}'[:'${date is}'.index('.')] == str(datetime.date.today().day)  datetime
-	Run Keyword If  ${is today} == ${False}  Fail
-	${time is}  get_message_time  ${message}
-	${time status}  compare_dates_smarttender  ${time now -5 min}  <=  ${time is}
+	${time is}  get_message_date  ${message}
+	${time status}  compare_dates_smarttender  ${TEST START TIME}  <=  ${time is}
 	Should Be Equal  ${time status}  ${True}
 	[Return]  ${message}

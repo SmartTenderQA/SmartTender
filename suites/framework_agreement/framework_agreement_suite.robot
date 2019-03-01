@@ -5,7 +5,7 @@ Suite Setup     Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
+...                                        Capture Element Screenshot  //body
 
 #  robot --consolecolors on -L TRACE:INFO -v hub:None -d test_output -e get_tender suites/framework_agreement/framework_agreement_suite.robot
 
@@ -25,6 +25,7 @@ If skipped create tender
 
 
 Подати заявку на участь в тендері трьома учасниками
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	:FOR  ${i}  IN  1  2  3
 	\  Завантажити сесію для  ${provider${i}}
 	\  Прийняти участь у тендері учасником  ${provider${i}}
@@ -32,19 +33,21 @@ If skipped create tender
 
 
 Відкрити браузер під роллю організатора та знайти тендер
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${tender_owner}
 	desktop.Перейти у розділ (webclient)  Рамкові угоди(тестові)
     main_page.Знайти тендер організатором по title  ${data['title']}
 
 
 Підтвердити прекваліфікацію для доступу до аукціону організатором
+    [Setup]  Stop The Whole Test Execution If Previous Test Failed
     qualification.Провести прекваліфікацію учасників
 
 
 Дочекатися учасником статусу тендера кваліфікація
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
 	Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Кваліфікація
 
 
@@ -60,7 +63,7 @@ If skipped create tender
 Дочекатися учасником статусу тендера "Пропозиції розглянуті"
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Пропозиції розглянуті
 
 
@@ -81,15 +84,16 @@ If skipped create tender
     framework_agreement.Заповнити поля Рамкової угоди
     actions.Натиснути кнопку "Заключить рамочное соглашение"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви впевнені  Так
-    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Ні
-    validation.Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на угоду  Так
+    EDS_webclient.Накласти ЕЦП (webclient)
+    #validation.Закрити валідаційне вікно (Так/Ні)  не накладено актуальний підпис ЕЦП  Так
     framework_agreement.Підтвердити активацію рамкової угоди
 
 
 Переконатись що статус закупівлі "Завершено"
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
 
 
@@ -112,7 +116,7 @@ If skipped create tender
 Прийняти участь у тендері учасником
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником

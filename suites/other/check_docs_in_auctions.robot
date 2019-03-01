@@ -5,7 +5,7 @@ Suite Teardown  		Close All Browsers
 Test Teardown    		Run Keywords
 						...  Log  ${checks}  AND
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Page Screenshot
+						...  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 # Команда запуска проверки коммерческих
 # robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:none suites/other/check_docs_in_auctions.robot
@@ -27,8 +27,10 @@ ${tender boby on old search}   /following-sibling::tr[@class="content"][1][not(c
 	...  Натиснути на іконку з баннеру  Комерційні тендери SmartTender
 	...  ELSE IF  '${type}' == 'procurement'
 	...  Натиснути на іконку з баннеру  Державні закупівлі Prozorro
-	...  ELSE IF  '${type}' == 'bank_aucs'
-	...  Натиснути на іконку з баннеру  Аукціони на продаж майна банків
+	...  ELSE IF  '${type}' == 'bank_aucs'  Run Keywords
+	...  Натиснути на іконку з баннеру  Аукціони на продаж майна банків         AND
+	...  Дочекатись закінчення загрузки сторінки                                AND
+	...  dgf_search.Сортувати за  Датою публікації
 
 
 Пошук та перевірка необхідних файлів

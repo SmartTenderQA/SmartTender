@@ -4,7 +4,7 @@ Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_asset_page/cdb2_ssp_ass
 Library  ../../src/pages/sale/SPF/cdb2_ssp_page/cdb2_ssp_lot_page/cdb2_ssp_lot_variables.py
 Suite Setup  Precondition
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Element Screenshot  //body
 ...  AND  Log Location
 ...  AND  Log  ${data}
 
@@ -95,7 +95,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
 	[Setup]  Go To Smart  ${start page}
 	Set Global Variable  ${asset_data}  ${data}
 	cdb2_ssp_step.Створити інформаційне повідомлення МП  ${assetID}
-	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  10 min
+	cdb2_ssp_lot_page.Дочекатися статусу повідомлення  Опубліковано  20 min
 	Run Keyword If  '${site}' == 'test'
 	...  sale_keywords.Отримати prozorro ID
 	${location}  Get Location

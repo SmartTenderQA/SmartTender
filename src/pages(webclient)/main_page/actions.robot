@@ -6,7 +6,8 @@
     Run Keyword And Ignore Error
     ...  validation.Закрити валідаційне вікно (Так/Ні)  Увага! Бюджет перевищує  Так
     Підтвердити повідомлення про перевірку публікації документу за необхідністю
-    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП  Ні
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП  Так
+    EDS_webclient.Накласти ЕЦП (webclient)
 
 
 Оголосити тендер
@@ -22,7 +23,8 @@
     Натиснути кнопку Перечитать (Shift+F4)
     Натиснути надіслати вперед(Alt+Right)
     validation.Закрити валідаційне вікно (Так/Ні)  Опублікувати процедуру?  Так
-    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на тендер?  Ні
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на тендер?  Так
+    EDS_webclient.Накласти ЕЦП (webclient)
 
 
 Відкрити вікно створення тендеру     #TODO переписати кейворд
@@ -67,6 +69,7 @@
 Підтвердити вибір(F10)
 	${ok button}  Set Variable  //*[@title="Вибрати"]
 	elements.Дочекатися відображення елемента на сторінці  ${ok button}
+	Дочекатись закінчення загрузки сторінки
 	Click Element  ${ok button}
 	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Does Not Contain Element  ${ok button}
@@ -84,7 +87,7 @@
 Натиснути додати(F7)
 	[Arguments]  ${text}  ${additional_xpath}=${EMPTY}
 	elements.Дочекатися відображення елемента на сторінці  ${additional_xpath}//*[@title="Додати (F7)"]  30
-	Click Element  ${additional_xpath}//*[@title="Додати (F7)"]
+	Wait Until Keyword Succeeds  15  3  Click Element  ${additional_xpath}//*[@title="Додати (F7)"]
 	Дочекатись закінчення загрузки сторінки
 	Wait Until Page Contains Element
 	...  //*[contains(@id, "pcModalMode") and contains(., "${text}") and not(contains(@style, "visibility: hidden"))]
@@ -116,6 +119,7 @@
 Натиснути кнопку Змінити (F4)
     ${selector}  Set Variable  //*[@title="Змінити (F4)"]
     Wait Until Element Is Visible  ${selector}  15
+    Дочекатись закінчення загрузки сторінки
     Click Element  ${selector}
     Дочекатись закінчення загрузки сторінки
 

@@ -5,7 +5,7 @@ Suite Setup  			Open Browser In Grid  ${user}
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Page Screenshot
+						...  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 
 *** Test Cases ***
