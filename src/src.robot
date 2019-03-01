@@ -1,5 +1,5 @@
 *** Settings ***
-Library     Selenium2Library   #run_on_failure=Capture Full Screenshot
+Library     Selenium2Library
 Library     BuiltIn
 Library     Collections
 Library	    RequestsLibrary
