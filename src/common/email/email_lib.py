@@ -54,6 +54,10 @@ class Email:
 			for i in self.messages_IDs:
 				msg = self.get_mail_by_id(i)
 				if subject in get_message_subject(msg):
+					print('message date: ' + get_message_date(msg))
+					print('message subject: ' + get_message_subject(msg))
+					print('message from: ' + __decode_content__(msg['from']))
+					print('message to: ' + msg['to'])
 					return msg
 			return "Oops! Листа з темою '" + subject + "' не знайдено"
 		else:

@@ -59,6 +59,10 @@ Preconditions
     balance.Натиснути сформувати Invoice
     Дочекатись закінчення загрузки сторінки
     invoice.Перевірити сторінку
+   	${TEST START TIME}  Evaluate  ('{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() - datetime.timedelta(minutes=3)))  datetime
+   	#date.now - 3 min (так нужно)
+	Set Global Variable  ${TEST START TIME}  ${TEST START TIME}
+
 
 
 Спробувати сформувати рахунок без суми
