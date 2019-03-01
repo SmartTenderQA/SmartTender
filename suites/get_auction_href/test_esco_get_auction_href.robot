@@ -5,7 +5,7 @@ Suite Setup  Підготувати користувачів
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Page Screenshot
+...                                        Capture Element Screenshot  //body
 
 
 #  robot --consolecolors on -L TRACE:INFO -d test_output -v hub:None -e get_tender suites/get_auction_href/test_esco_get_auction_href.robot

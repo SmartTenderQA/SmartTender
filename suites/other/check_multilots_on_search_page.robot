@@ -6,7 +6,7 @@ Test Teardown                   Run Keywords
                                   ...  Log  ${checked_single}  WARN  AND
                                   ...  Log  ${checked_multiple}  WARN  AND
                                   ...  Log Location  AND
-                                  ...  Run Keyword If Test Failed  Capture Page Screenshot
+                                  ...  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 # Команда запуска
 # robot --noncritical non-critical --consolecolors on -L TRACE:INFO -v user:test_viewer -v capability:chrome -v hub:None -d test_output suites/other/check_multilots_on_search_page.robot

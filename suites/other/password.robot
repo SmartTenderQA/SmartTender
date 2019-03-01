@@ -3,7 +3,7 @@ Resource        ../../src/src.robot
 Suite Setup     Precondition
 Suite Teardown  Postcondition
 Test Setup  	Stop The Whole Test Execution If Previous Test Failed
-Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Element Screenshot  //body
 #...  AND  Log Location
 
 

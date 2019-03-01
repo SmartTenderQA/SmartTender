@@ -71,7 +71,7 @@ Suite Precondition
 
 Test Postcondition
 	Log Location
-	Run Keyword If Test Failed  Capture Page Screenshot
+	Run Keyword If Test Failed  Capture Element Screenshot  //body
 	Log  ${data}
 
 

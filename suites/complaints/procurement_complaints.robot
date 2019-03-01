@@ -6,7 +6,7 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot
+...                                         Capture Element Screenshot  //body
 
 Metadata  Команда запуска вимог
 ...       robot --consolecolors on -L TRACE:INFO -d test_output -v type:claims -i claims -v site:test suites/complaints/procurement_complaints.robot
