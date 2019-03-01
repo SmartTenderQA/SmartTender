@@ -2,7 +2,7 @@
 Resource  ../../src/src.robot
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Full Screenshot
+...                                         Capture Page Screenshot
 Suite Teardown  Close All Browsers
 
 
@@ -177,7 +177,7 @@ ${bidding type block}               //*[@data-qa="procedure-type"]|//*[@data-qa=
 Залогувати дані про відсутність тендерів
 	[Arguments]  ${text}
 	Log  Oops! Немає підходящого тендера! ${text}  WARN
-	Capture Full Screenshot
+	Capture Page Screenshot
 
 
 Встановити фільтр

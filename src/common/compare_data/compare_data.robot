@@ -27,7 +27,7 @@ Library		compare_data.py
  	${is equal}  compare_data.compare_values  ${value viewed}  ${value cdb}
  	Run Keyword If  ${is equal} == ${False}  Run Keywords
  	...  Scroll Page To Element XPATH  ${view_locators${field}}  AND
- 	...  Capture Full Screenshot
+ 	...  Capture Page Screenshot
  	Should Be True  ${is equal}  Oops! Помилка з даними для ${field}
 
 

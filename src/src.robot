@@ -287,7 +287,3 @@ Go To Smart
 	[Arguments]  ${href}
 	Go To  ${href}
 	loading.Дочекатись закінчення загрузки сторінки
-
-
-Capture Full Screenshot
-	Capture Element Screenshot  //body

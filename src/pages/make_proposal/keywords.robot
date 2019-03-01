@@ -47,7 +47,7 @@ Ignore cancellation error
 	Run Keyword And Ignore Error  Wait Until Element Is Visible      ${loading}
 	Run Keyword And Ignore Error  Wait Until Element Is Not Visible  ${loading}  600
 	${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-	Capture Full Screenshot  ${OUTPUTDIR}/my_screen{index}.png
+	capture page screenshot  ${OUTPUTDIR}/my_screen{index}.png
 	[Return]  ${message}
 
 

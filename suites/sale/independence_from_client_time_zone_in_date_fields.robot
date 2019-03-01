@@ -5,7 +5,7 @@ Suite Setup  Precondition
 Suite Teardown  Close All Browsers
 Test Teardown  Run Keyword If Test Failed  Run Keywords
 ...                                        Log Location  AND
-...                                        Capture Full Screenshot
+...                                        Capture Page Screenshot
 
 *** Variables ***
 

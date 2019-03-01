@@ -8,7 +8,7 @@ Suite Setup             Precondition
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Full Screenshot
+						...  Run Keyword If Test Failed  Capture Page Screenshot
 
 #zapusk
 #robot --consolecolors on -L TRACE:INFO -d test_output -v where:test suites/other/povidomlenya.robot

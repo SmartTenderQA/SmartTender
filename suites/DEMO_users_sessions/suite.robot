@@ -39,4 +39,4 @@ Check users sessions
 	\  Завантажити сесію для  ${u}
 	\  ${location}  Get Location
 	\  Log To Console  ${u} ${location}
-	\  Capture Full Screenshot
+	\  Capture Page Screenshot

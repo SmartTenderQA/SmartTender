@@ -38,7 +38,7 @@
     Click Element  ${selector}
     Wait Until Element Is Visible   ${validation message}  10
     ${status}  ${message}  Run Keyword And Ignore Error  Get Text  ${validation message}
-	Capture Full Screenshot  ${OUTPUTDIR}/my_screen{index}.png
+	capture page screenshot  ${OUTPUTDIR}/my_screen{index}.png
 	[Return]  ${message}
 
 

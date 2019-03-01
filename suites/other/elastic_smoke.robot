@@ -8,7 +8,7 @@ Suite Setup  			Run Keywords
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  											AND
-						...  Run Keyword If Test Failed  Capture Full Screenshot
+						...  Run Keyword If Test Failed  Capture Page Screenshot
 
 *** Test Cases ***
 Elastic Smoke

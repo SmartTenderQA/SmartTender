@@ -5,7 +5,7 @@ Suite Setup  			Preconditions
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Full Screenshot
+						...  Run Keyword If Test Failed  Capture Page Screenshot
 
 #robot --consolecolors on -L TRACE:INFO -d test_output -i $tag -v suite:$tag -v where:$where suites/other/balance_replenishment.robot
 

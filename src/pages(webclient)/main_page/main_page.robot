@@ -77,7 +77,7 @@
 
 Знайти тендер організатором по title
     [Arguments]  ${title}
-    Capture Full Screenshot
+    Capture Page Screenshot
     Пошук об'єкта у webclient по полю  Узагальнена назва закупівлі  ${title}
     ${status}  Run Keyword And Return Status  Вибрати тендер за номером (webclient)  1
     Run Keyword If  '${status}' == 'False'  Run Keywords

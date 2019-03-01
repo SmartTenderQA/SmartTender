@@ -1,6 +1,6 @@
 *** Settings ***
 Resource  ../../src/src.robot
-Test Teardown  Run Keyword If Test Failed  Capture Full Screenshot
+Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
 Suite Setup  Додати першого користувача  LLC
 Suite Teardown  Close All Browsers
 
