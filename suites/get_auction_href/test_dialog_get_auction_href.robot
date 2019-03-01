@@ -19,7 +19,7 @@ Test Teardown  Run Keyword If Test Failed  Run Keywords
 Отримати дані з cdb
     [Tags]  create_tender
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Отримати дані з cdb та зберегти їх у файл
 
 
@@ -76,7 +76,7 @@ If skipped create tender
 
 Підготувати користувача та дочекатись початку періоду перкваліфікації
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
 
 
@@ -93,7 +93,7 @@ If skipped create tender
 Підготувати користувача та дочекатись очікування рішення організатора
     [Setup]  Stop The Whole Test Execution If Previous Test Failed
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     Wait Until Keyword Succeeds  20m  10  Дочекатись закінчення періоду прекваліфікації
     procurement_tender_detail.Дочекатися статусу тендера  Очікування рішення організатора
 
@@ -104,7 +104,7 @@ If skipped create tender
     main_page.Знайти тендер організатором по title  ${data['title']}
     Wait Until Keyword Succeeds  3m  3  second_stage.Перейти до другої фази
     Завантажити сесію для  ${provider1}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Завершено
     Завантажити сесію для  ${tender_owner}
     desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
@@ -143,7 +143,7 @@ If skipped create tender
 Отримати поcилання на перегляд аукціону
 	:FOR  ${i}  IN  ${tender_owner}  ${viewer}  #provider4
 	\  Завантажити сесію для  ${i}
-	\  Go To  ${data['tender_href']}
+	\  Go To Smart  ${data['tender_href']}
 	\  ${auction_href}  get_auction_href.Отримати посилання на прегляд аукціону не учасником
 	\  Run Keyword And Expect Error  *  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 
@@ -177,7 +177,7 @@ If skipped create tender
 Прийняти участь у тендері учасником
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником
@@ -186,7 +186,7 @@ If skipped create tender
 Прийняти участь у тендері учасником на 1-му етапі
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go to  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
     procurement_tender_detail.Дочекатися статусу тендера  Прийом пропозицій
     Run Keyword If  '${username}' == '${provider1}'  Sleep  3m
     Подати пропозицію учасником на 1-му етапі
@@ -211,7 +211,7 @@ If skipped create tender
 Перевірити отримання посилань на аукціон учасником
     [Arguments]  ${username}
     Завантажити сесію для  ${username}
-    Go To  ${data['tender_href']}
+    Go To Smart  ${data['tender_href']}
 	${auction_participate_href}  ${auction_href}
 	...  get_auction_href.Отримати посилання на участь та прегляд аукціону для учасника
 	Wait Until Keyword Succeeds  60  3  Перейти та перевірити сторінку участі в аукціоні  ${auction_participate_href}
@@ -219,7 +219,7 @@ If skipped create tender
 
 Перейти та перевірити сторінку участі в аукціоні
 	[Arguments]  ${auction_href}
-	Go To  ${auction_href}
+	Go To Smart  ${auction_href}
 	Location Should Contain  bidder_id=
 	Підтвердити повідомлення про умови проведення аукціону
 	Wait Until Page Contains Element  //*[@class="page-header"]//h2  30
