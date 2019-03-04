@@ -141,18 +141,6 @@ Variables       procurement_variables.py
     ...  //*[@data-qa="reason"]//*[@class="ivu-modal-header-inner"]  Причина відміни
 
 
-Скачати файл на сторінці
-    [Arguments]  ${file}
-    ${selector}  Set Variable  //*[@data-qa="file-name"][text()="${file}"]
-    Mouse Over  ${selector}/preceding-sibling::i
-    Wait Until Element Is Visible  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]
-    ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
-    ${link}  Поправити лінку для IP  ${link}
-    ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
-    download_file_to_my_path  ${link}  ${OUTPUTDIR}/${file}
-    Sleep  3
-
-
 Порівняти створений документ з документом в ЦБД procurement
 	[Arguments]  ${doc}
 	${cdb_doc}  get_cdb_doc  ${doc}  ${cdb}
@@ -169,3 +157,14 @@ Variables       procurement_variables.py
 	Should Be Equal  ${view title}  ${cdb_doc['title']}  Oops! Помилка з title
     ${view dateModified}  Get Text  ${view doc block}${docs_view['dateModified']}
 	Should Be Equal  ${view dateModified}  ${cdb_doc['dateModified']}  Oops! Помилка з dateModified
+
+
+Переглянути файл за іменем
+    [Arguments]  ${file}
+    tender_detail_page.Переглянути файл за іменем  ${file}
+
+
+Скачати файл на сторінці
+    [Arguments]  ${file}
+    tender_detail_page.Скачати файл на сторінці  ${file}
+
