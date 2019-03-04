@@ -17,6 +17,8 @@
     ${path}  Set Variable  ${doc[0]}
     ${name}  Set Variable  ${doc[1]}
     Choose File  xpath=//*[@type='file'][1]  ${path}
-    Click Element  xpath=(//span[.='ОК'])[1]
     Дочекатись закінчення загрузки сторінки
     Page Should Contain  ${name}
+    Click Element  xpath=(//span[.='ОК'])[1]
+    Дочекатись закінчення загрузки сторінки
+	elements.Дочекатися відображення елемента на сторінці  //a[@title="Додати"]//span[text()="Додати"]
