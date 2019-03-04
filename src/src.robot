@@ -26,6 +26,7 @@ Library     common/seo/seo.py
 Resource    common/synchronization/synchronization.robot
 Resource    common/compare_data/compare_data.robot
 Resource    common(webclient)/validation/validation.robot
+Resource    common/tender_detail_page/tender_detail_page.robot
 
 
 Resource  	elements/actions.robot
@@ -198,7 +199,7 @@ Open button
 	[Arguments]  ${selector}
 	${href}=  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
-	Go To Smart  ${href}
+	Go To  ${href}
 
 
 conver dict to json
