@@ -30,7 +30,7 @@ ${review_list_close}                 xpath=//*[@class='ivu-modal' and not(contai
     Дочекатись закінчення загрузки сторінки
     ${status}  Run Keyword And Return Status
     ...  Wait Until Element Is Not Visible  ${review submit}  10s
-    Run Keyword If  '${status}' == 'False'  Відправити відгук
+    Run Keyword If  '${status}' == 'False'  dozorro.Відправити відгук
     Wait Until Element Is Not Visible  xpath=//*[@class="ivu-notice"]  10s
 
 
