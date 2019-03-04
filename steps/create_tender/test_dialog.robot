@@ -3,6 +3,7 @@
 	desktop.Перейти у розділ (webclient)  Конкурентний діалог(тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Конкурентний діалог 1-ий етап
+  	tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_dialog.Заповнити amount для tender
   	test_dialog.Заповнити minimalStep для tender
   	test_dialog.Заповнити title для tender
