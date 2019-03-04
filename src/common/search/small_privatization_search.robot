@@ -42,6 +42,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 Активувати перемемик тестового режиму на
 	[Documentation]  ${switcher mode} == вкл|викл
 	[Arguments]  ${switcher mode}
+	Дочекатись закінчення загрузки сторінки
 	${switcher locator}  Set Variable  //*[@data-qa='test-mode-switch']
 	${switcher status}  Run Keyword And Return Status  Element Should Contain  //*[@data-qa='test-mode-span']  ${switcher mode}
 	Run Keyword If  ${switcher status} == ${False}  Click Element  ${switcher locator}
@@ -50,7 +51,7 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 
 Перейти по результату пошуку за номером
 	[Arguments]  ${n}
-	${selector}  Set Variable  (${privatization item}//a)[${n}]
+	${selector}  Set Variable  (${privatization item})[${n}]//a
 	Wait Until Element Is Visible  ${selector}  10
 	${href}  Get Element Attribute  ${selector}  href
 	${href}  Поправити лінку для IP  ${href}
@@ -68,4 +69,33 @@ ${privatization item}			//*[@class="asset-card ivu-card ivu-card-bordered"]
 	[Arguments]  ${create button}
 	${create button locator}  Set Variable  //*[contains(@class,'action-block-item')]//button[contains(.,"${create button}")]
 	Click Element  ${create button locator}
+	Дочекатись закінчення загрузки сторінки
+
+
+Отримати кількість сторінок
+	elements.Дочекатися відображення елемента на сторінці  //*[contains(@class,"ivu-page-item")][last()]
+	${page count}  Get Text  //*[contains(@class,"ivu-page-item")][last()]
+	[Return]  ${page count}
+
+
+Отримати кількість лотів
+	elements.Дочекатися відображення елемента на сторінці  ${privatization item}
+	${lot count}  Get Element Count  ${privatization item}
+	[Return]  ${lot count}
+
+
+Перейти на сторінку за номером
+	[Arguments]  ${page num}
+	${active page num}  Get Text  //*[@class="ivu-page-item ivu-page-item-active"]
+	${cur url}  Get Location
+	${new url}  Evaluate  '${cur url}'.replace('&p=' + '${active page num}', '&p=' + '${page num}')
+	Go To Smart  ${new url}
+
+
+Встановити фільтр "Організатор"
+	[Arguments]  ${owner_name}
+	Click Element  //input[@placeholder="Введіть код ЄДРПОУ або назву організації"]
+	Input Text  //input[@placeholder="Введіть код ЄДРПОУ або назву організації"]  ${owner_name}
+	elements.Дочекатися відображення елемента на сторінці  //li[contains(text(), '${owner_name}')]
+	Click Element  //li[contains(text(), '${owner_name}')]
 	Дочекатись закінчення загрузки сторінки
