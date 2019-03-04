@@ -127,6 +127,7 @@ If skipped create tender
     \  ${hash}  Wait Until Keyword Succeeds  60  1  Скачати файл з іменем та індексом для користувача  ${i}  sign.p7s  2
     \  Зберегти дані файлу у словник docs_data  bids  sign.p7s  ${hash}
     \  Звірити підпис ЕЦП (фінансовий документ) в ЦБД та на сторінці procurement  ${data['qualification_documents'][${i}]}  2
+    \  procurement_tender_detail.Згорнути всі експандери учасника  ${i}
 
 
 Відхилити організатором пропозицію першого учасника
@@ -298,7 +299,6 @@ Precondition
     ...  Reload Page
     ${md5}   Wait Until Keyword Succeeds  10  .5  get_checksum_md5  ${OUTPUTDIR}/downloads/sign.p7s
     Empty Directory   ${OUTPUTDIR}/downloads/
-    procurement_tender_detail.Згорнути всі експандери учасника  ${user index}
     [Return]  ${md5}
 
 
