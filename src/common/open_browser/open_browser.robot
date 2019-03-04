@@ -63,3 +63,4 @@
 	Log  ${webdriver.__dict__['capabilities']}
 	Log To Console  ${data}
 	Log  ${data}
+	Log To Console  ------------------------------------------------------------------------------
