@@ -73,6 +73,7 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 Прикріпити документ договору
 	elements.Дочекатися відображення елемента на сторінці  //*[contains(text(),'Обзор...')]
+	Дочекатись закінчення загрузки сторінки
 	Click Element  //*[contains(text(),'Обзор...')]
 	Дочекатись закінчення загрузки сторінки
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']
