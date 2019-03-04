@@ -5,9 +5,9 @@
   	create_tender.Вибрати тип процедури  Допорогові закупівлі
     below.Заповнити amount для tender
   	below.Заповнити minimalStep для tender
-  	Run Keyword If  '${site}' == 'prod'  Run Keywords
-  	...  below.Заповнити contact для tender ${site}  AND
-  	...  tender_tab.Заповнити "Вид предмету закупівлі"  Товари
+  	Run Keyword If  '${site}' == 'prod'
+  	...  below.Заповнити contact для tender ${site}
+  	tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	below.Заповнити title для tender
   	below.Заповнити description для tender
   	below.Додати предмет в тендер
