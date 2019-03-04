@@ -29,6 +29,7 @@
     ${submit claim}  Set Variable  //*[@data-qa="submit-claim"]
     Scroll Page To Element XPATH       ${submit claim}
     Click Element                      ${submit claim}
+	Дочекатись закінчення загрузки сторінки
     Wait Until Element Contains  //*[@data-qa="new-complaint"]//*[@class="ivu-card-head"]  Подання вимоги
 
 
