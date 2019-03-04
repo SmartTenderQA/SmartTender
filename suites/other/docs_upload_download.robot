@@ -56,12 +56,12 @@ Test Teardown  			Run Keywords
 
 Отримати контрольні суми файлів з ЦБД, до загрузки та після скачування та порівняти їх
     ${cdb md5 first}   Отримати md5 файлу із словника ЦБД   ${1 full name}
-    ${md5 first}       get_checksum_md5  ${OUTPUTDIR}/${1 full name}
-    ${now md5 first}   get_checksum_md5  ${OUTPUTDIR}/downloads/${1 full name}
+    ${md5 first}       get_checksum_md5  ${OUTPUTDIR}${/}${1 full name}
+    ${now md5 first}   get_checksum_md5  ${OUTPUTDIR}${/}downloads${/}${1 full name}
 
     ${cdb md5 second}  Отримати md5 файлу із словника ЦБД  ${2 full name}
-    ${md5 second}      get_checksum_md5  ${OUTPUTDIR}/${2 full name}
-    ${now md5 second}  get_checksum_md5  ${OUTPUTDIR}/downloads/${2 full name}
+    ${md5 second}      get_checksum_md5  ${OUTPUTDIR}${/}${2 full name}
+    ${now md5 second}  get_checksum_md5  ${OUTPUTDIR}${/}downloads${/}${2 full name}
 
     Should Be Equal    ${cdb md5 first}   ${md5 first}   ${now md5 first}
     Should Be Equal    ${cdb md5 second}  ${md5 second}  ${now md5 second}
@@ -76,12 +76,12 @@ Precondition
 	Додати першого користувача  prod_ssp_owner
 
 Створити папку загрузок
-    Create Directory  ${OUTPUTDIR}/downloads/
+    Create Directory  ${OUTPUTDIR}${/}downloads${/}
 
 
 Загрузити файл
     [Arguments]  ${file}
-    Choose File  ${button add file}  ${new_OUTPUTDIR}/${file}
+    Choose File  ${button add file}  ${OUTPUTDIR}${/}${file}
     Sleep  2
 
 
@@ -98,12 +98,11 @@ Precondition
 Створити великий PDF файл з довгою назвою
     [Arguments]  ${name}
     ${n}  random_number  1  1000
-    ${long name}  Evaluate  '1' * 200 + ' ${name}' + ' ${n}'
-    ${file path}  Set Variable  ${OUTPUTDIR}/${long name}.pdf
+    ${long name}  Evaluate  '1' * 100 + ' ${name}' + ' ${n}'
+    ${file path}  Set Variable  ${OUTPUTDIR}${/}${long name}.pdf
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
     ${full name}  Set Variable  ${long name}.pdf
-    Set Global Variable  ${new_OUTPUTDIR}  ${OUTPUTDIR}
     [Return]  ${full name}
 
 
@@ -124,5 +123,5 @@ Precondition
     \  ${link}  Get Element Attribute  ${selector}/ancestor::div[@class="ivu-poptip"]//a[@data-qa="file-preview"]  href
     \  ${link}  Поправити лінку для IP  ${link}
     \  ${link}  Evaluate  re.search(r'(?P<href>.+)&view=g', '${link}').group('href')  re
-    \  download_file_to_my_path  ${link}  ${OUTPUTDIR}/downloads/${file}
+    \  download_file_to_my_path  ${link}  ${OUTPUTDIR}${/}downloads${/}${file}
     \  Sleep  3
