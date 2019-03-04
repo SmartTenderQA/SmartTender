@@ -5,7 +5,7 @@ Suite Setup  			Preconditions
 Suite Teardown  		Close All Browsers
 Test Teardown  			Run Keywords
 						...  Log Location  AND
-						...  Run Keyword If Test Failed  Capture Page Screenshot
+						...  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 #robot --consolecolors on -L TRACE:INFO -d test_output -i $tag -v suite:$tag -v where:$where suites/other/balance_replenishment.robot
 
@@ -59,6 +59,10 @@ Preconditions
     balance.Натиснути сформувати Invoice
     Дочекатись закінчення загрузки сторінки
     invoice.Перевірити сторінку
+   	${TEST START TIME}  Evaluate  ('{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() - datetime.timedelta(minutes=3)))  datetime
+   	#date.now - 3 min (так нужно)
+	Set Global Variable  ${TEST START TIME}  ${TEST START TIME}
+
 
 
 Спробувати сформувати рахунок без суми

@@ -74,8 +74,9 @@
 
 
 Заповнити locality для item
-    ${city}  tender_tab.Заповнити "Місто"  Мюнхен
-    Set To Dictionary  ${data['items'][0]['deliveryAddress']}  locality  ${city}
+    ${input}  Set Variable  //*[@id='pcModalMode_PW-1']//span[contains(text(), 'Місто')]/following-sibling::*//input
+	${locality}  ${region}  ${countryName}  cdb1_dutch_page.Заповнити items.0.address.locality
+    Set To Dictionary  ${data['items'][0]['deliveryAddress']}  locality  ${locality}
 
 
 Отримати дані тендера та зберегти їх у файл

@@ -26,6 +26,15 @@
     Дочекатися статусу тендера  Прекваліфікація
 
 
+Дочекатися відображення блоку прекваліфікація на сторінці
+	[Arguments]  ${timeout}
+	Wait Until Keyword Succeeds  ${timeout}  20s  Run Keywords
+	...  Reload Page                                                                                        AND
+	...  Дочекатись закінчення загрузки сторінки                                                            AND
+	...  elements.Дочекатися відображення елемента на сторінці  //*[@data-qa="prequalification-block"]  5
+
+
+
 Натиснути "Завантажити кваліфікаційні документи"
     ${selector}  Set Variable  //*[@data-qa="qualif-documents-button"]
     Wait Until Element Is Visible  ${selector}  30

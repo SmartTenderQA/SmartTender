@@ -4,7 +4,7 @@ Library     ../../suites/dozorro/dozorro_srv.py
 Variables   ../../suites/dozorro/var.py
 Suite Setup  Підготувати користувачів
 Suite Teardown  Postcondition
-Test Teardown  Run Keyword If Test Failed  Capture Page Screenshot
+Test Teardown  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 
 #  robot --consolecolors on -L TRACE:INFO -A suites/dozorro/arguments.txt -v hub:None -i $variable suites/dozorro/prod.robot

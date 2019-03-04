@@ -3,8 +3,8 @@ Resource        ../../src/src.robot
 Suite Setup     Precondition
 Suite Teardown  Postcondition
 Test Setup  	Stop The Whole Test Execution If Previous Test Failed
-Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Page Screenshot
-#...  AND  Log Location
+Test Teardown  Run Keyword If Test Failed  Run Keywords  Capture Element Screenshot  //body
+...  AND  Log Location
 
 
 *** Variables ***
@@ -78,6 +78,8 @@ Precondition
 	${name}  Отримати дані користувача по полю  ${user}  name
 	Set Global Variable  ${role}
 	Set Global Variable  ${name}
+	${TEST START TIME}  Evaluate  ('{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now()))  datetime
+	Set Global Variable  ${TEST START TIME}  ${TEST START TIME}
 
 
 Postcondition
@@ -101,7 +103,7 @@ Postcondition
     Input Password  //*[@data-qa="change-password-new-password"]//input  ${new Password}
     Input Password  //*[@data-qa="change-password-confirm-new-password"]//input  ${new Password}
     Click Element   //*[@data-qa="change-password-new-btn"]
-    Wait Until Page Contains Element  xpath=//div[contains(@class,'alert')]
+    elements.Дочекатися відображення елемента на сторінці  //*[contains(text(),"Пароль успішно змінений")]
 
 
 Переконатися що пароль змінено

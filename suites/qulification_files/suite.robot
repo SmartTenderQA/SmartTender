@@ -10,7 +10,7 @@ Suite Teardown  Close All Browsers
 Test Setup      Stop The Whole Test Execution If Previous Test Failed
 Test Teardown   Run Keyword If Test Failed  Run Keywords
 ...                                         Log Location  AND
-...                                         Capture Page Screenshot  AND
+...                                         Capture Element Screenshot  //body  AND
 ...                                         actions.Зберегти словник у файл  ${data}  data
 
 
@@ -80,6 +80,7 @@ If skipped create tender
 Дочекатись початку періоду перкваліфікації
     [Tags]  sync  pre-qualification
     procurement_page_keywords.Дочекатись початку періоду перкваліфікації
+    procurement_page_keywords.Дочекатися відображення блоку прекваліфікація на сторінці  3m
 
 
 Перевірити наявність конфіденційного документу на сторінці та в ЦБД
