@@ -81,7 +81,7 @@ Precondition
 
 Загрузити файл
     [Arguments]  ${file}
-    Choose File  ${button add file}  ${OUTPUTDIR}/${file}
+    Choose File  ${button add file}  ${new_OUTPUTDIR}/${file}
     Sleep  2
 
 
@@ -103,6 +103,7 @@ Precondition
     ${content}  Evaluate  '${name} file ' * 1024 * 256
     Create File  ${file path}  ${content}
     ${full name}  Set Variable  ${long name}.pdf
+    Set Global Variable  ${new_OUTPUTDIR}  ${OUTPUTDIR}
     [Return]  ${full name}
 
 
