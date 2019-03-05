@@ -8,12 +8,10 @@ Test Teardown    		Run Keywords
 						...  Run Keyword If Test Failed  Capture Element Screenshot  //body
 
 # Команда запуска проверки коммерческих
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:none suites/other/check_docs_in_auctions.robot
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:commercial -v hub:none suites/other/check_doc_in_random_tender.robot
 
 # Команда запуска проверки прозорро
-# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:procurement -v hub:none suites/other/check_docs_in_auctions.robot
-
-# убрать с прода проверку картинок
+# robot --consolecolors on -L TRACE:INFO -v user:test_viewer -v browser:chrome -d test_output -v type:procurement -v hub:none suites/other/check_doc_in_random_tender.robot
 
 
 *** Variables ***
@@ -50,10 +48,16 @@ Preconditions
 	&{checks}  Create Dictionary
 	...  checked_doc	${false}
 	...  checked_docx	${false}
-#	...  checked_pdf	${false}
+	...  checked_pdf	${false}
 	Set Global Variable  &{checks}
-#	Run Keyword If  '${site}' == 'test'				Set To Dictionary  ${checks}  checked_image	${false}
-	Run Keyword If  '${type}' == 'procurement'		Set To Dictionary  ${checks}  checked_p7s	${false}
+	Run Keyword If  '${site}' == 'test'				Set To Dictionary  ${checks}  checked_image	    ${false}
+	Run Keyword If  '${type}' == 'procurement'		Set To Dictionary  ${checks}  checked_p7s	    ${false}
+
+
+Завершити тест при виконанні вимог
+	${status}  Run Keyword And Return Status
+	...  Dictionary Should Contain Value  ${checks}  ${True}
+	Pass Execution If  ${status}  Вимоги для завершення тесту виконані
 
 
 Активувати вкладку за номером
@@ -192,15 +196,6 @@ Preconditions
 	${lowercase_status}  Run Keyword And Return Status  Location Should Contain  ${doc_type[:3]}
 	${upper_doc_type}  Run Keyword If  ${lowercase_status} == ${False}  Convert To Uppercase  ${doc_type}
 	Run Keyword If  ${lowercase_status} == ${False}  Location Should Contain  ${upper_doc_type[:3]}
-
-
-Завершити тест при виконанні вимог
-	${status}
-	...  Run Keyword If  '${site}' == 'test'  Run Keyword And Return Status
-	...  		Dictionary Should Contain Value  ${checks}  ${True}
-	...  ELSE IF  '${site}' == 'prod'  Run Keyword And Return Status
-	...  		Dictionary Should Not Contain Value  ${checks}  ${False}
-	Pass Execution If  ${status}  Вимоги для завершення тесту виконані
 
 
 Почати пошук файлів у процедурах new
