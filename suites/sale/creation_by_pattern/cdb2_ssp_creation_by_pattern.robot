@@ -95,7 +95,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	Set Global Variable  ${cdb_data_old}  ${cdb_data_old}
 	Click Element  ${create by pattern btn}
 	Дочекатись закінчення загрузки сторінки
-	small_privatization_search.Активувати перемемик тестового режиму на  викл
+	cdb2_ssp_asset_page.Активувати перемемик тестового режиму на  викл
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
 	sale_keywords.Отримати prozorro ID
