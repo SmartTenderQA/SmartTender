@@ -48,7 +48,7 @@ Preconditions
 	&{checks}  Create Dictionary
 	...  checked_doc	${false}
 	...  checked_docx	${false}
-	...  checked_pdf	${false}
+#	...  checked_pdf	${false}
 	Set Global Variable  &{checks}
 #	Run Keyword If  '${site}' == 'test'				Set To Dictionary  ${checks}  checked_image	    ${false}
 	Run Keyword If  '${type}' == 'procurement'		Set To Dictionary  ${checks}  checked_p7s	    ${false}
