@@ -495,7 +495,7 @@ ${last found multiple element}		  xpath=(//*[@id='tenders']//*[@class='head']//s
 	new_search.Операція над чекбоксом  ${TESTNAME}  select
 	Дочекатись закінчення загрузки сторінки
 	Sleep  10
-	new_search.Перейти по результату пошуку за номером  1
+	new_search.Перейти по результату пошуку за номером  2
 	${TESTNAME}  Run Keyword If  "${site}" == "test"  Set Variable  Аукціон
 	...  ELSE  Set Variable  ${TESTNAME}
 	Перевірити тип процедури для аукціонів  ${TESTNAME}
