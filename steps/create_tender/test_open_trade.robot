@@ -4,6 +4,7 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
+  	tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_trade.Заповнити amount для tender
   	test_open_trade.Заповнити minimalStep для tender
   	test_open_trade.Заповнити title для tender
@@ -21,6 +22,7 @@
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  ${type}
     tender_tab.Встановити чекбокс "Мультилоти"
+    tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_trade.Заповнити amount для lot
   	test_open_trade.Заповнити minimalStep для lot
   	test_open_trade.Заповнити title для tender
