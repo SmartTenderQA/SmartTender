@@ -13,8 +13,9 @@ ${weclient start}                   //*[@class="spinner"]
 ${loading bar}                      //div[@class="ivu-loading-bar"]   # полоса вверху страницы http://joxi.ru/Dr8xjNeT47v7Dr
 ${blocker}                          //*[@id="adorner"]
 ${sale web loading}                 //*[contains(@class,'disabled-block')]
+${povidomlennya loading}            //*[@class="loading-bar"]
 
-${loadings}                         ${loading}|${webClient loading}|${circle loading}|${skeleton loading}|${sales spin}|${docs spin}|${weclient start}|${loading bar}|${blocker}|${sale web loading}
+${loadings}                         ${loading}|${webClient loading}|${circle loading}|${skeleton loading}|${sales spin}|${docs spin}|${weclient start}|${loading bar}|${blocker}|${sale web loading}|${povidomlennya loading}
 
 *** Keywords ***
 Дочекатись закінчення загрузки сторінки

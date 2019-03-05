@@ -5,6 +5,7 @@
 ${qualification docs btn}				//a[@class='ivu-btn ivu-btn-primary ivu-btn-circle font-18 action-block-btn']
 ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@class,'ivu-btn-long')]
 ${notice message}						//*[@class='ivu-notice-desc']
+${notice block}                         //*[@class="ivu-notice-notice-content"]
 
 
 *** Keywords ***
@@ -14,11 +15,11 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	elements.Дочекатися відображення елемента на сторінці  ${save btn}  10
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-	elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+	elements.Дочекатися відображення елемента на сторінці  ${notice block}  30
     ${notice text}  Get Text  ${notice message}
 	Should Contain Any  ${notice text}  Аукціон було успішно  Об'єкт приватизації було успішно  Інформаційне повідомлення було
 	Дочекатись закінчення загрузки сторінки
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice block}
 
 
 Натиснути кнопку опублікувати
@@ -26,20 +27,16 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	elements.Дочекатися відображення елемента на сторінці  ${publish btn}  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-    elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+    elements.Дочекатися відображення елемента на сторінці  ${notice block}  30
     ${notice text}  Get Text  ${notice message}
 	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано  Інформаційне повідомлення було передано на перевірку, за умови успішного результату через деякий час будуть перенесені усі дані з об'єкту приватизації
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice block}
 
 
 Отримати та зберегти tender_id
 	Пошук об'єкта у webclient по полю  Загальна назва  ${data['title'].replace('[ТЕСТУВАННЯ] ','')}
 	${tender_id}  Get Element Attribute  xpath=//a[@href and contains(text(),'UA-')]  text
 	Set To Dictionary  ${data}  tender_id=${tender_id}
-
-
-Отримати prozorro ID
-	Run Keyword  Отримати prozorro ID для ${site}
 
 
 Отримати посилання в ЦБД
@@ -49,19 +46,8 @@ ${notice message}						//*[@class='ivu-notice-desc']
     Set Global Variable  ${cdb href}  ${cdb href}
 
 
-Отримати prozorro ID для prod
+Отримати prozorro ID
     ${cdb locator}  Set Variable  //*[contains(@class,'margin-bottom-16') and contains(.,'Посилання') and contains(.,'ЦБД')]//a
-    Wait Until Element Is Visible  ${cdb locator}  120
-    ${cdb href}  Get Element Attribute  ${cdb locator}  href
-    ${cdb href}  Поправити лінку для IP  ${cdb href}
-    ${cdb id}  Evaluate  (re.findall(r'[a-z0-9]{32}','${cdb href}'))[0]  re
-    Set To Dictionary  ${data}  id  ${cdb id}
-
-
-Отримати prozorro ID для test
-	${url}  Get Location
-	${status}  Evaluate  'privatization-' in '${url}'
-    ${cdb locator}  Set Variable If  ${status} == ${True}  //*[@data-qa='cdbNumber']  //*[contains(@class,'margin-bottom') and contains(.,'Посилання у ЦБД')]//a
     Wait Until Element Is Visible  ${cdb locator}  120
     ${cdb href}  Get Element Attribute  ${cdb locator}  href
     ${cdb href}  Поправити лінку для IP  ${cdb href}

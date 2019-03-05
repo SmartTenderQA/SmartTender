@@ -8,6 +8,17 @@
 ###########################################################################
 ################################# COMMON ##################################
 ###########################################################################
+Активувати перемемик тестового режиму на
+	[Documentation]  ${switcher mode} == вкл|викл
+	[Arguments]  ${switcher mode}
+	${switcher locator}  Set Variable  //*[@data-qa='switch-test-mode']
+	${switcher class}  Get Element Attribute  ${switcher locator}  class
+	${switcher status}  Set Variable If
+	...  'ivu-switch-checked' in '${switcher class}'  вкл  викл
+	Run Keyword If  '${switcher status}' != '${switcher mode}'  Click Element  ${switcher locator}
+	Дочекатись закінчення загрузки сторінки
+
+
 Натиснути кнопку "Коригувати об'єкт приватизації"
      ${selector}  Set Variable  //*[@data-qa="button-to-edit-page"]
      Scroll Page To Element XPATH  ${selector}

@@ -17,7 +17,8 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 Знайти аукціон
 	[Tags]  by_pattern  change_mode
 	start_page.Натиснути на іконку з баннеру  Аукціони на продаж державного майна
-	small_privatization_search.Активувати перемемик тестового режиму на  вкл
+	Run Keyword If  '${site}' == 'test'
+	...  small_privatization_search.Активувати перемемик тестового режиму на  вкл
 	small_privatization_search.Встановити фільтр "Організатор"  Адвокатське Бюро "І Ес Ей Сторожук та Партнери"
 	${page count}  small_privatization_search.Отримати кількість сторінок
 	${random page}  random_number  1  ${page count}
@@ -29,6 +30,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Створити аукціон за зразком
 	[Tags]  by_pattern
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	sale_keywords.Отримати prozorro ID
 	${cdb_data_old}  Wait Until Keyword Succeeds  180  15  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Log  ${cdb_data_old}
@@ -36,7 +38,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	Set Global Variable  ${cdb_data_old}  ${cdb_data_old}
 	Click Element  ${create by pattern btn}
 	Дочекатись закінчення загрузки сторінки
-	cdb2_LandLease_step.Заповнити "Дата проведення аукціону"
+	Run Keyword  cdb2_LandLease_step.Заповнити "Дата проведення аукціону" ${site}
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
 	sale_keywords.Отримати prozorro ID
@@ -48,6 +50,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Порівняти дані в цбд для двох об'єктів
 	[Tags]  by_pattern
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  creation_by_pattern_keywords.Порівняти дані словників за назвою поля
 	${cdb_data_old}  ${cdb_data_new}  ['bankAccount']['accountIdentification'][0]['scheme']
 	${cdb_data_old}  ${cdb_data_new}  ['bankAccount']['accountIdentification'][0]['id']
@@ -104,7 +107,6 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentOf']
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentType']
 	${cdb_data_old}  ${cdb_data_new}  ['title']
-	${cdb_data_old}  ${cdb_data_new}  ['tenderAttempts']
 	${cdb_data_old}  ${cdb_data_new}  ['procurementMethodDetails']
 	${cdb_data_old}  ${cdb_data_new}  ['auctionParameters']['type']
 	${cdb_data_old}  ${cdb_data_new}  ['lotHolder']['contactPoint']['telephone']
@@ -149,7 +151,6 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	${cdb_data_old}  ${cdb_data_new}  ['value']['currency']
 	${cdb_data_old}  ${cdb_data_new}  ['value']['amount']
 	${cdb_data_old}  ${cdb_data_new}  ['value']['valueAddedTaxIncluded']
-	${cdb_data_old}  ${cdb_data_new}  ['numberOfBids']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['currency']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['amount']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['valueAddedTaxIncluded']
@@ -161,6 +162,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Створити об'єкт за зразком та змінити режим публікації
 	[Tags]  change_mode
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	sale_keywords.Отримати prozorro ID
 	${cdb_data_old}  Wait Until Keyword Succeeds  180  15  Отримати дані Аукціону ДЗК з cdb по id  ${data['id']}
 	Log  ${cdb_data_old}
@@ -168,8 +170,8 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	Set Global Variable  ${cdb_data_old}  ${cdb_data_old}
 	Click Element  ${create by pattern btn}
 	Дочекатись закінчення загрузки сторінки
-	small_privatization_search.Активувати перемемик тестового режиму на  викл
-	cdb2_LandLease_step.Заповнити "Дата проведення аукціону"
+	cdb2_ssp_asset_page.Активувати перемемик тестового режиму на  викл
+	cdb2_LandLease_step.Заповнити "Дата проведення аукціону" prod
 	sale_keywords.Натиснути кнопку зберегти
 	sale_keywords.Натиснути кнопку опублікувати
 	sale_keywords.Отримати prozorro ID
@@ -182,6 +184,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Порівняти дані в цбд для двох об'єктів
 	[Tags]  change_mode
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  creation_by_pattern_keywords.Порівняти дані словників за назвою поля
 	${cdb_data_old}  ${cdb_data_new}  ['bankAccount']['accountIdentification'][0]['scheme']
 	${cdb_data_old}  ${cdb_data_new}  ['bankAccount']['accountIdentification'][0]['id']
@@ -238,7 +241,6 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentOf']
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentType']
 	${cdb_data_old}  ${cdb_data_new}  ['title']
-	${cdb_data_old}  ${cdb_data_new}  ['tenderAttempts']
 	${cdb_data_old}  ${cdb_data_new}  ['procurementMethodDetails']
 	${cdb_data_old}  ${cdb_data_new}  ['auctionParameters']['type']
 	${cdb_data_old}  ${cdb_data_new}  ['lotHolder']['contactPoint']['telephone']
@@ -282,7 +284,6 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 	${cdb_data_old}  ${cdb_data_new}  ['value']['currency']
 	${cdb_data_old}  ${cdb_data_new}  ['value']['amount']
 	${cdb_data_old}  ${cdb_data_new}  ['value']['valueAddedTaxIncluded']
-	${cdb_data_old}  ${cdb_data_new}  ['numberOfBids']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['currency']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['amount']
 	${cdb_data_old}  ${cdb_data_new}  ['minimalStep']['valueAddedTaxIncluded']
