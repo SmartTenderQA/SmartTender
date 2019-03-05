@@ -44,6 +44,7 @@
 Поставити чекбокс "Зафіксувати відповідь"
     ${check}  Set Variable  (//*[.="Зафіксувати відповідь"]/preceding-sibling::td//span)[1]
     Click Element  ${check}
+    Дочекатись закінчення загрузки сторінки
     Wait Until Page Contains Element  ${check}\[contains(@class, "Checked")]
 
 
