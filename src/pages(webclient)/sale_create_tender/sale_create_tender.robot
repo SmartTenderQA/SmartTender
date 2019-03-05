@@ -21,9 +21,9 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 
 Натиснути "Підтвердити перевірку протоколу"
-	Wait Until Element Is Visible  ${approve btn}
+	elements.Дочекатися відображення елемента на сторінці  ${approve btn}
 	Click Element  ${approve btn}
-	Wait Until Element Is Visible  ${approve btn}/parent::*[contains(@class,'dxbDisabled')]
+	elements.Дочекатися відображення елемента на сторінці  ${approve btn}/parent::*[contains(@class,'dxbDisabled')]
 
 
 Додати протокол рішення
