@@ -110,6 +110,7 @@ If skipped create tender
 	:FOR  ${i}  IN  2  3
 	\  Завантажити сесію для  ${provider${i}}
 	\  Go To Smart  ${data['tender_href']}
+	\  other.Закрити сповіщення "Берете участь вперше?"
 	\  Зберегти сесію  ${provider${i}}
 
 
@@ -120,6 +121,7 @@ If skipped create tender
 	:FOR  ${i}  IN  1  2
 	\  Завантажити сесію для  ${provider${i}}
 	\  Зберегти сесію  ${provider${i}}
+	\  other.Закрити сповіщення "Берете участь вперше?"
 	\  Подати заявку для подачі пропозиції
 
 
