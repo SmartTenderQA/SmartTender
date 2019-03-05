@@ -5,6 +5,7 @@
 ${qualification docs btn}				//a[@class='ivu-btn ivu-btn-primary ivu-btn-circle font-18 action-block-btn']
 ${qualification docs unload btn}		//*[@class='ivu-card-body']//button[contains(@class,'ivu-btn-long')]
 ${notice message}						//*[@class='ivu-notice-desc']
+${notice block}                         //*[@class="ivu-notice-notice-content"]
 
 
 *** Keywords ***
@@ -14,11 +15,11 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	elements.Дочекатися відображення елемента на сторінці  ${save btn}  10
     Scroll Page To Element XPATH  ${save btn}
     Click Element  ${save btn}
-	elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+	elements.Дочекатися відображення елемента на сторінці  ${notice block}  30
     ${notice text}  Get Text  ${notice message}
 	Should Contain Any  ${notice text}  Аукціон було успішно  Об'єкт приватизації було успішно  Інформаційне повідомлення було
 	Дочекатись закінчення загрузки сторінки
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice block}
 
 
 Натиснути кнопку опублікувати
@@ -26,10 +27,10 @@ ${notice message}						//*[@class='ivu-notice-desc']
 	elements.Дочекатися відображення елемента на сторінці  ${publish btn}  10
 	Scroll Page To Element XPATH  ${publish btn}
 	Click Element  ${publish btn}
-    elements.Дочекатися відображення елемента на сторінці  ${notice message}  30
+    elements.Дочекатися відображення елемента на сторінці  ${notice block}  30
     ${notice text}  Get Text  ${notice message}
 	Should Contain Any  ${notice text}  Аукціон було успішно опубліковано  Об'єкт приватизації було успішно опубліковано  Інформаційне повідомлення було опубліковано  Інформаційне повідомлення було передано на перевірку, за умови успішного результату через деякий час будуть перенесені усі дані з об'єкту приватизації
-	Wait Until Page Does Not Contain Element  ${notice message}
+	Wait Until Page Does Not Contain Element  ${notice block}
 
 
 Отримати та зберегти tender_id
