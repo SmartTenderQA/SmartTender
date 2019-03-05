@@ -7,6 +7,7 @@
 
 Дочекатись закінчення прийому пропозицій
     Reload Page
+	loading.Дочекатись закінчення загрузки сторінки
     ${tender end date}  procurement_tender_detail.Отритами дані зі сторінки  ['tenderPeriod']['endDate']
     Дочекатись дати  ${tender end date}
 
