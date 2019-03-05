@@ -29,6 +29,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Створити об'єкт за зразком
 	[Tags]  by_pattern
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	sale_keywords.Отримати prozorro ID
 	${cdb_data_old}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Log  ${cdb_data_old}
@@ -47,6 +48,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Порівняти дані в цбд для двох об'єктів
 	[Tags]  by_pattern
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  creation_by_pattern_keywords.Порівняти дані словників за назвою поля
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['title']
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentOf']
@@ -88,6 +90,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Створити об'єкт за зразком та змінити режим публікації
 	[Tags]  change_mode
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	sale_keywords.Отримати prozorro ID
 	${cdb_data_old}  Wait Until Keyword Succeeds  180  15  Отримати дані об'єкту приватизації з cdb по id  ${data['id']}
 	Log  ${cdb_data_old}
@@ -108,6 +111,7 @@ ${create by pattern btn}            //*[@data-qa="button-create-by-pattern"]
 
 Порівняти дані в цбд для двох об'єктів
 	[Tags]  change_mode
+	[Setup]  Stop The Whole Test Execution If Previous Test Failed
 	[Template]  creation_by_pattern_keywords.Порівняти дані словників за назвою поля
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['title']
 	${cdb_data_old}  ${cdb_data_new}  ['documents'][0]['documentOf']
