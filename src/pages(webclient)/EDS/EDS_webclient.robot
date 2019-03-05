@@ -9,11 +9,12 @@ ${eds index}     0
 
 *** Keywords ***
 Накласти ЕЦП (webclient)
-    loading.Дочекатись закінчення загрузки сторінки
-    Run Keyword If      '${eds index}' != '1'  Накласти ЕЦП (webclient) перший раз
-    Set Global Variable  ${eds index}  1
-    loading.Дочекатись закінчення загрузки сторінки
-    validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
+    Run Keyword If  "${where}" == "test"  Run Keywords
+    ...  loading.Дочекатись закінчення загрузки сторінки                                    AND
+    ...  Run Keyword If      '${eds index}' != '1'  Накласти ЕЦП (webclient) перший раз     AND
+    ...  Set Global Variable  ${eds index}  1                                               AND
+    ...  loading.Дочекатись закінчення загрузки сторінки                                    AND
+    ...  validation.Підтвердити повідомлення про перевірку публікації документу за необхідністю
 
 
 Накласти ЕЦП (webclient) перший раз

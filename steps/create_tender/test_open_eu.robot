@@ -3,10 +3,10 @@
 	desktop.Перейти у розділ (webclient)  Публічні закупівлі (тестові)
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
-  	Run Keyword If  '${site}' == 'prod'  Run Keywords
-  	...  test_open_eu.Заповнити contact для tender  AND
+  	Run Keyword If  '${site}' == 'prod'
+  	...  test_open_eu.Заповнити contact для tender
   	#...  test_open_eu.Заповнити ПІБ організації  AND
-    ...  tender_tab.Заповнити "Вид предмету закупівлі"  Товари
+    tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_eu.Заповнити amount для tender
   	test_open_eu.Заповнити minimalStep для tender
   	test_open_eu.Заповнити title для tender
@@ -24,10 +24,10 @@
 	actions.Натиснути додати(F7)  Додавання. Тендери
   	create_tender.Вибрати тип процедури  Відкриті торги з публікацією англійською мовою
     tender_tab.Встановити чекбокс "Мультилоти"
-   	Run Keyword If  '${site}' == 'prod'  Run Keywords
-  	...  test_open_eu.Заповнити contact для tender  AND
+   	Run Keyword If  '${site}' == 'prod'
+  	...  test_open_eu.Заповнити contact для tender
   	#...  test_open_eu.Заповнити ПІБ організації  AND
-  	...  tender_tab.Заповнити "Вид предмету закупівлі"  Товари
+  	tender_tab.Заповнити "Вид предмету закупівлі"  Товари
   	test_open_eu.Заповнити amount для lot
   	test_open_eu.Заповнити minimalStep для lot
   	test_open_eu.Заповнити title для tender

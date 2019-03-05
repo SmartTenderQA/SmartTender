@@ -121,7 +121,8 @@ ${winners}                //div[@id="MainSted2TabPage_1_cp" or @id="MainSted2Tab
     qualification_keywords.Вибрати переможця за номером  ${i}
     actions.Натиснути кнопку "Підписати договір"
     validation.Закрити валідаційне вікно (Так/Ні)  Ви дійсно хочете підписати договір?  Так
-    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на договір?  Так
+    ${answer}  Set Variable If  "${where}" == "test"  Так  Ні
+    validation.Закрити валідаційне вікно (Так/Ні)  Накласти ЕЦП на договір?  ${answer}
     EDS_webclient.Накласти ЕЦП (webclient)
     #validation.Закрити валідаційне вікно (Так/Ні)  На рішення не накладено актуальний підпис ЕЦП  Так
     Wait Until Page Contains  Договір підписаний    60

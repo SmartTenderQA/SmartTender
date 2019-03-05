@@ -21,9 +21,9 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 
 Натиснути "Підтвердити перевірку протоколу"
-	Wait Until Element Is Visible  ${approve btn}
+	elements.Дочекатися відображення елемента на сторінці  ${approve btn}
 	Click Element  ${approve btn}
-	Wait Until Element Is Visible  ${approve btn}/parent::*[contains(@class,'dxbDisabled')]
+	elements.Дочекатися відображення елемента на сторінці  ${approve btn}/parent::*[contains(@class,'dxbDisabled')]
 
 
 Додати протокол рішення
@@ -73,6 +73,7 @@ ${approve btn}			//*[contains(@class,'dxb') and contains(.,'Підтвердит
 
 Прикріпити документ договору
 	elements.Дочекатися відображення елемента на сторінці  //*[contains(text(),'Обзор...')]
+	Дочекатись закінчення загрузки сторінки
 	Click Element  //*[contains(text(),'Обзор...')]
 	Дочекатись закінчення загрузки сторінки
 	${input file}  Set Variable  //*[@class='dxpc-content']//input[@type='file']

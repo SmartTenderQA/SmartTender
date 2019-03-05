@@ -19,8 +19,9 @@ ${close button}							//*[@class="ivu-modal-wrap vertical-center-modal"]//*[@cla
 Переглянути повідемлення
 	${title}  Get Text  (${messages block})[1]
 	Click Element  (${messages block})[1]
-	elements.Дочекатися відображення елемента на сторінці  ${close button}
-	${message title}  Get Text  //td[contains(@style,'background-color: rgb(48,63,159)')]//div[contains(@style,'color:#fff')]
+	${message title selector}  set variable  //td[contains(@style,'background-color: rgb(48,63,159)')]//div[contains(@style,'color:#fff')]
+	elements.Дочекатися відображення елемента на сторінці  ${message title selector}
+	${message title}  Get Text  ${message title selector}
 	Should Be Equal  ${title}  ${message title}
 
 

@@ -133,7 +133,7 @@ Library  ../../src/pages/sale/SPF/cdb2_LandLease_page/cdb2_LandLease_variables.p
 
 
 Заповнити "Інформацію про умови аукціону"
-	cdb2_LandLease_step.Заповнити "Дата проведення аукціону"
+	Run Keyword  cdb2_LandLease_step.Заповнити "Дата проведення аукціону" ${site}
 	cdb2_LandLease_step.Заповнити "Лоти виставляються"
 	cdb2_LandLease_step.Заповнити "Мінімальна кількість учасників аукціону"
 	cdb2_LandLease_step.Заповнити "Тривалість оренди Років"
@@ -145,11 +145,16 @@ Library  ../../src/pages/sale/SPF/cdb2_LandLease_page/cdb2_LandLease_variables.p
 	cdb2_LandLease_step.Заповнити "Реєстраційний внесок"
 
 
-Заповнити "Дата проведення аукціону"
-	${delta minutes}  Set Variable  40
-	${start}  Evaluate  '{:%d.%m.%Y %H:%M:%S}'.format(datetime.datetime.now() + datetime.timedelta(minutes=int(${delta minutes})))  datetime
-	cdb2_LandLease_page.Заповнити auctionPeriod.shouldStartAfter  ${start}
-	Set To Dictionary  ${data['auctionPeriod']}  shouldStartAfter  ${start}
+Заповнити "Дата проведення аукціону" test
+	${startDate}  get_formated_time_with_delta  40  minutes  s
+	cdb2_LandLease_page.Заповнити auctionPeriod.shouldStartAfter  ${startDate}
+	Set To Dictionary  ${data['auctionPeriod']}  shouldStartAfter  ${startDate}
+
+
+Заповнити "Дата проведення аукціону" prod
+	${startDate}  get_formated_time_with_delta  7  days  s
+	cdb2_LandLease_page.Заповнити auctionPeriod.shouldStartAfter  ${startDate}
+	Set To Dictionary  ${data['auctionPeriod']}  shouldStartAfter  ${startDate}
 
 
 Заповнити "Лоти виставляються"

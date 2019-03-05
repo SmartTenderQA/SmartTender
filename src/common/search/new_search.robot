@@ -57,6 +57,7 @@ ${elastic search clean filter}      css=.tag-holder button
 	${selector}  Set Variable  //label[contains(., "${field_text}")]//input[@type="checkbox"]
 	Scroll Page To Element XPATH  ${selector}
 	Run Keyword  ${action} Checkbox  ${selector}
+	Дочекатись закінчення загрузки сторінки
 	${status}  Run Keyword And Return Status  Checkbox Should Be Selected  ${selector}
 	Run Keyword If  ${status} == ${False}  Операція над чекбоксом  ${field_text}  ${action}
 

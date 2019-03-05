@@ -2,6 +2,7 @@
 Створити тендер
 	desktop.Перейти у розділ (webclient)  Открытые закупки энергосервиса (ESCO) (тестовые)
 	actions.Натиснути додати(F7)  Додавання. Тендери
+	tender_tab.Заповнити "Вид предмету закупівлі"  Послуги
 	test_esco.Заповнити minimalStep для tender
 	test_esco.Заповнити title для tender
   	test_esco.Заповнити title_eng для tender
